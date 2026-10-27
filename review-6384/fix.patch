@@ -1,0 +1,106 @@
+diff --git a/lib/CXGN/Trial/FieldMap.pm b/lib/CXGN/Trial/FieldMap.pm
+index f0d91b9a64..ed3de60fd3 100644
+--- a/lib/CXGN/Trial/FieldMap.pm
++++ b/lib/CXGN/Trial/FieldMap.pm
+@@ -599,15 +599,47 @@ sub rebuild_trial_plot_replicates {
+         my $i = 1;
+         foreach my $plot (@sorted_plots) {
+             my $row = $schema->resultset("Stock::Stockprop")->find({ type_id=>$rep_number_id, stock_id=>$plot->{plot_id}});
+-            $row->update({
+-                type_id=>$rep_number_id, 
+-                stock_id=>$plot->{plot_id}, 
+-                rank=>0, 
+-                value=>$i 
++            # rep_number is optional on upload, so the plot may have none yet
++            if (!$row) {
++                $row = $schema->resultset("Stock::Stockprop")->new({ type_id=>$rep_number_id, stock_id=>$plot->{plot_id} });
++            }
++            $row->set_columns({
++                type_id=>$rep_number_id,
++                stock_id=>$plot->{plot_id},
++                rank=>0,
++                value=>$i
+             });
++            $row->update_or_insert();
+             $i += 1;
+-        } 
++        }
++    }
++}
++
++# Renames several plots at once. Takes a hashref of plot_id => [old_name, new_name].
++# A new name may be the current name of another plot in the set (for example when
++# replicate numbers in template names shift), so every plot first gets a temporary
++# name. Returns an error string, or nothing.
++sub rename_plots {
++    my $self = shift;
++    my $renames = shift;
++
++    my %new_names = map { $renames->{$_}->[1] => 1 } keys %$renames;
++    if (scalar(keys %new_names) != scalar(keys %$renames)) {
++        return "The new plot names are not unique";
++    }
++
++    my %temp_names;
++    foreach my $plot_id (sort { $a <=> $b } keys %$renames) {
++        my $temp_name = $renames->{$plot_id}->[0]."__renaming_".$plot_id;
++        my $error = $self->replace_plot_name_fieldMap($plot_id, $renames->{$plot_id}->[0], $temp_name);
++        return $error if $error;
++        $temp_names{$plot_id} = $temp_name;
++    }
++    foreach my $plot_id (sort { $a <=> $b } keys %$renames) {
++        my $error = $self->replace_plot_name_fieldMap($plot_id, $temp_names{$plot_id}, $renames->{$plot_id}->[1]);
++        return $error if $error;
+     }
++    return;
+ }
+ 
+ sub _regenerate_trial_layout_cache {
+diff --git a/lib/SGN/Controller/AJAX/TrialMetadata.pm b/lib/SGN/Controller/AJAX/TrialMetadata.pm
+index ffdc0366fa..fdb3935f2d 100644
+--- a/lib/SGN/Controller/AJAX/TrialMetadata.pm
++++ b/lib/SGN/Controller/AJAX/TrialMetadata.pm
+@@ -3267,6 +3267,9 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
+     }
+     my $new_stock_id = $new_stock_row->stock_id;
+ 
++    # The layout is read after regenerating its cache, because the cache may be
++    # stale (replace_stock did not regenerate it before).
++    $replace_stock_fieldmap->_regenerate_trial_layout_cache();
+     my $trial_layout_download = CXGN::Trial::TrialLayoutDownload->new({
+         schema => $schema,
+         trial_id => $trial_id,
+@@ -3351,7 +3354,8 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
+             $affected_ids{$_}++ for keys %{$rep_hash->{$acc_id}->{add}   // {}};
+         }
+ 
+-        foreach my $affected_id (keys %affected_ids) {
++        my %plot_renames;
++        foreach my $affected_id (sort { $a <=> $b } keys %affected_ids) {
+             next unless $plot_info{$affected_id};
+             my $current_plot_name = $plot_info{$affected_id}->{plot_name};
+             my $effective_new_name;
+@@ -3377,17 +3381,20 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
+                 my $old_acc_name = $plot_info{$affected_id}->{accession_name};
+                 my $new_acc_name = exists $swapped_plots{$affected_id} ? $swapped_plots{$affected_id} : $old_acc_name;
+                 if ($new_acc_name ne $old_acc_name) {
+-                    (my $candidate = $current_plot_name) =~ s/\Q$old_acc_name\E/$new_acc_name/;
++                    # only where the old name is a whole part of the plot name
++                    (my $candidate = $current_plot_name) =~ s/(?:^|(?<=[-_]))\Q$old_acc_name\E(?=[-_]|$)/$new_acc_name/;
+                     $effective_new_name = $candidate if $candidate ne $current_plot_name;
+                 }
+             }
+ 
+             if ($effective_new_name && $effective_new_name ne $current_plot_name) {
+-                my $err = $replace_stock_fieldmap->replace_plot_name_fieldMap($affected_id, $current_plot_name, $effective_new_name);
+-                die "$err\n" if $err;
++                $plot_renames{$affected_id} = [ $current_plot_name, $effective_new_name ];
+             }
+         }
+ 
++        my $err = $replace_stock_fieldmap->rename_plots(\%plot_renames);
++        die "$err\n" if $err;
++
+         $replace_stock_fieldmap->_regenerate_trial_layout_cache();
+     };
+ 
