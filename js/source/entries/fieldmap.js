@@ -696,6 +696,11 @@ export function init() {
                     );
                     jQuery("#hm_plot_name").html(`<a href="/stock/${replace_plot_id}/view">${replace_plot_name}</a>`);
                     jQuery("#hm_plot_number").html(replace_plot_number);
+                    var not_planted = !!(plot.additionalInfo && plot.additionalInfo.notPlanted);
+                    jQuery("#hm_plot_planting").html(not_planted ? "<b>Not planted</b> (the accession is the planned one)" : "Planted");
+                    jQuery("#hm_toggle_not_planted")
+                        .data("not_planted", not_planted ? 0 : 1)
+                        .text(not_planted ? "Mark as Planted" : "Mark as Not Planted");
                     var old_plot_id = jQuery("#hm_plot_id").html(replace_plot_id);
                     var old_plot_accession = jQuery("#hm_plot_accession").html(
                         plot.additionalInfo?.intercropGermplasm ? 
@@ -1000,11 +1005,18 @@ export function init() {
                 return false;
             };
 
+            // plots that were not planted keep their planned accession but have nothing growing
+            var is_not_planted = function (plot) {
+                return !!(plot.additionalInfo && plot.additionalInfo.notPlanted);
+            };
+
             var get_fieldmap_plot_color = function (plot) {
                 var color;
                 if (plot.observationUnitPosition.observationLevelRelationships) {
                     if (is_plot_overlapping(plot)) {
                         color = "#000";
+                    } else if (is_not_planted(plot)) {
+                        color = "#fff";
                     } else if (plot.observationUnitPosition.entryType == "check") {
                         color = "#6a5acd";
                     } else if (
@@ -1033,6 +1045,8 @@ export function init() {
                     color = "#000";
                 } else if (!plot.observationUnitPosition.observationLevel) {
                     color = "lightgrey";
+                } else if (is_not_planted(plot)) {
+                    color = "#fff";
                 } else {
                     var cs = heatmap_object.hasOwnProperty(trait_name) && heatmap_object[trait_name].hasOwnProperty(plot.observationUnitDbId)
                         ? colorScale(heatmap_object[trait_name][plot.observationUnitDbId].val)
@@ -1074,6 +1088,9 @@ export function init() {
                         }'>${plot.studyName}</span><br />`
                         : "";
                     html += `<strong>Plot Name:</strong> ${plot.observationUnitName}<br />`;
+                    if (is_not_planted(plot)) {
+                        html += `<strong>Not planted</strong> (planned accession below)<br />`;
+                    }
                     if (plot.type == "data") {
                         html += `<strong>Plot Number:</strong> ${plot.observationUnitPosition.observationLevel.levelCode}<br />
                             <strong>Block Number:</strong> ${plot.observationUnitPosition.observationLevelRelationships[1].levelCode}<br />
@@ -1263,6 +1280,7 @@ export function init() {
                 .attr("height", 48)
                 .style("stroke-width", 2)
                 .style("stroke", get_stroke_color)
+                .style("stroke-dasharray", (d) => (is_not_planted(d) ? "6,4" : null))
                 .style(
                     "fill",
                     !isHeatMap ? get_fieldmap_plot_color : get_heatmap_plot_color

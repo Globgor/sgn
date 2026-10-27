@@ -11,7 +11,7 @@ use CXGN::Trial;
 use CXGN::Stock::RelatedStocks;
 
 my @REQUIRED_COLUMNS = qw|plot_name accession_name|;
-my @OPTIONAL_COLUMNS = qw|new_plot_name|;
+my @OPTIONAL_COLUMNS = qw|new_plot_name not_planted|;
 my $parsed_accession_ids = {};
 
 sub _validate_with_plugin {
@@ -29,6 +29,7 @@ sub _validate_with_plugin {
         column_aliases => {
             'plot_name' => ['plot name'],
             'new_plot_name' => ['new plot name'],
+            'not_planted' => ['not planted'],
             'accession_name' => ['accession name', 'accession', 'cross_unique_id', 'cross unique id', 'family_name', 'family name']
         },
         unique_only_columns => ['plot_name', 'new_plot_name']
@@ -82,11 +83,21 @@ sub _validate_with_plugin {
 
     my $validate_stocks = $transform->transform($schema, 'stocks_2_stock_ids', \@accessions);
     if (scalar(@{$validate_stocks->{'missing'}}) > 0) {
-        push @error_messages, "The following accessions were not found in the database: ".$validate_stocks->{'missing'};
+        push @error_messages, "The following accessions were not found in the database: ".join(", ", @{$validate_stocks->{'missing'}});
     } else {
         foreach my $accession_id (@{$validate_stocks->{'transform'}}) {
             my $accession_name = shift(@accessions);
             $parsed_accession_ids->{$accession_name} = $accession_id;
+        }
+    }
+
+    # not_planted: 1 (or yes, true, x) marks the plot as not planted, 0 (or no,
+    # false) as planted; an empty cell leaves it as it is
+    foreach my $row (@$parsed_data) {
+        my $value = $row->{'not_planted'};
+        next if !defined($value) || $value !~ /\S/;
+        if (_not_planted_value($value) eq '') {
+            push @error_messages, "Plot $row->{'plot_name'}: not_planted must be 1 (not planted) or 0 (planted), not $value.";
         }
     }
 
@@ -128,7 +139,8 @@ sub _parse_with_plugin {
             'old_plot_name' => $row->{'plot_name'},
             'new_plot_name' => $row->{'new_plot_name'} ? $row->{'new_plot_name'} : '',
             'new_accession_name' => $row->{'accession_name'},
-            'new_accession_id' => $parsed_accession_ids->{$row->{'accession_name'}}
+            'new_accession_id' => $parsed_accession_ids->{$row->{'accession_name'}},
+            'not_planted' => _not_planted_value($row->{'not_planted'}),
         };
     }
 
@@ -136,5 +148,14 @@ sub _parse_with_plugin {
     return 1;
 }
 
+# 1, 0, '' for anything else (an empty cell included)
+sub _not_planted_value {
+    my $value = shift;
+    return '' if !defined($value);
+    $value =~ s/^\s+|\s+$//g;
+    return 1 if $value =~ /^(1|yes|y|true|x)$/i;
+    return 0 if $value =~ /^(0|no|n|false)$/i;
+    return '';
+}
 
 1;

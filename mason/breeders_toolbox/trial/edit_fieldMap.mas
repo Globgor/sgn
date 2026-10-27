@@ -5,7 +5,7 @@ $trial_stock_type => undef
 </%args>
 
 
-<& /util/import_javascript.mas, classes => [ 'jqueryui.js', 'jquery.js', 'CXGN.TrialAccessionChange' ] &>
+<& /util/import_javascript.mas, classes => [ 'jqueryui.js', 'jquery.js' ], entries => [ 'trial_accession_change' ] &>
 
 
 <!-- Load DataTables CSS and JS -->
@@ -38,6 +38,7 @@ $trial_stock_type => undef
                 <button id="close_edit_field_map_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="replace_trial_stock_submit" id="replace_trial_stock_submit"></button>
                 <button type="button" class="btn btn-primary" name="shift_trial_stocks_open" id="shift_trial_stocks_open">Shift Accessions</button>
+                <button type="button" class="btn btn-primary" name="not_planted_plots_open" id="not_planted_plots_open">Not Planted Plots</button>
                 <!-- <button type="button" class="btn btn-primary" name="substitute_stock_submit" id="substitute_stock_submit"></button> -->
             </div>
         </div>
@@ -141,10 +142,10 @@ $trial_stock_type => undef
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Accession for empty places:</label>
+                            <label class="col-sm-4 control-label">Places that stay empty:</label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="shift_stocks_empty_stock" placeholder="for example NOT_PLANTED" />
-                                <p class="help-block" style="white-space: normal">The places that stay empty get this accession, so that their data is not counted for a real one. Exclude it from analyses.</p>
+                                <p class="form-control-static" style="white-space: normal">are marked as not planted. They keep their planned accession, but get no Field Book entries and no phenotypes. Places already marked as not planted are skipped: the planting went on past them.</p>
+                                <input class="form-control" id="shift_stocks_empty_stock" placeholder="Optional: an accession for them, for example NOT_PLANTED" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -159,6 +160,40 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="shift_trial_stocks_submit">Shift Accessions</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="not_planted_plots_dialog" name="not_planted_plots_dialog" tabindex="-1" role="dialog" aria-labelledby="not_planted_plots_dialog_title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="not_planted_plots_dialog_title">Not Planted Plots in <% $trial_name %></h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <p class="help-block" style="white-space: normal">For places in the field where nothing was planted. A plot that was not planted keeps the accession planned for it, so the plan stays visible, but it is shown as empty on the field map, it is left out of Field Book files and phenotyping spreadsheets, and no phenotypes can be stored for it. Phenotypes it already has are deleted after you confirm. You see what changes before anything is changed.</p>
+                    <form class="form-horizontal" role="form" id="not_planted_plots_form" name="not_planted_plots_form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Plot names:</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="not_planted_plot_names" rows="6" placeholder="One plot name per line"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <div class="radio"><label><input type="radio" name="not_planted_value" value="1" checked /> Mark as not planted</label></div>
+                                <div class="radio"><label><input type="radio" name="not_planted_value" value="0" /> Mark as planted again</label></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="not_planted_plots_submit">Save</button>
             </div>
         </div>
     </div>
@@ -642,60 +677,24 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         replace_stock_in_trial(trial_stock_type)
     });
 
-    function replace_stock_in_trial() {
+    // shows what changed in the success dialog, which reloads the page when closed
+    function show_accession_change_result(title, message, summary) {
+        window.jsMod['trial_accession_change'].showSummary('#replace_stock_success_details', summary, false);
+        jQuery('#replace_stock_message_title').text(title);
+        jQuery('#replace_stock_success_message').text(message);
+        jQuery('#replace_stock_dialog_success_message').modal('show');
+    }
+
+    async function replace_stock_in_trial() {
         jQuery('#replace_trial_stocks_dialog').modal("hide");
-        var data = {
+        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/replace_stock', {
             'old_stock_id': jQuery('#trial_stock_table').val(),
             'new_stock': jQuery('#replace_database_stock').val(),
             'rename_plots': jQuery('#replace_stock_rename_plots').is(':checked') ? 1 : 0,
-        };
-
-        // first the plan, then the change once the user confirms it
-        jQuery.ajax({
-            type: 'POST',
-            url: '/ajax/breeders/trial/<% $trial_id %>/replace_stock',
-            dataType: "json",
-            data: jQuery.extend({ 'preview': 1 }, data),
-            beforeSend: function(){
-                jQuery('#working_modal').modal("show");
-            },
-            success: function (response) {
-                jQuery('#working_modal').modal("hide");
-                if (response.error) {
-                    alert("Error Replacing Stock: "+response.error);
-                    return;
-                }
-                if (!confirm(trial_accession_change_lines(response.preview, true).join("\n") + "\n\nContinue?")) {
-                    return;
-                }
-                jQuery.ajax({
-                    type: 'POST',
-                    url: '/ajax/breeders/trial/<% $trial_id %>/replace_stock',
-                    dataType: "json",
-                    data: data,
-                    beforeSend: function(){
-                        jQuery('#working_modal').modal("show");
-                    },
-                    success: function (response) {
-                        jQuery('#working_modal').modal("hide");
-                        if (response.error) {
-                            alert("Error Replacing Stock: "+response.error);
-                        } else {
-                            trial_accession_change_show('#replace_stock_success_details', response, false);
-                            jQuery('#replace_stock_dialog_success_message').modal("show");
-                        }
-                    },
-                    error: function() {
-                        jQuery('#working_modal').modal("hide");
-                        alert('An error occurred replacing stock');
-                    }
-                });
-            },
-            error: function() {
-                jQuery('#working_modal').modal("hide");
-                alert('An error occurred replacing stock');
-            }
-        });
+        }, { action: "Error Replacing Stock" });
+        if (summary) {
+            show_accession_change_result(jQuery('#replace_stock_message_title').text(), jQuery('#replace_stock_success_message').text(), summary);
+        }
     }
 
     // Shift Accessions
@@ -724,8 +723,8 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         source: '/ajax/stock/accession_autocomplete'
     });
 
-    jQuery('#shift_trial_stocks_submit').click(function() {
-        var data = {
+    jQuery('#shift_trial_stocks_submit').click(async function() {
+        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/shift_accessions', {
             'order': jQuery('#shift_stocks_order').val(),
             'start': jQuery('#shift_stocks_start').val(),
             'from_plot_id': jQuery('#shift_stocks_from_plot').val(),
@@ -733,53 +732,29 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             'positions': jQuery('#shift_stocks_positions').val(),
             'empty_stock': jQuery('#shift_stocks_empty_stock').val(),
             'rename_plots': jQuery('#shift_stocks_rename_plots').is(':checked') ? 1 : 0,
-        };
-        // first the plan (asking curators once when the trial already has data), then the change
-        var preview = function() {
-            shift_stocks_post(jQuery.extend({ 'preview': 1 }, data), function(response) {
-                if (response.warning) {
-                    if (confirm(response.warning + "\n\nThis trial already has data. Change it anyway?")) {
-                        data.override = 1;
-                        preview();
-                    }
-                    return;
-                }
-                if (!confirm(trial_accession_change_lines(response.preview, true).join("\n") + "\n\nContinue?")) {
-                    return;
-                }
-                shift_stocks_post(data, function(response) {
-                    trial_accession_change_show('#replace_stock_success_details', response, false);
-                    jQuery('#replace_stock_message_title').text('Shift Accessions');
-                    jQuery('#replace_stock_success_message').text('The accessions were shifted.');
-                    jQuery('#shift_trial_stocks_dialog').modal('hide');
-                    jQuery('#replace_stock_dialog_success_message').modal('show');
-                });
-            });
-        };
-        preview();
+        }, { action: "Error Shifting Accessions" });
+        if (summary) {
+            jQuery('#shift_trial_stocks_dialog').modal('hide');
+            show_accession_change_result('Shift Accessions', 'The accessions were shifted.', summary);
+        }
     });
 
-    function shift_stocks_post(params, on_success) {
-        jQuery.ajax({
-            type: 'POST',
-            url: '/ajax/breeders/trial/<% $trial_id %>/shift_accessions',
-            dataType: "json",
-            data: params,
-            beforeSend: function() { jQuery('#working_modal').modal("show"); },
-            success: function(response) {
-                jQuery('#working_modal').modal("hide");
-                if (response.error) {
-                    alert("Error Shifting Accessions: " + response.error);
-                } else {
-                    on_success(response);
-                }
-            },
-            error: function() {
-                jQuery('#working_modal').modal("hide");
-                alert('An error occurred shifting accessions');
-            }
-        });
-    }
+    // Not Planted Plots
+    jQuery('#not_planted_plots_open').click(function() {
+        jQuery('#edit_field_map_dialog').modal('hide');
+        jQuery('#not_planted_plots_dialog').modal('show');
+    });
+
+    jQuery('#not_planted_plots_submit').click(async function() {
+        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/not_planted', {
+            'plot_names': jQuery('#not_planted_plot_names').val(),
+            'not_planted': jQuery('input[name="not_planted_value"]:checked').val(),
+        }, { action: "Error Marking Plots" });
+        if (summary) {
+            jQuery('#not_planted_plots_dialog').modal('hide');
+            show_accession_change_result('Not Planted Plots', 'The plots were marked.', summary);
+        }
+    });
 
   jQuery('#close_replace_field_map_dialog').click( function() {
     location.reload();

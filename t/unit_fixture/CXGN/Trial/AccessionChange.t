@@ -19,6 +19,8 @@ use CXGN::Trial;
 use CXGN::Trial::TrialDesign;
 use CXGN::Trial::TrialCreate;
 use CXGN::Trial::TrialLayout;
+use CXGN::Trial::TrialLayoutDownload;
+use CXGN::Phenotypes::StorePhenotypes;
 
 BEGIN { use_ok('CXGN::Trial::AccessionChange'); }
 
@@ -37,6 +39,7 @@ my %t = (
     block => cvterm_id('block', 'stock_property'),
     plot_number => cvterm_id('plot number', 'stock_property'),
     is_a_control => cvterm_id('is a control', 'stock_property'),
+    not_planted => cvterm_id('not_planted', 'stock_property'),
     row_number => cvterm_id('row_number', 'stock_property'),
     col_number => cvterm_id('col_number', 'stock_property'),
     accession => cvterm_id('accession', 'stock_type'),
@@ -107,11 +110,9 @@ my $change = sub { CXGN::Trial::AccessionChange->new({ schema => $schema, trial_
 is($change->()->design_type, 'CRD', 'test_trial is a CRD');
 
 # for creating plants and tissue samples
-my $temp_dir = $f->config->{basepath}.'/'.($f->config->{tempfiles_subdir} // '');
-mkdir("$temp_dir/delete_nd_experiment_ids/") if !-d "$temp_dir/delete_nd_experiment_ids/";
-my (undef, $nd_experiment_ids_file) = tempfile("$temp_dir/delete_nd_experiment_ids/fileXXXX");
+my (undef, $nd_experiment_ids_file) = tempfile(TMPDIR => 1, UNLINK => 1);
 my $phenotype_store_config = {
-    basepath => $temp_dir,
+    basepath => $f->config->{basepath},
     dbhost => $f->config->{dbhost},
     dbuser => $f->config->{dbuser},
     dbname => $f->config->{dbname},
@@ -458,13 +459,14 @@ scenario 'shift: errors' => sub {
         [ { from_plot_id => 1, positions => 1, empty_stock_id => $empty }, qr/first plot of the shift is not a plot of this trial/ ],
         [ { from_plot_id => $plot{6}, to_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty }, qr/comes before the first one/ ],
         [ { from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 3, empty_stock_id => $empty }, qr/not shorter than the 3 plot/ ],
-        [ { from_plot_id => $plot{4}, positions => 1 }, qr/Choose the accession for the places that stay empty/ ],
         [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'diagonal' }, qr/Unknown plot order/ ],
         [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'by_row_serpentine' }, qr/do not have a row and\/or column/ ],
     );
     foreach my $case (@cases) {
         like($ac->changes_for_shift($case->[0])->{error} // '', $case->[1], 'error: '.$case->[1]);
     }
+    prop($plot{4}, 'not_planted', 1);
+    like($change->()->changes_for_shift({ from_plot_id => $plot{4}, positions => 1 })->{error} // '', qr/first plot of the shift \(test_trial24\) is marked as not planted/, 'error: the first plot is not planted');
 };
 
 scenario 'shift along a serpentine planting order, with a check plot' => sub {
@@ -485,6 +487,168 @@ scenario 'shift along a serpentine planting order, with a check plot' => sub {
     is(linked_stock($plot{6}, 'plot_of'), 'test_accession5', 'the check accession of plot 7 is now in plot 6');
     is_deeply([ is_check($plot{6}), is_check($plot{7}) ], [ 1, 0 ], 'plot 6 became a check plot, plot 7 a test plot');
     is_deeply({ map { $_->{plot_name} => $_->{new} } @{$plan->{checks}} }, { test_trial26 => 1, test_trial27 => 0 }, 'planned that way');
+};
+
+# --- plots that were not planted ---------------------------------------------
+sub phenotype_store {
+    my ($values, $traits) = @_;
+    return CXGN::Phenotypes::StorePhenotypes->new(
+        basepath => $f->config->{basepath},
+        dbhost => $f->config->{dbhost},
+        dbname => $f->config->{dbname},
+        dbuser => $f->config->{dbuser},
+        dbpass => $f->config->{dbpass},
+        temp_file_nd_experiment_id => $nd_experiment_ids_file,
+        bcs_schema => $schema,
+        metadata_schema => $f->metadata_schema,
+        phenome_schema => $f->phenome_schema,
+        user_id => 41,
+        stock_list => [ sort keys %$values ],
+        trait_list => $traits,
+        values_hash => $values,
+        has_timestamps => 0,
+        overwrite_values => 0,
+        metadata_hash => { operator => 'janedoe', date => '20260901' },
+        composable_validation_check_name => $f->config->{composable_validation_check_name},
+    );
+}
+sub layout_rows {
+    my %args = @_;
+    my $output = CXGN::Trial::TrialLayoutDownload->new({ schema => $schema, trial_id => $trial_id, data_level => 'plots', selected_columns => { plot_name => 1, accession_name => 1, rep_number => 1 }, %args })->get_layout_output();
+    my ($header, @rows) = @{ $output->{output} || [] };
+    my %rows;
+    foreach my $row (@rows) { $rows{ $row->[0] } = { map { $header->[$_] => $row->[$_] } 0 .. $#$header }; }
+    return { header => $header, rows => \%rows };
+}
+
+scenario 'not planted: the plot keeps its accession; CRD replicates, layout and downloads leave it out' => sub {
+    my $ac = $change->();
+    is_deeply([ map { prop($plot{$_}, 'replicate') } (5, 8, 11) ], [ 1, 2, 3 ], 'test_accession1 is in plots 5, 8 and 11');
+    my $plan = $ac->apply([ { plot_id => $plot{5}, not_planted => 1 } ]);
+    is_deeply($plan->{planting}, [ { plot_id => $plot{5}, plot_name => 'test_trial25', not_planted => 1 } ], 'planned: plot 5 not planted');
+    is_deeply($plan->{changes}, [], 'no accession changes');
+    is_deeply($plan->{unchanged}, [], 'and plot 5 is not listed as unchanged');
+    is(prop($plot{5}, 'not_planted'), '1', 'plot 5 has not_planted');
+    is(linked_stock($plot{5}, 'plot_of'), 'test_accession1', 'and keeps its planned accession');
+    is(name_of($plot{5}), 'test_trial25', 'and its name');
+    is_deeply([ map { prop($plot{$_}, 'replicate') } (8, 11) ], [ 1, 2 ], 'CRD: plots 8 and 11 are replicates 1 and 2 now');
+
+    is(cached_design($trial_id)->{test_trial25}->{not_planted}, '1', 'the cached layout has not_planted');
+    my $layout = CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $trial_id, experiment_type => 'field_layout' });
+    my @planted = map { $_->{plot_name} } values %{ $layout->get_planted_design() };
+    is(scalar(@planted), 14, 'the planted design has 14 plots');
+    ok(!(grep { $_ eq 'test_trial25' } @planted), 'without plot 5');
+
+    my $all = layout_rows();
+    ok((grep { $_ eq 'not_planted' } @{$all->{header}}), 'the plot layout download has a not_planted column');
+    is_deeply([ $all->{rows}->{test_trial25}->{not_planted}, $all->{rows}->{test_trial28}->{not_planted} ], [ 1, 0 ], 'with 1 and 0');
+    my $fieldbook = layout_rows(exclude_not_planted => 1);
+    ok(!exists($fieldbook->{rows}->{test_trial25}), 'files to collect data in leave plot 5 out');
+    is(scalar(keys %{$fieldbook->{rows}}), 14, 'and have the other 14 plots');
+    foreach my $n (1 .. 15) {
+        prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+    CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $trial_id, experiment_type => 'field_layout' })->generate_and_cache_layout();
+    my $ordered = layout_rows(exclude_not_planted => 1, include_plot_order => 1, plot_order => 'by_row_serpentine', plot_start => 'bottom_left');
+    is(scalar(keys %{$ordered->{rows}}), 14, 'with the planting order too, no row for plot 5');
+    ok(!(grep { !defined($_->{plot_name}) } values %{$ordered->{rows}}), 'and no empty rows');
+
+    my ($warning, $error) = phenotype_store({ test_trial25 => { 'dry yield|CO_334:0000014' => [ 30, '' ] } }, [ 'dry yield|CO_334:0000014' ])->verify();
+    like($error // '', qr/These plots were not planted, so they cannot have phenotype values: <br\/>'test_trial25'/, 'phenotypes cannot be stored for plot 5');
+    ($warning, $error) = phenotype_store({ test_trial28 => { 'dry yield|CO_334:0000014' => [ 30, '' ] } }, [ 'dry yield|CO_334:0000014' ])->verify();
+    unlike($error // '', qr/not planted/, 'but for plot 8');
+
+    $plan = $ac->apply([ { plot_id => $plot{5}, not_planted => 1 } ]);
+    is_deeply([ $plan->{planting}, $plan->{unchanged} ], [ [], [ 'test_trial25' ] ], 'marking it again changes nothing');
+    $plan = $ac->apply([ { plot_id => $plot{5}, not_planted => 0 } ]);
+    is_deeply($plan->{planting}, [ { plot_id => $plot{5}, plot_name => 'test_trial25', not_planted => 0 } ], 'planted again');
+    is(prop($plot{5}, 'not_planted'), undef, 'without not_planted');
+    is_deeply([ map { prop($plot{$_}, 'replicate') } (5, 8, 11) ], [ 1, 2, 3 ], 'and the replicates are as before');
+};
+
+scenario 'not planted together with another accession; status changes are validated' => sub {
+    my $ac = $change->();
+    my $plan = $ac->apply([ { plot_id => $plot{5}, new_stock_id => $acc{2}, not_planted => 1 } ], { rename_plots => 'none' });
+    is(linked_stock($plot{5}, 'plot_of'), 'test_accession2', 'the planned accession can be corrected at the same time');
+    is(prop($plot{5}, 'not_planted'), '1', 'and the plot is not planted');
+    ok(!(grep { /already have phenotypes/ } @{$plan->{warnings}}), 'no warning about phenotypes counting for the new accession');
+    is_deeply([ map { prop($plot{$_}, 'replicate') } (9, 13, 15) ], [ 1, 2, 3 ], 'CRD: test_accession2 keeps replicates 1 to 3 on its planted plots');
+    $plan = $ac->plan([ { plot_id => $plot{6}, not_planted => 'yes' }, { plot_id => $plot{7}, new_stock_id => $acc{5}, not_planted => '' } ]);
+    is_deeply([ map { $_->{plot_name} } @{$plan->{planting}} ], [ 'test_trial26' ], "'yes' marks a plot, an empty value leaves it");
+    is_deeply($plan->{unchanged}, [ 'test_trial27' ], 'the plot without a value is unchanged');
+    $plan = $ac->plan([ { plot_id => $plot{7}, not_planted => '' } ]);
+    ok((grep { /The new stock for plot test_trial27 does not exist/ } @{$plan->{errors}}), 'a change with neither a stock nor a status is an error');
+};
+
+scenario 'not planted: phenotypes of the plot are deleted only when asked' => sub {
+    my $store = phenotype_store({ test_trial210 => { 'dry yield|CO_334:0000014' => [ 30, '' ], 'fresh root weight|CO_334:0000012' => [ 7, '' ] }, test_trial211 => { 'dry yield|CO_334:0000014' => [ 40, '' ] } }, [ 'dry yield|CO_334:0000014', 'fresh root weight|CO_334:0000012' ]);
+    my ($warning, $error) = $store->verify();
+    ok(!$error, 'phenotypes for plots 10 and 11 verify') or diag($error);
+    $store->store();
+    my $values_of = sub { return $schema->resultset('NaturalDiversity::NdExperimentStock')->search({ stock_id => $_[0] })->search_related('nd_experiment')->search_related('nd_experiment_phenotypes')->count; };
+    is_deeply([ $values_of->($plot{10}), $values_of->($plot{11}) ], [ 2, 1 ], 'stored');
+    my @experiments = map { $_->nd_experiment_id } $schema->resultset('NaturalDiversity::NdExperimentStock')->search({ stock_id => $plot{10}, type_id => cvterm_id('phenotyping_experiment', 'experiment_type') })->all;
+    is(scalar(@experiments), 1, 'in one phenotyping experiment');
+
+    my $ac = $change->();
+    my $plan = $ac->plan([ { plot_id => $plot{10}, not_planted => 1 } ]);
+    is(scalar(@{$plan->{errors}}), 1, 'an error without delete_phenotypes');
+    like($plan->{errors}->[0], qr/^2 phenotype value\(s\) were stored for plots that are marked as not planted \(test_trial210\)\. They would count for an accession that did not grow there/, 'which says why');
+    is($plan->{not_planted_phenotypes}, 2, 'with the number of values');
+    dies_with(sub { $ac->apply([ { plot_id => $plot{10}, not_planted => 1 } ]) }, qr/phenotype value/, 'apply without delete_phenotypes');
+    is(prop($plot{10}, 'not_planted'), undef, 'nothing changed');
+
+    $plan = $ac->apply([ { plot_id => $plot{10}, not_planted => 1 } ], { delete_phenotypes => 1 });
+    ok((grep { /^2 phenotype value\(s\) of the plots marked as not planted \(test_trial210\) are deleted\./ } @{$plan->{warnings}}), 'a warning about the deleted values');
+    is($ac->summary($plan)->{phenotypes_deleted}, 2, 'the summary counts them');
+    is_deeply([ $values_of->($plot{10}), $values_of->($plot{11}) ], [ 0, 1 ], 'the values of plot 10 are deleted, those of plot 11 kept');
+    is($schema->resultset('NaturalDiversity::NdExperiment')->search({ nd_experiment_id => { -in => \@experiments } })->count, 0, 'and so are the experiments of plot 10');
+    is(prop($plot{10}, 'not_planted'), '1', 'plot 10 is not planted');
+};
+
+scenario 'not planted: phenotypes stored together with other plots are not deleted' => sub {
+    my $geolocation = $schema->resultset('NaturalDiversity::NdGeolocation')->search({})->first;
+    my $type_id = cvterm_id('phenotyping_experiment', 'experiment_type');
+    my $experiment = $schema->resultset('NaturalDiversity::NdExperiment')->create({ nd_geolocation_id => $geolocation->nd_geolocation_id, type_id => $type_id });
+    $experiment->create_related('nd_experiment_stocks', { stock_id => $_, type_id => $type_id }) for ($plot{10}, $plot{11});
+    my $phenotype = $schema->resultset('Phenotype::Phenotype')->create({ uniquename => 'shared phenotype', observable_id => 70741, value => '30' });
+    $experiment->create_related('nd_experiment_phenotypes', { phenotype_id => $phenotype->phenotype_id });
+    my $plan = $change->()->plan([ { plot_id => $plot{10}, not_planted => 1 } ], { delete_phenotypes => 1 });
+    ok((grep { /stored together with those of other plots/ } @{$plan->{errors}}), 'an error');
+};
+
+scenario 'not planted: plants, seedlots and plates' => sub {
+    my $seedlot = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_seedlot', name => 'review_seedlot', type_id => cvterm_id('seedlot', 'stock_type'), organism_id => stock('test_accession1')->organism_id });
+    $schema->resultset('Stock::StockRelationship')->create({ subject_id => $seedlot->stock_id, object_id => $plot{5}, type_id => cvterm_id('seed transaction', 'stock_relationship') });
+    my $plan = $change->()->plan([ { plot_id => $plot{5}, not_planted => 1 } ]);
+    ok((grep { /^Plot test_trial25 is marked as not planted but has a transaction with seedlot review_seedlot/ } @{$plan->{warnings}}), 'a warning about the seedlot');
+    my $trial = CXGN::Trial->new({ bcs_schema => $schema, trial_id => $trial_id, phenome_schema => $f->phenome_schema, metadata_schema => $f->metadata_schema });
+    $trial->create_plant_entities(2, 1, undef, undef, undef, undef, $phenotype_store_config);
+    $plan = $change->()->plan([ { plot_id => $plot{6}, not_planted => 1 } ]);
+    ok((grep { /^Plot test_trial26 is marked as not planted but has 2 plant\(s\), subplot\(s\) or tissue sample\(s\); they are kept\./ } @{$plan->{warnings}}), 'a warning about the plants');
+};
+
+scenario 'shift: the empty places are marked as not planted, places already not planted are skipped' => sub {
+    my $ac = $change->();
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    $ac->apply([ { plot_id => $plot{6}, not_planted => 1 } ]);
+    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{9}, positions => 1 });
+    ok(!$shift->{error}, 'no error') or diag($shift->{error});
+    is_deeply($shift->{plots}, [ map { "test_trial2$_" } (4, 5, 7, 8, 9) ], 'plot 6 is not part of the stretch');
+    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{9} ], 'pushed out: planned for 9');
+    my $plan = $ac->apply($shift->{changes}, { rename_plots => 'none' });
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (4, 5, 6, 7, 8, 9) ], [ map { $before{$_} } (4, 4, 6, 5, 7, 8) ], 'plot 4 keeps its planned accession, 6 stays as it was, the others shift past 6');
+    is_deeply([ map { prop($plot{$_}, 'not_planted') } (4, 5, 6, 7, 8, 9) ], [ '1', undef, '1', undef, undef, undef ], 'plots 4 and 6 are not planted');
+    is_deeply([ map { $_->{plot_name} } grep { $_->{not_planted} } @{$plan->{planting}} ], [ 'test_trial24' ], 'planned: plot 4 not planted');
+    is(scalar(@{$plan->{changes}}), 4, 'four plots got another accession');
+};
+
+scenario 'shift with an accession for the empty places' => sub {
+    my $not_planted = new_accession('NOT_PLANTED');
+    my $ac = $change->();
+    $ac->apply($ac->changes_for_shift({ from_plot_id => $plot{14}, positions => 1, empty_stock_id => $not_planted->stock_id })->{changes}, { rename_plots => 'none' });
+    is_deeply([ linked_stock($plot{14}, 'plot_of'), prop($plot{14}, 'not_planted') ], [ 'NOT_PLANTED', '1' ], 'plot 14 gets NOT_PLANTED and is not planted');
 };
 
 # --- an RCBD trial with plants and tissue samples ------------------------------
@@ -651,6 +815,8 @@ scenario 'genotyping plate: the accession of a well' => sub {
     is(name_of($wells{A01}), 'review_plate_A01', 'not renamed');
     $plan = $ac->plan([ { plot_id => $wells{A02}, new_stock_id => $acc{2}, new_plot_name => 'x' } ]);
     ok((grep { /cannot be renamed/ } @{$plan->{errors}}), 'wells cannot be renamed');
+    $plan = $ac->plan([ { plot_id => $wells{A02}, not_planted => 1 } ]);
+    ok((grep { /cannot be marked as not planted/ } @{$plan->{errors}}), 'wells cannot be marked as not planted');
 };
 
 # --- clean up ------------------------------------------------------------------

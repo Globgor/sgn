@@ -472,9 +472,20 @@ Check plots follow the check accessions: a plot that gets a check accession of t
 
 #### Plots planted shifted
 
-If plots were planted shifted, for example a place was skipped and from there on every place got the accession planned for the place before it, use the “Shift Accessions” button of the “Edit Field Layout” window. Choose the planting order the planter took (by plot number, or by row or column, serpentine or zigzag, from a corner, as in “Download Plot Order”), the first and the last shifted plot, the number of positions (1 when a place was skipped, -1 when a plot was left out) and an accession for the places that stay empty, for example one named NOT_PLANTED that you exclude from analyses. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move along the planting order. Before anything is changed, a summary shows the changes and the accessions that no longer have a plot in the shifted stretch.
+If plots were planted shifted, for example a place was skipped and from there on every place got the accession planned for the place before it, use the “Shift Accessions” button of the “Edit Field Layout” window. Choose the planting order the planter took (by plot number, or by row or column, serpentine or zigzag, from a corner, as in “Download Plot Order”), the first and the last shifted plot, and the number of positions (1 when a place was skipped, -1 when a plot was left out). The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move along the planting order. The places that stay empty are marked as not planted (see below). Places that were already marked as not planted are skipped: the planting went on past them. Before anything is changed, a summary shows the changes and the accessions that no longer have a plot in the shifted stretch.
 
-For other corrections, upload the plan as it was planted with “Change Accessions” on the “Experimental Design” section: a file with plot_name and accession_name for every plot (plots whose accession does not change are left as they are). Check “Keep the plot names” when labels with the plot names are already in the field.
+#### Plots that were not planted
+
+If nothing was planted in a plot, use the “Not Planted Plots” button of the “Edit Field Layout” window (enter the plot names, one per line), or click the plot on the field map and use “Mark as Not Planted”. A plot that was not planted keeps the accession planned for it, so the plan stays visible, but:
+
+* the field map shows it as an empty plot with a dashed border;
+* it is left out of Field Book files and of the phenotyping spreadsheets, and phenotypes cannot be uploaded for it;
+* the plot layout download has a not_planted column, and BrAPI gives it additionalInfo.notPlanted;
+* in a completely randomized design it is left out of the replicate numbering of its accession.
+
+Its plot number, block and replicate stay, so an empty place is a missing value in the analyses, not a value of 0. If the plot already has phenotypes, they would count for an accession that did not grow there: they are deleted with the change after you confirm it, or nothing is changed. Marking plots works in trials that already have phenotypes; “Mark as Planted” undoes it.
+
+For other corrections, upload the plan as it was planted with “Change Accessions” on the “Experimental Design” section: a file with plot_name and accession_name for every plot (plots whose accession does not change are left as they are), and optionally not_planted (1 for places where nothing was planted). Check “Keep the plot names” when labels with the plot names are already in the field.
 <!--
 You can switch plot accessions between any two plots by clicking on “Substitute Accession” button.
 

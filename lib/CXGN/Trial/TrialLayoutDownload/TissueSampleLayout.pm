@@ -92,7 +92,8 @@ sub retrieve {
         my $results = CXGN::Trial->get_sorted_plots($schema, [$self->trial_id], $self->plot_order, $self->plot_start);
         if ( $results->{plots} ) {
             foreach (@{$results->{plots}}) {
-                $design{$_->{plot_number}}->{plot_order} = $_->{order};
+                # plots left out of %design (not planted) are not added back
+                $design{$_->{plot_number}}->{plot_order} = $_->{order} if $design{$_->{plot_number}};
             }
         }
     }

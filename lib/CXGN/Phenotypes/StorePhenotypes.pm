@@ -477,6 +477,20 @@ sub verify {
         return ($warning_message, $error_message);
     }
 
+    # nothing grew on plots that were not planted (see CXGN::Trial::AccessionChange)
+    my $not_planted_cvterm = SGN::Model::Cvterm->get_cvterm_row($schema, 'not_planted', 'stock_property');
+    if ($not_planted_cvterm && @plot_list) {
+        my $h = $schema->storage->dbh()->prepare("SELECT DISTINCT stock.uniquename FROM stock JOIN stockprop ON stockprop.stock_id = stock.stock_id
+            WHERE stockprop.type_id = ? AND stockprop.value = '1' AND stock.uniquename = ANY(?) ORDER BY stock.uniquename");
+        $h->execute($not_planted_cvterm->cvterm_id(), \@plot_list);
+        my @not_planted;
+        while (my ($name) = $h->fetchrow_array()) { push @not_planted, $name; }
+        if (@not_planted) {
+            $error_message .= "These plots were not planted, so they cannot have phenotype values: <br/>".join(", <br/>", map { "'$_'" } @not_planted);
+            return ($warning_message, $error_message);
+        }
+    }
+
     $self->create_hash_lookups();
 
     ### note: moved these variables below to accessors

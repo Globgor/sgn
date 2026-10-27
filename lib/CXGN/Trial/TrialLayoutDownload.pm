@@ -167,6 +167,13 @@ has 'overall_performance_hash' => (
     is => 'rw',
 );
 
+# leave out the plots that were not planted (for files to collect data in)
+has 'exclude_not_planted' => (
+    isa => 'Bool',
+    is => 'ro',
+    default => 0,
+);
+
 has 'include_plot_order' => (
     is => 'rw',
     isa => 'Bool',
@@ -239,7 +246,7 @@ sub get_layout_output {
         return \%errors;
     }
     print STDERR "TrialLayoutDownload retrieving deisgn ".localtime."\n";
-    my $design = $trial_layout->get_design();
+    my $design = $self->exclude_not_planted ? $trial_layout->get_planted_design() : $trial_layout->get_design();
     if (!$design){
         push @error_messages, "Trial does not have valid field design. Please contact us.";
         $errors{'error_messages'} = \@error_messages;

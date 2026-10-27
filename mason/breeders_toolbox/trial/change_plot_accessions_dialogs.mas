@@ -4,7 +4,7 @@ $trial_id
 $trial_stock_type
 </%args>
 
-<& /util/import_javascript.mas, classes => [ 'jquery.iframe-post-form', 'CXGN.TrialAccessionChange' ] &>
+<& /util/import_javascript.mas, classes => [ 'jquery.iframe-post-form' ], entries => [ 'trial_accession_change' ] &>
 
 % my $title = '';
 % if ($trial_stock_type eq 'cross') {
@@ -37,6 +37,7 @@ $trial_stock_type
                                 An optional additional column, 'new_plot_name' can be added to change the plot names; the current name keeps it.<br>
                                 Without a new name, the old name is replaced where it is a whole part of the plot name, or, if a plot name template has been saved in association with this trial, the template is used to rename the plot. Check "Keep the plot names" to keep all names.<br>
                                 The file can list every plot of the trial, for example the plan as it was planted; plots whose accession does not change are left as they are.<br>
+                                An optional column 'not_planted' marks places where nothing was planted (1) or that were planted after all (0); an empty cell leaves the plot as it is. A plot that was not planted keeps the accession in the file as its planned accession.<br>
 
                                 <table style="margin-top: 3%;" class="table table-bordered table-hover">
                                   <tbody>
@@ -44,6 +45,7 @@ $trial_stock_type
                                     <td>plot_name</td>
                                     <td>accession_name</td>
                                     <td>new_plot_name (optional)</td>
+                                    <td>not_planted (optional)</td>
                                   </tr>
                                   </tbody>
                                 </table>
@@ -52,8 +54,9 @@ $trial_stock_type
                         <b>Required columns:</b><br>
                         <b>plot_name:</b> name of plot to change the accession for<br>
                         <b>accession_name or cross_unique_id or family_name:</b> name of the accession or cross unique id or family name that the plot should be connected to.<br>
-                        <br><b>Optional column:</b><br>
+                        <br><b>Optional columns:</b><br>
                         <b>new_plot_name:</b> new name for plot.<br>
+                        <b>not_planted:</b> 1 if nothing was planted in the plot, 0 if it was planted. Plots that were not planted are shown as empty on the field map, are left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.<br>
                         <div class="list-group-item-warning" >
                           <p><i>Warning: the new plot name will replace the old plot name in subplots, plants, and tissue samples if possible. Plot numbers, blocks and, except in completely randomized designs, replicates are kept; check plots follow their accessions. Phenotypes stay with their plots. You may need to reprint labels after the changes are applied.</i></p>
                         </div>
@@ -69,6 +72,8 @@ $trial_stock_type
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" /> Keep the plot names</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="delete_phenotypes" id="trial_design_change_accessions_delete_phenotypes" value="1" /> Delete the phenotypes of plots marked as not planted</label></div>
+                                <p class="help-block" style="white-space: normal">Without it, nothing is changed if such plots already have phenotypes.</p>
                             </div>
                         </div>
                     </form>
@@ -203,7 +208,7 @@ jQuery(document).ready(function () {
             else {
 	            jQuery('#trial_design_change_accessions_dialog').modal("hide");
                 jQuery('#td_replace_accession_curator_warning_message').modal("hide");
-                trial_accession_change_show('#trial_design_change_accessions_summary', response, false);
+                window.jsMod['trial_accession_change'].showSummary('#trial_design_change_accessions_summary', response, false);
                 jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
             }
         },
