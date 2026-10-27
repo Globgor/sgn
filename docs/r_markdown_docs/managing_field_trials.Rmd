@@ -461,6 +461,12 @@ Select any accession that you want to replace, enter your new accession, then cl
 ```{r echo=FALSE, out.width='95%', fig.align='center'}
 knitr::include_graphics('assets/images/image85.png')
 ```
+
+Before anything is changed, a summary shows how many plots get the new accession, which plots are renamed and any notes; nothing is changed until you confirm it.
+
+With "Update plot names" (on by default), a plot whose name contains the old accession name as a whole part gets the new name there (for example, TRIAL-rep1-OLD_3 becomes TRIAL-rep1-NEW_3). If the trial was created with a plot name template, the changed plots get their template names instead. Plants and tissue samples are renamed with their plot. Uncheck the option to keep all plot names, for example when labels are already printed.
+
+Changing the accession does not move the plot: plot numbers, blocks, rows and columns stay the same. In a completely randomized design (CRD) the replicate counts the plots of each accession, so the replicates of the accessions involved are numbered again by plot number. In blocked designs (RCBD, Alpha, ...) the replicate is part of the field layout and is kept.
 <!--
 You can switch plot accessions between any two plots by clicking on “Substitute Accession” button.
 

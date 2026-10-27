@@ -69,6 +69,15 @@ $trial_stock_type => undef
 	                        </div>
 	                      </div>
 
+	                      <div class="form-group">
+	                        <div class="col-sm-offset-3 col-sm-9">
+	                          <div class="checkbox">
+	                            <label><input type="checkbox" id="replace_stock_rename_plots" name="replace_stock_rename_plots" checked /> Update plot names</label>
+	                          </div>
+	                          <p class="help-block" style="white-space: normal">Replaces the old name where it is a whole part of a plot name, or uses the plot name template of the trial. Plants and tissue samples are renamed with their plot. You see what changes before anything is changed.</p>
+	                        </div>
+	                      </div>
+
                     </form>
                 </div>
             </div>
@@ -129,6 +138,7 @@ $trial_stock_type => undef
                 <div class="container-fluid">
 
                     <p3 id="replace_stock_success_message"></p3>
+                    <ul id="replace_stock_success_details"></ul>
 
                 </div>
             </div>
@@ -557,31 +567,76 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         replace_stock_in_trial(trial_stock_type)
     });
 
+    // Lines that describe the summary of a replace_stock plan or result.
+    function describe_stock_change(summary, planned) {
+        var lines = [];
+        var will = planned ? ' will ' : ' ';
+        lines.push(summary.changed + ' plot(s)' + will + (planned ? 'get' : 'got') + ' the new stock.');
+        if (summary.replicates_changed) {
+            lines.push(summary.replicates_changed + ' replicate number(s)' + will + (planned ? 'be numbered again' : 'were numbered again') + ' by plot number (completely randomized design).');
+        }
+        if (summary.renamed.length) {
+            lines.push(summary.renamed.length + ' plot(s)' + will + (planned ? 'be renamed' : 'were renamed') + ':');
+            summary.renamed.slice(0, 10).forEach(function(r) { lines.push('    ' + r.old_name + ' -> ' + r.new_name); });
+            if (summary.renamed.length > 10) { lines.push('    ... and ' + (summary.renamed.length - 10) + ' more'); }
+        }
+        summary.not_renamed.forEach(function(r) { lines.push('Not renamed: ' + r.plot_name + ' (' + r.reason + ')'); });
+        summary.entry_numbers.forEach(function(e) { lines.push(e.stock_name + (planned ? ' will get' : ' got') + ' entry number ' + e.entry_number + '.'); });
+        summary.warnings.forEach(function(w) { lines.push('Note: ' + w); });
+        return lines;
+    }
+
     function replace_stock_in_trial() {
         jQuery('#replace_trial_stocks_dialog').modal("hide");
-        var old_stock_id = jQuery('#trial_stock_table').val();
-        var new_stock = jQuery('#replace_database_stock').val();
+        var data = {
+            'old_stock_id': jQuery('#trial_stock_table').val(),
+            'new_stock': jQuery('#replace_database_stock').val(),
+            'rename_plots': jQuery('#replace_stock_rename_plots').is(':checked') ? 1 : 0,
+        };
 
-        new jQuery.ajax({
+        // first the plan, then the change once the user confirms it
+        jQuery.ajax({
             type: 'POST',
             url: '/ajax/breeders/trial/<% $trial_id %>/replace_stock',
             dataType: "json",
-            data: {
-                'old_stock_id': old_stock_id,
-                'new_stock': new_stock,
-                'trial_stock_type': trial_stock_type,
-            },
+            data: jQuery.extend({ 'preview': 1 }, data),
             beforeSend: function(){
                 jQuery('#working_modal').modal("show");
             },
             success: function (response) {
                 jQuery('#working_modal').modal("hide");
-
                 if (response.error) {
                     alert("Error Replacing Stock: "+response.error);
-                } else {
-                    jQuery('#replace_stock_dialog_success_message').modal("show");
+                    return;
                 }
+                if (!confirm(describe_stock_change(response.preview, true).join("\n") + "\n\nContinue?")) {
+                    return;
+                }
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/ajax/breeders/trial/<% $trial_id %>/replace_stock',
+                    dataType: "json",
+                    data: data,
+                    beforeSend: function(){
+                        jQuery('#working_modal').modal("show");
+                    },
+                    success: function (response) {
+                        jQuery('#working_modal').modal("hide");
+                        if (response.error) {
+                            alert("Error Replacing Stock: "+response.error);
+                        } else {
+                            var details = jQuery('#replace_stock_success_details').empty();
+                            describe_stock_change(response, false).forEach(function(line) {
+                                details.append(jQuery('<li/>').text(line));
+                            });
+                            jQuery('#replace_stock_dialog_success_message').modal("show");
+                        }
+                    },
+                    error: function() {
+                        jQuery('#working_modal').modal("hide");
+                        alert('An error occurred replacing stock');
+                    }
+                });
             },
             error: function() {
                 jQuery('#working_modal').modal("hide");
