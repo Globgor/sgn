@@ -1272,7 +1272,7 @@ jQuery(document).ready( function() {
         var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/not_planted', {
             'plot_ids': jQuery('#hm_plot_id').text(),
             'not_planted': not_planted,
-        }, { action: "Error Marking Plot" });
+        }, { action: "Error Marking Plot", title: jQuery(this).text() });
         if (summary) {
             alert(window.jsMod['trial_accession_change'].summaryLines(summary, false).join("\n"));
             location.reload();

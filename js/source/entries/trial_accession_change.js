@@ -81,21 +81,87 @@ export function showSummary(list, summary, planned) {
     summaryLines(summary, planned, 50).forEach((line) => ul.append(jQuery("<li/>").text(line)));
 }
 
-// the "Working..." dialog of the page, when there is one
+function hasModals() {
+    return typeof jQuery.fn.modal === "function";
+}
+
+// shows or hides the "Working..." dialog of the page, when there is one;
+// resolves once it is hidden, so that another dialog can open
 function working(show) {
     const modal = jQuery("#working_modal");
-    if (modal.length && typeof modal.modal === "function") {
-        modal.modal(show ? "show" : "hide");
+    if (!modal.length || !hasModals()) {
+        return Promise.resolve();
     }
+    if (show) {
+        modal.modal("show");
+        return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+        const state = modal.data("bs.modal");
+        if (!state || !state.isShown) {
+            resolve();
+            return;
+        }
+        modal.one("hidden.bs.modal", () => resolve());
+        setTimeout(resolve, 1000);
+        modal.modal("hide");
+    });
 }
 
 function post(url, data) {
     working(true);
     return new Promise((resolve) => {
         jQuery.ajax({ type: "POST", url, data, dataType: "json", traditional: true })
-            .done((response) => resolve(response || {}))
-            .fail(() => resolve({ error: "The server could not be reached, or it failed; nothing may have been changed." }))
-            .always(() => working(false));
+            .done((response) => working(false).then(() => resolve(response || {})))
+            .fail(() => working(false).then(() => resolve({ error: "The server could not be reached, or it failed; nothing may have been changed." })));
+    });
+}
+
+/**
+ * Asks the user in a dialog of the page that shows each line of the message,
+ * on top of any dialog that is open. Falls back to window.confirm.
+ * @param {string} message - lines separated by newlines
+ * @param {Object} [options]
+ * @param {string} [options.title="Please check"] - the title of the dialog
+ * @param {string} [options.ok="Continue"] - the button that says yes
+ * @returns {Promise<boolean>} true when the user clicked the ok button
+ */
+export function confirmDialog(message, { title = "Please check", ok = "Continue" } = {}) {
+    if (!hasModals()) {
+        return Promise.resolve(window.confirm(message));
+    }
+    return new Promise((resolve) => {
+        const dialog = jQuery(`<div class="modal fade" tabindex="-1" role="dialog" style="z-index: 1070">
+            <div class="modal-dialog" role="document"><div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title"></h4></div>
+                <div class="modal-body"><ul class="list-unstyled" style="white-space: pre-wrap; margin: 0"></ul></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-answer="no">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-answer="yes"></button>
+                </div>
+            </div></div></div>`);
+        dialog.attr("aria-label", title);
+        dialog.find(".modal-title").text(title);
+        dialog.find(".btn-primary").text(ok);
+        message.split("\n").filter((line) => line.trim() !== "").forEach((line) => {
+            dialog.find("ul").append(jQuery("<li/>").text(line));
+        });
+        let answer = false;
+        dialog.on("click", "[data-answer]", function () {
+            answer = jQuery(this).data("answer") === "yes";
+            dialog.modal("hide");
+        });
+        dialog.on("hidden.bs.modal", () => {
+            dialog.remove();
+            // Bootstrap forgets that a dialog below this one is still open
+            if (jQuery(".modal.in").length) {
+                jQuery("body").addClass("modal-open");
+            }
+            resolve(answer);
+        });
+        jQuery("body").append(dialog);
+        dialog.modal({ backdrop: "static", show: true });
+        jQuery(".modal-backdrop").last().css("z-index", 1065);
     });
 }
 
@@ -109,20 +175,21 @@ function post(url, data) {
  * @param {Object} data - the parameters of the change
  * @param {Object} [options]
  * @param {string} [options.action="Change"] - names the change in error messages
- * @param {function(string): boolean} [options.confirm] - asks the user; window.confirm by default
+ * @param {string} [options.title="Please check the changes"] - the title of the question with the plan
+ * @param {function(string, Object): (boolean|Promise<boolean>)} [options.confirm] - asks the user, with { title, ok }; confirmDialog by default
  * @param {function(string): void} [options.alert] - tells the user; window.alert by default
  * @returns {Promise<Object|null>} what changed (the summary), or null when nothing was changed
  */
 export async function changeWithPreview(url, data, options = {}) {
     const action = options.action || "Change";
-    const ask = options.confirm || ((message) => window.confirm(message));
+    const ask = options.confirm || confirmDialog;
     const tell = options.alert || ((message) => window.alert(message));
     const params = { ...data };
 
     for (;;) {
         const response = await post(url, { ...params, preview: 1 });
         if (response.warning) {
-            if (params.override || !ask(`${response.warning}\n\nThis trial already has data. Change it anyway?`)) {
+            if (params.override || !(await ask(`${response.warning}\n\nThis trial already has data. Change it anyway?`, { title: "This trial already has data", ok: "Change it anyway" }))) {
                 return null;
             }
             params.override = 1;
@@ -130,7 +197,7 @@ export async function changeWithPreview(url, data, options = {}) {
         }
         if (response.error) {
             if (response.not_planted_phenotypes && !params.delete_phenotypes) {
-                if (ask(`${response.error}\n\nDelete these ${response.not_planted_phenotypes} phenotype value(s) with this change?`)) {
+                if (await ask(`${response.error}\n\nDelete these ${response.not_planted_phenotypes} phenotype value(s) with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete them and continue" })) {
                     params.delete_phenotypes = 1;
                     continue;
                 }
@@ -139,7 +206,7 @@ export async function changeWithPreview(url, data, options = {}) {
             tell(`${action}: ${response.error}`);
             return null;
         }
-        if (!response.preview || !ask(summaryLines(response.preview, true).join("\n") + "\n\nContinue?")) {
+        if (!response.preview || !(await ask(summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: options.title || "Please check the changes", ok: "Continue" }))) {
             return null;
         }
         break;

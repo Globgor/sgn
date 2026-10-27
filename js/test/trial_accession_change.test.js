@@ -1,5 +1,5 @@
 import test from "tape";
-import { summaryLines, showSummary, changeWithPreview } from "../source/entries/trial_accession_change.js";
+import { summaryLines, showSummary, changeWithPreview, confirmDialog } from "../source/entries/trial_accession_change.js";
 
 const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], phenotypes_deleted: 0, warnings: [] };
 
@@ -113,11 +113,51 @@ test("changeWithPreview", (t) => {
         t.end();
     });
 
+    t.test("the page can ask in its own dialog", async (t) => {
+        const requests = fakeServer([{ preview: { ...empty, changed: 1 } }, { success: 1, ...empty, changed: 1 }]);
+        const result = await changeWithPreview("/url", {}, { confirm: () => Promise.resolve(true) });
+        t.equal(requests.length, 2);
+        t.equal(result.changed, 1);
+        t.end();
+    });
+
     t.test("keeping the phenotypes changes nothing", async (t) => {
         const requests = fakeServer([{ error: "2 phenotype value(s) ...", not_planted_phenotypes: 2 }]);
         const result = await changeWithPreview("/url", {}, { confirm: () => false, alert: () => t.fail("no alert") });
         t.equal(result, null);
         t.equal(requests.length, 1);
+        t.end();
+    });
+});
+
+test("confirmDialog", (t) => {
+    t.test("without Bootstrap: window.confirm", async (t) => {
+        delete jQuery.fn.modal;
+        const asked = [];
+        window.confirm = (m) => { asked.push(m); return true; };
+        t.equal(await confirmDialog("a\nb"), true);
+        t.deepEqual(asked, ["a\nb"]);
+        t.end();
+    });
+
+    t.test("a dialog with a line per item", async (t) => {
+        // enough of Bootstrap's modal: hiding fires hidden.bs.modal
+        jQuery.fn.modal = function (option) {
+            if (option === "hide") this.trigger("hidden.bs.modal");
+            return this;
+        };
+        const answer = confirmDialog("2 plot(s) will get another accession.\n    P1\n\nContinue?", { title: "Shift Accessions", ok: "Go" });
+        const dialog = jQuery(".modal").last();
+        t.equal(dialog.find(".modal-title").text(), "Shift Accessions");
+        t.deepEqual(dialog.find("li").map((i, li) => jQuery(li).text()).get(), ["2 plot(s) will get another accession.", "    P1", "Continue?"], "one item per line, without empty lines");
+        t.equal(dialog.find(".btn-primary").text(), "Go");
+        dialog.find("[data-answer=yes]").trigger("click");
+        t.equal(await answer, true, "yes");
+        t.equal(jQuery(".modal").length, 0, "the dialog is removed");
+        const no = confirmDialog("x");
+        jQuery(".modal").last().find("[data-answer=no]").trigger("click");
+        t.equal(await no, false, "cancel");
+        delete jQuery.fn.modal;
         t.end();
     });
 });
