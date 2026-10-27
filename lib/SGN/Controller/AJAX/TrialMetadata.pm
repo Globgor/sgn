@@ -2463,7 +2463,8 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
     } } sort keys %$parsed_data;
 
-    $self->_change_trial_stocks($c, $accession_change, \@changes, { rename_plots => 'auto' }, undef, 1);
+    my $keep_names = $c->req->param('keep_plot_names');
+    $self->_change_trial_stocks($c, $accession_change, \@changes, { rename_plots => $keep_names ? 'none' : 'auto' }, undef, 1);
 }
 
 sub trial_additional_file_upload : Chained('trial') PathPart('upload_additional_file') Args(0) {
@@ -3203,6 +3204,86 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
 
     my $keep_names = $rename_plots eq '0' || lc($rename_plots) eq 'false';
     $self->_change_trial_stocks($c, $accession_change, $changes, { rename_plots => $keep_names ? 'none' : 'auto' }, $preview);
+}
+
+# Corrects plots that were planted shifted along the planting order: from a plot
+# on, every place got the stock planned for a place some positions earlier
+# (positions > 0) or later (positions < 0). The places that stay empty get
+# empty_stock (for example an accession named NOT_PLANTED).
+# params: from_plot_id, to_plot_id (optional, default the last plot), positions,
+#   empty_stock (uniquename), order ('plot_number' or 'by_row_serpentine' etc.,
+#   as for the planting order download), start ('bottom_left' etc.),
+#   rename_plots (1 to update the plot names, default 0), preview (1 to get the
+#   plan only), override (1: curators change trials that already have phenotypes)
+sub shift_trial_stocks : Chained('trial') PathPart('shift_accessions') Args(0) {
+    my $self = shift;
+    my $c = shift;
+    my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
+    my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
+    my $trial_id = $c->stash->{trial_id};
+    my $preview = $c->req->param('preview');
+    my $override = $c->req->param('override');
+    my $rename_plots = $c->req->param('rename_plots') // '0';
+
+    if ($self->privileges_denied($c)) {
+        $c->stash->{rest} = { error => "You have insufficient access privileges to edit this map." };
+        return;
+    }
+
+    my $fieldmap = CXGN::Trial::FieldMap->new({
+        bcs_schema => $schema,
+        trial_id => $trial_id,
+    });
+    my $return_error = $fieldmap->update_fieldmap_precheck();
+    if ($return_error) {
+        if (!$c->user()->check_roles("curator")) {
+            $c->stash->{rest} = { error => $return_error };
+            return;
+        }
+        if (!$override) {
+            $c->stash->{rest} = { warning => $return_error };
+            return;
+        }
+    }
+
+    my $empty_stock_name = $c->req->param('empty_stock');
+    if (!defined($empty_stock_name) || $empty_stock_name !~ /\S/) {
+        $c->stash->{rest} = { error => "Choose the accession for the places that stay empty, for example NOT_PLANTED." };
+        return;
+    }
+    my ($empty_stock, $stock_error) = $self->_find_trial_stock($schema, $empty_stock_name);
+    if (!$empty_stock) {
+        $c->stash->{rest} = { error => "The accession for the empty places: $stock_error" };
+        return;
+    }
+
+    my $accession_change = CXGN::Trial::AccessionChange->new({
+        schema => $schema,
+        trial_id => $trial_id,
+    });
+    my $shift = $accession_change->changes_for_shift({
+        from_plot_id => scalar($c->req->param('from_plot_id')),
+        to_plot_id => scalar($c->req->param('to_plot_id')),
+        positions => scalar($c->req->param('positions')),
+        empty_stock_id => $empty_stock->stock_id,
+        order => scalar($c->req->param('order')),
+        start => scalar($c->req->param('start')),
+    });
+    if ($shift->{error}) {
+        $c->stash->{rest} = { error => $shift->{error} };
+        return;
+    }
+
+    my $keep_names = $rename_plots eq '0' || lc($rename_plots) eq 'false';
+    $self->_change_trial_stocks($c, $accession_change, $shift->{changes}, { rename_plots => $keep_names ? 'none' : 'auto' }, $preview);
+    my $rest = $c->stash->{rest};
+    my $summary = $rest->{preview} || $rest;
+    if (!$rest->{error}) {
+        $summary->{pushed_out} = $shift->{pushed_out};
+        $summary->{first_plot} = $shift->{plots}->[0];
+        $summary->{last_plot} = $shift->{plots}->[-1];
+        $summary->{plots_in_stretch} = scalar(@{ $shift->{plots} });
+    }
 }
 
 sub refresh_cache : Chained('trial') PathPart('refresh_cache') Args(0) {

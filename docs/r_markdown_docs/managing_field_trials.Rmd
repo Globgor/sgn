@@ -467,6 +467,14 @@ Before anything is changed, a summary shows how many plots get the new accession
 With "Update plot names" (on by default), a plot whose name contains the old accession name as a whole part gets the new name there (for example, TRIAL-rep1-OLD_3 becomes TRIAL-rep1-NEW_3). If the trial was created with a plot name template, the changed plots get their template names instead. Plants and tissue samples are renamed with their plot. Uncheck the option to keep all plot names, for example when labels are already printed.
 
 Changing the accession does not move the plot: plot numbers, blocks, rows and columns stay the same. In a completely randomized design (CRD) the replicate counts the plots of each accession, so the replicates of the accessions involved are numbered again by plot number. In blocked designs (RCBD, Alpha, ...) the replicate is part of the field layout and is kept.
+
+Check plots follow the check accessions: a plot that gets a check accession of the trial becomes a check plot, and one that gets a test accession becomes a test plot. Phenotypes stay with their plots, so after a correction they count for the accession that really grew there; run the analyses of the trial again. Once a trial has phenotypes, only curators can change its accessions, after a warning, with “Change Accessions”, “Shift Accessions” or the plot form; “Replace Accession” is not available then.
+
+#### Plots planted shifted
+
+If plots were planted shifted, for example a place was skipped and from there on every place got the accession planned for the place before it, use the “Shift Accessions” button of the “Edit Field Layout” window. Choose the planting order the planter took (by plot number, or by row or column, serpentine or zigzag, from a corner, as in “Download Plot Order”), the first and the last shifted plot, the number of positions (1 when a place was skipped, -1 when a plot was left out) and an accession for the places that stay empty, for example one named NOT_PLANTED that you exclude from analyses. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move along the planting order. Before anything is changed, a summary shows the changes and the accessions that no longer have a plot in the shifted stretch.
+
+For other corrections, upload the plan as it was planted with “Change Accessions” on the “Experimental Design” section: a file with plot_name and accession_name for every plot (plots whose accession does not change are left as they are). Check “Keep the plot names” when labels with the plot names are already in the field.
 <!--
 You can switch plot accessions between any two plots by clicking on “Substitute Accession” button.
 

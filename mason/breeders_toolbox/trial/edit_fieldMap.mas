@@ -5,7 +5,7 @@ $trial_stock_type => undef
 </%args>
 
 
-<& /util/import_javascript.mas, classes => [ 'jqueryui.js', 'jquery.js' ] &>
+<& /util/import_javascript.mas, classes => [ 'jqueryui.js', 'jquery.js', 'CXGN.TrialAccessionChange' ] &>
 
 
 <!-- Load DataTables CSS and JS -->
@@ -37,6 +37,7 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button id="close_edit_field_map_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="replace_trial_stock_submit" id="replace_trial_stock_submit"></button>
+                <button type="button" class="btn btn-primary" name="shift_trial_stocks_open" id="shift_trial_stocks_open">Shift Accessions</button>
                 <!-- <button type="button" class="btn btn-primary" name="substitute_stock_submit" id="substitute_stock_submit"></button> -->
             </div>
         </div>
@@ -84,6 +85,80 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button id="close_replace_trial_accession_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="replace_stock_submit" id="replace_stock_submit"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shift_trial_stocks_dialog" name="shift_trial_stocks_dialog" tabindex="-1" role="dialog" aria-labelledby="shift_stocks_dialog_title">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="shift_stocks_dialog_title">Shift Accessions in <% $trial_name %></h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order. You see what changes before anything is changed.</p>
+                    <form class="form-horizontal" role="form" id="shift_trial_stocks_form" name="shift_trial_stocks_form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Planting order:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="shift_stocks_order">
+                                    <option value="plot_number">By plot number</option>
+                                    <option value="by_row_serpentine">By row: serpentine</option>
+                                    <option value="by_row_zigzag">By row: zigzag</option>
+                                    <option value="by_col_serpentine">By column: serpentine</option>
+                                    <option value="by_col_zigzag">By column: zigzag</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Starting plot:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="shift_stocks_start">
+                                    <option value="bottom_left">Bottom left</option>
+                                    <option value="bottom_right">Bottom right</option>
+                                    <option value="top_left">Top left</option>
+                                    <option value="top_right">Top right</option>
+                                </select>
+                                <p class="help-block">Only for orders by row or column; they need row and column numbers for every plot.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">First shifted plot:</label>
+                            <div class="col-sm-8"><select class="form-control" id="shift_stocks_from_plot"></select></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Last shifted plot:</label>
+                            <div class="col-sm-8"><select class="form-control" id="shift_stocks_to_plot"></select></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Positions:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="number" id="shift_stocks_positions" value="1" step="1" />
+                                <p class="help-block" style="white-space: normal">1: every place got the accession planned for the place before it (a place was skipped). -1: the one planned for the place after it (a plot was left out).</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Accession for empty places:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="shift_stocks_empty_stock" placeholder="for example NOT_PLANTED" />
+                                <p class="help-block" style="white-space: normal">The places that stay empty get this accession, so that their data is not counted for a real one. Exclude it from analyses.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <div class="checkbox"><label><input type="checkbox" id="shift_stocks_rename_plots" /> Update plot names</label></div>
+                                <p class="help-block" style="white-space: normal">Labels in the field carry the planned plot names, and phenotype files use them. Keep the names unless you reprint the labels.</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="shift_trial_stocks_submit">Shift Accessions</button>
             </div>
         </div>
     </div>
@@ -567,25 +642,6 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         replace_stock_in_trial(trial_stock_type)
     });
 
-    // Lines that describe the summary of a replace_stock plan or result.
-    function describe_stock_change(summary, planned) {
-        var lines = [];
-        var will = planned ? ' will ' : ' ';
-        lines.push(summary.changed + ' plot(s)' + will + (planned ? 'get' : 'got') + ' the new stock.');
-        if (summary.replicates_changed) {
-            lines.push(summary.replicates_changed + ' replicate number(s)' + will + (planned ? 'be numbered again' : 'were numbered again') + ' by plot number (completely randomized design).');
-        }
-        if (summary.renamed.length) {
-            lines.push(summary.renamed.length + ' plot(s)' + will + (planned ? 'be renamed' : 'were renamed') + ':');
-            summary.renamed.slice(0, 10).forEach(function(r) { lines.push('    ' + r.old_name + ' -> ' + r.new_name); });
-            if (summary.renamed.length > 10) { lines.push('    ... and ' + (summary.renamed.length - 10) + ' more'); }
-        }
-        summary.not_renamed.forEach(function(r) { lines.push('Not renamed: ' + r.plot_name + ' (' + r.reason + ')'); });
-        summary.entry_numbers.forEach(function(e) { lines.push(e.stock_name + (planned ? ' will get' : ' got') + ' entry number ' + e.entry_number + '.'); });
-        summary.warnings.forEach(function(w) { lines.push('Note: ' + w); });
-        return lines;
-    }
-
     function replace_stock_in_trial() {
         jQuery('#replace_trial_stocks_dialog').modal("hide");
         var data = {
@@ -609,7 +665,7 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
                     alert("Error Replacing Stock: "+response.error);
                     return;
                 }
-                if (!confirm(describe_stock_change(response.preview, true).join("\n") + "\n\nContinue?")) {
+                if (!confirm(trial_accession_change_lines(response.preview, true).join("\n") + "\n\nContinue?")) {
                     return;
                 }
                 jQuery.ajax({
@@ -625,10 +681,7 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
                         if (response.error) {
                             alert("Error Replacing Stock: "+response.error);
                         } else {
-                            var details = jQuery('#replace_stock_success_details').empty();
-                            describe_stock_change(response, false).forEach(function(line) {
-                                details.append(jQuery('<li/>').text(line));
-                            });
+                            trial_accession_change_show('#replace_stock_success_details', response, false);
                             jQuery('#replace_stock_dialog_success_message').modal("show");
                         }
                     },
@@ -641,6 +694,89 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             error: function() {
                 jQuery('#working_modal').modal("hide");
                 alert('An error occurred replacing stock');
+            }
+        });
+    }
+
+    // Shift Accessions
+    jQuery('#shift_trial_stocks_open').click(function() {
+        jQuery('#edit_field_map_dialog').modal('hide');
+        if (jQuery('#shift_stocks_from_plot option').length === 0) {
+            jQuery.ajax({
+                url: '/ajax/breeders/trial/<% $trial_id %>/plots',
+                success: function(response) {
+                    var plots = (response.plots && response.plots[0]) ? response.plots[0] : [];
+                    var from = jQuery('#shift_stocks_from_plot').empty();
+                    var to = jQuery('#shift_stocks_to_plot').empty().append(jQuery('<option/>').val('').text('(the last plot in this order)'));
+                    plots.forEach(function(p) {
+                        from.append(jQuery('<option/>').val(p[0]).text(p[1]));
+                        to.append(jQuery('<option/>').val(p[0]).text(p[1]));
+                    });
+                },
+                error: function() { alert('An error occurred getting the plots of this trial.'); }
+            });
+        }
+        jQuery('#shift_trial_stocks_dialog').modal('show');
+    });
+
+    jQuery('#shift_stocks_empty_stock').autocomplete({
+        appendTo: "#shift_trial_stocks_dialog",
+        source: '/ajax/stock/accession_autocomplete'
+    });
+
+    jQuery('#shift_trial_stocks_submit').click(function() {
+        var data = {
+            'order': jQuery('#shift_stocks_order').val(),
+            'start': jQuery('#shift_stocks_start').val(),
+            'from_plot_id': jQuery('#shift_stocks_from_plot').val(),
+            'to_plot_id': jQuery('#shift_stocks_to_plot').val(),
+            'positions': jQuery('#shift_stocks_positions').val(),
+            'empty_stock': jQuery('#shift_stocks_empty_stock').val(),
+            'rename_plots': jQuery('#shift_stocks_rename_plots').is(':checked') ? 1 : 0,
+        };
+        // first the plan (asking curators once when the trial already has data), then the change
+        var preview = function() {
+            shift_stocks_post(jQuery.extend({ 'preview': 1 }, data), function(response) {
+                if (response.warning) {
+                    if (confirm(response.warning + "\n\nThis trial already has data. Change it anyway?")) {
+                        data.override = 1;
+                        preview();
+                    }
+                    return;
+                }
+                if (!confirm(trial_accession_change_lines(response.preview, true).join("\n") + "\n\nContinue?")) {
+                    return;
+                }
+                shift_stocks_post(data, function(response) {
+                    trial_accession_change_show('#replace_stock_success_details', response, false);
+                    jQuery('#replace_stock_message_title').text('Shift Accessions');
+                    jQuery('#replace_stock_success_message').text('The accessions were shifted.');
+                    jQuery('#shift_trial_stocks_dialog').modal('hide');
+                    jQuery('#replace_stock_dialog_success_message').modal('show');
+                });
+            });
+        };
+        preview();
+    });
+
+    function shift_stocks_post(params, on_success) {
+        jQuery.ajax({
+            type: 'POST',
+            url: '/ajax/breeders/trial/<% $trial_id %>/shift_accessions',
+            dataType: "json",
+            data: params,
+            beforeSend: function() { jQuery('#working_modal').modal("show"); },
+            success: function(response) {
+                jQuery('#working_modal').modal("hide");
+                if (response.error) {
+                    alert("Error Shifting Accessions: " + response.error);
+                } else {
+                    on_success(response);
+                }
+            },
+            error: function() {
+                jQuery('#working_modal').modal("hide");
+                alert('An error occurred shifting accessions');
             }
         });
     }
