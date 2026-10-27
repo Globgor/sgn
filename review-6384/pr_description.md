@@ -1,99 +1,122 @@
-Description
------------
+# Correct what was planted: Replace, Shift and Not Planted, in one service
 
-Builds on #6384 (and #6353). Changing the accession of plots was done in four
-copies of the same code, each a bit different, and some of it was wrong for
-most designs. This moves it into one module, `CXGN::Trial::AccessionChange`,
-and uses that everywhere: Replace Accession, one plot (field map, heatmap,
-trial coordinates), the Change Accessions upload, Substitute, genotyping
-plate wells and BrAPI `PUT /observationunits`.
+Supersedes #6384 (and #6353). Builds on #6384, fixes its replicate handling and
+adds the two corrections breeders ask for most: a planting that shifted along
+the planting order, and places where nothing was planted.
 
-**What a change does.** A plot is a place in the field; changing its accession
-corrects what grows there and does not move it.
+## The rule
 
-- The plot, and its plants, subplots and tissue samples in the trial, get the
-  new stock. Samples of the plot in other trials (plate wells) keep the old
-  one, with a warning.
-- Plot number, block, row and column stay the same. The replicate stays the
-  same in blocked designs (RCBD, Alpha, Lattice, split plot, RRC, URDD), where
-  the design stores it as the block. Only in a CRD, where it counts the plots
-  of an accession, are the replicates of the accessions involved numbered
-  again (as #6384 does for every design). Plots without a replicate keep none.
-- Plot names: the template name when the trial has a plot name template;
-  otherwise the old stock name is replaced where it is a whole part of the
-  name, as in #6353 (a name with it more than once is left as it is and
-  reported). Plants, subplots and tissue samples are renamed with their plot.
-  Renames run in two passes, so names can move between plots, and new names
-  are checked against every stock. Replace Accession can keep all names
-  (`rename_plots=0`).
-- The new stock must exist, not be obsolete, and be of the trial's stock type
-  (trial property, or the types the plots have).
-- Entry numbers move from the old stock to the new one when it replaces it
-  completely.
-- Everything happens in one transaction, and the cached layout is
-  regenerated. The plots are read from the database, not from the cache.
+A plot is a place in the field. Its plot number, block, replicate, row and
+column describe that place and are part of the design; the accession is what
+grows there. A correction changes what grows there and never moves the plot.
+So blocks and replicates stay (except in a CRD, where the replicate is the
+n-th plot of an accession and is numbered again), and phenotypes stay with the
+plot they were measured on.
 
-**Fixed**, each with a test:
+## What changes
 
-| | before |
-|---|---|
-| RCBD with 3 blocks, Replace Accession into an accession already in the trial | replicates 4, 5 and 6; untouched plots got new replicates |
-| plots without replicate (`rep_number` is optional on upload) | `Can't call method "update" on an undefined value` |
-| template `trialName_accessionName_repNumber` | the same request failed or worked depending on hash order |
-| accession name inside the trial name (`trial2` in `test_trial23`) | renamed to `test_test_accession33` |
-| stale layout cache (trials where Replace Accession was used before #6384) | changes computed from old data |
-| one plot, new name already taken | error shown, but the accession was already changed (no transaction) |
-| Substitute | swapped every relationship of the two plots by position, plants included |
-| `replace_well_accessions`, BrAPI germplasm change | broken since `replace_plot_accession_fieldMap` got a fourth argument (1423e6b4) |
-| upload | no check of the user's privileges on the trial; any stock type accepted; only the stockprop matview refreshed |
+**One service, `CXGN::Trial::AccessionChange`.** Every way to change the
+accession of plots goes through it: Replace Accession, the plot dialog of the
+field map, the Change Accessions upload, Substitute, genotyping plate wells
+and BrAPI `PUT /observationunits`. `plan()` returns what would change
+without changing anything; `apply()` does it in one transaction and refuses
+plots that were changed by someone else in the meantime. It reads the layout
+from the database, not from the cache.
 
-**Replace Accession dialog**: it now shows what will change (plots, renames,
-replicates, notes) and changes nothing until the user confirms. "Update plot
-names" can be unchecked. The success message lists what changed.
+- Plants, subplots and tissue samples of the plot in this trial follow it;
+  samples in other trials (genotyping plates) keep their accession, with a warning.
+- Plot names: replaced where the old name is a whole part of the name, or from
+  the trial's plot name template; optional. Plants and samples are renamed with
+  their plot.
+- Check plots follow the check accession (`is a control`).
+- Entry numbers move to a new accession that takes the place of an old one.
+- Warnings for plots with phenotypes and for plots used as cross parents.
 
-**Endpoints** keep their parameters and `success` / `error` / `warning`
-responses; `success` responses now also carry a summary (`changed`,
-`renamed`, `not_renamed`, `replicates_changed`, `entry_numbers`,
-`warnings`). `replace_stock` takes `rename_plots` and `preview`. The FieldMap
-methods that changed accessions call the new module and keep the plot names,
-as they did.
+**Shift Accessions** (Edit Field Layout). For a planting that shifted: from a
+plot on, every place got the packet planned for the place before it (or after
+it). Along the plot numbers or the planting order (row/column, serpentine or
+zigzag, from any corner, as in Download Plot Order). The places that stay empty
+are marked as not planted; places already marked are skipped. Plot names are
+kept by default, because the labels in the field carry them.
 
-**Tests**
+**Not planted plots.** New stock property `not_planted` (db patch
+`AddNotPlantedStockprop`). The plot keeps its planned accession, so the plan
+stays visible, and:
 
-- `t/unit_fixture/CXGN/Trial/AccessionChange.t` (new): CRD and RCBD trials,
-  plants, subplots and tissue samples, templates, explicit names and name
-  swaps, conflicts, stale cache, missing replicates, entry numbers, crosses
-  and family names, intercropping, concurrent changes, genotyping plates.
-  Every scenario runs in a transaction that is rolled back.
-- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t` (new): every
-  endpoint through the web server, including privileges and BrAPI.
-- `t/unit_mech/AJAX/BreedersToolbox/TrialMetadata.t`: a name with the
-  accession name twice is kept and reported again (as in #6353).
-- Run locally in `breedbase/breedbase:latest` with the patched fixture:
-  the two new files, `TrialMetadata.t`, `EditFieldMap.t`,
-  `_BrAPIv2_phenotyping.t`, and all of `t/unit_fixture/CXGN/Trial/`
-  (17 files, 1217 tests) pass. The dialog was checked in Chromium.
+- the field map shows it empty (white, dashed border), with a legend entry, a
+  tooltip, and Mark as Not Planted / Planted in the plot dialog;
+- it is left out of Field Book files and the phenotyping spreadsheets;
+- phenotypes cannot be stored for it (`StorePhenotypes::verify`);
+- it is flagged in the plot layout download (`not_planted` column) and in BrAPI
+  (`additionalInfo.notPlanted`, read only);
+- it is left out of the replicate numbering of a CRD;
+- phenotypes it already has are deleted only when the user confirms it
+  (`delete_phenotypes`); otherwise nothing is changed.
 
-Closes #4642. Supersedes #6384 and #6353 (or can be merged into #6384).
+Endpoint: `POST /ajax/breeders/trial/<id>/not_planted` (`plot_names` or
+`plot_ids`, `not_planted`, `delete_phenotypes`, `preview`). The Change
+Accessions upload takes an optional `not_planted` column.
 
-Checklist
----------
-- [ ] Refactoring only
-- [ ] Documentation only
-- [ ] Fixture update only
-- [x] Bug fix
-  - [ ] The relevant issue has been closed.
-  - [ ] Further work is required.
-- [x] New feature
-  - [x] Relevant tests have been created and run.
-  - [ ] Data was added to the fixture
-    - [ ] Data was added via a patch in `/t/data/fixture/patches/`.
-  - [x] User-Facing Change
-    - [x] The user manual in `/docs` has been updated.
-  - [x] Any new Perl has been documented using **perldoc**.
-  - [ ] Any new JavaScript has been documented using **JSDoc**.
-  - [ ] Any new _legacy_ JavaScript has been moved from `/js` to `/js/source/legacy`.
+**Preview first.** Every dialog shows the plan in a dialog and changes nothing
+until the user confirms it. The front end is a webpack entry,
+`js/source/entries/trial_accession_change.js` (`summaryLines`, `showSummary`,
+`confirmDialog`, `changeWithPreview`), with tests in `js/test`.
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+**Also**: the solGS analysis cache of the trial is cleared after a change; the
+plot, plant, subplot and tissue sample layout downloads with a plot order no
+longer add empty rows for plots that are left out.
 
-https://claude.ai/code/session_01HkB7TKJzpN9q6SpSnX84js
+## Fixed from #6384
+
+- Replicates in blocked designs: #6384 numbers the replicate per accession
+  after a change. In an RCBD the replicate is the block, so replacing an
+  accession by one already in the trial gives it replicates 1 to 8 in a
+  4-block trial, and a shift across blocks gives plots a replicate other than
+  their block. The replicate is kept now (in a CRD it is numbered again).
+- A plot without a replicate stockprop made `rebuild_trial_plot_replicates`
+  call `update` on undef, so Replace Accession failed on such trials.
+- Renames ran in hash order, one at a time, so with a plot name template the
+  same request sometimes failed (`... already exists in the database`). All
+  renames now happen in two passes.
+- Plot names were changed by substring, also inside the trial name or a longer
+  accession name (`A1` in `A10`). Only whole name parts are replaced now.
+- The layout was read from the cached layout, which is stale exactly in the
+  trials that need the fix (#4642). It is read from the database now.
+- Changing one plot was not one transaction: a refused new name left the new
+  accession in place.
+- Errors sent to the browser carried `{UNKNOWN}:` and server file paths.
+- The `trial_stock_type` sent by the client could widen the stock types a
+  trial accepts; the trial decides now.
+
+## Statistics
+
+Simulated with the models Breedbase uses (heritability tool:
+`lmer(y ~ (1|germplasmName) + replicate)`; Mixed Models with replicate random),
+RCBD with 20 accessions x 4 blocks, a skip at plot 26 shifting the rest, one
+place left empty on purpose, one plot lost; 500 simulations:
+
+| data | accuracy (cor with true values) | H2 (heritability tool) |
+|---|---|---|
+| as it grew | 0.893 | 0.393 |
+| after Shift Accessions + not planted | 0.893 (identical in all 500) | 0.393 |
+| not corrected | 0.000 | 0.000 (63% of fits singular) |
+| corrected, replicates renumbered as in #6384 | 0.889 | 0.391 |
+| corrected, empty places recorded as 0 | 0.648 | 0.086 |
+
+Not corrected, a shift of 14 plots already lowers the accuracy from 0.90 to
+0.83. Empty places must be missing values, not zeros, which is why not planted
+plots cannot get phenotypes.
+
+## Tests
+
+- `t/unit_fixture/CXGN/Trial/AccessionChange.t`: 49 scenarios, 357 assertions.
+- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 18 scenarios
+  through the web server, 151 assertions.
+- `js/test/trial_accession_change.test.js` (run with the other JS tests: 39 pass).
+- Regression: trial, Field Book, data collector, phenotype upload, BrAPI v2
+  and TrialMetadata tests.
+- Docs: `docs/r_markdown_docs/managing_field_trials.Rmd`.
+
+## Deploy
+
+Run the db patches (`AddNotPlantedStockprop`) and build the JS.
