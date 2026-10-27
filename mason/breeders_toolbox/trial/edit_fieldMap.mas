@@ -100,10 +100,10 @@ $trial_stock_type => undef
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order. You see what changes before anything is changed.</p>
+                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order (orders by row or column need row and column numbers for every plot). You see what changes before anything is changed.</p>
                     <form class="form-horizontal" role="form" id="shift_trial_stocks_form" name="shift_trial_stocks_form" onsubmit="return false;">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Planting order:</label>
+                            <label class="col-sm-4 control-label" for="shift_stocks_order">Planting order:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="shift_stocks_order">
                                     <option value="plot_number">By plot number</option>
@@ -114,8 +114,8 @@ $trial_stock_type => undef
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Starting plot:</label>
+                        <div class="form-group" id="shift_stocks_start_group" style="display: none">
+                            <label class="col-sm-4 control-label" for="shift_stocks_start">Starting corner:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="shift_stocks_start">
                                     <option value="bottom_left">Bottom left</option>
@@ -123,35 +123,34 @@ $trial_stock_type => undef
                                     <option value="top_left">Top left</option>
                                     <option value="top_right">Top right</option>
                                 </select>
-                                <p class="help-block">Only for orders by row or column; they need row and column numbers for every plot.</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">First shifted plot:</label>
+                            <label class="col-sm-4 control-label" for="shift_stocks_from_plot">First shifted plot:</label>
                             <div class="col-sm-8"><select class="form-control" id="shift_stocks_from_plot"></select></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Last shifted plot:</label>
+                            <label class="col-sm-4 control-label" for="shift_stocks_to_plot">Last shifted plot:</label>
                             <div class="col-sm-8"><select class="form-control" id="shift_stocks_to_plot"></select></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Positions:</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" type="number" id="shift_stocks_positions" value="1" step="1" />
-                                <p class="help-block" style="white-space: normal">1: every place got the accession planned for the place before it (a place was skipped). -1: the one planned for the place after it (a plot was left out).</p>
-                            </div>
+                            <label class="col-sm-4 control-label" for="shift_stocks_positions">Positions:</label>
+                            <div class="col-sm-8"><input class="form-control" type="number" id="shift_stocks_positions" value="1" step="1" /></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Places that stay empty:</label>
-                            <div class="col-sm-8">
-                                <p class="form-control-static" style="white-space: normal">are marked as not planted. They keep their planned accession, but get no Field Book entries and no phenotypes. Places already marked as not planted are skipped: the planting went on past them.</p>
-                                <input class="form-control" id="shift_stocks_empty_stock" placeholder="Optional: an accession for them, for example NOT_PLANTED" />
-                            </div>
+                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">1: every place got the accession planned for the place before it (a place was skipped). -1: the one planned for the place after it (a plot was left out).</p></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">The places that stay empty are marked as not planted: they keep their planned accession, but get no Field Book entries and no phenotypes. Places already marked as not planted are skipped; the planting went on past them.</p></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="shift_stocks_empty_stock">Accession for them:</label>
+                            <div class="col-sm-8"><input class="form-control" id="shift_stocks_empty_stock" placeholder="Optional, for example NOT_PLANTED" /></div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <div class="checkbox"><label><input type="checkbox" id="shift_stocks_rename_plots" /> Update plot names</label></div>
-                                <p class="help-block" style="white-space: normal">Labels in the field carry the planned plot names, and phenotype files use them. Keep the names unless you reprint the labels.</p>
+                                <p class="help-block" style="white-space: normal; margin: 0">Labels in the field carry the planned plot names, and phenotype files use them. Keep the names unless you reprint the labels.</p>
                             </div>
                         </div>
                     </form>
@@ -720,6 +719,11 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             });
         }
         jQuery('#shift_trial_stocks_dialog').modal('show');
+    });
+
+    // the starting corner only matters for orders by row or column
+    jQuery('#shift_stocks_order').change(function() {
+        jQuery('#shift_stocks_start_group').toggle(jQuery(this).val() !== 'plot_number');
     });
 
     jQuery('#shift_stocks_empty_stock').autocomplete({

@@ -107,7 +107,7 @@ test("changeWithPreview", (t) => {
         ]);
         const asked = [];
         const result = await changeWithPreview("/url", { plot_ids: "7" }, { confirm: (m) => { asked.push(m); return true; } });
-        t.ok(/Delete these 2 phenotype value\(s\) with this change\?$/.test(asked[0]));
+        t.ok(/Delete these 2 phenotype values with this change\?$/.test(asked[0]));
         t.deepEqual(requests[2], { plot_ids: "7", delete_phenotypes: 1 });
         t.equal(result.phenotypes_deleted, 2);
         t.end();

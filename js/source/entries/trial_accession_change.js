@@ -78,7 +78,7 @@ export function summaryLines(summary, planned, maxItems = 10) {
  */
 export function showSummary(list, summary, planned) {
     const ul = jQuery(list).empty();
-    summaryLines(summary, planned, 50).forEach((line) => ul.append(jQuery("<li/>").text(line)));
+    summaryLines(summary, planned, 50).forEach((line) => ul.append(jQuery("<li/>").css("white-space", "pre-wrap").text(line)));
 }
 
 function hasModals() {
@@ -197,7 +197,9 @@ export async function changeWithPreview(url, data, options = {}) {
         }
         if (response.error) {
             if (response.not_planted_phenotypes && !params.delete_phenotypes) {
-                if (await ask(`${response.error}\n\nDelete these ${response.not_planted_phenotypes} phenotype value(s) with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete them and continue" })) {
+                const n = response.not_planted_phenotypes;
+                const values = n === 1 ? "this phenotype value" : `these ${n} phenotype values`;
+                if (await ask(`${response.error}\n\nDelete ${values} with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
                     params.delete_phenotypes = 1;
                     continue;
                 }
