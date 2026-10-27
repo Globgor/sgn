@@ -6,6 +6,8 @@ use SGN::Model::Cvterm;
 use CXGN::Trial;
 use CXGN::Trait;
 use CXGN::Trial::TrialLayoutSearch;
+use CXGN::Trial::FieldMap;
+use CXGN::Trial::AccessionChange;
 use CXGN::BrAPI::Pagination;
 use CXGN::BrAPI::JSONResponse;
 use CXGN::BrAPI::v2::ExternalReferences;
@@ -498,25 +500,29 @@ sub observationunits_update {
                 }
 
                 #update accession
-                my $plot_of_type_id = SGN::Model::Cvterm->get_cvterm_row($schema, 'plot_of', 'stock_relationship')->cvterm_id();
                 if ($old_accession && $accession_id && $old_accession_id ne $accession_id) {
-                    my $replace_plot_accession_fieldmap = CXGN::Trial::FieldMap->new({
+                    if ($stock_type ne $plot_cvterm_id) {
+                        return CXGN::BrAPI::JSONResponse->return_error($self->status, sprintf('The germplasm can only be changed for plots.'), 400);
+                    }
+                    my $trial_id = CXGN::Trial::AccessionChange->field_trial_of_plot($schema, $observation_unit_db_id);
+                    my $fieldmap = CXGN::Trial::FieldMap->new({
                         bcs_schema => $schema,
-                        trial_id => $study_ids_arrayref,
-                        # new_accession => $accession_name,
-                        # old_accession => $old_accession,
-                        # old_plot_id => $observation_unit_db_id,
-                        # old_plot_name => $observationUnit_name,
+                        trial_id => $trial_id,
                         experiment_type => 'field_layout'
                     });
 
-                    my $return_error = $replace_plot_accession_fieldmap->update_fieldmap_precheck();
+                    my $return_error = $fieldmap->update_fieldmap_precheck();
                     if ($return_error) {
                         print STDERR Dumper $return_error;
                         return CXGN::BrAPI::JSONResponse->return_error($self->status, sprintf('Something went wrong. Accession cannot be replaced.'));
                     }
 
-                    my $replace_return_error = $replace_plot_accession_fieldmap->replace_plot_accession_fieldMap($observation_unit_db_id, $old_accession_id, $plot_of_type_id);
+                    my $replace_return_error;
+                    try {
+                        CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $trial_id })->apply([ { plot_id => $observation_unit_db_id, new_stock_id => $accession_id } ], { rename_plots => 'none' });
+                    } catch {
+                        $replace_return_error = $_;
+                    };
                     if ($replace_return_error) {
                         print STDERR Dumper $replace_return_error;
                         return CXGN::BrAPI::JSONResponse->return_error($self->status, sprintf('Something went wrong. Accession cannot be replaced.'));

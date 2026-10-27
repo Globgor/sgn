@@ -193,7 +193,9 @@ is_deeply($response, {'success' => 1}, "get add management factor page");
 
 $mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_plot_accessions', ['old_accession' => 'test_accession3', 'new_accession' => 'test_accession1', 'old_plot_id' => '38866', 'old_plot_name' => 'test_trial210', 'new_plot_name' => "test_trial210_afterchange", 'override' => 'check']);
 $response = decode_json $mech->content;
-is_deeply($response, {success => 1});
+is($response->{success}, 1, "replace_plot_accessions succeeds");
+is($response->{changed}, 1, "one plot changed");
+is_deeply($response->{renamed}, [ { old_name => 'test_trial210', new_name => 'test_trial210_afterchange' } ], "and renamed to the given name");
 
 $mech->get_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/plots');
 $response = decode_json $mech->content;
@@ -202,7 +204,7 @@ is_deeply($response, {'plots' => [[[38857,'test_trial21'],[38858,'test_trial22']
 
 $mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_plot_accessions', ['old_accession' => 'test_accession1', 'new_accession' => 'test_accession3', 'old_plot_id' => '38866', 'old_plot_name' => 'test_trial210_afterchange', 'new_plot_name' => "test_trial210", 'override' => 'check']);
 $response = decode_json $mech->content;
-is_deeply($response, {success => 1});
+is($response->{success}, 1, "replace_plot_accessions back succeeds");
 
 # Change Accessions (replace_stock) must update the cached layout, the plot names and the accession pages.
 # test_accession3 is swapped for a temporary accession that is in no other trial, then swapped back.
@@ -213,7 +215,7 @@ my $temp_stock = $schema->resultset('Stock::Stock')->create({ uniquename => 'rep
 my $temp_stock_id = $temp_stock->stock_id();
 
 # give one plot a name that contains its accession name, and another one a
-# name that contains it twice (only the first occurrence is replaced)
+# name that contains it twice (that one is left as it is and reported)
 my $named_plot = $schema->resultset('Stock::Stock')->find({ uniquename => 'test_trial23' });
 $named_plot->update({ uniquename => 'test_trial23_test_accession3', name => 'test_trial23_test_accession3' });
 my $twice_named_plot = $schema->resultset('Stock::Stock')->find({ uniquename => 'test_trial24' });
@@ -246,14 +248,17 @@ $taken_stock->delete();
 
 $mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $accession3_id, 'new_stock' => 'replace_stock_temp_accession', 'trial_stock_type' => 'accession']);
 $response = decode_json $mech->content;
-is_deeply($response, {success => 1}, "replace_stock succeeds");
+is($response->{success}, 1, "replace_stock succeeds");
+is($response->{changed}, 3, "three plots changed");
+is_deeply($response->{renamed}, [ { old_name => 'test_trial23_test_accession3', new_name => 'test_trial23_replace_stock_temp_accession' } ], "one plot renamed");
+is_deeply($response->{not_renamed}, [ { plot_name => 'test_accession3_test_trial24_test_accession3', reason => 'the plot name contains test_accession3 more than once' } ], "the plot name with the accession name twice is reported");
 my $layout_after = $plot_accessions->();
 is($layout_after->{'test_trial210'}, 'replace_stock_temp_accession', "layout shows the new accession after replace_stock");
 is($layout_after->{'test_trial23_replace_stock_temp_accession'}, 'replace_stock_temp_accession', "layout shows the renamed plot with the new accession");
 ok(!exists $layout_after->{'test_trial23_test_accession3'}, "layout no longer has the old plot name");
-is($layout_after->{'replace_stock_temp_accession_test_trial24_test_accession3'}, 'replace_stock_temp_accession', "only the first occurrence of the old accession name is replaced in a plot name");
+is($layout_after->{'test_accession3_test_trial24_test_accession3'}, 'replace_stock_temp_accession', "a plot name with the old accession name twice is kept, with the new accession");
 my $reps_after = $plot_reps->();
-is_deeply([ @$reps_after{'test_trial23_replace_stock_temp_accession', 'replace_stock_temp_accession_test_trial24_test_accession3', 'test_trial210'} ], [1, 2, 3], "replicates of the new accession are rebuilt by plot number");
+is_deeply([ @$reps_after{'test_trial23_replace_stock_temp_accession', 'test_accession3_test_trial24_test_accession3', 'test_trial210'} ], [1, 2, 3], "replicates of the new accession, numbered by plot number (CRD)");
 
 $mech->get_ok('http://localhost:3010/ajax/html/select/plots_from_trial?trial_id='.$trial_id);
 like(decode_json($mech->content)->{select}, qr/>test_trial23_replace_stock_temp_accession</, "plots table of the trial page shows the renamed plot");
@@ -261,7 +266,7 @@ unlike($stock_trials->($accession3_id), qr/>test_trial</, "test_trial is no long
 like($stock_trials->($temp_stock_id), qr/>test_trial</, "test_trial is listed in the Experiment Usage of the new accession");
 
 $mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $temp_stock_id, 'new_stock' => 'test_accession3', 'trial_stock_type' => 'accession']);
-is_deeply(decode_json($mech->content), {success => 1}, "swapping back succeeds");
+is(decode_json($mech->content)->{success}, 1, "swapping back succeeds");
 my $layout_restored = $plot_accessions->();
 is($layout_restored->{'test_trial23_test_accession3'}, 'test_accession3', "plot name and accession are restored after swapping back");
 is($layout_restored->{'test_accession3_test_trial24_test_accession3'}, 'test_accession3', "plot name with the accession name twice is restored after swapping back");
