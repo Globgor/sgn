@@ -21,6 +21,9 @@ CXGN::Trial::AccessionChange - change the accession (cross, family name) of plot
     # every plot of one stock
     my $changes = $change->changes_for_stock($old_stock_id, $new_stock_id);
 
+    # plots planted one place further along the planting order than planned
+    my $shift = $change->changes_for_shift({ from_plot_id => $plot_id, positions => 1, empty_stock_id => $not_planted_id, order => 'by_row_serpentine', start => 'bottom_left' });
+
 =head1 DESCRIPTION
 
 A plot is a place in the field. Its plot number, block, replicate, row and
@@ -54,10 +57,29 @@ accession or replicate changes. Otherwise the old stock name is replaced by
 the new one where it is a whole part of the plot name (at the start or after
 C<-> or C<_>, and at the end or before C<-> or C<_>). A name that contains
 the old stock name that way more than once is left as it is and listed in
-C<not_renamed>. An explicit C<new_plot_name> in a change is always used.
-Plants, subplots and tissue samples whose names start with the plot name are
-renamed with it. All renames happen in two passes, so a new name can be one
-that another plot in the same change has now.
+C<not_renamed>. An explicit C<new_plot_name> in a change is always used; one
+that is the current name keeps it. Plants, subplots and tissue samples whose
+names start with the plot name are renamed with it. All renames happen in
+two passes, so a new name can be one that another plot in the same change
+has now.
+
+=item *
+
+keeps the check plots (C<is a control>) with the check accessions: a plot
+becomes a check plot when its new accession is a check in this trial (all of
+its plots are check plots) and a test plot when it is not (none are). A new
+accession that takes the place of another one everywhere takes over its
+check marks; another accession that is new to the trial makes a test plot.
+For an accession that is a check on some plots and not on others the mark is
+left as it is, with a warning. Plants, subplots and tissue samples that have
+a check mark get the one of their plot, and in a CRD the replicate of their
+plot.
+
+=item *
+
+warns when plots already have phenotypes (the values stay with the plot, so
+they count for the new accession) and when plots or their plants are parents
+of crosses (the crosses keep their recorded parents).
 
 =item *
 
@@ -89,6 +111,7 @@ use Moose;
 use JSON;
 use Try::Tiny;
 use SGN::Model::Cvterm;
+use CXGN::Trial;
 use CXGN::Trial::TrialLayout;
 use CXGN::BreedersToolbox::Projects;
 
@@ -138,6 +161,10 @@ sub _build_cvterm_ids {
         [ subplot_of => 'subplot_of', 'stock_relationship' ],
         [ tissue_sample_of => 'tissue_sample_of', 'stock_relationship' ],
         [ intercrop_plot_of => 'intercrop_plot_of', 'stock_relationship' ],
+        [ female_plot_of => 'female_plot_of', 'stock_relationship' ],
+        [ male_plot_of => 'male_plot_of', 'stock_relationship' ],
+        [ female_plant_of => 'female_plant_of', 'stock_relationship' ],
+        [ male_plant_of => 'male_plant_of', 'stock_relationship' ],
         [ plot_number => 'plot number', 'stock_property' ],
         [ block => 'block', 'stock_property' ],
         [ replicate => 'replicate', 'stock_property' ],
@@ -311,6 +338,8 @@ Returns a hashref:
     changes       => [ { plot_id, plot_name, old_stock_id, old_stock_name, new_stock_id, new_stock_name } ]
     unchanged     => [ plot names whose stock is already the new one ]
     replicates    => [ { plot_id, plot_name, old, new } ]
+    checks        => [ { plot_id, plot_name, old, new } ]; 1 for a check plot, 0 for a test plot
+    plots_with_phenotypes => the number of changed plots that have phenotypes
     renames       => [ { stock_id, type => 'plot'|'plant'|'subplot'|'tissue_sample', old_name, new_name } ]
     not_renamed   => [ { plot_name, reason } ]
     entry_numbers => [ { stock_id, stock_name, entry_number, from_stock_id } ]
@@ -337,7 +366,7 @@ sub _plan {
     my $schema = $self->schema;
     my $ids = $self->_cvterm_ids;
 
-    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [] );
+    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0 );
     my $errors = $plan{errors};
 
     if ($rename_mode ne 'auto' && $rename_mode ne 'none') {
@@ -354,6 +383,7 @@ sub _plan {
     # validate the changes
     my %new_stock_by_unit;
     my %explicit_name;
+    my %keep_name;
     my %seen_unit;
     my %new_stocks;
     my $allowed_types = $self->_allowed_stock_types($units);
@@ -393,7 +423,11 @@ sub _plan {
                 next;
             }
             (my $name = $change->{new_plot_name}) =~ s/^\s+|\s+$//g;
-            $explicit_name{$unit_id} = $name if $name ne $unit->{plot_name};
+            if ($name ne $unit->{plot_name}) {
+                $explicit_name{$unit_id} = $name;
+            } else {
+                $keep_name{$unit_id} = 1;
+            }
         }
         if ($new_stock_id == $unit->{stock_id}) {
             push @{$plan{unchanged}}, $unit->{plot_name} if !exists($explicit_name{$unit_id});
@@ -448,7 +482,7 @@ sub _plan {
         my $template = $self->plot_name_template();
         my %touched = (%new_stock_by_unit, %new_replicate);
         foreach my $unit_id (sort { $a <=> $b } keys %touched) {
-            next if exists($new_name{$unit_id});
+            next if exists($new_name{$unit_id}) || $keep_name{$unit_id};
             my $unit = $units->{$unit_id};
             if ($template) {
                 my $name = $self->_template_name($template, $after{$unit_id});
@@ -489,9 +523,10 @@ sub _plan {
         if (@$external) {
             push @{$plan{warnings}}, scalar(@$external)." sample(s) of plot $c->{plot_name} in other trials (for example ".$external->[0]->{name}.") keep $c->{old_stock_name}.";
         }
-        if ($units->{ $c->{plot_id} }->{is_a_control}) {
-            push @{$plan{warnings}}, "Plot $c->{plot_name} is a check plot; it stays a check plot with $c->{new_stock_name}.";
-        }
+    }
+    if (!$self->_is_plate) {
+        $self->_plan_checks(\%plan, $units, \%after);
+        $self->_plan_phenotype_and_cross_warnings(\%plan, $children);
     }
     if (!$self->_is_plate) {
         my $intercropped = $self->_intercropped([ keys %new_stock_by_unit ]);
@@ -539,7 +574,8 @@ sub _execute {
     my $ids = $self->_cvterm_ids;
 
     # stocks of the units, and of their plants, subplots and tissue samples in this trial
-    my $children = $self->_is_plate ? {} : $self->_children([ map { $_->{plot_id} } @{$plan->{changes}} ]);
+    my $children = $self->_is_plate ? {} : $self->_children([ map { $_->{plot_id} } @{$plan->{changes}}, @{$plan->{replicates}} ]);
+    my $children_of = sub { return [ map { $_->{stock_id} } @{ $children->{ $_[0] }->{in_trial} || [] } ]; };
     my $unit_h = $dbh->prepare("UPDATE stock_relationship SET object_id = ? WHERE subject_id = ? AND object_id = ? AND type_id = ?");
     my $child_h = $dbh->prepare("UPDATE stock_relationship SET object_id = ? WHERE subject_id = ANY(?) AND object_id = ? AND type_id = ANY(?)");
     my @child_relationships = grep { defined } map { $ids->{$_} } qw(plant_of subplot_of tissue_sample_of);
@@ -554,9 +590,23 @@ sub _execute {
         }
     }
 
-    my $rep_h = $dbh->prepare("UPDATE stockprop SET value = ? WHERE stock_id = ? AND type_id = ?");
+    # replicates of the plots, and of their plants, subplots and tissue samples that have one
+    my $rep_h = $dbh->prepare("UPDATE stockprop SET value = ? WHERE stock_id = ANY(?) AND type_id = ?");
     foreach my $r (@{$plan->{replicates}}) {
-        $rep_h->execute($r->{new}, $r->{plot_id}, $ids->{replicate});
+        $rep_h->execute($r->{new}, [ $r->{plot_id}, @{ $children_of->($r->{plot_id}) } ], $ids->{replicate});
+    }
+
+    # check marks of the plots, and of their plants, subplots and tissue samples that have one
+    my $uncheck_h = $dbh->prepare("DELETE FROM stockprop WHERE stock_id = ANY(?) AND type_id = ?");
+    my $check_children_h = $dbh->prepare("UPDATE stockprop SET value = '1' WHERE stock_id = ANY(?) AND type_id = ?");
+    foreach my $k (@{$plan->{checks}}) {
+        if ($k->{new}) {
+            $uncheck_h->execute([ $k->{plot_id} ], $ids->{is_a_control});
+            $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $k->{plot_id}, type_id => $ids->{is_a_control}, value => '1', rank => 0 });
+            $check_children_h->execute($children_of->($k->{plot_id}), $ids->{is_a_control});
+        } else {
+            $uncheck_h->execute([ $k->{plot_id}, @{ $children_of->($k->{plot_id}) } ], $ids->{is_a_control});
+        }
     }
 
     # two passes, so that a new name may be one that another renamed stock has now
@@ -583,7 +633,7 @@ sub _execute {
         $row->update({ value => encode_json($map) });
     }
 
-    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}}) {
+    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}}) {
         my $layout = CXGN::Trial::TrialLayout->new({
             schema => $self->schema,
             trial_id => $self->trial_id,
@@ -834,6 +884,185 @@ sub _plan_entry_numbers {
     }
 }
 
+sub _is_true {
+    my $value = shift;
+    return (defined($value) && $value =~ /^\s*(1|true|yes|t|y)\s*$/i) ? 1 : 0;
+}
+
+# check marks: a plot is a check plot when its accession is a check accession of this trial
+sub _plan_checks {
+    my $self = shift;
+    my $plan = shift;
+    my $units = shift;
+    my $after = shift;
+    return if !@{$plan->{changes}};
+
+    my (%total, %checked);
+    foreach my $u (values %$units) {
+        next if !defined($u->{stock_id});
+        $total{ $u->{stock_id} }++;
+        $checked{ $u->{stock_id} }++ if _is_true($u->{is_a_control});
+    }
+    my %after_stocks = map { $_->{stock_id} => 1 } grep { defined $_->{stock_id} } values %$after;
+    my %takers;
+    foreach my $c (@{$plan->{changes}}) {
+        $takers{ $c->{old_stock_id} }->{ $c->{new_stock_id} } = 1;
+    }
+    my %mixed_warned;
+    foreach my $c (@{$plan->{changes}}) {
+        my $is_check = _is_true($units->{ $c->{plot_id} }->{is_a_control});
+        my $new = $c->{new_stock_id};
+        my $should_be_check;
+        if ($total{$new}) {
+            if (($checked{$new} // 0) == $total{$new}) {
+                $should_be_check = 1;
+            } elsif (!$checked{$new}) {
+                $should_be_check = 0;
+            } else {
+                push @{$plan->{warnings}}, "$c->{new_stock_name} is a check on some plots of this trial and not on others, so the check marks of its new plots are left as they are." if !$mixed_warned{$new}++;
+                next;
+            }
+        } elsif (!$after_stocks{ $c->{old_stock_id} } && scalar(keys %{ $takers{ $c->{old_stock_id} } }) == 1) {
+            # the new accession takes the place of the old one everywhere
+            $should_be_check = $is_check;
+        } else {
+            $should_be_check = 0;
+        }
+        if ($should_be_check != $is_check) {
+            push @{$plan->{checks}}, { plot_id => $c->{plot_id}, plot_name => $c->{plot_name}, old => $is_check, new => $should_be_check };
+        }
+    }
+}
+
+# phenotypes and crosses of the changed plots and of their plants, subplots and tissue samples
+sub _plan_phenotype_and_cross_warnings {
+    my $self = shift;
+    my $plan = shift;
+    my $children = shift;
+    my @plot_ids = map { $_->{plot_id} } @{$plan->{changes}};
+    return if !@plot_ids;
+    my $dbh = $self->schema->storage->dbh;
+    my $ids = $self->_cvterm_ids;
+
+    my %plot_of = map { $_ => $_ } @plot_ids;
+    foreach my $plot_id (@plot_ids) {
+        $plot_of{ $_->{stock_id} } = $plot_id for @{ $children->{$plot_id}->{in_trial} || [] };
+    }
+    my @stock_ids = keys %plot_of;
+    my %plot_name = map { $_->{plot_id} => $_->{plot_name} } @{$plan->{changes}};
+    my %old_stock = map { $_->{plot_id} => $_->{old_stock_name} } @{$plan->{changes}};
+
+    my $h = $dbh->prepare("SELECT DISTINCT nes.stock_id FROM nd_experiment_stock nes
+        JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = nes.nd_experiment_id
+        WHERE nes.stock_id = ANY(?)");
+    $h->execute(\@stock_ids);
+    my %phenotyped_plots;
+    while (my ($stock_id) = $h->fetchrow_array()) { $phenotyped_plots{ $plot_of{$stock_id} } = 1; }
+    $plan->{plots_with_phenotypes} = scalar(keys %phenotyped_plots);
+    if (%phenotyped_plots) {
+        push @{$plan->{warnings}}, scalar(keys %phenotyped_plots)." plot(s) already have phenotypes. The values stay with their plot, so they count for the new accession; run the analyses of this trial again.";
+        if (grep { $_->{type} eq 'plot' && $phenotyped_plots{ $_->{stock_id} } } @{$plan->{renames}}) {
+            push @{$plan->{warnings}}, "Phenotype files and Field Book files with the old plot names will not match the renamed plots. Keep the plot names to avoid that.";
+        }
+    }
+
+    my %role = map { ($ids->{$_} // -1) => ($_ =~ /^female/ ? 'female' : 'male') } qw(female_plot_of female_plant_of male_plot_of male_plant_of);
+    my @cross_types = grep { defined } map { $ids->{$_} } qw(female_plot_of female_plant_of male_plot_of male_plant_of);
+    return if !@cross_types;
+    $h = $dbh->prepare("SELECT r.subject_id, r.type_id, c.uniquename FROM stock_relationship r
+        JOIN stock c ON c.stock_id = r.object_id
+        WHERE r.subject_id = ANY(?) AND r.type_id = ANY(?) ORDER BY c.uniquename");
+    $h->execute(\@stock_ids, \@cross_types);
+    while (my ($stock_id, $type_id, $cross_name) = $h->fetchrow_array()) {
+        my $plot_id = $plot_of{$stock_id};
+        push @{$plan->{warnings}}, "Cross $cross_name used plot $plot_name{$plot_id} as $role{$type_id} parent. The cross keeps its recorded $role{$type_id} parent ($old_stock{$plot_id} when it was made from this plot); correct the cross if needed.";
+    }
+}
+
+=head2 changes_for_shift($args)
+
+The changes for a stretch of plots that were planted shifted along the
+planting order: the stock planned for one plot grows some places further
+along (positions > 0) or back (positions < 0). The stretch starts at
+from_plot_id and ends at to_plot_id (default: the last plot of the order).
+The places at the start of the stretch (or at its end, going back) that stay
+empty get empty_stock_id, for example an accession named NOT_PLANTED. The
+stocks pushed out of the stretch are returned in pushed_out.
+
+$args: { from_plot_id, to_plot_id, positions, empty_stock_id, order, start }.
+order is 'plot_number' (default), or as in CXGN::Trial::get_sorted_plots
+('by_row_serpentine', 'by_row_zigzag', 'by_col_serpentine', 'by_col_zigzag',
+with start 'bottom_left', 'bottom_right', 'top_left' or 'top_right'), the
+same order as the planting order download.
+
+Returns { changes => [ ... ], pushed_out => [ { stock_id, stock_name, plot_name } ], plots => [ plot names of the stretch ] }, or { error => message }.
+
+=cut
+
+sub changes_for_shift {
+    my $self = shift;
+    my $args = shift || {};
+    my $positions = $args->{positions};
+    if (!defined($positions) || $positions !~ /^\s*-?\d+\s*$/ || $positions == 0) {
+        return { error => "The number of positions must be a whole number other than 0." };
+    }
+    $positions = int($positions);
+    my $units = $self->load_units();
+    my $order = $args->{order} || 'plot_number';
+    my @path;
+    if ($order eq 'plot_number') {
+        @path = map { $_->{plot_id} } sort { _compare_plot_numbers($a->{plot_number}, $b->{plot_number}) || $a->{plot_id} <=> $b->{plot_id} } values %$units;
+    } else {
+        return { error => "Unknown plot order $order." } if $order !~ /^by_(row|col)_(serpentine|zigzag)$/;
+        my $start = $args->{start} || 'bottom_left';
+        return { error => "Unknown starting corner $start." } if $start !~ /^(bottom|top)_(left|right)$/;
+        # the planting order is read from the cached layout, so that is brought up to date first
+        CXGN::Trial::TrialLayout->new({ schema => $self->schema, trial_id => $self->trial_id, experiment_type => $self->experiment_type })->generate_and_cache_layout();
+        my $sorted = CXGN::Trial->get_sorted_plots($self->schema, [ $self->trial_id ], $order, $start);
+        return { error => $sorted->{error} } if $sorted->{error};
+        @path = map { $_->{plot_id} } grep { ($_->{type} // '') eq 'plot' && $units->{ $_->{plot_id} } } @{ $sorted->{plots} || [] };
+    }
+
+    my %index = map { $path[$_] => $_ } 0 .. $#path;
+    my $from = $args->{from_plot_id};
+    return { error => "The first plot of the shift is not a plot of this trial." } if !defined($from) || !exists($index{$from});
+    my $to = $args->{to_plot_id};
+    if (defined($to) && length($to)) {
+        return { error => "The last plot of the shift is not a plot of this trial." } if !exists($index{$to});
+    } else {
+        $to = $path[-1];
+    }
+    return { error => "The last plot of the shift comes before the first one in this order." } if $index{$to} < $index{$from};
+    my @stretch = @path[ $index{$from} .. $index{$to} ];
+    my $n = abs($positions);
+    if ($n >= @stretch) {
+        return { error => "The shift of $n position(s) is not shorter than the ".scalar(@stretch)." plot(s) from the first to the last plot." };
+    }
+    if (!defined($args->{empty_stock_id}) || $args->{empty_stock_id} !~ /^\d+$/) {
+        return { error => "Choose the accession for the places that stay empty, for example NOT_PLANTED." };
+    }
+    foreach my $plot_id (@stretch) {
+        return { error => "Plot $units->{$plot_id}->{plot_name} is linked to ".($units->{$plot_id}->{stock_count} // 0)." stocks; it must be linked to exactly one." } if !defined($units->{$plot_id}->{stock_id});
+    }
+
+    my @planned = map { $units->{$_} } @stretch;
+    my @new;
+    my @pushed_out;
+    if ($positions > 0) {
+        @new = ((undef) x $n, map { $_->{stock_id} } @planned[ 0 .. $#planned - $n ]);
+        @pushed_out = @planned[ $#planned - $n + 1 .. $#planned ];
+    } else {
+        @new = ((map { $_->{stock_id} } @planned[ $n .. $#planned ]), (undef) x $n);
+        @pushed_out = @planned[ 0 .. $n - 1 ];
+    }
+    my @changes = map { { plot_id => $stretch[$_], new_stock_id => $new[$_] // $args->{empty_stock_id} } } 0 .. $#stretch;
+    return {
+        changes => \@changes,
+        pushed_out => [ map { { stock_id => $_->{stock_id} + 0, stock_name => $_->{stock_name}, plot_name => $_->{plot_name} } } @pushed_out ],
+        plots => [ map { $units->{$_}->{plot_name} } @stretch ],
+    };
+}
+
 =head2 summary($plan)
 
 A short, JSON-safe summary of a plan for AJAX responses.
@@ -850,6 +1079,8 @@ sub summary {
         renamed => [ map { { old_name => $_->{old_name}, new_name => $_->{new_name} } } grep { $_->{type} eq 'plot' } @{$plan->{renames}} ],
         not_renamed => $plan->{not_renamed},
         entry_numbers => [ map { { stock_name => $_->{stock_name}, entry_number => $_->{entry_number} } } @{$plan->{entry_numbers}} ],
+        checks => [ map { { plot_name => $_->{plot_name}, check => $_->{new} } } @{$plan->{checks}} ],
+        plots_with_phenotypes => $plan->{plots_with_phenotypes},
         warnings => $plan->{warnings},
     };
 }

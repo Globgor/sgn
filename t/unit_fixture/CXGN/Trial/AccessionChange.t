@@ -37,6 +37,8 @@ my %t = (
     block => cvterm_id('block', 'stock_property'),
     plot_number => cvterm_id('plot number', 'stock_property'),
     is_a_control => cvterm_id('is a control', 'stock_property'),
+    row_number => cvterm_id('row_number', 'stock_property'),
+    col_number => cvterm_id('col_number', 'stock_property'),
     accession => cvterm_id('accession', 'stock_type'),
     plot => cvterm_id('plot', 'stock_type'),
     tissue_sample => cvterm_id('tissue_sample', 'stock_type'),
@@ -103,6 +105,21 @@ my $fixture_state = { map { $_ => [ linked_stock($plot{$_}, 'plot_of'), prop($pl
 my $change = sub { CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $trial_id, @_ }) };
 
 is($change->()->design_type, 'CRD', 'test_trial is a CRD');
+
+# for creating plants and tissue samples
+my $temp_dir = $f->config->{basepath}.'/'.($f->config->{tempfiles_subdir} // '');
+mkdir("$temp_dir/delete_nd_experiment_ids/") if !-d "$temp_dir/delete_nd_experiment_ids/";
+my (undef, $nd_experiment_ids_file) = tempfile("$temp_dir/delete_nd_experiment_ids/fileXXXX");
+my $phenotype_store_config = {
+    basepath => $temp_dir,
+    dbhost => $f->config->{dbhost},
+    dbuser => $f->config->{dbuser},
+    dbname => $f->config->{dbname},
+    dbpass => $f->config->{dbpass},
+    temp_file_nd_experiment_id => $nd_experiment_ids_file,
+    user_id => '41',
+    metadata_hash => { archived_file => 'none', archived_file_type => 'new stock treatment auto inheritance', operator => 'janedoe', date => DateTime->now()->ymd() },
+};
 
 scenario 'replace_name_part' => sub {
     my $r = \&CXGN::Trial::AccessionChange::replace_name_part;
@@ -288,10 +305,10 @@ scenario 'entry numbers' => sub {
     is($after->{ $acc{1} }, 101, 'others kept');
 };
 
-scenario 'warnings: check plots' => sub {
+scenario 'a check plot that gets a test accession becomes a test plot' => sub {
     prop($plot{10}, 'is_a_control', 1);
     my $plan = $change->()->plan([ { plot_id => $plot{10}, new_stock_id => $acc{1} } ]);
-    ok((grep { /test_trial210 is a check plot/ } @{$plan->{warnings}}), 'check plot warning');
+    is_deeply($plan->{checks}, [ { plot_id => $plot{10}, plot_name => 'test_trial210', old => 1, new => 0 } ], 'test_accession1 is not a check');
 };
 
 scenario 'intercropping: the new accession cannot also be the intercrop of the plot' => sub {
@@ -329,6 +346,147 @@ scenario 'crosses and family names' => sub {
     is(cached_design($trial_id)->{test_trial210}->{accession_name}, 'review_family', 'cached layout');
 };
 
+sub is_check { my $id = shift; my $v = prop($id, 'is_a_control'); return ($v && $v ne '0') ? 1 : 0; }
+
+scenario 'check plots follow the check accession' => sub {
+    prop($plot{$_}, 'is_a_control', 1) for (2, 7, 12);   # test_accession5 is the check
+    my $ac = $change->();
+    my $plan = $ac->apply([ { plot_id => $plot{2}, new_stock_id => $acc{4} }, { plot_id => $plot{1}, new_stock_id => $acc{5} } ]);
+    is_deeply({ map { $_->{plot_name} => $_->{new} } @{$plan->{checks}} }, { test_trial22 => 0, test_trial21 => 1 }, 'planned: plot 2 becomes a test plot, plot 1 a check plot');
+    is_deeply([ map { is_check($plot{$_}) } (1, 2, 7, 12) ], [ 1, 0, 1, 1 ], 'stored');
+    is_deeply($plan->{warnings}, [], 'no warnings');
+};
+
+scenario 'check plots: an accession new to the trial' => sub {
+    prop($plot{$_}, 'is_a_control', 1) for (2, 7, 12);
+    my $new_check = new_accession('review_new_check');
+    my $ac = $change->();
+    my $plan = $ac->apply($ac->changes_for_stock($acc{5}, $new_check->stock_id));
+    is_deeply($plan->{checks}, [], 'it takes the place of the check everywhere: the plots stay check plots');
+    is_deeply([ map { is_check($plot{$_}) } (2, 7, 12) ], [ 1, 1, 1 ], 'stored');
+    my $one_plot = new_accession('review_one_plot');
+    $plan = $ac->apply([ { plot_id => $plot{2}, new_stock_id => $one_plot->stock_id } ]);
+    is_deeply([ map { [ $_->{plot_name}, $_->{new} ] } @{$plan->{checks}} ], [ [ 'test_trial22', 0 ] ], 'in one plot only: a test plot');
+    is(is_check($plot{2}), 0, 'stored');
+};
+
+scenario 'check plots: an accession that is a check on some plots only' => sub {
+    prop($plot{2}, 'is_a_control', 1);
+    my $plan = $change->()->apply([ { plot_id => $plot{1}, new_stock_id => $acc{5} } ]);
+    is_deeply($plan->{checks}, [], 'the mark is left as it is');
+    ok((grep { /test_accession5 is a check on some plots of this trial and not on others/ } @{$plan->{warnings}}), 'with a warning');
+};
+
+scenario 'a new_plot_name that is the current name keeps it' => sub {
+    rename_stock($plot{3}, 'test_trial-rep1-test_accession3_3');
+    my $plan = $change->()->apply([ { plot_id => $plot{3}, new_stock_id => $acc{1}, new_plot_name => 'test_trial-rep1-test_accession3_3' } ]);
+    is(name_of($plot{3}), 'test_trial-rep1-test_accession3_3', 'name kept');
+    is_deeply($plan->{renames}, [], 'nothing renamed');
+    is(linked_stock($plot{3}, 'plot_of'), 'test_accession1', 'accession changed');
+};
+
+scenario 'phenotypes and crosses of the changed plots' => sub {
+    my $geolocation = $schema->resultset('NaturalDiversity::NdGeolocation')->search({})->first;
+    my $experiment = $schema->resultset('NaturalDiversity::NdExperiment')->create({ nd_geolocation_id => $geolocation->nd_geolocation_id, type_id => cvterm_id('phenotyping_experiment', 'experiment_type') });
+    $experiment->create_related('nd_experiment_stocks', { stock_id => $plot{10}, type_id => cvterm_id('phenotyping_experiment', 'experiment_type') });
+    my $phenotype = $schema->resultset('Phenotype::Phenotype')->create({ uniquename => 'review phenotype of test_trial210', observable_id => 70741, value => '30' });
+    $experiment->create_related('nd_experiment_phenotypes', { phenotype_id => $phenotype->phenotype_id });
+    my $cross = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_cross', name => 'review_cross', type_id => cvterm_id('cross', 'stock_type'), organism_id => stock('test_accession1')->organism_id });
+    $schema->resultset('Stock::StockRelationship')->create({ subject_id => $plot{10}, object_id => $cross->stock_id, type_id => cvterm_id('female_plot_of', 'stock_relationship') });
+
+    rename_stock($plot{10}, 'test_trial-test_accession3-10');
+    my $ac = $change->();
+    my $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => $acc{2} } ]);
+    is($plan->{plots_with_phenotypes}, 1, 'one plot with phenotypes');
+    ok((grep { /1 plot\(s\) already have phenotypes\. The values stay with their plot/ } @{$plan->{warnings}}), 'phenotype warning');
+    ok((grep { /Phenotype files and Field Book files with the old plot names will not match/ } @{$plan->{warnings}}), 'rename warning');
+    ok((grep { /Cross review_cross used plot test_trial-test_accession3-10 as female parent/ } @{$plan->{warnings}}), 'cross warning');
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => $acc{2} } ], { rename_plots => 'none' });
+    ok(!(grep { /Phenotype files/ } @{$plan->{warnings}}), 'no rename warning when names are kept');
+    $ac->apply([ { plot_id => $plot{10}, new_stock_id => $acc{2} } ], { rename_plots => 'none' });
+    is($schema->resultset('NaturalDiversity::NdExperimentStock')->search({ stock_id => $plot{10}, nd_experiment_id => $experiment->nd_experiment_id })->count, 1, 'the phenotype stays with the plot');
+    is(linked_stock($plot{10}, 'plot_of'), 'test_accession2', 'which has the new accession');
+};
+
+scenario 'CRD: the plants of a plot get its new replicate' => sub {
+    my $trial = CXGN::Trial->new({ bcs_schema => $schema, trial_id => $trial_id, phenome_schema => $f->phenome_schema, metadata_schema => $f->metadata_schema });
+    $trial->create_plant_entities(2, 1, undef, undef, undef, undef, $phenotype_store_config);
+    my @plants = map { $_->object_id } $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{5}, type_id => $t{plant_of} })->all;
+    is(scalar(@plants), 2, 'plot 5 has two plants');
+    is_deeply([ map { prop($_, 'replicate') } @plants ], [ 1, 1 ], 'with replicate 1');
+    my $ac = $change->();
+    $ac->apply($ac->changes_for_stock($acc{3}, $acc{1}));
+    is(prop($plot{5}, 'replicate'), 3, 'plot 5 has replicate 3');
+    is_deeply([ map { prop($_, 'replicate') } @plants ], [ 3, 3 ], 'and its plants too');
+};
+
+scenario 'shift by plot number' => sub {
+    my $not_planted = new_accession('NOT_PLANTED');
+    my $ac = $change->();
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+
+    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, positions => 1, empty_stock_id => $not_planted->stock_id });
+    ok(!$shift->{error}, 'no error') or diag($shift->{error});
+    is_deeply($shift->{plots}, [ map { "test_trial2$_" } 4 .. 15 ], 'plots 4 to 15');
+    is_deeply($shift->{pushed_out}, [ { stock_id => $acc{2}, stock_name => 'test_accession2', plot_name => 'test_trial215' } ], 'the accession of plot 15 is pushed out');
+    $ac->apply($shift->{changes}, { rename_plots => 'none' });
+    is(linked_stock($plot{4}, 'plot_of'), 'NOT_PLANTED', 'plot 4 stays empty');
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } 5 .. 15 ], [ map { $before{$_} } 4 .. 14 ], 'plots 5 to 15 have the accessions planned for 4 to 14');
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } 1 .. 3 ], [ map { $before{$_} } 1 .. 3 ], 'plots 1 to 3 unchanged');
+};
+
+scenario 'shift a stretch forward and back' => sub {
+    my $not_planted = new_accession('NOT_PLANTED');
+    my $ac = $change->();
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 1, empty_stock_id => $not_planted->stock_id });
+    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $not_planted->stock_id, $acc{3}, $acc{1} ], 'forward: empty, planned for 4, planned for 5');
+    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{6} ], 'pushed out: planned for 6');
+    $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => -1, empty_stock_id => $not_planted->stock_id });
+    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $acc{1}, $acc{4}, $not_planted->stock_id ], 'back: planned for 5, planned for 6, empty');
+    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{4} ], 'pushed out: planned for 4');
+    $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{9}, positions => 2, empty_stock_id => $not_planted->stock_id });
+    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $not_planted->stock_id, $not_planted->stock_id, map { stock_id($before{$_}) } 4 .. 7 ], 'two positions');
+};
+
+scenario 'shift: errors' => sub {
+    my $ac = $change->();
+    my $empty = $acc{1};
+    my @cases = (
+        [ { from_plot_id => $plot{4}, positions => 0, empty_stock_id => $empty }, qr/whole number other than 0/ ],
+        [ { from_plot_id => $plot{4}, positions => 'x', empty_stock_id => $empty }, qr/whole number other than 0/ ],
+        [ { from_plot_id => 1, positions => 1, empty_stock_id => $empty }, qr/first plot of the shift is not a plot of this trial/ ],
+        [ { from_plot_id => $plot{6}, to_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty }, qr/comes before the first one/ ],
+        [ { from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 3, empty_stock_id => $empty }, qr/not shorter than the 3 plot/ ],
+        [ { from_plot_id => $plot{4}, positions => 1 }, qr/Choose the accession for the places that stay empty/ ],
+        [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'diagonal' }, qr/Unknown plot order/ ],
+        [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'by_row_serpentine' }, qr/do not have a row and\/or column/ ],
+    );
+    foreach my $case (@cases) {
+        like($ac->changes_for_shift($case->[0])->{error} // '', $case->[1], 'error: '.$case->[1]);
+    }
+};
+
+scenario 'shift along a serpentine planting order, with a check plot' => sub {
+    # three rows of five plots: row 1 plots 1-5, row 2 plots 6-10, row 3 plots 11-15
+    foreach my $n (1 .. 15) {
+        prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+    prop($plot{$_}, 'is_a_control', 1) for (2, 7, 12);   # test_accession5 is the check
+    my $not_planted = new_accession('NOT_PLANTED');
+    my $ac = $change->();
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 1, empty_stock_id => $not_planted->stock_id, order => 'by_row_serpentine', start => 'bottom_left' });
+    ok(!$shift->{error}, 'no error') or diag($shift->{error});
+    is_deeply($shift->{plots}, [ map { "test_trial2$_" } (4, 5, 10, 9, 8, 7, 6) ], 'the planter turns at the end of row 1');
+    my $plan = $ac->apply($shift->{changes}, { rename_plots => 'none' });
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (4, 5, 10, 9, 8, 7, 6) ], [ 'NOT_PLANTED', map { $before{$_} } (4, 5, 10, 9, 8, 7) ], 'shifted along the path');
+    is(linked_stock($plot{6}, 'plot_of'), 'test_accession5', 'the check accession of plot 7 is now in plot 6');
+    is_deeply([ is_check($plot{6}), is_check($plot{7}) ], [ 1, 0 ], 'plot 6 became a check plot, plot 7 a test plot');
+    is_deeply({ map { $_->{plot_name} => $_->{new} } @{$plan->{checks}} }, { test_trial26 => 1, test_trial27 => 0 }, 'planned that way');
+};
+
 # --- an RCBD trial with plants and tissue samples ------------------------------
 my @rcbd_accessions = map { new_accession("review_rcbd_acc_$_")->stock_id } ('A', 'B', 'C', 'D');
 my $td = CXGN::Trial::TrialDesign->new();
@@ -348,19 +506,6 @@ my $save = CXGN::Trial::TrialCreate->new({
 my $rcbd_id = $save->{trial_id};
 ok($rcbd_id, 'RCBD trial created');
 my $rcbd_trial = CXGN::Trial->new({ bcs_schema => $schema, trial_id => $rcbd_id, phenome_schema => $f->phenome_schema, metadata_schema => $f->metadata_schema });
-my $temp_dir = $f->config->{basepath}.'/'.$f->config->{tempfiles_subdir};
-mkdir("$temp_dir/delete_nd_experiment_ids/") if !-d "$temp_dir/delete_nd_experiment_ids/";
-my (undef, $nd_experiment_ids_file) = tempfile("$temp_dir/delete_nd_experiment_ids/fileXXXX");
-my $phenotype_store_config = {
-    basepath => $temp_dir,
-    dbhost => $f->config->{dbhost},
-    dbuser => $f->config->{dbuser},
-    dbname => $f->config->{dbname},
-    dbpass => $f->config->{dbpass},
-    temp_file_nd_experiment_id => $nd_experiment_ids_file,
-    user_id => '41',
-    metadata_hash => { archived_file => 'none', archived_file_type => 'new stock treatment auto inheritance', operator => 'janedoe', date => DateTime->now()->ymd() },
-};
 ok($rcbd_trial->create_plant_entities(2, 1, undef, undef, undef, undef, $phenotype_store_config), 'plants created');
 ok($rcbd_trial->create_tissue_samples(['leaf'], 1, 0, undef, undef, $phenotype_store_config), 'tissue samples created');
 
