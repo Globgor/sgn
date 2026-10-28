@@ -37,6 +37,8 @@ my %t = map { $_->[0] => SGN::Model::Cvterm->get_cvterm_row($schema, $_->[1], $_
     [ replicate => 'replicate', 'stock_property' ],
     [ block => 'block', 'stock_property' ],
     [ not_planted => 'not_planted', 'stock_property' ],
+    [ row_number => 'row_number', 'stock_property' ],
+    [ col_number => 'col_number', 'stock_property' ],
     [ accession => 'accession', 'stock_type' ],
     [ design => 'design', 'project_property' ],
 );
@@ -250,6 +252,47 @@ subtest 'shift_accessions' => sub {
     like(decode_json($anonymous->content)->{error}, qr/insufficient access privileges/, 'not logged in');
     is_deeply(trial_state(), $original, 'nothing changed');
     $not_planted->delete;
+};
+
+subtest 'shift_accessions along a serpentine by column, to the end of the column' => sub {
+    # 3 rows of 5 columns: up column 1 (plots 1, 6, 11), down column 2 (12, 7, 2); after a left border the other way round
+    foreach my $n (1 .. 15) {
+        set_prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        set_prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
+    my $shift = "/ajax/breeders/trial/$trial_id/shift_accessions";
+
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/shift_accessions_plots");
+    my $plots = decode_json($mech->content);
+    is(scalar(@{$plots->{plots}}), 15, 'the dialog gets the 15 plots');
+    is_deeply([ @{ $plots->{plots}->[6] }{qw(plot_name plot_number row_number col_number not_planted)} ], [ 'test_trial27', 7, 2, 2, 0 ], 'with plot number, row and column');
+    is_deeply($plots->{borders}, { top => 0, right => 0, bottom => 0, left => 0 }, 'and the saved borders');
+
+    # the order of the planting order download (Download Plot Order), with and without the left border
+    my $planting_order = sub {
+        my $left = shift;
+        $mech->get_ok("$base/ajax/breeders/trial_plot_order?trial_ids=$trial_id&type=planting&order=by_col_serpentine&start=bottom_left&left_border=$left", "planting order, left border $left");
+        my %seen;
+        return [ grep { !$seen{$_}++ } map { /^test_trial2(\d+)$/ ? $1 + 0 : () } ($mech->content =~ /\b(test_trial2\d+)\b/g) ];
+    };
+    is_deeply($planting_order->('false'), [ 1, 6, 11, 12, 7, 2, 3, 8, 13, 14, 9, 4, 5, 10, 15 ], 'planting order without borders: column 2 goes down');
+    is_deeply($planting_order->('true'), [ 11, 6, 1, 2, 7, 12, 13, 8, 3, 4, 9, 14, 15, 10, 5 ], 'with the left border column 2 goes up');
+
+    my %params = (from_plot_id => $plot{7}, to_plot_id => 'line_end', positions => 1, order => 'by_col_serpentine', start => 'bottom_left');
+    my $r = post_json($shift, [ %params, preview => 1 ]);
+    is_deeply($r->{preview}->{lines}, [ { line => 'column', number => 2, from => 2, to => 1, plots => [ 'test_trial27', 'test_trial22' ] } ], 'column 2 goes down, to plot 2') or diag(explain $r);
+    $r = post_json($shift, [ %params, border_left => 1, preview => 1 ]);
+    is_deeply($r->{preview}->{lines}, [ { line => 'column', number => 2, from => 2, to => 3, plots => [ 'test_trial27', 'test_trial212' ] } ], 'after a left border column 2 goes up, to plot 12');
+    is_deeply([ map { $_->{plot_name} } @{ $r->{preview}->{pushed_out} } ], [ 'test_trial212' ], 'the packet of plot 12 is left over');
+    $r = post_json($shift, [ %params, border_left => 1 ]);
+    is($r->{success}, 1, 'shifted') or diag(explain $r);
+    is_deeply([ map { plot_state($plot{$_})->{accession} } (2, 7, 12) ], [ $original->{2}->{accession}, $original->{7}->{accession}, $original->{7}->{accession} ], 'plot 12 has the accession planned for plot 7');
+    is(plot_state($plot{7})->{not_planted}, '1', 'plot 7 is not planted');
+    like(post_json($shift, [ %{{ %params, order => 'plot_number', from_plot_id => $plot{8} }} ])->{error}, qr/end of a column or row needs a planting order by row or column/, 'the end of a column needs an order by column');
+
+    $schema->resultset('Stock::Stockprop')->search({ stock_id => { -in => [ values %plot ] }, type_id => { -in => [ $t{row_number}, $t{col_number} ] } })->delete;
+    restore();
 };
 
 subtest 'shift_accessions at the end of the season: the trial has phenotypes' => sub {

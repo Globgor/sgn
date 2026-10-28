@@ -100,21 +100,21 @@ $trial_stock_type => undef
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order (orders by row or column need row and column numbers for every plot). You see what changes before anything is changed.</p>
+                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order, usually to the end of the column or row, where the packet left over went into a border. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order. You see the path and what changes before anything is changed.</p>
                     <form class="form-horizontal" role="form" id="shift_trial_stocks_form" name="shift_trial_stocks_form" onsubmit="return false;">
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="shift_stocks_order">Planting order:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="shift_stocks_order">
+                                    <option value="by_col_serpentine">By column: serpentine (up one column, down the next)</option>
+                                    <option value="by_col_zigzag">By column: zigzag (every column the same way)</option>
+                                    <option value="by_row_serpentine">By row: serpentine (along one row, back the next)</option>
+                                    <option value="by_row_zigzag">By row: zigzag (every row the same way)</option>
                                     <option value="plot_number">By plot number</option>
-                                    <option value="by_row_serpentine">By row: serpentine</option>
-                                    <option value="by_row_zigzag">By row: zigzag</option>
-                                    <option value="by_col_serpentine">By column: serpentine</option>
-                                    <option value="by_col_zigzag">By column: zigzag</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group" id="shift_stocks_start_group" style="display: none">
+                        <div class="form-group shift_stocks_layout">
                             <label class="col-sm-4 control-label" for="shift_stocks_start">Starting corner:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="shift_stocks_start">
@@ -124,6 +124,18 @@ $trial_stock_type => undef
                                     <option value="top_right">Top right</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-group shift_stocks_layout">
+                            <label class="col-sm-4 control-label">Borders planted on the way:</label>
+                            <div class="col-sm-8">
+                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_left" /> Left</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_right" /> Right</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_bottom" /> Bottom</label>
+                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_top" /> Top</label>
+                            </div>
+                        </div>
+                        <div class="form-group shift_stocks_layout">
+                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">As in Download Plot Order with Include Borders; set from the borders saved with the field map. In a serpentine order a border column (or row) is a turn of its own, so it changes the direction of the columns after it. Border places take no packets.</p></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="shift_stocks_from_plot">First shifted plot:</label>
@@ -306,7 +318,7 @@ $trial_stock_type => undef
                   <dt>Replace Trial Accession</dt>
                   <dd>An accession used in a trial can be replaced by a new accession or another accession from the trial. When this replace option is used, it replaces every instances (plots and plants) of that accession in the trial. To do this, <b>click on the Edit Field Map link</b> by the top right of the physical trial layout section; <b>click on Replace Accession button</b>; <b>select accession</b> to replace from the trial and <b>provide a new accession</b> (must already exit in the database); <b>click on Replace Trial Accession button</b> to complete the operation.</dd>
                   <dt>Shift Accessions</dt>
-                  <dd>For plots that were planted shifted: from one plot on, every place got the accession planned for the place before it (or after it) in the planting order. <b>Click on the Edit Field Layout link</b>, <b>click on Shift Accessions</b>, choose the planting order, the first and last shifted plot and the number of positions. The plots keep their plot numbers, blocks and replicates; only the accessions move. The places that stay empty are marked as not planted.</dd>
+                  <dd>For plots that were planted shifted: from one plot on, every place got the accession planned for the place before it (or after it) in the planting order, usually to the end of the column or row. <b>Click on the Edit Field Layout link</b>, <b>click on Shift Accessions</b>, choose the planting order as in Download Plot Order (with the borders planted on the way), the first shifted plot, where the shift ends and the number of positions. The plots keep their plot numbers, blocks and replicates; only the accessions move. The places that stay empty are marked as not planted.</dd>
                   <dt>Not Planted Plots</dt>
                   <dd>For places where nothing was planted: <b>click on Not Planted Plots</b> in Edit Field Layout and enter the plot names, or <b>click on the plot</b> and use Mark as Not Planted. The plot keeps its planned accession, is shown empty with a dashed border, is left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.</dd>
                   <dt>Change dimensions</dt>
@@ -701,19 +713,26 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
     }
 
     // Shift Accessions
+    // the plots with their plot number and position, and the borders saved with the field map
     jQuery('#shift_trial_stocks_open').click(function() {
         jQuery('#edit_field_map_dialog').modal('hide');
         if (jQuery('#shift_stocks_from_plot option').length === 0) {
             jQuery.ajax({
-                url: '/ajax/breeders/trial/<% $trial_id %>/plots',
+                url: '/ajax/breeders/trial/<% $trial_id %>/shift_accessions_plots',
                 success: function(response) {
-                    var plots = (response.plots && response.plots[0]) ? response.plots[0] : [];
                     var from = jQuery('#shift_stocks_from_plot').empty();
-                    var to = jQuery('#shift_stocks_to_plot').empty().append(jQuery('<option/>').val('').text('(the last plot in this order)'));
-                    plots.forEach(function(p) {
-                        from.append(jQuery('<option/>').val(p[0]).text(p[1]));
-                        to.append(jQuery('<option/>').val(p[0]).text(p[1]));
+                    var to = jQuery('#shift_stocks_to_plot').empty()
+                        .append(jQuery('<option/>').val('line_end').text('(the end of this column or row)'))
+                        .append(jQuery('<option/>').val('').text('(the last plot in this order)'));
+                    (response.plots || []).forEach(function(p) {
+                        var label = p.plot_name + ' (plot ' + p.plot_number + (p.row_number ? ', row ' + p.row_number + ', column ' + p.col_number : '') + (p.not_planted ? ', not planted' : '') + ')';
+                        from.append(jQuery('<option/>').val(p.plot_id).text(label).prop('disabled', !!p.not_planted));
+                        to.append(jQuery('<option/>').val(p.plot_id).text(label).prop('disabled', !!p.not_planted));
                     });
+                    ['top', 'right', 'bottom', 'left'].forEach(function(side) {
+                        jQuery('#shift_stocks_border_' + side).prop('checked', !!(response.borders && response.borders[side]));
+                    });
+                    shift_stocks_layout();
                 },
                 error: function() { alert('An error occurred getting the plots of this trial.'); }
             });
@@ -721,10 +740,16 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         jQuery('#shift_trial_stocks_dialog').modal('show');
     });
 
-    // the starting corner only matters for orders by row or column
-    jQuery('#shift_stocks_order').change(function() {
-        jQuery('#shift_stocks_start_group').toggle(jQuery(this).val() !== 'plot_number');
-    });
+    // the starting corner, the borders and the end of a column or row only matter for orders by row or column
+    function shift_stocks_layout() {
+        var by_line = jQuery('#shift_stocks_order').val() !== 'plot_number';
+        jQuery('.shift_stocks_layout').toggle(by_line);
+        jQuery('#shift_stocks_to_plot option[value="line_end"]').prop('disabled', !by_line);
+        if (!by_line && jQuery('#shift_stocks_to_plot').val() === 'line_end') {
+            jQuery('#shift_stocks_to_plot').val('');
+        }
+    }
+    jQuery('#shift_stocks_order').change(shift_stocks_layout);
 
     jQuery('#shift_stocks_empty_stock').autocomplete({
         appendTo: "#shift_trial_stocks_dialog",
@@ -740,6 +765,10 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             'positions': jQuery('#shift_stocks_positions').val(),
             'empty_stock': jQuery('#shift_stocks_empty_stock').val(),
             'rename_plots': jQuery('#shift_stocks_rename_plots').is(':checked') ? 1 : 0,
+            'border_top': jQuery('#shift_stocks_border_top').is(':checked') ? 1 : 0,
+            'border_right': jQuery('#shift_stocks_border_right').is(':checked') ? 1 : 0,
+            'border_bottom': jQuery('#shift_stocks_border_bottom').is(':checked') ? 1 : 0,
+            'border_left': jQuery('#shift_stocks_border_left').is(':checked') ? 1 : 0,
         }, { action: "Error Shifting Accessions", title: "Shift Accessions" });
         if (summary) {
             jQuery('#shift_trial_stocks_dialog').modal('hide');

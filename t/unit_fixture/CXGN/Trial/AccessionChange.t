@@ -40,6 +40,7 @@ my %t = (
     plot_number => cvterm_id('plot number', 'stock_property'),
     is_a_control => cvterm_id('is a control', 'stock_property'),
     not_planted => cvterm_id('not_planted', 'stock_property'),
+    stock_additional_info => cvterm_id('stock_additional_info', 'stock_property'),
     row_number => cvterm_id('row_number', 'stock_property'),
     col_number => cvterm_id('col_number', 'stock_property'),
     accession => cvterm_id('accession', 'stock_type'),
@@ -649,6 +650,78 @@ scenario 'shift with an accession for the empty places' => sub {
     my $ac = $change->();
     $ac->apply($ac->changes_for_shift({ from_plot_id => $plot{14}, positions => 1, empty_stock_id => $not_planted->stock_id })->{changes}, { rename_plots => 'none' });
     is_deeply([ linked_stock($plot{14}, 'plot_of'), prop($plot{14}, 'not_planted') ], [ 'NOT_PLANTED', '1' ], 'plot 14 gets NOT_PLANTED and is not planted');
+};
+
+# test_trial as 3 rows of 5 columns: plot n is in row int((n-1)/5)+1, column (n-1)%5+1
+sub grid_3x5 {
+    foreach my $n (1 .. 15) {
+        prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+}
+sub stretch_numbers { my $shift = shift; return [ map { /^test_trial2(\d+)$/ ? $1 + 0 : $_ } @{ $shift->{plots} || [] } ]; }
+
+scenario 'shift along a serpentine by column to the end of the column; a border column turns the direction' => sub {
+    grid_3x5();
+    my $ac = $change->();
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    my %args = (from_plot_id => $plot{7}, positions => 1, order => 'by_col_serpentine', start => 'bottom_left', to_end_of_line => 1);
+
+    # up column 1 (plots 1, 6, 11), down column 2 (12, 7, 2)
+    my $shift = $ac->changes_for_shift({ %args });
+    ok(!$shift->{error}, 'no error') or diag($shift->{error});
+    is_deeply(stretch_numbers($shift), [ 7, 2 ], 'without borders column 2 goes down: from plot 7 to plot 2, the end of the column');
+    is_deeply($shift->{lines}, [ { line => 'column', number => 2, from => 2, to => 1, plots => [ 'test_trial27', 'test_trial22' ] } ], 'the path: column 2, rows 2 to 1');
+    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{2} ], 'the packet of plot 2 is left over');
+
+    # the left border column goes up first, so column 1 goes down and column 2 up (2, 7, 12)
+    $shift = $ac->changes_for_shift({ %args, borders => { left => 1 } });
+    is_deeply(stretch_numbers($shift), [ 7, 12 ], 'with a left border column 2 goes up: from plot 7 to plot 12');
+    is_deeply([ @{ $shift->{lines}->[0] }{qw(from to)} ], [ 2, 3 ], 'rows 2 to 3');
+    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{12} ], 'the packet of plot 12 is left over');
+
+    # top and bottom borders are places within the columns: no turn of their own
+    $shift = $ac->changes_for_shift({ %args, borders => { top => 1, bottom => 1 } });
+    is_deeply(stretch_numbers($shift), [ 7, 2 ], 'top and bottom borders do not change the direction');
+
+    # zigzag: every column goes up
+    $shift = $ac->changes_for_shift({ %args, order => 'by_col_zigzag' });
+    is_deeply(stretch_numbers($shift), [ 7, 12 ], 'zigzag: column 2 goes up as well');
+
+    # starting at the top right: column 5 goes down, column 4 up
+    $shift = $ac->changes_for_shift({ %args, from_plot_id => $plot{9}, start => 'top_right' });
+    is_deeply(stretch_numbers($shift), [ 9, 14 ], 'from the top right corner column 4 goes up');
+
+    # to the end of the field: column by column, turning at each end
+    $shift = $ac->changes_for_shift({ %args, to_end_of_line => 0 });
+    is_deeply([ map { [ $_->{number}, $_->{from}, $_->{to} ] } @{$shift->{lines}} ], [ [ 2, 2, 1 ], [ 3, 1, 3 ], [ 4, 3, 1 ], [ 5, 1, 3 ] ], 'to the end of the field: columns 2 to 5, turning at each end');
+    is_deeply(stretch_numbers($shift), [ 7, 2, 3, 8, 13, 14, 9, 4, 5, 10, 15 ], 'in the order of the planting');
+
+    # apply the shift to the end of column 2, with the left border
+    my $plan = $ac->apply($ac->changes_for_shift({ %args, borders => { left => 1 } })->{changes}, { rename_plots => 'none' });
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (2, 7, 12) ], [ $before{2}, $before{7}, $before{7} ], 'plot 7 stays empty with its planned accession, plot 12 got the packet of plot 7');
+    is(prop($plot{7}, 'not_planted'), '1', 'plot 7 is not planted');
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (1, 6, 11, 3, 8, 13) ], [ map { $before{$_} } (1, 6, 11, 3, 8, 13) ], 'columns 1 and 3 are as planned');
+
+    like($ac->changes_for_shift({ %args, order => 'plot_number' })->{error} // '', qr/end of a column or row needs a planting order by row or column/, 'the end of a column needs an order by column');
+};
+
+scenario 'shift along a serpentine by row with a bottom border; the borders saved with the field map' => sub {
+    grid_3x5();
+    my $ac = $change->();
+    is_deeply($ac->saved_borders(), { top => 0, right => 0, bottom => 0, left => 0 }, 'no borders saved');
+    # the field map saves its settings in the additional info of every plot
+    foreach my $n (1 .. 15) {
+        prop($plot{$n}, 'stock_additional_info', encode_json({ bottom_border_selection => JSON::true, left_border_selection => JSON::false, top_border_selection => JSON::false, right_border_selection => JSON::true, plot_layout => 'serpentine' }));
+    }
+    is_deeply($ac->saved_borders(), { top => 0, right => 1, bottom => 1, left => 0 }, 'saved borders: bottom and right');
+
+    # the bottom border row goes left to right first, so row 1 goes right to left (5, 4, 3, 2, 1)
+    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{3}, positions => 1, order => 'by_row_serpentine', start => 'bottom_left', to_end_of_line => 1, borders => $ac->saved_borders() });
+    is_deeply(stretch_numbers($shift), [ 3, 2, 1 ], 'row 1 goes from column 3 back to column 1');
+    is_deeply($shift->{lines}, [ { line => 'row', number => 1, from => 3, to => 1, plots => [ map { "test_trial2$_" } (3, 2, 1) ] } ], 'the path: row 1, columns 3 to 1');
+    $shift = $ac->changes_for_shift({ from_plot_id => $plot{3}, positions => 1, order => 'by_row_serpentine', start => 'bottom_left', to_end_of_line => 1 });
+    is_deeply(stretch_numbers($shift), [ 3, 4, 5 ], 'without the border row 1 goes from column 3 to column 5');
 };
 
 # --- an RCBD trial with plants and tissue samples ------------------------------

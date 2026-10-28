@@ -32,6 +32,12 @@ export function summaryLines(summary, planned, maxItems = 10) {
     if (summary.first_plot) {
         lines.push(`Plots ${summary.first_plot} to ${summary.last_plot} (${summary.plots_in_stretch} plots in this order).`);
     }
+    // the path of a shift, column by column (or row by row), to check its direction
+    (summary.lines || []).forEach((l) => {
+        const across = l.line === "column" ? "rows" : "columns";
+        const shown = l.plots.slice(0, maxItems).join(", ") + (l.plots.length > maxItems ? `, ... and ${l.plots.length - maxItems} more` : "");
+        lines.push(`    ${l.line === "column" ? "Column" : "Row"} ${l.number}, ${across} ${l.from} to ${l.to}: ${shown}`);
+    });
     const planting = summary.planting || [];
     if (summary.changed || !planting.length) {
         lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession.`);
@@ -59,7 +65,7 @@ export function summaryLines(summary, planned, maxItems = 10) {
     }
     (summary.not_renamed || []).forEach((r) => lines.push(`Not renamed: ${r.plot_name} (${r.reason})`));
     if (summary.pushed_out && summary.pushed_out.length) {
-        lines.push("No longer in these plots (add a plot if they were planted somewhere else):");
+        lines.push("Left over, no longer in these plots (for example thrown into a border):");
         list(summary.pushed_out, (p) => `${p.stock_name} (planned for ${p.plot_name})`);
     }
     (summary.entry_numbers || []).forEach((e) => lines.push(`${e.stock_name}${planned ? " will get" : " got"} entry number ${e.entry_number}.`));

@@ -3224,9 +3224,11 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
 # on, every place got the stock planned for a place some positions earlier
 # (positions > 0) or later (positions < 0). The places that stay empty are
 # marked as not planted; they keep their planned stock, or get empty_stock.
-# params: from_plot_id, to_plot_id (optional, default the last plot), positions,
+# params: from_plot_id, to_plot_id (optional, default the last plot; 'line_end' for
+#   the end of the column or row of from_plot_id), positions,
 #   empty_stock (uniquename, optional), order ('plot_number' or 'by_row_serpentine' etc.,
-#   as for the planting order download), start ('bottom_left' etc.),
+#   as for the planting order download), start ('bottom_left' etc.), border_top,
+#   border_right, border_bottom, border_left (1 for borders planted in the same pass),
 #   rename_plots (1 to update the plot names, default 0), delete_phenotypes (1 to
 #   delete the phenotypes of the places that stay empty), preview (1 to get the
 #   plan only), override (1: curators change trials that already have phenotypes)
@@ -3275,13 +3277,16 @@ sub shift_trial_stocks : Chained('trial') PathPart('shift_accessions') Args(0) {
         schema => $schema,
         trial_id => $trial_id,
     });
+    my $to_plot_id = $c->req->param('to_plot_id');
     my $shift = $accession_change->changes_for_shift({
         from_plot_id => scalar($c->req->param('from_plot_id')),
-        to_plot_id => scalar($c->req->param('to_plot_id')),
+        to_plot_id => $to_plot_id,
+        to_end_of_line => (defined($to_plot_id) && $to_plot_id eq 'line_end') ? 1 : 0,
         positions => scalar($c->req->param('positions')),
         empty_stock_id => $empty_stock ? $empty_stock->stock_id : undef,
         order => scalar($c->req->param('order')),
         start => scalar($c->req->param('start')),
+        borders => { map { $_ => _true_param($c->req->param("border_$_")) } qw(top right bottom left) },
     });
     if ($shift->{error}) {
         $c->stash->{rest} = { error => $shift->{error} };
@@ -3298,7 +3303,32 @@ sub shift_trial_stocks : Chained('trial') PathPart('shift_accessions') Args(0) {
         $summary->{first_plot} = $shift->{plots}->[0];
         $summary->{last_plot} = $shift->{plots}->[-1];
         $summary->{plots_in_stretch} = scalar(@{ $shift->{plots} });
+        $summary->{lines} = $shift->{lines};
     }
+}
+
+# The plots of the trial for the Shift Accessions dialog, by plot number:
+# { plots => [ { plot_id, plot_name, plot_number, row_number, col_number, not_planted } ],
+#   borders => { top, right, bottom, left } } (the borders saved with the field map)
+sub shift_trial_stocks_plots : Chained('trial') PathPart('shift_accessions_plots') Args(0) {
+    my $self = shift;
+    my $c = shift;
+    my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
+    my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
+    my $accession_change = CXGN::Trial::AccessionChange->new({
+        schema => $schema,
+        trial_id => $c->stash->{trial_id},
+    });
+    my @plots = sort { CXGN::Trial::AccessionChange::_compare_plot_numbers($a->{plot_number}, $b->{plot_number}) || $a->{plot_id} <=> $b->{plot_id} } values %{ $accession_change->load_units() };
+    @plots = map { {
+        plot_id => $_->{plot_id} + 0,
+        plot_name => $_->{plot_name},
+        plot_number => $_->{plot_number},
+        row_number => $_->{row_number},
+        col_number => $_->{col_number},
+        not_planted => ($_->{not_planted} && $_->{not_planted} ne '0') ? 1 : 0,
+    } } @plots;
+    $c->stash->{rest} = { plots => \@plots, borders => $accession_change->saved_borders() };
 }
 
 # Marks plots as not planted, or as planted again (Field Layout Tools -> Edit Field Layout -> Not Planted Plots).

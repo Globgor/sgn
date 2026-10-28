@@ -472,7 +472,14 @@ Check plots follow the check accessions: a plot that gets a check accession of t
 
 #### Plots planted shifted
 
-If plots were planted shifted, for example a place was skipped and from there on every place got the accession planned for the place before it, use the “Shift Accessions” button of the “Edit Field Layout” window. Choose the planting order the planter took (by plot number, or by row or column, serpentine or zigzag, from a corner, as in “Download Plot Order”), the first and the last shifted plot, and the number of positions (1 when a place was skipped, -1 when a plot was left out). The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move along the planting order. The places that stay empty are marked as not planted (see below). Places that were already marked as not planted are skipped: the planting went on past them. Before anything is changed, a summary shows the changes and the accessions that no longer have a plot in the shifted stretch.
+If plots were planted shifted, for example a place was skipped and from there on every place got the accession planned for the place before it, use the “Shift Accessions” button of the “Edit Field Layout” window.
+
+* Planting order: the order the planter took, as in “Download Plot Order”: by column or by row, serpentine (up one column, down the next) or zigzag (every column the same way), from a starting corner, or by plot number.
+* Borders planted on the way: the borders the planter went through, as with “Include Borders” in “Download Plot Order” (they are set from the borders saved with the field map). In a serpentine order a border column (or row) is a turn of its own: with a left border column, the first column of the trial is planted downwards. Border places take no packets of the trial.
+* First shifted plot, and where the shift ends: by default at the end of the column (or row) of that plot. That is the usual case: the shift runs to the end of the column, the packet left over goes into a border, and the next column is planted as planned. It can also end at a plot you choose or at the last plot of the order.
+* Positions: 1 when a place was skipped, -1 when a packet was left out.
+
+The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move along the planting order. The places that stay empty are marked as not planted (see below). Places that were already marked as not planted are skipped: the planting went on past them. Before anything is changed, a summary shows the path column by column with its direction (for example “Column 2, rows 2 to 5”), the changes and the accessions left over.
 
 #### Plots that were not planted
 

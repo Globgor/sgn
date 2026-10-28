@@ -46,6 +46,17 @@ test("summaryLines", (t) => {
         t.end();
     });
 
+    t.test("the path of a shift along columns", (t) => {
+        const summary = { ...empty, changed: 3, first_plot: "P7", last_plot: "P9", plots_in_stretch: 3, planting: [{ plot_name: "P7", not_planted: 1 }],
+            lines: [{ line: "column", number: "2", from: "3", to: "1", plots: ["P7", "P8", "P9"] }], pushed_out: [{ stock_name: "A9", plot_name: "P9" }] };
+        const lines = summaryLines(summary, true);
+        t.equal(lines[1], "    Column 2, rows 3 to 1: P7, P8, P9", "column and direction");
+        t.ok(lines.includes("Left over, no longer in these plots (for example thrown into a border):"));
+        const row = summaryLines({ ...summary, lines: [{ line: "row", number: "4", from: "1", to: "12", plots: Array.from({ length: 12 }, (_, i) => "Q" + i) }] }, true, 10);
+        t.equal(row[1], "    Row 4, columns 1 to 12: Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, ... and 2 more", "long lines are cut");
+        t.end();
+    });
+
     t.test("long lists are cut", (t) => {
         const checks = Array.from({ length: 12 }, (_, i) => ({ plot_name: "P" + i, check: 1 }));
         const lines = summaryLines({ ...empty, changed: 12, checks }, false, 10);
