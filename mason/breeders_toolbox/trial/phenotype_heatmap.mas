@@ -9,7 +9,7 @@ $trial_stock_type => undef
 </%args>
 
 <& /util/import_css.mas, paths => ['fieldmap/leaflet-search.min.css', 'fieldmap/leaflet.css'] &>
-<& /util/import_javascript.mas, entries => ['fieldmap', 'trial_accession_change'], classes => [ 'jqueryui.js', 'jquery.js', 'jstree.dist.jstree', "thickbox", "CXGN.Page.FormattingHelpers", 'brapi.fieldmap.leaflet', 'brapi.fieldmap.L-Path-Transform', 'brapi.fieldmap.leaflet-search', 'brapi.fieldmap.turf', 'brapi.BrAPI', 'brapi.BrAPIFieldmap' ] &>
+<& /util/import_javascript.mas, entries => ['fieldmap'], classes => [ 'jqueryui.js', 'jquery.js', 'jstree.dist.jstree', "thickbox", "CXGN.Page.FormattingHelpers", 'brapi.fieldmap.leaflet', 'brapi.fieldmap.L-Path-Transform', 'brapi.fieldmap.leaflet-search', 'brapi.fieldmap.turf', 'brapi.BrAPI', 'brapi.BrAPIFieldmap' ] &>
 
 <style id='heatmap_stylesheet'>
     #trait_heatmap {display: inline; }
@@ -584,7 +584,6 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary " name="hm_view_plot_image_submit" id="hm_view_plot_image_submit">View Plot Images</button>
                 <button id="hm_close_replace_plot_accession_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="hm_toggle_not_planted" id="hm_toggle_not_planted">Mark as Not Planted</button>
                 <button type="button" class="btn btn-primary" name="hm_edit_plot_info" id="hm_edit_plot_info" onclick="jQuery('#hm_replace_plot_accessions_dialog').modal('show')">Edit Plot Info</button>
             </div>
         </div>
@@ -1263,20 +1262,6 @@ jQuery(document).ready( function() {
 
     jQuery("#hm_view_plot_image_submit").click( function() {
         jQuery("#view_plot_image_dialog").modal("show");
-    });
-
-    // marks the plot of the plot dialog as not planted, or as planted again
-    jQuery("#hm_toggle_not_planted").click(async function() {
-        var not_planted = jQuery(this).data('not_planted');
-        jQuery('#hm_plot_details_modal').modal("hide");
-        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/not_planted', {
-            'plot_ids': jQuery('#hm_plot_id').text(),
-            'not_planted': not_planted,
-        }, { action: "Error Marking Plot", title: jQuery(this).text() });
-        if (summary) {
-            alert(window.jsMod['trial_accession_change'].summaryLines(summary, false).join("\n"));
-            location.reload();
-        }
     });
 
     jQuery("#hm_accession").autocomplete({

@@ -1,9 +1,9 @@
 import "../legacy/jquery.js";
 
 /**
- * Changes of what grows on the plots of a field trial: Replace Accession,
- * Shift Accessions and Not Planted Plots (Field Layout Tools -> Edit Field
- * Layout), the plot dialog of the field map, and the Change Accessions upload.
+ * Changes of what grows on the plots of a field trial: the Change Accessions
+ * upload (a file of what was planted, which can also mark plots as not
+ * planted) and Replace Accession (Field Layout Tools -> Edit Field Layout).
  *
  * The endpoints answer with a summary (see CXGN::Trial::AccessionChange::summary()):
  * with preview=1 what would change ({ preview: summary }), otherwise what changed
@@ -29,15 +29,6 @@ export function summaryLines(summary, planned, maxItems = 10) {
         }
     };
 
-    if (summary.first_plot) {
-        lines.push(`Plots ${summary.first_plot} to ${summary.last_plot} (${summary.plots_in_stretch} plots in this order).`);
-    }
-    // the path of a shift, column by column (or row by row), to check its direction
-    (summary.lines || []).forEach((l) => {
-        const across = l.line === "column" ? "rows" : "columns";
-        const shown = l.plots.slice(0, maxItems).join(", ") + (l.plots.length > maxItems ? `, ... and ${l.plots.length - maxItems} more` : "");
-        lines.push(`    ${l.line === "column" ? "Column" : "Row"} ${l.number}, ${across} ${l.from} to ${l.to}: ${shown}`);
-    });
     const planting = summary.planting || [];
     if (summary.changed || !planting.length) {
         const changes = summary.changes || [];
@@ -66,10 +57,6 @@ export function summaryLines(summary, planned, maxItems = 10) {
         list(summary.renamed, (r) => `${r.old_name} -> ${r.new_name}`);
     }
     (summary.not_renamed || []).forEach((r) => lines.push(`Not renamed: ${r.plot_name} (${r.reason})`));
-    if (summary.pushed_out && summary.pushed_out.length) {
-        lines.push("Left over, no longer in these plots (for example thrown into a border):");
-        list(summary.pushed_out, (p) => `${p.stock_name} (planned for ${p.plot_name})`);
-    }
     (summary.entry_numbers || []).forEach((e) => lines.push(`${e.stock_name}${planned ? " will get" : " got"} entry number ${e.entry_number}.`));
     if (!planned && summary.phenotypes_deleted) {
         lines.push(`${summary.phenotypes_deleted} phenotype value(s) were deleted.`);
@@ -127,10 +114,32 @@ function working(show) {
     });
 }
 
+// the data with more parameters; a FormData (a form with a file) is copied
+function withParams(data, params) {
+    if (typeof FormData !== "undefined" && data instanceof FormData) {
+        const form = new FormData();
+        data.forEach((value, key) => form.append(key, value));
+        Object.entries(params).forEach(([key, value]) => form.set(key, value));
+        return form;
+    }
+    return { ...data, ...params };
+}
+
+// the text of an error that the server sent as HTML (lines separated by <br>)
+function plainText(html) {
+    return new DOMParser().parseFromString(String(html).replace(/<br\s*\/?>/gi, "\n"), "text/html").body.textContent;
+}
+
 function post(url, data) {
+    const request = { type: "POST", url, data, dataType: "json", traditional: true };
+    if (typeof FormData !== "undefined" && data instanceof FormData) {
+        // sent as multipart/form-data, as the form would send it
+        request.processData = false;
+        request.contentType = false;
+    }
     working(true);
     return new Promise((resolve) => {
-        jQuery.ajax({ type: "POST", url, data, dataType: "json", traditional: true })
+        jQuery.ajax(request)
             .done((response) => working(false).then(() => resolve(response || {})))
             .fail(() => working(false).then(() => resolve({ error: "The server could not be reached, or it failed; nothing may have been changed." })));
     });
@@ -197,24 +206,26 @@ export function confirmDialog(message, { title = "Please check", ok = "Continue"
  * with override=1), and the user confirms deleting the phenotypes of plots
  * marked as not planted (with delete_phenotypes=1). Errors are shown with alert.
  * @param {string} url - e.g. /ajax/breeders/trial/<id>/replace_stock
- * @param {Object} data - the parameters of the change
+ * @param {Object|FormData} data - the parameters of the change; a FormData for a form with a file
  * @param {Object} [options]
  * @param {string} [options.action="Change"] - names the change in error messages
  * @param {string} [options.title="Please check the changes"] - the title of the question with the plan
  * @param {function(string, Object): (boolean|Promise<boolean>)} [options.confirm] - asks the user, with { title, ok }; confirmDialog by default
- * @param {function(string): void} [options.alert] - tells the user; window.alert by default
+ * @param {function(string, string): void} [options.alert] - tells the user about an error, with the error from the server alone as the second argument; window.alert by default
+ * @param {function(string): (void|Promise)} [options.inform] - tells the user something that is not an error; options.alert by default
  * @returns {Promise<Object|null>} what changed (the summary), or null when nothing was changed
  */
 export async function changeWithPreview(url, data, options = {}) {
     const action = options.action || "Change";
     const ask = options.confirm || confirmDialog;
     const tell = options.alert || ((message) => window.alert(message));
-    const params = { ...data };
+    const inform = options.inform || tell;
+    const params = {};
 
     for (;;) {
-        const response = await post(url, { ...params, preview: 1 });
+        const response = await post(url, withParams(data, { ...params, preview: 1 }));
         if (response.warning) {
-            if (params.override || !(await ask(`${response.warning}\n\nThis trial already has data. Change it anyway?`, { title: "This trial already has data", ok: "Change it anyway" }))) {
+            if (params.override || !(await ask(`${plainText(response.warning)}\n\nThis trial already has data. Change it anyway?`, { title: "This trial already has data", ok: "Change it anyway" }))) {
                 return null;
             }
             params.override = 1;
@@ -224,17 +235,17 @@ export async function changeWithPreview(url, data, options = {}) {
             if (response.not_planted_phenotypes && !params.delete_phenotypes) {
                 const n = response.not_planted_phenotypes;
                 const values = n === 1 ? "this phenotype value" : `these ${n} phenotype values`;
-                if (await ask(`${response.error}\n\nDelete ${values} with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
+                if (await ask(`${plainText(response.error)}\n\nDelete ${values} with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
                     params.delete_phenotypes = 1;
                     continue;
                 }
                 return null;
             }
-            tell(`${action}: ${response.error}`);
+            tell(`${action}: ${response.error}`, response.error);
             return null;
         }
         if (response.preview && nothingChanges(response.preview)) {
-            tell("Nothing to change.");
+            await inform("Nothing to change: the trial already matches.");
             return null;
         }
         if (!response.preview || !(await ask(summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: options.title || "Please check the changes", ok: "Continue" }))) {
@@ -243,9 +254,9 @@ export async function changeWithPreview(url, data, options = {}) {
         break;
     }
 
-    const response = await post(url, params);
+    const response = await post(url, withParams(data, params));
     if (response.error) {
-        tell(`${action}: ${response.error}`);
+        tell(`${action}: ${response.error}`, response.error);
         return null;
     }
     return response;

@@ -422,74 +422,6 @@ scenario 'CRD: the plants of a plot get its new replicate' => sub {
     is_deeply([ map { prop($_, 'replicate') } @plants ], [ 3, 3 ], 'and its plants too');
 };
 
-scenario 'shift by plot number' => sub {
-    my $not_planted = new_accession('NOT_PLANTED');
-    my $ac = $change->();
-    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
-
-    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, positions => 1, empty_stock_id => $not_planted->stock_id });
-    ok(!$shift->{error}, 'no error') or diag($shift->{error});
-    is_deeply($shift->{plots}, [ map { "test_trial2$_" } 4 .. 15 ], 'plots 4 to 15');
-    is_deeply($shift->{pushed_out}, [ { stock_id => $acc{2}, stock_name => 'test_accession2', plot_name => 'test_trial215' } ], 'the accession of plot 15 is pushed out');
-    $ac->apply($shift->{changes}, { rename_plots => 'none' });
-    is(linked_stock($plot{4}, 'plot_of'), 'NOT_PLANTED', 'plot 4 stays empty');
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } 5 .. 15 ], [ map { $before{$_} } 4 .. 14 ], 'plots 5 to 15 have the accessions planned for 4 to 14');
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } 1 .. 3 ], [ map { $before{$_} } 1 .. 3 ], 'plots 1 to 3 unchanged');
-};
-
-scenario 'shift a stretch forward and back' => sub {
-    my $not_planted = new_accession('NOT_PLANTED');
-    my $ac = $change->();
-    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
-    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 1, empty_stock_id => $not_planted->stock_id });
-    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $not_planted->stock_id, $acc{3}, $acc{1} ], 'forward: empty, planned for 4, planned for 5');
-    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{6} ], 'pushed out: planned for 6');
-    $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => -1, empty_stock_id => $not_planted->stock_id });
-    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $acc{1}, $acc{4}, $not_planted->stock_id ], 'back: planned for 5, planned for 6, empty');
-    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{4} ], 'pushed out: planned for 4');
-    $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{9}, positions => 2, empty_stock_id => $not_planted->stock_id });
-    is_deeply([ map { $_->{new_stock_id} } @{$shift->{changes}} ], [ $not_planted->stock_id, $not_planted->stock_id, map { stock_id($before{$_}) } 4 .. 7 ], 'two positions');
-};
-
-scenario 'shift: errors' => sub {
-    my $ac = $change->();
-    my $empty = $acc{1};
-    my @cases = (
-        [ { from_plot_id => $plot{4}, positions => 0, empty_stock_id => $empty }, qr/whole number other than 0/ ],
-        [ { from_plot_id => $plot{4}, positions => 'x', empty_stock_id => $empty }, qr/whole number other than 0/ ],
-        [ { from_plot_id => 1, positions => 1, empty_stock_id => $empty }, qr/first plot of the shift is not a plot of this trial/ ],
-        [ { from_plot_id => $plot{6}, to_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty }, qr/comes before the first one/ ],
-        [ { from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 3, empty_stock_id => $empty }, qr/not shorter than the 3 plot/ ],
-        [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'diagonal' }, qr/Unknown plot order/ ],
-        [ { from_plot_id => $plot{4}, positions => 1, empty_stock_id => $empty, order => 'by_row_serpentine' }, qr/do not have a row and\/or column/ ],
-    );
-    foreach my $case (@cases) {
-        like($ac->changes_for_shift($case->[0])->{error} // '', $case->[1], 'error: '.$case->[1]);
-    }
-    prop($plot{4}, 'not_planted', 1);
-    like($change->()->changes_for_shift({ from_plot_id => $plot{4}, positions => 1 })->{error} // '', qr/first plot of the shift \(test_trial24\) is marked as not planted/, 'error: the first plot is not planted');
-};
-
-scenario 'shift along a serpentine planting order, with a check plot' => sub {
-    # three rows of five plots: row 1 plots 1-5, row 2 plots 6-10, row 3 plots 11-15
-    foreach my $n (1 .. 15) {
-        prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
-        prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
-    }
-    prop($plot{$_}, 'is_a_control', 1) for (2, 7, 12);   # test_accession5 is the check
-    my $not_planted = new_accession('NOT_PLANTED');
-    my $ac = $change->();
-    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
-    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 1, empty_stock_id => $not_planted->stock_id, order => 'by_row_serpentine', start => 'bottom_left' });
-    ok(!$shift->{error}, 'no error') or diag($shift->{error});
-    is_deeply($shift->{plots}, [ map { "test_trial2$_" } (4, 5, 10, 9, 8, 7, 6) ], 'the planter turns at the end of row 1');
-    my $plan = $ac->apply($shift->{changes}, { rename_plots => 'none' });
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (4, 5, 10, 9, 8, 7, 6) ], [ 'NOT_PLANTED', map { $before{$_} } (4, 5, 10, 9, 8, 7) ], 'shifted along the path');
-    is(linked_stock($plot{6}, 'plot_of'), 'test_accession5', 'the check accession of plot 7 is now in plot 6');
-    is_deeply([ is_check($plot{6}), is_check($plot{7}) ], [ 1, 0 ], 'plot 6 became a check plot, plot 7 a test plot');
-    is_deeply({ map { $_->{plot_name} => $_->{new} } @{$plan->{checks}} }, { test_trial26 => 1, test_trial27 => 0 }, 'planned that way');
-};
-
 # --- plots that were not planted ---------------------------------------------
 sub phenotype_store {
     my ($values, $traits) = @_;
@@ -630,98 +562,21 @@ scenario 'not planted: plants, seedlots and plates' => sub {
     ok((grep { /^Plot test_trial26 is marked as not planted but has 2 plant\(s\), subplot\(s\) or tissue sample\(s\); they are kept\./ } @{$plan->{warnings}}), 'a warning about the plants');
 };
 
-scenario 'shift: the empty places are marked as not planted, places already not planted are skipped' => sub {
+scenario 'a shifted planting, as a corrected file gives it: the skipped place is not planted, check plots follow' => sub {
+    prop($plot{$_}, 'is_a_control', 1) for (2, 7, 12);   # test_accession5 is the check
     my $ac = $change->();
     my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
-    $ac->apply([ { plot_id => $plot{6}, not_planted => 1 } ]);
-    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{4}, to_plot_id => $plot{9}, positions => 1 });
-    ok(!$shift->{error}, 'no error') or diag($shift->{error});
-    is_deeply($shift->{plots}, [ map { "test_trial2$_" } (4, 5, 7, 8, 9) ], 'plot 6 is not part of the stretch');
-    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{9} ], 'pushed out: planned for 9');
-    my $plan = $ac->apply($shift->{changes}, { rename_plots => 'none' });
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (4, 5, 6, 7, 8, 9) ], [ map { $before{$_} } (4, 4, 6, 5, 7, 8) ], 'plot 4 keeps its planned accession, 6 stays as it was, the others shift past 6');
-    is_deeply([ map { prop($plot{$_}, 'not_planted') } (4, 5, 6, 7, 8, 9) ], [ '1', undef, '1', undef, undef, undef ], 'plots 4 and 6 are not planted');
-    is_deeply([ map { $_->{plot_name} } grep { $_->{not_planted} } @{$plan->{planting}} ], [ 'test_trial24' ], 'planned: plot 4 not planted');
+    # plot 4 was skipped: plots 5 to 8 got the packets planned for 4 to 7, the packet of 8 went into a border
+    my @changes = ({ plot_id => $plot{4}, not_planted => 1 }, map { { plot_id => $plot{$_}, new_stock_id => stock_id($before{$_ - 1}) } } 5 .. 8);
+    my $plan = $ac->apply(\@changes, { rename_plots => 'none' });
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } 4 .. 8 ], [ map { $before{$_} } (4, 4, 5, 6, 7) ], 'plot 4 keeps its planned accession, plots 5 to 8 got those of 4 to 7');
+    is_deeply([ map { prop($plot{$_}, 'not_planted') } 4 .. 8 ], [ '1', undef, undef, undef, undef ], 'plot 4 is not planted');
+    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (1 .. 3, 9 .. 15) ], [ map { $before{$_} } (1 .. 3, 9 .. 15) ], 'the other plots are as planned');
+    is(linked_stock($plot{8}, 'plot_of'), 'test_accession5', 'the check accession of plot 7 is now in plot 8');
+    is_deeply([ is_check($plot{7}), is_check($plot{8}) ], [ 0, 1 ], 'plot 8 became a check plot, plot 7 a test plot');
+    is_deeply({ map { $_->{plot_name} => $_->{new} } @{$plan->{checks}} }, { test_trial27 => 0, test_trial28 => 1 }, 'planned that way');
+    is_deeply([ map { $_->{plot_name} } @{$plan->{planting}} ], [ 'test_trial24' ], 'one plot marked as not planted');
     is(scalar(@{$plan->{changes}}), 4, 'four plots got another accession');
-};
-
-scenario 'shift with an accession for the empty places' => sub {
-    my $not_planted = new_accession('NOT_PLANTED');
-    my $ac = $change->();
-    $ac->apply($ac->changes_for_shift({ from_plot_id => $plot{14}, positions => 1, empty_stock_id => $not_planted->stock_id })->{changes}, { rename_plots => 'none' });
-    is_deeply([ linked_stock($plot{14}, 'plot_of'), prop($plot{14}, 'not_planted') ], [ 'NOT_PLANTED', '1' ], 'plot 14 gets NOT_PLANTED and is not planted');
-};
-
-# test_trial as 3 rows of 5 columns: plot n is in row int((n-1)/5)+1, column (n-1)%5+1
-sub grid_3x5 {
-    foreach my $n (1 .. 15) {
-        prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
-        prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
-    }
-}
-sub stretch_numbers { my $shift = shift; return [ map { /^test_trial2(\d+)$/ ? $1 + 0 : $_ } @{ $shift->{plots} || [] } ]; }
-
-scenario 'shift along a serpentine by column to the end of the column; a border column turns the direction' => sub {
-    grid_3x5();
-    my $ac = $change->();
-    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
-    my %args = (from_plot_id => $plot{7}, positions => 1, order => 'by_col_serpentine', start => 'bottom_left', to_end_of_line => 1);
-
-    # up column 1 (plots 1, 6, 11), down column 2 (12, 7, 2)
-    my $shift = $ac->changes_for_shift({ %args });
-    ok(!$shift->{error}, 'no error') or diag($shift->{error});
-    is_deeply(stretch_numbers($shift), [ 7, 2 ], 'without borders column 2 goes down: from plot 7 to plot 2, the end of the column');
-    is_deeply($shift->{lines}, [ { line => 'column', number => 2, from => 2, to => 1, plots => [ 'test_trial27', 'test_trial22' ] } ], 'the path: column 2, rows 2 to 1');
-    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{2} ], 'the packet of plot 2 is left over');
-
-    # the left border column goes up first, so column 1 goes down and column 2 up (2, 7, 12)
-    $shift = $ac->changes_for_shift({ %args, borders => { left => 1 } });
-    is_deeply(stretch_numbers($shift), [ 7, 12 ], 'with a left border column 2 goes up: from plot 7 to plot 12');
-    is_deeply([ @{ $shift->{lines}->[0] }{qw(from to)} ], [ 2, 3 ], 'rows 2 to 3');
-    is_deeply([ map { $_->{stock_name} } @{$shift->{pushed_out}} ], [ $before{12} ], 'the packet of plot 12 is left over');
-
-    # top and bottom borders are places within the columns: no turn of their own
-    $shift = $ac->changes_for_shift({ %args, borders => { top => 1, bottom => 1 } });
-    is_deeply(stretch_numbers($shift), [ 7, 2 ], 'top and bottom borders do not change the direction');
-
-    # zigzag: every column goes up
-    $shift = $ac->changes_for_shift({ %args, order => 'by_col_zigzag' });
-    is_deeply(stretch_numbers($shift), [ 7, 12 ], 'zigzag: column 2 goes up as well');
-
-    # starting at the top right: column 5 goes down, column 4 up
-    $shift = $ac->changes_for_shift({ %args, from_plot_id => $plot{9}, start => 'top_right' });
-    is_deeply(stretch_numbers($shift), [ 9, 14 ], 'from the top right corner column 4 goes up');
-
-    # to the end of the field: column by column, turning at each end
-    $shift = $ac->changes_for_shift({ %args, to_end_of_line => 0 });
-    is_deeply([ map { [ $_->{number}, $_->{from}, $_->{to} ] } @{$shift->{lines}} ], [ [ 2, 2, 1 ], [ 3, 1, 3 ], [ 4, 3, 1 ], [ 5, 1, 3 ] ], 'to the end of the field: columns 2 to 5, turning at each end');
-    is_deeply(stretch_numbers($shift), [ 7, 2, 3, 8, 13, 14, 9, 4, 5, 10, 15 ], 'in the order of the planting');
-
-    # apply the shift to the end of column 2, with the left border
-    my $plan = $ac->apply($ac->changes_for_shift({ %args, borders => { left => 1 } })->{changes}, { rename_plots => 'none' });
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (2, 7, 12) ], [ $before{2}, $before{7}, $before{7} ], 'plot 7 stays empty with its planned accession, plot 12 got the packet of plot 7');
-    is(prop($plot{7}, 'not_planted'), '1', 'plot 7 is not planted');
-    is_deeply([ map { linked_stock($plot{$_}, 'plot_of') } (1, 6, 11, 3, 8, 13) ], [ map { $before{$_} } (1, 6, 11, 3, 8, 13) ], 'columns 1 and 3 are as planned');
-
-    like($ac->changes_for_shift({ %args, order => 'plot_number' })->{error} // '', qr/end of a column or row needs a planting order by row or column/, 'the end of a column needs an order by column');
-};
-
-scenario 'shift along a serpentine by row with a bottom border; the borders saved with the field map' => sub {
-    grid_3x5();
-    my $ac = $change->();
-    is_deeply($ac->saved_borders(), { top => 0, right => 0, bottom => 0, left => 0 }, 'no borders saved');
-    # the field map saves its settings in the additional info of every plot
-    foreach my $n (1 .. 15) {
-        prop($plot{$n}, 'stock_additional_info', encode_json({ bottom_border_selection => JSON::true, left_border_selection => JSON::false, top_border_selection => JSON::false, right_border_selection => JSON::true, plot_layout => 'serpentine' }));
-    }
-    is_deeply($ac->saved_borders(), { top => 0, right => 1, bottom => 1, left => 0 }, 'saved borders: bottom and right');
-
-    # the bottom border row goes left to right first, so row 1 goes right to left (5, 4, 3, 2, 1)
-    my $shift = $ac->changes_for_shift({ from_plot_id => $plot{3}, positions => 1, order => 'by_row_serpentine', start => 'bottom_left', to_end_of_line => 1, borders => $ac->saved_borders() });
-    is_deeply(stretch_numbers($shift), [ 3, 2, 1 ], 'row 1 goes from column 3 back to column 1');
-    is_deeply($shift->{lines}, [ { line => 'row', number => 1, from => 3, to => 1, plots => [ map { "test_trial2$_" } (3, 2, 1) ] } ], 'the path: row 1, columns 3 to 1');
-    $shift = $ac->changes_for_shift({ from_plot_id => $plot{3}, positions => 1, order => 'by_row_serpentine', start => 'bottom_left', to_end_of_line => 1 });
-    is_deeply(stretch_numbers($shift), [ 3, 4, 5 ], 'without the border row 1 goes from column 3 to column 5');
 };
 
 # --- an RCBD trial with plants and tissue samples ------------------------------

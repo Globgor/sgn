@@ -4,10 +4,12 @@ import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingCha
 const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], phenotypes_deleted: 0, warnings: [] };
 
 // answers the POSTs in turn with the given responses, and records their data
-function fakeServer(responses) {
+// (a FormData as an object); the options of the requests go to sent
+function fakeServer(responses, sent = []) {
     const requests = [];
     jQuery.ajax = (options) => {
-        requests.push(options.data);
+        sent.push(options);
+        requests.push(options.data instanceof FormData ? Object.fromEntries(options.data.entries()) : options.data);
         return jQuery.Deferred().resolve(responses.shift()).promise();
     };
     return requests;
@@ -41,25 +43,6 @@ test("summaryLines", (t) => {
             "3 phenotype value(s) were deleted.",
         ], "no line about accessions when only the planting changes");
         t.notOk(summaryLines(summary, true).some((l) => /deleted/.test(l)), "the preview tells about deleting in its warnings");
-        t.end();
-    });
-
-    t.test("a shift", (t) => {
-        const lines = summaryLines({ ...empty, changed: 3, first_plot: "P4", last_plot: "P10", plots_in_stretch: 7, planting: [{ plot_name: "P4", not_planted: 1 }], pushed_out: [{ stock_name: "A10", plot_name: "P10" }] }, true);
-        t.equal(lines[0], "Plots P4 to P10 (7 plots in this order).");
-        t.equal(lines[1], "3 plot(s) will get another accession.");
-        t.ok(lines.includes("    A10 (planned for P10)"));
-        t.end();
-    });
-
-    t.test("the path of a shift along columns", (t) => {
-        const summary = { ...empty, changed: 3, first_plot: "P7", last_plot: "P9", plots_in_stretch: 3, planting: [{ plot_name: "P7", not_planted: 1 }],
-            lines: [{ line: "column", number: "2", from: "3", to: "1", plots: ["P7", "P8", "P9"] }], pushed_out: [{ stock_name: "A9", plot_name: "P9" }] };
-        const lines = summaryLines(summary, true);
-        t.equal(lines[1], "    Column 2, rows 3 to 1: P7, P8, P9", "column and direction");
-        t.ok(lines.includes("Left over, no longer in these plots (for example thrown into a border):"));
-        const row = summaryLines({ ...summary, lines: [{ line: "row", number: "4", from: "1", to: "12", plots: Array.from({ length: 12 }, (_, i) => "Q" + i) }] }, true, 10);
-        t.equal(row[1], "    Row 4, columns 1 to 12: Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, ... and 2 more", "long lines are cut");
         t.end();
     });
 
@@ -143,10 +126,50 @@ test("changeWithPreview", (t) => {
         const told = [];
         const result = await changeWithPreview("/url", {}, { confirm: () => t.fail("no question"), alert: (m) => told.push(m) });
         t.equal(result, null);
-        t.deepEqual(told, ["Nothing to change."]);
+        t.deepEqual(told, ["Nothing to change: the trial already matches."]);
         t.equal(requests.length, 1, "and nothing is posted to change");
         t.ok(nothingChanges({ ...empty }), "an empty plan");
         t.notOk(nothingChanges({ ...empty, planting: [{ plot_name: "P1", not_planted: 1 }] }), "a plan that marks a plot");
+        t.end();
+    });
+
+    t.test("a file of what was planted", async (t) => {
+        const form = new FormData();
+        form.append("trial_design_change_accessions_file", new Blob(["plot_name,accession_name\nP1,A2\n"]), "planted.csv");
+        form.append("keep_plot_names", "1");
+        const sent = [];
+        const requests = fakeServer([
+            { warning: "Phenotypes have been stored for this trial." },
+            { error: "1 phenotype value(s) were stored for plots that are marked as not planted (P1 &amp; P2).<br>Another error", not_planted_phenotypes: 1 },
+            { preview: { ...empty, changed: 1 } },
+            { success: 1, ...empty, changed: 1 },
+        ], sent);
+        const asked = [];
+        const result = await changeWithPreview("/upload", form, { confirm: (m) => { asked.push(m); return true; } });
+        t.equal(result.changed, 1);
+        t.deepEqual(requests.map((r) => Object.keys(r).sort().join(",")), [
+            "keep_plot_names,preview,trial_design_change_accessions_file",
+            "keep_plot_names,override,preview,trial_design_change_accessions_file",
+            "delete_phenotypes,keep_plot_names,override,preview,trial_design_change_accessions_file",
+            "delete_phenotypes,keep_plot_names,override,trial_design_change_accessions_file",
+        ], "the file is posted each time, with the answers so far");
+        t.ok(requests.every((r) => r.trial_design_change_accessions_file.name === "planted.csv"), "with its name");
+        t.equal(sent[0].processData, false, "as multipart/form-data");
+        t.equal(sent[0].contentType, false);
+        t.equal([...form.keys()].length, 2, "the form itself is not changed");
+        t.ok(asked[1].startsWith("1 phenotype value(s) were stored for plots that are marked as not planted (P1 & P2).\nAnother error\n\nDelete this phenotype value"), "the error as text");
+        t.end();
+    });
+
+    t.test("errors and messages of a file", async (t) => {
+        fakeServer([{ error: "Required column plot_name is missing<br>" }]);
+        const errors = [];
+        await changeWithPreview("/upload", new FormData(), { action: "Change Accessions", alert: (m, e) => errors.push([m, e]) });
+        t.deepEqual(errors, [["Change Accessions: Required column plot_name is missing<br>", "Required column plot_name is missing<br>"]], "the error from the server alone, to show as it is");
+        fakeServer([{ preview: { ...empty } }]);
+        const told = [];
+        await changeWithPreview("/upload", new FormData(), { alert: () => t.fail("not an error"), inform: (m) => told.push(m) });
+        t.deepEqual(told, ["Nothing to change: the trial already matches."]);
         t.end();
     });
 
@@ -175,9 +198,9 @@ test("confirmDialog", (t) => {
             if (option === "hide") this.trigger("hidden.bs.modal");
             return this;
         };
-        const answer = confirmDialog("2 plot(s) will get another accession.\n    P1\n\nContinue?", { title: "Shift Accessions", ok: "Go" });
+        const answer = confirmDialog("2 plot(s) will get another accession.\n    P1\n\nContinue?", { title: "Change Accessions", ok: "Go" });
         const dialog = jQuery(".modal").last();
-        t.equal(dialog.find(".modal-title").text(), "Shift Accessions");
+        t.equal(dialog.find(".modal-title").text(), "Change Accessions");
         t.deepEqual(dialog.find("li").map((i, li) => jQuery(li).text()).get(), ["2 plot(s) will get another accession.", "    P1", "Continue?"], "one item per line, without empty lines");
         t.equal(dialog.find(".btn-primary").text(), "Go");
         dialog.find("[data-answer=yes]").trigger("click");

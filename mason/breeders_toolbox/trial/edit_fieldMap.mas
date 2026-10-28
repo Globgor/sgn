@@ -37,8 +37,6 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button id="close_edit_field_map_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="replace_trial_stock_submit" id="replace_trial_stock_submit"></button>
-                <button type="button" class="btn btn-primary" name="shift_trial_stocks_open" id="shift_trial_stocks_open">Shift Accessions</button>
-                <button type="button" class="btn btn-primary" name="not_planted_plots_open" id="not_planted_plots_open">Not Planted Plots</button>
                 <!-- <button type="button" class="btn btn-primary" name="substitute_stock_submit" id="substitute_stock_submit"></button> -->
             </div>
         </div>
@@ -86,125 +84,6 @@ $trial_stock_type => undef
             <div class="modal-footer">
                 <button id="close_replace_trial_accession_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="replace_stock_submit" id="replace_stock_submit"></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="shift_trial_stocks_dialog" name="shift_trial_stocks_dialog" tabindex="-1" role="dialog" aria-labelledby="shift_stocks_dialog_title">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="shift_stocks_dialog_title">Shift Accessions in <% $trial_name %></h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <p class="help-block" style="white-space: normal">For plots that were planted shifted: from one plot on, every place got the accession planned for a place before it (or after it) in the planting order, usually to the end of the column or row, where the packet left over went into a border. The plots stay where they are, with their plot numbers, blocks and replicates; only the accessions move. Choose the order the planter took, as in Download Plot Order. You see the path and what changes before anything is changed.</p>
-                    <form class="form-horizontal" role="form" id="shift_trial_stocks_form" name="shift_trial_stocks_form" onsubmit="return false;">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="shift_stocks_order">Planting order:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="shift_stocks_order">
-                                    <option value="by_col_serpentine">By column: serpentine (up one column, down the next)</option>
-                                    <option value="by_col_zigzag">By column: zigzag (every column the same way)</option>
-                                    <option value="by_row_serpentine">By row: serpentine (along one row, back the next)</option>
-                                    <option value="by_row_zigzag">By row: zigzag (every row the same way)</option>
-                                    <option value="plot_number">By plot number</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group shift_stocks_layout">
-                            <label class="col-sm-4 control-label" for="shift_stocks_start">Starting corner:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="shift_stocks_start">
-                                    <option value="bottom_left">Bottom left</option>
-                                    <option value="bottom_right">Bottom right</option>
-                                    <option value="top_left">Top left</option>
-                                    <option value="top_right">Top right</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group shift_stocks_layout">
-                            <label class="col-sm-4 control-label">Borders planted on the way:</label>
-                            <div class="col-sm-8">
-                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_left" /> Left</label>
-                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_right" /> Right</label>
-                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_bottom" /> Bottom</label>
-                                <label class="checkbox-inline"><input type="checkbox" id="shift_stocks_border_top" /> Top</label>
-                            </div>
-                        </div>
-                        <div class="form-group shift_stocks_layout">
-                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">As in Download Plot Order with Include Borders; set from the borders saved with the field map. In a serpentine order a border column (or row) is a turn of its own, so it changes the direction of the columns after it. Border places take no packets.</p></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="shift_stocks_from_plot">First shifted plot:</label>
-                            <div class="col-sm-8"><select class="form-control" id="shift_stocks_from_plot"></select></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="shift_stocks_to_plot">Last shifted plot:</label>
-                            <div class="col-sm-8"><select class="form-control" id="shift_stocks_to_plot"></select></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="shift_stocks_positions">Positions:</label>
-                            <div class="col-sm-8"><input class="form-control" type="number" id="shift_stocks_positions" value="1" step="1" /></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">1: every place got the accession planned for the place before it (a place was skipped). -1: the one planned for the place after it (a plot was left out).</p></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8"><p class="help-block" style="white-space: normal; margin: 0">The places that stay empty are marked as not planted: they keep their planned accession, but get no Field Book entries and no phenotypes. Places already marked as not planted are skipped; the planting went on past them.</p></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="shift_stocks_empty_stock">Accession for them:</label>
-                            <div class="col-sm-8"><input class="form-control" id="shift_stocks_empty_stock" placeholder="Optional, for example NOT_PLANTED" /></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <div class="checkbox"><label><input type="checkbox" id="shift_stocks_rename_plots" /> Update plot names</label></div>
-                                <p class="help-block" style="white-space: normal; margin: 0">Labels in the field carry the planned plot names, and phenotype files use them. Keep the names unless you reprint the labels.</p>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="shift_trial_stocks_submit">Shift Accessions</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="not_planted_plots_dialog" name="not_planted_plots_dialog" tabindex="-1" role="dialog" aria-labelledby="not_planted_plots_dialog_title">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="not_planted_plots_dialog_title">Not Planted Plots in <% $trial_name %></h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <p class="help-block" style="white-space: normal">For places in the field where nothing was planted. A plot that was not planted keeps the accession planned for it, so the plan stays visible, but it is shown as empty on the field map, it is left out of Field Book files and phenotyping spreadsheets, and no phenotypes can be stored for it. Phenotypes it already has are deleted after you confirm. You see what changes before anything is changed.</p>
-                    <form class="form-horizontal" role="form" id="not_planted_plots_form" name="not_planted_plots_form" onsubmit="return false;">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Plot names:</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" id="not_planted_plot_names" rows="6" placeholder="One plot name per line"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <div class="radio"><label><input type="radio" name="not_planted_value" value="1" checked /> Mark as not planted</label></div>
-                                <div class="radio"><label><input type="radio" name="not_planted_value" value="0" /> Mark as planted again</label></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="not_planted_plots_submit">Save</button>
             </div>
         </div>
     </div>
@@ -317,10 +196,6 @@ $trial_stock_type => undef
                   <dd>A plot accession can be replaced by an accession within or outside of the trial. To do this, <b>click on the plot</b> and <b>provide the name of the new accession</b> (must already exist in the database).</dd>
                   <dt>Replace Trial Accession</dt>
                   <dd>An accession used in a trial can be replaced by a new accession or another accession from the trial. When this replace option is used, it replaces every instances (plots and plants) of that accession in the trial. To do this, <b>click on the Edit Field Map link</b> by the top right of the physical trial layout section; <b>click on Replace Accession button</b>; <b>select accession</b> to replace from the trial and <b>provide a new accession</b> (must already exit in the database); <b>click on Replace Trial Accession button</b> to complete the operation.</dd>
-                  <dt>Shift Accessions</dt>
-                  <dd>For plots that were planted shifted: from one plot on, every place got the accession planned for the place before it (or after it) in the planting order, usually to the end of the column or row. <b>Click on the Edit Field Layout link</b>, <b>click on Shift Accessions</b>, choose the planting order as in Download Plot Order (with the borders planted on the way), the first shifted plot, where the shift ends and the number of positions. The plots keep their plot numbers, blocks and replicates; only the accessions move. The places that stay empty are marked as not planted.</dd>
-                  <dt>Not Planted Plots</dt>
-                  <dd>For places where nothing was planted: <b>click on Not Planted Plots</b> in Edit Field Layout and enter the plot names, or <b>click on the plot</b> and use Mark as Not Planted. The plot keeps its planned accession, is shown empty with a dashed border, is left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.</dd>
                   <dt>Change dimensions</dt>
                   <dd>Click on the change dimensions button to alter the dimensions of the field map, and the respective row and column attributes of the plots in your trial. Clicking on this button will open a dialogue that prompts you to enter an accession name if the change you are making will result in dimensions that are larger than the amount of plots in your trial. The result is that the map will fill in the extra space with filler plots, and the filler plots will have the accession entered in input in the dialogue.</dd>
                   <dt>Invert rows</dt>
@@ -362,7 +237,7 @@ $trial_stock_type => undef
                 </h4>
                 <dd>- You have to be a <b>curator</b> or a <b>submitter and associated to the breeding program</b> of the trial to use the features of this tool.</dd>
                 <dd>- <b>Input boxes</b> used within the field map tool will automatically (<b>autocomplete</b>) give accession name options from the database when you start typing the accession name.</dd>
-                <dd>- <b>Once phenotypes are uploaded for the trial, only curators can change accessions</b>, after a warning, with Shift Accessions, Change Accessions or the plot form. Plots can still be marked as not planted. Every change shows what will change before anything is changed.</dd>
+                <dd>- <b>Once phenotypes are uploaded for the trial, only curators can change accessions</b>, after a warning, with Change Accessions (a file of what was planted) or the plot form. Every change shows what will change before anything is changed.</dd>
 
                 </div>
             </div>
@@ -692,14 +567,6 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
         replace_stock_in_trial(trial_stock_type)
     });
 
-    // shows what changed in the success dialog, which reloads the page when closed
-    function show_accession_change_result(title, message, summary) {
-        window.jsMod['trial_accession_change'].showSummary('#replace_stock_success_details', summary, false);
-        jQuery('#replace_stock_message_title').text(title);
-        jQuery('#replace_stock_success_message').text(message);
-        jQuery('#replace_stock_dialog_success_message').modal('show');
-    }
-
     async function replace_stock_in_trial() {
         jQuery('#replace_trial_stocks_dialog').modal("hide");
         var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/replace_stock', {
@@ -708,90 +575,11 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             'rename_plots': jQuery('#replace_stock_rename_plots').is(':checked') ? 1 : 0,
         }, { action: "Error Replacing Stock", title: "Replace Accession" });
         if (summary) {
-            show_accession_change_result(jQuery('#replace_stock_message_title').text(), jQuery('#replace_stock_success_message').text(), summary);
+            // the success dialog reloads the page when it is closed
+            window.jsMod['trial_accession_change'].showSummary('#replace_stock_success_details', summary, false);
+            jQuery('#replace_stock_dialog_success_message').modal('show');
         }
     }
-
-    // Shift Accessions
-    // the plots with their plot number and position, and the borders saved with the field map
-    jQuery('#shift_trial_stocks_open').click(function() {
-        jQuery('#edit_field_map_dialog').modal('hide');
-        if (jQuery('#shift_stocks_from_plot option').length === 0) {
-            jQuery.ajax({
-                url: '/ajax/breeders/trial/<% $trial_id %>/shift_accessions_plots',
-                success: function(response) {
-                    var from = jQuery('#shift_stocks_from_plot').empty();
-                    var to = jQuery('#shift_stocks_to_plot').empty()
-                        .append(jQuery('<option/>').val('line_end').text('(the end of this column or row)'))
-                        .append(jQuery('<option/>').val('').text('(the last plot in this order)'));
-                    (response.plots || []).forEach(function(p) {
-                        var label = p.plot_name + ' (plot ' + p.plot_number + (p.row_number ? ', row ' + p.row_number + ', column ' + p.col_number : '') + (p.not_planted ? ', not planted' : '') + ')';
-                        from.append(jQuery('<option/>').val(p.plot_id).text(label).prop('disabled', !!p.not_planted));
-                        to.append(jQuery('<option/>').val(p.plot_id).text(label).prop('disabled', !!p.not_planted));
-                    });
-                    ['top', 'right', 'bottom', 'left'].forEach(function(side) {
-                        jQuery('#shift_stocks_border_' + side).prop('checked', !!(response.borders && response.borders[side]));
-                    });
-                    shift_stocks_layout();
-                },
-                error: function() { alert('An error occurred getting the plots of this trial.'); }
-            });
-        }
-        jQuery('#shift_trial_stocks_dialog').modal('show');
-    });
-
-    // the starting corner, the borders and the end of a column or row only matter for orders by row or column
-    function shift_stocks_layout() {
-        var by_line = jQuery('#shift_stocks_order').val() !== 'plot_number';
-        jQuery('.shift_stocks_layout').toggle(by_line);
-        jQuery('#shift_stocks_to_plot option[value="line_end"]').prop('disabled', !by_line);
-        if (!by_line && jQuery('#shift_stocks_to_plot').val() === 'line_end') {
-            jQuery('#shift_stocks_to_plot').val('');
-        }
-    }
-    jQuery('#shift_stocks_order').change(shift_stocks_layout);
-
-    jQuery('#shift_stocks_empty_stock').autocomplete({
-        appendTo: "#shift_trial_stocks_dialog",
-        source: '/ajax/stock/accession_autocomplete'
-    });
-
-    jQuery('#shift_trial_stocks_submit').click(async function() {
-        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/shift_accessions', {
-            'order': jQuery('#shift_stocks_order').val(),
-            'start': jQuery('#shift_stocks_start').val(),
-            'from_plot_id': jQuery('#shift_stocks_from_plot').val(),
-            'to_plot_id': jQuery('#shift_stocks_to_plot').val(),
-            'positions': jQuery('#shift_stocks_positions').val(),
-            'empty_stock': jQuery('#shift_stocks_empty_stock').val(),
-            'rename_plots': jQuery('#shift_stocks_rename_plots').is(':checked') ? 1 : 0,
-            'border_top': jQuery('#shift_stocks_border_top').is(':checked') ? 1 : 0,
-            'border_right': jQuery('#shift_stocks_border_right').is(':checked') ? 1 : 0,
-            'border_bottom': jQuery('#shift_stocks_border_bottom').is(':checked') ? 1 : 0,
-            'border_left': jQuery('#shift_stocks_border_left').is(':checked') ? 1 : 0,
-        }, { action: "Error Shifting Accessions", title: "Shift Accessions" });
-        if (summary) {
-            jQuery('#shift_trial_stocks_dialog').modal('hide');
-            show_accession_change_result('Shift Accessions', 'The accessions were shifted.', summary);
-        }
-    });
-
-    // Not Planted Plots
-    jQuery('#not_planted_plots_open').click(function() {
-        jQuery('#edit_field_map_dialog').modal('hide');
-        jQuery('#not_planted_plots_dialog').modal('show');
-    });
-
-    jQuery('#not_planted_plots_submit').click(async function() {
-        var summary = await window.jsMod['trial_accession_change'].changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/not_planted', {
-            'plot_names': jQuery('#not_planted_plot_names').val(),
-            'not_planted': jQuery('input[name="not_planted_value"]:checked').val(),
-        }, { action: "Error Marking Plots", title: "Not Planted Plots" });
-        if (summary) {
-            jQuery('#not_planted_plots_dialog').modal('hide');
-            show_accession_change_result('Not Planted Plots', 'The plots were marked.', summary);
-        }
-    });
 
   jQuery('#close_replace_field_map_dialog').click( function() {
     location.reload();

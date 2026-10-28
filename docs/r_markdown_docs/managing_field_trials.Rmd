@@ -468,7 +468,7 @@ With "Update plot names" (on by default), a plot whose name contains the old acc
 
 Changing the accession does not move the plot: plot numbers, blocks, rows and columns stay the same. In a completely randomized design (CRD) the replicate counts the plots of each accession, so the replicates of the accessions involved are numbered again by plot number. In blocked designs (RCBD, Alpha, ...) the replicate is part of the field layout and is kept.
 
-Check plots follow the check accessions: a plot that gets a check accession of the trial becomes a check plot, and one that gets a test accession becomes a test plot. Phenotypes stay with their plots, so after a correction they count for the accession that really grew there; run the analyses of the trial again. Once a trial has phenotypes, only curators can change its accessions, after a warning, with “Change Accessions”, “Shift Accessions” or the plot form; “Replace Accession” is not available then.
+Check plots follow the check accessions: a plot that gets a check accession of the trial becomes a check plot, and one that gets a test accession becomes a test plot. Phenotypes stay with their plots, so after a correction they count for the accession that really grew there; run the analyses of the trial again. Once a trial has phenotypes, only curators can change its accessions, after a warning, with “Change Accessions” or the plot form; “Replace Accession” is not available then.
 
 #### Correcting the trial to what was planted
 
@@ -478,30 +478,20 @@ The surest way to make the trial match the field is a file of what was planted, 
 2. Write what was planted: change accession_name where another accession grows, and put 1 in not_planted where nothing was planted (the plot keeps its planned accession). In a file in planting order, a shift is a cut and paste of accession_name one row down, to where the shift ended. Border rows are ignored, so it does not matter if you write the packet that went into a border there.
 3. Upload it with “Change Accessions”. Before anything is changed, a summary shows which plots get another accession, which are marked as not planted, and any notes; nothing is changed until you confirm it. Plots that already match the file are left as they are: uploading the same file again changes nothing, and a later correction starts from a new download.
 
-Check “Keep the plot names” when labels with the plot names are already in the field.
+Check “Keep the plot names” when labels with the plot names are already in the field. If plot names do change, print new labels for those plots once the trial is corrected.
 
-#### Plots planted shifted
-
-For the common case of a shift there is also the “Shift Accessions” button of the “Edit Field Layout” window: from a plot on, every place got the accession planned for the place before it (positions 1, a place was skipped) or after it (-1, a packet was left out), usually to the end of the column, where the packet left over went into a border.
-
-* Planting order: as in “Download Plot Order”: by column or by row, serpentine (up one column, down the next) or zigzag (every column the same way), from a starting corner, or by plot number.
-* Borders planted on the way: as with “Include Borders” in “Download Plot Order”, set from the borders saved with the field map. Border rows at the bottom and the top are places within each column and do not change its direction; a border column at the side is a turn of its own in a serpentine order, so with a left border the first column of the trial is planted downwards.
-* The first shifted plot, and where the shift ends: by default the end of its column (or row).
-
-Before anything is changed, a summary shows the path column by column with its direction (for example “Column 2, rows 5 to 1”), the changes and the accessions left over. Unlike a file, a shift moves accessions from where they are now: run it once for each skipped place.
+The same file can be corrected and uploaded as often as needed, for example once after planting and again when gaps are found later in the season.
 
 #### Plots that were not planted
 
-If nothing was planted in a plot, use the “Not Planted Plots” button of the “Edit Field Layout” window (enter the plot names, one per line), or click the plot on the field map and use “Mark as Not Planted”. A plot that was not planted keeps the accession planned for it, so the plan stays visible, but:
+If nothing was planted in a plot, put 1 in its not_planted column in the file described above (0 marks it as planted again). A plot that was not planted keeps the accession planned for it, so the plan stays visible, but:
 
 * the field map shows it as an empty plot with a dashed border;
 * it is left out of Field Book files and of the phenotyping spreadsheets, and phenotypes cannot be uploaded for it;
 * the plot layout download has a not_planted column, and BrAPI gives it additionalInfo.notPlanted;
 * in a completely randomized design it is left out of the replicate numbering of its accession.
 
-Its plot number, block and replicate stay, so an empty place is a missing value in the analyses, not a value of 0. If the plot already has phenotypes, they would count for an accession that did not grow there: they are deleted with the change after you confirm it, or nothing is changed. Marking plots works in trials that already have phenotypes; “Mark as Planted” undoes it.
-
-Plots can also be marked in the not_planted column of the file described above.
+Its plot number, block and replicate stay, so an empty place is a missing value in the analyses, not a value of 0. If the plot already has phenotypes, they would count for an accession that did not grow there: they are deleted with the change after you confirm it, or nothing is changed. Clicking the plot on the field map shows whether it was planted.
 <!--
 You can switch plot accessions between any two plots by clicking on “Substitute Accession” button.
 

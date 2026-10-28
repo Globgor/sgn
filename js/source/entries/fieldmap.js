@@ -698,9 +698,6 @@ export function init() {
                     jQuery("#hm_plot_number").html(replace_plot_number);
                     var not_planted = !!(plot.additionalInfo && plot.additionalInfo.notPlanted);
                     jQuery("#hm_plot_planting").html(not_planted ? "<b>Not planted</b> (the accession is the planned one)" : "Planted");
-                    jQuery("#hm_toggle_not_planted")
-                        .data("not_planted", not_planted ? 0 : 1)
-                        .text(not_planted ? "Mark as Planted" : "Mark as Not Planted");
                     var old_plot_id = jQuery("#hm_plot_id").html(replace_plot_id);
                     var old_plot_accession = jQuery("#hm_plot_accession").html(
                         plot.additionalInfo?.intercropGermplasm ? 

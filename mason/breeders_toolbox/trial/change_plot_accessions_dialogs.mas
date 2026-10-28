@@ -4,7 +4,7 @@ $trial_id
 $trial_stock_type
 </%args>
 
-<& /util/import_javascript.mas, classes => [ 'jquery.iframe-post-form' ], entries => [ 'trial_accession_change' ] &>
+<& /util/import_javascript.mas, entries => [ 'trial_accession_change' ] &>
 
 % my $title = '';
 % if ($trial_stock_type eq 'cross') {
@@ -78,8 +78,6 @@ $trial_stock_type
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" /> Keep the plot names</label></div>
-                                <input type="hidden" name="preview" id="trial_design_change_accessions_preview" value="1" />
-                                <input type="hidden" name="delete_phenotypes" id="trial_design_change_accessions_delete_phenotypes" value="0" />
                             </div>
                         </div>
                     </form>
@@ -93,36 +91,6 @@ $trial_stock_type
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="td_replace_accession_curator_warning_message" name="td_replace_accession_curator_warning_message" tabindex="-1" role="dialog" aria-labelledby="td_curator_warning">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="tDDialog"><b>Warning!</b></h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-
-                    <big>
-                        <span>&#9888;</span>
-                        <p3>
-                            One or more traits have been assayed for this trial; <br>
-                            It is not recommended to change accessions/cross_unique_ids/family_names at this point. Are you sure?
-                        </p3>
-                    </big>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="td_override_accession_warning" type="button" class="btn btn-primary" >Yes</button>
-                <button id="close_tdfieldmap_dialog" type="button" class="btn btn-default" data-dismiss="modal">No</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div class="modal  fade" id="trial_design_replace_accessions_dialog_message" name="trial_design_replace_accessions_dialog_message" tabindex="-1" role="dialog" aria-labelledby="tDDialog">
     <div class="modal-dialog " role="document">
@@ -183,66 +151,26 @@ jQuery(document).ready(function () {
     });
 
     // the file is posted twice: first for the plan (preview), then, once the user agrees, to change the trial
-    var change_accessions_action = 'check';
-    function post_change_accessions(action, preview) {
-        change_accessions_action = action;
-        jQuery('#trial_design_change_accessions_preview').val(preview ? 1 : 0);
-        jQuery('#trial_design_change_accessions_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/" + action);
-        jQuery("#trial_design_change_accessions_form").submit();
-    }
-
-    jQuery('#trial_design_change_accessions_submit').click( function() {
+    jQuery('#trial_design_change_accessions_submit').click(async function() {
         if (jQuery("#trial_design_change_accessions_file").val() === '') {
             alert("Please select a file");
             return;
         }
-        jQuery('#trial_design_change_accessions_delete_phenotypes').val(0);
-        post_change_accessions('check', true);
-    });
-
-    jQuery('#td_override_accession_warning').click( function() {
-        jQuery('#td_replace_accession_curator_warning_message').modal("hide");
-        post_change_accessions('override', true);
-    });
-
-    jQuery('#trial_design_change_accessions_form').iframePostForm({
-        json: true,
-        post: function () {
-            jQuery('#working_modal').modal("show");
-        },
-        complete: async function (response) {
-            jQuery('#working_modal').modal("hide");
-            var change = window.jsMod['trial_accession_change'];
-            if (response.warning) {
-                jQuery('#trial_design_change_accessions_dialog').modal("hide");
-                jQuery('#td_replace_accession_curator_warning_message').modal("show");
-            } else if (response.error && response.not_planted_phenotypes && jQuery('#trial_design_change_accessions_delete_phenotypes').val() !== '1') {
-                var text = jQuery('<div/>').html(response.error.replace(/<br\s*\/?>/g, "\n")).text();
-                if (await change.confirmDialog(text + "\n\nDelete these phenotype values with this change?", { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
-                    jQuery('#trial_design_change_accessions_delete_phenotypes').val(1);
-                    post_change_accessions(change_accessions_action, true);
-                }
-            } else if (response.error) {
+        var change = window.jsMod['trial_accession_change'];
+        var summary = await change.changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/check', new FormData(jQuery('#trial_design_change_accessions_form')[0]), {
+            title: "<% $title %>",
+            alert: function(message, error) {
+                jQuery('#change_accession_error_dialog tbody').html(error);
                 jQuery('#change_accession_error_dialog').modal("show");
-                jQuery('#change_accession_error_dialog tbody').html(response.error);
-            } else if (response.preview) {
-                if (change.nothingChanges(response.preview)) {
-                    await change.confirmDialog("Nothing to change: the trial already matches the file.", { title: "<% $title %>", ok: "OK", cancel: null });
-                } else if (await change.confirmDialog(change.summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: "<% $title %>", ok: "Continue" })) {
-                    post_change_accessions(change_accessions_action, false);
-                }
-            } else {
-                jQuery('#trial_design_change_accessions_dialog').modal("hide");
-                jQuery('#td_replace_accession_curator_warning_message').modal("hide");
-                change.showSummary('#trial_design_change_accessions_summary', response, false);
-                jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
-            }
-        },
-        error: function(response) {
+            },
+            inform: function(message) {
+                return change.confirmDialog(message, { title: "<% $title %>", ok: "OK", cancel: null });
+            },
+        });
+        if (summary) {
             jQuery('#trial_design_change_accessions_dialog').modal("hide");
-            jQuery('#td_replace_accession_curator_warning_message').modal("hide");
-            jQuery('#working_modal').modal("hide");
-            alert("An error occurred changing plot accessions");
+            change.showSummary('#trial_design_change_accessions_summary', summary, false);
+            jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
         }
     });
 

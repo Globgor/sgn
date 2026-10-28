@@ -1,7 +1,7 @@
 # Tests the ways to change the accession of plots in a trial, through the web
 # server: Replace Accession (replace_stock), one plot (replace_plot_accessions),
-# the Change Accessions upload, Shift Accessions (shift_accessions), Not Planted
-# Plots (not_planted), Substitute (substitute_stock), genotyping plate wells
+# the Change Accessions upload (a file of what was planted, also of plots that
+# were not planted), Substitute (substitute_stock), genotyping plate wells
 # (replace_well_accessions) and BrAPI PUT /observationunits.
 # CXGN::Trial::AccessionChange, which they all use, is tested in
 # t/unit_fixture/CXGN/Trial/AccessionChange.t.
@@ -94,6 +94,16 @@ sub cached_accession {
     my $design = CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $trial_id, experiment_type => 'field_layout' })->get_design();
     my ($p) = grep { $_->{plot_name} eq $plot_name } values %$design;
     return $p ? $p->{accession_name} : undef;
+}
+
+# posts a CSV file to the Change Accessions upload of a trial
+sub upload_accessions {
+    my ($trial, $content, @fields) = @_;
+    my ($fh, $filename) = tempfile(SUFFIX => '.csv');
+    print $fh $content;
+    close($fh);
+    $mech->post("$base/ajax/breeders/trial/$trial/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ], @fields ]);
+    return decode_json($mech->content);
 }
 
 my $replace_stock = "/ajax/breeders/trial/$trial_id/replace_stock";
@@ -200,14 +210,7 @@ subtest 'Change Accessions upload' => sub {
 };
 
 subtest 'Change Accessions upload: keeping the plot names' => sub {
-    my $upload = sub {
-        my ($content, @fields) = @_;
-        my ($fh, $filename) = tempfile(SUFFIX => '.csv');
-        print $fh $content;
-        close($fh);
-        $mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ], @fields ]);
-        return decode_json($mech->content);
-    };
+    my $upload = sub { return upload_accessions($trial_id, @_) };
     rename_plot($plot{3}, 'test_trial-rep1-test_accession3_3');
     rename_plot($plot{4}, 'test_trial-rep2-test_accession3_4');
     my $r = $upload->("plot_name,accession_name\ntest_trial-rep1-test_accession3_3,test_accession2\n", keep_plot_names => 1);
@@ -221,113 +224,37 @@ subtest 'Change Accessions upload: keeping the plot names' => sub {
     restore();
 };
 
-subtest 'shift_accessions' => sub {
-    my $not_planted = $schema->resultset('Stock::Stock')->create({ uniquename => 'NOT_PLANTED', name => 'NOT_PLANTED', type_id => $t{accession}, organism_id => $organism_id });
-    my $shift = "/ajax/breeders/trial/$trial_id/shift_accessions";
-    my %params = (from_plot_id => $plot{4}, to_plot_id => $plot{6}, positions => 1, empty_stock => 'NOT_PLANTED', order => 'plot_number');
-
-    my $r = post_json($shift, [ %{{ %params, preview => 1 }} ]);
-    is($r->{preview}->{changed}, 3, 'preview: three plots change');
-    is_deeply($r->{preview}->{pushed_out}, [ { stock_id => $original->{6}->{accession_id}, stock_name => $original->{6}->{accession}, plot_name => 'test_trial26' } ], 'preview: the accession planned for plot 6 is pushed out');
-    is_deeply([ @{$r->{preview}}{'first_plot', 'last_plot', 'plots_in_stretch'} ], [ 'test_trial24', 'test_trial26', 3 ], 'preview: the stretch');
-    is_deeply(trial_state(), $original, 'preview changes nothing');
-
-    $r = post_json($shift, [ %params ]);
-    is($r->{success}, 1, 'shift succeeds') or diag(explain $r);
-    is_deeply([ map { plot_state($plot{$_})->{accession} } (4, 5, 6) ], [ 'NOT_PLANTED', $original->{4}->{accession}, $original->{5}->{accession} ], 'shifted');
-    is_deeply([ map { plot_state($plot{$_})->{name} } (4, 5, 6) ], [ 'test_trial24', 'test_trial25', 'test_trial26' ], 'names kept by default');
-    is(cached_accession('test_trial24'), 'NOT_PLANTED', 'cached layout');
-    is(plot_state($plot{4})->{not_planted}, '1', 'plot 4 is not planted');
-    restore();
-
-    $r = post_json($shift, [ %{{ %params, empty_stock => '' }} ]);
-    is($r->{success}, 1, 'without an accession for the empty places') or diag(explain $r);
-    is_deeply([ map { plot_state($plot{$_})->{accession} } (4, 5, 6) ], [ map { $original->{$_}->{accession} } (4, 4, 5) ], 'plot 4 keeps its planned accession');
-    is_deeply([ map { plot_state($plot{$_})->{not_planted} } (4, 5, 6) ], [ '1', undef, undef ], 'and is not planted');
-    is_deeply($r->{planting}, [ { plot_name => 'test_trial24', not_planted => 1 } ], 'the summary says so');
-    restore();
-    like(post_json($shift, [ %{{ %params, positions => 5 }} ])->{error}, qr/not shorter than the 3 plot/, 'too many positions');
-    like(post_json($shift, [ %{{ %params, order => 'by_row_serpentine' }} ])->{error}, qr/row and\/or column/, 'no rows and columns for the serpentine order');
-    my $anonymous = Test::WWW::Mechanize->new;
-    $anonymous->post("$base$shift", [ %params ]);
-    like(decode_json($anonymous->content)->{error}, qr/insufficient access privileges/, 'not logged in');
-    is_deeply(trial_state(), $original, 'nothing changed');
-    $not_planted->delete;
-};
-
-subtest 'shift_accessions along a serpentine by column, to the end of the column' => sub {
-    # 3 rows of 5 columns: up column 1 (plots 1, 6, 11), down column 2 (12, 7, 2); after a left border the other way round
-    foreach my $n (1 .. 15) {
-        set_prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
-        set_prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
-    }
-    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
-    my $shift = "/ajax/breeders/trial/$trial_id/shift_accessions";
-
-    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/shift_accessions_plots");
-    my $plots = decode_json($mech->content);
-    is(scalar(@{$plots->{plots}}), 15, 'the dialog gets the 15 plots');
-    is_deeply([ @{ $plots->{plots}->[6] }{qw(plot_name plot_number row_number col_number not_planted)} ], [ 'test_trial27', 7, 2, 2, 0 ], 'with plot number, row and column');
-    is_deeply($plots->{borders}, { top => 0, right => 0, bottom => 0, left => 0 }, 'and the saved borders');
-
-    # the order of the planting order download (Download Plot Order), with and without the left border
-    my $planting_order = sub {
-        my $left = shift;
-        $mech->get_ok("$base/ajax/breeders/trial_plot_order?trial_ids=$trial_id&type=planting&order=by_col_serpentine&start=bottom_left&left_border=$left", "planting order, left border $left");
-        my %seen;
-        return [ grep { !$seen{$_}++ } map { /^test_trial2(\d+)$/ ? $1 + 0 : () } ($mech->content =~ /\b(test_trial2\d+)\b/g) ];
-    };
-    is_deeply($planting_order->('false'), [ 1, 6, 11, 12, 7, 2, 3, 8, 13, 14, 9, 4, 5, 10, 15 ], 'planting order without borders: column 2 goes down');
-    is_deeply($planting_order->('true'), [ 11, 6, 1, 2, 7, 12, 13, 8, 3, 4, 9, 14, 15, 10, 5 ], 'with the left border column 2 goes up');
-
-    my %params = (from_plot_id => $plot{7}, to_plot_id => 'line_end', positions => 1, order => 'by_col_serpentine', start => 'bottom_left');
-    my $r = post_json($shift, [ %params, preview => 1 ]);
-    is_deeply($r->{preview}->{lines}, [ { line => 'column', number => 2, from => 2, to => 1, plots => [ 'test_trial27', 'test_trial22' ] } ], 'column 2 goes down, to plot 2') or diag(explain $r);
-    $r = post_json($shift, [ %params, border_left => 1, preview => 1 ]);
-    is_deeply($r->{preview}->{lines}, [ { line => 'column', number => 2, from => 2, to => 3, plots => [ 'test_trial27', 'test_trial212' ] } ], 'after a left border column 2 goes up, to plot 12');
-    is_deeply([ map { $_->{plot_name} } @{ $r->{preview}->{pushed_out} } ], [ 'test_trial212' ], 'the packet of plot 12 is left over');
-    $r = post_json($shift, [ %params, border_left => 1 ]);
-    is($r->{success}, 1, 'shifted') or diag(explain $r);
-    is_deeply([ map { plot_state($plot{$_})->{accession} } (2, 7, 12) ], [ $original->{2}->{accession}, $original->{7}->{accession}, $original->{7}->{accession} ], 'plot 12 has the accession planned for plot 7');
-    is(plot_state($plot{7})->{not_planted}, '1', 'plot 7 is not planted');
-    like(post_json($shift, [ %{{ %params, order => 'plot_number', from_plot_id => $plot{8} }} ])->{error}, qr/end of a column or row needs a planting order by row or column/, 'the end of a column needs an order by column');
-
-    $schema->resultset('Stock::Stockprop')->search({ stock_id => { -in => [ values %plot ] }, type_id => { -in => [ $t{row_number}, $t{col_number} ] } })->delete;
-    restore();
-};
-
-subtest 'shift_accessions at the end of the season: the trial has phenotypes' => sub {
+subtest 'Change Accessions upload at the end of the season: the trial has phenotypes' => sub {
     my $phenotyped_trial_id = $schema->resultset('Project::Project')->find({ name => 'CASS_6Genotypes_Sampling_2015' })->project_id;
     my $ac = CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $phenotyped_trial_id });
     my @plots = sort { $a->{plot_number} <=> $b->{plot_number} } values %{ $ac->load_units() };
-    # plot 201 has no phenotypes: it stays empty (not planted), 202 and 203 have phenotypes
+    # plot 201 has no phenotypes: it was skipped (not planted), 202 and 203 have phenotypes and got the packets of 201 and 202
     my ($first) = grep { $plots[$_]->{plot_number} == 201 } 0 .. $#plots;
     my @stretch = @plots[$first .. $first + 2];
     my %saved = map { $_->{plot_id} => [ $_->{stock_id}, $_->{plot_name} ] } @stretch;
-    my $not_planted = $schema->resultset('Stock::Stock')->create({ uniquename => 'NOT_PLANTED', name => 'NOT_PLANTED', type_id => $t{accession}, organism_id => $organism_id });
     my $phenotypes_h = $schema->storage->dbh->prepare("SELECT count(*) FROM nd_experiment_stock nes JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = nes.nd_experiment_id WHERE nes.stock_id = ?");
     my $phenotypes = sub { $phenotypes_h->execute($_[0]); return ($phenotypes_h->fetchrow_array())[0]; };
     my %phenotype_count = map { $_->{plot_id} => $phenotypes->($_->{plot_id}) } @stretch;
     is($phenotype_count{ $stretch[0]->{plot_id} }, 0, 'the first plot has no phenotypes');
     ok($phenotype_count{ $stretch[1]->{plot_id} } > 0, 'the others have');
 
-    my $shift = "/ajax/breeders/trial/$phenotyped_trial_id/shift_accessions";
-    my %params = (from_plot_id => $stretch[0]->{plot_id}, to_plot_id => $stretch[2]->{plot_id}, positions => 1, empty_stock => 'NOT_PLANTED', order => 'plot_number');
-    my $r = post_json($shift, [ %{{ %params, preview => 1 }} ]);
-    like($r->{warning}, qr/traits have been assayed/, 'curators are warned first');
-    $r = post_json($shift, [ %{{ %params, preview => 1, override => 1 }} ]);
-    ok($r->{preview}->{plots_with_phenotypes} > 0, 'the preview counts the plots with phenotypes');
+    my $file = "plot_name,accession_name,not_planted\n"
+        .join('', map { "$stretch[$_]->{plot_name},".($stretch[$_ ? $_ - 1 : 0]->{stock_name}).",".($_ ? 0 : 1)."\n" } 0 .. 2);
+    my $r = upload_accessions($phenotyped_trial_id, $file, preview => 1);
+    like($r->{warning}, qr/traits have been assayed/, 'curators are warned first, with the reason');
+    $r = upload_accessions($phenotyped_trial_id, $file, preview => 1, override => 1);
+    ok($r->{preview}->{plots_with_phenotypes} > 0, 'the preview counts the plots with phenotypes') or diag(explain $r);
     ok((grep { /already have phenotypes/ } @{ $r->{preview}->{warnings} }), 'and warns that the values count for the new accessions');
-    $r = post_json($shift, [ %{{ %params, override => 1 }} ]);
-    is($r->{success}, 1, 'shift succeeds with override') or diag(explain $r);
+    $r = upload_accessions($phenotyped_trial_id, $file, override => 1);
+    is($r->{success}, 1, 'changed with override') or diag(explain $r);
     my $after = $ac->load_units();
     is($after->{ $stretch[1]->{plot_id} }->{stock_id}, $stretch[0]->{stock_id}, 'the second plot has the accession planned for the first');
     is_deeply({ map { $_->{plot_id} => $phenotypes->($_->{plot_id}) } @stretch }, \%phenotype_count, 'every plot keeps its phenotypes');
     is($after->{ $stretch[0]->{plot_id} }->{not_planted}, '1', 'the first plot is not planted');
 
-    # a place that stays empty but has phenotypes: they would be deleted, so the user is asked
-    $r = post_json($shift, [ %{{ %params, from_plot_id => $stretch[1]->{plot_id}, preview => 1, override => 1 }} ]);
-    like($r->{error}, qr/phenotype value\(s\) were stored for plots that are marked as not planted \(\Q$stretch[1]->{plot_name}\E\)/, 'shifting from a plot with phenotypes needs delete_phenotypes');
+    # a place with phenotypes that was not planted: the values would be deleted, so the user is asked
+    $r = upload_accessions($phenotyped_trial_id, "plot_name,accession_name,not_planted\n$stretch[1]->{plot_name},$stretch[0]->{stock_name},1\n", preview => 1, override => 1);
+    like($r->{error}, qr/phenotype value\(s\) were stored for plots that are marked as not planted \(\Q$stretch[1]->{plot_name}\E\)/, 'a plot with phenotypes needs delete_phenotypes');
     ok($r->{not_planted_phenotypes} > 0, 'and the page can ask');
 
     # put the trial back
@@ -337,25 +264,31 @@ subtest 'shift_accessions at the end of the season: the trial has phenotypes' =>
     }
     $mech->get_ok("$base/ajax/breeders/trial/$phenotyped_trial_id/refresh_cache");
     is_deeply({ map { $_->{plot_id} => [ $_->{stock_id}, $_->{plot_name} ] } grep { $saved{ $_->{plot_id} } } values %{ $ac->load_units() } }, \%saved, 'restored');
-    $not_planted->delete;
 };
 
 subtest 'Change Accessions upload: the not_planted column' => sub {
-    my $upload = sub {
-        my ($content, @fields) = @_;
-        my ($fh, $filename) = tempfile(SUFFIX => '.csv');
-        print $fh $content;
-        close($fh);
-        $mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ], @fields ]);
-        return decode_json($mech->content);
-    };
-    my $r = $upload->("plot_name,accession_name,not_planted\ntest_trial24,$original->{4}->{accession},1\ntest_trial25,test_accession2,\ntest_trial26,$original->{6}->{accession},0\n");
+    my $upload = sub { return upload_accessions($trial_id, @_) };
+    my $r = $upload->("plot_name,accession_name,not_planted\ntest_trial24,$original->{4}->{accession},1\ntest_trial25,test_accession2,\ntest_trial26,$original->{6}->{accession},0\n", preview => 1);
+    is_deeply($r->{preview}->{planting}, [ { plot_name => 'test_trial24', not_planted => 1 } ], 'preview: plot 4 will be marked as not planted') or diag(explain $r);
+    is_deeply(trial_state(), $original, 'preview changes nothing');
+    $r = $upload->("plot_name,accession_name,not_planted\ntest_trial24,$original->{4}->{accession},1\ntest_trial25,test_accession2,\ntest_trial26,$original->{6}->{accession},0\n");
     is($r->{success}, 1, 'success') or diag(explain $r);
     is_deeply($r->{planting}, [ { plot_name => 'test_trial24', not_planted => 1 } ], 'plot 4 marked as not planted');
     is_deeply([ map { plot_state($plot{$_})->{not_planted} } (4, 5, 6) ], [ '1', undef, undef ], 'stored');
+    is(plot_state($plot{4})->{accession}, $original->{4}->{accession}, 'plot 4 keeps its accession');
     is(plot_state($plot{5})->{accession}, 'test_accession2', 'and plot 5 changed in the same file');
-    $r = $upload->("plot_name,accession_name,not planted\ntest_trial24,$original->{4}->{accession},no\n");
-    is_deeply($r->{planting}, [ { plot_name => 'test_trial24', not_planted => 0 } ], "'not planted' with 'no' plants it again");
+    restore();
+
+    $r = $upload->("plot_name,accession_name,not_planted\ntest_trial25,$original->{5}->{accession},1\n");
+    is_deeply([ map { plot_state($plot{$_})->{rep} } (8, 11) ], [ 1, 2 ], 'CRD: test_accession1 is numbered without plot 5');
+    my $ua = LWP::UserAgent->new;
+    $ua->default_header('Authorization' => 'Bearer '.$access_token);
+    my $unit = sub { return decode_json($ua->get("$base/brapi/v2/observationunits/$_[0]")->decoded_content)->{result}; };
+    ok($unit->($plot{5})->{additionalInfo}->{notPlanted}, 'BrAPI: additionalInfo.notPlanted');
+    ok(!exists(($unit->($plot{8})->{additionalInfo} || {})->{notPlanted}), 'BrAPI: not for a planted plot');
+    $r = $upload->("plot_name,accession_name,not planted\ntest_trial25,$original->{5}->{accession},no\n");
+    is_deeply($r->{planting}, [ { plot_name => 'test_trial25', not_planted => 0 } ], "'not planted' with 'no' plants it again");
+    is_deeply(trial_state(), $original, 'as before');
     $r = $upload->("plot_name,accession_name,not_planted\ntest_trial24,$original->{4}->{accession},maybe\n");
     like($r->{error}, qr/Plot test_trial24: not_planted must be 1 \(not planted\) or 0 \(planted\), not maybe\./, 'an unknown value is refused');
     restore();
@@ -435,37 +368,7 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     restore();
 };
 
-subtest 'not_planted: Not Planted Plots and the plot dialog' => sub {
-    my $url = "/ajax/breeders/trial/$trial_id/not_planted";
-    my $r = post_json($url, [ plot_names => "test_trial25\r\ntest_trial28\n", preview => 1 ]);
-    is_deeply($r->{preview}->{planting}, [ { plot_name => 'test_trial25', not_planted => 1 }, { plot_name => 'test_trial28', not_planted => 1 } ], 'preview by plot names');
-    is_deeply(trial_state(), $original, 'preview changes nothing');
-
-    $r = post_json($url, [ plot_ids => $plot{5} ]);
-    is($r->{success}, 1, 'by plot id') or diag(explain $r);
-    is(plot_state($plot{5})->{not_planted}, '1', 'plot 5 is not planted');
-    is(plot_state($plot{5})->{accession}, $original->{5}->{accession}, 'and keeps its accession');
-    is_deeply([ map { plot_state($plot{$_})->{rep} } (8, 11) ], [ 1, 2 ], 'CRD: test_accession1 is numbered without plot 5');
-
-    my $ua = LWP::UserAgent->new;
-    $ua->default_header('Authorization' => 'Bearer '.$access_token);
-    my $unit = sub { return decode_json($ua->get("$base/brapi/v2/observationunits/$_[0]")->decoded_content)->{result}; };
-    ok($unit->($plot{5})->{additionalInfo}->{notPlanted}, 'BrAPI: additionalInfo.notPlanted');
-    ok(!exists(($unit->($plot{8})->{additionalInfo} || {})->{notPlanted}), 'BrAPI: not for a planted plot');
-
-    $r = post_json($url, [ plot_ids => $plot{5}, not_planted => 0 ]);
-    is_deeply($r->{planting}, [ { plot_name => 'test_trial25', not_planted => 0 } ], 'planted again');
-    is_deeply(trial_state(), $original, 'as before');
-
-    like(post_json($url, [ plot_names => "test_trial25\nno_such_plot" ])->{error}, qr/These plots are not part of this trial: no_such_plot/, 'unknown plot');
-    like(post_json($url, [])->{error}, qr/Choose the plots/, 'no plots');
-    my $anonymous = Test::WWW::Mechanize->new;
-    $anonymous->post("$base$url", [ plot_ids => $plot{5} ]);
-    like(decode_json($anonymous->content)->{error}, qr/insufficient access privileges/, 'not logged in');
-    is_deeply(trial_state(), $original, 'nothing changed');
-};
-
-subtest 'not_planted: phenotypes of the plot are deleted after confirmation' => sub {
+subtest 'Change Accessions upload: phenotypes of a plot that was not planted are deleted after confirmation' => sub {
     my $temp_file = $f->config->{cluster_shared_tempdir}."/test_temp_nd_experiment_id_delete";
     my $store = CXGN::Phenotypes::StorePhenotypes->new(
         basepath => $f->config->{basepath}, dbhost => $f->config->{dbhost}, dbname => $f->config->{dbname}, dbuser => $f->config->{dbuser}, dbpass => $f->config->{dbpass},
@@ -479,14 +382,14 @@ subtest 'not_planted: phenotypes of the plot are deleted after confirmation' => 
     my $values = sub { $values_h->execute($_[0]); return ($values_h->fetchrow_array())[0]; };
     is($values->($plot{10}), 1, 'plot 10 has a phenotype');
 
-    my $url = "/ajax/breeders/trial/$trial_id/not_planted";
-    my $r = post_json($url, [ plot_ids => $plot{10}, preview => 1 ]);
+    my $file = "plot_name,accession_name,not_planted\ntest_trial210,$original->{10}->{accession},1\n";
+    my $r = upload_accessions($trial_id, $file, preview => 1, override => 1);
     like($r->{error}, qr/1 phenotype value\(s\) were stored for plots that are marked as not planted \(test_trial210\)/, 'the preview refuses');
     is($r->{not_planted_phenotypes}, 1, 'and counts the values, so that the page can ask');
-    $r = post_json($url, [ plot_ids => $plot{10}, preview => 1, delete_phenotypes => 1 ]);
+    $r = upload_accessions($trial_id, $file, preview => 1, override => 1, delete_phenotypes => 1);
     ok((grep { /are deleted/ } @{ $r->{preview}->{warnings} }), 'with delete_phenotypes the preview warns');
     is($values->($plot{10}), 1, 'and deletes nothing');
-    $r = post_json($url, [ plot_ids => $plot{10}, delete_phenotypes => 1 ]);
+    $r = upload_accessions($trial_id, $file, override => 1, delete_phenotypes => 1);
     is($r->{success}, 1, 'marked') or diag(explain $r);
     is($r->{phenotypes_deleted}, 1, 'one value deleted');
     is($values->($plot{10}), 0, 'plot 10 has no phenotypes');

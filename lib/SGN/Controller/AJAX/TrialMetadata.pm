@@ -2372,11 +2372,12 @@ sub trial_plot_gps_upload : Chained('trial') PathPart('upload_plot_gps') Args(0)
 # Plot Order, whose border and gap rows are skipped) can be corrected and
 # uploaded; uploading it again changes nothing.
 # Args: 'check' (curators get a warning for trials with phenotypes) or 'override'.
-# params: keep_plot_names, delete_phenotypes, preview (1 to get the plan only)
+# params: keep_plot_names, delete_phenotypes, preview (1 to get the plan only),
+#   override (1, the same as the Arg 'override')
 sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot_accessions_using_file') Args(1) {
     my $self = shift;
     my $c = shift;
-    my $override = shift;
+    my $override = _true_param($c->req->param('override')) ? 'override' : shift;
     my $trial_id = $c->stash->{trial_id};
     my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
     my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
@@ -2452,8 +2453,8 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
             $c->stash->{rest} = { error => $return_error };
             return;
         }
-        if ($override eq "check") {
-            $c->stash->{rest} = { warning => "curator warning" };
+        if ($override ne "override") {
+            $c->stash->{rest} = { warning => $return_error };
             return;
         }
     }
@@ -3226,163 +3227,6 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
 
     my $keep_names = $rename_plots eq '0' || lc($rename_plots) eq 'false';
     $self->_change_trial_stocks($c, $accession_change, $changes, { rename_plots => $keep_names ? 'none' : 'auto' }, $preview);
-}
-
-# Corrects plots that were planted shifted along the planting order: from a plot
-# on, every place got the stock planned for a place some positions earlier
-# (positions > 0) or later (positions < 0). The places that stay empty are
-# marked as not planted; they keep their planned stock, or get empty_stock.
-# params: from_plot_id, to_plot_id (optional, default the last plot; 'line_end' for
-#   the end of the column or row of from_plot_id), positions,
-#   empty_stock (uniquename, optional), order ('plot_number' or 'by_row_serpentine' etc.,
-#   as for the planting order download), start ('bottom_left' etc.), border_top,
-#   border_right, border_bottom, border_left (1 for borders planted in the same pass),
-#   rename_plots (1 to update the plot names, default 0), delete_phenotypes (1 to
-#   delete the phenotypes of the places that stay empty), preview (1 to get the
-#   plan only), override (1: curators change trials that already have phenotypes)
-sub shift_trial_stocks : Chained('trial') PathPart('shift_accessions') Args(0) {
-    my $self = shift;
-    my $c = shift;
-    my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
-    my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
-    my $trial_id = $c->stash->{trial_id};
-    my $preview = $c->req->param('preview');
-    my $override = $c->req->param('override');
-    my $rename_plots = $c->req->param('rename_plots') // '0';
-
-    if ($self->privileges_denied($c)) {
-        $c->stash->{rest} = { error => "You have insufficient access privileges to edit this map." };
-        return;
-    }
-
-    my $fieldmap = CXGN::Trial::FieldMap->new({
-        bcs_schema => $schema,
-        trial_id => $trial_id,
-    });
-    my $return_error = $fieldmap->update_fieldmap_precheck();
-    if ($return_error) {
-        if (!$c->user()->check_roles("curator")) {
-            $c->stash->{rest} = { error => $return_error };
-            return;
-        }
-        if (!$override) {
-            $c->stash->{rest} = { warning => $return_error };
-            return;
-        }
-    }
-
-    my $empty_stock_name = $c->req->param('empty_stock');
-    my $empty_stock;
-    if (defined($empty_stock_name) && $empty_stock_name =~ /\S/) {
-        ($empty_stock, my $stock_error) = $self->_find_trial_stock($schema, $empty_stock_name);
-        if (!$empty_stock) {
-            $c->stash->{rest} = { error => "The accession for the empty places: $stock_error" };
-            return;
-        }
-    }
-
-    my $accession_change = CXGN::Trial::AccessionChange->new({
-        schema => $schema,
-        trial_id => $trial_id,
-    });
-    my $to_plot_id = $c->req->param('to_plot_id');
-    my $shift = $accession_change->changes_for_shift({
-        from_plot_id => scalar($c->req->param('from_plot_id')),
-        to_plot_id => $to_plot_id,
-        to_end_of_line => (defined($to_plot_id) && $to_plot_id eq 'line_end') ? 1 : 0,
-        positions => scalar($c->req->param('positions')),
-        empty_stock_id => $empty_stock ? $empty_stock->stock_id : undef,
-        order => scalar($c->req->param('order')),
-        start => scalar($c->req->param('start')),
-        borders => { map { $_ => _true_param($c->req->param("border_$_")) } qw(top right bottom left) },
-    });
-    if ($shift->{error}) {
-        $c->stash->{rest} = { error => $shift->{error} };
-        return;
-    }
-
-    my $keep_names = $rename_plots eq '0' || lc($rename_plots) eq 'false';
-    my $options = { rename_plots => $keep_names ? 'none' : 'auto', delete_phenotypes => _true_param($c->req->param('delete_phenotypes')) };
-    $self->_change_trial_stocks($c, $accession_change, $shift->{changes}, $options, $preview);
-    my $rest = $c->stash->{rest};
-    my $summary = $rest->{preview} || $rest;
-    if (!$rest->{error}) {
-        $summary->{pushed_out} = $shift->{pushed_out};
-        $summary->{first_plot} = $shift->{plots}->[0];
-        $summary->{last_plot} = $shift->{plots}->[-1];
-        $summary->{plots_in_stretch} = scalar(@{ $shift->{plots} });
-        $summary->{lines} = $shift->{lines};
-    }
-}
-
-# The plots of the trial for the Shift Accessions dialog, by plot number:
-# { plots => [ { plot_id, plot_name, plot_number, row_number, col_number, not_planted } ],
-#   borders => { top, right, bottom, left } } (the borders saved with the field map)
-sub shift_trial_stocks_plots : Chained('trial') PathPart('shift_accessions_plots') Args(0) {
-    my $self = shift;
-    my $c = shift;
-    my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
-    my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
-    my $accession_change = CXGN::Trial::AccessionChange->new({
-        schema => $schema,
-        trial_id => $c->stash->{trial_id},
-    });
-    my @plots = sort { CXGN::Trial::AccessionChange::_compare_plot_numbers($a->{plot_number}, $b->{plot_number}) || $a->{plot_id} <=> $b->{plot_id} } values %{ $accession_change->load_units() };
-    @plots = map { {
-        plot_id => $_->{plot_id} + 0,
-        plot_name => $_->{plot_name},
-        plot_number => $_->{plot_number},
-        row_number => $_->{row_number},
-        col_number => $_->{col_number},
-        not_planted => ($_->{not_planted} && $_->{not_planted} ne '0') ? 1 : 0,
-    } } @plots;
-    $c->stash->{rest} = { plots => \@plots, borders => $accession_change->saved_borders() };
-}
-
-# Marks plots as not planted, or as planted again (Field Layout Tools -> Edit Field Layout -> Not Planted Plots).
-# A plot that was not planted keeps its planned accession; see CXGN::Trial::AccessionChange.
-# Marking empty places is allowed in trials that already have phenotypes; plots
-# that have phenotypes themselves need delete_phenotypes.
-# params: plot_names (plot names, one per line or separated by commas) or plot_ids,
-#   not_planted (1, the default, or 0 to mark the plots as planted again),
-#   delete_phenotypes (1 to delete the phenotypes of the plots), preview (1 to get the plan only)
-sub set_not_planted : Chained('trial') PathPart('not_planted') Args(0) {
-    my $self = shift;
-    my $c = shift;
-    my $sp_person_id = $c->user() ? $c->user->get_object()->get_sp_person_id() : undef;
-    my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
-    my $trial_id = $c->stash->{trial_id};
-
-    if ($self->privileges_denied($c)) {
-        $c->stash->{rest} = { error => "You have insufficient access privileges to edit this map." };
-        return;
-    }
-
-    my $accession_change = CXGN::Trial::AccessionChange->new({
-        schema => $schema,
-        trial_id => $trial_id,
-    });
-    my $units = $accession_change->load_units();
-    my %plot_id_by_name = map { $_->{plot_name} => $_->{plot_id} } values %$units;
-    my @plot_ids = grep { /\S/ } map { split /[\s,]+/ } $c->req->param('plot_ids'), $c->req->param('plot_ids[]');
-    my @plot_names = grep { /\S/ } map { s/^\s+|\s+$//gr } map { split /[\r\n,]+/ } $c->req->param('plot_names'), $c->req->param('plot_names[]');
-    my @unknown = grep { !exists($plot_id_by_name{$_}) } @plot_names;
-    if (@unknown) {
-        $c->stash->{rest} = { error => "These plots are not part of this trial: ".join(", ", @unknown) };
-        return;
-    }
-    my %seen;
-    my @ids = grep { !$seen{$_}++ } (@plot_ids, map { $plot_id_by_name{$_} } @plot_names);
-    if (!@ids) {
-        $c->stash->{rest} = { error => "Choose the plots." };
-        return;
-    }
-
-    my $not_planted = $c->req->param('not_planted') // '1';
-    $not_planted = _true_param($not_planted) ? 1 : 0;
-    my @changes = map { { plot_id => $_, not_planted => $not_planted } } @ids;
-    my $options = { rename_plots => 'none', delete_phenotypes => _true_param($c->req->param('delete_phenotypes')) };
-    $self->_change_trial_stocks($c, $accession_change, \@changes, $options, $c->req->param('preview'));
 }
 
 sub _true_param {
