@@ -2367,7 +2367,8 @@ sub trial_plot_gps_upload : Chained('trial') PathPart('upload_plot_gps') Args(0)
 }
 
 # Changes the accessions of plots, and marks plots as not planted, from a file:
-# plot_name, accession_name, and optionally new_plot_name and not_planted. Other
+# plot_name, accession_name, and optionally new_plot_name, not_planted and
+# seedlot_name (the seed transactions follow the packets anyway). Other
 # columns are ignored, so a downloaded layout or planting order file (Download
 # Plot Order, whose border and gap rows are skipped) can be corrected and
 # uploaded; uploading it again changes nothing.
@@ -2430,13 +2431,13 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         my $return_error = '';
         my $parse_errors;
         if (!$parser->has_parse_errors() ){
-            $c->stash->{rest} = {error_string => "Could not get parsing errors"};
+            $c->stash->{rest} = {error => "Could not get parsing errors"};
             $c->detach();
         } else {
             $parse_errors = $parser->get_parse_errors();
-            #print STDERR Dumper $parse_errors;
+            # the messages carry names from the file
             foreach my $error_string (@{$parse_errors->{'error_messages'}}){
-                $return_error .= $error_string."<br>";
+                $return_error .= encode_entities($error_string)."<br>";
             }
         }
         $c->stash->{rest} = {error => $return_error};
@@ -2447,7 +2448,8 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         bcs_schema => $schema,
         trial_id => $trial_id
     });
-    my $return_error = $fieldmap->update_fieldmap_precheck();
+    # the seed transactions follow the packets (CXGN::Trial::AccessionChange), so seedlots are no reason to stop
+    my $return_error = $fieldmap->update_fieldmap_precheck({ ignore_seedlots => 1 });
     if ($return_error) {
         if (!$c->user()->check_roles("curator")) {
             $c->stash->{rest} = { error => $return_error };
@@ -2471,13 +2473,19 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         new_stock_id => $parsed_data->{$_}->{new_accession_id},
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
         not_planted => $parsed_data->{$_}->{not_planted},
+        seedlot_name => $parsed_data->{$_}->{seedlot_name},
     } } sort { CXGN::Trial::AccessionChange::_compare_plot_numbers(map { $unit_by_name{$_} ? $unit_by_name{$_}->{plot_number} : undef } ($a, $b)) || $a cmp $b } keys %$parsed_data;
 
     my $options = {
         rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
         delete_phenotypes => _true_param($c->req->param('delete_phenotypes')),
     };
-    $self->_change_trial_stocks($c, $accession_change, \@changes, $options, _true_param($c->req->param('preview')), 1);
+    my $preview = _true_param($c->req->param('preview'));
+    if ($self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1) && !$preview) {
+        # the file stays with the trial (Uploaded Additional Files), as a record of the correction
+        my $result = $c->stash->{trial}->add_additional_uploaded_file($c->user->get_object->get_sp_person_id(), $archived_filename_with_path, $md5->hexdigest());
+        print STDERR "Could not keep $archived_filename_with_path with trial $trial_id: $result->{error}\n" if $result->{error};
+    }
 }
 
 sub trial_additional_file_upload : Chained('trial') PathPart('upload_additional_file') Args(0) {
@@ -3150,6 +3158,8 @@ sub _change_trial_stocks {
 
     my $plan;
     my $error;
+    # the plan the user saw in the preview, if any
+    $options->{plan_digest} = $c->req->param('plan_digest');
     try {
         $plan = $accession_change->apply($changes, $options);
     } catch {

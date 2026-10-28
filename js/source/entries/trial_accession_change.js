@@ -57,12 +57,43 @@ export function summaryLines(summary, planned, maxItems = 10) {
         list(summary.renamed, (r) => `${r.old_name} -> ${r.new_name}`);
     }
     (summary.not_renamed || []).forEach((r) => lines.push(`Not renamed: ${r.plot_name} (${r.reason})`));
+    const seedlots = summary.seedlots || [];
+    const moves = seedlots.filter((t) => t.type === "move");
+    if (moves.length) {
+        lines.push(`${moves.length} seed transaction(s) ${planned ? "will follow" : "followed"} their packets:`);
+        list(moves, (t) => `${t.seedlot_name}: ${t.from_plot_name} -> ${t.plot_name}`);
+    }
+    const otherSeedlot = seedlots.filter((t) => t.type === "seedlot");
+    if (otherSeedlot.length) {
+        lines.push(`${otherSeedlot.length} plot(s) ${planned ? "will get" : "got"} another seedlot:`);
+        list(otherSeedlot, (t) => `${t.plot_name}: ${t.old_seedlot_name} -> ${t.seedlot_name}`);
+    }
+    const taken = seedlots.filter((t) => t.type === "taken");
+    if (taken.length) {
+        lines.push(`${taken.length} packet(s) ${planned ? "will be" : "are"} in no plot (for example planted into a border); their seed stays taken from the seedlot:`);
+        list(taken, (t) => `${t.seedlot_name} (was linked to ${t.plot_name})`);
+    }
     (summary.entry_numbers || []).forEach((e) => lines.push(`${e.stock_name}${planned ? " will get" : " got"} entry number ${e.entry_number}.`));
     if (!planned && summary.phenotypes_deleted) {
         lines.push(`${summary.phenotypes_deleted} phenotype value(s) were deleted.`);
     }
     (summary.warnings || []).forEach((w) => lines.push("Note: " + w));
     return lines;
+}
+
+/**
+ * The plots that a change touched, by their names after it (for new labels and files).
+ * @param {Object} summary - what changed (the summary from the server)
+ * @returns {string[]}
+ */
+export function changedPlots(summary) {
+    const newName = new Map((summary.renamed || []).map((r) => [r.old_name, r.new_name]));
+    const names = [
+        ...(summary.changes || []).map((c) => c.plot_name),
+        ...(summary.renamed || []).map((r) => r.old_name),
+        ...(summary.planting || []).map((p) => p.plot_name),
+    ];
+    return [...new Set(names.map((name) => newName.get(name) || name))];
 }
 
 /**
@@ -73,7 +104,8 @@ export function summaryLines(summary, planned, maxItems = 10) {
 export function nothingChanges(summary) {
     return !summary.changed && !summary.replicates_changed && !summary.phenotypes_deleted
         && !(summary.planting || []).length && !(summary.renamed || []).length
-        && !(summary.checks || []).length && !(summary.entry_numbers || []).length;
+        && !(summary.checks || []).length && !(summary.entry_numbers || []).length
+        && !(summary.seedlots || []).length;
 }
 
 /**
@@ -125,8 +157,13 @@ function withParams(data, params) {
     return { ...data, ...params };
 }
 
-// the text of an error that the server sent as HTML (lines separated by <br>)
-function plainText(html) {
+/**
+ * The text of an error that the server sent as HTML (lines separated by <br>),
+ * without running anything in it.
+ * @param {string} html
+ * @returns {string}
+ */
+export function plainText(html) {
     return new DOMParser().parseFromString(String(html).replace(/<br\s*\/?>/gi, "\n"), "text/html").body.textContent;
 }
 
@@ -201,7 +238,8 @@ export function confirmDialog(message, { title = "Please check", ok = "Continue"
 
 /**
  * Makes a change after the user has seen it: posts the request with preview=1,
- * shows what will change and asks to continue, then posts it again to change.
+ * shows what will change and asks to continue, then posts it again to change,
+ * with the plan_digest of the preview, so that the server changes nothing else.
  * A curator confirms a change of a trial with data (the request is repeated
  * with override=1), and the user confirms deleting the phenotypes of plots
  * marked as not planted (with delete_phenotypes=1). Errors are shown with alert.
@@ -245,18 +283,25 @@ export async function changeWithPreview(url, data, options = {}) {
             return null;
         }
         if (response.preview && nothingChanges(response.preview)) {
-            await inform("Nothing to change: the trial already matches.");
+            const notes = (response.preview.warnings || []).map((w) => "\nNote: " + w).join("");
+            await inform("Nothing to change: the trial already matches." + notes);
             return null;
         }
-        if (!response.preview || !(await ask(summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: options.title || "Please check the changes", ok: "Continue" }))) {
+        // every change is listed, so that nothing (for example a change undone by an old file) goes unseen
+        if (!response.preview || !(await ask(summaryLines(response.preview, true, Infinity).join("\n") + "\n\nContinue?", { title: options.title || "Please check the changes", ok: "Continue" }))) {
             return null;
+        }
+        // the server refuses to change anything but what the user saw
+        if (response.preview.plan_digest) {
+            params.plan_digest = response.preview.plan_digest;
         }
         break;
     }
 
     const response = await post(url, withParams(data, params));
-    if (response.error) {
-        tell(`${action}: ${response.error}`, response.error);
+    if (!response.success) {
+        const error = response.error || response.warning || "The trial was not changed.";
+        tell(`${action}: ${error}`, error);
         return null;
     }
     return response;

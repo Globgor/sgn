@@ -90,8 +90,16 @@ the field map shows it as empty, it is left out of Field Book files and
 phenotyping spreadsheets, and no phenotypes can be stored for it. Phenotypes
 it already has would count for an accession that did not grow there, so they
 are only deleted with the option C<delete_phenotypes>; without it the plan
-has an error. Not planted plots are left out of the replicate numbering of a
-CRD.
+has an error. Like any plot, a plot that was not planted keeps its place in
+the design, also in the replicate numbering of a CRD.
+
+=item *
+
+moves the seed transactions (seedlot to plot) with the packets: a plot that
+gets another accession takes over the transaction of a plot in the same change
+that lost that accession, or of the seedlot in C<seedlot_name>. A transaction
+that no plot takes, for example of a packet planted into a border, becomes
+seed taken from the seedlot, so the inventory stays as it is.
 
 =item *
 
@@ -122,10 +130,14 @@ after the transaction is committed; callers do it.
 use Moose;
 use JSON;
 use Try::Tiny;
+use Digest::MD5 qw(md5_hex);
+use Encode qw(encode_utf8);
 use SGN::Model::Cvterm;
 use CXGN::Trial;
 use CXGN::Trial::TrialLayout;
 use CXGN::BreedersToolbox::Projects;
+use CXGN::Stock::Seedlot;
+use CXGN::JSONUtils qw(decode_stored_json);
 
 has 'schema' => ( isa => 'Bio::Chado::Schema', is => 'ro', required => 1 );
 
@@ -168,6 +180,7 @@ sub _build_cvterm_ids {
         [ accession => 'accession', 'stock_type' ],
         [ cross => 'cross', 'stock_type' ],
         [ family_name => 'family_name', 'stock_type' ],
+        [ seedlot => 'seedlot', 'stock_type' ],
         [ plot_of => 'plot_of', 'stock_relationship' ],
         [ plant_of => 'plant_of', 'stock_relationship' ],
         [ subplot_of => 'subplot_of', 'stock_relationship' ],
@@ -178,6 +191,8 @@ sub _build_cvterm_ids {
         [ female_plant_of => 'female_plant_of', 'stock_relationship' ],
         [ male_plant_of => 'male_plant_of', 'stock_relationship' ],
         [ seed_transaction => 'seed transaction', 'stock_relationship' ],
+        [ collection_of => 'collection_of', 'stock_relationship' ],
+        [ cross_member_of => 'cross_member_of', 'stock_relationship' ],
         [ plot_number => 'plot number', 'stock_property' ],
         [ block => 'block', 'stock_property' ],
         [ replicate => 'replicate', 'stock_property' ],
@@ -222,7 +237,8 @@ sub _allowed_stock_types {
         $wanted = $row->value if $row;
     }
     if ($wanted) {
-        return [ grep { $_ eq $wanted } @names ];
+        # trials of crosses or family names can have accessions as checks
+        return [ grep { $_ eq $wanted || $_ eq 'accession' } @names ];
     }
     my %present = map { $_->{stock_type_id} => 1 } grep { defined $_->{stock_type_id} } values %$units;
     my @present = grep { $ids->{$_} && $present{ $ids->{$_} } } @names;
@@ -360,7 +376,8 @@ Returns a hashref:
     checks        => [ { plot_id, plot_name, old, new } ]; 1 for a check plot, 0 for a test plot
     planting      => [ { plot_id, plot_name, not_planted } ]; plots marked as not planted (1) or planted (0)
     not_planted_phenotypes => number of phenotype values of the plots marked as not planted
-    phenotypes_to_delete   => { phenotype_ids => [ ... ], nd_experiment_ids => [ ... ] } of them, with delete_phenotypes
+    phenotypes_to_delete   => { phenotype_ids => [ ... ], nd_experiment_ids => [ ... ], md_experiment_ids => [ ... ] }
+                              of them (md: experiments with high-dimensional data), with delete_phenotypes
     plots_with_phenotypes => the number of changed plots that have phenotypes
     renames       => [ { stock_id, type => 'plot'|'plant'|'subplot'|'tissue_sample', old_name, new_name } ]
     not_renamed   => [ { plot_name, reason } ]
@@ -388,7 +405,7 @@ sub _plan {
     my $schema = $self->schema;
     my $ids = $self->_cvterm_ids;
 
-    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, planting => [], not_planted_phenotypes => 0, phenotypes_to_delete => { phenotype_ids => [], nd_experiment_ids => [] } );
+    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, planting => [], seedlots => [], not_planted_phenotypes => 0, phenotypes_to_delete => { phenotype_ids => [], nd_experiment_ids => [] } );
     my $errors = $plan{errors};
 
     if ($rename_mode ne 'auto' && $rename_mode ne 'none') {
@@ -405,6 +422,7 @@ sub _plan {
     # validate the changes
     my %new_stock_by_unit;
     my %new_not_planted;
+    my %seedlot_name;
     my %explicit_name;
     my %keep_name;
     my %seen_unit;
@@ -440,6 +458,13 @@ sub _plan {
                 $new_not_planted{$unit_id} = $not_planted;
             }
         }
+        if (defined($change->{seedlot_name}) && $change->{seedlot_name} =~ /\S/) {
+            if ($self->_is_plate) {
+                push @$errors, "Wells of a genotyping plate have no seedlots here.";
+                next;
+            }
+            ($seedlot_name{$unit_id} = $change->{seedlot_name}) =~ s/^\s+|\s+$//g;
+        }
         my $new_stock_id = $change->{new_stock_id};
         if ((!defined($new_stock_id) || $new_stock_id eq '') && defined($not_planted)) {
             $new_stock_id = $unit->{stock_id};   # only the planting status changes
@@ -449,13 +474,16 @@ sub _plan {
             push @$errors, "The new stock for plot $unit->{plot_name} does not exist.";
             next;
         }
-        if ($new_stock->is_obsolete) {
-            push @$errors, "Stock ".$new_stock->uniquename." is obsolete.";
-            next;
-        }
-        if (!$allowed_type{$new_stock->type_id}) {
-            push @$errors, "Stock ".$new_stock->uniquename." is not ".stock_type_description(@$allowed_types).".";
-            next;
+        # a plot that keeps its stock keeps it, whatever has become of the stock since
+        if ($new_stock_id != $unit->{stock_id}) {
+            if ($new_stock->is_obsolete) {
+                push @$errors, "Stock ".$new_stock->uniquename." is obsolete.";
+                next;
+            }
+            if (!$allowed_type{$new_stock->type_id}) {
+                push @$errors, "Stock ".$new_stock->uniquename." is not ".stock_type_description(@$allowed_types).".";
+                next;
+            }
         }
         if (defined($change->{new_plot_name}) && $change->{new_plot_name} =~ /\S/) {
             if ($self->_is_plate) {
@@ -504,12 +532,9 @@ sub _plan {
             $affected_stocks{ $c->{old_stock_id} } = 1;
             $affected_stocks{ $c->{new_stock_id} } = 1;
         }
-        foreach my $unit_id (keys %new_not_planted) {
-            $affected_stocks{ $units->{$unit_id}->{stock_id} } = 1;
-        }
         foreach my $stock_id (keys %affected_stocks) {
             my @plots = sort { _compare_plot_numbers($a->{plot_number}, $b->{plot_number}) || $a->{plot_id} <=> $b->{plot_id} }
-                grep { $_->{stock_id} == $stock_id && defined($_->{replicate}) && !_is_true($_->{not_planted}) } values %after;
+                grep { $_->{stock_id} == $stock_id && defined($_->{replicate}) } values %after;
             my $n = 1;
             foreach my $p (@plots) {
                 if ($p->{replicate} ne $n) {
@@ -563,6 +588,12 @@ sub _plan {
         }
     }
     $self->_check_new_names($plan{renames}, $errors);
+    # labels in the field and files with the old names would point to the other plot
+    my %plot_named = map { $_->{plot_name} => $_->{plot_id} } values %$units;
+    my @taken_names = grep { $_->{type} eq 'plot' && exists($plot_named{ $_->{new_name} }) && $plot_named{ $_->{new_name} } != $_->{stock_id} } @{$plan{renames}};
+    if (@taken_names) {
+        push @{$plan{warnings}}, scalar(@taken_names)." plot(s) get a name that another plot has now (for example $taken_names[0]->{old_name} gets the name $taken_names[0]->{new_name}): labels and files with the old names would point to the wrong plot. Keep the plot names if labels are in the field or data was collected with them.";
+    }
 
     # warnings
     foreach my $c (@{$plan{changes}}) {
@@ -575,6 +606,9 @@ sub _plan {
         $self->_plan_checks(\%plan, $units, \%after);
         $self->_plan_phenotype_and_cross_warnings(\%plan, $children, \%after);
         $self->_plan_not_planted(\%plan, $children, $options);
+        $self->_plan_seedlots(\%plan, $units, \%after, \%seedlot_name);
+        my %seedlot_changed = map { $_->{plot_name} => 1 } @{$plan{seedlots}};
+        $plan{unchanged} = [ grep { !$seedlot_changed{$_} } @{$plan{unchanged}} ];
     }
     if (!$self->_is_plate) {
         my $intercropped = $self->_intercropped([ keys %new_stock_by_unit ]);
@@ -595,14 +629,16 @@ sub _plan {
 
 Plans the changes (see plan()) and carries them out in one transaction. Dies
 with the errors of the plan, or with a database error; nothing is changed
-then. Returns the plan.
+then. With the option plan_digest (from the summary of a preview) it also
+dies when the plan is not the one of the preview any more, for example
+because someone changed the trial in between. Returns the plan.
 
 =cut
 
 sub apply {
     my $self = shift;
     my $changes = shift;
-    my $options = shift;
+    my $options = shift || {};
     my $schema = $self->schema;
     my $plan;
     $schema->txn_do(sub {
@@ -610,9 +646,37 @@ sub apply {
         if (@{$plan->{errors}}) {
             die join("\n", @{$plan->{errors}})."\n";
         }
+        if (defined($options->{plan_digest}) && length($options->{plan_digest}) && $options->{plan_digest} ne $self->plan_digest($plan)) {
+            die "The trial changed after the preview, so the changes are not the ones you saw; check them again.\n";
+        }
         $self->_execute($plan);
     });
     return $plan;
+}
+
+=head2 plan_digest($plan)
+
+A digest of what a plan changes, to make sure that apply() carries out the
+plan the user saw in a preview.
+
+=cut
+
+sub plan_digest {
+    my $self = shift;
+    my $plan = shift;
+    my $to_delete = $plan->{phenotypes_to_delete} || {};
+    my @parts = (
+        (map { "change $_->{plot_id} $_->{new_stock_id}" } @{$plan->{changes}}),
+        (map { "planting $_->{plot_id} $_->{not_planted}" } @{$plan->{planting}}),
+        (map { "replicate $_->{plot_id} $_->{new}" } @{$plan->{replicates}}),
+        (map { "rename $_->{stock_id} $_->{new_name}" } @{$plan->{renames}}),
+        (map { "check $_->{plot_id} $_->{new}" } @{$plan->{checks}}),
+        (map { "entry $_->{stock_id} $_->{entry_number}" } @{$plan->{entry_numbers}}),
+        (map { "seedlot $_->{type} $_->{transaction_id} $_->{plot_id} $_->{seedlot_id}" } @{$plan->{seedlots}}),
+        (map { "delete phenotype $_" } @{ $to_delete->{phenotype_ids} || [] }),
+        (map { "delete experiment $_" } @{ $to_delete->{nd_experiment_ids} || [] }),
+    );
+    return md5_hex(encode_utf8(join("\n", sort @parts)));
 }
 
 sub _execute {
@@ -638,22 +702,59 @@ sub _execute {
         }
     }
 
+    # seed transactions follow the packets (see _plan_seedlots)
+    if (@{$plan->{seedlots}}) {
+        my $seed_transaction = $ids->{seed_transaction};
+        my $rank_h = $dbh->prepare("SELECT COALESCE(MAX(rank), -1) + 1 FROM stock_relationship WHERE subject_id = ? AND object_id = ? AND type_id = ?");
+        my $next_rank = sub { $rank_h->execute(@_, $seed_transaction); return ($rank_h->fetchrow_array())[0]; };
+        my $value_h = $dbh->prepare("SELECT value FROM stock_relationship WHERE stock_relationship_id = ?");
+        my $update_h = $dbh->prepare("UPDATE stock_relationship SET subject_id = ?, object_id = ?, rank = ?, value = COALESCE(?, value)
+            WHERE stock_relationship_id = ? AND subject_id = ? AND object_id = ? AND type_id = ?");
+        my %recount;
+        foreach my $s (@{$plan->{seedlots}}) {
+            my ($subject, $object, $value) = ($s->{plot_id}, $s->{seedlot_id}, undef);
+            my ($old_subject, $old_object) = ($s->{plot_id}, $s->{seedlot_id});
+            if ($s->{type} eq 'move') {
+                $old_subject = $s->{from_plot_id};
+            } elsif ($s->{type} eq 'seedlot') {
+                $old_object = $s->{old_seedlot_id};
+                $recount{$old_object} = $recount{$object} = 1;
+            } else {
+                # seed taken from the seedlot: a transaction from the seedlot to itself
+                $subject = $s->{seedlot_id};
+                $value_h->execute($s->{transaction_id});
+                my ($json) = $value_h->fetchrow_array();
+                # the amount must stay, or the inventory would change
+                my $v = decode_stored_json($json // '{}');
+                $v->{factor} = -1;
+                $v->{description} = join(' ', grep { defined($_) && length($_) } $v->{description}, "(Correction of trial ".$self->_trial_name.": no plot has this packet; it was linked to plot $s->{plot_name}.)");
+                $value = encode_json($v);
+            }
+            my $rows = $update_h->execute($subject, $object, $next_rank->($subject, $object), $value, $s->{transaction_id}, $old_subject, $old_object, $seed_transaction);
+            if ($rows != 1) {
+                die "The seed transaction of plot ".($s->{from_plot_name} // $s->{plot_name})." was changed by someone else in the meantime; nothing was changed.\n";
+            }
+        }
+        foreach my $seedlot_id (sort { $a <=> $b } keys %recount) {
+            my $seedlot = CXGN::Stock::Seedlot->new(schema => $self->schema, seedlot_id => $seedlot_id);
+            $seedlot->set_current_count_property();
+            $seedlot->set_current_weight_property();
+        }
+    }
+
     # replicates of the plots, and of their plants, subplots and tissue samples that have one
     my $rep_h = $dbh->prepare("UPDATE stockprop SET value = ? WHERE stock_id = ANY(?) AND type_id = ?");
     foreach my $r (@{$plan->{replicates}}) {
         $rep_h->execute($r->{new}, [ $r->{plot_id}, @{ $children_of->($r->{plot_id}) } ], $ids->{replicate});
     }
 
-    # check marks of the plots, and of their plants, subplots and tissue samples that have one
+    # check marks of the plots, and of their plants, subplots and tissue samples
     my $uncheck_h = $dbh->prepare("DELETE FROM stockprop WHERE stock_id = ANY(?) AND type_id = ?");
-    my $check_children_h = $dbh->prepare("UPDATE stockprop SET value = '1' WHERE stock_id = ANY(?) AND type_id = ?");
     foreach my $k (@{$plan->{checks}}) {
+        my @stock_ids = ($k->{plot_id}, @{ $children_of->($k->{plot_id}) });
+        $uncheck_h->execute(\@stock_ids, $ids->{is_a_control});
         if ($k->{new}) {
-            $uncheck_h->execute([ $k->{plot_id} ], $ids->{is_a_control});
-            $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $k->{plot_id}, type_id => $ids->{is_a_control}, value => '1', rank => 0 });
-            $check_children_h->execute($children_of->($k->{plot_id}), $ids->{is_a_control});
-        } else {
-            $uncheck_h->execute([ $k->{plot_id}, @{ $children_of->($k->{plot_id}) } ], $ids->{is_a_control});
+            $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $_, type_id => $ids->{is_a_control}, value => '1', rank => 0 }) for @stock_ids;
         }
     }
 
@@ -690,8 +791,9 @@ sub _execute {
         }
     }
     my $to_delete = $plan->{phenotypes_to_delete};
-    if (@{ $to_delete->{phenotype_ids} }) {
+    if (@{ $to_delete->{nd_experiment_ids} }) {
         $dbh->prepare("DELETE FROM phenotype WHERE phenotype_id = ANY(?)")->execute($to_delete->{phenotype_ids});
+        $dbh->prepare("DELETE FROM phenome.nd_experiment_md_json WHERE nd_experiment_id = ANY(?)")->execute($to_delete->{md_experiment_ids} || []);
         # the experiments that have no phenotypes left, as CXGN::Project::delete_phenotype_values_and_nd_experiment_md_values does
         my $empty_h = $dbh->prepare("SELECT ne.nd_experiment_id FROM nd_experiment ne LEFT JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = ne.nd_experiment_id
             WHERE ne.nd_experiment_id = ANY(?) AND nep.phenotype_id IS NULL");
@@ -706,7 +808,7 @@ sub _execute {
         }
     }
 
-    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}} || @{$plan->{planting}}) {
+    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}} || @{$plan->{planting}} || @{$plan->{seedlots}}) {
         my $layout = CXGN::Trial::TrialLayout->new({
             schema => $self->schema,
             trial_id => $self->trial_id,
@@ -1026,9 +1128,15 @@ sub _plan_phenotype_and_cross_warnings {
     my %plot_name = map { $_->{plot_id} => $_->{plot_name} } @{$plan->{changes}};
     my %old_stock = map { $_->{plot_id} => $_->{old_stock_name} } @{$plan->{changes}};
 
+    # phenotypes other than treatments, or high-dimensional data
     my $h = $dbh->prepare("SELECT DISTINCT nes.stock_id FROM nd_experiment_stock nes
-        JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = nes.nd_experiment_id
-        WHERE nes.stock_id = ANY(?)");
+        WHERE nes.stock_id = ANY(?) AND (
+            EXISTS (SELECT 1 FROM nd_experiment_phenotype nep JOIN phenotype p ON p.phenotype_id = nep.phenotype_id
+                LEFT JOIN cvterm trait ON trait.cvterm_id = p.cvalue_id
+                LEFT JOIN dbxref x ON x.dbxref_id = trait.dbxref_id
+                LEFT JOIN db ON db.db_id = x.db_id
+                WHERE nep.nd_experiment_id = nes.nd_experiment_id AND COALESCE(right(db.name, 10), '') <> '_TREATMENT')
+            OR EXISTS (SELECT 1 FROM phenome.nd_experiment_md_json j WHERE j.nd_experiment_id = nes.nd_experiment_id))");
     $h->execute(\@stock_ids);
     my %phenotyped_plots;
     while (my ($stock_id) = $h->fetchrow_array()) { $phenotyped_plots{ $plot_of{$stock_id} } = 1; }
@@ -1053,9 +1161,10 @@ sub _plan_phenotype_and_cross_warnings {
     }
 }
 
-# Plots marked as not planted: their phenotypes (and those of their plants,
-# subplots and tissue samples) are deleted with the option delete_phenotypes,
-# or are an error.
+# Plots marked as not planted: their phenotypes and high-dimensional data (and
+# those of their plants, subplots and tissue samples) are deleted with the
+# option delete_phenotypes, or are an error. Treatments are part of the design
+# and stay; crosses that used the plots as parents get a warning.
 sub _plan_not_planted {
     my $self = shift;
     my $plan = shift;
@@ -1074,19 +1183,25 @@ sub _plan_not_planted {
         }
     }
     my $dbh = $self->schema->storage->dbh;
-    if (my $seed_transaction = $self->_cvterm_ids->{seed_transaction}) {
-        my $seedlot_h = $dbh->prepare("SELECT DISTINCT p.stock_id, s.uniquename FROM stock_relationship r
-            JOIN stock p ON p.stock_id IN (r.subject_id, r.object_id) AND p.stock_id = ANY(?)
-            JOIN stock s ON s.stock_id IN (r.subject_id, r.object_id) AND s.stock_id <> p.stock_id
-            WHERE r.type_id = ? ORDER BY s.uniquename");
-        $seedlot_h->execute(\@plot_ids, $seed_transaction);
-        while (my ($plot_id, $seedlot_name) = $seedlot_h->fetchrow_array()) {
-            push @{$plan->{warnings}}, "Plot $plot_name{$plot_id} is marked as not planted but has a transaction with seedlot $seedlot_name; correct the seedlot if needed.";
+    my $ids = $self->_cvterm_ids;
+    my @cross_types = grep { defined } map { $ids->{$_} } qw(female_plot_of female_plant_of male_plot_of male_plant_of);
+    if (@cross_types) {
+        my $cross_h = $dbh->prepare("SELECT DISTINCT r.subject_id, c.uniquename FROM stock_relationship r JOIN stock c ON c.stock_id = r.object_id
+            WHERE r.subject_id = ANY(?) AND r.type_id = ANY(?) ORDER BY c.uniquename");
+        $cross_h->execute([ keys %plot_of ], \@cross_types);
+        while (my ($stock_id, $cross_name) = $cross_h->fetchrow_array()) {
+            push @{$plan->{warnings}}, "Cross $cross_name used plot $plot_name{ $plot_of{$stock_id} } (or a plant of it) as a parent, but the plot is marked as not planted; correct the cross if needed.";
         }
     }
+
+    # phenotypes other than treatments (traits of an ontology *_TREATMENT), and experiments with high-dimensional data
     my $h = $dbh->prepare("SELECT DISTINCT nes.stock_id, nep.phenotype_id, nes.nd_experiment_id FROM nd_experiment_stock nes
         JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = nes.nd_experiment_id
-        WHERE nes.stock_id = ANY(?)");
+        JOIN phenotype p ON p.phenotype_id = nep.phenotype_id
+        LEFT JOIN cvterm trait ON trait.cvterm_id = p.cvalue_id
+        LEFT JOIN dbxref x ON x.dbxref_id = trait.dbxref_id
+        LEFT JOIN db ON db.db_id = x.db_id
+        WHERE nes.stock_id = ANY(?) AND COALESCE(right(db.name, 10), '') <> '_TREATMENT'");
     $h->execute([ keys %plot_of ]);
     my (%phenotypes, %experiments, %plots_with);
     while (my ($stock_id, $phenotype_id, $nd_experiment_id) = $h->fetchrow_array()) {
@@ -1094,8 +1209,19 @@ sub _plan_not_planted {
         $experiments{$nd_experiment_id} = 1;
         $plots_with{ $plot_of{$stock_id} } = 1;
     }
-    return if !%phenotypes;
-    $plan->{not_planted_phenotypes} = scalar(keys %phenotypes);
+    my $md_h = $dbh->prepare("SELECT DISTINCT nes.stock_id, nes.nd_experiment_id FROM nd_experiment_stock nes
+        JOIN phenome.nd_experiment_md_json j ON j.nd_experiment_id = nes.nd_experiment_id
+        WHERE nes.stock_id = ANY(?)");
+    $md_h->execute([ keys %plot_of ]);
+    my %md_experiments;
+    while (my ($stock_id, $nd_experiment_id) = $md_h->fetchrow_array()) {
+        $md_experiments{$nd_experiment_id} = 1;
+        $experiments{$nd_experiment_id} = 1;
+        $plots_with{ $plot_of{$stock_id} } = 1;
+    }
+    return if !%phenotypes && !%md_experiments;
+    $plan->{not_planted_phenotypes} = scalar(keys %phenotypes) + scalar(keys %md_experiments);
+    my $what = scalar(keys %phenotypes)." phenotype value(s)".(%md_experiments ? " and ".scalar(keys %md_experiments)." set(s) of high-dimensional data" : "");
     my @names = map { $plot_name{$_} } sort { $a <=> $b } keys %plots_with;
     my $which = scalar(@names) > 3 ? join(', ', @names[0 .. 2]).' and '.(scalar(@names) - 3).' more' : join(', ', @names);
     if ($options->{delete_phenotypes}) {
@@ -1106,10 +1232,156 @@ sub _plan_not_planted {
             push @{$plan->{errors}}, "Phenotypes of the plots marked as not planted ($which) were stored together with those of other plots; delete those values on the field map heatmap first.";
             return;
         }
-        $plan->{phenotypes_to_delete} = { phenotype_ids => [ sort { $a <=> $b } keys %phenotypes ], nd_experiment_ids => [ sort { $a <=> $b } keys %experiments ] };
-        push @{$plan->{warnings}}, scalar(keys %phenotypes)." phenotype value(s) of the plots marked as not planted ($which) are deleted.";
+        $plan->{phenotypes_to_delete} = { phenotype_ids => [ sort { $a <=> $b } keys %phenotypes ], nd_experiment_ids => [ sort { $a <=> $b } keys %experiments ], md_experiment_ids => [ sort { $a <=> $b } keys %md_experiments ] };
+        push @{$plan->{warnings}}, "$what of the plots marked as not planted ($which) are deleted.";
     } else {
-        push @{$plan->{errors}}, scalar(keys %phenotypes)." phenotype value(s) were stored for plots that are marked as not planted ($which). They would count for an accession that did not grow there: delete them with this change, or keep the plots planted.";
+        push @{$plan->{errors}}, "$what were stored for plots that are marked as not planted ($which). They would count for an accession that did not grow there: delete them with this change, or keep the plots planted.";
+    }
+}
+
+# Seed transactions (seedlot -> plot) follow the packets. A plot that gets
+# another accession takes over the transaction of a plot in this change that
+# lost that accession, the nearest one by plot number (a shift moves packets a
+# few places), or the transaction from the seedlot in its seedlot_name. A
+# seedlot_name of another seedlot of the same accession moves the plot's own
+# transaction to that seedlot. So a plot keeps at most one seedlot, and it holds
+# the accession of the plot. A transaction that no plot takes, for example of a
+# packet planted into a border or of a place left empty, becomes seed taken from
+# the seedlot, so the inventory does not change. Seedlots harvested from the
+# changed plots get a warning.
+sub _plan_seedlots {
+    my $self = shift;
+    my $plan = shift;
+    my $units = shift;
+    my $after = shift;
+    my $seedlot_name = shift || {};
+    my $ids = $self->_cvterm_ids;
+    return if !$ids->{seed_transaction} || !$ids->{seedlot} || !$ids->{collection_of};
+    my $dbh = $self->schema->storage->dbh;
+
+    my %changed = map { $_->{plot_id} => 1 } @{$plan->{changes}};
+    my %planting = map { $_->{plot_id} => 1 } @{$plan->{planting}};
+    my %plot_ids = map { $_ => 1 } (keys %changed, keys %planting, keys %$seedlot_name);
+    return if !%plot_ids;
+
+    # the planting transactions of these plots, with the stock their seedlot holds
+    my $h = $dbh->prepare("SELECT r.stock_relationship_id, r.subject_id, s.stock_id, s.uniquename, MIN(c.subject_id)
+        FROM stock_relationship r
+        JOIN stock s ON s.stock_id = r.object_id AND s.type_id = ?
+        LEFT JOIN stock_relationship c ON c.object_id = s.stock_id AND c.type_id = ?
+        WHERE r.type_id = ? AND r.subject_id = ANY(?)
+        GROUP BY r.stock_relationship_id, r.subject_id, s.stock_id, s.uniquename ORDER BY r.stock_relationship_id");
+    $h->execute($ids->{seedlot}, $ids->{collection_of}, $ids->{seed_transaction}, [ keys %plot_ids ]);
+    my %own;
+    while (my ($transaction_id, $plot_id, $seedlot_id, $name, $content_id) = $h->fetchrow_array()) {
+        push @{ $own{$plot_id} }, { transaction_id => $transaction_id, plot_id => $plot_id, seedlot_id => $seedlot_id, seedlot_name => $name, content_id => $content_id };
+    }
+
+    # the seedlots named in the change
+    my %seedlot;
+    if (%$seedlot_name) {
+        my $seedlot_h = $dbh->prepare("SELECT s.stock_id, s.uniquename, MIN(c.subject_id) FROM stock s
+            LEFT JOIN stock_relationship c ON c.object_id = s.stock_id AND c.type_id = ?
+            WHERE s.uniquename = ANY(?) AND s.type_id = ? GROUP BY s.stock_id, s.uniquename");
+        $seedlot_h->execute($ids->{collection_of}, [ values %$seedlot_name ], $ids->{seedlot});
+        while (my ($seedlot_id, $name, $content_id) = $seedlot_h->fetchrow_array()) {
+            $seedlot{$name} = { seedlot_id => $seedlot_id, content_id => $content_id };
+        }
+    }
+
+    # what a seedlot holds counts for its stock and, for a cross, for the families the cross is a member of
+    # (plots of a family name are planted from seedlots of its crosses)
+    my %holds;
+    my @contents = grep { defined } map { $_->{content_id} } (values %seedlot, map { @$_ } values %own);
+    $holds{$_}->{$_} = 1 for @contents;
+    if (@contents && $ids->{cross_member_of}) {
+        my $family_h = $dbh->prepare("SELECT subject_id, object_id FROM stock_relationship WHERE type_id = ? AND subject_id = ANY(?)");
+        $family_h->execute($ids->{cross_member_of}, \@contents);
+        while (my ($cross_id, $family_id) = $family_h->fetchrow_array()) { $holds{$cross_id}->{$family_id} = 1; }
+    }
+    my $holds = sub { my ($content_id, $stock_id) = @_; return defined($content_id) && $holds{$content_id}->{$stock_id}; };
+
+    # what each plot needs now: no seedlot (not planted), a given seedlot, or one of its accession
+    my $by_number = sub { _compare_plot_numbers($units->{ $_[0] }->{plot_number}, $units->{ $_[1] }->{plot_number}) || $_[0] <=> $_[1] };
+    my %want;
+    foreach my $plot_id (sort { $by_number->($a, $b) } keys %plot_ids) {
+        my $state = $after->{$plot_id};
+        if (_is_true($state->{not_planted})) {
+            $want{$plot_id} = undef;
+            next;
+        }
+        my $name = $seedlot_name->{$plot_id};
+        # the seedlot the plot has now is no change (a cell left as it was)
+        if (defined($name) && !grep { $_->{seedlot_name} eq $name } @{ $own{$plot_id} || [] }) {
+            my $s = $seedlot{$name};
+            if (!$s) {
+                push @{$plan->{errors}}, "Seedlot $name (plot $state->{plot_name}) does not exist.";
+            } elsif (!$holds->($s->{content_id}, $state->{stock_id})) {
+                push @{$plan->{errors}}, "Seedlot $name does not hold $state->{stock_name}, the accession of plot $state->{plot_name}.";
+            } else {
+                $want{$plot_id} = { seedlot_id => $s->{seedlot_id}, seedlot_name => $name };
+            }
+        } elsif ($changed{$plot_id} || $planting{$plot_id}) {
+            $want{$plot_id} = { content_id => $state->{stock_id} };
+        }
+    }
+    return if @{$plan->{errors}};
+    my $fits = sub {
+        my ($t, $want) = @_;
+        return 0 if !$want;
+        return $t->{seedlot_id} == $want->{seedlot_id} if $want->{seedlot_id};
+        return $holds->($t->{content_id}, $want->{content_id});
+    };
+
+    # transactions that do not fit their plot any more are free for the plots that need one
+    my (@free, @need);
+    foreach my $plot_id (sort { $by_number->($a, $b) } keys %want) {
+        my $own = $own{$plot_id} || [];
+        next if grep { $fits->($_, $want{$plot_id}) } @$own;
+        push @free, @$own;
+        push @need, $plot_id if $want{$plot_id};
+    }
+    my $distance = sub {
+        my ($m, $n) = map { $units->{$_}->{plot_number} } @_;
+        return (defined($m) && defined($n) && $m =~ /^\d+$/ && $n =~ /^\d+$/) ? abs($m - $n) : 0;
+    };
+    # the plots with a given seedlot first, so that the others do not take their transactions
+    @need = ((grep { $want{$_}->{seedlot_id} } @need), (grep { !$want{$_}->{seedlot_id} } @need));
+    foreach my $plot_id (@need) {
+        my $want = $want{$plot_id};
+        my ($t) = sort { $distance->($a->{plot_id}, $plot_id) <=> $distance->($b->{plot_id}, $plot_id) || $a->{transaction_id} <=> $b->{transaction_id} } grep { $fits->($_, $want) } @free;
+        if ($t) {
+            @free = grep { $_ != $t } @free;
+            push @{$plan->{seedlots}}, { %$t, type => 'move', from_plot_id => $t->{plot_id}, from_plot_name => $units->{ $t->{plot_id} }->{plot_name}, plot_id => $plot_id, plot_name => $units->{$plot_id}->{plot_name} };
+            next;
+        }
+        if (!$want->{seedlot_id}) {
+            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} is planted again but has no seedlot; if it was planted from one, record it with Upload Used Seedlots in Trial." if $planting{$plot_id} && !@{ $own{$plot_id} || [] };
+            next;
+        }
+        # another seedlot of the plot's accession: the plot's own transaction gets it
+        ($t) = grep { $_->{plot_id} == $plot_id } @free;
+        if ($t) {
+            @free = grep { $_ != $t } @free;
+            push @{$plan->{seedlots}}, { %$t, type => 'seedlot', plot_name => $units->{$plot_id}->{plot_name}, old_seedlot_id => $t->{seedlot_id}, old_seedlot_name => $t->{seedlot_name}, seedlot_id => $want->{seedlot_id}, seedlot_name => $want->{seedlot_name} };
+        } else {
+            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} has no seed transaction, so seedlot $want->{seedlot_name} is not recorded for it; record it with Upload Used Seedlots in Trial.";
+        }
+    }
+    foreach my $t (sort { $a->{transaction_id} <=> $b->{transaction_id} } @free) {
+        push @{$plan->{seedlots}}, { %$t, type => 'taken', plot_name => $units->{ $t->{plot_id} }->{plot_name} };
+    }
+
+    my @harvested_from = grep { $changed{$_} || ($planting{$_} && _is_true($after->{$_}->{not_planted})) } keys %plot_ids;
+    if (@harvested_from) {
+        my $harvest_h = $dbh->prepare("SELECT r.object_id, s.uniquename FROM stock_relationship r
+            JOIN stock s ON s.stock_id = r.subject_id AND s.type_id = ?
+            WHERE r.type_id = ? AND r.object_id = ANY(?) ORDER BY s.uniquename");
+        $harvest_h->execute($ids->{seedlot}, $ids->{seed_transaction}, \@harvested_from);
+        while (my ($plot_id, $name) = $harvest_h->fetchrow_array()) {
+            my $state = $after->{$plot_id};
+            push @{$plan->{warnings}}, "Seedlot $name was harvested from plot $state->{plot_name}, which ".(_is_true($state->{not_planted}) ? "is marked as not planted" : "has $state->{stock_name} now")."; correct the seedlot if needed.";
+        }
     }
 }
 
@@ -1132,9 +1404,11 @@ sub summary {
         entry_numbers => [ map { { stock_name => $_->{stock_name}, entry_number => $_->{entry_number} } } @{$plan->{entry_numbers}} ],
         checks => [ map { { plot_name => $_->{plot_name}, check => $_->{new} } } @{$plan->{checks}} ],
         planting => [ map { { plot_name => $_->{plot_name}, not_planted => $_->{not_planted} } } @{$plan->{planting}} ],
-        phenotypes_deleted => scalar(@{ $plan->{phenotypes_to_delete}->{phenotype_ids} }),
+        seedlots => [ map { my $s = $_; +{ map { $_ => $s->{$_} } grep { defined($s->{$_}) } qw(type seedlot_name plot_name from_plot_name old_seedlot_name) } } @{$plan->{seedlots}} ],
+        phenotypes_deleted => scalar(@{ $plan->{phenotypes_to_delete}->{phenotype_ids} }) + scalar(@{ $plan->{phenotypes_to_delete}->{md_experiment_ids} || [] }),
         plots_with_phenotypes => $plan->{plots_with_phenotypes},
         warnings => $plan->{warnings},
+        plan_digest => $self->plan_digest($plan),
     };
 }
 

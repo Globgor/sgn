@@ -237,7 +237,7 @@ $trial_stock_type => undef
                 </h4>
                 <dd>- You have to be a <b>curator</b> or a <b>submitter and associated to the breeding program</b> of the trial to use the features of this tool.</dd>
                 <dd>- <b>Input boxes</b> used within the field map tool will automatically (<b>autocomplete</b>) give accession name options from the database when you start typing the accession name.</dd>
-                <dd>- <b>Once phenotypes are uploaded for the trial, only curators can change accessions</b>, after a warning, with Change Accessions (a file of what was planted) or the plot form. Every change shows what will change before anything is changed.</dd>
+                <dd>- <b>Once phenotypes are uploaded for the trial, only curators can change accessions</b>, after a warning, with Change Accessions (a file of what was planted) or the plot form. Change Accessions and Replace Accession show what will change before anything is changed.</dd>
 
                 </div>
             </div>

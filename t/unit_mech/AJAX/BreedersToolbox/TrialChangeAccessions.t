@@ -23,6 +23,7 @@ use SGN::Model::Cvterm;
 use CXGN::Trial::TrialLayout;
 use CXGN::Trial::AccessionChange;
 use CXGN::Phenotypes::StorePhenotypes;
+use CXGN::Stock::Seedlot::Transaction;
 
 my $f = SGN::Test::Fixture->new();
 my $schema = $f->bcs_schema;
@@ -41,6 +42,9 @@ my %t = map { $_->[0] => SGN::Model::Cvterm->get_cvterm_row($schema, $_->[1], $_
     [ row_number => 'row_number', 'stock_property' ],
     [ col_number => 'col_number', 'stock_property' ],
     [ accession => 'accession', 'stock_type' ],
+    [ seedlot => 'seedlot', 'stock_type' ],
+    [ collection_of => 'collection_of', 'stock_relationship' ],
+    [ seed_transaction => 'seed transaction', 'stock_relationship' ],
     [ design => 'design', 'project_property' ],
 );
 my %acc = map { $_ => $schema->resultset('Stock::Stock')->find({ uniquename => "test_accession$_" })->stock_id } 1 .. 5;
@@ -121,6 +125,7 @@ subtest 'replace_stock: errors' => sub {
     like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_trial21', trial_stock_type => 'accession' ])->{error}, qr/test_trial21 is not an accession\./, 'a plot name as new stock');
     like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'no_such_stock_xyz' ])->{error}, qr/Could not find no_such_stock_xyz/, 'unknown stock');
     like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'cross_test1' ])->{error}, qr/cross_test1 is not an accession\./, 'a cross in a trial of accessions, without trial_stock_type');
+    like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'cross_test1', trial_stock_type => 'cross' ])->{error}, qr/cross_test1 is not an accession\./, 'trial_stock_type from the browser does not widen what the trial takes');
     like(post_json($replace_stock, [ old_stock_id => $plot{1}, new_stock => 'test_accession1' ])->{error}, qr/No plot of this trial has the stock to replace/, 'old stock not in the trial');
     like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => '  ' ])->{error}, qr/Provide new stock name/, 'empty name');
     my $anonymous = Test::WWW::Mechanize->new;
@@ -171,6 +176,7 @@ subtest 'replace_plot_accessions: one plot' => sub {
     is(cached_accession('test_trial210'), 'test_accession2', 'cached layout');
     $r = post_json("/ajax/breeders/trial/$trial_id/replace_plot_accessions", [ new_accession => 'test_accession1', old_plot_id => $plot{10}, new_plot_name => 'test_trial21', override => 'check' ]);
     like($r->{error}, qr/Nothing was changed: Plot name test_trial21 already exists/, 'taken name refused');
+    unlike($r->{error}, qr/\{UNKNOWN\}|line \d+|\.pm/, 'without internal details');
     is(plot_state($plot{10})->{accession}, 'test_accession2', 'and the accession was not changed either');
     $r = post_json("/ajax/breeders/trial/$trial_id/replace_plot_accessions", [ new_accession => 'test_accession1', old_plot_id => 1, override => 'check' ]);
     like($r->{error}, qr/not part of this trial/, 'a stock that is not a plot of this trial');
@@ -193,6 +199,9 @@ subtest 'Change Accessions upload' => sub {
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'plot 10');
     is_deeply([ @{plot_state($plot{3})}{'name', 'accession'} ], [ 'review_upload_name', 'test_accession2' ], 'plot 3 renamed');
     is(cached_accession('review_upload_name'), 'test_accession2', 'cached layout');
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/get_uploaded_additional_file");
+    my @files = grep { $_->[4] =~ /change_accessions\.csv$/ } @{ decode_json($mech->content)->{files} || [] };
+    is(scalar(@files), 1, 'the file of the change is kept with the trial, once (not for the previews)');
     restore();
 
     my $obsolete = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_obsolete_<b>accession</b>', name => 'review_obsolete', type_id => $t{accession}, organism_id => $organism_id, is_obsolete => 1 });
@@ -218,7 +227,8 @@ subtest 'Change Accessions upload: keeping the plot names' => sub {
     is(plot_state($plot{3})->{name}, 'test_trial-rep1-test_accession3_3', 'keep_plot_names keeps the name');
     is(plot_state($plot{3})->{accession}, 'test_accession2', 'accession changed');
     $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial-rep2-test_accession3_4,test_accession2,test_trial-rep2-test_accession3_4\n");
-    is(plot_state($plot{4})->{name}, 'test_trial-rep2-test_accession3_4', 'a new_plot_name that is the current name keeps it');
+    is($r->{success}, 1, 'a new_plot_name that is the current name is accepted') or diag(explain $r);
+    is(plot_state($plot{4})->{name}, 'test_trial-rep2-test_accession3_4', 'and keeps it');
     $r = $upload->("plot_name,accession_name\ntest_trial210,test_accession2\n");
     is(plot_state($plot{10})->{accession}, 'test_accession2', 'without the option: changed too');
     restore();
@@ -280,7 +290,7 @@ subtest 'Change Accessions upload: the not_planted column' => sub {
     restore();
 
     $r = $upload->("plot_name,accession_name,not_planted\ntest_trial25,$original->{5}->{accession},1\n");
-    is_deeply([ map { plot_state($plot{$_})->{rep} } (8, 11) ], [ 1, 2 ], 'CRD: test_accession1 is numbered without plot 5');
+    is_deeply([ map { plot_state($plot{$_})->{rep} } (5, 8, 11) ], [ 1, 2, 3 ], 'CRD: the replicates are kept; plot 5 keeps its place in the design');
     my $ua = LWP::UserAgent->new;
     $ua->default_header('Authorization' => 'Bearer '.$access_token);
     my $unit = sub { return decode_json($ua->get("$base/brapi/v2/observationunits/$_[0]")->decoded_content)->{result}; };
@@ -358,6 +368,13 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     # the layout download of the Change Accessions dialog (by plot number), uploaded as it is, changes nothing
     my $columns = uri_escape('{"plot_name":1,"accession_name":1,"plot_number":1,"block_number":1,"not_planted":1,"rep_number":1,"row_number":1,"col_number":1}');
     $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=xlsx&dataLevel=plots&selected_columns=$columns", 'the layout as Excel');
+    my ($xlsx_fh, $xlsx) = tempfile(SUFFIX => '.xlsx');
+    binmode($xlsx_fh);
+    print $xlsx_fh $mech->response->content;
+    close($xlsx_fh);
+    $mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $xlsx, 'layout.xlsx' ], keep_plot_names => 1, preview => 1 ]);
+    $r = decode_json($mech->content);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'the Excel file uploaded as it is: nothing to change') or diag(explain $r);
     $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'the layout as CSV');
     my ($layout_header, @layout_rows) = map { [ map { s/^"|"$//gr } split /,/, $_, -1 ] } grep { /\S/ } split /\r?\n/, $mech->content;
     is_deeply($layout_header, [ qw(plot_name accession_name plot_number block_number not_planted rep_number row_number col_number) ], 'with plot_name, accession_name and not_planted');
@@ -365,6 +382,74 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'uploaded unchanged: nothing to change') or diag(explain $r);
 
     $schema->resultset('Stock::Stockprop')->search({ stock_id => { -in => [ values %plot ] }, type_id => { -in => [ $t{row_number}, $t{col_number} ] } })->delete;
+    restore();
+};
+
+subtest 'Change Accessions upload: what the parser reads' => sub {
+    my $r = upload_accessions($trial_id, "plot_name,accession_name\n<b>x</b>,test_accession1\n");
+    like($r->{error}, qr/Plot &lt;b&gt;x&lt;\/b&gt; does not exist in this trial/, 'names from the file are escaped in errors');
+    $r = upload_accessions($trial_id, "Plot;Accession\ntest_trial21;test_accession1\n");
+    like($r->{error} // '', qr/plot_name/, 'a file without a plot_name column is an error, not a crash') or diag(explain $r);
+    $r = upload_accessions($trial_id, "trial_name,plot_name,accession_name,not_planted\nother_trial,other_trial_plot_1,test_accession1,\ntest_trial,test_trial25,,1\n", preview => 1);
+    is_deeply($r->{preview}->{planting}, [ { plot_name => 'test_trial25', not_planted => 1 } ], 'rows of other trials are skipped; a plot that was not planted needs no accession') or diag(explain $r);
+    $r = upload_accessions($trial_id, "trial_name,plot_name,accession_name\nother_trial,other_trial_plot_1,test_accession1\n");
+    like($r->{error} // '', qr/The file has no plots of this trial \(it is a file of trial other_trial\)/, 'a file of another trial') or diag(explain $r);
+    is_deeply(trial_state(), $original, 'nothing changed');
+};
+
+subtest 'Change Accessions upload: a trial planted from seedlots' => sub {
+    # a seedlot of 100 seeds for each accession, 10 seeds planted in each plot
+    my %seedlot;
+    foreach my $n (sort { $a <=> $b } keys %plot) {
+        my $accession = $original->{$n};
+        $seedlot{ $accession->{accession} } //= do {
+            my $name = "review_upload_seedlot_$accession->{accession}";
+            my $seedlot = $schema->resultset('Stock::Stock')->create({ uniquename => $name, name => $name, type_id => $t{seedlot}, organism_id => $organism_id });
+            $schema->resultset('Stock::StockRelationship')->create({ subject_id => $accession->{accession_id}, object_id => $seedlot->stock_id, type_id => $t{collection_of} });
+            CXGN::Stock::Seedlot::Transaction->new(schema => $schema, from_stock => [ $seedlot->stock_id, $name ], to_stock => [ $seedlot->stock_id, $name ], amount => 100, weight_gram => 'NA', factor => 1, operator => 'janedoe', timestamp => '2026-04-01', description => 'harvest')->store();
+            $seedlot;
+        };
+        CXGN::Stock::Seedlot::Transaction->new(schema => $schema, from_stock => [ $seedlot{ $accession->{accession} }->stock_id, 'x' ], to_stock => [ $plot{$n}, $accession->{name} ], amount => 10, weight_gram => 'NA', operator => 'janedoe', timestamp => '2026-05-01', description => 'planted')->store();
+    }
+    my $planted_from = sub { return join(',', map { $_->object->uniquename } $schema->resultset('Stock::StockRelationship')->search({ subject_id => $_[0], type_id => $t{seed_transaction} })->all); };
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
+
+    # the layout as the Change Accessions dialog downloads it, with the seedlots
+    my $download = sub {
+        my $columns = uri_escape('{"plot_name":1,"accession_name":1,"plot_number":1,"block_number":1,"not_planted":1,"rep_number":1,"row_number":1,"col_number":1,"seedlot_name":1}');
+        $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'download the layout');
+        my ($header, @rows) = map { [ map { s/^"|"$//gr } split /,/, $_, -1 ] } grep { /\S/ } split /\r?\n/, $mech->content;
+        return ($header, \@rows, { map { $header->[$_] => $_ } 0 .. $#$header });
+    };
+    my ($header, $rows, $col) = $download->();
+    my %row_of = map { $_->[ $col->{plot_name} ] => $_ } @$rows;
+    is($row_of{test_trial24}->[ $col->{seedlot_name} ], "review_upload_seedlot_$original->{4}->{accession}", 'with the seedlot of each plot');
+    my $csv = sub { return join("\n", map { join(',', @$_) } $header, @$rows)."\n"; };
+
+    my $r = upload_accessions($trial_id, $csv->(), preview => 1);
+    is_deeply([ $r->{warning}, $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting} ], [ undef, 0, [], [] ], 'the layout uploaded as it is: no warning or error about the seedlots, nothing to change') or diag(explain $r);
+
+    # plot 4 was skipped: plots 5 to 8 got the packets planned for 4 to 7, the packet of 8 went into a border;
+    # only accession_name and not_planted are corrected, the seedlot_name cells are left as they are
+    my @accessions = map { $row_of{"test_trial2$_"}->[ $col->{accession_name} ] } 4 .. 8;
+    $row_of{"test_trial2$_"}->[ $col->{accession_name} ] = $accessions[$_ - 5] for 5 .. 8;
+    $row_of{test_trial24}->[ $col->{not_planted} ] = 1;
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, override => 1, keep_plot_names => 1);
+    is_deeply([ map { [ $_->{type}, $_->{from_plot_name} // '', $_->{plot_name} ] } @{ $r->{preview}->{seedlots} } ],
+        [ (map { [ 'move', 'test_trial2'.($_ - 1), "test_trial2$_" ] } 5 .. 8), [ 'taken', '', 'test_trial28' ] ],
+        'preview: the seed transactions follow the packets, the packet of plot 8 is in no plot') or diag(explain $r);
+    $r = upload_accessions($trial_id, $csv->(), override => 1, keep_plot_names => 1);
+    is($r->{success}, 1, 'changed') or diag(explain $r);
+    is_deeply([ map { $planted_from->($plot{$_}) } 4 .. 8 ], [ '', map { "review_upload_seedlot_$original->{$_}->{accession}" } 4 .. 7 ], 'plots 5 to 8 were planted from the seedlots of their new accessions, plot 4 from none');
+
+    # a new download, uploaded as it is, changes nothing
+    ($header, $rows, $col) = $download->();
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, override => 1, keep_plot_names => 1);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting} ], [ 0, [], [] ], 'the new download uploaded as it is: nothing to change') or diag(explain $r);
+
+    my @seedlot_ids = map { $_->stock_id } values %seedlot;
+    $schema->resultset('Stock::StockRelationship')->search({ type_id => $t{seed_transaction}, -or => [ subject_id => { -in => \@seedlot_ids }, object_id => { -in => \@seedlot_ids } ] })->delete;
+    $_->delete for values %seedlot;
     restore();
 };
 

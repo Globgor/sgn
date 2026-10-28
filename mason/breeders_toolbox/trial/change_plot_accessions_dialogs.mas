@@ -4,7 +4,7 @@ $trial_id
 $trial_stock_type
 </%args>
 
-<& /util/import_javascript.mas, entries => [ 'trial_accession_change' ] &>
+<& /util/import_javascript.mas, classes => [ 'CXGN.List' ], entries => [ 'trial_accession_change' ] &>
 
 % my $title = '';
 % if ($trial_stock_type eq 'cross') {
@@ -29,11 +29,12 @@ $trial_stock_type
                     <div class="well well-sm">
                         <p><b>Correct the trial with a file of what was planted:</b></p>
                         <ol style="padding-left: 20px">
-                            <li><a class="btn btn-default btn-sm" id="trial_design_change_accessions_download" href="/breeders/trial/<% $trial_id %>/download/layout?format=xlsx&amp;dataLevel=plots&amp;selected_columns=%7B%22plot_name%22%3A1%2C%22accession_name%22%3A1%2C%22plot_number%22%3A1%2C%22block_number%22%3A1%2C%22not_planted%22%3A1%2C%22rep_number%22%3A1%2C%22row_number%22%3A1%2C%22col_number%22%3A1%7D">Download the current layout</a> (by plot number), or <b>Download Plot Order</b> with the planting order and borders in Field Layout Tools.</li>
-                            <li>Write what was planted: change accession_name where another accession grows; put 1 in not_planted where nothing was planted (the plot keeps its planned accession). In a file in planting order, a shift is a cut and paste of accession_name one row down; leave the border rows as they are.</li>
-                            <li>Upload the file here. You see what changes before anything is changed. Plots that already match the file are left as they are, so the same file can be uploaded again, and a later correction starts from a new download.</li>
+                            <li><a class="btn btn-default btn-sm" id="trial_design_change_accessions_download" href="/breeders/trial/<% $trial_id %>/download/layout?format=xlsx&amp;dataLevel=plots&amp;selected_columns=%7B%22plot_name%22%3A1%2C%22accession_name%22%3A1%2C%22plot_number%22%3A1%2C%22block_number%22%3A1%2C%22not_planted%22%3A1%2C%22rep_number%22%3A1%2C%22row_number%22%3A1%2C%22col_number%22%3A1%2C%22seedlot_name%22%3A1%7D">Download the current layout</a> (by plot number), or <b>Download Plot Order</b> with the planting order and borders in Field Layout Tools.</li>
+                            <li>Write what was planted: change accession_name where another accession grows. Put 1 in not_planted where no seed was sown (add a not_planted column if the file has none); the plot keeps its planned accession, so its accession_name may stay as it is or be left empty. A plot that was sown but lost later (no emergence, flood) stays planted: record its stand count. In a file in planting order, a shift is a cut and paste of accession_name one row down; leave the border rows as they are.</li>
+                            <li>Upload the file here. You see what changes before anything is changed. Plots that already match the file are left as they are, so the same file can be uploaded again, and a later correction starts from a new download. The file is kept with the trial (Uploaded Additional Files).</li>
                         </ol>
-                        <& /help/file_upload_type.mas, type => "Accession exchanges", optional_column => 0 &>
+                        <p>Seed transactions follow the packets: a plot that got the packet of another plot takes over its seedlot. A packet that is in no plot any more (for example planted into a border) stays taken from its seedlot; if the seed of a place left empty went back into the seedlot, add it there. After the change, print new labels for the changed plots, and download new Field Book files and phenotyping spreadsheets.</p>
+                        <& /help/file_upload_type.mas, type => "Accession exchanges", optional_column => 1 &>
                         <br/>
 
                         <div class="panel panel-default">
@@ -43,7 +44,8 @@ $trial_stock_type
                                 An optional additional column, 'new_plot_name' can be added to change the plot names; the current name keeps it.<br>
                                 Without a new name, the old name is replaced where it is a whole part of the plot name, or, if a plot name template has been saved in association with this trial, the template is used to rename the plot. Check "Keep the plot names" to keep all names.<br>
                                 The file can list every plot of the trial, for example the plan as it was planted; plots whose accession does not change are left as they are. Other columns are ignored, and so are rows of a planting order file whose type is not plot (borders and gaps).<br>
-                                An optional column 'not_planted' marks places where nothing was planted (1) or that were planted after all (0); an empty cell leaves the plot as it is. A plot that was not planted keeps the accession in the file as its planned accession.<br>
+                                An optional column 'not_planted' marks places where no seed was sown (1) or that were planted after all (0); an empty cell leaves the plot as it is. A plot that was not planted keeps the accession in the file as its planned accession.<br>
+                                An optional column 'seedlot_name' names the seedlot a plot was planted from, where it is not the one the plot has now; seed transactions follow the packets without it.<br>
 
                                 <table style="margin-top: 3%;" class="table table-bordered table-hover">
                                   <tbody>
@@ -52,6 +54,7 @@ $trial_stock_type
                                     <td>accession_name</td>
                                     <td>new_plot_name (optional)</td>
                                     <td>not_planted (optional)</td>
+                                    <td>seedlot_name (optional)</td>
                                   </tr>
                                   </tbody>
                                 </table>
@@ -62,7 +65,8 @@ $trial_stock_type
                         <b>accession_name or cross_unique_id or family_name:</b> name of the accession or cross unique id or family name that the plot should be connected to.<br>
                         <br><b>Optional columns:</b><br>
                         <b>new_plot_name:</b> new name for plot.<br>
-                        <b>not_planted:</b> 1 if nothing was planted in the plot, 0 if it was planted. Plots that were not planted are shown as empty on the field map, are left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.<br>
+                        <b>not_planted:</b> 1 if no seed was sown in the plot, 0 if it was planted. Plots that were not planted are shown as empty on the field map, are left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.<br>
+                        <b>seedlot_name:</b> the seedlot the plot was planted from, where it is another one than now (a plot without a seed transaction gets one with Upload Used Seedlots in Trial).<br>
                         <div class="list-group-item-warning" >
                           <p><i>Warning: the new plot name will replace the old plot name in subplots, plants, and tissue samples if possible. Plot numbers, blocks and, except in completely randomized designs, replicates are kept; check plots follow their accessions. Phenotypes stay with their plots. You may need to reprint labels after the changes are applied.</i></p>
                         </div>
@@ -77,7 +81,8 @@ $trial_stock_type
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" /> Keep the plot names</label></div>
+                                <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" checked /> Keep the plot names</label></div>
+                                <p class="help-block" style="white-space: normal">Keep them while labels with the names are in the field or data was collected with them. Unchecked, plot names that contain the old accession name, or that follow the plot name template of the trial, are updated.</p>
                             </div>
                         </div>
                     </form>
@@ -104,42 +109,18 @@ $trial_stock_type
 
                     <p3> The trial was changed:</p3>
                     <ul id="trial_design_change_accessions_summary"></ul>
+                    <p>The plots that changed, for new labels (Label Designer) and new files:</p>
+                    <textarea id="trial_design_changed_plots" class="form-control" rows="4" readonly></textarea>
+                    <div id="trial_design_changed_plots_to_list" style="margin-top: 5px"></div>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_replace_accession_dialog" type="button" onclick=location.reload() class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_replace_accession_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
-
-
-<div class="modal  fade" id="change_accession_error_dialog" name="change_accession_error_dialog" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="change_accsn_err_dialog"><b>Error Changing Plot Accessions</b></h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <p3> Accessions were not changed due to these errors:</p3><br><br>
-                    <div style="background-color: light-gray;" class="well well-sm">
-                        <table>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="close_error_change_accsn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 <script>
@@ -148,6 +129,11 @@ jQuery(document).ready(function () {
 
     jQuery('#trial_detail_page_change_accessions').click(function(){
         jQuery('#trial_design_change_accessions_dialog').modal('show');
+    });
+
+    // the page shows the trial as it was; however the result is closed, show it as it is now
+    jQuery('#trial_design_replace_accessions_dialog_message').on('hidden.bs.modal', function() {
+        location.reload();
     });
 
     // the file is posted twice: first for the plan (preview), then, once the user agrees, to change the trial
@@ -160,8 +146,7 @@ jQuery(document).ready(function () {
         var summary = await change.changeWithPreview('/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/check', new FormData(jQuery('#trial_design_change_accessions_form')[0]), {
             title: "<% $title %>",
             alert: function(message, error) {
-                jQuery('#change_accession_error_dialog tbody').html(error);
-                jQuery('#change_accession_error_dialog').modal("show");
+                return change.confirmDialog(change.plainText(error), { title: "<% $title %>", ok: "OK", cancel: null });
             },
             inform: function(message) {
                 return change.confirmDialog(message, { title: "<% $title %>", ok: "OK", cancel: null });
@@ -170,6 +155,10 @@ jQuery(document).ready(function () {
         if (summary) {
             jQuery('#trial_design_change_accessions_dialog').modal("hide");
             change.showSummary('#trial_design_change_accessions_summary', summary, false);
+            jQuery('#trial_design_changed_plots').val(change.changedPlots(summary).join("\n"));
+            if (typeof addToListMenu === 'function') {
+                addToListMenu('trial_design_changed_plots_to_list', 'trial_design_changed_plots', { listType: 'plots' });
+            }
             jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
         }
     });

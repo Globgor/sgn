@@ -478,17 +478,10 @@ sub verify {
     }
 
     # nothing grew on plots that were not planted (see CXGN::Trial::AccessionChange)
-    my $not_planted_cvterm = SGN::Model::Cvterm->get_cvterm_row($schema, 'not_planted', 'stock_property');
-    if ($not_planted_cvterm && @plot_list) {
-        my $h = $schema->storage->dbh()->prepare("SELECT DISTINCT stock.uniquename FROM stock JOIN stockprop ON stockprop.stock_id = stock.stock_id
-            WHERE stockprop.type_id = ? AND stockprop.value = '1' AND stock.uniquename = ANY(?) ORDER BY stock.uniquename");
-        $h->execute($not_planted_cvterm->cvterm_id(), \@plot_list);
-        my @not_planted;
-        while (my ($name) = $h->fetchrow_array()) { push @not_planted, $name; }
-        if (@not_planted) {
-            $error_message .= "These plots were not planted, so they cannot have phenotype values: <br/>".join(", <br/>", map { "'$_'" } @not_planted);
-            return ($warning_message, $error_message);
-        }
+    my $not_planted = $self->not_planted_units();
+    if (@$not_planted) {
+        $error_message .= "These plots were not planted (or these plants and samples are of plots that were not planted), so they cannot have phenotype values: <br/>".join(", <br/>", map { "'$_'" } @$not_planted);
+        return ($warning_message, $error_message);
     }
 
     $self->create_hash_lookups();
@@ -853,6 +846,58 @@ sub check_measurement {
     return ($warning_message, $error_message);
 }
 
+# The units in values_hash with a value (other than notes and treatments) that
+# were not planted: plots with the stock property not_planted, and the plants,
+# subplots and tissue samples of such plots. Nothing grew there, so they cannot
+# have phenotypes (see CXGN::Trial::AccessionChange).
+sub not_planted_units {
+    my $self = shift;
+    my $schema = $self->bcs_schema;
+    my $not_planted_cvterm = SGN::Model::Cvterm->get_cvterm_row($schema, 'not_planted', 'stock_property');
+    return [] if !$not_planted_cvterm;
+    my $values = $self->values_hash() || {};
+    my @units = grep { _has_values($values->{$_}) } keys %$values;
+    return [] if !@units;
+    my %relationship = map { my $row = SGN::Model::Cvterm->get_cvterm_row($schema, $_, 'stock_relationship'); ($_ => $row ? $row->cvterm_id() : 0) } qw(plant_of subplot_of tissue_sample_of);
+    my @unit_types = map { my $row = SGN::Model::Cvterm->get_cvterm_row($schema, $_, 'stock_type'); $row ? $row->cvterm_id() : () } qw(plot plant subplot tissue_sample);
+    # each unit and the units above it: the plot (subject) of a plant or subplot, the plot, plant or
+    # subplot (object) of a tissue sample; never an accession, which links to plants of every trial
+    my $h = $schema->storage->dbh()->prepare("WITH RECURSIVE up(unit_id, stock_id) AS (
+            SELECT stock_id, stock_id FROM stock WHERE uniquename = ANY(?)
+            UNION
+            SELECT up.unit_id, parent.stock_id
+            FROM up JOIN stock_relationship r ON (r.type_id IN (?, ?) AND r.object_id = up.stock_id) OR (r.type_id = ? AND r.subject_id = up.stock_id)
+            JOIN stock parent ON parent.stock_id = CASE WHEN r.type_id = ? THEN r.object_id ELSE r.subject_id END AND parent.type_id = ANY(?)
+        )
+        SELECT DISTINCT unit.uniquename FROM up
+        JOIN stock unit ON unit.stock_id = up.unit_id
+        JOIN stockprop p ON p.stock_id = up.stock_id AND p.type_id = ? AND p.value = '1'
+        ORDER BY unit.uniquename");
+    $h->execute(\@units, $relationship{plant_of}, $relationship{subplot_of}, $relationship{tissue_sample_of}, $relationship{tissue_sample_of}, \@unit_types, $not_planted_cvterm->cvterm_id());
+    my @not_planted;
+    while (my ($name) = $h->fetchrow_array()) { push @not_planted, $name; }
+    return \@not_planted;
+}
+
+# whether the values of a unit in values_hash have a value that would be stored
+# (CXGN::Phenotype skips empty values, '.' and NA), other than notes and treatments
+sub _has_values {
+    my $traits = shift;
+    return 0 if ref($traits) ne 'HASH';
+    foreach my $trait (keys %$traits) {
+        next if $trait eq 'notes' || $trait =~ /_TREATMENT:/;
+        my $measurements = $traits->{$trait};
+        return 1 if $trait =~ /^(nirs|transcriptomics|metabolomics)$/ && defined($measurements);
+        next if ref($measurements) ne 'ARRAY';
+        foreach my $m (ref($measurements->[0]) eq 'ARRAY' ? @$measurements : ($measurements)) {
+            next if ref($m) ne 'ARRAY';
+            return 1 if defined($m->[4]) && $m->[4] ne '';
+            return 1 if defined($m->[0]) && (ref($m->[0]) || $m->[0] !~ /^\s*(NA|\.)?\s*$/);
+        }
+    }
+    return 0;
+}
+
 sub store {
     my $self = shift;
     # print STDERR "CXGN::Phenotypes::StorePhenotypes store\n";
@@ -915,6 +960,11 @@ sub store {
     }
 
     # print STDERR "DATA: ".Dumper(\%data);
+
+    # values of plots that were not planted are not stored, also where verify() was not called
+    my %not_planted = map { $_ => 1 } @{ $self->not_planted_units() };
+    print STDERR "Not storing the phenotypes of units that were not planted: ".join(', ', sort keys %not_planted)."\n" if %not_planted;
+
     ## Use txn_do with the following coderef so that if any part fails, the entire transaction fails.
     my $coderef = sub {
         my %trait_and_stock_to_overwrite;
@@ -931,6 +981,9 @@ sub store {
             my $stock_id = $data{$plot_name}[0];
             my $location_id = $data{$plot_name}[1];
             my $project_id = $data{$plot_name}[2];
+            # of a unit that was not planted, only notes and treatments are stored
+            my $not_planted = $not_planted{$plot_name};
+            next if $not_planted && !grep { $_ eq 'notes' || /_TREATMENT:/ } keys %{ $self->values_hash()->{$plot_name} };
 
             # create plot-wide nd_experiment entry
 
@@ -953,21 +1006,21 @@ sub store {
 
             # Check if there is nirs data for this plot
             my $nirs_hashref = $self->values_hash->{$plot_name}->{'nirs'};
-            if (defined $nirs_hashref) {
+            if (defined $nirs_hashref && !$not_planted) {
                 $self->store_high_dimensional_data($nirs_hashref, $experiment->nd_experiment_id(), 'nirs_spectra');
                 $new_count++;
             }
 
             # Check if there is transcriptomics data for this plot
             my $transcriptomics_hashref = $self->values_hash->{$plot_name}->{'transcriptomics'};
-            if (defined $transcriptomics_hashref) {
+            if (defined $transcriptomics_hashref && !$not_planted) {
                 $self->store_high_dimensional_data($transcriptomics_hashref, $experiment->nd_experiment_id(), 'transcriptomics');
                 $new_count++;
             }
 
             # Check if there is metabolomics data for this plot
             my $metabolomics_hashref = $self->values_hash->{$plot_name}->{'metabolomics'};
-            if (defined $metabolomics_hashref) {
+            if (defined $metabolomics_hashref && !$not_planted) {
                 $self->store_high_dimensional_data($metabolomics_hashref, $experiment->nd_experiment_id(), 'metabolomics');
                 $new_count++;
             }
@@ -982,6 +1035,7 @@ sub store {
                     print STDERR "skipping notes trait (already stored as stockprop)...\n";
                     next;
                 }
+                next if $not_planted && $trait_name !~ /_TREATMENT:/;
                 my $trait_cvterm = $self->trait_objs->{$trait_name};
 
                 if (!$trait_cvterm) {

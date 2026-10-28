@@ -3303,7 +3303,7 @@ sub create_plant_entities {
 
     my $create_plant_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -3742,7 +3742,7 @@ sub create_plant_subplot_entities {
 
     my $create_plant_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -4375,7 +4375,7 @@ sub create_tissue_samples {
 
     my $create_tissue_sample_entries_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -4681,7 +4681,7 @@ sub create_subplot_entities {
 
     my $create_subplot_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();

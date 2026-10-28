@@ -295,8 +295,11 @@ sub delete_fieldmap {
     return $error;
 }
 
+# Options: ignore_seedlots (1 for a caller that moves the seed transactions with
+# the plots, as CXGN::Trial::AccessionChange does).
 sub update_fieldmap_precheck {
     my $self = shift;
+    my $options = shift || {};
     my $error;
     my $trial_id = $self->trial_id;
 
@@ -304,13 +307,14 @@ sub update_fieldmap_precheck {
         bcs_schema => $self->bcs_schema,
         trial_id => $trial_id
     });
-    my $triat_name = $trial->get_traits_assayed();
-    #print STDERR Dumper($triat_name);
+    # treatments are part of the design, not traits assayed
+    my @traits = grep { $_->[1] !~ /_TREATMENT:/ } @{ $trial->get_traits_assayed() };
 
-    if (scalar(@{$triat_name}) != 0)  {
+    if (scalar(@traits) != 0)  {
         $error = "One or more traits have been assayed for this trial; Map/Layout can not be modified. Please contact us.";
         return $error;
     }
+    return $error if $options->{ignore_seedlots};
     my $seedlots = $trial->get_seedlots();
     if (scalar(@$seedlots) != 0){
         $error = "Seedlots have already been saved as the source material for the plots in this trial. Map/Layout can not be modified. Please contact us.";
