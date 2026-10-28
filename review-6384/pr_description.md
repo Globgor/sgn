@@ -1,8 +1,12 @@
-# Correct what was planted: Replace, Shift and Not Planted, in one service
+# Correct a trial to what was planted: a file round trip, not planted plots, one service
 
 Supersedes #6384 (and #6353). Builds on #6384, fixes its replicate handling and
-adds the two corrections breeders ask for most: a planting that shifted along
-the planting order, and places where nothing was planted.
+makes the trial match the field when the planting went wrong.
+
+The ways a planting goes wrong are many (a place skipped and the rest of the
+column shifted, a packet planted into a border, places left empty on purpose,
+plots lost), so the main way to correct a trial is a file of what was planted:
+download it, write what was planted, upload it, as often as needed.
 
 ## The rule
 
@@ -32,7 +36,18 @@ from the database, not from the cache.
 - Entry numbers move to a new accession that takes the place of an old one.
 - Warnings for plots with phenotypes and for plots used as cross parents.
 
-**Shift Accessions** (Edit Field Layout). For a planting that shifted: from a
+**A file of what was planted** (Change Accessions). The window links to a
+download of the current layout (plot_name, accession_name, not_planted, plot
+number, block, replicate, row, column), and the planting order file of
+Download Plot Order can be uploaded as it is: rows of borders, gaps, subplots
+and plants are skipped (also when a packet planted into a border is written
+there), other columns are ignored. The upload shows which plot gets which
+accession and which plots become not planted before anything is changed. The
+file is a state, not an action: plots that already match it are left as they
+are, so uploading the same file again changes nothing, and a later correction
+starts from a new download, which then has the not_planted column.
+
+**Shift Accessions** (Edit Field Layout), a shortcut for a single shift. For a planting that shifted: from a
 plot on, every place got the packet planned for the place before it (or after
 it), usually to the end of the column, where the packet left over goes into a
 border and the next column is planted as planned. The path is the one of
@@ -45,7 +60,8 @@ at the end of the column or row of the first plot (the default), at a chosen
 plot, or at the last plot. The preview shows the path column by column with
 its direction ("Column 2, rows 2 to 5"). The places that stay empty are
 marked as not planted; places already marked are skipped. Plot names are kept
-by default, because the labels in the field carry them.
+by default, because the labels in the field carry them. Unlike the file, a
+shift is relative: run twice, it shifts twice.
 
 **Not planted plots.** New stock property `not_planted` (db patch
 `AddNotPlantedStockprop`). The plot keeps its planned accession, so the plan
@@ -125,10 +141,12 @@ correction.
 ## Tests
 
 - `t/unit_fixture/CXGN/Trial/AccessionChange.t`: 51 scenarios, 382 assertions.
-- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 19 scenarios
-  through the web server, 170 assertions, including the path of a shift against
-  the planting order download, with and without a border.
-- `js/test/trial_accession_change.test.js`: 36 assertions (all 42 JS tests pass).
+- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 20 scenarios
+  through the web server, 195 assertions, including the round trip of a
+  planting order file with border rows (corrected, uploaded, uploaded again,
+  corrected again), the layout download uploaded unchanged, and the path of a
+  shift against the planting order download.
+- `js/test/trial_accession_change.test.js`: 44 assertions (all 50 JS tests pass).
 - Regression: trial, Field Book, data collector, phenotype upload, BrAPI v2,
   TrialMetadata and `t/unit` (Mason compile) tests. Four assertions of
   `t/unit_fixture/CXGN/Trial.t` (1-2, 71-72) fail in the same run on the base
