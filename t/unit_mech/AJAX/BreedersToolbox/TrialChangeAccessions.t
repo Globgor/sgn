@@ -18,6 +18,7 @@ use Test::WWW::Mechanize;
 use LWP::UserAgent;
 use JSON::XS;
 use File::Temp qw(tempfile);
+use URI::Escape qw(uri_escape);
 use SGN::Model::Cvterm;
 use CXGN::Trial::TrialLayout;
 use CXGN::Trial::AccessionChange;
@@ -357,6 +358,80 @@ subtest 'Change Accessions upload: the not_planted column' => sub {
     is_deeply($r->{planting}, [ { plot_name => 'test_trial24', not_planted => 0 } ], "'not planted' with 'no' plants it again");
     $r = $upload->("plot_name,accession_name,not_planted\ntest_trial24,$original->{4}->{accession},maybe\n");
     like($r->{error}, qr/Plot test_trial24: not_planted must be 1 \(not planted\) or 0 \(planted\), not maybe\./, 'an unknown value is refused');
+    restore();
+};
+
+subtest 'Change Accessions upload: a planting order file, corrected and uploaded again' => sub {
+    # 3 rows of 5 columns, planted by column, serpentine, with border rows at the bottom and the top:
+    # border, 1, 6, 11, border up column 1; border, 12, 7, 2, border down column 2; border, 3, 8, 13, border up column 3 ...
+    foreach my $n (1 .. 15) {
+        set_prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        set_prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
+    my $download = sub {
+        $mech->get_ok("$base/ajax/breeders/trial_plot_order?trial_ids=$trial_id&type=planting&order=by_col_serpentine&start=bottom_left&top_border=true&bottom_border=true", 'download the planting order');
+        my ($header, @rows) = map { [ split /,/, $_, -1 ] } grep { /\S/ } split /\r?\n/, $mech->content;
+        my %col = map { $header->[$_] => $_ } 0 .. $#$header;
+        return ($header, \@rows, \%col);
+    };
+    my $upload = sub {
+        my ($header, $rows, @fields) = @_;
+        my ($fh, $filename) = tempfile(SUFFIX => '.csv');
+        print $fh join("\n", map { join(',', @$_) } $header, @$rows), "\n";
+        close($fh);
+        $mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'planting_order.csv', Content_Type => 'text/csv' ], keep_plot_names => 1, @fields ]);
+        return decode_json($mech->content);
+    };
+    my ($header, $rows, $col) = $download->();
+    is_deeply([ map { $_->[ $col->{type} ] eq 'plot' ? ($_->[ $col->{plot_name} ] =~ /^test_trial2(\d+)$/)[0] + 0 : 'b' } grep { $_->[ $col->{col_number} ] == 2 } @$rows ], [ 'b', 12, 7, 2, 'b' ], 'column 2 in the file: border, 12, 7, 2, border');
+    is_deeply([ map { $_->[ $col->{type} ] eq 'plot' ? ($_->[ $col->{plot_name} ] =~ /^test_trial2(\d+)$/)[0] + 0 : 'b' } grep { $_->[ $col->{col_number} ] == 3 } @$rows ], [ 'b', 3, 8, 13, 'b' ], 'column 3: border, 3, 8, 13, border');
+    ok(!exists($col->{not_planted}), 'no not_planted column while every plot is planted');
+
+    # the place of plot 8 was skipped: plot 13 got the packet of plot 8, the packet of plot 13 went into the top border
+    push @$header, 'not_planted';
+    my %row_of = map { $_->[ $col->{plot_name} ] => $_ } grep { $_->[ $col->{type} ] eq 'plot' } @$rows;
+    push @$_, '' for @$rows;
+    my ($top_border) = grep { $_->[ $col->{type} ] eq 'border' && $_->[ $col->{col_number} ] == 3 && $_->[ $col->{row_number} ] == 4 } @$rows;
+    $top_border->[ $col->{accession_name} ] = $row_of{test_trial213}->[ $col->{accession_name} ];
+    $row_of{test_trial213}->[ $col->{accession_name} ] = $row_of{test_trial28}->[ $col->{accession_name} ];
+    $row_of{test_trial28}->[-1] = 1;
+
+    my $r = $upload->($header, $rows, preview => 1);
+    is($r->{preview}->{changed}, 1, 'preview: one plot gets another accession') or diag(explain $r);
+    is_deeply($r->{preview}->{planting}, [ { plot_name => 'test_trial28', not_planted => 1 } ], 'preview: plot 8 is not planted; the border rows are skipped');
+    is_deeply(trial_state(), $original, 'preview changes nothing');
+
+    $r = $upload->($header, $rows);
+    is($r->{success}, 1, 'uploaded') or diag(explain $r);
+    is_deeply([ plot_state($plot{13})->{accession}, plot_state($plot{8})->{accession}, plot_state($plot{8})->{not_planted} ], [ $original->{8}->{accession}, $original->{8}->{accession}, '1' ], 'plot 13 has the accession planned for plot 8, plot 8 is not planted');
+
+    $r = $upload->($header, $rows, preview => 1);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'the same file again: nothing to change');
+    $r = $upload->($header, $rows);
+    is_deeply([ $r->{success}, $r->{changed} ], [ 1, 0 ], 'uploading it again changes nothing');
+    is(plot_state($plot{13})->{accession}, $original->{8}->{accession}, 'plot 13 is as after the first upload');
+
+    # a later correction starts from a new download, which has the not_planted column now
+    ($header, $rows, $col) = $download->();
+    ok(exists($col->{not_planted}), 'the new download has a not_planted column');
+    %row_of = map { $_->[ $col->{plot_name} ] => $_ } grep { $_->[ $col->{type} ] eq 'plot' } @$rows;
+    is_deeply([ map { $row_of{$_}->[ $col->{not_planted} ] } qw(test_trial28 test_trial212) ], [ 1, 0 ], 'with plot 8 not planted');
+    $row_of{test_trial212}->[ $col->{not_planted} ] = 1;
+    $r = $upload->($header, $rows);
+    is_deeply($r->{planting}, [ { plot_name => 'test_trial212', not_planted => 1 } ], 'second correction: plot 12 not planted too') or diag(explain $r);
+    is_deeply([ map { plot_state($plot{$_})->{not_planted} } (8, 12) ], [ '1', '1' ], 'plots 8 and 12 are not planted');
+
+    # the layout download of the Change Accessions dialog (by plot number), uploaded as it is, changes nothing
+    my $columns = uri_escape('{"plot_name":1,"accession_name":1,"plot_number":1,"block_number":1,"not_planted":1,"rep_number":1,"row_number":1,"col_number":1}');
+    $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=xlsx&dataLevel=plots&selected_columns=$columns", 'the layout as Excel');
+    $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'the layout as CSV');
+    my ($layout_header, @layout_rows) = map { [ map { s/^"|"$//gr } split /,/, $_, -1 ] } grep { /\S/ } split /\r?\n/, $mech->content;
+    is_deeply($layout_header, [ qw(plot_name accession_name plot_number block_number not_planted rep_number row_number col_number) ], 'with plot_name, accession_name and not_planted');
+    $r = $upload->($layout_header, \@layout_rows, preview => 1);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'uploaded unchanged: nothing to change') or diag(explain $r);
+
+    $schema->resultset('Stock::Stockprop')->search({ stock_id => { -in => [ values %plot ] }, type_id => { -in => [ $t{row_number}, $t{col_number} ] } })->delete;
     restore();
 };
 

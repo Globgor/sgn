@@ -27,6 +27,12 @@ $trial_stock_type
                 <div class="container-fluid">
 
                     <div class="well well-sm">
+                        <p><b>Correct the trial with a file of what was planted:</b></p>
+                        <ol style="padding-left: 20px">
+                            <li><a class="btn btn-default btn-sm" id="trial_design_change_accessions_download" href="/breeders/trial/<% $trial_id %>/download/layout?format=xlsx&amp;dataLevel=plots&amp;selected_columns=%7B%22plot_name%22%3A1%2C%22accession_name%22%3A1%2C%22plot_number%22%3A1%2C%22block_number%22%3A1%2C%22not_planted%22%3A1%2C%22rep_number%22%3A1%2C%22row_number%22%3A1%2C%22col_number%22%3A1%7D">Download the current layout</a> (by plot number), or <b>Download Plot Order</b> with the planting order and borders in Field Layout Tools.</li>
+                            <li>Write what was planted: change accession_name where another accession grows; put 1 in not_planted where nothing was planted (the plot keeps its planned accession). In a file in planting order, a shift is a cut and paste of accession_name one row down; leave the border rows as they are.</li>
+                            <li>Upload the file here. You see what changes before anything is changed. Plots that already match the file are left as they are, so the same file can be uploaded again, and a later correction starts from a new download.</li>
+                        </ol>
                         <& /help/file_upload_type.mas, type => "Accession exchanges", optional_column => 0 &>
                         <br/>
 
@@ -36,7 +42,7 @@ $trial_stock_type
                                 The first row (header) must contain the columns 'plot_name' and 'accession_name' or 'cross_unique_id' or 'family_name', depending on the stock type in this trial.<br>
                                 An optional additional column, 'new_plot_name' can be added to change the plot names; the current name keeps it.<br>
                                 Without a new name, the old name is replaced where it is a whole part of the plot name, or, if a plot name template has been saved in association with this trial, the template is used to rename the plot. Check "Keep the plot names" to keep all names.<br>
-                                The file can list every plot of the trial, for example the plan as it was planted; plots whose accession does not change are left as they are.<br>
+                                The file can list every plot of the trial, for example the plan as it was planted; plots whose accession does not change are left as they are. Other columns are ignored, and so are rows of a planting order file whose type is not plot (borders and gaps).<br>
                                 An optional column 'not_planted' marks places where nothing was planted (1) or that were planted after all (0); an empty cell leaves the plot as it is. A plot that was not planted keeps the accession in the file as its planned accession.<br>
 
                                 <table style="margin-top: 3%;" class="table table-bordered table-hover">
@@ -72,8 +78,8 @@ $trial_stock_type
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" /> Keep the plot names</label></div>
-                                <div class="checkbox"><label><input type="checkbox" name="delete_phenotypes" id="trial_design_change_accessions_delete_phenotypes" value="1" /> Delete the phenotypes of plots marked as not planted</label></div>
-                                <p class="help-block" style="white-space: normal">Without it, nothing is changed if such plots already have phenotypes.</p>
+                                <input type="hidden" name="preview" id="trial_design_change_accessions_preview" value="1" />
+                                <input type="hidden" name="delete_phenotypes" id="trial_design_change_accessions_delete_phenotypes" value="0" />
                             </div>
                         </div>
                     </form>
@@ -128,7 +134,7 @@ $trial_stock_type
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <p3> Plot accession was replaced successfully.</p3>
+                    <p3> The trial was changed:</p3>
                     <ul id="trial_design_change_accessions_summary"></ul>
 
                 </div>
@@ -176,19 +182,27 @@ jQuery(document).ready(function () {
         jQuery('#trial_design_change_accessions_dialog').modal('show');
     });
 
+    // the file is posted twice: first for the plan (preview), then, once the user agrees, to change the trial
+    var change_accessions_action = 'check';
+    function post_change_accessions(action, preview) {
+        change_accessions_action = action;
+        jQuery('#trial_design_change_accessions_preview').val(preview ? 1 : 0);
+        jQuery('#trial_design_change_accessions_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/" + action);
+        jQuery("#trial_design_change_accessions_form").submit();
+    }
+
     jQuery('#trial_design_change_accessions_submit').click( function() {
-        var uploadFile = jQuery("#trial_design_change_accessions_file").val();
-        jQuery('#trial_design_change_accessions_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/check");
-        if (uploadFile === '') {
+        if (jQuery("#trial_design_change_accessions_file").val() === '') {
             alert("Please select a file");
             return;
         }
-        jQuery("#trial_design_change_accessions_form").submit();
+        jQuery('#trial_design_change_accessions_delete_phenotypes').val(0);
+        post_change_accessions('check', true);
     });
 
     jQuery('#td_override_accession_warning').click( function() {
-        jQuery('#trial_design_change_accessions_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/change_plot_accessions_using_file/override");
-        jQuery("#trial_design_change_accessions_form").submit();
+        jQuery('#td_replace_accession_curator_warning_message').modal("hide");
+        post_change_accessions('override', true);
     });
 
     jQuery('#trial_design_change_accessions_form').iframePostForm({
@@ -196,19 +210,31 @@ jQuery(document).ready(function () {
         post: function () {
             jQuery('#working_modal').modal("show");
         },
-        complete: function (response) {
+        complete: async function (response) {
             jQuery('#working_modal').modal("hide");
+            var change = window.jsMod['trial_accession_change'];
             if (response.warning) {
                 jQuery('#trial_design_change_accessions_dialog').modal("hide");
                 jQuery('#td_replace_accession_curator_warning_message').modal("show");
+            } else if (response.error && response.not_planted_phenotypes && jQuery('#trial_design_change_accessions_delete_phenotypes').val() !== '1') {
+                var text = jQuery('<div/>').html(response.error.replace(/<br\s*\/?>/g, "\n")).text();
+                if (await change.confirmDialog(text + "\n\nDelete these phenotype values with this change?", { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
+                    jQuery('#trial_design_change_accessions_delete_phenotypes').val(1);
+                    post_change_accessions(change_accessions_action, true);
+                }
             } else if (response.error) {
                 jQuery('#change_accession_error_dialog').modal("show");
                 jQuery('#change_accession_error_dialog tbody').html(response.error);
-            }
-            else {
-	            jQuery('#trial_design_change_accessions_dialog').modal("hide");
+            } else if (response.preview) {
+                if (change.nothingChanges(response.preview)) {
+                    await change.confirmDialog("Nothing to change: the trial already matches the file.", { title: "<% $title %>", ok: "OK" });
+                } else if (await change.confirmDialog(change.summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: "<% $title %>", ok: "Continue" })) {
+                    post_change_accessions(change_accessions_action, false);
+                }
+            } else {
+                jQuery('#trial_design_change_accessions_dialog').modal("hide");
                 jQuery('#td_replace_accession_curator_warning_message').modal("hide");
-                window.jsMod['trial_accession_change'].showSummary('#trial_design_change_accessions_summary', response, false);
+                change.showSummary('#trial_design_change_accessions_summary', response, false);
                 jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
             }
         },

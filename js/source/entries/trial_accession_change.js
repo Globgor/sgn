@@ -77,6 +77,17 @@ export function summaryLines(summary, planned, maxItems = 10) {
 }
 
 /**
+ * Whether a plan changes nothing, for example a file that the trial already matches.
+ * @param {Object} summary - the preview from the server
+ * @returns {boolean}
+ */
+export function nothingChanges(summary) {
+    return !summary.changed && !summary.replicates_changed && !summary.phenotypes_deleted
+        && !(summary.planting || []).length && !(summary.renamed || []).length
+        && !(summary.checks || []).length && !(summary.entry_numbers || []).length;
+}
+
+/**
  * Shows the lines of a summary as the items of a list.
  * @param {string|HTMLElement} list - the ul element, or its selector
  * @param {Object} summary - the summary from the server
@@ -212,6 +223,10 @@ export async function changeWithPreview(url, data, options = {}) {
                 return null;
             }
             tell(`${action}: ${response.error}`);
+            return null;
+        }
+        if (response.preview && nothingChanges(response.preview)) {
+            tell("Nothing to change.");
             return null;
         }
         if (!response.preview || !(await ask(summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: options.title || "Please check the changes", ok: "Continue" }))) {

@@ -2366,6 +2366,13 @@ sub trial_plot_gps_upload : Chained('trial') PathPart('upload_plot_gps') Args(0)
     $c->stash->{rest} = { success => 1 };
 }
 
+# Changes the accessions of plots, and marks plots as not planted, from a file:
+# plot_name, accession_name, and optionally new_plot_name and not_planted. Other
+# columns are ignored, so a downloaded layout or planting order file (Download
+# Plot Order, whose border and gap rows are skipped) can be corrected and
+# uploaded; uploading it again changes nothing.
+# Args: 'check' (curators get a warning for trials with phenotypes) or 'override'.
+# params: keep_plot_names, delete_phenotypes, preview (1 to get the plan only)
 sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot_accessions_using_file') Args(1) {
     my $self = shift;
     my $c = shift;
@@ -2468,7 +2475,7 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
         delete_phenotypes => _true_param($c->req->param('delete_phenotypes')),
     };
-    $self->_change_trial_stocks($c, $accession_change, \@changes, $options, undef, 1);
+    $self->_change_trial_stocks($c, $accession_change, \@changes, $options, _true_param($c->req->param('preview')), 1);
 }
 
 sub trial_additional_file_upload : Chained('trial') PathPart('upload_additional_file') Args(0) {
@@ -6501,6 +6508,10 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
             "block_number",
             "is_a_control"
         );
+        # plots that were not planted (see CXGN::Trial::AccessionChange), when there are any;
+        # the file can be corrected and uploaded with Change Accessions
+        my $has_not_planted = grep { ($_->{type} // '') eq 'plot' && $_->{not_planted} } @{$results->{plots}};
+        push(@headers, "not_planted") if $has_not_planted;
         push(@data, \@headers);
 
         # Add plot rows
@@ -6527,6 +6538,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                     $plot->{block_number},
                     $plot->{is_a_control}
                 );
+                push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                 push(@data, \@d);
 
                 # Add additional subplots for the current plot, if found
@@ -6550,6 +6562,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                             $plot->{block_number},
                             $plot->{is_a_control}
                         );
+                        push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                         push(@data, \@d);
                     }
                 }
@@ -6575,6 +6588,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                             $plot->{block_number},
                             $plot->{is_a_control}
                         );
+                        push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                         push(@data, \@d);
                     }
                 }
@@ -6599,6 +6613,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                     "", # block
                     "", # control
                 );
+                push(@d, "") if $has_not_planted;
                 push(@data, \@d);
             }
 

@@ -1,5 +1,5 @@
 import test from "tape";
-import { summaryLines, showSummary, changeWithPreview, confirmDialog } from "../source/entries/trial_accession_change.js";
+import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingChanges } from "../source/entries/trial_accession_change.js";
 
 const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], phenotypes_deleted: 0, warnings: [] };
 
@@ -129,6 +129,18 @@ test("changeWithPreview", (t) => {
         const result = await changeWithPreview("/url", {}, { confirm: () => Promise.resolve(true) });
         t.equal(requests.length, 2);
         t.equal(result.changed, 1);
+        t.end();
+    });
+
+    t.test("a plan that changes nothing is not asked about", async (t) => {
+        const requests = fakeServer([{ preview: { ...empty, unchanged: ["P1", "P2"] } }]);
+        const told = [];
+        const result = await changeWithPreview("/url", {}, { confirm: () => t.fail("no question"), alert: (m) => told.push(m) });
+        t.equal(result, null);
+        t.deepEqual(told, ["Nothing to change."]);
+        t.equal(requests.length, 1, "and nothing is posted to change");
+        t.ok(nothingChanges({ ...empty }), "an empty plan");
+        t.notOk(nothingChanges({ ...empty, planting: [{ plot_name: "P1", not_planted: 1 }] }), "a plan that marks a plot");
         t.end();
     });
 

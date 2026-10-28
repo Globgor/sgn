@@ -40,6 +40,23 @@ sub _validate_with_plugin {
     my $parsed_data = $parsed->{'data'};
     my $parsed_values = $parsed->{'values'};
 
+    # A planting order file (Download Plot Order) can be uploaded as it is: its
+    # rows of other types than plot (borders, gaps, subplots, plants) are skipped.
+    my %skip_row = map { $_->{_row} => 1 } grep { defined($_->{type}) && $_->{type} =~ /\S/ && lc($_->{type}) ne 'plot' } @{ $parsed_data || [] };
+    if (%skip_row) {
+        $parsed_errors = [ grep {
+            my $error = $_;
+            if ($error =~ /does not have a value in row (\d+)$/) {
+                !$skip_row{$1};
+            } elsif ($error =~ /appears more than once in rows ([\d,]+)$/) {
+                scalar(grep { !$skip_row{$_} } split(/,/, $1)) > 1;
+            } else {
+                1;
+            }
+        } @$parsed_errors ];
+        $parsed_data = [ grep { !$skip_row{ $_->{_row} } } @$parsed_data ];
+    }
+
     if (@$parsed_errors) {
         push @error_messages, join (". ", @$parsed_errors);
     }
