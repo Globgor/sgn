@@ -1,158 +1,176 @@
-# Correct a trial to what was planted: a file round trip, not planted plots, one service
+# Correct a trial to what was planted: one file, not planted plots, seed that follows the packets
 
-Supersedes #6384 (and #6353). Builds on #6384, fixes its replicate handling and
-makes the trial match the field when the planting went wrong.
+Supersedes #6384 (and #6353). Builds on #6384 and fixes its replicate handling. The
+goal: when the planting went wrong, the trial in the database is made to match the
+field, and everything that depends on it (analyses, files, labels, seed inventory)
+stays right.
 
-The ways a planting goes wrong are many (a place skipped and the rest of the
-column shifted, a packet planted into a border, places left empty on purpose,
-plots lost), so the main way to correct a trial is a file of what was planted:
-download it, write what was planted, upload it, as often as needed.
+## Why one file and no buttons
+
+The ways a planting goes wrong are many: a place skipped and the rest of the column
+shifted, a packet planted into a border, two packets swapped, a column planted the
+other way, a place left empty, the right accession from the wrong seedlot, and
+corrections found at different times of the season. A button for each case would
+never cover them all, and each would act on the trial as it is, so running one twice
+corrects twice. A file of what was planted covers all of them and is a state, not an
+action: download the trial, write what was planted, upload. Plots that already match
+are left as they are, so the same file changes nothing the second time. (Earlier
+versions of this PR had Shift Accessions and Not Planted Plots buttons; they were
+removed for this reason.)
 
 ## The rule
 
-A plot is a place in the field. Its plot number, block, replicate, row and
-column describe that place and are part of the design; the accession is what
-grows there. A correction changes what grows there and never moves the plot.
-So blocks and replicates stay (except in a CRD, where the replicate is the
-n-th plot of an accession and is numbered again), and phenotypes stay with the
+A plot is a place in the field. Its plot number, block, replicate, row and column
+describe that place and are part of the design; the accession is what grows there.
+A correction changes what grows there and never moves the plot. Blocks and
+replicates stay (in a CRD, where the replicate is the n-th plot of an accession, the
+accessions that gain or lose plots are numbered again), and phenotypes stay with the
 plot they were measured on.
 
-## What changes
+## How to correct a trial
 
-**One service, `CXGN::Trial::AccessionChange`.** Every way to change the
-accession of plots goes through it: Replace Accession, the plot dialog of the
-field map, the Change Accessions upload, Substitute, genotyping plate wells
-and BrAPI `PUT /observationunits`. `plan()` returns what would change
-without changing anything; `apply()` does it in one transaction and refuses
-plots that were changed by someone else in the meantime. It reads the layout
-from the database, not from the cache.
+1. Download the trial: "Download the current layout" in the Change Accessions window
+   (plot_name, accession_name, not_planted, plot number, block, replicate, row,
+   column, seedlot), or Download Plot Order (planting order with the border rows).
+2. Write what was planted: change accession_name where another accession grows; put 1
+   in not_planted where no seed was sown. A shift is a cut and paste of accession_name
+   one row down in the planting order file.
+3. Upload it with Change Accessions. The preview lists every change; nothing is
+   changed until the user confirms, and then exactly that is changed.
 
-- Plants, subplots and tissue samples of the plot in this trial follow it;
-  samples in other trials (genotyping plates) keep their accession, with a warning.
-- Plot names: replaced where the old name is a whole part of the name, or from
-  the trial's plot name template; optional. Plants and samples are renamed with
-  their plot.
-- Check plots follow the check accession (`is a control`).
-- Entry numbers move to a new accession that takes the place of an old one.
-- Warnings for plots with phenotypes and for plots used as cross parents.
+Plot names are kept by default (labels are in the field). The file is kept with the
+trial. The result lists the changed plots, ready to be saved as a list for the Label
+Designer.
 
-**A file of what was planted** (Change Accessions). The window links to a
-download of the current layout (plot_name, accession_name, not_planted, plot
-number, block, replicate, row, column), and the planting order file of
-Download Plot Order can be uploaded as it is: rows of borders, gaps, subplots
-and plants are skipped (also when a packet planted into a border is written
-there), other columns are ignored. The upload shows which plot gets which
-accession and which plots become not planted before anything is changed. The
-file is a state, not an action: plots that already match it are left as they
-are, so uploading the same file again changes nothing, and a later correction
-starts from a new download, which then has the not_planted column.
+## Problems, and how each is handled
 
-**Shift Accessions** (Edit Field Layout), a shortcut for a single shift. For a planting that shifted: from a
-plot on, every place got the packet planned for the place before it (or after
-it), usually to the end of the column, where the packet left over goes into a
-border and the next column is planted as planned. The path is the one of
-Download Plot Order: by column or row, serpentine or zigzag, from any corner,
-with the borders planted on the way (set from the borders saved with the
-field map). This matters: in a serpentine order a border column is a turn of
-its own, so with a left border column 1 goes down and column 2 up, and a path
-built without the border runs the wrong way in every column. The stretch ends
-at the end of the column or row of the first plot (the default), at a chosen
-plot, or at the last plot. The preview shows the path column by column with
-its direction ("Column 2, rows 2 to 5"). The places that stay empty are
-marked as not planted; places already marked are skipped. Plot names are kept
-by default, because the labels in the field carry them. Unlike the file, a
-shift is relative: run twice, it shifts twice.
+Explained = where a user reads about it (Docs: `managing_field_trials.Rmd`; Dialog:
+the Change Accessions window). Tests: `AC` = `t/unit_fixture/CXGN/Trial/AccessionChange.t`,
+`TCA` = `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`, `JS` =
+`js/test/trial_accession_change.test.js`.
 
-**Not planted plots.** New stock property `not_planted` (db patch
-`AddNotPlantedStockprop`). The plot keeps its planned accession, so the plan
-stays visible, and:
+### Fixed from #6384
 
-- the field map shows it empty (white, dashed border), with a legend entry, a
-  tooltip, and Mark as Not Planted / Planted in the plot dialog;
-- it is left out of Field Book files and the phenotyping spreadsheets;
-- phenotypes cannot be stored for it (`StorePhenotypes::verify`);
-- it is flagged in the plot layout download (`not_planted` column) and in BrAPI
-  (`additionalInfo.notPlanted`, read only);
-- it is left out of the replicate numbering of a CRD;
-- phenotypes it already has are deleted only when the user confirms it
-  (`delete_phenotypes`); otherwise nothing is changed.
+| Problem | What was done | Explained | Test |
+|---|---|---|---|
+| Replicates in blocked designs were numbered per accession (an RCBD accession got replicates 1 to 8 in 4 blocks) | Blocked designs keep the replicate; only a CRD is numbered again | Docs, PR | AC "RCBD: replicates and blocks are kept…", TCA "replace_stock in an RCBD…" |
+| A plot without a replicate stockprop crashed Replace Accession | Plots without replicate keep none | PR | AC "CRD: a plot without replicate keeps none" |
+| Renames in hash order failed at random with a name template | All renames in two passes | PR | AC "CRD with the template…" |
+| Names changed by substring (`A1` inside `A10`, inside the trial name) | Only whole name parts | Docs | AC "no template: …" (2 scenarios) |
+| Layout read from the stale cache (#4642) | Read from the database | PR | AC "the trial is read from the database…" |
+| One plot not one transaction (a refused name left the new accession) | One transaction | PR | TCA "replace_plot_accessions: one plot" |
+| Errors with `{UNKNOWN}:` and server paths | Cleaned | PR | TCA "replace_plot_accessions: one plot" |
+| `trial_stock_type` from the client could widen the allowed types | The trial decides | PR | TCA "replace_stock: errors" |
 
-Endpoint: `POST /ajax/breeders/trial/<id>/not_planted` (`plot_names` or
-`plot_ids`, `not_planted`, `delete_phenotypes`, `preview`). The Change
-Accessions upload takes an optional `not_planted` column.
+### Correcting a planting
 
-**Preview first.** Every dialog shows the plan in a dialog and changes nothing
-until the user confirms it. The front end is a webpack entry,
-`js/source/entries/trial_accession_change.js` (`summaryLines`, `showSummary`,
-`confirmDialog`, `changeWithPreview`), with tests in `js/test`.
+| Problem | What was done | Explained | Test |
+|---|---|---|---|
+| Too many kinds of planting errors for buttons | One file round trip; layout and planting order downloads upload as they are (border rows, other trials' rows skipped) | Docs, Dialog | TCA "a planting order file, corrected and uploaded again", AC "a shifted planting…" |
+| Uploading the same file twice must not correct twice | Plots that match are left; "nothing to change" | Docs, Dialog | TCA "…uploaded again", JS "a plan that changes nothing…" |
+| The user must see what will change | Preview of every change, then confirm | Docs, Dialog | JS "preview, confirm, change", "the preview lists every change" |
+| Someone changes the trial between preview and confirm (another upload, Field Book sync) | The apply carries the digest of the preview and is refused if the plan differs | Docs | AC "apply carries out only the plan of the preview", JS "the change is the one of the preview" |
+| An old file would undo later corrections | Every change is listed (no "and N more"); docs say to start from a new download | Docs | JS "the preview lists every change" |
+| Labels are in the field | "Keep the plot names" on by default; a warning when a rename gives a plot another plot's name | Docs, Dialog | TCA "keeping the plot names", AC "CRD with the template…" |
+| New labels for the changed plots | The result lists them and saves them as a list | Docs, Dialog | JS "changedPlots" |
+| Check plots after a change | A plot with a check accession becomes a check plot (and its plants) | Docs | AC "check plots…" (3), "RCBD: a plot that becomes a check plot marks its plants too" |
+| Plants, subplots, tissue samples | Follow their plot; samples in other trials (plates) warned | Docs | AC "RCBD: … plants and tissue samples follow…", "subplots…", "samples … in other trials" |
+| Entry numbers | Move to a new accession that takes the place of an old one | PR | AC "entry numbers" |
+| Phenotypes already collected | Stay with the plot (they count for what grew there); curators only, after a warning | Docs | TCA "at the end of the season" |
+| Crosses that used a plot as a parent | Warning | Preview | AC "phenotypes and crosses…", "not planted: treatments…" |
+| Cross and family-name trials with accession checks | Accessions allowed as checks; unchanged rows never refused | Dialog | AC "crosses and family names" |
+| No record that a trial was corrected | The applied file is kept with the trial (Uploaded Additional Files) | Docs, Dialog | TCA "Change Accessions upload" |
+| Names from the file in error messages (XSS) | Escaped; shown as text | — | TCA "what the parser reads", JS "plainText" |
+| Excel turns `397073.10` or `0101` into numbers | The layout xlsx writes names as text | — | TCA (xlsx uploaded as it is) |
 
-**Also**: the solGS analysis cache of the trial is cleared after a change; the
-plot, plant, subplot and tissue sample layout downloads with a plot order no
-longer add empty rows for plots that are left out.
+### Places that were not planted
 
-## Fixed from #6384
+| Problem | What was done | Explained | Test |
+|---|---|---|---|
+| No way to record an empty place; zeros would bias the analyses | Stockprop `not_planted`; the plot keeps its planned accession and its place in the design | Docs, Dialog | AC "not planted: the plot keeps its accession…" |
+| "Not planted" vs "lost after planting" | Only for places where no seed was sown; a lost plot stays planted and gets its stand count | Docs, Dialog | — |
+| Field Book files and spreadsheets would list it | Left out (all data levels, Associated Images too) | Docs | AC "not planted: spreadsheets…", "…layout and downloads leave it out" |
+| Phenotypes could be stored for it, or for its plants | Refused in verify; never stored by store() (BrAPI v1, drone imagery, derived traits) | Docs | AC "not planted: phenotype files" |
+| Spreadsheets made before the mark would be refused | Only rows with a value count | Docs | AC "not planted: phenotype files" |
+| Values it already has | Deleted only when the user confirms, also NIRS data; never values shared with other plots | Docs, Dialog | AC "…deleted only when asked", "…stored together…", "…high-dimensional data goes", TCA "…deleted after confirmation" |
+| Treatments and notes are design, not growth | Kept and allowed; a trial with treatments only has no "traits assayed" | Docs | AC "…treatments stay…" |
+| CRD replicate numbering | The plot keeps its place (no renumbering of its neighbours) | Docs | AC "not planted: …", TCA "the not_planted column" |
+| Maps | Field map: empty with a dashed border, legend, plot dialog; field map spreadsheet: "(not planted)" | Docs | AC "not planted: spreadsheets…" |
+| New plants, subplots, tissue samples | Not created in it | Docs | AC "not planted: spreadsheets…" |
+| BrAPI | `additionalInfo.notPlanted` (read only) | Docs | TCA "the not_planted column" |
 
-- Replicates in blocked designs: #6384 numbers the replicate per accession
-  after a change. In an RCBD the replicate is the block, so replacing an
-  accession by one already in the trial gives it replicates 1 to 8 in a
-  4-block trial, and a shift across blocks gives plots a replicate other than
-  their block. The replicate is kept now (in a CRD it is numbered again).
-- A plot without a replicate stockprop made `rebuild_trial_plot_replicates`
-  call `update` on undef, so Replace Accession failed on such trials.
-- Renames ran in hash order, one at a time, so with a plot name template the
-  same request sometimes failed (`... already exists in the database`). All
-  renames now happen in two passes.
-- Plot names were changed by substring, also inside the trial name or a longer
-  accession name (`A1` in `A10`). Only whole name parts are replaced now.
-- The layout was read from the cached layout, which is stale exactly in the
-  trials that need the fix (#4642). It is read from the database now.
-- Changing one plot was not one transaction: a refused new name left the new
-  accession in place.
-- Errors sent to the browser carried `{UNKNOWN}:` and server file paths.
-- The `trial_stock_type` sent by the client could widen the stock types a
-  trial accepts; the trial decides now.
+### Seedlots
+
+| Problem | What was done | Explained | Test |
+|---|---|---|---|
+| The upload refused every plot planted from a seedlot, even for curators | Seed transactions follow the packets: a plot takes over the transaction of the plot whose packet it got (nearest by plot number); seedlots are no reason to ask a curator | Docs, Dialog | AC "seedlots: the seed transactions follow the packets", TCA "a trial planted from seedlots" |
+| A packet planted into a border, in no plot | Stays taken from its seedlot (inventory unchanged); returned seed is added on the seedlot page | Docs, Dialog | AC "seedlots: … follow the packets" |
+| The right accession from the wrong seedlot | Optional `seedlot_name`; both seedlots recounted | Docs, Dialog | AC "seedlots: another seedlot of the same accession" |
+| Family-name plots are planted from seedlots of their crosses | Counted as holding the family | Docs | AC "seedlots: plots of family names…" |
+| The same file uploaded again: its seedlot cells are those of before the packets moved | A seedlot_name that does not hold the plot's accession is not used | Docs | AC, TCA "…the same file again" |
+| Seedlots harvested from a corrected plot | Warning | Docs | AC "not planted: plants, seedlots and plates" |
+
+### After a change
+
+| Problem | What was done | Explained | Test |
+|---|---|---|---|
+| Phenotype search, datasets | Materialized views refreshed | Docs ("run the analyses again") | — (checked end to end on a trial with phenotypes; the refresh runs in the background) |
+| solGS results of the trial | Cache cleared | PR | — |
+| Layout cache | Regenerated in the transaction | PR | AC "cached layout" assertions |
 
 ## Statistics
 
-Simulated with the models Breedbase uses (heritability tool:
-`lmer(y ~ (1|germplasmName) + replicate)`; Mixed Models with replicate random),
-RCBD with 20 accessions x 4 blocks, a skip at plot 26 shifting the rest, one
-place left empty on purpose, one plot lost; 500 simulations:
+Simulated with the models Breedbase uses (heritability tool
+`lmer(y ~ (1|germplasmName) + replicate)`; Mixed Models with replicate random), RCBD
+of 20 accessions x 4 blocks, a skipped place shifting the rest, a place left empty, a
+plot lost; 500 simulations:
 
-| data | accuracy (cor with true values) | H2 (heritability tool) |
+| data | accuracy (cor with true values) | H2 |
 |---|---|---|
 | as it grew | 0.893 | 0.393 |
-| after Shift Accessions + not planted | 0.893 (identical in all 500) | 0.393 |
-| not corrected | 0.000 | 0.000 (63% of fits singular) |
+| corrected with the file (shift + not planted) | 0.893, identical in all 500 | 0.393 |
+| not corrected | 0.000 (63% of fits singular) | 0.000 |
 | corrected, replicates renumbered as in #6384 | 0.889 | 0.391 |
 | corrected, empty places recorded as 0 | 0.648 | 0.086 |
 
-Not corrected, a shift of 14 plots already lowers the accuracy from 0.90 to
-0.83. Empty places must be missing values, not zeros, which is why not planted
-plots cannot get phenotypes.
+Not corrected, a shift of 14 plots already lowers the accuracy from 0.90 to 0.83.
+Shifts within columns of a 10 x 8 RCBD (serpentine after a border column, 300
+simulations): corrected 0.873 = truth; not corrected 0.791; corrected along the wrong
+direction 0.700, worse than not correcting, which is why the planting order file
+(with its borders) is the one to edit.
 
-Shifts inside columns (column serpentine after a left border, a skip in three
-columns of a 10 x 8 RCBD, each shifted to the end of its column; Mixed Models;
-300 simulations): Shift Accessions with the border gives the accuracy of the
-true data (0.873, identical in all 300); not corrected 0.791; a shift built
-without the border, so the wrong way in each column, 0.700, worse than no
-correction.
+## Review
+
+Two review passes by independent critics (data integrity, analyses, files/labels/Field
+Book, APIs/permissions/UI, field scenarios; then a code review and a scenario re-check
+of the fixes). Every finding was verified against the code; the tables above include
+what they found. The last bug (the same file uploaded again in a trial planted from
+seedlots) was found by running the round trip in the browser.
+
+## Not changed, and why
+
+- Rejecting a planted plot as a whole (damaged, trampled) is not part of this PR; the
+  existing Suppress (one value) and Quality Control (outliers) remain the tools.
+- BrAPI v2 `POST /observations` answers every refused request with a generic 500
+  (predates this PR).
+- BrAPI `PUT /observationunits` does not refresh the materialized views (predates).
+- The trial phenotype summary counts not planted plots as missing values.
+- The planned accession of a not planted plot still counts as "in the trial" (the
+  plan stays visible on purpose).
+- Mixed seed in one plot, extra plots outside the design, borders measured later.
+- A packet that became "seed taken" is not linked back if a later correction puts
+  it in a plot again; that is done on the seedlot page.
 
 ## Tests
 
-- `t/unit_fixture/CXGN/Trial/AccessionChange.t`: 51 scenarios, 382 assertions.
-- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 20 scenarios
-  through the web server, 195 assertions, including the round trip of a
-  planting order file with border rows (corrected, uploaded, uploaded again,
-  corrected again), the layout download uploaded unchanged, and the path of a
-  shift against the planting order download.
-- `js/test/trial_accession_change.test.js`: 44 assertions (all 50 JS tests pass).
-- Regression: trial, Field Book, data collector, phenotype upload, BrAPI v2,
-  TrialMetadata and `t/unit` (Mason compile) tests. Four assertions of
-  `t/unit_fixture/CXGN/Trial.t` (1-2, 71-72) fail in the same run on the base
-  of #6384 as well; they depend on the order of the tests.
-- Docs: `docs/r_markdown_docs/managing_field_trials.Rmd`.
+- `AC`: 43 scenarios, 391 assertions. `TCA`: 17 subtests through the web server, 173
+  assertions. `JS`: 65 assertions (the whole JS suite passes).
+- Regression after merging current master: trial, Field Book, data collector, field
+  map spreadsheet, phenotype uploads (plots, plants, repeated measurements,
+  high-dimensional), seedlots (29 files, 1941 tests); TrialMetadata, BrAPI v2,
+  Fieldbook through the web server (261); t/unit (1495). Four assertions of `t/unit_fixture/CXGN/Trial.t` (1-2, 71-72)
+  fail on the base as well (order dependent).
 
 ## Deploy
 
-Run the db patches (`AddNotPlantedStockprop`) and build the JS.
+Run the db patch `AddNotPlantedStockprop` (db/00209) and build the JS.
