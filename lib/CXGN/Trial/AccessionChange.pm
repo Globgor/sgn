@@ -1283,6 +1283,7 @@ sub summary {
     my $plan = shift;
     return {
         changed => scalar(@{$plan->{changes}}),
+        changes => [ map { { plot_name => $_->{plot_name}, old_stock_name => $_->{old_stock_name}, new_stock_name => $_->{new_stock_name} } } @{$plan->{changes}} ],
         unchanged => $plan->{unchanged},
         replicates_changed => scalar(@{$plan->{replicates}}),
         renamed => [ map { { old_name => $_->{old_name}, new_name => $_->{new_name} } } grep { $_->{type} eq 'plot' } @{$plan->{renames}} ],

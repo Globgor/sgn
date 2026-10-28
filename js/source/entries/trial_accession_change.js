@@ -40,7 +40,9 @@ export function summaryLines(summary, planned, maxItems = 10) {
     });
     const planting = summary.planting || [];
     if (summary.changed || !planting.length) {
-        lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession.`);
+        const changes = summary.changes || [];
+        lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession${changes.length ? ":" : "."}`);
+        list(changes, (c) => `${c.plot_name}: ${c.old_stock_name} -> ${c.new_stock_name}`);
     }
     const notPlanted = planting.filter((p) => p.not_planted);
     const planted = planting.filter((p) => !p.not_planted);
@@ -141,9 +143,10 @@ function post(url, data) {
  * @param {Object} [options]
  * @param {string} [options.title="Please check"] - the title of the dialog
  * @param {string} [options.ok="Continue"] - the button that says yes
+ * @param {string|null} [options.cancel="Cancel"] - the button that says no; null for a message with one button
  * @returns {Promise<boolean>} true when the user clicked the ok button
  */
-export function confirmDialog(message, { title = "Please check", ok = "Continue" } = {}) {
+export function confirmDialog(message, { title = "Please check", ok = "Continue", cancel = "Cancel" } = {}) {
     if (!hasModals()) {
         return Promise.resolve(window.confirm(message));
     }
@@ -160,6 +163,11 @@ export function confirmDialog(message, { title = "Please check", ok = "Continue"
         dialog.attr("aria-label", title);
         dialog.find(".modal-title").text(title);
         dialog.find(".btn-primary").text(ok);
+        if (cancel) {
+            dialog.find("[data-answer=no]").text(cancel);
+        } else {
+            dialog.find("[data-answer=no]").remove();
+        }
         message.split("\n").filter((line) => line.trim() !== "").forEach((line) => {
             dialog.find("ul").append(jQuery("<li/>").text(line));
         });

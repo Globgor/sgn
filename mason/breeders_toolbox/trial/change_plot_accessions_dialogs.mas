@@ -227,7 +227,7 @@ jQuery(document).ready(function () {
                 jQuery('#change_accession_error_dialog tbody').html(response.error);
             } else if (response.preview) {
                 if (change.nothingChanges(response.preview)) {
-                    await change.confirmDialog("Nothing to change: the trial already matches the file.", { title: "<% $title %>", ok: "OK" });
+                    await change.confirmDialog("Nothing to change: the trial already matches the file.", { title: "<% $title %>", ok: "OK", cancel: null });
                 } else if (await change.confirmDialog(change.summaryLines(response.preview, true).join("\n") + "\n\nContinue?", { title: "<% $title %>", ok: "Continue" })) {
                     post_change_accessions(change_accessions_action, false);
                 }

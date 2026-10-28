@@ -25,6 +25,12 @@ test("summaryLines", (t) => {
         t.end();
     });
 
+    t.test("which plot gets which accession", (t) => {
+        const lines = summaryLines({ ...empty, changed: 2, changes: [{ plot_name: "P8", old_stock_name: "A1", new_stock_name: "A5" }, { plot_name: "P9", old_stock_name: "A3", new_stock_name: "A1" }] }, true);
+        t.deepEqual(lines, ["2 plot(s) will get another accession:", "    P8: A1 -> A5", "    P9: A3 -> A1"]);
+        t.end();
+    });
+
     t.test("plots marked as not planted, and planted again", (t) => {
         const summary = { ...empty, planting: [{ plot_name: "P1", not_planted: 1 }, { plot_name: "P2", not_planted: 0 }], phenotypes_deleted: 3 };
         t.deepEqual(summaryLines(summary, false), [
@@ -180,6 +186,10 @@ test("confirmDialog", (t) => {
         const no = confirmDialog("x");
         jQuery(".modal").last().find("[data-answer=no]").trigger("click");
         t.equal(await no, false, "cancel");
+        const message = confirmDialog("Nothing to change.", { ok: "OK", cancel: null });
+        t.equal(jQuery(".modal").last().find("[data-answer=no]").length, 0, "a message has no cancel button");
+        jQuery(".modal").last().find("[data-answer=yes]").trigger("click");
+        t.equal(await message, true);
         delete jQuery.fn.modal;
         t.end();
     });

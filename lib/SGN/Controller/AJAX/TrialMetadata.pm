@@ -2462,14 +2462,15 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         schema => $schema,
         trial_id => $trial_id,
     });
-    my %plot_id_by_name = map { $_->{plot_name} => $_->{plot_id} } values %{ $accession_change->load_units() };
+    my $units = $accession_change->load_units();
+    my %unit_by_name = map { $_->{plot_name} => $_ } values %$units;
     my @changes = map { {
-        plot_id => $plot_id_by_name{$_},
+        plot_id => $unit_by_name{$_} ? $unit_by_name{$_}->{plot_id} : undef,
         plot_name => $_,
         new_stock_id => $parsed_data->{$_}->{new_accession_id},
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
         not_planted => $parsed_data->{$_}->{not_planted},
-    } } sort keys %$parsed_data;
+    } } sort { CXGN::Trial::AccessionChange::_compare_plot_numbers(map { $unit_by_name{$_} ? $unit_by_name{$_}->{plot_number} : undef } ($a, $b)) || $a cmp $b } keys %$parsed_data;
 
     my $options = {
         rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
