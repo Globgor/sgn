@@ -1244,7 +1244,8 @@ sub _plan_not_planted {
 # lost that accession, the nearest one by plot number (a shift moves packets a
 # few places), or the transaction from the seedlot in its seedlot_name. A
 # seedlot_name of another seedlot of the same accession moves the plot's own
-# transaction to that seedlot. So a plot keeps at most one seedlot, and it holds
+# transaction to that seedlot; one that does not hold the plot's accession (a
+# cell left as it was while the accession was corrected) is not used. So a plot keeps at most one seedlot, and it holds
 # the accession of the plot. A transaction that no plot takes, for example of a
 # packet planted into a border or of a place left empty, becomes seed taken from
 # the seedlot, so the inventory does not change. Seedlots harvested from the
@@ -1317,7 +1318,12 @@ sub _plan_seedlots {
             if (!$s) {
                 push @{$plan->{errors}}, "Seedlot $name (plot $state->{plot_name}) does not exist.";
             } elsif (!$holds->($s->{content_id}, $state->{stock_id})) {
-                push @{$plan->{errors}}, "Seedlot $name does not hold $state->{stock_name}, the accession of plot $state->{plot_name}.";
+                # a cell that was not changed with the accession (or a file uploaded again after the
+                # packets moved): not used; a note only if the plot is left without a seedlot of its accession
+                if (!grep { $holds->($_->{content_id}, $state->{stock_id}) } @{ $own{$plot_id} || [] }) {
+                    push @{$plan->{warnings}}, "Seedlot $name, given for plot $state->{plot_name}, does not hold $state->{stock_name}, its accession, so it is not used.";
+                }
+                $want{$plot_id} = { content_id => $state->{stock_id} } if $changed{$plot_id} || $planting{$plot_id};
             } else {
                 $want{$plot_id} = { seedlot_id => $s->{seedlot_id}, seedlot_name => $name };
             }

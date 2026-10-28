@@ -442,6 +442,10 @@ subtest 'Change Accessions upload: a trial planted from seedlots' => sub {
     is($r->{success}, 1, 'changed') or diag(explain $r);
     is_deeply([ map { $planted_from->($plot{$_}) } 4 .. 8 ], [ '', map { "review_upload_seedlot_$original->{$_}->{accession}" } 4 .. 7 ], 'plots 5 to 8 were planted from the seedlots of their new accessions, plot 4 from none');
 
+    # the same file again (its seedlot cells are those of before the packets moved) changes nothing
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, keep_plot_names => 1);
+    is_deeply([ $r->{error}, $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting}, $r->{preview}->{warnings} ], [ undef, 0, [], [], [] ], 'the same file again: nothing to change') or diag(explain $r);
+
     # a new download, uploaded as it is, changes nothing
     ($header, $rows, $col) = $download->();
     $r = upload_accessions($trial_id, $csv->(), preview => 1, override => 1, keep_plot_names => 1);

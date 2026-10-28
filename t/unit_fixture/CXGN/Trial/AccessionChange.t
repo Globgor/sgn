@@ -746,6 +746,9 @@ scenario 'seedlots: the seed transactions follow the packets' => sub {
     # uploading the same state again changes nothing
     $plan = $ac->plan([ map { { plot_id => $plot{$_}, new_stock_id => stock_id(linked_stock($plot{$_}, 'plot_of')), seedlot_name => planted_from($plot{$_}) } } 5 .. 10 ]);
     is_deeply([ $plan->{seedlots}, scalar(@{$plan->{unchanged}}) ], [ [], 6 ], 'the same seedlots again: nothing to change');
+    # the file of the correction again: its seedlot cells are those of before the packets moved
+    $plan = $ac->plan([ map { { plot_id => $plot{$_}, new_stock_id => stock_id(linked_stock($plot{$_}, 'plot_of')), seedlot_name => "review_seedlot_$before{$_}" } } 5 .. 10 ]);
+    is_deeply([ $plan->{errors}, $plan->{seedlots}, $plan->{warnings} ], [ [], [], [] ], 'the same file again: nothing to change, no notes') or diag(explain $plan);
 };
 
 scenario 'seedlots: plots of family names are planted from seedlots of their crosses' => sub {
@@ -765,7 +768,7 @@ scenario 'seedlots: plots of family names are planted from seedlots of their cro
     is_deeply([ sort map { "$_->{type} $_->{plot_name}" } @{$plan->{seedlots}} ], [ 'move test_trial21', 'move test_trial22' ], 'both packets move');
     is_deeply([ planted_from($plot{1}), planted_from($plot{2}) ], [ 'review_seedlot_family_2', 'review_seedlot_family_1' ], 'each plot has a seedlot of a cross of its family');
     $plan = $ac->plan([ { plot_id => $plot{1}, new_stock_id => $family{2}->stock_id, seedlot_name => 'review_seedlot_family_1' } ]);
-    is_deeply($plan->{errors}, [ 'Seedlot review_seedlot_family_1 does not hold review_family_2, the accession of plot test_trial21.' ], 'a seedlot of a cross of another family is refused');
+    is_deeply([ $plan->{errors}, $plan->{seedlots} ], [ [], [] ], 'a seedlot of a cross of another family is not used (the cell of the file as downloaded before the swap)');
 };
 
 scenario 'seedlots: another seedlot of the same accession, and errors' => sub {
@@ -784,7 +787,9 @@ scenario 'seedlots: another seedlot of the same accession, and errors' => sub {
     $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => stock_id($accession), seedlot_name => 'no_such_seedlot' } ]);
     is_deeply($plan->{errors}, [ 'Seedlot no_such_seedlot (plot test_trial210) does not exist.' ], 'a seedlot that does not exist');
     $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => stock_id($accession), seedlot_name => $other->uniquename } ]);
-    is_deeply($plan->{errors}, [ 'Seedlot '.$other->uniquename." does not hold $accession, the accession of plot test_trial210." ], 'a seedlot of another accession');
+    is_deeply([ $plan->{errors}, $plan->{seedlots}, $plan->{warnings} ], [ [], [], [] ], 'a seedlot of another accession is not used; the plot has one of its accession, so no note');
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => $acc{5}, seedlot_name => $first->uniquename } ], { rename_plots => 'none' });
+    ok((grep { /^Seedlot \Q${\ $first->uniquename}\E, given for plot test_trial210, does not hold test_accession5, its accession, so it is not used\./ } @{$plan->{warnings}}), 'a note where the plot is left without a seedlot of its accession') or diag(explain $plan->{warnings});
     $plan = $ac->plan([ { plot_id => $plot{11}, new_stock_id => stock_id('test_accession5'), seedlot_name => $other->uniquename } ], { rename_plots => 'none' });
     ok((grep { /^Plot test_trial211 has no seed transaction, so seedlot review_seedlot_test_accession5 is not recorded for it/ } @{$plan->{warnings}}), 'a plot without a seed transaction gets a warning') or diag(explain $plan);
 };
