@@ -34,10 +34,18 @@ from the database, not from the cache.
 
 **Shift Accessions** (Edit Field Layout). For a planting that shifted: from a
 plot on, every place got the packet planned for the place before it (or after
-it). Along the plot numbers or the planting order (row/column, serpentine or
-zigzag, from any corner, as in Download Plot Order). The places that stay empty
-are marked as not planted; places already marked are skipped. Plot names are
-kept by default, because the labels in the field carry them.
+it), usually to the end of the column, where the packet left over goes into a
+border and the next column is planted as planned. The path is the one of
+Download Plot Order: by column or row, serpentine or zigzag, from any corner,
+with the borders planted on the way (set from the borders saved with the
+field map). This matters: in a serpentine order a border column is a turn of
+its own, so with a left border column 1 goes down and column 2 up, and a path
+built without the border runs the wrong way in every column. The stretch ends
+at the end of the column or row of the first plot (the default), at a chosen
+plot, or at the last plot. The preview shows the path column by column with
+its direction ("Column 2, rows 2 to 5"). The places that stay empty are
+marked as not planted; places already marked are skipped. Plot names are kept
+by default, because the labels in the field carry them.
 
 **Not planted plots.** New stock property `not_planted` (db patch
 `AddNotPlantedStockprop`). The plot keeps its planned accession, so the plan
@@ -107,14 +115,24 @@ Not corrected, a shift of 14 plots already lowers the accuracy from 0.90 to
 0.83. Empty places must be missing values, not zeros, which is why not planted
 plots cannot get phenotypes.
 
+Shifts inside columns (column serpentine after a left border, a skip in three
+columns of a 10 x 8 RCBD, each shifted to the end of its column; Mixed Models;
+300 simulations): Shift Accessions with the border gives the accuracy of the
+true data (0.873, identical in all 300); not corrected 0.791; a shift built
+without the border, so the wrong way in each column, 0.700, worse than no
+correction.
+
 ## Tests
 
-- `t/unit_fixture/CXGN/Trial/AccessionChange.t`: 49 scenarios, 357 assertions.
-- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 18 scenarios
-  through the web server, 151 assertions.
-- `js/test/trial_accession_change.test.js` (run with the other JS tests: 39 pass).
-- Regression: trial, Field Book, data collector, phenotype upload, BrAPI v2
-  and TrialMetadata tests.
+- `t/unit_fixture/CXGN/Trial/AccessionChange.t`: 51 scenarios, 382 assertions.
+- `t/unit_mech/AJAX/BreedersToolbox/TrialChangeAccessions.t`: 19 scenarios
+  through the web server, 170 assertions, including the path of a shift against
+  the planting order download, with and without a border.
+- `js/test/trial_accession_change.test.js`: 36 assertions (all 42 JS tests pass).
+- Regression: trial, Field Book, data collector, phenotype upload, BrAPI v2,
+  TrialMetadata and `t/unit` (Mason compile) tests. Four assertions of
+  `t/unit_fixture/CXGN/Trial.t` (1-2, 71-72) fail in the same run on the base
+  of #6384 as well; they depend on the order of the tests.
 - Docs: `docs/r_markdown_docs/managing_field_trials.Rmd`.
 
 ## Deploy
