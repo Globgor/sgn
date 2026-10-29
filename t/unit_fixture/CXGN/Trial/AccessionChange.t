@@ -883,15 +883,27 @@ scenario 'RCBD: swap the accessions of two plots, as Substitute does' => sub {
     is_deeply([ map { linked_stock($_, 'plant_of') } @{ plants_of($plot_a->{plot_id}) } ], [ 'review_rcbd_acc_B', 'review_rcbd_acc_B' ], 'plants of the first plot');
 };
 
-scenario 'RCBD: samples of a plot in other trials keep the accession, with a warning' => sub {
+scenario 'RCBD: a well of a genotyping plate taken from the plot gets the accession too, and the plate layout is cached again' => sub {
+    my $plate = $schema->resultset('Project::Project')->create({ name => 'review_plate_of_rcbd', description => 'AccessionChange.t' });
+    $schema->resultset('Project::Projectprop')->create({ project_id => $plate->project_id, type_id => cvterm_id('design', 'project_property'), value => 'genotyping_plate' });
+    my $geolocation = $schema->resultset('NaturalDiversity::NdGeolocation')->search({})->first;
+    my $experiment = $schema->resultset('NaturalDiversity::NdExperiment')->create({ nd_geolocation_id => $geolocation->nd_geolocation_id, type_id => $t{genotyping_layout} });
+    $experiment->create_related('nd_experiment_projects', { project_id => $plate->project_id });
     my $well = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_plate_well_A01', name => 'review_plate_well_A01', type_id => $t{tissue_sample}, organism_id => stock('test_accession1')->organism_id });
+    $experiment->create_related('nd_experiment_stocks', { stock_id => $well->stock_id, type_id => $t{genotyping_layout} });
     $schema->resultset('Stock::StockRelationship')->create({ subject_id => $well->stock_id, object_id => $plot_a->{plot_id}, type_id => $t{tissue_sample_of} });
     $schema->resultset('Stock::StockRelationship')->create({ subject_id => $well->stock_id, object_id => $plot_a->{stock_id}, type_id => $t{tissue_sample_of} });
+    prop($well->stock_id, 'plot_number', 'A01');
+    my $plate_well = sub { return (values %{ CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $plate->project_id, experiment_type => 'genotyping_layout' })->get_design() })[0]; };
+    CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $plate->project_id, experiment_type => 'genotyping_layout' })->generate_and_cache_layout();
+    is($plate_well->()->{accession_name}, 'review_rcbd_acc_A', 'the cached plate layout has the accession of the well');
+
     my $ac = $rcbd_change->();
     my $plan = $ac->apply([ { plot_id => $plot_a->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_C') } ]);
-    ok((grep { /sample\(s\) of plot .* in other trials .*review_plate_well_A01.* keep review_rcbd_acc_A/ } @{$plan->{warnings}}), 'warning');
-    is(linked_stock($well->stock_id, 'tissue_sample_of'), 'review_rcbd_acc_A', 'the well keeps its accession');
-    is(name_of($well->stock_id), 'review_plate_well_A01', 'and its name');
+    ok((grep { /^1 sample\(s\) of plot .* in other trials \(for example review_plate_well_A01\) get review_rcbd_acc_C too\.$/ } @{$plan->{warnings}}), 'the plan names the well') or diag(explain $plan->{warnings});
+    is(linked_stock($well->stock_id, 'tissue_sample_of'), 'review_rcbd_acc_C', 'the well gets the accession too: it was taken from what grew in the plot');
+    is(name_of($well->stock_id), 'review_plate_well_A01', 'and keeps its name');
+    is($plate_well->()->{accession_name}, 'review_rcbd_acc_C', 'the cached plate layout has the new accession');
 };
 
 scenario 'RCBD with the template trialName_accessionName_repNumber: merging two accessions cannot keep the names unique' => sub {

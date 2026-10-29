@@ -36,10 +36,11 @@ will be planted); it does not move the plot. So a change:
 =item *
 
 links the plot to the new stock (C<plot_of>), and the plants, subplots and
-tissue samples of the plot that belong to this trial (C<plant_of>,
-C<subplot_of>, C<tissue_sample_of>). Samples of the plot in other trials, for
-example the wells of a genotyping plate, are not changed; the plan warns about
-them.
+tissue samples of the plot (C<plant_of>, C<subplot_of>, C<tissue_sample_of>),
+also the samples of them in other trials, for example the wells of a
+genotyping plate made from the plants of the plot: they were taken from what
+grew there. The plan names those samples, and the layouts of their trials are
+cached again.
 
 =item *
 
@@ -599,7 +600,7 @@ sub _plan {
     foreach my $c (@{$plan{changes}}) {
         my $external = $children->{ $c->{plot_id} }->{external} || [];
         if (@$external) {
-            push @{$plan{warnings}}, scalar(@$external)." sample(s) of plot $c->{plot_name} in other trials (for example ".$external->[0]->{name}.") keep $c->{old_stock_name}.";
+            push @{$plan{warnings}}, scalar(@$external)." sample(s) of plot $c->{plot_name} in other trials (for example ".$external->[0]->{name}.") get $c->{new_stock_name} too.";
         }
     }
     if (!$self->_is_plate) {
@@ -685,9 +686,11 @@ sub _execute {
     my $dbh = $self->schema->storage->dbh;
     my $ids = $self->_cvterm_ids;
 
-    # stocks of the units, and of their plants, subplots and tissue samples in this trial
+    # stocks of the units and of their plants, subplots and tissue samples, also the samples in other trials;
+    # the replicates and check marks of this trial are only for the children in this trial
     my $children = $self->_is_plate ? {} : $self->_children([ map { $_->{plot_id} } @{$plan->{changes}}, @{$plan->{replicates}} ]);
     my $children_of = sub { return [ map { $_->{stock_id} } @{ $children->{ $_[0] }->{in_trial} || [] } ]; };
+    my @external_ids;
     my $unit_h = $dbh->prepare("UPDATE stock_relationship SET object_id = ? WHERE subject_id = ? AND object_id = ? AND type_id = ?");
     my $child_h = $dbh->prepare("UPDATE stock_relationship SET object_id = ? WHERE subject_id = ANY(?) AND object_id = ? AND type_id = ANY(?)");
     my @child_relationships = grep { defined } map { $ids->{$_} } qw(plant_of subplot_of tissue_sample_of);
@@ -696,10 +699,12 @@ sub _execute {
         if ($rows != 1) {
             die "Plot $c->{plot_name} was changed by someone else in the meantime; nothing was changed.\n";
         }
-        my @child_ids = map { $_->{stock_id} } @{ $children->{ $c->{plot_id} }->{in_trial} || [] };
+        my @external = map { $_->{stock_id} } @{ $children->{ $c->{plot_id} }->{external} || [] };
+        my @child_ids = ((map { $_->{stock_id} } @{ $children->{ $c->{plot_id} }->{in_trial} || [] }), @external);
         if (@child_ids) {
             $child_h->execute($c->{new_stock_id}, \@child_ids, $c->{old_stock_id}, \@child_relationships);
         }
+        push @external_ids, @external;
     }
 
     # seed transactions follow the packets (see _plan_seedlots)
@@ -816,6 +821,16 @@ sub _execute {
         });
         $layout->generate_and_cache_layout();
     }
+    # the other trials (genotyping plates, sampling trials) with samples of the changed plots
+    my $other_layouts = @external_ids ? $self->_layout_projects(\@external_ids) : {};
+    foreach my $project_id (sort { $a <=> $b } keys %$other_layouts) {
+        next if $project_id == $self->trial_id;
+        CXGN::Trial::TrialLayout->new({
+            schema => $self->schema,
+            trial_id => $project_id,
+            experiment_type => $other_layouts->{$project_id},
+        })->generate_and_cache_layout();
+    }
 }
 
 =head2 stock_type_description(@stock_types)
@@ -925,7 +940,24 @@ sub _compare_plot_numbers {
     return $x cmp $y;
 }
 
-# plants, subplots and tissue samples of the units; in_trial are those that belong to this trial
+# the trials, genotyping plates and sampling trials of the stocks: project_id => experiment type
+sub _layout_projects {
+    my $self = shift;
+    my $stock_ids = shift;
+    my $h = $self->schema->storage->dbh->prepare("SELECT DISTINCT nep.project_id, type.name
+        FROM nd_experiment_stock nes
+        JOIN nd_experiment e ON e.nd_experiment_id = nes.nd_experiment_id
+        JOIN cvterm type ON type.cvterm_id = e.type_id
+        JOIN nd_experiment_project nep ON nep.nd_experiment_id = nes.nd_experiment_id
+        WHERE nes.stock_id = ANY(?) AND type.name IN ('field_layout', 'genotyping_layout', 'sampling_layout')");
+    $h->execute($stock_ids);
+    my %projects;
+    while (my ($project_id, $type) = $h->fetchrow_array()) { $projects{$project_id} = $type; }
+    return \%projects;
+}
+
+# plants, subplots and tissue samples of the units; in_trial are those that belong to this trial,
+# external the samples in other trials (the wells of a genotyping plate made from the plants)
 sub _children {
     my $self = shift;
     my $unit_ids = shift;
