@@ -198,7 +198,12 @@ sub observations_store {
     if ($verified_error) {
         print STDERR "Error: $verified_error\n";
         push @$status, {'500' => 'Internal error.'};
-        return CXGN::BrAPI::JSONResponse->return_error($status, "Error: Your request did not pass the checks.", 500);
+        # the reason, without the HTML of the web page (which units, which values)
+        (my $reason = $verified_error) =~ s/<[^>]*>/ /g;
+        $reason =~ s/\s+/ /g;
+        $reason =~ s/^\s+|\s+$//g;
+        $reason = substr($reason, 0, 1000)."..." if length($reason) > 1000;
+        return CXGN::BrAPI::JSONResponse->return_error($status, "Error: Your request did not pass the checks. $reason", 500);
     }
     if ($verified_warning) {
         print STDERR "\nWarning: $verified_warning\n";

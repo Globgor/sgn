@@ -2479,6 +2479,10 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
     };
     my $preview = _true_param($c->req->param('preview'));
     my $done = $self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1);
+    if ($done && $parser->has_parse_warnings()) {
+        # rows the parser skipped (other trials in a planting order file)
+        push @{ ($preview ? $c->stash->{rest}->{preview} : $c->stash->{rest})->{warnings} }, @{ $parser->get_parse_warnings()->{warning_messages} || [] };
+    }
     if ($done && $preview) {
         # so that a file that is not the whole trial is noticed
         $c->stash->{rest}->{preview}->{rows_read} = scalar(@changes);
@@ -3157,7 +3161,9 @@ sub _change_trial_stocks {
     }
 
     my $bs = CXGN::BreederSearch->new({ dbh => $c->dbc->dbh(), dbname => $c->config->{dbname} });
-    $bs->refresh_matviews($c->config->{dbhost}, $c->config->{dbname}, $c->config->{dbuser}, $c->config->{dbpass}, 'phenotypes', 'concurrent', $c->config->{basepath});
+    # the genotypes of the wells of a plate are filed under their accession in materialized_genoview
+    my $matviews = $accession_change->experiment_type eq 'genotyping_layout' ? 'fullview' : 'phenotypes';
+    $bs->refresh_matviews($c->config->{dbhost}, $c->config->{dbname}, $c->config->{dbuser}, $c->config->{dbpass}, $matviews, 'concurrent', $c->config->{basepath});
     # analyses cached by solGS used the old accessions (or the deleted phenotypes)
     try {
         $c->controller('solGS::clearCache')->clear_cached_analyses_result($c, { trials => [ $accession_change->trial_id ] });

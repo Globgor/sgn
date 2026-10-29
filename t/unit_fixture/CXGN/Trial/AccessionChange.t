@@ -638,8 +638,9 @@ scenario 'not planted: phenotype files' => sub {
 
     # paths that store without verify() (BrAPI v1, drone imagery, derived traits) store nothing for it either
     my $values_of = sub { return $schema->resultset('NaturalDiversity::NdExperimentStock')->search({ stock_id => $_[0] })->search_related('nd_experiment')->search_related('nd_experiment_phenotypes')->count; };
-    phenotype_store({ test_trial25 => { $trait => [ 30, '' ] }, test_trial28 => { $trait => [ 31, '' ] } }, [ $trait ])->store();
+    my ($store_error, $store_success) = phenotype_store({ test_trial25 => { $trait => [ 30, '' ] }, test_trial28 => { $trait => [ 31, '' ] } }, [ $trait ])->store();
     is_deeply([ $values_of->($plot{5}), $values_of->($plot{8}) ], [ 0, 1 ], 'store() leaves out the plot that was not planted');
+    like($store_success, qr/1 unit\(s\) were not planted, so their values were not stored: test_trial25/, 'and says so (BrAPI v1 puts it in the status)') or diag($store_error);
 };
 
 scenario 'not planted: spreadsheets, the field map spreadsheet and new plants leave it out' => sub {
@@ -779,6 +780,34 @@ scenario 'seedlots: the seed transactions follow the packets' => sub {
     # the file of the correction again: its seedlot cells are those of before the packets moved
     $plan = $ac->plan([ map { { plot_id => $plot{$_}, new_stock_id => stock_id(linked_stock($plot{$_}, 'plot_of')), seedlot_name => "review_seedlot_$before{$_}" } } 5 .. 10 ]);
     is_deeply([ $plan->{errors}, $plan->{seedlots}, $plan->{warnings} ], [ [], [], [] ], 'the same file again: nothing to change, no notes') or diag(explain $plan);
+};
+
+scenario 'seedlots: a plot marked as not planted by mistake: its packet is found again, not recorded twice' => sub {
+    my %seedlot = map { $_ => seedlot_with_seed("test_accession$_") } 1 .. 5;
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    plant_from($seedlot{ substr($before{$_}, -1) }, $plot{$_}) for keys %plot;
+    my $ac = $change->();
+    $ac->apply([ { plot_id => $plot{4}, not_planted => 1 } ], { rename_plots => 'none' });
+    is(planted_from($plot{4}), '', 'the packet of plot 4 is taken from its seedlot');
+    my $plan = $ac->plan([ { plot_id => $plot{4}, not_planted => 0 } ], { rename_plots => 'none' });
+    is_deeply($plan->{seedlots}, [], 'planted after all: no transaction to move');
+    my $seedlot_name = "review_seedlot_$before{4}";
+    ok((grep { /^The packet of plot test_trial24 was recorded as seed taken from seedlot \Q$seedlot_name\E when the plot was marked as not planted; do not record it again/ } @{$plan->{warnings}}), 'the plan says where the packet is, instead of asking to record it again') or diag(explain $plan->{warnings});
+};
+
+scenario 'seedlots: two packets of the accession as near: the plan says which one it took' => sub {
+    # plots 4 and 6 have test_accession1, plot 5 test_accession2, each planted from the seedlot of its accession
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{$_}, type_id => $t{plot_of} })->update({ object_id => $acc{1} }) for (4, 6);
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{5}, type_id => $t{plot_of} })->update({ object_id => $acc{2} });
+    my %seedlot = map { $_ => seedlot_with_seed("test_accession$_") } (1, 2);
+    plant_from($seedlot{1}, $plot{$_}) for (4, 6);
+    plant_from($seedlot{2}, $plot{5});
+    # the packets of plots 4 and 6 are free, both one plot away from plot 5
+    my $plan = $change->()->plan([ { plot_id => $plot{4}, new_stock_id => $acc{2} }, { plot_id => $plot{6}, new_stock_id => $acc{2} }, { plot_id => $plot{5}, new_stock_id => $acc{1} } ], { rename_plots => 'none' });
+    is_deeply($plan->{errors}, [], 'no errors') or diag(join("\n", @{$plan->{errors}}));
+    my ($move) = grep { $_->{type} eq 'move' && $_->{plot_name} eq 'test_trial25' } @{$plan->{seedlots}};
+    is($move->{from_plot_name}, 'test_trial24', 'plot 5 takes the packet of plot 4');
+    ok((grep { /^Plot test_trial25 takes the packet of plot test_trial24 \(review_seedlot_test_accession1\), but the packet of plot test_trial26 \(review_seedlot_test_accession1\) fits as well; give the seedlot in a seedlot_name column if it was that one\.$/ } @{$plan->{warnings}}), 'and says that the packet of plot 6 fits as well') or diag(explain $plan->{warnings});
 };
 
 scenario 'seedlots: plots of family names are planted from seedlots of their crosses' => sub {

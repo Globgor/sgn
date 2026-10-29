@@ -100,7 +100,9 @@ moves the seed transactions (seedlot to plot) with the packets: a plot that
 gets another accession takes over the transaction of a plot in the same change
 that lost that accession, or of the seedlot in C<seedlot_name>. A transaction
 that no plot takes, for example of a packet planted into a border, becomes
-seed taken from the seedlot, so the inventory stays as it is.
+seed taken from the seedlot, so the inventory stays as it is. The plan names
+the plot the packet was linked to, so that a plot marked as not planted by
+mistake is not recorded as planted from its seedlot a second time.
 
 =item *
 
@@ -124,7 +126,13 @@ C<tissue_sample_of>), but wells are never renamed and have no replicates.
 The materialized views are not refreshed here, because that has to happen
 after the transaction is committed; callers do it.
 
+The plants, subplots and tissue samples of a plot in this trial get the
+replicate number and the check mark of their plot with it; the samples in
+other trials keep their own properties.
+
 =head1 AUTHOR
+
+Globgor (https://github.com/Globgor)
 
 =cut
 
@@ -520,11 +528,11 @@ sub _plan {
                 push @$errors, "Wells of a genotyping plate cannot be marked as not planted.";
                 next;
             }
-            if (!$ids->{not_planted}) {
-                push @$errors, "This database does not know the stock property not_planted yet; run the database patches (AddNotPlantedStockprop).";
-                next;
-            }
             if ($not_planted != _is_true($unit->{not_planted})) {
+                if (!$ids->{not_planted}) {
+                    push @$errors, "This database does not know the stock property not_planted yet; run the database patches (AddNotPlantedStockprop).";
+                    next;
+                }
                 $new_not_planted{$unit_id} = $not_planted;
             }
         }
@@ -617,7 +625,7 @@ sub _plan {
         }
         foreach my $stock_id (keys %affected_stocks) {
             my @plots = sort { _compare_plot_numbers($a->{plot_number}, $b->{plot_number}) || $a->{plot_id} <=> $b->{plot_id} }
-                grep { $_->{stock_id} == $stock_id && defined($_->{replicate}) } values %after;
+                grep { defined($_->{stock_id}) && $_->{stock_id} == $stock_id && defined($_->{replicate}) } values %after;
             my $n = 1;
             foreach my $p (@plots) {
                 if ($p->{replicate} ne $n) {
@@ -826,6 +834,7 @@ sub _execute {
                 # the amount must stay, or the inventory would change
                 my $v = decode_stored_json($json // '{}');
                 $v->{factor} = -1;
+                $v->{taken_from_plot_id} = $s->{plot_id} + 0;   # found again if the plot is planted after all
                 $v->{description} = join(' ', grep { defined($_) && length($_) } $v->{description}, "(Correction of trial ".$self->_trial_name.": no plot has this packet; it was linked to plot $s->{plot_name}.)");
                 $value = encode_json($v);
             }
@@ -1481,14 +1490,26 @@ sub _plan_seedlots {
     @need = ((grep { $want{$_}->{seedlot_id} } @need), (grep { !$want{$_}->{seedlot_id} } @need));
     foreach my $plot_id (@need) {
         my $want = $want{$plot_id};
-        my ($t) = sort { $distance->($a->{plot_id}, $plot_id) <=> $distance->($b->{plot_id}, $plot_id) || $a->{transaction_id} <=> $b->{transaction_id} } grep { $fits->($_, $want) } @free;
+        my $plot_name = $units->{$plot_id}->{plot_name};
+        my @fitting = sort { $distance->($a->{plot_id}, $plot_id) <=> $distance->($b->{plot_id}, $plot_id) || $a->{transaction_id} <=> $b->{transaction_id} } grep { $fits->($_, $want) } @free;
+        my $t = $fitting[0];
         if ($t) {
+            if (!$want->{seedlot_id} && @fitting > 1 && $distance->($fitting[1]->{plot_id}, $plot_id) == $distance->($t->{plot_id}, $plot_id)) {
+                # two packets of the accession as near: the nearest-by-number rule cannot tell which one went in
+                push @{$plan->{warnings}}, "Plot $plot_name takes the packet of plot $units->{ $t->{plot_id} }->{plot_name} ($t->{seedlot_name}), but the packet of plot $units->{ $fitting[1]->{plot_id} }->{plot_name} ($fitting[1]->{seedlot_name}) fits as well; give the seedlot in a seedlot_name column if it was that one.";
+            }
             @free = grep { $_ != $t } @free;
-            push @{$plan->{seedlots}}, { %$t, type => 'move', from_plot_id => $t->{plot_id}, from_plot_name => $units->{ $t->{plot_id} }->{plot_name}, plot_id => $plot_id, plot_name => $units->{$plot_id}->{plot_name} };
+            push @{$plan->{seedlots}}, { %$t, type => 'move', from_plot_id => $t->{plot_id}, from_plot_name => $units->{ $t->{plot_id} }->{plot_name}, plot_id => $plot_id, plot_name => $plot_name };
             next;
         }
         if (!$want->{seedlot_id}) {
-            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} is planted again but has no seedlot; if it was planted from one, record it with Upload Used Seedlots in Trial." if $planting{$plot_id} && !@{ $own{$plot_id} || [] };
+            if ($planting{$plot_id} && !@{ $own{$plot_id} || [] }) {
+                # the packet of a plot marked as not planted by mistake was recorded as seed taken from its seedlot
+                my $taken = $self->_taken_packet($plot_id);
+                push @{$plan->{warnings}}, $taken
+                    ? "The packet of plot $plot_name was recorded as seed taken from seedlot $taken->{seedlot_name} when the plot was marked as not planted; do not record it again (a curator can delete that transaction on the seedlot page)."
+                    : "Plot $plot_name is planted again but has no seedlot; if it was planted from one, record it with Upload Used Seedlots in Trial.";
+            }
             next;
         }
         # another seedlot of the plot's accession: the plot's own transaction gets it
@@ -1515,6 +1536,22 @@ sub _plan_seedlots {
             push @{$plan->{warnings}}, "Seedlot $name was harvested from plot $state->{plot_name}, which ".(_is_true($state->{not_planted}) ? "is marked as not planted" : "has $state->{stock_name} now")."; correct the seedlot if needed.";
         }
     }
+}
+
+# the seed transaction that the packet of the plot became when the plot was marked as not
+# planted (type 'taken', see _plan_seedlots): { transaction_id, seedlot_name }, or undef
+sub _taken_packet {
+    my $self = shift;
+    my $plot_id = shift;
+    my $ids = $self->_cvterm_ids;
+    my $h = $self->schema->storage->dbh->prepare("SELECT r.stock_relationship_id, s.uniquename FROM stock_relationship r
+        JOIN stock s ON s.stock_id = r.object_id
+        WHERE r.type_id = ? AND r.subject_id = r.object_id AND (r.value LIKE ? OR r.value LIKE ?)
+        ORDER BY r.stock_relationship_id DESC LIMIT 1");
+    my $key = '%"taken_from_plot_id":'.($plot_id + 0);
+    $h->execute($ids->{seed_transaction}, "$key,%", "$key}%");
+    my ($transaction_id, $name) = $h->fetchrow_array();
+    return $transaction_id ? { transaction_id => $transaction_id, seedlot_name => $name } : undef;
 }
 
 =head2 summary($plan)

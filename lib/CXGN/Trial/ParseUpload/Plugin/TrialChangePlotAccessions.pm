@@ -54,6 +54,11 @@ sub _validate_with_plugin {
         my ($other) = map { $_->{trial_name} } grep { $of_other_trial->($_) } @$parsed_data;
         push @error_messages, "The file has no plots of this trial".($other ? " (it is a file of trial $other)" : "").".";
     }
+    my %rows_of_other_trial;
+    $rows_of_other_trial{ $_->{trial_name} }++ for grep { $of_other_trial->($_) } @{ $parsed_data || [] };
+    if (%rows_of_other_trial) {
+        $self->_set_parse_warnings({ warning_messages => [ map { "$rows_of_other_trial{$_} row(s) of trial $_ were skipped; upload the file in that trial too if it has corrections there." } sort keys %rows_of_other_trial ] });
+    }
     # a place that was not planted keeps its planned accession, so its accession may be left empty
     my %no_accession_needed = map { $_->{_row} => 1 } grep { _not_planted_value($_->{not_planted}) eq '1' } @{ $parsed_data || [] };
     if (%skip_row || %no_accession_needed) {

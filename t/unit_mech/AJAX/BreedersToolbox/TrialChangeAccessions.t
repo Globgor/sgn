@@ -422,7 +422,7 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'the Excel file uploaded as it is: nothing to change') or diag(explain $r);
     $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'the layout as CSV');
     my ($layout_header, @layout_rows) = map { [ map { s/^"|"$//gr } split /,/, $_, -1 ] } grep { /\S/ } split /\r?\n/, $mech->content;
-    is_deeply($layout_header, [ qw(plot_name accession_name plot_number block_number not_planted rep_number row_number col_number) ], 'with plot_name, accession_name and not_planted');
+    is_deeply($layout_header, [ qw(plot_name accession_name plot_number block_number rep_number row_number col_number not_planted) ], 'with plot_name, accession_name and not_planted (last, so that the other columns stay where they are)');
     $r = $upload->($layout_header, \@layout_rows, preview => 1);
     is_deeply([ $r->{preview}->{changed}, $r->{preview}->{planting} ], [ 0, [] ], 'uploaded unchanged: nothing to change') or diag(explain $r);
 
@@ -437,6 +437,7 @@ subtest 'Change Accessions upload: what the parser reads' => sub {
     like($r->{error} // '', qr/plot_name/, 'a file without a plot_name column is an error, not a crash') or diag(explain $r);
     $r = upload_accessions($trial_id, "trial_name,plot_name,accession_name,not_planted\nother_trial,other_trial_plot_1,test_accession1,\ntest_trial,test_trial25,,1\n", preview => 1);
     is_deeply($r->{preview}->{planting}, [ { plot_name => 'test_trial25', not_planted => 1 } ], 'rows of other trials are skipped; a plot that was not planted needs no accession') or diag(explain $r);
+    is_deeply($r->{preview}->{warnings}, [ '1 row(s) of trial other_trial were skipped; upload the file in that trial too if it has corrections there.' ], 'and the preview says so') or diag(explain $r);
     $r = upload_accessions($trial_id, "trial_name,plot_name,accession_name\nother_trial,other_trial_plot_1,test_accession1\n");
     like($r->{error} // '', qr/The file has no plots of this trial \(it is a file of trial other_trial\)/, 'a file of another trial') or diag(explain $r);
     is_deeply(trial_state(), $original, 'nothing changed');
@@ -547,6 +548,24 @@ subtest 'substitute_stock swaps two plots and keeps their names' => sub {
 
 subtest 'replace_well_accessions only for genotyping plates' => sub {
     like(post_json("/ajax/breeders/trial/$trial_id/replace_well_accessions", [ old_plot_id => $plot{1}, new_accession => 'test_accession1' ])->{error}, qr/not a genotyping plate/, 'refused for a field trial');
+};
+
+subtest 'BrAPI: a plot that was not planted is marked in the v1 layout, and a value for it is refused with the reason' => sub {
+    my $r = upload_accessions($trial_id, "plot_name,accession_name,not_planted\ntest_trial210,,1\n");
+    is($r->{success}, 1, 'plot 10 marked as not planted') or diag(explain $r);
+    $mech->get_ok("$base/brapi/v1/studies/$trial_id/layout?pageSize=100");
+    my ($row) = grep { $_->{observationUnitName} eq 'test_trial210' } @{ decode_json($mech->content)->{result}->{data} };
+    ok($row && $row->{additionalInfo}->{notPlanted}, 'v1 layout: additionalInfo.notPlanted') or diag(explain $row);
+    my $ua = LWP::UserAgent->new;
+    $ua->default_header('Content-Type' => 'application/json');
+    $ua->default_header('Authorization' => 'Bearer '.$access_token);
+    my $resp = $ua->post("$base/brapi/v2/observations", Content => encode_json([ { observationUnitDbId => "$plot{10}", observationVariableDbId => '70741', value => '15', observationTimeStamp => '2026-06-01T10:00:00Z' } ]));
+    my $brapi = decode_json($resp->decoded_content);
+    ok((grep { ($_->{messageType} // '') eq '500' } @{ $brapi->{metadata}->{status} }), 'v2 observations: refused, with the status as before') or diag($resp->decoded_content);
+    my ($message) = map { $_->{message} } grep { ($_->{messageType} // '') eq 'ERROR' } @{ $brapi->{metadata}->{status} };
+    like($message // '', qr/did not pass the checks\. These plots were not planted .*'test_trial210'/, 'and the message names the reason and the plot');
+    ok(!$brapi->{result} || !@{ $brapi->{result}->{data} || [] }, 'nothing stored');
+    restore();
 };
 
 subtest 'BrAPI PUT observationunits changes the germplasm of a plot' => sub {

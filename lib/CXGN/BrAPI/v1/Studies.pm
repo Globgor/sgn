@@ -564,6 +564,10 @@ sub studies_layout {
 			if ($design->{$plot_number}->{plant_ids}){
 				$additional_info{plantDbIds} = $design->{$plot_number}->{plant_ids};
 			}
+			# plots that were not planted (see CXGN::Trial::AccessionChange), as in v2
+			if ($design->{$plot_number}->{not_planted}){
+				$additional_info{notPlanted} = JSON::true;
+			}
 			my @plot_image_ids;
 			eval {
 	            my $image_id = CXGN::Stock->new({

@@ -974,6 +974,7 @@ sub store {
 	my $previously_stored_skip_count = 0;
         my $overwrite_count = 0;
         my $remove_count = 0;
+        my %not_stored;   # units that were not planted, whose values are left out
 
         # print STDERR "(store) values hash ".Dumper($self->values_hash());
         # foreach my $plot_name (@plot_list) {
@@ -983,7 +984,11 @@ sub store {
             my $project_id = $data{$plot_name}[2];
             # of a unit that was not planted, only notes and treatments are stored
             my $not_planted = $not_planted{$plot_name};
-            next if $not_planted && !grep { $_ eq 'notes' || /_TREATMENT:/ } keys %{ $self->values_hash()->{$plot_name} };
+            if ($not_planted) {
+                my @values = keys %{ $self->values_hash()->{$plot_name} };
+                $not_stored{$plot_name} = 1 if grep { $_ ne 'notes' && !/_TREATMENT:/ } @values;
+                next if !grep { $_ eq 'notes' || /_TREATMENT:/ } @values;
+            }
 
             # create plot-wide nd_experiment entry
 
@@ -1346,6 +1351,9 @@ sub store {
         $success_message .= "$overwrite_count previously stored values overwritten<br>";
 
         $success_message .= "$remove_count previously stored values removed<br><br>";
+        if (%not_stored) {
+            $success_message .= scalar(keys %not_stored)." unit(s) were not planted, so their values were not stored: ".join(", ", sort keys %not_stored)."<br><br>";
+        }
         my %files_with_overwritten_values = map {$_->[0] => 1} @overwritten_values;
         my $obsoleted_files = $self->check_overwritten_files_status(keys %files_with_overwritten_values);
         if (scalar(@$obsoleted_files) > 0){
