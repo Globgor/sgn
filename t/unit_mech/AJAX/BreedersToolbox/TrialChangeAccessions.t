@@ -63,6 +63,7 @@ sub plot_state {
 sub trial_state { return { map { $_ => plot_state($plot{$_}) } keys %plot }; }
 my $original = trial_state();
 my $original_design = $schema->resultset('Project::Projectprop')->find({ project_id => $trial_id, type_id => $t{design} })->value;
+my $files_at_start;   # the additional files of test_trial before any upload (set below)
 
 sub set_prop {
     my ($stock_id, $type, $value) = @_;
@@ -82,6 +83,7 @@ sub restore {
         set_prop($plot{$n}, 'not_planted', $o->{not_planted});
     }
     $schema->resultset('Project::Projectprop')->search({ project_id => $trial_id, type_id => $t{design} })->update({ value => $original_design });
+    obsolete_new_files($trial_id, $files_at_start);
     $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache", 'refresh cache after restore');
     is_deeply(trial_state(), $original, 'test_trial restored');
 }
@@ -100,15 +102,32 @@ sub cached_accession {
     return $p ? $p->{accession_name} : undef;
 }
 
-# posts a CSV file to the Change Accessions upload of a trial
-sub upload_accessions {
-    my ($trial, $content, @fields) = @_;
-    my ($fh, $filename) = tempfile(SUFFIX => '.csv');
+# posts a CSV file to the Change Accessions upload of a trial, as a user ($mech by default)
+sub upload_as {
+    my ($user_mech, $trial, $content, @fields) = @_;
+    my ($fh, $filename) = tempfile(SUFFIX => '.csv', UNLINK => 1);
     print $fh $content;
     close($fh);
-    $mech->post("$base/ajax/breeders/trial/$trial/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ], @fields ]);
-    return decode_json($mech->content);
+    $user_mech->post("$base/ajax/breeders/trial/$trial/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ], @fields ]);
+    return eval { decode_json($user_mech->content) } || { http_status => $user_mech->status, content => substr($user_mech->content, 0, 500) };
 }
+sub upload_accessions { return upload_as($mech, @_); }
+
+# the ids of the additional files of a trial (an applied upload is kept there)
+sub additional_files {
+    my $trial = shift;
+    $mech->get_ok("$base/ajax/breeders/trial/$trial/get_uploaded_additional_file", 'the additional files of the trial');
+    return [ map { $_->[0] } @{ decode_json($mech->content)->{files} || [] } ];
+}
+# the files added since $before are marked obsolete, so that the fixture is as it was
+sub obsolete_new_files {
+    my ($trial, $before) = @_;
+    my %old = map { $_ => 1 } @$before;
+    foreach my $file_id (grep { !$old{$_} } @{ additional_files($trial) }) {
+        $mech->get_ok("$base/ajax/breeders/trial/$trial/obsolete_uploaded_additional_file/$file_id", "additional file $file_id obsoleted");
+    }
+}
+$files_at_start = additional_files($trial_id);
 
 my $replace_stock = "/ajax/breeders/trial/$trial_id/replace_stock";
 $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
@@ -184,24 +203,18 @@ subtest 'replace_plot_accessions: one plot' => sub {
 };
 
 subtest 'Change Accessions upload' => sub {
-    my $upload = sub {
-        my ($content, $user_mech) = @_;
-        my ($fh, $filename) = tempfile(SUFFIX => '.csv');
-        print $fh $content;
-        close($fh);
-        $user_mech //= $mech;
-        $user_mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'change_accessions.csv', Content_Type => 'text/csv' ] ]);
-        return decode_json($user_mech->content);
-    };
-    my $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial210,test_accession1,\ntest_trial23,test_accession2,review_upload_name\n");
+    my $upload = sub { my ($content, $user_mech, @fields) = @_; return upload_as($user_mech || $mech, $trial_id, $content, @fields); };
+    my $files_before = additional_files($trial_id);
+    my $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial210,test_accession1,\ntest_trial23,test_accession2,review_upload_name\n", undef, preview => 1);
+    is($r->{preview}->{changed}, 2, 'preview: two plots will change') or diag(explain $r);
+    is(scalar(@{ additional_files($trial_id) }) - scalar(@$files_before), 0, 'a preview keeps no file with the trial');
+    $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial210,test_accession1,\ntest_trial23,test_accession2,review_upload_name\n");
     is($r->{success}, 1, 'success') or diag(explain $r);
     is($r->{changed}, 2, 'two plots changed');
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'plot 10');
     is_deeply([ @{plot_state($plot{3})}{'name', 'accession'} ], [ 'review_upload_name', 'test_accession2' ], 'plot 3 renamed');
     is(cached_accession('review_upload_name'), 'test_accession2', 'cached layout');
-    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/get_uploaded_additional_file");
-    my @files = grep { $_->[4] =~ /change_accessions\.csv$/ } @{ decode_json($mech->content)->{files} || [] };
-    is(scalar(@files), 1, 'the file of the change is kept with the trial, once (not for the previews)');
+    is(scalar(@{ additional_files($trial_id) }) - scalar(@$files_before), 1, 'the applied file is kept with the trial');
     restore();
 
     my $obsolete = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_obsolete_<b>accession</b>', name => 'review_obsolete', type_id => $t{accession}, organism_id => $organism_id, is_obsolete => 1 });
@@ -248,6 +261,7 @@ subtest 'Change Accessions upload at the end of the season: the trial has phenot
     is($phenotype_count{ $stretch[0]->{plot_id} }, 0, 'the first plot has no phenotypes');
     ok($phenotype_count{ $stretch[1]->{plot_id} } > 0, 'the others have');
 
+    my $cass_files = additional_files($phenotyped_trial_id);
     my $file = "plot_name,accession_name,not_planted\n"
         .join('', map { "$stretch[$_]->{plot_name},".($stretch[$_ ? $_ - 1 : 0]->{stock_name}).",".($_ ? 0 : 1)."\n" } 0 .. 2);
     my $r = upload_accessions($phenotyped_trial_id, $file, preview => 1);
@@ -272,6 +286,7 @@ subtest 'Change Accessions upload at the end of the season: the trial has phenot
         $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot_id, type_id => $t{plot_of} })->update({ object_id => $saved{$plot_id}->[0] });
         set_prop($plot_id, 'not_planted', undef);
     }
+    obsolete_new_files($phenotyped_trial_id, $cass_files);
     $mech->get_ok("$base/ajax/breeders/trial/$phenotyped_trial_id/refresh_cache");
     is_deeply({ map { $_->{plot_id} => [ $_->{stock_id}, $_->{plot_name} ] } grep { $saved{ $_->{plot_id} } } values %{ $ac->load_units() } }, \%saved, 'restored');
 };
@@ -320,11 +335,7 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     };
     my $upload = sub {
         my ($header, $rows, @fields) = @_;
-        my ($fh, $filename) = tempfile(SUFFIX => '.csv');
-        print $fh join("\n", map { join(',', @$_) } $header, @$rows), "\n";
-        close($fh);
-        $mech->post("$base/ajax/breeders/trial/$trial_id/change_plot_accessions_using_file/check", Content_Type => 'form-data', Content => [ trial_design_change_accessions_file => [ $filename, 'planting_order.csv', Content_Type => 'text/csv' ], keep_plot_names => 1, @fields ]);
-        return decode_json($mech->content);
+        return upload_accessions($trial_id, join("\n", map { join(',', @$_) } $header, @$rows)."\n", keep_plot_names => 1, @fields);
     };
     my ($header, $rows, $col) = $download->();
     is_deeply([ map { $_->[ $col->{type} ] eq 'plot' ? ($_->[ $col->{plot_name} ] =~ /^test_trial2(\d+)$/)[0] + 0 : 'b' } grep { $_->[ $col->{col_number} ] == 2 } @$rows ], [ 'b', 12, 7, 2, 'b' ], 'column 2 in the file: border, 12, 7, 2, border');
@@ -368,7 +379,7 @@ subtest 'Change Accessions upload: a planting order file, corrected and uploaded
     # the layout download of the Change Accessions dialog (by plot number), uploaded as it is, changes nothing
     my $columns = uri_escape('{"plot_name":1,"accession_name":1,"plot_number":1,"block_number":1,"not_planted":1,"rep_number":1,"row_number":1,"col_number":1}');
     $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=xlsx&dataLevel=plots&selected_columns=$columns", 'the layout as Excel');
-    my ($xlsx_fh, $xlsx) = tempfile(SUFFIX => '.xlsx');
+    my ($xlsx_fh, $xlsx) = tempfile(SUFFIX => '.xlsx', UNLINK => 1);
     binmode($xlsx_fh);
     print $xlsx_fh $mech->response->content;
     close($xlsx_fh);

@@ -101,11 +101,6 @@ sub _validate_with_plugin {
     }
 
     my $transform = CXGN::List::Transform->new();
-    my $validate_plots = $transform->transform($schema, 'plots_2_plot_ids', \@old_plot_names);
-    if (scalar(@{$validate_plots->{'missing'}}) > 0) {
-        push @error_messages, "The following plots were not found in the database: ".join(";",@{$validate_plots->{'missing'}});
-    }
-
     my $validate_stocks = $transform->transform($schema, 'stocks_2_stock_ids', \@accessions);
     my %accession_ids;
     if (scalar(@{$validate_stocks->{'missing'}}) > 0) {

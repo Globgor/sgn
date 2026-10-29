@@ -12,8 +12,6 @@ use CXGN::Stock::Plot;
 use List::MoreUtils qw | :all !before !after |;
 use Bio::Chado::Schema;
 use CXGN::Stock;
-use CXGN::Trial::AccessionChange;
-use Try::Tiny;
 
 has 'bcs_schema' => (
     isa => 'Bio::Chado::Schema',
@@ -347,86 +345,6 @@ sub substitute_accession_precheck {
         $error = "Accessions used as control/check can't be substituted between plots...";
     }
     return $error;
-}
-
-# The methods below change the accession of plots. They are kept for code that
-# still calls them; new code should use CXGN::Trial::AccessionChange, which
-# they call. They keep the plot names, as they did before, and return an error
-# string, or nothing.
-
-sub _change_accessions {
-    my $self = shift;
-    my $changes = shift;
-    my $error;
-    try {
-        CXGN::Trial::AccessionChange->new({
-            schema => $self->bcs_schema,
-            trial_id => $self->trial_id,
-            ($self->experiment_type ? (experiment_type => $self->experiment_type) : ()),
-            ($self->trial_stock_type ? (stock_type => $self->trial_stock_type) : ()),
-        })->apply($changes, { rename_plots => 'none' });
-    } catch {
-        $error = $_;
-    };
-    return $error;
-}
-
-=head2 substitute_accession_fieldmap()
-
-Swaps the accessions of first_plot_selected and second_plot_selected.
-
-=cut
-
-sub substitute_accession_fieldmap {
-    my $self = shift;
-    my $plot_1_id = $self->first_plot_selected;
-    my $plot_2_id = $self->second_plot_selected;
-    my $units = CXGN::Trial::AccessionChange->new({ schema => $self->bcs_schema, trial_id => $self->trial_id })->load_units();
-    foreach my $plot_id ($plot_1_id, $plot_2_id) {
-        if (!$units->{$plot_id} || !defined($units->{$plot_id}->{stock_id})) {
-            return "Plot $plot_id is not a plot of this trial with one accession.\n";
-        }
-    }
-    return $self->_change_accessions([
-        { plot_id => $plot_1_id, new_stock_id => $units->{$plot_2_id}->{stock_id} },
-        { plot_id => $plot_2_id, new_stock_id => $units->{$plot_1_id}->{stock_id} },
-    ]);
-}
-
-=head2 replace_plot_accession_fieldMap($plot_id, $old_accession_id, $new_accession_id)
-
-Gives the plot (and its plants, subplots and tissue samples) the new accession.
-
-=cut
-
-sub replace_plot_accession_fieldMap {
-    my $self = shift;
-    my $plot_id = shift;
-    my $old_accession_id = shift;
-    my $new_accession_id = shift;
-    return $self->_change_accessions([ { plot_id => $plot_id, new_stock_id => $new_accession_id } ]);
-}
-
-=head2 replace_trial_stock_fieldMap($new_stock_uniquename, $old_stock_id)
-
-Replaces the old stock by the new one in every plot of the trial.
-
-=cut
-
-sub replace_trial_stock_fieldMap {
-    my $self = shift;
-    my $new_stock = shift;
-    my $old_stock_id = shift;
-    my $new_stock_row = $self->bcs_schema->resultset("Stock::Stock")->search({ uniquename => $new_stock }, { order_by => 'is_obsolete' })->first();
-    if (!$new_stock_row) {
-        return "Could not find $new_stock in the database.\n";
-    }
-    my $accession_change = CXGN::Trial::AccessionChange->new({ schema => $self->bcs_schema, trial_id => $self->trial_id });
-    my $changes = $accession_change->changes_for_stock($old_stock_id, $new_stock_row->stock_id);
-    if (!@$changes) {
-        return "No plot of this trial has the stock to replace.\n";
-    }
-    return $self->_change_accessions($changes);
 }
 
 sub _regenerate_trial_layout_cache {

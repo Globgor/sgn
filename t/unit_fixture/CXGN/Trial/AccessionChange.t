@@ -964,7 +964,7 @@ scenario 'genotyping plate: the accession of a well' => sub {
     is(scalar(keys %{ $ac->load_units() }), 2, 'two wells');
     my $plan = $ac->plan([ { plot_id => $wells{A01}, new_stock_id => $acc{2} } ]);
     is_deeply($plan->{errors}, [], 'no errors') or diag(join("\n", @{$plan->{errors}}));
-    eval { $ac->_execute($plan) if !@{$plan->{errors}}; 1 } or diag("layout cache of the minimal plate: $@");
+    $ac->apply([ { plot_id => $wells{A01}, new_stock_id => $acc{2} } ]);
     is(linked_stock($wells{A01}, 'tissue_sample_of'), 'test_accession2', 'the well has the new accession');
     is($schema->resultset('Stock::StockRelationship')->search({ subject_id => $wells{A01}, object_id => $plot{5}, type_id => $t{tissue_sample_of} })->count, 1, 'its source plot is kept');
     is(name_of($wells{A01}), 'review_plate_A01', 'not renamed');
