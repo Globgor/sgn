@@ -29,6 +29,9 @@ export function summaryLines(summary, planned, maxItems = 10) {
         }
     };
 
+    if (planned && summary.rows_read !== undefined) {
+        lines.push(`${summary.rows_read} plot(s) read from the file.`);
+    }
     const planting = summary.planting || [];
     if (summary.changed || !planting.length) {
         const changes = summary.changes || [];

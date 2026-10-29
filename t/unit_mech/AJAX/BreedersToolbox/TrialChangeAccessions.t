@@ -207,6 +207,7 @@ subtest 'Change Accessions upload' => sub {
     my $files_before = additional_files($trial_id);
     my $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial210,test_accession1,\ntest_trial23,test_accession2,review_upload_name\n", undef, preview => 1);
     is($r->{preview}->{changed}, 2, 'preview: two plots will change') or diag(explain $r);
+    is($r->{preview}->{rows_read}, 2, 'the preview says how many plot rows the file had');
     is(scalar(@{ additional_files($trial_id) }) - scalar(@$files_before), 0, 'a preview keeps no file with the trial');
     $r = $upload->("plot_name,accession_name,new_plot_name\ntest_trial210,test_accession1,\ntest_trial23,test_accession2,review_upload_name\n");
     is($r->{success}, 1, 'success') or diag(explain $r);

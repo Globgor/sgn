@@ -333,6 +333,57 @@ sub changes_for_stock {
              grep { defined($_->{stock_id}) && $_->{stock_id} == $old_stock_id } values %$units ];
 }
 
+=head2 find_stock($name)
+
+The stock with the name that a plot of this trial may get: of several stocks
+with the name, one of an allowed type (see stock_type) and not obsolete, as
+for a new_stock_name in plan(). Returns the stock ({ stock_id, uniquename,
+type_id, is_obsolete }), or undef and an error message.
+
+=cut
+
+sub find_stock {
+    my $self = shift;
+    my $name = shift // '';
+    $name =~ s/^\s+|\s+$//g;
+    my $ids = $self->_cvterm_ids;
+    my %allowed_type = map { $ids->{$_} => 1 } grep { $ids->{$_} } @{ $self->_allowed_stock_types({}) };
+    my $stock = length($name) ? $self->_find_stocks([ { new_stock_name => $name } ], {}, \%allowed_type)->{by_name}->{$name} : undef;
+    return $stock ? ($stock) : (undef, "Could not find $name in the database.");
+}
+
+# the stocks of the changes in one query: by id (new_stock_id, and the current stocks of the
+# plots) and by name (new_stock_name), as { by_id => { stock_id => stock }, by_name => { name =>
+# stock } }, a stock being { stock_id, uniquename, type_id, is_obsolete }. Of several stocks
+# with a name, one of an allowed type is taken, and one that is not obsolete.
+sub _find_stocks {
+    my $self = shift;
+    my $changes = shift;
+    my $units = shift;
+    my $allowed_type = shift;
+    my %ids = map { $_ => 1 } grep { defined($_) && /^\d+$/ }
+        map { ($_->{new_stock_id}, (defined($_->{plot_id}) && $units->{ $_->{plot_id} }) ? $units->{ $_->{plot_id} }->{stock_id} : undef) } @$changes;
+    my %names = map { $_ => 1 } grep { length } map { my $n = $_->{new_stock_name} // ''; $n =~ s/^\s+|\s+$//g; $n } @$changes;
+    my %stocks = ( by_id => {}, by_name => {} );
+    return \%stocks if !%ids && !%names;
+    my $h = $self->schema->storage->dbh->prepare("SELECT stock_id, uniquename, type_id, is_obsolete FROM stock WHERE stock_id = ANY(?) OR uniquename = ANY(?)");
+    $h->execute([ keys %ids ], [ keys %names ]);
+    my %candidates;
+    while (my ($stock_id, $name, $type_id, $is_obsolete) = $h->fetchrow_array()) {
+        my $stock = { stock_id => $stock_id, uniquename => $name, type_id => $type_id, is_obsolete => ($is_obsolete && $is_obsolete ne 'f') ? 1 : 0 };
+        $stocks{by_id}->{$stock_id} = $stock;
+        push @{ $candidates{$name} }, $stock if $names{$name};
+    }
+    foreach my $name (keys %candidates) {
+        ($stocks{by_name}->{$name}) = sort {
+            ($allowed_type->{ $a->{type_id} } ? 0 : 1) <=> ($allowed_type->{ $b->{type_id} } ? 0 : 1)
+            || $a->{is_obsolete} <=> $b->{is_obsolete}
+            || $a->{stock_id} <=> $b->{stock_id}
+        } @{ $candidates{$name} };
+    }
+    return \%stocks;
+}
+
 =head2 field_trial_of_plot($schema, $plot_id)
 
 Class method: the id of the field trial the plot belongs to, or undef.
@@ -357,8 +408,12 @@ sub field_trial_of_plot {
 =head2 plan($changes, $options)
 
 $changes is an arrayref of { plot_id, new_stock_id, new_plot_name (optional) }.
-A change whose new stock is the current one only renames the plot (when it has
-a new_plot_name) or does nothing.
+A plot can be given as plot_name instead of plot_id, and the new stock as
+new_stock_name instead of new_stock_id (of several stocks with the name, one
+of an allowed type, see stock_type, and not obsolete). The plots and the new
+stocks of all changes are read in one query each, and the changes are planned
+in the order of the plot numbers. A change whose new stock is the current one
+only renames the plot (when it has a new_plot_name) or does nothing.
 
 A change can also set not_planted (1 or 0): without new_stock_id it only
 marks the plot as not planted, or as planted.
@@ -419,6 +474,22 @@ sub _plan {
     }
 
     my $units = $self->load_units();
+    my $allowed_types = $self->_allowed_stock_types($units);
+    my %allowed_type = map { $ids->{$_} => 1 } grep { $ids->{$_} } @$allowed_types;
+
+    # the plots by name, the stocks by id and by name (one query), in the order of the plot numbers
+    my %unit_by_name = map { $_->{plot_name} => $_->{plot_id} } values %$units;
+    my @changes = map { { %$_ } } @$changes;
+    foreach my $change (@changes) {
+        if ((!defined($change->{plot_id}) || $change->{plot_id} !~ /^\d+$/) && defined($change->{plot_name}) && exists($unit_by_name{ $change->{plot_name} })) {
+            $change->{plot_id} = $unit_by_name{ $change->{plot_name} };
+        }
+    }
+    my $stocks = $self->_find_stocks(\@changes, $units, \%allowed_type);
+    @changes = sort {
+        _compare_plot_numbers(map { defined($_->{plot_id}) && $units->{ $_->{plot_id} } ? $units->{ $_->{plot_id} }->{plot_number} : undef } ($a, $b))
+        || ($a->{plot_name} // '') cmp ($b->{plot_name} // '')
+    } @changes;
 
     # validate the changes
     my %new_stock_by_unit;
@@ -427,10 +498,8 @@ sub _plan {
     my %explicit_name;
     my %keep_name;
     my %seen_unit;
-    my %new_stocks;
-    my $allowed_types = $self->_allowed_stock_types($units);
-    my %allowed_type = map { $ids->{$_} => 1 } grep { $ids->{$_} } @$allowed_types;
-    foreach my $change (@$changes) {
+    my @missing_stocks;
+    foreach my $change (@changes) {
         my $unit_id = $change->{plot_id};
         if (!defined($unit_id) || $unit_id !~ /^\d+$/ || !$units->{$unit_id}) {
             push @$errors, "Plot ".($change->{plot_name} // $unit_id // '(none)')." is not part of this trial.";
@@ -467,22 +536,30 @@ sub _plan {
             ($seedlot_name{$unit_id} = $change->{seedlot_name}) =~ s/^\s+|\s+$//g;
         }
         my $new_stock_id = $change->{new_stock_id};
+        if ((!defined($new_stock_id) || $new_stock_id eq '') && defined($change->{new_stock_name}) && $change->{new_stock_name} =~ /\S/) {
+            (my $name = $change->{new_stock_name}) =~ s/^\s+|\s+$//g;
+            if (!$stocks->{by_name}->{$name}) {
+                push @missing_stocks, $name;
+                next;
+            }
+            $new_stock_id = $stocks->{by_name}->{$name}->{stock_id};
+        }
         if ((!defined($new_stock_id) || $new_stock_id eq '') && defined($not_planted)) {
             $new_stock_id = $unit->{stock_id};   # only the planting status changes
         }
-        my $new_stock = (defined($new_stock_id) && $new_stock_id =~ /^\d+$/) ? ($new_stocks{$new_stock_id} //= $schema->resultset('Stock::Stock')->find({ stock_id => $new_stock_id })) : undef;
+        my $new_stock = (defined($new_stock_id) && $new_stock_id =~ /^\d+$/) ? $stocks->{by_id}->{$new_stock_id} : undef;
         if (!$new_stock) {
             push @$errors, "The new stock for plot $unit->{plot_name} does not exist.";
             next;
         }
         # a plot that keeps its stock keeps it, whatever has become of the stock since
         if ($new_stock_id != $unit->{stock_id}) {
-            if ($new_stock->is_obsolete) {
-                push @$errors, "Stock ".$new_stock->uniquename." is obsolete.";
+            if ($new_stock->{is_obsolete}) {
+                push @$errors, "Stock $new_stock->{uniquename} is obsolete.";
                 next;
             }
-            if (!$allowed_type{$new_stock->type_id}) {
-                push @$errors, "Stock ".$new_stock->uniquename." is not ".stock_type_description(@$allowed_types).".";
+            if (!$allowed_type{ $new_stock->{type_id} }) {
+                push @$errors, "Stock $new_stock->{uniquename} is not ".stock_type_description(@$allowed_types).".";
                 next;
             }
         }
@@ -509,8 +586,13 @@ sub _plan {
             old_stock_id => $unit->{stock_id} + 0,
             old_stock_name => $unit->{stock_name},
             new_stock_id => $new_stock_id + 0,
-            new_stock_name => $new_stock->uniquename,
+            new_stock_name => $new_stock->{uniquename},
         };
+    }
+    if (@missing_stocks) {
+        my %seen;
+        my @missing = grep { !$seen{$_}++ } @missing_stocks;
+        push @$errors, @missing == 1 ? "Could not find $missing[0] in the database." : "The following accessions were not found in the database: ".join(", ", @missing).".";
     }
     return \%plan if @$errors;
 
@@ -518,7 +600,7 @@ sub _plan {
     my %after = map { $_ => { %{$units->{$_}} } } keys %$units;
     foreach my $unit_id (keys %new_stock_by_unit) {
         $after{$unit_id}->{stock_id} = $new_stock_by_unit{$unit_id};
-        $after{$unit_id}->{stock_name} = $new_stocks{ $new_stock_by_unit{$unit_id} }->uniquename;
+        $after{$unit_id}->{stock_name} = $stocks->{by_id}->{ $new_stock_by_unit{$unit_id} }->{uniquename};
     }
     foreach my $unit_id (sort { $a <=> $b } keys %new_not_planted) {
         $after{$unit_id}->{not_planted} = $new_not_planted{$unit_id};
@@ -575,8 +657,12 @@ sub _plan {
         }
     }
 
-    # the units' own samples, and samples of them in other trials
-    my $children = $self->_is_plate ? {} : $self->_children([ keys %new_stock_by_unit, keys %new_name, keys %new_not_planted ]);
+    $self->_plan_checks(\%plan, $units, \%after) if !$self->_is_plate;
+
+    # the units' own samples, and samples of them in other trials; _execute takes them from the plan
+    my %touched_unit = map { $_ => 1 } keys %new_stock_by_unit, keys %new_name, keys %new_not_planted, map { $_->{plot_id} } @{$plan{replicates}}, @{$plan{checks}};
+    my $children = $self->_is_plate ? {} : $self->_children([ keys %touched_unit ]);
+    $plan{_children} = $children;
 
     # renames of the plots and of their plants, subplots and tissue samples
     foreach my $unit_id (sort { $a <=> $b } keys %new_name) {
@@ -604,7 +690,6 @@ sub _plan {
         }
     }
     if (!$self->_is_plate) {
-        $self->_plan_checks(\%plan, $units, \%after);
         $self->_plan_phenotype_and_cross_warnings(\%plan, $children, \%after);
         $self->_plan_not_planted(\%plan, $children, $options);
         $self->_plan_seedlots(\%plan, $units, \%after, \%seedlot_name);
@@ -697,7 +782,7 @@ sub _execute {
 
     # stocks of the units and of their plants, subplots and tissue samples, also the samples in other trials;
     # the replicates and check marks of this trial are only for the children in this trial
-    my $children = $self->_is_plate ? {} : $self->_children([ map { $_->{plot_id} } @{$plan->{changes}}, @{$plan->{replicates}} ]);
+    my $children = $plan->{_children} // ($self->_is_plate ? {} : $self->_children([ map { $_->{plot_id} } @{$plan->{changes}}, @{$plan->{replicates}}, @{$plan->{checks}} ]));
     my $children_of = sub { return [ map { $_->{stock_id} } @{ $children->{ $_[0] }->{in_trial} || [] } ]; };
     my @external_ids;
     my $unit_h = $dbh->prepare("UPDATE stock_relationship SET object_id = ? WHERE subject_id = ? AND object_id = ? AND type_id = ?");

@@ -286,6 +286,35 @@ scenario 'apply carries out only the plan of the preview' => sub {
 };
 
 
+scenario 'plots and stocks by name: one query each, the changes in the order of the plot numbers' => sub {
+    my $ac = $change->();
+    my $plan = $ac->plan([ { plot_name => 'test_trial210', new_stock_name => ' test_accession1 ' }, { plot_name => 'test_trial21', new_stock_name => 'test_accession1' } ], { rename_plots => 'none' });
+    is_deeply($plan->{errors}, [], 'no errors') or diag(join("\n", @{$plan->{errors}}));
+    is_deeply([ map { [ $_->{plot_id}, $_->{plot_name}, $_->{new_stock_id} ] } @{$plan->{changes}} ], [ [ $plot{1}, 'test_trial21', $acc{1} ], [ $plot{10}, 'test_trial210', $acc{1} ] ], 'the plots and the stock were found by name, plot 1 before plot 10');
+    $plan = $ac->plan([ { plot_name => 'no_such_plot', new_stock_name => 'test_accession1' } ]);
+    is_deeply($plan->{errors}, [ 'Plot no_such_plot is not part of this trial.' ], 'a plot name that is not in the trial');
+    $plan = $ac->plan([ { plot_name => 'test_trial210', new_stock_name => 'no_such_accession' }, { plot_name => 'test_trial21', new_stock_name => 'nor_this_one' } ]);
+    is_deeply($plan->{errors}, [ 'The following accessions were not found in the database: nor_this_one, no_such_accession.' ], 'the names that were not found, in one error');
+    $plan = $ac->plan([ { plot_name => 'test_trial210', new_stock_name => 'no_such_accession' } ]);
+    is_deeply($plan->{errors}, [ 'Could not find no_such_accession in the database.' ], 'one name that was not found');
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_name => 'test_trial21' } ]);
+    is_deeply($plan->{errors}, [ 'Stock test_trial21 is not an accession.' ], 'a plot name as the new stock');
+};
+
+scenario 'a name that several stocks have: the one the trial takes, and not an obsolete one' => sub {
+    my $organism_id = stock('test_accession1')->organism_id;
+    my ($other_organism) = grep { $_->organism_id != $organism_id } $schema->resultset('Organism::Organism')->search({}, { rows => 2, order_by => 'organism_id' })->all;
+    my $plot_type = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_twin', name => 'review_twin', type_id => $t{plot}, organism_id => $organism_id });
+    my $obsolete = $schema->resultset('Stock::Stock')->create({ uniquename => 'review_twin', name => 'review_twin', type_id => $t{accession}, organism_id => $other_organism->organism_id, is_obsolete => 1 });
+    my $accession = new_accession('review_twin');
+    my $ac = $change->();
+    my ($found) = $ac->find_stock(' review_twin ');
+    is($found->{stock_id}, $accession->stock_id, 'find_stock: the accession, not the plot nor the obsolete accession');
+    my $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_name => 'review_twin' } ], { rename_plots => 'none' });
+    is_deeply([ $plan->{errors}, $plan->{changes}->[0]->{new_stock_id} ], [ [], $accession->stock_id ], 'plan: the same');
+    is_deeply([ $ac->find_stock('no_such_stock') ], [ undef, 'Could not find no_such_stock in the database.' ], 'find_stock: not found');
+};
+
 scenario 'the trial is read from the database, not from the cached layout' => sub {
     cached_design($trial_id);
     # plot 2 gets test_accession3 without the cache knowing it

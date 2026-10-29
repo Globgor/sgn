@@ -27,6 +27,13 @@ test("summaryLines", (t) => {
         t.end();
     });
 
+    t.test("how many rows the file had, so that a file of part of the trial is noticed", (t) => {
+        t.equal(summaryLines({ ...empty, changed: 1, rows_read: 3 }, true)[0], "3 plot(s) read from the file.");
+        t.notOk(summaryLines({ ...empty, changed: 1, rows_read: 3 }, false).some((l) => /read from the file/.test(l)), "not after the change");
+        t.notOk(summaryLines({ ...empty, changed: 1 }, true).some((l) => /read from the file/.test(l)), "not when the server does not say it (Replace Accession)");
+        t.end();
+    });
+
     t.test("which plot gets which accession", (t) => {
         const lines = summaryLines({ ...empty, changed: 2, changes: [{ plot_name: "P8", old_stock_name: "A1", new_stock_name: "A5" }, { plot_name: "P9", old_stock_name: "A3", new_stock_name: "A1" }] }, true);
         t.deepEqual(lines, ["2 plot(s) will get another accession:", "    P8: A1 -> A5", "    P9: A3 -> A1"]);

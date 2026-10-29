@@ -6,7 +6,6 @@ use CXGN::File::Parse;
 use SGN::Model::Cvterm;
 use Data::Dumper;
 use CXGN::List::Validate;
-use CXGN::List::Transform;
 use CXGN::Trial;
 
 my @REQUIRED_COLUMNS = qw|plot_name accession_name|;
@@ -89,7 +88,6 @@ sub _validate_with_plugin {
         return grep { defined($_) && $_ =~ /\S/ && !$seen{$_}++ } map { $_->{$column} } @$parsed_data;
     };
     my @old_plot_names = $values_of->('plot_name');
-    my @accessions = $values_of->('accession_name');
     my @new_plot_names = $values_of->('new_plot_name');
     my $validator = CXGN::List::Validate->new();
 
@@ -98,15 +96,6 @@ sub _validate_with_plugin {
         if (!exists($trial_plots{$old_plot_name})) {
             push @error_messages, "Plot $old_plot_name does not exist in this trial.";
         }
-    }
-
-    my $transform = CXGN::List::Transform->new();
-    my $validate_stocks = $transform->transform($schema, 'stocks_2_stock_ids', \@accessions);
-    my %accession_ids;
-    if (scalar(@{$validate_stocks->{'missing'}}) > 0) {
-        push @error_messages, "The following accessions were not found in the database: ".join(", ", @{$validate_stocks->{'missing'}});
-    } else {
-        @accession_ids{@accessions} = @{$validate_stocks->{'transform'}};
     }
 
     # not_planted: 1 (or yes, true, x) marks the plot as not planted, 0 (or no,
@@ -135,10 +124,7 @@ sub _validate_with_plugin {
         return 0;
     }
 
-    $self->_set_parsed_data({
-        parsed => $parsed_data,
-        accession_ids => \%accession_ids,
-    });
+    $self->_set_parsed_data({ parsed => $parsed_data });
 
     return 1; #returns true if validation passed
 
@@ -154,15 +140,13 @@ sub _parse_with_plugin {
     my $parsed_entries = {};
 
     my $parsed_data = $self->_parsed_data()->{parsed};
-    my $accession_ids = $self->_parsed_data()->{accession_ids};
 
+    # the accessions are found by CXGN::Trial::AccessionChange, by the rule of the trial
     foreach my $row (@$parsed_data) {
-        my $accession_name = $row->{'accession_name'} // '';
         $parsed_entries->{$row->{'plot_name'}} = {
             'old_plot_name' => $row->{'plot_name'},
             'new_plot_name' => $row->{'new_plot_name'} ? $row->{'new_plot_name'} : '',
-            'new_accession_name' => $accession_name,
-            'new_accession_id' => $accession_ids->{$accession_name},
+            'new_accession_name' => $row->{'accession_name'} // '',
             'not_planted' => _not_planted_value($row->{'not_planted'}),
             'seedlot_name' => $row->{'seedlot_name'} // '',
         };

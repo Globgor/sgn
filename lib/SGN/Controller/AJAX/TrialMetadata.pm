@@ -2464,23 +2464,25 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         schema => $schema,
         trial_id => $trial_id,
     });
-    my $units = $accession_change->load_units();
-    my %unit_by_name = map { $_->{plot_name} => $_ } values %$units;
+    # the service finds the plots and the accessions by name, and plans in the order of the plot numbers
     my @changes = map { {
-        plot_id => $unit_by_name{$_} ? $unit_by_name{$_}->{plot_id} : undef,
         plot_name => $_,
-        new_stock_id => $parsed_data->{$_}->{new_accession_id},
+        new_stock_name => $parsed_data->{$_}->{new_accession_name},
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
         not_planted => $parsed_data->{$_}->{not_planted},
         seedlot_name => $parsed_data->{$_}->{seedlot_name},
-    } } sort { CXGN::Trial::AccessionChange::_compare_plot_numbers(map { $unit_by_name{$_} ? $unit_by_name{$_}->{plot_number} : undef } ($a, $b)) || $a cmp $b } keys %$parsed_data;
+    } } keys %$parsed_data;
 
     my $options = {
         rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
         delete_phenotypes => _true_param($c->req->param('delete_phenotypes')),
     };
     my $preview = _true_param($c->req->param('preview'));
-    if ($self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1) && !$preview) {
+    my $done = $self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1);
+    if ($done && $preview) {
+        # so that a file that is not the whole trial is noticed
+        $c->stash->{rest}->{preview}->{rows_read} = scalar(@changes);
+    } elsif ($done) {
         # the file stays with the trial (Uploaded Additional Files), as a record of the correction
         my $result = $c->stash->{trial}->add_additional_uploaded_file($c->user->get_object->get_sp_person_id(), $archived_filename_with_path, $md5->hexdigest());
         print STDERR "Could not keep $archived_filename_with_path with trial $trial_id: $result->{error}\n" if $result->{error};
@@ -3106,22 +3108,6 @@ sub delete_field_coord : Path('/ajax/phenotype/delete_field_coords') Args(0) {
 # cross or family name ($stock_type when given) that is not obsolete is
 # preferred. Whether its type fits the trial is checked by
 # CXGN::Trial::AccessionChange. Returns ($stock) or (undef, $error).
-sub _find_trial_stock {
-    my $self = shift;
-    my $schema = shift;
-    my $name = shift;
-    my $stock_type = shift;
-
-    $name //= '';
-    $name =~ s/^\s+|\s+$//g;
-    my @type_names = $stock_type ? ($stock_type) : ('accession', 'cross', 'family_name');
-    my %preferred = map { $_->cvterm_id() => 1 } grep { defined } map { SGN::Model::Cvterm->get_cvterm_row($schema, $_, 'stock_type') } @type_names;
-    my @stocks = sort { ($preferred{$b->type_id} ? 1 : 0) <=> ($preferred{$a->type_id} ? 1 : 0) || ($a->is_obsolete ? 1 : 0) <=> ($b->is_obsolete ? 1 : 0) }
-        $schema->resultset("Stock::Stock")->search({ uniquename => $name })->all();
-    return ($stocks[0]) if @stocks;
-    return (undef, "Could not find $name in the database.");
-}
-
 # Changes the stock of plots (or wells) with CXGN::Trial::AccessionChange and
 # puts the outcome in the REST response: with $preview the plan, otherwise
 # success and a summary of what changed, or why nothing was changed. A preview
@@ -3219,17 +3205,16 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
         return;
     }
 
-    my ($new_stock_row, $stock_error) = $self->_find_trial_stock($schema, $new_stock);
-    if (!$new_stock_row) {
-        $c->stash->{rest} = { error => $stock_error };
-        return;
-    }
-
     my $accession_change = CXGN::Trial::AccessionChange->new({
         schema => $schema,
         trial_id => $trial_id,
     });
-    my $changes = (defined($old_stock_id) && $old_stock_id =~ /^\d+$/) ? $accession_change->changes_for_stock($old_stock_id, $new_stock_row->stock_id) : [];
+    my ($new_stock_row, $stock_error) = $accession_change->find_stock($new_stock);
+    if (!$new_stock_row) {
+        $c->stash->{rest} = { error => $stock_error };
+        return;
+    }
+    my $changes = (defined($old_stock_id) && $old_stock_id =~ /^\d+$/) ? $accession_change->changes_for_stock($old_stock_id, $new_stock_row->{stock_id}) : [];
     if (!@$changes) {
         $c->stash->{rest} = { error => "No plot of this trial has the stock to replace." };
         return;
@@ -3303,17 +3288,11 @@ sub replace_plot_accession : Chained('trial') PathPart('replace_plot_accessions'
         }
     }
 
-    my ($new_stock_row, $stock_error) = $self->_find_trial_stock($schema, $new_accession);
-    if (!$new_stock_row) {
-        $c->stash->{rest} = { error => $stock_error };
-        return;
-    }
-
     my $accession_change = CXGN::Trial::AccessionChange->new({
         schema => $schema,
         trial_id => $trial_id,
     });
-    $self->_change_trial_stocks($c, $accession_change, [ { plot_id => $plot_id, new_stock_id => $new_stock_row->stock_id, new_plot_name => $new_plot_name } ], { rename_plots => 'auto' });
+    $self->_change_trial_stocks($c, $accession_change, [ { plot_id => $plot_id, new_stock_name => $new_accession, new_plot_name => $new_plot_name } ], { rename_plots => 'auto' });
 }
 
 sub accession_exists : Chained('trial') PathPart('accession_exists') Args(0) {
@@ -3381,18 +3360,12 @@ sub replace_well_accession : Chained('trial') PathPart('replace_well_accessions'
         return;
     }
 
-    my ($new_stock_row, $stock_error) = $self->_find_trial_stock($schema, $new_accession, 'accession');
-    if (!$new_stock_row) {
-        $c->stash->{rest} = { error => $stock_error };
-        return;
-    }
-
     my $accession_change = CXGN::Trial::AccessionChange->new({
         schema => $schema,
         trial_id => $trial_id,
         experiment_type => 'genotyping_layout',
     });
-    $self->_change_trial_stocks($c, $accession_change, [ { plot_id => $well_id, new_stock_id => $new_stock_row->stock_id } ], { rename_plots => 'none' });
+    $self->_change_trial_stocks($c, $accession_change, [ { plot_id => $well_id, new_stock_name => $new_accession } ], { rename_plots => 'none' });
 }
 
 sub substitute_stock : Chained('trial') PathPart('substitute_stock') Args(0) {
