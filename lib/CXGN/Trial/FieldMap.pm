@@ -306,12 +306,12 @@ sub update_fieldmap_precheck {
     my @traits = grep { $_->[1] !~ /_TREATMENT:/ } @{ $trial->get_traits_assayed() };
 
     if (scalar(@traits) != 0)  {
-        $error = "One or more traits have been assayed for this trial; Map/Layout can not be modified. Please contact us.";
+        $error = "One or more traits have been assayed for this trial; only a curator of this database can change the map or layout now.";
         return $error;
     }
     my $seedlots = $trial->get_seedlots();
     if (scalar(@$seedlots) != 0){
-        $error = "Seedlots have already been saved as the source material for the plots in this trial. Map/Layout can not be modified. Please contact us.";
+        $error = "Seedlots have already been saved as the source material for the plots in this trial; only a curator of this database can change the map or layout now.";
     }
     return $error;
 }

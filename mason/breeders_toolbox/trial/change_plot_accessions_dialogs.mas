@@ -29,9 +29,9 @@ $trial_stock_type
                     <div class="well well-sm">
                         <p><b>Correct the trial with a file of what was planted:</b></p>
                         <ol style="padding-left: 20px">
-                            <li><a class="btn btn-default btn-sm" id="trial_design_change_accessions_download" href="/breeders/trial/<% $trial_id %>/download/layout?format=xlsx&amp;dataLevel=plots&amp;selected_columns=%7B%22plot_name%22%3A1%2C%22accession_name%22%3A1%2C%22plot_number%22%3A1%2C%22block_number%22%3A1%2C%22not_planted%22%3A1%2C%22rep_number%22%3A1%2C%22row_number%22%3A1%2C%22col_number%22%3A1%2C%22seedlot_name%22%3A1%7D">Download the current layout</a> (by plot number), or <b>Download Plot Order</b> with the planting order and borders in Field Layout Tools.</li>
+                            <li><a class="btn btn-default btn-sm" id="trial_design_change_accessions_download" href="/breeders/trial/<% $trial_id %>/download/layout?format=xlsx&amp;dataLevel=plots&amp;selected_columns=%7B%22plot_name%22%3A1%2C%22accession_name%22%3A1%2C%22plot_number%22%3A1%2C%22block_number%22%3A1%2C%22not_planted%22%3A1%2C%22rep_number%22%3A1%2C%22row_number%22%3A1%2C%22col_number%22%3A1%2C%22seedlot_name%22%3A1%7D">Download the current layout</a> (by plot number), or <b>Download Plot Order</b> with the planting order and borders in Field Layout Tools (for a trial with row and column numbers).</li>
                             <li>Write what was planted: change accession_name where another accession grows. Put 1 in not_planted where no seed was sown (add a not_planted column if the file has none); the plot keeps its planned accession, so its accession_name may stay as it is or be left empty. A plot that was sown but lost later (no emergence, flood) stays planted: record its stand count. In a file in planting order, a shift is a cut and paste of accession_name one row down; leave the border rows as they are.</li>
-                            <li>Upload the file here. You see what changes before anything is changed. Plots that already match the file are left as they are, so the same file can be uploaded again, and a later correction starts from a new download. The file is kept with the trial (Uploaded Additional Files).</li>
+                            <li>Upload the file here, as .xlsx or as CSV with commas (a CSV that Excel saved with semicolons is not read). You see what changes before anything is changed. Plots that already match the file are left as they are, so the same file can be uploaded again, and a later correction starts from a new download. The file is kept with the trial (Uploaded Additional Files). Once the trial has phenotypes or seedlots, a curator uploads the file.</li>
                         </ol>
                         <p>Seed transactions follow the packets: a plot that got the packet of another plot takes over its seedlot. A packet that is in no plot any more (for example planted into a border) stays taken from its seedlot; if the seed of a place left empty went back into the seedlot, add it there. After the change, print new labels for the changed plots, and download new Field Book files and phenotyping spreadsheets.</p>
                         <& /help/file_upload_type.mas, type => "Accession exchanges", optional_column => 1 &>
@@ -66,7 +66,7 @@ $trial_stock_type
                         <br><b>Optional columns:</b><br>
                         <b>new_plot_name:</b> new name for plot.<br>
                         <b>not_planted:</b> 1 if no seed was sown in the plot, 0 if it was planted. Plots that were not planted are shown as empty on the field map, are left out of Field Book files and phenotyping spreadsheets, and cannot get phenotypes.<br>
-                        <b>seedlot_name:</b> the seedlot the plot was planted from, where it is another one than now (a plot without a seed transaction gets one with Upload Used Seedlots in Trial).<br>
+                        <b>seedlot_name:</b> the seedlot the plot was planted from, where it is another one than now (a plot without a seed transaction gets one with Upload Seedlots Planted In Trial).<br>
                         <div class="list-group-item-warning" >
                           <p><i>Warning: the new plot name will replace the old plot name in subplots, plants, and tissue samples if possible. Plot numbers, blocks and, except in completely randomized designs, replicates are kept; check plots follow their accessions. Phenotypes stay with their plots. You may need to reprint labels after the changes are applied.</i></p>
                         </div>
@@ -153,13 +153,15 @@ jQuery(document).ready(function () {
             },
         });
         if (summary) {
-            jQuery('#trial_design_change_accessions_dialog').modal("hide");
             change.showSummary('#trial_design_change_accessions_summary', summary, false);
             jQuery('#trial_design_changed_plots').val(change.changedPlots(summary).join("\n"));
             if (typeof addToListMenu === 'function') {
                 addToListMenu('trial_design_changed_plots_to_list', 'trial_design_changed_plots', { listType: 'plots' });
             }
-            jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
+            // after Bootstrap has closed this dialog, or the page under the next one scrolls with it
+            jQuery('#trial_design_change_accessions_dialog').one('hidden.bs.modal', function() {
+                jQuery('#trial_design_replace_accessions_dialog_message').modal("show");
+            }).modal("hide");
         }
     });
 

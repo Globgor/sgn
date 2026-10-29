@@ -1508,7 +1508,7 @@ sub _plan_seedlots {
                 my $taken = $self->_taken_packet($plot_id);
                 push @{$plan->{warnings}}, $taken
                     ? "The packet of plot $plot_name was recorded as seed taken from seedlot $taken->{seedlot_name} when the plot was marked as not planted; do not record it again (a curator can delete that transaction on the seedlot page)."
-                    : "Plot $plot_name is planted again but has no seedlot; if it was planted from one, record it with Upload Used Seedlots in Trial.";
+                    : "Plot $plot_name is planted again but has no seedlot; if it was planted from one, record it with Upload Seedlots Planted In Trial.";
             }
             next;
         }
@@ -1518,7 +1518,7 @@ sub _plan_seedlots {
             @free = grep { $_ != $t } @free;
             push @{$plan->{seedlots}}, { %$t, type => 'seedlot', plot_name => $units->{$plot_id}->{plot_name}, old_seedlot_id => $t->{seedlot_id}, old_seedlot_name => $t->{seedlot_name}, seedlot_id => $want->{seedlot_id}, seedlot_name => $want->{seedlot_name} };
         } else {
-            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} has no seed transaction, so seedlot $want->{seedlot_name} is not recorded for it; record it with Upload Used Seedlots in Trial.";
+            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} has no seed transaction, so seedlot $want->{seedlot_name} is not recorded for it; record it with Upload Seedlots Planted In Trial.";
         }
     }
     foreach my $t (sort { $a->{transaction_id} <=> $b->{transaction_id} } @free) {

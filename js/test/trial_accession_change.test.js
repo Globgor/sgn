@@ -128,6 +128,15 @@ test("changeWithPreview", (t) => {
         t.end();
     });
 
+    t.test("the server cannot be reached", async (t) => {
+        jQuery.ajax = () => jQuery.Deferred().reject().promise();
+        const told = [];
+        const result = await changeWithPreview("/url", {}, { confirm: () => true, alert: (m) => told.push(m) });
+        t.equal(result, null);
+        t.deepEqual(told, ["Change: The server could not be reached, or it failed; nothing may have been changed."]);
+        t.end();
+    });
+
     t.test("the user says no", async (t) => {
         const requests = fakeServer([{ preview: { ...empty, changed: 1 } }]);
         const result = await changeWithPreview("/url", {}, { confirm: () => false });
