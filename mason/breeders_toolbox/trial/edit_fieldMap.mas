@@ -72,9 +72,9 @@ $trial_stock_type => undef
 	                      <div class="form-group">
 	                        <div class="col-sm-offset-3 col-sm-9">
 	                          <div class="checkbox">
-	                            <label><input type="checkbox" id="replace_stock_rename_plots" name="replace_stock_rename_plots" checked /> Update plot names</label>
+	                            <label><input type="checkbox" id="replace_stock_rename_plots" name="replace_stock_rename_plots" /> Update plot names</label>
 	                          </div>
-	                          <p class="help-block" style="white-space: normal">Replaces the old name where it is a whole part of a plot name, or uses the plot name template of the trial. Plants and tissue samples are renamed with their plot. You see what changes before anything is changed.</p>
+	                          <p class="help-block" style="white-space: normal">The plot names are kept unless this is checked: then the old name is replaced where it is a whole part of a plot name, or the plot name template of the trial is used, and plants and tissue samples are renamed with their plot. You see what changes before anything is changed.</p>
 	                        </div>
 	                      </div>
 

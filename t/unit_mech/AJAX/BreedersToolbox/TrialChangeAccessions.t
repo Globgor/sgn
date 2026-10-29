@@ -153,9 +153,9 @@ subtest 'replace_stock: errors' => sub {
     is_deeply(trial_state(), $original, 'nothing changed');
 };
 
-subtest 'replace_stock: names are kept when asked to' => sub {
+subtest 'replace_stock: names are kept by default (labels in the field)' => sub {
     rename_plot($plot{3}, 'test_trial-rep1-test_accession3_3');
-    my $r = post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_accession2', trial_stock_type => 'accession', rename_plots => 0 ]);
+    my $r = post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_accession2', trial_stock_type => 'accession' ]);
     is($r->{success}, 1, 'success');
     is_deeply($r->{renamed}, [], 'nothing renamed');
     is(plot_state($plot{3})->{name}, 'test_trial-rep1-test_accession3_3', 'name kept');
@@ -163,9 +163,9 @@ subtest 'replace_stock: names are kept when asked to' => sub {
     restore();
 };
 
-subtest 'replace_stock: names are updated by default' => sub {
+subtest 'replace_stock: names are updated when asked to' => sub {
     rename_plot($plot{3}, 'test_trial-rep1-test_accession3_3');
-    my $r = post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_accession2', trial_stock_type => 'accession' ]);
+    my $r = post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_accession2', trial_stock_type => 'accession', rename_plots => 1 ]);
     is_deeply($r->{renamed}, [ { old_name => 'test_trial-rep1-test_accession3_3', new_name => 'test_trial-rep1-test_accession2_3' } ], 'renamed');
     is(plot_state($plot{3})->{name}, 'test_trial-rep1-test_accession2_3', 'in the database');
     restore();
@@ -437,8 +437,12 @@ subtest 'Change Accessions upload: a trial planted from seedlots' => sub {
     is($row_of{test_trial24}->[ $col->{seedlot_name} ], "review_upload_seedlot_$original->{4}->{accession}", 'with the seedlot of each plot');
     my $csv = sub { return join("\n", map { join(',', @$_) } $header, @$rows)."\n"; };
 
+    # saved seedlots are a reason to ask, as for the field map: a curator is warned and confirms, Replace Accession is refused
     my $r = upload_accessions($trial_id, $csv->(), preview => 1);
-    is_deeply([ $r->{warning}, $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting} ], [ undef, 0, [], [] ], 'the layout uploaded as it is: no warning or error about the seedlots, nothing to change') or diag(explain $r);
+    like($r->{warning}, qr/Seedlots have already been saved/, 'the upload warns the curator that the trial has seedlots') or diag(explain $r);
+    like(post_json($replace_stock, [ old_stock_id => $acc{3}, new_stock => 'test_accession1', trial_stock_type => 'accession', preview => 1 ])->{error}, qr/Seedlots have already been saved/, 'Replace Accession is refused, as before');
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, override => 1);
+    is_deeply([ $r->{warning}, $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting} ], [ undef, 0, [], [] ], 'the layout uploaded as it is, confirmed: nothing to change') or diag(explain $r);
 
     # plot 4 was skipped: plots 5 to 8 got the packets planned for 4 to 7, the packet of 8 went into a border;
     # only accession_name and not_planted are corrected, the seedlot_name cells are left as they are
@@ -454,7 +458,7 @@ subtest 'Change Accessions upload: a trial planted from seedlots' => sub {
     is_deeply([ map { $planted_from->($plot{$_}) } 4 .. 8 ], [ '', map { "review_upload_seedlot_$original->{$_}->{accession}" } 4 .. 7 ], 'plots 5 to 8 were planted from the seedlots of their new accessions, plot 4 from none');
 
     # the same file again (its seedlot cells are those of before the packets moved) changes nothing
-    $r = upload_accessions($trial_id, $csv->(), preview => 1, keep_plot_names => 1);
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, override => 1, keep_plot_names => 1);
     is_deeply([ $r->{error}, $r->{preview}->{changed}, $r->{preview}->{seedlots}, $r->{preview}->{planting}, $r->{preview}->{warnings} ], [ undef, 0, [], [], [] ], 'the same file again: nothing to change') or diag(explain $r);
 
     # a new download, uploaded as it is, changes nothing
@@ -496,11 +500,13 @@ subtest 'Change Accessions upload: phenotypes of a plot that was not planted are
     restore();
 };
 
-subtest 'substitute_stock swaps two plots' => sub {
+subtest 'substitute_stock swaps two plots and keeps their names' => sub {
+    rename_plot($plot{1}, "test_trial-$original->{1}->{accession}-1");
     my $r = post_json("/ajax/breeders/trial/$trial_id/substitute_stock", [ plot_1_info => "$plot{1},x", plot_2_info => "$plot{2},y" ]);
     is($r->{success}, 1, 'success');
     is_deeply([ map { plot_state($plot{$_})->{accession} } (1, 2) ], [ $original->{2}->{accession}, $original->{1}->{accession} ], 'accessions swapped');
-    is_deeply([ map { plot_state($plot{$_})->{name} } (1, 2) ], [ 'test_trial21', 'test_trial22' ], 'names kept (they do not contain the accession names)');
+    is_deeply([ map { plot_state($plot{$_})->{name} } (1, 2) ], [ "test_trial-$original->{1}->{accession}-1", 'test_trial22' ], 'names kept, also one with the old accession name in it (as before)');
+    is_deeply($r->{renamed}, [], 'nothing renamed');
     like(post_json("/ajax/breeders/trial/$trial_id/substitute_stock", [ plot_1_info => "$plot{1},x", plot_2_info => "$plot{1},x" ])->{error}, qr/Choose a different plot/, 'the same plot twice');
     restore();
 };

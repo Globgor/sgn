@@ -2448,8 +2448,7 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         bcs_schema => $schema,
         trial_id => $trial_id
     });
-    # the seed transactions follow the packets (CXGN::Trial::AccessionChange), so seedlots are no reason to stop
-    my $return_error = $fieldmap->update_fieldmap_precheck({ ignore_seedlots => 1 });
+    my $return_error = $fieldmap->update_fieldmap_precheck();
     if ($return_error) {
         if (!$c->user()->check_roles("curator")) {
             $c->stash->{rest} = { error => $return_error };
@@ -3185,7 +3184,8 @@ sub _change_trial_stocks {
 }
 
 # Replaces a stock in every plot of the trial (Field Layout Tools -> Edit Field Layout -> Replace Accession).
-# params: old_stock_id, new_stock (uniquename), rename_plots (0 to keep the plot names),
+# params: old_stock_id, new_stock (uniquename), rename_plots (1 to update the plot names
+#   that contain the old stock name or follow the template; they are kept by default),
 #   preview (1 to get the plan without changing anything). The type the new stock must have
 #   comes from the trial (see CXGN::Trial::AccessionChange), not from the request.
 sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
@@ -3195,7 +3195,7 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
     my $schema = $c->dbic_schema('Bio::Chado::Schema', undef, $sp_person_id);
     my $old_stock_id = $c->req->param('old_stock_id');
     my $new_stock = $c->req->param('new_stock');
-    my $rename_plots = $c->req->param('rename_plots') // '1';
+    my $rename_plots = _true_param($c->req->param('rename_plots'));
     my $preview = $c->req->param('preview');
     my $trial_id = $c->stash->{trial_id};
 
@@ -3235,8 +3235,7 @@ sub replace_trial_stock : Chained('trial') PathPart('replace_stock') Args(0) {
         return;
     }
 
-    my $keep_names = $rename_plots eq '0' || lc($rename_plots) eq 'false';
-    $self->_change_trial_stocks($c, $accession_change, $changes, { rename_plots => $keep_names ? 'none' : 'auto' }, $preview);
+    $self->_change_trial_stocks($c, $accession_change, $changes, { rename_plots => $rename_plots ? 'auto' : 'none' }, $preview);
 }
 
 sub _true_param {
@@ -3448,7 +3447,7 @@ sub substitute_stock : Chained('trial') PathPart('substitute_stock') Args(0) {
     $self->_change_trial_stocks($c, $accession_change, [
         { plot_id => $plot_1_id, new_stock_id => $units->{$plot_2_id}->{stock_id} },
         { plot_id => $plot_2_id, new_stock_id => $units->{$plot_1_id}->{stock_id} },
-    ], { rename_plots => 'auto' });
+    ], { rename_plots => 'none' });
 }
 
 sub create_plant_plot_entries : Chained('trial') PathPart('create_plant_entries') Args(0) {

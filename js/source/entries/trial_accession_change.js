@@ -8,7 +8,7 @@ import "../legacy/jquery.js";
  * The endpoints answer with a summary (see CXGN::Trial::AccessionChange::summary()):
  * with preview=1 what would change ({ preview: summary }), otherwise what changed
  * ({ success: 1, ...summary }). Otherwise they answer { error }, or { warning }
- * when a curator has to confirm a change of a trial that already has data.
+ * when a curator has to confirm a change of a trial that has phenotypes or seedlots.
  * Errors about phenotypes of plots marked as not planted come with
  * not_planted_phenotypes, the number of those values.
  */
@@ -263,7 +263,7 @@ export async function changeWithPreview(url, data, options = {}) {
     for (;;) {
         const response = await post(url, withParams(data, { ...params, preview: 1 }));
         if (response.warning) {
-            if (params.override || !(await ask(`${plainText(response.warning)}\n\nThis trial already has data. Change it anyway?`, { title: "This trial already has data", ok: "Change it anyway" }))) {
+            if (params.override || !(await ask(`${plainText(response.warning)}\n\nChange it anyway?`, { title: "Only a curator can change this trial", ok: "Change it anyway" }))) {
                 return null;
             }
             params.override = 1;

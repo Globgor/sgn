@@ -241,12 +241,12 @@ unlike($stock_trials->($temp_stock_id), qr/>test_trial</, "test_trial is not lis
 # a plot name that is already taken by another plot stops the replacement before anything changes
 my $plot_type_id = SGN::Model::Cvterm->get_cvterm_row($schema, 'plot', 'stock_type')->cvterm_id();
 my $taken_stock = $schema->resultset('Stock::Stock')->create({ uniquename => 'test_trial23_replace_stock_temp_accession', name => 'test_trial23_replace_stock_temp_accession', type_id => $plot_type_id, organism_id => $accession3->organism_id() });
-$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $accession3_id, 'new_stock' => 'replace_stock_temp_accession', 'trial_stock_type' => 'accession']);
+$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $accession3_id, 'new_stock' => 'replace_stock_temp_accession', 'trial_stock_type' => 'accession', 'rename_plots' => 1]);
 like(decode_json($mech->content)->{error}, qr/already exists/, "replace_stock refuses a plot name that already exists");
 is($plot_accessions->()->{'test_trial23_test_accession3'}, 'test_accession3', "nothing was changed after the refused replace_stock");
 $taken_stock->delete();
 
-$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $accession3_id, 'new_stock' => 'replace_stock_temp_accession', 'trial_stock_type' => 'accession']);
+$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $accession3_id, 'new_stock' => 'replace_stock_temp_accession', 'trial_stock_type' => 'accession', 'rename_plots' => 1]);
 $response = decode_json $mech->content;
 is($response->{success}, 1, "replace_stock succeeds");
 is($response->{changed}, 3, "three plots changed");
@@ -265,7 +265,7 @@ like(decode_json($mech->content)->{select}, qr/>test_trial23_replace_stock_temp_
 unlike($stock_trials->($accession3_id), qr/>test_trial</, "test_trial is no longer listed in the Experiment Usage of the old accession");
 like($stock_trials->($temp_stock_id), qr/>test_trial</, "test_trial is listed in the Experiment Usage of the new accession");
 
-$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $temp_stock_id, 'new_stock' => 'test_accession3', 'trial_stock_type' => 'accession']);
+$mech->post_ok('http://localhost:3010/ajax/breeders/trial/'.$trial_id.'/replace_stock', ['old_stock_id' => $temp_stock_id, 'new_stock' => 'test_accession3', 'trial_stock_type' => 'accession', 'rename_plots' => 1]);
 is(decode_json($mech->content)->{success}, 1, "swapping back succeeds");
 my $layout_restored = $plot_accessions->();
 is($layout_restored->{'test_trial23_test_accession3'}, 'test_accession3', "plot name and accession are restored after swapping back");
