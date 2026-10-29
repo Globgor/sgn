@@ -285,6 +285,7 @@ scenario 'apply carries out only the plan of the preview' => sub {
     is(linked_stock($plot{10}, 'plot_of'), 'test_accession2', 'and changes nothing');
 };
 
+
 scenario 'the trial is read from the database, not from the cached layout' => sub {
     cached_design($trial_id);
     # plot 2 gets test_accession3 without the cache knowing it
@@ -881,6 +882,15 @@ scenario 'RCBD: swap the accessions of two plots, as Substitute does' => sub {
     is($units->{ $plot_b->{plot_id} }->{stock_name}, 'review_rcbd_acc_A', 'second plot');
     is_deeply([ map { $units->{ $_->{plot_id} }->{plot_number} } ($plot_a, $plot_b) ], [ $plot_a->{plot_number}, $plot_b->{plot_number} ], 'plot numbers kept');
     is_deeply([ map { linked_stock($_, 'plant_of') } @{ plants_of($plot_a->{plot_id}) } ], [ 'review_rcbd_acc_B', 'review_rcbd_acc_B' ], 'plants of the first plot');
+};
+
+scenario 'RCBD: a plot that someone else changed after the preview is not changed over their head' => sub {
+    my $ac = $rcbd_change->();
+    my $changes = [ { plot_id => $plot_a->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_C') } ];
+    my $digest = $ac->summary($ac->plan($changes, { rename_plots => 'none' }))->{plan_digest};   # the preview said A -> C
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot_a->{plot_id}, type_id => $t{plot_of} })->update({ object_id => stock_id('review_rcbd_acc_B') });
+    dies_with(sub { $ac->apply($changes, { rename_plots => 'none', plan_digest => $digest }) }, qr/The trial changed after the preview/, 'the same change, from another accession now (B -> C), is refused');
+    is(linked_stock($plot_a->{plot_id}, 'plot_of'), 'review_rcbd_acc_B', 'the other change stays');
 };
 
 scenario 'RCBD: a well of a genotyping plate taken from the plot gets the accession too, and the plate layout is cached again' => sub {

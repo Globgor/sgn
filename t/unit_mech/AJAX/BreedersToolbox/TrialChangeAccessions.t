@@ -231,6 +231,38 @@ subtest 'Change Accessions upload' => sub {
     is_deeply(trial_state(), $original, 'nothing changed');
 };
 
+subtest 'Change Accessions upload: a plot that someone else changed after the preview is not changed over their head' => sub {
+    my $file = "plot_name,accession_name\ntest_trial210,test_accession1\n";
+    my $r = upload_accessions($trial_id, $file, preview => 1);
+    my $digest = $r->{preview}->{plan_digest};
+    ok($digest, 'the preview comes with the digest of its plan (test_accession3 -> test_accession1)') or diag(explain $r);
+    # meanwhile someone else corrects plot 10 to test_accession2
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{10}, type_id => $t{plot_of} })->update({ object_id => $acc{2} });
+    $r = upload_accessions($trial_id, $file, plan_digest => $digest);
+    like($r->{error}, qr/The trial changed after the preview, so the changes are not the ones you saw/, 'the file applied with the digest of the preview is refused') or diag(explain $r);
+    is(plot_state($plot{10})->{accession}, 'test_accession2', 'the other change stays');
+    is_deeply([ @{ $r }{'success', 'changed'} ], [ undef, undef ], 'nothing was changed');
+    restore();
+};
+
+subtest 'a submitter of the program corrects a trial; a trial with phenotypes needs a curator' => sub {
+    my $submitter = Test::WWW::Mechanize->new;
+    $submitter->post_ok("$base/brapi/v1/token", [ username => 'johndoe', password => 'secretpw', grant_type => 'password' ], 'login as johndoe, a submitter of the program');
+    my $r = upload_as($submitter, $trial_id, "plot_name,accession_name\ntest_trial210,test_accession1\n", preview => 1);
+    is($r->{preview}->{changed}, 1, 'the submitter gets the preview for a trial without phenotypes') or diag(explain $r);
+
+    my $phenotyped_trial_id = $schema->resultset('Project::Project')->find({ name => 'CASS_6Genotypes_Sampling_2015' })->project_id;
+    my ($cass_plot) = sort { $a->{plot_number} <=> $b->{plot_number} } values %{ CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $phenotyped_trial_id })->load_units() };
+    $r = upload_as($submitter, $phenotyped_trial_id, "plot_name,accession_name\n$cass_plot->{plot_name},test_accession1\n", preview => 1, override => 1);
+    like($r->{error}, qr/traits have been assayed/, 'a trial with phenotypes: the submitter is refused, override or not') or diag(explain $r);
+    ok(!$r->{warning}, 'and not asked');
+    $submitter->post("$base/ajax/breeders/trial/$phenotyped_trial_id/replace_plot_accessions", [ new_accession => 'test_accession1', old_plot_id => $cass_plot->{plot_id}, old_plot_name => $cass_plot->{plot_name}, new_plot_name => '', override => 'override' ]);
+    like(decode_json($submitter->content)->{error}, qr/traits have been assayed/, 'the plot form refuses the submitter too');
+    like(post_json("/ajax/breeders/trial/$phenotyped_trial_id/replace_stock", [ old_stock_id => $cass_plot->{stock_id}, new_stock => 'test_accession1', trial_stock_type => 'accession', preview => 1 ])->{error}, qr/traits have been assayed/, 'Replace Accession is refused for a trial with phenotypes, also for a curator');
+    my $unchanged = CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $phenotyped_trial_id })->load_units()->{ $cass_plot->{plot_id} };
+    is($unchanged->{stock_id}, $cass_plot->{stock_id}, 'the plot keeps its accession');
+};
+
 subtest 'Change Accessions upload: keeping the plot names' => sub {
     my $upload = sub { return upload_accessions($trial_id, @_) };
     rename_plot($plot{3}, 'test_trial-rep1-test_accession3_3');
@@ -275,6 +307,7 @@ subtest 'Change Accessions upload at the end of the season: the trial has phenot
     is($after->{ $stretch[1]->{plot_id} }->{stock_id}, $stretch[0]->{stock_id}, 'the second plot has the accession planned for the first');
     is_deeply({ map { $_->{plot_id} => $phenotypes->($_->{plot_id}) } @stretch }, \%phenotype_count, 'every plot keeps its phenotypes');
     is($after->{ $stretch[0]->{plot_id} }->{not_planted}, '1', 'the first plot is not planted');
+    is_deeply([ map { plot_state($_->{plot_id})->{rep} } @stretch ], [ 1, 1, 1 ], 'RCBD: the replicates stay as planned, they are not numbered again by accession as the upload did before');
 
     # a place with phenotypes that was not planted: the values would be deleted, so the user is asked
     $r = upload_accessions($phenotyped_trial_id, "plot_name,accession_name,not_planted\n$stretch[1]->{plot_name},$stretch[0]->{stock_name},1\n", preview => 1, override => 1);

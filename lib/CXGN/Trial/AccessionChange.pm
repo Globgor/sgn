@@ -658,7 +658,9 @@ sub apply {
 =head2 plan_digest($plan)
 
 A digest of what a plan changes, to make sure that apply() carries out the
-plan the user saw in a preview.
+plan the user saw in a preview. It names the old stock of every plot too: a
+plot that someone else changed after the preview would get the new stock
+with the same plan otherwise, and that change would be lost unseen.
 
 =cut
 
@@ -667,7 +669,7 @@ sub plan_digest {
     my $plan = shift;
     my $to_delete = $plan->{phenotypes_to_delete} || {};
     my @parts = (
-        (map { "change $_->{plot_id} $_->{new_stock_id}" } @{$plan->{changes}}),
+        (map { "change $_->{plot_id} $_->{old_stock_id} $_->{new_stock_id}" } @{$plan->{changes}}),
         (map { "planting $_->{plot_id} $_->{not_planted}" } @{$plan->{planting}}),
         (map { "replicate $_->{plot_id} $_->{new}" } @{$plan->{replicates}}),
         (map { "rename $_->{stock_id} $_->{new_name}" } @{$plan->{renames}}),
