@@ -130,10 +130,6 @@ The plants, subplots and tissue samples of a plot in this trial get the
 replicate number and the check mark of their plot with it; the samples in
 other trials keep their own properties.
 
-=head1 AUTHOR
-
-Globgor (https://github.com/Globgor)
-
 =cut
 
 use Moose;
