@@ -884,6 +884,19 @@ scenario 'RCBD: swap the accessions of two plots, as Substitute does' => sub {
     is_deeply([ map { linked_stock($_, 'plant_of') } @{ plants_of($plot_a->{plot_id}) } ], [ 'review_rcbd_acc_B', 'review_rcbd_acc_B' ], 'plants of the first plot');
 };
 
+scenario 'RCBD: apply holds the trial until the change is committed, so that two corrections are not planned on the same old state' => sub {
+    my $ac = $rcbd_change->();
+    $ac->apply([ { plot_id => $plot_a->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_C') } ], { rename_plots => 'none' });
+    # this scenario runs in a transaction that is not committed yet, as a change is while it is applied
+    my $other = $f->dbh;   # another connection
+    $other->begin_work;
+    my ($free) = $other->selectrow_array("SELECT pg_try_advisory_xact_lock(hashtext('CXGN::Trial::AccessionChange'), ?)", undef, $rcbd_id);
+    ok(!$free, 'another change of the trial waits');
+    ($free) = $other->selectrow_array("SELECT pg_try_advisory_xact_lock(hashtext('CXGN::Trial::AccessionChange'), ?)", undef, $trial_id);
+    ok($free, 'a change of another trial does not');
+    $other->rollback;
+};
+
 scenario 'RCBD: a plot that someone else changed after the preview is not changed over their head' => sub {
     my $ac = $rcbd_change->();
     my $changes = [ { plot_id => $plot_a->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_C') } ];

@@ -634,6 +634,10 @@ then. With the option plan_digest (from the summary of a preview) it also
 dies when the plan is not the one of the preview any more, for example
 because someone changed the trial in between. Returns the plan.
 
+The trial is locked for other calls of apply() (an advisory lock on the
+trial id) until the transaction ends: two corrections at the same time
+would each be planned on the trial as it was before the other.
+
 =cut
 
 sub apply {
@@ -643,6 +647,9 @@ sub apply {
     my $schema = $self->schema;
     my $plan;
     $schema->txn_do(sub {
+        # one change of a trial at a time: a second one waits, plans on the committed trial
+        # and is refused if its plan is not the one of its preview
+        $schema->storage->dbh->do("SELECT pg_advisory_xact_lock(hashtext('CXGN::Trial::AccessionChange'), ?)", undef, $self->trial_id);
         $plan = $self->plan($changes, $options);
         if (@{$plan->{errors}}) {
             die join("\n", @{$plan->{errors}})."\n";
