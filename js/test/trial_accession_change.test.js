@@ -27,9 +27,37 @@ test("summaryLines", (t) => {
         t.end();
     });
 
+    t.test("how many rows the file had, so that a file of part of the trial is noticed", (t) => {
+        t.equal(summaryLines({ ...empty, changed: 1, rows_read: 3 }, true)[0], "3 plot(s) read from the file.");
+        t.notOk(summaryLines({ ...empty, changed: 1, rows_read: 3 }, false).some((l) => /read from the file/.test(l)), "not after the change");
+        t.notOk(summaryLines({ ...empty, changed: 1 }, true).some((l) => /read from the file/.test(l)), "not when the server does not say it (Replace Accession)");
+        t.end();
+    });
+
     t.test("which plot gets which accession", (t) => {
         const lines = summaryLines({ ...empty, changed: 2, changes: [{ plot_name: "P8", old_stock_name: "A1", new_stock_name: "A5" }, { plot_name: "P9", old_stock_name: "A3", new_stock_name: "A1" }] }, true);
         t.deepEqual(lines, ["2 plot(s) will get another accession:", "    P8: A1 -> A5", "    P9: A3 -> A1"]);
+        t.end();
+    });
+
+    t.test("seed transactions follow the packets", (t) => {
+        const seedlots = [
+            { type: "move", seedlot_name: "S1", from_plot_name: "P1", plot_name: "P2" },
+            { type: "seedlot", plot_name: "P5", old_seedlot_name: "S5", seedlot_name: "S6" },
+            { type: "taken", seedlot_name: "S3", plot_name: "P3" },
+            { type: "restore", seedlot_name: "S4", plot_name: "P4" },
+        ];
+        t.deepEqual(summaryLines({ ...empty, changed: 1, seedlots }, true).slice(1), [
+            "1 seed transaction(s) will follow their packets:",
+            "    S1: P1 -> P2",
+            "1 plot(s) will get another seedlot:",
+            "    P5: S5 -> S6",
+            "1 plot(s) will get back the packet an earlier correction left in no plot:",
+            "    P4: S4",
+            "1 packet(s) will be in no plot (for example planted into a border); their seed stays taken from the seedlot:",
+            "    S3 (was linked to P3)",
+        ]);
+        t.notOk(nothingChanges({ ...empty, seedlots: [seedlots[1]] }), "another seedlot alone is a change");
         t.end();
     });
 
