@@ -1,7 +1,7 @@
 import test from "tape";
 import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingChanges, plainText, changedPlots } from "../source/entries/trial_accession_change.js";
 
-const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], warnings: [] };
+const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], phenotypes_deleted: 0, warnings: [] };
 
 // answers the POSTs in turn with the given responses, and records their data
 // (a FormData as an object); the options of the requests go to sent
@@ -37,6 +37,19 @@ test("summaryLines", (t) => {
     t.test("which plot gets which accession", (t) => {
         const lines = summaryLines({ ...empty, changed: 2, changes: [{ plot_name: "P8", old_stock_name: "A1", new_stock_name: "A5" }, { plot_name: "P9", old_stock_name: "A3", new_stock_name: "A1" }] }, true);
         t.deepEqual(lines, ["2 plot(s) will get another accession:", "    P8: A1 -> A5", "    P9: A3 -> A1"]);
+        t.end();
+    });
+
+    t.test("plots marked as not planted, and planted again", (t) => {
+        const summary = { ...empty, planting: [{ plot_name: "P1", not_planted: 1 }, { plot_name: "P2", not_planted: 0 }], phenotypes_deleted: 3 };
+        t.deepEqual(summaryLines(summary, false), [
+            "1 plot(s) were marked as not planted:",
+            "    P1",
+            "1 plot(s) were marked as planted again:",
+            "    P2",
+            "3 phenotype value(s) were deleted.",
+        ], "no line about accessions when only the planting changes");
+        t.notOk(summaryLines(summary, true).some((l) => /deleted/.test(l)), "the preview tells about deleting in its warnings");
         t.end();
     });
 
@@ -151,6 +164,20 @@ test("changeWithPreview", (t) => {
         t.end();
     });
 
+    t.test("phenotypes of plots marked as not planted", async (t) => {
+        const requests = fakeServer([
+            { error: "2 phenotype value(s) were stored for plots that are marked as not planted (P1).", not_planted_phenotypes: 2 },
+            { preview: { ...empty, planting: [{ plot_name: "P1", not_planted: 1 }] } },
+            { success: 1, ...empty, phenotypes_deleted: 2 },
+        ]);
+        const asked = [];
+        const result = await changeWithPreview("/url", { plot_ids: "7" }, { confirm: (m) => { asked.push(m); return true; } });
+        t.ok(/Delete these 2 phenotype values with this change\?$/.test(asked[0]));
+        t.deepEqual(requests[2], { plot_ids: "7", delete_phenotypes: 1 });
+        t.equal(result.phenotypes_deleted, 2);
+        t.end();
+    });
+
     t.test("the page can ask in its own dialog", async (t) => {
         const requests = fakeServer([{ preview: { ...empty, changed: 1 } }, { success: 1, ...empty, changed: 1 }]);
         const result = await changeWithPreview("/url", {}, { confirm: () => Promise.resolve(true) });
@@ -171,7 +198,7 @@ test("changeWithPreview", (t) => {
         await changeWithPreview("/url", {}, { alert: (m) => notes.push(m) });
         t.deepEqual(notes, ["Nothing to change: the trial already matches.\nNote: Plot P1 has no seed transaction"], "with the notes of the plan");
         t.ok(nothingChanges({ ...empty }), "an empty plan");
-        t.notOk(nothingChanges({ ...empty, changed: 1 }), "a plan that changes a plot");
+        t.notOk(nothingChanges({ ...empty, planting: [{ plot_name: "P1", not_planted: 1 }] }), "a plan that marks a plot");
         t.end();
     });
 
@@ -182,6 +209,7 @@ test("changeWithPreview", (t) => {
         const sent = [];
         const requests = fakeServer([
             { warning: "Phenotypes have been stored for this trial." },
+            { error: "1 phenotype value(s) were stored for plots that are marked as not planted (P1 &amp; P2).<br>Another error", not_planted_phenotypes: 1 },
             { preview: { ...empty, changed: 1 } },
             { success: 1, ...empty, changed: 1 },
         ], sent);
@@ -191,13 +219,14 @@ test("changeWithPreview", (t) => {
         t.deepEqual(requests.map((r) => Object.keys(r).sort().join(",")), [
             "keep_plot_names,preview,trial_design_change_accessions_file",
             "keep_plot_names,override,preview,trial_design_change_accessions_file",
-            "keep_plot_names,override,trial_design_change_accessions_file",
+            "delete_phenotypes,keep_plot_names,override,preview,trial_design_change_accessions_file",
+            "delete_phenotypes,keep_plot_names,override,trial_design_change_accessions_file",
         ], "the file is posted each time, with the answers so far");
         t.ok(requests.every((r) => r.trial_design_change_accessions_file.name === "planted.csv"), "with its name");
         t.equal(sent[0].processData, false, "as multipart/form-data");
         t.equal(sent[0].contentType, false);
         t.equal([...form.keys()].length, 2, "the form itself is not changed");
-        t.ok(asked[0].startsWith("Phenotypes have been stored for this trial.\n\nChange it anyway?"), "the warning as text");
+        t.ok(asked[1].startsWith("1 phenotype value(s) were stored for plots that are marked as not planted (P1 & P2).\nAnother error\n\nDelete this phenotype value"), "the error as text");
         t.end();
     });
 
@@ -212,11 +241,19 @@ test("changeWithPreview", (t) => {
         t.deepEqual(told, ["Nothing to change: the trial already matches."]);
         t.end();
     });
+
+    t.test("keeping the phenotypes changes nothing", async (t) => {
+        const requests = fakeServer([{ error: "2 phenotype value(s) ...", not_planted_phenotypes: 2 }]);
+        const result = await changeWithPreview("/url", {}, { confirm: () => false, alert: () => t.fail("no alert") });
+        t.equal(result, null);
+        t.equal(requests.length, 1);
+        t.end();
+    });
 });
 
 test("changedPlots", (t) => {
-    const summary = { ...empty, changes: [{ plot_name: "P1" }, { plot_name: "P2" }], renamed: [{ old_name: "P2", new_name: "Q2" }, { old_name: "P3", new_name: "Q3" }] };
-    t.deepEqual(changedPlots(summary), ["P1", "Q2", "Q3"], "each plot once, by its new name");
+    const summary = { ...empty, changes: [{ plot_name: "P1" }, { plot_name: "P2" }], renamed: [{ old_name: "P2", new_name: "Q2" }, { old_name: "P3", new_name: "Q3" }], planting: [{ plot_name: "P1", not_planted: 1 }, { plot_name: "P4", not_planted: 1 }] };
+    t.deepEqual(changedPlots(summary), ["P1", "Q2", "Q3", "P4"], "each plot once, by its new name");
     t.end();
 });
 

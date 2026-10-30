@@ -154,6 +154,15 @@ sub _search {
         })->search()
         : {};
 
+    # plots that were not planted (see CXGN::Trial::AccessionChange) get additionalInfo.notPlanted
+    my %not_planted;
+    my $not_planted_cvterm = SGN::Model::Cvterm->get_cvterm_row($self->bcs_schema, 'not_planted', 'stock_property');
+    if ($not_planted_cvterm && @page_stock_ids) {
+        my $h = $self->bcs_schema->storage->dbh()->prepare("SELECT stock_id FROM stockprop WHERE type_id = ? AND value = '1' AND stock_id = ANY(?)");
+        $h->execute($not_planted_cvterm->cvterm_id(), \@page_stock_ids);
+        while (my ($stock_id) = $h->fetchrow_array()) { $not_planted{$stock_id} = 1; }
+    }
+
     foreach my $obs_unit (@$data){
 
         ## Formatting observations
@@ -196,6 +205,12 @@ sub _search {
 
         my $family_name;
         my $additional_info = $obs_unit->{additional_info};
+        # notPlanted comes from the stock property, never from a stored additionalInfo
+        if ($not_planted{ $obs_unit->{obsunit_stock_id} } || (ref($additional_info) eq 'HASH' && exists($additional_info->{notPlanted}))) {
+            $additional_info = { %{ $additional_info || {} } };
+            delete $additional_info->{notPlanted};
+            $additional_info->{notPlanted} = JSON::true if $not_planted{ $obs_unit->{obsunit_stock_id} };
+        }
 
         ## Following code lines add observationUnitParent to additionalInfo, useful for BI
         if ($obs_unit->{obsunit_type_name} eq 'plant') {
@@ -430,7 +445,7 @@ sub observationunits_update {
         }
 
         my $range_number = $raw_additional_info->{range} ? $raw_additional_info->{range} : undef;
-        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","range");
+        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","range","notPlanted");
         my %additional_info;
         my $block_number;
         my $rep_number;
@@ -708,7 +723,7 @@ sub observationunits_store {
         my $ou_level = $params->{observationUnitPosition}->{observationLevel}->{levelName} || undef;
         my $observationUnit_x_ref = $params->{externalReferences} ? $params->{externalReferences} : undef;
         my $raw_additional_info = $params->{additionalInfo} || undef;
-        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control");
+        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","notPlanted");
         my %additional_info;
         if (defined $raw_additional_info) {
             foreach my $key (keys %$raw_additional_info) {

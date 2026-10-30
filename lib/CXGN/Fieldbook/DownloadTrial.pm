@@ -214,7 +214,8 @@ sub download {
         all_stats => $self->all_stats,
         use_synonyms => $self->use_synonyms,
         selected_trait_ids => $self->selected_trait_ids,
-        trial_stock_type => $self->trial_stock_type
+        trial_stock_type => $self->trial_stock_type,
+        exclude_not_planted => 1,
     });
     my $output = $trial_layout_download->get_layout_output();
     if ($output->{error_messages}){

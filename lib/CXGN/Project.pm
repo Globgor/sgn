@@ -3303,7 +3303,7 @@ sub create_plant_entities {
 
     my $create_plant_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -3567,9 +3567,16 @@ sub save_plant_entries {
 
         my %design_by_plot_name = map { $design->{$_}->{plot_name} => $design->{$_} } keys %$design;
 
+        # nothing grew in a plot that was not planted (see CXGN::Trial::AccessionChange): no plants in it
+        my %not_planted_plot = map { $_->{plot_id} => 1 } grep { ref($_) eq 'HASH' && $_->{not_planted} } values %$design;
+
         while( my ($key, $val) = each %$parsed_data){
             my $plot_stock_id = $key;
             my $plot_name = $val->{plot_name};
+            if ($not_planted_plot{$plot_stock_id}) {
+                print STDERR " ... no plants for plot $plot_name: it was not planted\n";
+                next;
+            }
             print STDERR " ... creating plants for plot $plot_name...\n";
             my $plot_row = $chado_schema->resultset("Stock::Stock")->find( { stock_id=>$plot_stock_id });
 
@@ -3742,7 +3749,7 @@ sub create_plant_subplot_entities {
 
     my $create_plant_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -4077,6 +4084,11 @@ sub save_plant_subplot_entries {
             my $parent_plot = $plot_row->stock_id();
             my $parent_plot_name = $plot_row->uniquename();
             my $parent_plot_organism = $plot_row->organism_id();
+            # nothing grew in a plot that was not planted (see CXGN::Trial::AccessionChange): no plants in it
+            if (grep { ref($_) eq 'HASH' && $_->{not_planted} && $_->{plot_id} == $parent_plot } values %$design) {
+                print STDERR " ... no plants for subplot $subplot_name: its plot was not planted\n";
+                next;
+            }
 
             my $existing_count = 0;
             if ($add_additional_plants) {
@@ -4375,7 +4387,7 @@ sub create_tissue_samples {
 
     my $create_tissue_sample_entries_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -4681,7 +4693,7 @@ sub create_subplot_entities {
 
     my $create_subplot_entities_txn = sub {
         my $layout = CXGN::Trial::TrialLayout->new( { schema => $chado_schema, trial_id => $self->get_trial_id(), experiment_type=>'field_layout' });
-        my $design = $layout->get_design();
+        my $design = $layout->get_planted_design(); # none for plots that were not planted
 
         my $accession_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'accession', 'stock_type')->cvterm_id();
         my $cross_cvterm = SGN::Model::Cvterm->get_cvterm_row($chado_schema, 'cross', 'stock_type')->cvterm_id();
@@ -4899,6 +4911,11 @@ sub save_subplot_entries {
         while( my ($key, $val) = each %$parsed_data){
             my $plot_stock_id = $key;
             my $plot_name = $val->{plot_name};
+            # nothing grew in a plot that was not planted (see CXGN::Trial::AccessionChange): no subplots in it
+            if ($design_by_plot_name{$plot_name} && $design_by_plot_name{$plot_name}->{not_planted}) {
+                print STDERR " ... no subplots for plot $plot_name: it was not planted\n";
+                next;
+            }
             print STDERR " ... creating subplots for plot $plot_name...\n";
             my $plot_row = $chado_schema->resultset("Stock::Stock")->find( { stock_id=>$plot_stock_id });
 

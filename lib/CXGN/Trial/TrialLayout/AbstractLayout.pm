@@ -381,6 +381,21 @@ sub _get_design_from_trial {
     }
 }
 
+=head2 get_planted_design()
+
+The design without the plots that were not planted (stock property
+not_planted, see CXGN::Trial::AccessionChange). For files to collect data
+in, where those plots have nothing to measure.
+
+=cut
+
+sub get_planted_design {
+    my $self = shift;
+    my $design = $self->get_design();
+    return $design if ref($design) ne 'HASH';
+    return { map { $_ => $design->{$_} } grep { !(ref($design->{$_}) eq 'HASH' && $design->{$_}->{not_planted}) } keys %$design };
+}
+
 sub generate_and_cache_layout {
     my $self = shift;
     print STDERR "TrialLayout generate layout ".localtime."\n";
@@ -478,6 +493,9 @@ sub retrieve_plot_info {
     my $row_number_prop = $stockprop_hash{$self->cvterm_id('row_number')} ? join ',', @{$stockprop_hash{$self->cvterm_id('row_number')}} : undef;
     my $col_number_prop = $stockprop_hash{$self->cvterm_id('col_number')} ? join ',', @{$stockprop_hash{$self->cvterm_id('col_number')}} : undef;
     my $is_blank_prop = $stockprop_hash{$self->cvterm_id('is_blank')} ? join ',', @{$stockprop_hash{$self->cvterm_id('is_blank')}} : undef;
+    # not_planted is added by a database patch, so it may not exist yet
+    my $not_planted_type_id = $self->get_cvterm_hash->{'not_planted'};
+    my $not_planted_prop = ($not_planted_type_id && $stockprop_hash{$not_planted_type_id}) ? join ',', @{$stockprop_hash{$not_planted_type_id}} : undef;
     my $well_concentration_prop = $stockprop_hash{$self->cvterm_id('concentration')} ? join ',', @{$stockprop_hash{$self->cvterm_id('concentration')}} : undef;
     my $well_volume_prop = $stockprop_hash{$self->cvterm_id('volume')} ? join ',', @{$stockprop_hash{$self->cvterm_id('volume')}} : undef;
     my $well_dna_person_prop = $stockprop_hash{$self->cvterm_id('dna_person')} ? join ',', @{$stockprop_hash{$self->cvterm_id('dna_person')}} : undef;
@@ -623,6 +641,9 @@ sub retrieve_plot_info {
 	if ($plot_geo_json_prop) {
 	    $design_info{"plot_geo_json"} = decode_stored_json($plot_geo_json_prop);
 	}
+    if ($not_planted_prop) {
+        $design_info{"not_planted"} = $not_planted_prop;
+    }
     if ($is_a_control_prop) {
 	    $design_info{"is_a_control"}=$is_a_control_prop;
 	    $unique_controls{$accession_name}=$accession_id;

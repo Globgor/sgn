@@ -2,20 +2,22 @@ import "../legacy/jquery.js";
 
 /**
  * Changes of what grows on the plots of a field trial: the Change Accessions
- * upload (a file of what was planted) and Replace Accession (Field Layout
- * Tools -> Edit Field Layout).
+ * upload (a file of what was planted, which can also mark plots as not
+ * planted) and Replace Accession (Field Layout Tools -> Edit Field Layout).
  *
  * The endpoints answer with a summary (see CXGN::Trial::AccessionChange::summary()):
  * with preview=1 what would change ({ preview: summary }), otherwise what changed
  * ({ success: 1, ...summary }). Otherwise they answer { error }, or { warning }
  * when a curator has to confirm a change of a trial that has phenotypes or seedlots.
+ * Errors about phenotypes of plots marked as not planted come with
+ * not_planted_phenotypes, the number of those values.
  */
 
 /**
  * The lines that describe a summary, without HTML.
  * @param {Object} summary - the summary (or the preview) from the server
  * @param {boolean} planned - true for a preview (what will change), false for what changed
- * @param {number} [maxItems=10] - how many plots to list for renames and check marks
+ * @param {number} [maxItems=10] - how many plots to list for renames, check marks and planting
  * @returns {string[]}
  */
 export function summaryLines(summary, planned, maxItems = 10) {
@@ -30,9 +32,22 @@ export function summaryLines(summary, planned, maxItems = 10) {
     if (planned && summary.rows_read !== undefined) {
         lines.push(`${summary.rows_read} plot(s) read from the file.`);
     }
-    const changes = summary.changes || [];
-    lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession${changes.length ? ":" : "."}`);
-    list(changes, (c) => `${c.plot_name}: ${c.old_stock_name} -> ${c.new_stock_name}`);
+    const planting = summary.planting || [];
+    if (summary.changed || !planting.length) {
+        const changes = summary.changes || [];
+        lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession${changes.length ? ":" : "."}`);
+        list(changes, (c) => `${c.plot_name}: ${c.old_stock_name} -> ${c.new_stock_name}`);
+    }
+    const notPlanted = planting.filter((p) => p.not_planted);
+    const planted = planting.filter((p) => !p.not_planted);
+    if (notPlanted.length) {
+        lines.push(`${notPlanted.length} plot(s) ${planned ? "will be" : "were"} marked as not planted:`);
+        list(notPlanted, (p) => p.plot_name);
+    }
+    if (planted.length) {
+        lines.push(`${planted.length} plot(s) ${planned ? "will be" : "were"} marked as planted again:`);
+        list(planted, (p) => p.plot_name);
+    }
     if (summary.replicates_changed) {
         lines.push(`${summary.replicates_changed} replicate number(s) ${planned ? "will be" : "were"} numbered again by plot number (completely randomized design).`);
     }
@@ -67,6 +82,9 @@ export function summaryLines(summary, planned, maxItems = 10) {
         list(taken, (t) => `${t.seedlot_name} (was linked to ${t.plot_name})`);
     }
     (summary.entry_numbers || []).forEach((e) => lines.push(`${e.stock_name}${planned ? " will get" : " got"} entry number ${e.entry_number}.`));
+    if (!planned && summary.phenotypes_deleted) {
+        lines.push(`${summary.phenotypes_deleted} phenotype value(s) were deleted.`);
+    }
     (summary.warnings || []).forEach((w) => lines.push("Note: " + w));
     return lines;
 }
@@ -81,6 +99,7 @@ export function changedPlots(summary) {
     const names = [
         ...(summary.changes || []).map((c) => c.plot_name),
         ...(summary.renamed || []).map((r) => r.old_name),
+        ...(summary.planting || []).map((p) => p.plot_name),
     ];
     return [...new Set(names.map((name) => newName.get(name) || name))];
 }
@@ -91,7 +110,8 @@ export function changedPlots(summary) {
  * @returns {boolean}
  */
 export function nothingChanges(summary) {
-    return !summary.changed && !summary.replicates_changed && !(summary.renamed || []).length
+    return !summary.changed && !summary.replicates_changed && !summary.phenotypes_deleted
+        && !(summary.planting || []).length && !(summary.renamed || []).length
         && !(summary.checks || []).length && !(summary.entry_numbers || []).length
         && !(summary.seedlots || []).length;
 }
@@ -229,7 +249,8 @@ export function confirmDialog(message, { title = "Please check", ok = "Continue"
  * shows what will change and asks to continue, then posts it again to change,
  * with the plan_digest of the preview, so that the server changes nothing else.
  * A curator confirms a change of a trial with data (the request is repeated
- * with override=1). Errors are shown with alert.
+ * with override=1), and the user confirms deleting the phenotypes of plots
+ * marked as not planted (with delete_phenotypes=1). Errors are shown with alert.
  * @param {string} url - e.g. /ajax/breeders/trial/<id>/replace_stock
  * @param {Object|FormData} data - the parameters of the change; a FormData for a form with a file
  * @param {Object} [options]
@@ -257,6 +278,15 @@ export async function changeWithPreview(url, data, options = {}) {
             continue;
         }
         if (response.error) {
+            if (response.not_planted_phenotypes && !params.delete_phenotypes) {
+                const n = response.not_planted_phenotypes;
+                const values = n === 1 ? "this phenotype value" : `these ${n} phenotype values`;
+                if (await ask(`${plainText(response.error)}\n\nDelete ${values} with this change?`, { title: "Phenotypes of plots that were not planted", ok: "Delete and continue" })) {
+                    params.delete_phenotypes = 1;
+                    continue;
+                }
+                return null;
+            }
             tell(`${action}: ${response.error}`, response.error);
             return null;
         }
