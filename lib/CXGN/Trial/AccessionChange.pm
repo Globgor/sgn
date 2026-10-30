@@ -24,6 +24,9 @@ CXGN::Trial::AccessionChange - change the accession (cross, family name) of plot
     # plots that were not planted
     $change->apply([ { plot_id => $plot_id, not_planted => 1 } ], { delete_phenotypes => 1 });
 
+    # a planted plot whose data must not be used (trampled, flooded after emergence, contaminated)
+    $change->apply([ { plot_id => $plot_id, rejected => 1, reject_reason => 'trampled' } ]);
+
 =head1 DESCRIPTION
 
 A plot is a place in the field. Its plot number, block, replicate, row and
@@ -93,6 +96,19 @@ it already has would count for an accession that did not grow there, so they
 are only deleted with the option C<delete_phenotypes>; without it the plan
 has an error. Like any plot, a plot that was not planted keeps its place in
 the design, also in the replicate numbering of a CRD.
+
+=item *
+
+rejects plots, or takes a rejection back (C<rejected> 1 or 0 in a change,
+with an optional C<reject_reason>). A rejected plot is a planted plot whose
+data must not be used: it keeps its accession, place, plants, samples and
+every value, data can still be recorded for it, but its values and those of
+its plants, subplots and tissue samples are left out of phenotype downloads,
+datasets and analyses by the phenotype search itself (see
+L<CXGN::Phenotypes::RejectedUnits>). Nothing is deleted. The two stock
+properties C<rejected> and C<reject_reason> sit on the plot only. A plot that
+was not planted cannot be rejected, and a rejected plot marked as not planted
+stops being rejected.
 
 =item *
 
@@ -211,6 +227,8 @@ sub _build_cvterm_ids {
         [ range => 'range', 'stock_property' ],
         [ is_a_control => 'is a control', 'stock_property' ],
         [ not_planted => 'not_planted', 'stock_property' ],
+        [ rejected => 'rejected', 'stock_property' ],
+        [ reject_reason => 'reject_reason', 'stock_property' ],
         [ phenotyping_experiment => 'phenotyping_experiment', 'experiment_type' ],
         [ field_layout => 'field_layout', 'experiment_type' ],
         [ genotyping_layout => 'genotyping_layout', 'experiment_type' ],
@@ -259,8 +277,9 @@ sub _allowed_stock_types {
 
 Reads the plots (or wells) of the trial from the database. Returns a hashref
 plot_id => { plot_id, plot_name, stock_id, stock_name, plot_number, block,
-replicate, row_number, col_number, range, is_a_control, not_planted }. A plot that is not
-linked to exactly one stock has no stock_id, and stock_count instead.
+replicate, row_number, col_number, range, is_a_control, not_planted, rejected,
+reject_reason }. A plot that is not linked to exactly one stock has no stock_id,
+and stock_count instead.
 
 =cut
 
@@ -295,7 +314,7 @@ sub load_units {
         push @{$units{$unit_id}->{stocks}}, { stock_id => $stock_id, stock_name => $stock_name, type_id => $type_id };
     }
 
-    my %prop_names = map { $ids->{$_} => $_ } grep { $ids->{$_} } qw(plot_number block replicate row_number col_number range is_a_control not_planted);
+    my %prop_names = map { $ids->{$_} => $_ } grep { $ids->{$_} } qw(plot_number block replicate row_number col_number range is_a_control not_planted rejected reject_reason);
     my $props_q = "SELECT stock_id, type_id, value FROM stockprop WHERE stock_id = ANY(?) AND type_id = ANY(?) ORDER BY rank";
     $h = $dbh->prepare($props_q);
     $h->execute(\@unit_ids, [ keys %prop_names ]);
@@ -425,7 +444,13 @@ in the order of the plot numbers. A change whose new stock is the current one
 only renames the plot (when it has a new_plot_name) or does nothing.
 
 A change can also set not_planted (1 or 0): without new_stock_id it only
-marks the plot as not planted, or as planted.
+marks the plot as not planted, or as planted. Likewise rejected (1 or 0)
+with an optional reject_reason (text, at most 500 characters): rejected 1
+with an empty reason keeps the stored reason; a reason alone is a change of
+the reason of a rejected plot; a reason on a plot that is not rejected, and
+rejected 1 or a new reason on a plot that is not planted, are errors. Only a
+change needs the database patch: rejected 0 and empty reasons on plots that
+are not rejected are accepted on any database.
 
 $options: { rename_plots => 'auto' (default) or 'none', seedlots => 'follow',
 delete_phenotypes => 1 to delete the phenotypes of plots that are marked as
@@ -450,6 +475,8 @@ Returns a hashref:
     checks        => [ { plot_id, plot_name, old, new } ]; 1 for a check plot, 0 for a test plot
     external_samples => [ { plot_name, stock_id, name } ]; samples in other trials that get the new stock too
     planting      => [ { plot_id, plot_name, not_planted } ]; plots marked as not planted (1) or planted (0)
+    rejections    => [ { plot_id, plot_name, rejected, reject_reason, was_rejected } ]; plots rejected (1) or no longer
+                     rejected (0); was_rejected 1 with rejected 1 is a change of the reason
     not_planted_phenotypes => number of phenotype values of the plots marked as not planted
     phenotypes_to_delete   => { phenotype_ids => [ ... ], nd_experiment_ids => [ ... ], md_experiment_ids => [ ... ] }
                               of them (md: experiments with high-dimensional data), with delete_phenotypes
@@ -480,7 +507,7 @@ sub _plan {
     my $schema = $self->schema;
     my $ids = $self->_cvterm_ids;
 
-    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, external_samples => [], planting => [], seedlots => [], not_planted_phenotypes => 0, phenotypes_to_delete => { phenotype_ids => [], nd_experiment_ids => [] } );
+    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, external_samples => [], planting => [], rejections => [], seedlots => [], not_planted_phenotypes => 0, phenotypes_to_delete => { phenotype_ids => [], nd_experiment_ids => [] } );
     my $errors = $plan{errors};
 
     if ($rename_mode ne 'auto' && $rename_mode ne 'none') {
@@ -513,6 +540,7 @@ sub _plan {
     # validate the changes
     my %new_stock_by_unit;
     my %new_not_planted;
+    my %new_rejection;
     my %seedlot_name;
     my %explicit_name;
     my %keep_name;
@@ -551,6 +579,62 @@ sub _plan {
                 $new_not_planted{$unit_id} = $not_planted;
             }
         }
+        # a rejected plot: planted, but its data must not be used
+        my $rejected = (defined($change->{rejected}) && $change->{rejected} =~ /\S/) ? _is_true($change->{rejected}) : undef;
+        my $reason = $change->{reject_reason};
+        if (defined($reason)) {
+            $reason =~ s/[\r\n\t]+/ /g;
+            $reason =~ s/^\s+|\s+$//g;
+            $reason = undef if !length($reason);
+        }
+        if (defined($rejected) || defined($reason)) {
+            if ($self->_is_plate) {
+                # rejected 0 and no reason change nothing on a well
+                if ($rejected || defined($reason)) {
+                    push @$errors, "Wells of a genotyping plate cannot be rejected.";
+                    next;
+                }
+            }
+            elsif (defined($reason) && length($reason) > 500) {
+                push @$errors, "Plot $unit->{plot_name}: reject_reason is longer than 500 characters.";
+                next;
+            }
+            else {
+                my $planted_after = exists($new_not_planted{$unit_id}) ? !$new_not_planted{$unit_id} : !_is_true($unit->{not_planted});
+                my $is_rejected = _is_true($unit->{rejected});
+                my $want_rejected = ($rejected // $is_rejected) ? 1 : 0;
+                if ($want_rejected && !$planted_after) {
+                    # a rejected plot is planted; nothing grew in a plot that is not planted
+                    if ($rejected) {
+                        push @$errors, "Plot $unit->{plot_name} cannot be rejected: it is not planted (nothing grew there). A rejected plot is a planted plot whose data must not be used; mark it as planted again first, or leave rejected empty.";
+                        next;
+                    }
+                    if (defined($reason) && $reason ne ($unit->{reject_reason} // '')) {
+                        push @$errors, "Plot $unit->{plot_name} is marked as not planted, so it is no longer rejected and cannot get a reject_reason; leave the reason empty.";
+                        next;
+                    }
+                    $want_rejected = 0;   # the rule below ends the rejection
+                }
+                elsif (defined($reason) && !$want_rejected) {
+                    push @$errors, "Plot $unit->{plot_name} has a reject_reason but is not rejected; put 1 in rejected, or leave the reason empty.";
+                    next;
+                }
+                my $want_reason = $want_rejected ? ($reason // $unit->{reject_reason}) : undef;
+                if ($want_rejected != $is_rejected || ($want_rejected && ($want_reason // '') ne ($unit->{reject_reason} // ''))) {
+                    # only a change needs the properties: a file with 0 and empty reasons is read on any database
+                    if (!$ids->{rejected} || !$ids->{reject_reason}) {
+                        push @$errors, "This database does not know the stock property rejected yet; run the database patches (AddRejectedPlotStockprops).";
+                        next;
+                    }
+                    # a plot that is not planted after the change: the rule below ends its rejection, with a warning
+                    $new_rejection{$unit_id} = { rejected => $want_rejected, reject_reason => $want_reason, was_rejected => $is_rejected } if $planted_after;
+                }
+            }
+        }
+        # nothing grew in a plot that was not planted, so it is no longer rejected
+        if (($new_not_planted{$unit_id} // 0) && _is_true($unit->{rejected}) && !exists($new_rejection{$unit_id})) {
+            $new_rejection{$unit_id} = { rejected => 0, reject_reason => undef, was_rejected => 1, because_not_planted => 1 };
+        }
         if (defined($change->{seedlot_name}) && $change->{seedlot_name} =~ /\S/) {
             if ($self->_is_plate) {
                 push @$errors, "Wells of a genotyping plate have no seedlots here.";
@@ -567,8 +651,8 @@ sub _plan {
             }
             $new_stock_id = $stocks->{by_name}->{$name}->{stock_id};
         }
-        if ((!defined($new_stock_id) || $new_stock_id eq '') && defined($not_planted)) {
-            $new_stock_id = $unit->{stock_id};   # only the planting status changes
+        if ((!defined($new_stock_id) || $new_stock_id eq '') && (defined($not_planted) || defined($rejected) || defined($reason))) {
+            $new_stock_id = $unit->{stock_id};   # only the planting status or the rejection changes
         }
         my $new_stock = (defined($new_stock_id) && $new_stock_id =~ /^\d+$/) ? $stocks->{by_id}->{$new_stock_id} : undef;
         if (!$new_stock) {
@@ -599,7 +683,7 @@ sub _plan {
             }
         }
         if ($new_stock_id == $unit->{stock_id}) {
-            push @{$plan{unchanged}}, $unit->{plot_name} if !exists($explicit_name{$unit_id}) && !exists($new_not_planted{$unit_id});
+            push @{$plan{unchanged}}, $unit->{plot_name} if !exists($explicit_name{$unit_id}) && !exists($new_not_planted{$unit_id}) && !exists($new_rejection{$unit_id});
             next;
         }
         $new_stock_by_unit{$unit_id} = $new_stock_id;
@@ -628,6 +712,13 @@ sub _plan {
     foreach my $unit_id (sort { $a <=> $b } keys %new_not_planted) {
         $after{$unit_id}->{not_planted} = $new_not_planted{$unit_id};
         push @{$plan{planting}}, { plot_id => $unit_id + 0, plot_name => $units->{$unit_id}->{plot_name}, not_planted => $new_not_planted{$unit_id} };
+    }
+    foreach my $unit_id (sort { $a <=> $b } keys %new_rejection) {
+        my $r = $new_rejection{$unit_id};
+        $after{$unit_id}->{rejected} = $r->{rejected} ? '1' : undef;
+        $after{$unit_id}->{reject_reason} = $r->{reject_reason};
+        push @{$plan{rejections}}, { plot_id => $unit_id + 0, plot_name => $units->{$unit_id}->{plot_name}, rejected => $r->{rejected} ? 1 : 0, reject_reason => $r->{reject_reason}, was_rejected => $r->{was_rejected} ? 1 : 0 };
+        push @{$plan{warnings}}, "Plot $units->{$unit_id}->{plot_name} was rejected; marked as not planted, it is no longer rejected." if $r->{because_not_planted};
     }
 
     # replicates: only in a CRD, where the replicate is the n-th plot of an accession
@@ -798,6 +889,7 @@ sub plan_digest {
     my @parts = (
         (map { "change $_->{plot_id} $_->{old_stock_id} $_->{new_stock_id}" } @{$plan->{changes}}),
         (map { "planting $_->{plot_id} $_->{not_planted}" } @{$plan->{planting}}),
+        (map { "rejected $_->{plot_id} $_->{rejected} ".($_->{reject_reason} // '') } @{$plan->{rejections}}),
         (map { "replicate $_->{plot_id} $_->{new}" } @{$plan->{replicates}}),
         (map { "rename $_->{stock_id} $_->{new_name}" } @{$plan->{renames}}),
         (map { "check $_->{plot_id} $_->{new}" } @{$plan->{checks}}),
@@ -940,6 +1032,16 @@ sub _execute {
             $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $p->{plot_id}, type_id => $ids->{not_planted}, value => '1', rank => 0 });
         }
     }
+    # rejected plots: the two properties on the plot (its plants and samples are derived when read)
+    if (@{$plan->{rejections}}) {
+        my $reject_h = $dbh->prepare("DELETE FROM stockprop WHERE stock_id = ? AND type_id = ANY(?)");
+        foreach my $r (@{$plan->{rejections}}) {
+            $reject_h->execute($r->{plot_id}, [ grep { defined } $ids->{rejected}, $ids->{reject_reason} ]);
+            next if !$r->{rejected};
+            $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $r->{plot_id}, type_id => $ids->{rejected}, value => '1', rank => 0 });
+            $self->schema->resultset('Stock::Stockprop')->create({ stock_id => $r->{plot_id}, type_id => $ids->{reject_reason}, value => $r->{reject_reason}, rank => 0 }) if defined($r->{reject_reason}) && length($r->{reject_reason});
+        }
+    }
     my $to_delete = $plan->{phenotypes_to_delete};
     if (@{ $to_delete->{nd_experiment_ids} }) {
         $dbh->prepare("DELETE FROM phenotype WHERE phenotype_id = ANY(?)")->execute($to_delete->{phenotype_ids});
@@ -958,7 +1060,7 @@ sub _execute {
         }
     }
 
-    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}} || @{$plan->{planting}} || @{$plan->{seedlots}}) {
+    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}} || @{$plan->{planting}} || @{$plan->{rejections}} || @{$plan->{seedlots}}) {
         my $layout = CXGN::Trial::TrialLayout->new({
             schema => $self->schema,
             trial_id => $self->trial_id,
@@ -1292,7 +1394,10 @@ sub _plan_phenotype_and_cross_warnings {
     my $plan = shift;
     my $children = shift;
     my $after = shift;
-    my @plot_ids = map { $_->{plot_id} } grep { !_is_true($after->{ $_->{plot_id} }->{not_planted}) } @{$plan->{changes}};
+    # every changed plot for the crosses; for the phenotypes not the plots that are not planted after
+    # the change (their values are deleted or refused). The values of a rejected plot stay and count
+    # again when the rejection is taken back, so they count here too.
+    my @plot_ids = map { $_->{plot_id} } @{$plan->{changes}};
     return if !@plot_ids;
     my $dbh = $self->schema->storage->dbh;
     my $ids = $self->_cvterm_ids;
@@ -1314,12 +1419,14 @@ sub _plan_phenotype_and_cross_warnings {
                 LEFT JOIN db ON db.db_id = x.db_id
                 WHERE nep.nd_experiment_id = nes.nd_experiment_id AND COALESCE(right(db.name, 10), '') <> '_TREATMENT')
             OR EXISTS (SELECT 1 FROM phenome.nd_experiment_md_json j WHERE j.nd_experiment_id = nes.nd_experiment_id))");
-    $h->execute(\@stock_ids);
+    $h->execute([ grep { !_is_true($after->{ $plot_of{$_} }->{not_planted}) } @stock_ids ]);
     my %phenotyped_plots;
     while (my ($stock_id) = $h->fetchrow_array()) { $phenotyped_plots{ $plot_of{$stock_id} } = 1; }
     $plan->{plots_with_phenotypes} = scalar(keys %phenotyped_plots);
     if (%phenotyped_plots) {
-        push @{$plan->{warnings}}, scalar(keys %phenotyped_plots)." plot(s) already have phenotypes. The values stay with their plot, so they count for the new accession; run the analyses of this trial again.";
+        my $rejected = grep { _is_true($after->{$_}->{rejected}) } keys %phenotyped_plots;
+        push @{$plan->{warnings}}, scalar(keys %phenotyped_plots)." plot(s) already have phenotypes. The values stay with their plot, so they count for the new accession; run the analyses of this trial again."
+            .($rejected ? " $rejected of them are rejected: their values are left out now and count for the new accession if the rejection is taken back." : "");
         if (grep { $_->{type} eq 'plot' && $phenotyped_plots{ $_->{stock_id} } } @{$plan->{renames}}) {
             push @{$plan->{warnings}}, "Phenotype files and Field Book files with the old plot names will not match the renamed plots. Keep the plot names to avoid that.";
         }
@@ -1635,6 +1742,7 @@ sub summary {
         entry_numbers => [ map { { stock_name => $_->{stock_name}, entry_number => $_->{entry_number} } } @{$plan->{entry_numbers}} ],
         checks => [ map { { plot_name => $_->{plot_name}, check => $_->{new} } } @{$plan->{checks}} ],
         planting => [ map { { plot_name => $_->{plot_name}, not_planted => $_->{not_planted} } } @{$plan->{planting}} ],
+        rejections => [ map { { plot_name => $_->{plot_name}, rejected => $_->{rejected}, reject_reason => $_->{reject_reason}, was_rejected => $_->{was_rejected} } } @{$plan->{rejections}} ],
         seedlots => [ map { my $s = $_; +{ map { $_ => $s->{$_} } grep { defined($s->{$_}) } qw(type seedlot_name plot_name from_plot_name old_seedlot_name) } } @{$plan->{seedlots}} ],
         phenotypes_deleted => scalar(@{ $plan->{phenotypes_to_delete}->{phenotype_ids} }) + scalar(@{ $plan->{phenotypes_to_delete}->{md_experiment_ids} || [] }),
         plots_with_phenotypes => $plan->{plots_with_phenotypes},

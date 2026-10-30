@@ -3980,7 +3980,8 @@ sub observations_GET {
         observationTimeStampRangeEnd => $clean_inputs->{observationTimeStampRangeEnd},
         observationUnitDbId => $clean_inputs->{observationUnitDbId},
         observationDbId => $clean_inputs->{observationDbId},
-        observationVariableDbId => $clean_inputs->{observationVariableDbId}
+        observationVariableDbId => $clean_inputs->{observationVariableDbId},
+        includeRejected => $clean_inputs->{includeRejected}   # the heatmap asks for the values of rejected plots, flagged
 
     });
     _standard_response_construction($c, $brapi_package_result);

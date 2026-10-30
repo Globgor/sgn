@@ -3,7 +3,8 @@ import "../legacy/jquery.js";
 /**
  * Changes of what grows on the plots of a field trial: the Change Accessions
  * upload (a file of what was planted, which can also mark plots as not
- * planted) and Replace Accession (Field Layout Tools -> Edit Field Layout).
+ * planted or as rejected) and Replace Accession (Field Layout Tools -> Edit
+ * Field Layout).
  *
  * The endpoints answer with a summary (see CXGN::Trial::AccessionChange::summary()):
  * with preview=1 what would change ({ preview: summary }), otherwise what changed
@@ -33,7 +34,8 @@ export function summaryLines(summary, planned, maxItems = 10) {
         lines.push(`${summary.rows_read} plot(s) read from the file.`);
     }
     const planting = summary.planting || [];
-    if (summary.changed || !planting.length) {
+    const rejections = summary.rejections || [];
+    if (summary.changed || (!planting.length && !rejections.length)) {
         const changes = summary.changes || [];
         lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession${changes.length ? ":" : "."}`);
         list(changes, (c) => `${c.plot_name}: ${c.old_stock_name} -> ${c.new_stock_name}`);
@@ -47,6 +49,21 @@ export function summaryLines(summary, planned, maxItems = 10) {
     if (planted.length) {
         lines.push(`${planted.length} plot(s) ${planned ? "will be" : "were"} marked as planted again:`);
         list(planted, (p) => p.plot_name);
+    }
+    const rejected = rejections.filter((r) => r.rejected && !r.was_rejected);
+    const newReason = rejections.filter((r) => r.rejected && r.was_rejected);
+    const unrejected = rejections.filter((r) => !r.rejected);
+    if (rejected.length) {
+        lines.push(`${rejected.length} plot(s) ${planned ? "will be" : "were"} rejected (the data stay, but are left out of downloads and analyses):`);
+        list(rejected, (r) => r.plot_name + (r.reject_reason ? ` (${r.reject_reason})` : ""));
+    }
+    if (newReason.length) {
+        lines.push(`${newReason.length} rejected plot(s) ${planned ? "will get" : "got"} another reject reason:`);
+        list(newReason, (r) => `${r.plot_name}: ${r.reject_reason || "(none)"}`);
+    }
+    if (unrejected.length) {
+        lines.push(`${unrejected.length} plot(s) ${planned ? "will be" : "are"} no longer rejected:`);
+        list(unrejected, (r) => r.plot_name);
     }
     if (summary.replicates_changed) {
         lines.push(`${summary.replicates_changed} replicate number(s) ${planned ? "will be" : "were"} numbered again by plot number (completely randomized design).`);
@@ -100,6 +117,7 @@ export function changedPlots(summary) {
         ...(summary.changes || []).map((c) => c.plot_name),
         ...(summary.renamed || []).map((r) => r.old_name),
         ...(summary.planting || []).map((p) => p.plot_name),
+        ...(summary.rejections || []).map((r) => r.plot_name),
     ];
     return [...new Set(names.map((name) => newName.get(name) || name))];
 }
@@ -111,7 +129,7 @@ export function changedPlots(summary) {
  */
 export function nothingChanges(summary) {
     return !summary.changed && !summary.replicates_changed && !summary.phenotypes_deleted
-        && !(summary.planting || []).length && !(summary.renamed || []).length
+        && !(summary.planting || []).length && !(summary.rejections || []).length && !(summary.renamed || []).length
         && !(summary.checks || []).length && !(summary.entry_numbers || []).length
         && !(summary.seedlots || []).length;
 }

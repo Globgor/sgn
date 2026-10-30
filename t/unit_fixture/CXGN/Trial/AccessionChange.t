@@ -21,6 +21,11 @@ use CXGN::Trial::TrialCreate;
 use CXGN::Trial::TrialLayout;
 use CXGN::Trial::TrialLayoutDownload;
 use CXGN::Phenotypes::StorePhenotypes;
+use CXGN::Phenotypes::SearchFactory;
+use CXGN::Phenotypes::PhenotypeMatrix;
+use CXGN::Phenotypes::RejectedUnits;
+use CXGN::Dataset;
+use CXGN::Phenotypes::HighDimensionalPhenotypesSearch;
 use CXGN::Stock::Seedlot;
 use CXGN::Trial::Download;
 use CXGN::Trial::FieldMap;
@@ -46,6 +51,9 @@ my %t = (
     plot_number => cvterm_id('plot number', 'stock_property'),
     is_a_control => cvterm_id('is a control', 'stock_property'),
     not_planted => cvterm_id('not_planted', 'stock_property'),
+    rejected => cvterm_id('rejected', 'stock_property'),
+    reject_reason => cvterm_id('reject_reason', 'stock_property'),
+    phenotype_outlier => cvterm_id('phenotype_outlier', 'phenotype_property'),
     stock_additional_info => cvterm_id('stock_additional_info', 'stock_property'),
     row_number => cvterm_id('row_number', 'stock_property'),
     col_number => cvterm_id('col_number', 'stock_property'),
@@ -736,6 +744,167 @@ scenario 'a shifted planting, as a corrected file gives it: the skipped place is
     is(scalar(@{$plan->{changes}}), 4, 'four plots got another accession');
 };
 
+# --- rejected plots: planted, the data stay, left out of downloads and analyses --
+# the phenotype values of a plot (through its nd_experiments)
+sub phenotype_ids_of { return [ map { $_->phenotype_id } $schema->resultset('NaturalDiversity::NdExperimentStock')->search({ stock_id => $_[0] })->search_related('nd_experiment')->search_related('nd_experiment_phenotypes')->all ]; }
+
+scenario 'rejected: the plot keeps everything; both properties are written; the plan, the digest and the summary carry the reason' => sub {
+    my $ac = $change->();
+    my $replicate = prop($plot{10}, 'replicate');
+    my $plan = $ac->plan([ { plot_id => $plot{10}, rejected => 1, reject_reason => " trampled by\tcattle\n" } ], { rename_plots => 'none' });
+    is_deeply($plan->{errors}, [], 'no errors') or diag(join("\n", @{$plan->{errors}}));
+    is_deeply($plan->{rejections}, [ { plot_id => $plot{10}, plot_name => 'test_trial210', rejected => 1, reject_reason => 'trampled by cattle', was_rejected => 0 } ], 'the plan lists the rejection, with the reason trimmed');
+    is_deeply([ $plan->{changes}, $plan->{unchanged}, $plan->{warnings} ], [ [], [], [] ], 'no accession change, not "unchanged", no warnings');
+    is_deeply($ac->summary($plan)->{rejections}, [ { plot_name => 'test_trial210', rejected => 1, reject_reason => 'trampled by cattle', was_rejected => 0 } ], 'the summary too');
+    isnt($ac->plan_digest($plan), $ac->plan_digest($ac->plan([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'flooded' } ])), 'another reason is another plan');
+    $ac->apply([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'trampled by cattle' } ], { rename_plots => 'none' });
+    is_deeply([ prop($plot{10}, 'rejected'), prop($plot{10}, 'reject_reason') ], [ '1', 'trampled by cattle' ], 'both properties on the plot');
+    is_deeply([ linked_stock($plot{10}, 'plot_of'), prop($plot{10}, 'replicate'), name_of($plot{10}), prop($plot{10}, 'not_planted') ], [ 'test_accession3', $replicate, 'test_trial210', undef ], 'accession, replicate and name as before; planted');
+    my $unit = $ac->load_units()->{ $plot{10} };
+    is_deeply([ $unit->{rejected}, $unit->{reject_reason} ], [ '1', 'trampled by cattle' ], 'load_units reads them');
+
+    $plan = $ac->plan([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'trampled by cattle' } ], { rename_plots => 'none' });
+    is_deeply([ $plan->{rejections}, $plan->{unchanged} ], [ [], [ 'test_trial210' ] ], 'the same rejection again: nothing to change');
+    $plan = $ac->plan([ { plot_id => $plot{10}, rejected => 1 } ]);
+    is_deeply($plan->{rejections}, [], 'rejected = 1 without a reason keeps the stored reason');
+    $plan = $ac->plan([ { plot_id => $plot{10}, reject_reason => 'flooded after emergence' } ]);
+    is_deeply([ map { [ $_->{rejected}, $_->{reject_reason}, $_->{was_rejected} ] } @{$plan->{rejections}} ], [ [ 1, 'flooded after emergence', 1 ] ], 'a new reason alone is a change, of a plot that was rejected already');
+};
+
+scenario 'rejected: the rules of the reason and of the two states' => sub {
+    my $ac = $change->();
+    my $errors = sub { return $ac->plan(@_)->{errors} };
+    my $not_rejected = 'Plot test_trial210 has a reject_reason but is not rejected; put 1 in rejected, or leave the reason empty.';
+    is_deeply($errors->([ { plot_id => $plot{10}, reject_reason => 'weeds' } ]), [ $not_rejected ], 'a reason on a plot that is not rejected');
+    is_deeply($errors->([ { plot_id => $plot{10}, rejected => 0, reject_reason => 'weeds' } ]), [ $not_rejected ], 'a reason with rejected = 0');
+    is_deeply($errors->([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'x' x 501 } ]), [ 'Plot test_trial210: reject_reason is longer than 500 characters.' ], 'a reason that is too long');
+    my $plan = $ac->plan([ { plot_id => $plot{10}, rejected => 0 } ]);
+    is_deeply([ $plan->{errors}, $plan->{rejections}, $plan->{unchanged} ], [ [], [], [ 'test_trial210' ] ], 'rejected = 0 on a plot that is not rejected: nothing to change');
+    my $not_planted = qr/^Plot test_trial2\d+ cannot be rejected: it is not planted \(nothing grew there\)\. A rejected plot is a planted plot whose data must not be used; mark it as planted again first, or leave rejected empty\.$/;
+    $ac->apply([ { plot_id => $plot{5}, not_planted => 1 } ], { rename_plots => 'none' });
+    like(join("\n", @{ $errors->([ { plot_id => $plot{5}, rejected => 1 } ]) }), $not_planted, 'a plot that was not planted cannot be rejected');
+    like(join("\n", @{ $errors->([ { plot_id => $plot{10}, rejected => 1, not_planted => 1 } ]) }), $not_planted, 'rejected and not planted in one row');
+    is_deeply($errors->([ { plot_id => $plot{5}, rejected => 1, not_planted => 0 } ]), [], 'planted again and rejected in one row is fine');
+
+    # a rejected plot marked as not planted stops being rejected
+    $ac->apply([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    $plan = $ac->plan([ { plot_id => $plot{10}, not_planted => 1 } ], { rename_plots => 'none' });
+    is_deeply($plan->{rejections}, [ { plot_id => $plot{10}, plot_name => 'test_trial210', rejected => 0, reject_reason => undef, was_rejected => 1 } ], 'the plan takes the rejection back');
+    ok((grep { /^Plot test_trial210 was rejected; marked as not planted, it is no longer rejected\.$/ } @{$plan->{warnings}}), 'and says so') or diag(explain $plan->{warnings});
+    $ac->apply([ { plot_id => $plot{10}, not_planted => 1 } ], { rename_plots => 'none' });
+    is_deeply([ prop($plot{10}, 'rejected'), prop($plot{10}, 'reject_reason'), prop($plot{10}, 'not_planted') ], [ undef, undef, '1' ], 'not planted, no longer rejected');
+
+    # not planted with a reason: the stored reason is fine (a downloaded layout), a new one is not; never both states
+    $ac->apply([ { plot_id => $plot{4}, rejected => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    is_deeply($errors->([ { plot_id => $plot{4}, not_planted => 1, reject_reason => 'hail' } ]), [ 'Plot test_trial24 is marked as not planted, so it is no longer rejected and cannot get a reject_reason; leave the reason empty.' ], 'not planted with a new reason');
+    $plan = $ac->plan([ { plot_id => $plot{4}, not_planted => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    is_deeply([ $plan->{errors}, [ map { [ $_->{rejected}, $_->{was_rejected} ] } @{$plan->{rejections}} ], [ map { $_->{not_planted} } @{$plan->{planting}} ] ], [ [], [ [ 0, 1 ] ], [ 1 ] ], 'not planted with the stored reason: not planted, no longer rejected');
+    $ac->apply([ { plot_id => $plot{4}, not_planted => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    is_deeply([ prop($plot{4}, 'rejected'), prop($plot{4}, 'not_planted') ], [ undef, '1' ], 'never both');
+
+    # without the properties the plan says to run the patches, but only for a change
+    my $ids = $ac->_cvterm_ids;
+    my $saved = $ids->{rejected};
+    $ids->{rejected} = undef;
+    like(join("\n", @{ $errors->([ { plot_id => $plot{3}, rejected => 1 } ]) }), qr/does not know the stock property rejected yet; run the database patches \(AddRejectedPlotStockprops\)/, 'without the property: run the patches');
+    $plan = $ac->plan([ { plot_id => $plot{3}, rejected => 0 } ]);
+    is_deeply([ $plan->{errors}, $plan->{unchanged} ], [ [], [ 'test_trial23' ] ], 'rejected = 0 (a downloaded layout) changes nothing and is read without the patch');
+    $ids->{rejected} = $saved;
+    is_deeply($errors->([ { plot_id => $plot{3}, rejected => 1 } ]), [], 'with it: fine');
+};
+
+scenario 'un-reject: both properties go, a value a person suppressed stays suppressed; an accession change keeps the rejection' => sub {
+    my $trait = 'dry matter content percentage|CO_334:0000092';
+    phenotype_store({ test_trial210 => { $trait => [ 30, '' ] } }, [ $trait ])->store();
+    my $phenotype_ids = phenotype_ids_of($plot{10});
+    is(scalar(@$phenotype_ids), 1, 'plot 10 has a value');
+    $schema->resultset('Phenotype::Phenotypeprop')->create({ phenotype_id => $phenotype_ids->[0], type_id => $t{phenotype_outlier}, value => '{"value":1}' });
+    my $suppressed = sub { return $schema->resultset('Phenotype::Phenotypeprop')->search({ phenotype_id => $phenotype_ids->[0], type_id => $t{phenotype_outlier} })->count };
+    my $ac = $change->();
+    $ac->apply([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    is(scalar(@{ phenotype_ids_of($plot{10}) }), 1, 'the value stays');
+    my $plan = $ac->apply([ { plot_id => $plot{10}, new_stock_id => $acc{1} } ], { rename_plots => 'none' });
+    is($plan->{plots_with_phenotypes}, 1, 'a rejected plot is counted among the plots that already have phenotypes: its values count again if it is un-rejected');
+    ok((grep { /^1 plot\(s\) already have phenotypes\..* 1 of them are rejected: their values are left out now and count for the new accession if the rejection is taken back\.$/ } @{$plan->{warnings}}), 'and the warning says so') or diag(explain $plan->{warnings});
+    is_deeply([ linked_stock($plot{10}, 'plot_of'), prop($plot{10}, 'rejected'), prop($plot{10}, 'reject_reason') ], [ 'test_accession1', '1', 'weeds' ], 'the accession changed, the rejection stays with the plot');
+    $ac->apply([ { plot_id => $plot{10}, rejected => 0 } ], { rename_plots => 'none' });
+    is_deeply([ prop($plot{10}, 'rejected'), prop($plot{10}, 'reject_reason') ], [ undef, undef ], 'un-reject: both properties gone');
+    is_deeply([ scalar(@{ phenotype_ids_of($plot{10}) }), $suppressed->() ], [ 1, 1 ], 'the value stays, and stays suppressed: the rejection never touched it');
+};
+
+scenario 'rejected: the values stay, but the phenotype searches leave the plot out unless asked; a value stored later too' => sub {
+    my $trait = 'dry matter content percentage|CO_334:0000092';
+    my $trait_id = SGN::Model::Cvterm->get_cvterm_row_from_trait_name($schema, $trait)->cvterm_id;
+    phenotype_store({ test_trial210 => { $trait => [ 30, '' ] }, test_trial28 => { $trait => [ 31, '' ] } }, [ $trait ])->store();
+    my $plots_in = sub {
+        my %options = @_;
+        my ($data) = CXGN::Phenotypes::SearchFactory->instantiate('Native', { bcs_schema => $schema, data_level => 'plot', trial_list => [ $trial_id ], trait_list => [ $trait_id ], %options })->search();
+        return { map { $_->{obsunit_uniquename} => 1 } @$data };
+    };
+    my $matrix_plots = sub {
+        my ($header, @rows) = CXGN::Phenotypes::PhenotypeMatrix->new(search_type => 'Native', bcs_schema => $schema, data_level => 'plot', trial_list => [ $trial_id ], trait_list => [ $trait_id ], @_)->get_phenotype_matrix();
+        my %col = map { $header->[$_] => $_ } 0 .. $#$header;
+        return { map { $_->[ $col{observationUnitName} ] => 1 } @rows };
+    };
+    is_deeply([ map { $plots_in->()->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 1 ], 'before: both plots in the search');
+
+    my $ac = $change->();
+    $ac->apply([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'weeds' } ], { rename_plots => 'none' });
+    is_deeply([ map { $plots_in->()->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 0 ], 'Native: the rejected plot is left out by default');
+    is_deeply([ map { $plots_in->(exclude_rejected => 0)->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 1 ], 'with exclude_rejected => 0 it is there');
+    is_deeply([ map { $matrix_plots->()->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 0 ], 'PhenotypeMatrix (downloads, analyses): left out');
+    is_deeply([ map { $matrix_plots->(exclude_rejected => 0)->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 1 ], 'PhenotypeMatrix with exclude_rejected => 0: there');
+    # a dataset (mixed models, heritability, stability, GWAS) reads the materialized view
+    $schema->storage->dbh->do('SELECT refresh_materialized_phenotype_jsonb_table()');
+    my $dataset_plots = sub {
+        my ($header, @rows) = @{ CXGN::Dataset->new(people_schema => $f->people_schema, schema => $schema, trials => [ $trial_id ], traits => [ $trait_id ], @_)->retrieve_phenotypes() };
+        my %col = map { $header->[$_] => $_ } 0 .. $#$header;
+        return { map { $_->[ $col{observationUnitName} ] => 1 } @rows };
+    };
+    is_deeply([ map { $dataset_plots->()->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 0 ], 'a dataset leaves it out');
+    is_deeply([ map { $dataset_plots->(exclude_rejected => 0)->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 1 ], 'a dataset with exclude_rejected => 0: there');
+    is(scalar(@{ phenotype_ids_of($plot{10}) }), 1, 'the value is still in the database');
+    is_deeply($ac->plan([ { plot_id => $plot{10}, rejected => 1 } ])->{errors}, [], 'no error');
+
+    # NIRS spectra of plots 8 and 10, as StorePhenotypes writes them: the high-dimensional search leaves plot 10 out
+    my $dbh = $schema->storage->dbh;
+    my ($protocol_id) = $dbh->selectrow_array("INSERT INTO nd_protocol (name, type_id) VALUES ('review_nirs', ?) RETURNING nd_protocol_id", undef, cvterm_id('high_dimensional_phenotype_nirs_protocol', 'protocol_type'));
+    $dbh->do("INSERT INTO nd_protocolprop (nd_protocol_id, type_id, value) VALUES (?, ?, ?)", undef, $protocol_id, cvterm_id('high_dimensional_phenotype_protocol_properties', 'protocol_property'), '{"header_column_names":["740"],"header_column_details":{}}');
+    my ($geolocation_id) = $dbh->selectrow_array("SELECT nd_geolocation_id FROM nd_geolocation LIMIT 1");
+    foreach my $plot_id ($plot{8}, $plot{10}) {
+        my ($experiment_id) = $dbh->selectrow_array("INSERT INTO nd_experiment (nd_geolocation_id, type_id) VALUES (?, ?) RETURNING nd_experiment_id", undef, $geolocation_id, cvterm_id('phenotyping_experiment', 'experiment_type'));
+        $dbh->do("INSERT INTO nd_experiment_stock (nd_experiment_id, stock_id, type_id) VALUES (?, ?, ?)", undef, $experiment_id, $plot_id, cvterm_id('phenotyping_experiment', 'experiment_type'));
+        $dbh->do("INSERT INTO nd_experiment_protocol (nd_experiment_id, nd_protocol_id) VALUES (?, ?)", undef, $experiment_id, $protocol_id);
+        my ($json_id) = $dbh->selectrow_array("INSERT INTO metadata.md_json (json_type, json) VALUES ('nirs_spectra', ?) RETURNING json_id", undef, '{"spectra":{"740":0.5},"device_type":"SCIO"}');
+        $dbh->do("INSERT INTO phenome.nd_experiment_md_json (nd_experiment_id, json_id) VALUES (?, ?)", undef, $experiment_id, $json_id);
+        my ($file_id) = $dbh->selectrow_array("INSERT INTO metadata.md_files (basename, dirname, filetype) VALUES ('review_nirs.csv', '/tmp', 'nirs') RETURNING file_id");
+        $dbh->do("INSERT INTO phenome.nd_experiment_md_files (nd_experiment_id, file_id) VALUES (?, ?)", undef, $experiment_id, $file_id);
+    }
+    my $nirs_plots = sub {
+        my ($matrix) = CXGN::Phenotypes::HighDimensionalPhenotypesSearch->new({ bcs_schema => $schema, nd_protocol_id => $protocol_id, high_dimensional_phenotype_type => 'NIRS', query_associated_stocks => 0, accession_list => [], plot_list => [ $plot{8}, $plot{10} ], plant_list => [], @_ })->search();
+        return [ map { name_of($_) } sort { $a <=> $b } keys %$matrix ];
+    };
+    is_deeply($nirs_plots->(), [ 'test_trial28' ], 'NIRS: the spectra of the rejected plot are left out');
+    is_deeply($nirs_plots->(exclude_rejected => 0), [ map { name_of($_) } sort { $a <=> $b } ($plot{8}, $plot{10}) ], 'with exclude_rejected => 0: both');
+
+    # a value stored later is stored, the storage says so, and it is left out too
+    my $other_trait = 'fresh root weight|CO_334:0000012';
+    my $store = phenotype_store({ test_trial210 => { $other_trait => [ 5, '' ] } }, [ $other_trait ]);
+    my ($warning, $error) = $store->verify();
+    ok(!$error, 'verify does not refuse the value') or diag($error);
+    like($warning // '', qr/These plots are rejected .* left out of downloads and analyses while the plots are rejected: 'test_trial210'/, 'and warns');
+    my ($store_error, $store_success) = $store->store();
+    like($store_success // '', qr/1 unit\(s\) belong to rejected plots; their values were stored and are left out of downloads and analyses: test_trial210/, 'store says so') or diag($store_error);
+    is(scalar(@{ phenotype_ids_of($plot{10}) }), 2, 'the value is stored');
+    my $other_trait_id = SGN::Model::Cvterm->get_cvterm_row_from_trait_name($schema, $other_trait)->cvterm_id;
+    my $values_of_plot_10 = sub { my ($data) = CXGN::Phenotypes::SearchFactory->instantiate('Native', { bcs_schema => $schema, data_level => 'plot', trial_list => [ $trial_id ], trait_list => [ $other_trait_id ], @_ })->search(); return [ grep { defined } map { $_->{phenotype_value} } grep { $_->{obsunit_uniquename} eq 'test_trial210' } @$data ]; };
+    is_deeply($values_of_plot_10->(), [], 'and left out of the search');
+    is_deeply($values_of_plot_10->(exclude_rejected => 0), [ 5 ], 'there when asked');
+
+    $ac->apply([ { plot_id => $plot{10}, rejected => 0 } ], { rename_plots => 'none' });
+    is_deeply([ map { $plots_in->()->{$_} ? 1 : 0 } qw(test_trial28 test_trial210) ], [ 1, 1 ], 'no longer rejected: back in the search, with its values');
+};
+
 # seedlots of test_trial: one per accession, with 100 seeds, and 10 of them planted in each plot
 sub seedlot_with_seed {
     my $accession = shift;
@@ -1042,6 +1211,28 @@ scenario 'RCBD: a well of a genotyping plate taken from the plot gets the access
     is($plate_well->()->{accession_name}, 'review_rcbd_acc_C', 'the cached plate layout has the new accession');
 };
 
+scenario 'RCBD: the plants and tissue samples of a rejected plot are left out too; the storage path names the same units' => sub {
+    my ($plot_b) = grep { $_->{stock_name} eq 'review_rcbd_acc_B' && $_->{block} == 1 } @rcbd_plots;
+    my $plants = plants_of($plot_a->{plot_id});
+    my @samples = map { $_->subject_id } $schema->resultset('Stock::StockRelationship')->search({ object_id => { -in => $plants }, type_id => $t{tissue_sample_of} })->all;
+    ok(scalar(@$plants) && scalar(@samples), 'the plot has plants with tissue samples');
+    my $ac = $rcbd_change->();
+    $ac->apply([ { plot_id => $plot_a->{plot_id}, rejected => 1 } ], { rename_plots => 'none' });
+    is_deeply([ map { prop($_, 'rejected') } @$plants ], [ map { undef } @$plants ], 'the property is on the plot only');
+    my $ids = CXGN::Phenotypes::RejectedUnits->ids($schema, [ $plot_a->{plot_id}, @$plants, @samples, $plot_b->{plot_id}, $plot_a->{stock_id} ]);
+    is_deeply([ sort { $a <=> $b } keys %$ids ], [ sort { $a <=> $b } ($plot_a->{plot_id}, @$plants, @samples) ], 'the rejected units: the plot, its plants and their samples; not another plot, not the accession');
+    my $trait = 'dry matter content percentage|CO_334:0000092';
+    my $store = phenotype_store({ map { name_of($_) => { $trait => [ 1, '' ] } } ($plot_a->{plot_id}, @$plants, @samples, $plot_b->{plot_id}) }, [ $trait ]);
+    is_deeply([ sort @{ $store->rejected_units() } ], [ sort map { name_of($_) } ($plot_a->{plot_id}, @$plants, @samples) ], 'rejected_units() of the storage path names the same units');
+    $store->store();
+    my $trait_id = SGN::Model::Cvterm->get_cvterm_row_from_trait_name($schema, $trait)->cvterm_id;
+    foreach my $level ([ 'plant', $plants ], [ 'tissue_sample', \@samples ]) {
+        my ($data_level, $units) = @$level;
+        my $found = sub { my ($data) = CXGN::Phenotypes::SearchFactory->instantiate('Native', { bcs_schema => $schema, data_level => $data_level, trial_list => [ $rcbd_id ], trait_list => [ $trait_id ], @_ })->search(); my %with_value = map { $_->{obsunit_stock_id} => 1 } grep { defined($_->{phenotype_value}) } @$data; return scalar(grep { $with_value{$_} } @$units); };
+        is_deeply([ $found->(), $found->(exclude_rejected => 0) ], [ 0, scalar(@$units) ], "Native at the $data_level level: the values of the rejected plot's units are left out, and there when asked");
+    }
+};
+
 scenario 'RCBD with the template trialName_accessionName_repNumber: merging two accessions cannot keep the names unique' => sub {
     $schema->resultset('Project::Projectprop')->create({ project_id => $rcbd_id, type_id => $t{template}, value => encode_json({ review_format => { name_attributes => [ 'trialName', 'accessionName', 'repNumber' ] } }) });
     my $ac = $rcbd_change->();
@@ -1120,6 +1311,8 @@ scenario 'genotyping plate: the accession of a well' => sub {
     ok((grep { /cannot be renamed/ } @{$plan->{errors}}), 'wells cannot be renamed');
     $plan = $ac->plan([ { plot_id => $wells{A02}, not_planted => 1 } ]);
     ok((grep { /cannot be marked as not planted/ } @{$plan->{errors}}), 'wells cannot be marked as not planted');
+    is_deeply($ac->plan([ { plot_id => $wells{A02}, rejected => 1 } ])->{errors}, [ 'Wells of a genotyping plate cannot be rejected.' ], 'wells cannot be rejected');
+    is_deeply($ac->plan([ { plot_id => $wells{A02}, rejected => 0 } ])->{errors}, [], 'rejected = 0 changes nothing on a well');
 };
 
 # --- clean up ------------------------------------------------------------------

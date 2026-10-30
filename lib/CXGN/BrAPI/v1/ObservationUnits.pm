@@ -10,6 +10,7 @@ use CXGN::BrAPI::Pagination;
 use CXGN::BrAPI::JSONResponse;
 use Try::Tiny;
 use CXGN::Phenotypes::PhenotypeMatrix;
+use CXGN::Phenotypes::RejectedUnits;
 use CXGN::List::Transform;
 
 extends 'CXGN::BrAPI::v1::Common';
@@ -60,6 +61,7 @@ sub search {
             folder_list=>$folder_ids_arrayref,
             program_list=>$program_ids_arrayref,
             observation_unit_names_list=>$observation_unit_names_list,
+            exclude_rejected=>0,   # a listing of the units: a rejected plot stays, without its values (below)
             limit=>$limit,
             offset=>$offset,
             # # Order by plot_number, account for non-numeric plot numbers
@@ -70,13 +72,15 @@ sub search {
         }
     );
     my ($data, $unique_traits) = $phenotypes_search->search();
+    my $rejected_units = CXGN::Phenotypes::RejectedUnits->ids($self->bcs_schema, [ map { $_->{observationunit_stock_id} } @$data ]);
     # print STDERR Dumper $data;
 
     my @data_window;
     my $total_count = 0;
     foreach my $obs_unit (@$data){
         my @brapi_observations;
-        my $observations = $obs_unit->{observations};
+        # the values of a rejected plot are left out, as in the downloads
+        my $observations = $rejected_units->{ $obs_unit->{observationunit_stock_id} } ? [] : $obs_unit->{observations};
         foreach (@$observations){
             my $obs_timestamp = $_->{collect_date} ? $_->{collect_date} : $_->{timestamp};
             if ( $start_time && $obs_timestamp < $start_time ) { next; } #skip observations before date range

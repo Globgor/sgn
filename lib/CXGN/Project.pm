@@ -3291,6 +3291,7 @@ sub create_plant_entities {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'plot'
@@ -3510,6 +3511,7 @@ sub save_plant_entries {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'plot'
@@ -3737,6 +3739,7 @@ sub create_plant_subplot_entities {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'subplot'
@@ -3986,6 +3989,7 @@ sub save_plant_subplot_entries {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'subplot'
@@ -4375,6 +4379,7 @@ sub create_tissue_samples {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'plant'
@@ -4681,6 +4686,7 @@ sub create_subplot_entities {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'plot'
@@ -4859,6 +4865,7 @@ sub save_subplot_entries {
     my $phenosearch = CXGN::Phenotypes::SearchFactory->instantiate(
         'Native', {
         bcs_schema => $chado_schema,
+        exclude_rejected => 0,   # the treatments of a rejected plot are copied to its new units too
         trait_list => [map {$_->{trait_id}} @{$treatments}],
         trial_list => [$self->get_trial_id()],
         data_level => 'plot'

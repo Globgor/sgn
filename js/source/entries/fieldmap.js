@@ -698,6 +698,8 @@ export function init() {
                     jQuery("#hm_plot_number").html(replace_plot_number);
                     var not_planted = !!(plot.additionalInfo && plot.additionalInfo.notPlanted);
                     jQuery("#hm_plot_planting").html(not_planted ? "<b>Not planted</b> (the accession is the planned one)" : "Planted");
+                    var rejected_reason = (plot.additionalInfo && plot.additionalInfo.rejectReason) || "";
+                    jQuery("#hm_plot_rejected").text(plot.additionalInfo && plot.additionalInfo.rejected ? "Yes" + (rejected_reason ? ": " + rejected_reason : "") + " (the data stay, but are left out of downloads and analyses)" : "No");
                     var old_plot_id = jQuery("#hm_plot_id").html(replace_plot_id);
                     var old_plot_accession = jQuery("#hm_plot_accession").html(
                         plot.additionalInfo?.intercropGermplasm ? 
@@ -1006,6 +1008,13 @@ export function init() {
             var is_not_planted = function (plot) {
                 return !!(plot.additionalInfo && plot.additionalInfo.notPlanted);
             };
+            // rejected plots keep their data, which are left out of downloads and analyses; they are hatched
+            var is_rejected = function (plot) {
+                return !!(plot.additionalInfo && plot.additionalInfo.rejected);
+            };
+            var escape_html = function (text) {
+                return String(text).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+            };
 
             var get_fieldmap_plot_color = function (plot) {
                 var color;
@@ -1087,6 +1096,10 @@ export function init() {
                     html += `<strong>Plot Name:</strong> ${plot.observationUnitName}<br />`;
                     if (is_not_planted(plot)) {
                         html += `<strong>Not planted</strong> (planned accession below)<br />`;
+                    }
+                    if (is_rejected(plot)) {
+                        var reason = plot.additionalInfo.rejectReason ? ": " + escape_html(plot.additionalInfo.rejectReason) : "";
+                        html += `<strong>Rejected</strong>${reason} (the data stay, but are left out of downloads and analyses)<br />`;
                     }
                     if (plot.type == "data") {
                         html += `<strong>Plot Number:</strong> ${plot.observationUnitPosition.observationLevel.levelCode}<br />
@@ -1285,6 +1298,23 @@ export function init() {
                 .on("mouseover", handle_mouseover)
                 .on("mouseout", handle_mouseout)
                 .call(cc);
+
+            // rejected plots: a hatch over the plot colour
+            grid.append("defs").append("pattern")
+                .attr("id", "rejected_hatch").attr("patternUnits", "userSpaceOnUse").attr("width", 8).attr("height", 8).attr("patternTransform", "rotate(45)")
+                .append("rect").attr("width", 3).attr("height", 8).attr("fill", "#444").attr("fill-opacity", 0.65);
+            grid.selectAll(".rejected-hatch")
+                .data(this.plot_arr.filter(is_rejected))
+                .enter()
+                .append("rect")
+                .attr("class", "rejected-hatch")
+                .attr("x", (d) => plot_x_coord(d) * 50)
+                .attr("y", (d) => plot_y_coord(d) * 50 + 15 + y_offset)
+                .attr("rx", 2)
+                .attr("width", 48)
+                .attr("height", 48)
+                .style("fill", "url(#rejected_hatch)")
+                .style("pointer-events", "none");
 
 
             cc.on("click", (el) => {

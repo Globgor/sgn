@@ -264,6 +264,7 @@ sub get_layout_output {
             my $accession = $design_info->{accession_name};
             # as on the field map: the place is empty, the accession was planned
             $accession .= " (not planted)" if $design_info->{not_planted};
+            $accession .= " (rejected)" if $design_info->{rejected};
             $hash{$row_num}->{$col_num} = $accession;
             push @rows, $row_num;
             push @cols, $col_num;

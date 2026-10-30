@@ -1,7 +1,7 @@
 import test from "tape";
 import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingChanges, plainText, changedPlots } from "../source/entries/trial_accession_change.js";
 
-const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], phenotypes_deleted: 0, warnings: [] };
+const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], rejections: [], phenotypes_deleted: 0, warnings: [] };
 
 // answers the POSTs in turn with the given responses, and records their data
 // (a FormData as an object); the options of the requests go to sent
@@ -50,6 +50,22 @@ test("summaryLines", (t) => {
             "3 phenotype value(s) were deleted.",
         ], "no line about accessions when only the planting changes");
         t.notOk(summaryLines(summary, true).some((l) => /deleted/.test(l)), "the preview tells about deleting in its warnings");
+        t.end();
+    });
+
+    t.test("plots rejected, with the reason, and no longer rejected", (t) => {
+        const summary = { ...empty, rejections: [{ plot_name: "P1", rejected: 1, reject_reason: "trampled", was_rejected: 0 }, { plot_name: "P2", rejected: 1, reject_reason: null, was_rejected: 0 }, { plot_name: "P3", rejected: 0, reject_reason: null, was_rejected: 1 }, { plot_name: "P4", rejected: 1, reject_reason: "flooded", was_rejected: 1 }] };
+        t.deepEqual(summaryLines(summary, true), [
+            "2 plot(s) will be rejected (the data stay, but are left out of downloads and analyses):",
+            "    P1 (trampled)",
+            "    P2",
+            "1 rejected plot(s) will get another reject reason:",
+            "    P4: flooded",
+            "1 plot(s) will be no longer rejected:",
+            "    P3",
+        ], "no line about accessions when only rejections change; a new reason is not a new rejection");
+        t.notOk(nothingChanges(summary), "a rejection is a change");
+        t.deepEqual(changedPlots(summary), ["P1", "P2", "P3", "P4"], "rejected plots are changed plots");
         t.end();
     });
 
