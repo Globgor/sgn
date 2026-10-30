@@ -9,7 +9,7 @@ use CXGN::List::Validate;
 use CXGN::Trial;
 
 my @REQUIRED_COLUMNS = qw|plot_name accession_name|;
-my @OPTIONAL_COLUMNS = qw|new_plot_name not_planted seedlot_name type trial_name|;
+my @OPTIONAL_COLUMNS = qw|new_plot_name not_planted rejected reject_reason seedlot_name type trial_name|;
 
 sub _validate_with_plugin {
     my $self = shift;
@@ -27,6 +27,8 @@ sub _validate_with_plugin {
             'plot_name' => ['plot name'],
             'new_plot_name' => ['new plot name'],
             'not_planted' => ['not planted'],
+            'rejected' => ['reject', 'rejected plot', 'rejected_plot'],
+            'reject_reason' => ['reject reason', 'rejection_reason', 'rejection reason'],
             'seedlot_name' => ['seedlot name', 'seedlot'],
             'trial_name' => ['trial name'],
             'accession_name' => ['accession name', 'accession', 'cross_unique_id', 'cross unique id', 'family_name', 'family name']
@@ -62,7 +64,7 @@ sub _validate_with_plugin {
         $self->_set_parse_warnings({ warning_messages => [ map { "$rows_of_other_trial{$_} row(s) of trial $_ were skipped; upload the file in that trial too if it has corrections there." } sort keys %rows_of_other_trial ] });
     }
     # a place that was not planted keeps its planned accession, so its accession may be left empty
-    my %no_accession_needed = map { $_->{_row} => 1 } grep { _not_planted_value($_->{not_planted}) eq '1' } @{ $parsed_data || [] };
+    my %no_accession_needed = map { $_->{_row} => 1 } grep { _flag_value($_->{not_planted}) eq '1' } @{ $parsed_data || [] };
     if (%skip_row || %no_accession_needed) {
         $parsed_errors = [ grep {
             my $error = $_;
@@ -110,8 +112,27 @@ sub _validate_with_plugin {
     foreach my $row (@$parsed_data) {
         my $value = $row->{'not_planted'};
         next if !defined($value) || $value !~ /\S/;
-        if (_not_planted_value($value) eq '') {
+        if (_flag_value($value) eq '') {
             push @error_messages, "Plot $row->{'plot_name'}: not_planted must be 1 (not planted) or 0 (planted), not $value.";
+        }
+    }
+
+    # rejected: 1 (or yes, true, x) rejects a planted plot, 0 (or no, false) takes
+    # it back; an empty cell leaves it as it is; reject_reason only with rejected
+    foreach my $row (@$parsed_data) {
+        my $value = $row->{'rejected'};
+        my $flag = (defined($value) && $value =~ /\S/) ? _flag_value($value) : undef;
+        if (defined($flag) && $flag eq '') {
+            push @error_messages, "Plot $row->{'plot_name'}: rejected must be 1 (rejected) or 0 (not rejected), not $value.";
+        }
+        my $reason = $row->{'reject_reason'};
+        next if !defined($reason) || $reason !~ /\S/;
+        if (defined($flag) && $flag eq '0') {
+            push @error_messages, "Plot $row->{'plot_name'}: reject_reason is given but rejected is 0.";
+        }
+        (my $trimmed = $reason) =~ s/^\s+|\s+$//g;
+        if (length($trimmed) > 500) {
+            push @error_messages, "Plot $row->{'plot_name'}: reject_reason is longer than 500 characters.";
         }
     }
 
@@ -154,7 +175,9 @@ sub _parse_with_plugin {
             'old_plot_name' => $row->{'plot_name'},
             'new_plot_name' => $row->{'new_plot_name'} ? $row->{'new_plot_name'} : '',
             'new_accession_name' => $row->{'accession_name'} // '',
-            'not_planted' => _not_planted_value($row->{'not_planted'}),
+            'not_planted' => _flag_value($row->{'not_planted'}),
+            'rejected' => _flag_value($row->{'rejected'}),
+            'reject_reason' => do { (my $r = $row->{'reject_reason'} // '') =~ s/^\s+|\s+$//g; $r },
             'seedlot_name' => $row->{'seedlot_name'} // '',
         };
     }
@@ -164,7 +187,7 @@ sub _parse_with_plugin {
 }
 
 # 1, 0, '' for anything else (an empty cell included)
-sub _not_planted_value {
+sub _flag_value {
     my $value = shift;
     return '' if !defined($value);
     $value =~ s/^\s+|\s+$//g;

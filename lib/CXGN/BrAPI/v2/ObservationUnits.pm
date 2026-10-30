@@ -8,6 +8,7 @@ use CXGN::Trait;
 use CXGN::Trial::TrialLayoutSearch;
 use CXGN::Trial::FieldMap;
 use CXGN::Trial::AccessionChange;
+use CXGN::Phenotypes::RejectedUnits;
 use CXGN::BreederSearch;
 use CXGN::BreedersToolbox::Projects;
 use CXGN::People::Person;
@@ -162,6 +163,21 @@ sub _search {
         $h->execute($not_planted_cvterm->cvterm_id(), \@page_stock_ids);
         while (my ($stock_id) = $h->fetchrow_array()) { $not_planted{$stock_id} = 1; }
     }
+    # rejected plots get additionalInfo.rejected and rejectReason
+    my (%rejected, %reject_reason);
+    my $rejected_cvterm = SGN::Model::Cvterm->get_cvterm_row($self->bcs_schema, 'rejected', 'stock_property');
+    my $reject_reason_cvterm = SGN::Model::Cvterm->get_cvterm_row($self->bcs_schema, 'reject_reason', 'stock_property');
+    if ($rejected_cvterm && @page_stock_ids) {
+        my $h = $self->bcs_schema->storage->dbh()->prepare("SELECT stock_id, type_id, value FROM stockprop WHERE type_id = ANY(?) AND stock_id = ANY(?)");
+        $h->execute([ $rejected_cvterm->cvterm_id(), ($reject_reason_cvterm ? $reject_reason_cvterm->cvterm_id() : ()) ], \@page_stock_ids);
+        while (my ($stock_id, $type_id, $value) = $h->fetchrow_array()) {
+            if ($type_id == $rejected_cvterm->cvterm_id()) { $rejected{$stock_id} = 1 if ($value // '') eq '1'; }
+            else { $reject_reason{$stock_id} = $value; }
+        }
+        # the plants, subplots and tissue samples of a rejected plot: their values are left out too
+        # (the reason is on the plot)
+        $rejected{$_} = 1 for keys %{ CXGN::Phenotypes::RejectedUnits->ids($self->bcs_schema, \@page_stock_ids) };
+    }
 
     foreach my $obs_unit (@$data){
 
@@ -210,6 +226,16 @@ sub _search {
             $additional_info = { %{ $additional_info || {} } };
             delete $additional_info->{notPlanted};
             $additional_info->{notPlanted} = JSON::true if $not_planted{ $obs_unit->{obsunit_stock_id} };
+        }
+        # rejected and rejectReason come from the stock properties too
+        if ($rejected{ $obs_unit->{obsunit_stock_id} } || (ref($additional_info) eq 'HASH' && (exists($additional_info->{rejected}) || exists($additional_info->{rejectReason})))) {
+            $additional_info = { %{ $additional_info || {} } };
+            delete @{$additional_info}{qw(rejected rejectReason)};
+            if ($rejected{ $obs_unit->{obsunit_stock_id} }) {
+                $additional_info->{rejected} = JSON::true;
+                my $reason = $reject_reason{ $obs_unit->{obsunit_stock_id} };
+                $additional_info->{rejectReason} = $reason if defined($reason) && length($reason);
+            }
         }
 
         ## Following code lines add observationUnitParent to additionalInfo, useful for BI
@@ -445,7 +471,7 @@ sub observationunits_update {
         }
 
         my $range_number = $raw_additional_info->{range} ? $raw_additional_info->{range} : undef;
-        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","range","notPlanted");
+        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","range","notPlanted","rejected","rejectReason");
         my %additional_info;
         my $block_number;
         my $rep_number;
@@ -723,7 +749,7 @@ sub observationunits_store {
         my $ou_level = $params->{observationUnitPosition}->{observationLevel}->{levelName} || undef;
         my $observationUnit_x_ref = $params->{externalReferences} ? $params->{externalReferences} : undef;
         my $raw_additional_info = $params->{additionalInfo} || undef;
-        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","notPlanted");
+        my %specific_keys = map { $_ => 1 } ("observationUnitParent","control","notPlanted","rejected","rejectReason");
         my %additional_info;
         if (defined $raw_additional_info) {
             foreach my $key (keys %$raw_additional_info) {

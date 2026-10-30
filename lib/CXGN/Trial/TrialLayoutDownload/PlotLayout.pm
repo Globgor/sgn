@@ -53,11 +53,13 @@ sub retrieve {
     my $trial_stock_type = $self->trial_stock_type();
     my $include_plot_order = $self->include_plot_order() && $self->plot_order() && $self->plot_order() ne '' && $self->plot_start() && $self->plot_start() ne '';
 
-    my @possible_cols = ('plot_name','plot_id','accession_name','accession_id','plot_order','plot_number','block_number','is_a_control','rep_number','range_number','row_number','col_number','seedlot_name','seed_transaction_operator','num_seed_per_plot','pedigree','location_name','trial_name','year', 'planting_date', 'synonyms','variety','tier','plot_geo_json','not_planted',);
+    my @possible_cols = ('plot_name','plot_id','accession_name','accession_id','plot_order','plot_number','block_number','is_a_control','rep_number','range_number','row_number','col_number','seedlot_name','seed_transaction_operator','num_seed_per_plot','pedigree','location_name','trial_name','year', 'planting_date', 'synonyms','variety','tier','plot_geo_json','not_planted','rejected','reject_reason',);
 
     $selected_cols{plot_order} = 1 if $include_plot_order;
     # plots that were not planted are marked whenever the trial has some
     $selected_cols{not_planted} = 1 if grep { $_->{not_planted} } values %design;
+    # rejected plots too, with the reason
+    $selected_cols{rejected} = $selected_cols{reject_reason} = 1 if grep { $_->{rejected} } values %design;
 
     my @header;
     foreach (@possible_cols){
@@ -137,6 +139,10 @@ sub retrieve {
                     push @$line, $pedigree_strings->{$design_info->{"accession_name"}};
                 } elsif ($_ eq 'not_planted'){
                     push @$line, $design_info->{not_planted} ? 1 : 0;
+                } elsif ($_ eq 'rejected'){
+                    push @$line, $design_info->{rejected} ? 1 : 0;
+                } elsif ($_ eq 'reject_reason'){
+                    push @$line, $design_info->{reject_reason} // '';
                 } else {
                     push @$line, $design_info->{$_};
                 }

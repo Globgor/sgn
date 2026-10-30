@@ -9,6 +9,8 @@ use CXGN::Chado::Organism;
 use CXGN::BrAPI::Pagination;
 use CXGN::BrAPI::FileRequest;
 use CXGN::Phenotypes::StorePhenotypes;
+use CXGN::Phenotypes::RejectedUnits;
+use JSON;
 use CXGN::TimeUtils;
 use DateTime;
 use utf8;
@@ -46,6 +48,8 @@ sub detail {
     my $status = $self->status;
 
     $params->{observationDbId} = [$params->{observationDbId}];
+    # a value asked for by its id is given also when its plot is rejected, flagged additionalInfo.rejected
+    $params->{includeRejected} = 'true';
 
     my $data;
 	my $counter=0;
@@ -260,6 +264,10 @@ sub _search {
     my $end_date = $params->{observationTimeStampRangeEnd}->[0] || undef;
     my $repetitive_measurements_type = $params->{repetitiveMeasurementsType} || 'average'; #use default to average 
     my $observation_unit_db_id = $params->{observationUnitDbId} || ($params->{observationUnitDbIds} || ());
+    # the values of rejected plots (CXGN::Trial::AccessionChange) are left out, as in every download, unless
+    # includeRejected=true (the heatmap of the trial page); they are then flagged additionalInfo.rejected
+    my $include_rejected = ref($params->{includeRejected}) eq 'ARRAY' ? $params->{includeRejected}->[0] : $params->{includeRejected};
+    $include_rejected = (defined($include_rejected) && lc($include_rejected) eq 'true') ? 1 : 0;
     # observationUnitLevelName
     # observationUnitLevelOrder
     # observationUnitLevelCode
@@ -292,10 +300,12 @@ sub _search {
             start_date => $start_date,
 	        end_date => $end_date,
             repetitive_measurements => $repetitive_measurements_type,
-	        include_dateless_items => 1
+	        include_dateless_items => 1,
+            exclude_rejected => $include_rejected ? 0 : 1
         }
     );
     my ($data, $unique_traits) = $phenotypes_search->search();
+    my $rejected_units = $include_rejected ? CXGN::Phenotypes::RejectedUnits->ids($self->bcs_schema, [ map { $_->{obsunit_stock_id} } @$data ]) : {};
 
     my @data_window;
     my $counter = 0;
@@ -338,7 +348,11 @@ sub _search {
 
             if ($counter >= $start_index && $counter <= $end_index) {
                 push @data_window, {
-                    additionalInfo => $_->{phenotype_additional_info} ? decode_stored_json($_->{phenotype_additional_info}) : undef,
+                    additionalInfo => do {
+                        my $info = $_->{phenotype_additional_info} ? decode_stored_json($_->{phenotype_additional_info}) : undef;
+                        # a value of a rejected plot (CXGN::Trial::AccessionChange): kept, but left out of downloads and analyses
+                        $rejected_units->{ $_->{obsunit_stock_id} } ? { %{ ref($info) eq 'HASH' ? $info : {} }, rejected => JSON::true } : $info;
+                    },
                     externalReferences => $_->{phenotype_external_references} ? decode_stored_json($_->{phenotype_external_references}) : undef,
                     germplasmDbId => qq|$_->{accession_stock_id}|,
                     germplasmName => $_->{accession_uniquename},

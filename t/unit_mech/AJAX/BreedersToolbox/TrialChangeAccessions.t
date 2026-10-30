@@ -19,6 +19,7 @@ use LWP::UserAgent;
 use JSON::XS;
 use File::Temp qw(tempfile);
 use URI::Escape qw(uri_escape);
+use Text::CSV;
 use SGN::Model::Cvterm;
 use CXGN::Trial::TrialLayout;
 use CXGN::Trial::AccessionChange;
@@ -40,6 +41,8 @@ my %t = map { $_->[0] => SGN::Model::Cvterm->get_cvterm_row($schema, $_->[1], $_
     [ replicate => 'replicate', 'stock_property' ],
     [ block => 'block', 'stock_property' ],
     [ not_planted => 'not_planted', 'stock_property' ],
+    [ rejected => 'rejected', 'stock_property' ],
+    [ reject_reason => 'reject_reason', 'stock_property' ],
     [ row_number => 'row_number', 'stock_property' ],
     [ col_number => 'col_number', 'stock_property' ],
     [ accession => 'accession', 'stock_type' ],
@@ -59,7 +62,9 @@ sub plot_state {
     my $rep = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot_id, type_id => $t{replicate} });
     my $block = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot_id, type_id => $t{block} });
     my $not_planted = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot_id, type_id => $t{not_planted} });
-    return { name => $plot->uniquename, accession => $accession->uniquename, accession_id => $accession->stock_id, rep => $rep ? $rep->value : undef, block => $block ? $block->value : undef, not_planted => $not_planted ? $not_planted->value : undef };
+    my $rejected = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot_id, type_id => $t{rejected} });
+    my $reject_reason = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot_id, type_id => $t{reject_reason} });
+    return { name => $plot->uniquename, accession => $accession->uniquename, accession_id => $accession->stock_id, rep => $rep ? $rep->value : undef, block => $block ? $block->value : undef, not_planted => $not_planted ? $not_planted->value : undef, rejected => $rejected ? $rejected->value : undef, reject_reason => $reject_reason ? $reject_reason->value : undef };
 }
 sub trial_state { return { map { $_ => plot_state($plot{$_}) } keys %plot }; }
 my $original = trial_state();
@@ -82,6 +87,8 @@ sub restore {
         set_prop($plot{$n}, 'replicate', $o->{rep});
         set_prop($plot{$n}, 'block', $o->{block});
         set_prop($plot{$n}, 'not_planted', $o->{not_planted});
+        set_prop($plot{$n}, 'rejected', $o->{rejected});
+        set_prop($plot{$n}, 'reject_reason', $o->{reject_reason});
     }
     $schema->resultset('Project::Projectprop')->search({ project_id => $trial_id, type_id => $t{design} })->update({ value => $original_design });
     obsolete_new_files($trial_id, $files_at_start);
@@ -536,6 +543,133 @@ subtest 'Change Accessions upload: phenotypes of a plot that was not planted are
     is($r->{phenotypes_deleted}, 1, 'one value deleted');
     is($values->($plot{10}), 0, 'plot 10 has no phenotypes');
     restore();
+};
+
+subtest 'Change Accessions upload: the rejected and reject_reason columns' => sub {
+    my $r = upload_accessions($trial_id, "plot_name,accession_name,rejected,reject_reason\ntest_trial210,test_accession3,1,trampled by cattle\ntest_trial23,test_accession3,,\n", preview => 1);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{rejections} ], [ 0, [ { plot_name => 'test_trial210', rejected => 1, reject_reason => 'trampled by cattle', was_rejected => 0 } ] ], 'preview: one plot will be rejected, nothing else changes') or diag(explain $r);
+    $r = upload_accessions($trial_id, "plot_name,accession_name,rejected,reject_reason\ntest_trial210,test_accession3,1,trampled by cattle\n");
+    is_deeply([ $r->{success}, $r->{rejections} ], [ 1, [ { plot_name => 'test_trial210', rejected => 1, reject_reason => 'trampled by cattle', was_rejected => 0 } ] ], 'applied') or diag(explain $r);
+    is_deeply([ @{ plot_state($plot{10}) }{qw(accession rejected reject_reason not_planted)} ], [ 'test_accession3', '1', 'trampled by cattle', undef ], 'the plot is rejected, with its accession, planted');
+    is(cached_accession('test_trial210'), 'test_accession3', 'the cached layout still has the plot');
+
+    # the layout download: the two columns come last once a plot is rejected; a changed reason is the only change
+    my $columns = uri_escape('{"plot_name":1,"accession_name":1,"plot_number":1,"block_number":1,"rep_number":1,"row_number":1,"col_number":1}');
+    $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'the layout as CSV');
+    my $parse_csv = sub { my $p = Text::CSV->new({ binary => 1 }); return map { $p->parse($_) ? [ $p->fields() ] : die("not CSV: $_") } grep { /\S/ } split /\r?\n/, $_[0]; };
+    my ($header, @rows) = $parse_csv->($mech->content);
+    is_deeply([ @$header[-2, -1] ], [ 'rejected', 'reject_reason' ], 'rejected and reject_reason are the last columns');
+    my %col = map { $header->[$_] => $_ } 0 .. $#$header;
+    my ($row) = grep { $_->[ $col{plot_name} ] eq 'test_trial210' } @rows;
+    is_deeply([ @$row[ $col{rejected}, $col{reject_reason} ] ], [ 1, 'trampled by cattle' ], 'with the values');
+    my $csv = sub { return join("\n", map { join(',', map { my $v = $_ // ''; $v =~ s/"/""/g; "\"$v\"" } @$_) } $header, @rows)."\n" };
+    $r = upload_accessions($trial_id, $csv->(), preview => 1, keep_plot_names => 1);
+    is_deeply([ $r->{preview}->{changed}, $r->{preview}->{rejections} ], [ 0, [] ], 'the download uploaded as it is: nothing to change') or diag(explain $r);
+    # a reason is free text, with commas and quotes
+    my $reason = 'trampled, then "flooded"';
+    $row->[ $col{reject_reason} ] = $reason;
+    $r = upload_accessions($trial_id, $csv->(), keep_plot_names => 1);
+    is_deeply($r->{rejections}, [ { plot_name => 'test_trial210', rejected => 1, reject_reason => $reason, was_rejected => 1 } ], 'a changed reason is the change') or diag(explain $r);
+    is(plot_state($plot{10})->{reject_reason}, $reason, 'stored');
+    $mech->get_ok("$base/breeders/trial/$trial_id/download/layout?format=csv&dataLevel=plots&selected_columns=$columns", 'the layout as CSV again');
+    my ($reason_row) = grep { $_->[ $col{plot_name} ] eq 'test_trial210' } $parse_csv->($mech->content);
+    is($reason_row->[ $col{reject_reason} ], $reason, 'the layout CSV keeps the reason in one cell');
+
+    # the planting order download has the columns too
+    foreach my $n (1 .. 15) {
+        set_prop($plot{$n}, 'row_number', int(($n - 1) / 5) + 1);
+        set_prop($plot{$n}, 'col_number', ($n - 1) % 5 + 1);
+    }
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/refresh_cache");
+    $mech->get_ok("$base/ajax/breeders/trial_plot_order?trial_ids=$trial_id&type=planting&order=by_col_serpentine&start=bottom_left", 'download the planting order');
+    my $order_file = $mech->content;
+    my ($order_header, @order_rows) = $parse_csv->($order_file);
+    my %order_col = map { $order_header->[$_] => $_ } 0 .. $#$order_header;
+    my ($order_row) = grep { ($_->[ $order_col{plot_name} ] // '') eq 'test_trial210' } @order_rows;
+    is_deeply([ @$order_row[ $order_col{rejected}, $order_col{reject_reason} ] ], [ 1, $reason ], 'the planting order file has rejected and reject_reason, the reason in one cell') or diag(explain [ $order_header, $order_row ]);
+    $r = upload_accessions($trial_id, $order_file, preview => 1, keep_plot_names => 1);
+    is_deeply([ $r->{error}, $r->{preview}->{rejections} ], [ undef, [] ], 'uploaded as it is: the reason is read whole, nothing to change') or diag(explain $r);
+    $schema->resultset('Stock::Stockprop')->search({ stock_id => { -in => [ values %plot ] }, type_id => { -in => [ $t{row_number}, $t{col_number} ] } })->delete;
+
+    # what the parser refuses
+    like(upload_accessions($trial_id, "plot_name,accession_name,reject\ntest_trial23,test_accession3,maybe\n")->{error} // '', qr/rejected must be 1 \(rejected\) or 0 \(not rejected\), not maybe/, 'the alias reject; maybe is refused');
+    like(upload_accessions($trial_id, "plot_name,accession_name,rejected,reject_reason\ntest_trial23,test_accession3,0,weeds\n")->{error} // '', qr/reject_reason is given but rejected is 0/, 'a reason with rejected 0');
+    like(upload_accessions($trial_id, "plot_name,accession_name,rejected,reject_reason\ntest_trial23,test_accession3,1,".('x' x 501)."\n")->{error} // '', qr/reject_reason is longer than 500 characters/, 'a reason that is too long');
+    like(upload_accessions($trial_id, "plot_name,accession_name,reject_reason\ntest_trial23,test_accession3,weeds\n")->{error} // '', qr/has a reject_reason but is not rejected/, 'a reason alone on a plot that is not rejected');
+    # the two states
+    like(upload_accessions($trial_id, "plot_name,accession_name,not_planted,rejected\ntest_trial23,,1,1\n")->{error} // '', qr/cannot be rejected: it is not planted/, 'rejected and not planted in one row');
+    $r = upload_accessions($trial_id, "plot_name,accession_name,not_planted\ntest_trial210,,1\n", preview => 1);
+    is_deeply($r->{preview}->{rejections}, [ { plot_name => 'test_trial210', rejected => 0, reject_reason => undef, was_rejected => 1 } ], 'marked as not planted: the rejection is taken back') or diag(explain $r);
+    ok((grep { /no longer rejected/ } @{ $r->{preview}->{warnings} }), 'with a note');
+    $r = upload_accessions($trial_id, "plot_name,accession_name,not_planted\ntest_trial210,,1\n");
+    is_deeply([ @{ plot_state($plot{10}) }{qw(not_planted rejected reject_reason)} ], [ '1', undef, undef ], 'not planted, no longer rejected');
+    restore();
+};
+
+subtest 'a rejected plot is left out of the phenotype downloads and the trait summary, and is flagged in BrAPI' => sub {
+    my $phenotyped_trial_id = $schema->resultset('Project::Project')->find({ name => 'CASS_6Genotypes_Sampling_2015' })->project_id;
+    my $ac = CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $phenotyped_trial_id });
+    my ($plot) = grep { $_->{plot_name} eq 'CASS_6Genotypes_104' } values %{ $ac->load_units() };
+    my $cass_files = additional_files($phenotyped_trial_id);
+    my $download = sub {
+        $mech->get_ok("$base/breeders/trials/phenotype/download?trial_list=%5B$phenotyped_trial_id%5D&format=csv&dataLevel=plot&speed=$_[0]", "the phenotype download ($_[0])");
+        return $mech->content;
+    };
+    my $n_obs = sub {
+        $mech->get_ok("$base/ajax/breeders/trial/$phenotyped_trial_id/phenotypes?display=plots", 'the trait summary');
+        # the number of values of the trial over all traits, and the percentage missing of each trait:
+        # a row is [ trait, average, min, max, stddev, cv, count, missing, histogram ]
+        my $rows = decode_json($mech->content)->{data};
+        my $n = 0; $n += $_->[6] // 0 for @$rows;
+        return wantarray ? ($n, { map { $_->[0] => $_->[7] } @$rows }) : $n;
+    };
+    my $ua = LWP::UserAgent->new;
+    $ua->default_header('Authorization' => 'Bearer '.$access_token);
+    like($download->('Native'), qr/CASS_6Genotypes_104/, 'before: the plot is in the download');
+    my ($n_before, $missing_before) = $n_obs->();
+    ok($n_before > 0, 'before: the trait summary counts its values');
+
+    my $r = upload_accessions($phenotyped_trial_id, "plot_name,accession_name,rejected,reject_reason\nCASS_6Genotypes_104,$plot->{stock_name},1,flooded after emergence\n", override => 1);
+    is($r->{success}, 1, 'rejected by a curator') or diag(explain $r);
+    my $native = $download->('Native');
+    ok($native !~ /CASS_6Genotypes_104/ && $native =~ /CASS_6Genotypes_103/, 'the Native download leaves the plot out, the others stay');
+    my $mvt = $download->('MaterializedViewTable');
+    ok($mvt !~ /CASS_6Genotypes_104/ && $mvt =~ /CASS_6Genotypes_103/, 'the MaterializedViewTable download too');
+    my ($n_after, $missing_after) = $n_obs->();
+    ok($n_after < $n_before, 'the trait summary counts fewer values') or diag("before $n_before, after $n_after");
+    # the rejected plot has a value of every trait: it leaves the denominator, so the number of plots missing a value stays
+    my ($n_plots) = $schema->storage->dbh->selectrow_array("SELECT count(DISTINCT stock.stock_id) FROM stock JOIN nd_experiment_stock USING(stock_id) JOIN nd_experiment_project USING(nd_experiment_id) JOIN cvterm ON cvterm.cvterm_id = stock.type_id AND cvterm.name = 'plot' WHERE project_id = ?", undef, $phenotyped_trial_id);
+    my $plots_missing = sub { my ($percent, $n) = @_; $percent =~ s/%$//; return sprintf('%.0f', $percent * $n / 100); };
+    my @traits = sort keys %$missing_before;
+    is_deeply([ map { $plots_missing->($missing_after->{$_}, $n_plots - 1) } @traits ], [ map { $plots_missing->($missing_before->{$_}, $n_plots) } @traits ], 'the percentage missing: the rejected plot is not counted as a plot without values') or diag(explain [ $n_plots, $missing_before, $missing_after ]);
+    my $unit = decode_json($ua->get("$base/brapi/v2/observationunits/$plot->{plot_id}")->decoded_content)->{result};
+    is_deeply([ $unit->{additionalInfo}->{rejected} ? 1 : 0, $unit->{additionalInfo}->{rejectReason} ], [ 1, 'flooded after emergence' ], 'BrAPI v2 observation unit: additionalInfo.rejected and rejectReason') or diag(explain $unit->{additionalInfo});
+    $mech->get_ok("$base/brapi/v1/studies/$phenotyped_trial_id/layout?pageSize=300");
+    my ($v1) = grep { $_->{observationUnitName} eq 'CASS_6Genotypes_104' } @{ decode_json($mech->content)->{result}->{data} };
+    is_deeply([ $v1->{additionalInfo}->{rejected} ? 1 : 0, $v1->{additionalInfo}->{rejectReason} ], [ 1, 'flooded after emergence' ], 'BrAPI v1 study layout too');
+    my $observations = sub { return decode_json($ua->get("$base/brapi/v2/observations?observationUnitDbId=$plot->{plot_id}&pageSize=50".($_[0] // ''))->decoded_content)->{result}->{data} };
+    is(scalar(@{ $observations->() }), 0, 'BrAPI v2 observations leave its values out, like the downloads');
+    my $flagged = $observations->('&includeRejected=true');
+    ok(scalar(@$flagged) > 0 && !grep({ !$_->{additionalInfo}->{rejected} } @$flagged), 'with includeRejected=true (the heatmap) they are listed, each flagged rejected') or diag(explain [ scalar(@$flagged), $flagged->[0] ]);
+    my $with_observations = decode_json($ua->get("$base/brapi/v2/observationunits?observationUnitDbId=$plot->{plot_id}&includeObservations=true")->decoded_content)->{result}->{data};
+    is_deeply([ map { [ $_->{observationUnitName}, scalar(@{ $_->{observations} || [] }) ] } @$with_observations ], [ [ 'CASS_6Genotypes_104', 0 ] ], 'BrAPI v2 observation units with observations: the plot is listed, without its values (Trial Comparison, Boxplotter)');
+    $mech->get_ok("$base/brapi/v1/studies/$phenotyped_trial_id/observationunits?pageSize=300");
+    my ($v1_unit) = grep { $_->{observationUnitName} eq 'CASS_6Genotypes_104' } @{ decode_json($mech->content)->{result}->{data} };
+    ok($v1_unit, 'BrAPI v1 observation units of the study still list the plot (Field Book import)');
+    is(scalar(@{ ($v1_unit || {})->{observations} || [] }), 0, 'without its values');
+    $mech->get_ok("$base/brapi/v1/studies/$phenotyped_trial_id/observations?pageSize=10000");
+    is(scalar(grep { $_->{observationUnitDbId} eq $plot->{plot_id} } @{ decode_json($mech->content)->{result}->{data} }), 0, 'BrAPI v1 observations of the study leave its values out');
+    $mech->get_ok("$base/brapi/v1/phenotypes-search?observationUnitNames=CASS_6Genotypes_104&studyDbIds=$phenotyped_trial_id&pageSize=50");
+    is_deeply([ map { [ $_->{observationUnitName}, scalar(@{ $_->{observations} || [] }) ] } grep { $_->{observationUnitName} eq 'CASS_6Genotypes_104' } @{ decode_json($mech->content)->{result}->{data} } ], [ [ 'CASS_6Genotypes_104', 0 ] ], 'BrAPI v1 phenotypes-search lists the plot without its values');
+    my $value_id = $flagged->[0] ? $flagged->[0]->{observationDbId} : 0;
+    my $detail = decode_json($ua->get("$base/brapi/v2/observations/$value_id")->decoded_content)->{result};
+    ok($detail && $detail->{additionalInfo}->{rejected}, 'BrAPI v2 observations/{id} still gives a value of a rejected plot, flagged') or diag(explain $detail);
+
+    $r = upload_accessions($phenotyped_trial_id, "plot_name,accession_name,rejected\nCASS_6Genotypes_104,$plot->{stock_name},0\n", override => 1);
+    is($r->{success}, 1, 'no longer rejected') or diag(explain $r);
+    like($download->('Native'), qr/CASS_6Genotypes_104/, 'back in the download');
+    is(scalar($n_obs->()), $n_before, 'and in the trait summary');
+    obsolete_new_files($phenotyped_trial_id, $cass_files);
 };
 
 subtest 'substitute_stock swaps two plots and keeps their names' => sub {

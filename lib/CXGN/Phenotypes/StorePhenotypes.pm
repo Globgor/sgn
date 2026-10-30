@@ -483,6 +483,11 @@ sub verify {
     if (@$not_planted) {
         $warning_message .= "These plots were not planted (or these plants and samples are of plots that were not planted), so their values are not stored: <br/>".join(", <br/>", map { "'$_'" } @$not_planted)."<br/>";
     }
+    # the values of a rejected plot are stored, but the phenotype searches leave them out
+    my $rejected = $self->rejected_units();
+    if (@$rejected) {
+        $warning_message .= "These plots are rejected (or these plants and samples are of rejected plots): their values are stored, but left out of downloads and analyses while the plots are rejected: ".join(", ", map { "'$_'" } @$rejected)."<br>";
+    }
 
     $self->create_hash_lookups();
 
@@ -850,11 +855,18 @@ sub check_measurement {
 # were not planted: plots with the stock property not_planted, and the plants,
 # subplots and tissue samples of such plots. Nothing grew there, so they cannot
 # have phenotypes (see CXGN::Trial::AccessionChange).
-sub not_planted_units {
+sub not_planted_units { return $_[0]->_units_of_marked_plots('not_planted'); }
+
+# The same for rejected plots (stock property rejected): their values are stored
+# but left out of the phenotype searches (see CXGN::Phenotypes::RejectedUnits).
+sub rejected_units { return $_[0]->_units_of_marked_plots('rejected'); }
+
+sub _units_of_marked_plots {
     my $self = shift;
+    my $property = shift;
     my $schema = $self->bcs_schema;
-    my $not_planted_cvterm = SGN::Model::Cvterm->get_cvterm_row($schema, 'not_planted', 'stock_property');
-    return [] if !$not_planted_cvterm;
+    my $property_cvterm = SGN::Model::Cvterm->get_cvterm_row($schema, $property, 'stock_property');
+    return [] if !$property_cvterm;
     my $values = $self->values_hash() || {};
     my @units = grep { _has_values($values->{$_}) } keys %$values;
     return [] if !@units;
@@ -874,10 +886,10 @@ sub not_planted_units {
         JOIN stockprop p ON p.stock_id = up.stock_id AND p.type_id = ? AND p.value = '1'
         ORDER BY unit.uniquename");
     # an accession with the name of a unit is not a unit
-    $h->execute(\@units, \@unit_types, $relationship{plant_of}, $relationship{subplot_of}, $relationship{tissue_sample_of}, $relationship{tissue_sample_of}, \@unit_types, $not_planted_cvterm->cvterm_id());
-    my @not_planted;
-    while (my ($name) = $h->fetchrow_array()) { push @not_planted, $name; }
-    return \@not_planted;
+    $h->execute(\@units, \@unit_types, $relationship{plant_of}, $relationship{subplot_of}, $relationship{tissue_sample_of}, $relationship{tissue_sample_of}, \@unit_types, $property_cvterm->cvterm_id());
+    my @marked;
+    while (my ($name) = $h->fetchrow_array()) { push @marked, $name; }
+    return \@marked;
 }
 
 # whether the values of a unit in values_hash have a value that would be stored
@@ -965,6 +977,8 @@ sub store {
     # values of plots that were not planted are not stored, also where verify() was not called
     my %not_planted = map { $_ => 1 } @{ $self->not_planted_units() };
     print STDERR "Not storing the phenotypes of units that were not planted: ".join(', ', sort keys %not_planted)."\n" if %not_planted;
+    # values of rejected plots are stored, and the message says that the searches leave them out
+    my %rejected = map { $_ => 1 } @{ $self->rejected_units() };
 
     ## Use txn_do with the following coderef so that if any part fails, the entire transaction fails.
     my $coderef = sub {
@@ -1354,6 +1368,9 @@ sub store {
         $success_message .= "$remove_count previously stored values removed<br><br>";
         if (%not_stored) {
             $success_message .= scalar(keys %not_stored)." unit(s) were not planted, so their values were not stored: ".join(", ", sort keys %not_stored)."<br><br>";
+        }
+        if (%rejected) {
+            $success_message .= scalar(keys %rejected)." unit(s) belong to rejected plots; their values were stored and are left out of downloads and analyses: ".join(", ", sort keys %rejected)."<br><br>";
         }
         my %files_with_overwritten_values = map {$_->[0] => 1} @overwritten_values;
         my $obsoleted_files = $self->check_overwritten_files_status(keys %files_with_overwritten_values);

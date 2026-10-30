@@ -47,6 +47,7 @@ use Try::Tiny;
 use Data::Dumper;
 use SGN::Model::Cvterm;
 use CXGN::Stock::StockLookup;
+use CXGN::Phenotypes::RejectedUnits;
 use CXGN::Trial::TrialLayout;
 use CXGN::Calendar;
 use JSON::XS;
@@ -138,6 +139,14 @@ has 'exclude_phenotype_outlier' => (
     default => 0
 );
 
+# plots that are rejected (CXGN::Trial::AccessionChange), with their plants, subplots and
+# tissue samples, are left out unless asked otherwise (see CXGN::Phenotypes::RejectedUnits)
+has 'exclude_rejected' => (
+    isa => 'Bool|Undef',
+    is => 'ro',
+    default => 1
+);
+
 has 'include_timestamp' => (
     isa => 'Bool|Undef',
     is => 'ro',
@@ -198,6 +207,7 @@ sub search {
             WHERE pp.type_id = $phenotype_outlier_type_id
         ) outlier_stocks ON outlier_stocks.stock_id = materialized_phenotype_jsonb_table.observationunit_stock_id"
     };
+    my $rejected_sql = $self->exclude_rejected ? " LEFT JOIN ".CXGN::Phenotypes::RejectedUnits->sql($schema)." AS rejected_units ON rejected_units.stock_id = materialized_phenotype_jsonb_table.observationunit_stock_id " : '';
 
     my $select_clause = "SELECT observationunit_stock_id, observationunit_uniquename, observationunit_type_name, germplasm_uniquename, germplasm_stock_id, rep, block, plot_number, row_number, col_number, plant_number, is_a_control, notes, trial_id, trial_name, trial_description, plot_width, plot_length, field_size, field_trial_is_planned_to_be_genotyped, field_trial_is_planned_to_cross, breeding_program_id, breeding_program_name, breeding_program_description, year, design, location_id, planting_date, harvest_date, folder_id, folder_name, folder_description, seedlot_transaction, seedlot_stock_id, seedlot_uniquename, seedlot_current_weight_gram, seedlot_current_count, seedlot_box_name, available_germplasm_seedlots, treatments, observations, count(observationunit_stock_id) OVER() AS full_count, intercrop_germplasm FROM materialized_phenotype_jsonb_table
                          LEFT JOIN (
@@ -209,6 +219,7 @@ sub search {
                             group by stock.stock_id
                          ) xref on xref.stock_id = materialized_phenotype_jsonb_table.observationunit_stock_id
                          $phenotypeprop_sql
+                         $rejected_sql
                         ";
     my $order_clause = $self->order_by ? " ORDER BY ".$self->order_by : " ORDER BY trial_name, observationunit_uniquename";
     
@@ -349,7 +360,7 @@ sub search {
     if ($self->exclude_phenotype_outlier) {
         push @where_clause, " outlier_stocks.stock_id IS NULL"
     };
-
+    push @where_clause, "rejected_units.stock_id IS NULL" if $self->exclude_rejected;
 
     my $where_clause = " WHERE " . (join (" AND " , @where_clause));
     my $or_clause = '';

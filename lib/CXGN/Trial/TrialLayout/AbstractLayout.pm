@@ -496,6 +496,11 @@ sub retrieve_plot_info {
     # not_planted is added by a database patch, so it may not exist yet
     my $not_planted_type_id = $self->get_cvterm_hash->{'not_planted'};
     my $not_planted_prop = ($not_planted_type_id && $stockprop_hash{$not_planted_type_id}) ? join ',', @{$stockprop_hash{$not_planted_type_id}} : undef;
+    # rejected and reject_reason as well (CXGN::Trial::AccessionChange)
+    my $rejected_type_id = $self->get_cvterm_hash->{'rejected'};
+    my $rejected_prop = ($rejected_type_id && $stockprop_hash{$rejected_type_id}) ? join ',', @{$stockprop_hash{$rejected_type_id}} : undef;
+    my $reject_reason_type_id = $self->get_cvterm_hash->{'reject_reason'};
+    my $reject_reason_prop = ($reject_reason_type_id && $stockprop_hash{$reject_reason_type_id}) ? join ',', @{$stockprop_hash{$reject_reason_type_id}} : undef;
     my $well_concentration_prop = $stockprop_hash{$self->cvterm_id('concentration')} ? join ',', @{$stockprop_hash{$self->cvterm_id('concentration')}} : undef;
     my $well_volume_prop = $stockprop_hash{$self->cvterm_id('volume')} ? join ',', @{$stockprop_hash{$self->cvterm_id('volume')}} : undef;
     my $well_dna_person_prop = $stockprop_hash{$self->cvterm_id('dna_person')} ? join ',', @{$stockprop_hash{$self->cvterm_id('dna_person')}} : undef;
@@ -643,6 +648,10 @@ sub retrieve_plot_info {
 	}
     if ($not_planted_prop) {
         $design_info{"not_planted"} = $not_planted_prop;
+    }
+    if ($rejected_prop) {
+        $design_info{"rejected"} = $rejected_prop;
+        $design_info{"reject_reason"} = $reject_reason_prop if defined($reject_reason_prop) && length($reject_reason_prop);
     }
     if ($is_a_control_prop) {
 	    $design_info{"is_a_control"}=$is_a_control_prop;
