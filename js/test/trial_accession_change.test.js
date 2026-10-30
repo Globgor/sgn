@@ -1,5 +1,5 @@
 import test from "tape";
-import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingChanges, plainText, changedPlots } from "../source/entries/trial_accession_change.js";
+import { summaryLines, showSummary, changeWithPreview, confirmDialog, nothingChanges, plainText, changedPlots, renameByDefault } from "../source/entries/trial_accession_change.js";
 
 const empty = { changed: 0, replicates_changed: 0, checks: [], renamed: [], not_renamed: [], entry_numbers: [], planting: [], rejections: [], phenotypes_deleted: 0, warnings: [] };
 
@@ -50,6 +50,12 @@ test("summaryLines", (t) => {
             "3 phenotype value(s) were deleted.",
         ], "no line about accessions when only the planting changes");
         t.notOk(summaryLines(summary, true).some((l) => /deleted/.test(l)), "the preview tells about deleting in its warnings");
+        t.end();
+    });
+
+    t.test("plots are renamed by default until the trial has phenotypes", (t) => {
+        t.equal(renameByDefault(false), true, "a planned trial: the names follow the accessions");
+        t.equal(renameByDefault(true), false, "data collected with the names: they are kept");
         t.end();
     });
 

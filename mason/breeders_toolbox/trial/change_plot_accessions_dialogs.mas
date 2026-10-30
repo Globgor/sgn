@@ -87,7 +87,7 @@ $trial_stock_type
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <div class="checkbox"><label><input type="checkbox" name="keep_plot_names" id="trial_design_change_accessions_keep_names" value="1" checked /> Keep the plot names</label></div>
-                                <p class="help-block" style="white-space: normal">Keep them while labels with the names are in the field or data was collected with them. Unchecked, plot names that contain the old accession name, or that follow the plot name template of the trial, are updated.</p>
+                                <p class="help-block" style="white-space: normal">Checked when the trial has phenotypes: keep the names while labels with them are in the field or data was collected with them. Unchecked (the default while the trial has no phenotypes), plot names follow the plot name template of the trial, or else the old accession name in a plot name is replaced; other names stay.</p>
                             </div>
                         </div>
                     </form>
@@ -132,7 +132,10 @@ $trial_stock_type
 
 jQuery(document).ready(function () {
 
-    jQuery('#trial_detail_page_change_accessions').click(function(){
+    jQuery('#trial_detail_page_change_accessions').click(async function(){
+        // the plots are renamed by default until data was collected with their names
+        var accession_change = window.jsMod['trial_accession_change'];
+        jQuery('#trial_design_change_accessions_keep_names').prop('checked', !accession_change.renameByDefault(await accession_change.trialHasPhenotypes(<% $trial_id %>)));
         jQuery('#trial_design_change_accessions_dialog').modal('show');
     });
 

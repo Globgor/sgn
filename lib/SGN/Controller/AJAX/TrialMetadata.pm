@@ -3130,6 +3130,17 @@ sub delete_field_coord : Path('/ajax/phenotype/delete_field_coords') Args(0) {
     $c->stash->{rest} = {success => 1};
 }
 
+# Whether the plots of the trial (or their plants, subplots or tissue samples) have phenotypes
+# other than treatments, or high-dimensional data: the dialogs of accession changes keep the plot
+# names by default then, since data was collected with them.
+sub accession_change_defaults : Chained('trial') PathPart('accession_change_defaults') Args(0) {
+    my $self = shift;
+    my $c = shift;
+    my $schema = $c->dbic_schema('Bio::Chado::Schema');
+    my $accession_change = CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $c->stash->{trial_id} });
+    $c->stash->{rest} = { has_phenotypes => $accession_change->has_phenotypes() };
+}
+
 # Changes the stock of plots (or wells) with CXGN::Trial::AccessionChange and
 # puts the outcome in the REST response: with $preview the plan, otherwise
 # success and a summary of what changed, or why nothing was changed. A preview

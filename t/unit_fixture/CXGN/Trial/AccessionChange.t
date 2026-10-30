@@ -123,6 +123,7 @@ my $fixture_state = { map { $_ => [ linked_stock($plot{$_}, 'plot_of'), prop($pl
 my $change = sub { CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $trial_id, @_ }) };
 
 is($change->()->design_type, 'CRD', 'test_trial is a CRD');
+is($change->()->has_phenotypes(), 0, 'test_trial has no phenotypes yet');
 
 # for creating plants and tissue samples
 my (undef, $nd_experiment_ids_file) = tempfile(TMPDIR => 1, UNLINK => 1);
@@ -355,7 +356,8 @@ scenario 'entry numbers' => sub {
 
     $plan = $ac->plan($ac->changes_for_stock($acc{3}, $acc{1}));
     is_deeply($plan->{entry_numbers}, [], 'into an accession that has one: no change');
-    is_deeply($plan->{warnings}, [], 'and no warning');
+    is_deeply([ grep { !/^Design: / } @{$plan->{warnings}} ], [], 'and no warning about entry numbers');
+    like(join("\n", @{$plan->{warnings}}), qr/^Design: Every accession had 3 plot\(s\); after the change test_accession1 has 6\./m, 'the merge is a design warning (a CRD: every accession had 3 plots)');
 
     $plan = $ac->apply($ac->changes_for_stock($acc{3}, $tmp->stock_id));
     is_deeply($plan->{entry_numbers}, [ { stock_id => $tmp->stock_id, stock_name => 'review_tmp_accession', entry_number => 103, from_stock_id => $acc{3} } ], 'every plot: the entry number moves');
@@ -461,6 +463,7 @@ scenario 'phenotypes and crosses of the changed plots' => sub {
 
     rename_stock($plot{10}, 'test_trial-test_accession3-10');
     my $ac = $change->();
+    is($ac->has_phenotypes(), 1, 'the trial has phenotypes (the dialogs keep the plot names by default)');
     my $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => $acc{2} } ]);
     is($plan->{plots_with_phenotypes}, 1, 'one plot with phenotypes');
     ok((grep { /1 plot\(s\) already have phenotypes\. The values stay with their plot/ } @{$plan->{warnings}}), 'phenotype warning');
@@ -762,6 +765,16 @@ scenario 'rejected: the plot keeps everything; both properties are written; the 
     is_deeply([ linked_stock($plot{10}, 'plot_of'), prop($plot{10}, 'replicate'), name_of($plot{10}), prop($plot{10}, 'not_planted') ], [ 'test_accession3', $replicate, 'test_trial210', undef ], 'accession, replicate and name as before; planted');
     my $unit = $ac->load_units()->{ $plot{10} };
     is_deeply([ $unit->{rejected}, $unit->{reject_reason} ], [ '1', 'trampled by cattle' ], 'load_units reads them');
+    # data can still be recorded: the phenotyping spreadsheets list the plot; the field map spreadsheet marks it
+    grid_3x5();
+    foreach my $format ('ExcelBasic', 'ExcelAssociatedImages') {
+        my (undef, $file) = tempfile(TMPDIR => 1, SUFFIX => '.xls', UNLINK => 1);
+        CXGN::Trial::Download->new({ bcs_schema => $schema, trial_list => [ $trial_id ], trait_list => [ 'dry matter content percentage|CO_334:0000092' ], filename => $file, format => $format })->download();
+        my %cells = map { defined($_) ? ($_ => 1) : () } map { @{ $_ || [] } } @{ ReadData($file)->[1]->{cell} };
+        ok($cells{test_trial210}, "$format: the rejected plot is listed");
+    }
+    my $map = CXGN::Trial::TrialLayoutDownload->new({ schema => $schema, trial_id => $trial_id, data_level => 'plot_fieldMap', selected_columns => {} })->get_layout_output();
+    is($map->{output}->{2}->{5}, 'test_accession3 (rejected)', 'the field map spreadsheet marks plot 10 (row 2, column 5)');
 
     $plan = $ac->plan([ { plot_id => $plot{10}, rejected => 1, reject_reason => 'trampled by cattle' } ], { rename_plots => 'none' });
     is_deeply([ $plan->{rejections}, $plan->{unchanged} ], [ [], [ 'test_trial210' ] ], 'the same rejection again: nothing to change');
@@ -1209,6 +1222,27 @@ scenario 'RCBD: a well of a genotyping plate taken from the plot gets the access
     is(linked_stock($well->stock_id, 'tissue_sample_of'), 'review_rcbd_acc_C', 'the well gets the accession too: it was taken from what grew in the plot');
     is(name_of($well->stock_id), 'review_plate_well_A01', 'and keeps its name');
     is($plate_well->()->{accession_name}, 'review_rcbd_acc_C', 'the cached plate layout has the new accession');
+};
+
+scenario 'RCBD: a change that breaks the design is allowed, with a warning; an accession not in the trial and a swap inside a block are not warned about' => sub {
+    my ($plot_b) = grep { $_->{stock_name} eq 'review_rcbd_acc_B' && $_->{block} == $plot_a->{block} } @rcbd_plots;
+    my $ac = $rcbd_change->();
+    my $design_warnings = sub { return [ grep { /^Design: / } @{ $_[0]->{warnings} } ] };
+    my $plan = $ac->plan([ { plot_id => $plot_b->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_A') } ], { rename_plots => 'none' });
+    is_deeply($plan->{errors}, [], 'allowed') or diag(join("\n", @{$plan->{errors}}));
+    my $text = join("\n", @{ $design_warnings->($plan) });
+    like($text, qr/^Design: review_rcbd_acc_A will be in more than one plot of block $plot_a->{block}: in this design \(RCBD\) each accession is once in each block/m, 'twice in a block');
+    like($text, qr/^Design: Every accession had (\d+) plot\(s\); after the change review_rcbd_acc_A has \d+\. The design is no longer balanced/m, 'more plots than the others');
+    like($text, qr/^Design: To keep the design, use an accession that is not in the trial yet, or mark the plot as not planted/m, 'and the alternatives');
+    is_deeply($design_warnings->($ac->plan([ { plot_id => $plot_b->{plot_id}, new_stock_id => $acc{1} } ], { rename_plots => 'none' })), [], 'an accession that is not in the trial: no design warning');
+    is_deeply($design_warnings->($ac->plan($ac->changes_for_stock(stock_id('review_rcbd_acc_B'), $acc{1}), { rename_plots => 'none' })), [], 'Replace Accession by an accession that is not in the trial: no design warning');
+    like(join("\n", @{ $design_warnings->($ac->plan($ac->changes_for_stock(stock_id('review_rcbd_acc_B'), stock_id('review_rcbd_acc_A')), { rename_plots => 'none' })) }), qr/^Design: review_rcbd_acc_B will have no plot left in this trial/m, 'merging an accession into another one of the trial: it leaves the trial');
+    prop($plot_b->{plot_id}, 'not_planted', 1);
+    like(join("\n", @{ $design_warnings->($ac->plan([ { plot_id => $plot_a->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_B') } ], { rename_plots => 'none' })) }), qr/^Design: Every accession had \d+ plot\(s\); after the change review_rcbd_acc_B has/m, 'a plot that was not planted still counts as a place of the design');
+    is_deeply($design_warnings->($ac->plan([ { plot_id => $plot_a->{plot_id}, new_stock_id => $plot_b->{stock_id} }, { plot_id => $plot_b->{plot_id}, new_stock_id => $plot_a->{stock_id} } ], { rename_plots => 'none' })), [], 'two plots of a block swap their accessions: no design warning');
+    $plan = $ac->apply([ { plot_id => $plot_b->{plot_id}, new_stock_id => stock_id('review_rcbd_acc_A') } ], { rename_plots => 'none' });
+    is($ac->load_units()->{ $plot_b->{plot_id} }->{stock_name}, 'review_rcbd_acc_A', 'and applied after the warning');
+    is($ac->load_units()->{ $plot_b->{plot_id} }->{replicate}, $plot_b->{replicate}, 'the replicate stays the block of the plot (RCBD: rep_number = block_number)');
 };
 
 scenario 'RCBD: the plants and tissue samples of a rejected plot are left out too; the storage path names the same units' => sub {
