@@ -2366,14 +2366,14 @@ sub trial_plot_gps_upload : Chained('trial') PathPart('upload_plot_gps') Args(0)
     $c->stash->{rest} = { success => 1 };
 }
 
-# Changes the accessions of plots from a file: plot_name, accession_name, and
-# optionally new_plot_name and seedlot_name (the seed transactions follow the
-# packets anyway). Other
+# Changes the accessions of plots, and marks plots as not planted, from a file:
+# plot_name, accession_name, and optionally new_plot_name, not_planted and
+# seedlot_name (the seed transactions follow the packets anyway). Other
 # columns are ignored, so a downloaded layout or planting order file (Download
 # Plot Order, whose border and gap rows are skipped) can be corrected and
 # uploaded; uploading it again changes nothing.
 # Args: 'check' (curators get a warning for trials with phenotypes) or 'override'.
-# params: keep_plot_names, preview (1 to get the plan only),
+# params: keep_plot_names, delete_phenotypes, preview (1 to get the plan only),
 #   override (1, the same as the Arg 'override')
 sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot_accessions_using_file') Args(1) {
     my $self = shift;
@@ -2469,6 +2469,7 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         plot_name => $_,
         new_stock_name => $parsed_data->{$_}->{new_accession_name},
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
+        not_planted => $parsed_data->{$_}->{not_planted},
         seedlot_name => $parsed_data->{$_}->{seedlot_name},
     } } keys %$parsed_data;
 
@@ -2476,6 +2477,7 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
         # the file says what was planted: the seed transactions follow the packets (shown in the preview)
         seedlots => 'follow',
+        delete_phenotypes => _true_param($c->req->param('delete_phenotypes')),
     };
     my $preview = _true_param($c->req->param('preview'));
     my $done = $self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1);
@@ -3110,8 +3112,10 @@ sub delete_field_coord : Path('/ajax/phenotype/delete_field_coords') Args(0) {
 
 # Changes the stock of plots (or wells) with CXGN::Trial::AccessionChange and
 # puts the outcome in the REST response: with $preview the plan, otherwise
-# success and a summary of what changed, or why nothing was changed. The
-# materialized views are refreshed after a change. With $html_errors the errors are HTML-escaped
+# success and a summary of what changed, or why nothing was changed. A preview
+# that fails because plots marked as not planted have phenotypes also has
+# not_planted_phenotypes, the number of those values. The materialized views
+# are refreshed after a change. With $html_errors the errors are HTML-escaped
 # and joined with <br>. A user who is not a curator cannot change plots with phenotypes or
 # with samples in other trials (see the option curator of CXGN::Trial::AccessionChange).
 sub _change_trial_stocks {
@@ -3133,6 +3137,8 @@ sub _change_trial_stocks {
         my $plan = $accession_change->plan($changes, $options);
         if (@{$plan->{errors}}) {
             $c->stash->{rest} = { error => $format_errors->(@{$plan->{errors}}) };
+            # the user can delete them with the change (delete_phenotypes)
+            $c->stash->{rest}->{not_planted_phenotypes} = $plan->{not_planted_phenotypes} if $plan->{not_planted_phenotypes} && !$options->{delete_phenotypes};
             return;
         }
         $c->stash->{rest} = { preview => $accession_change->summary($plan) };
@@ -6337,6 +6343,10 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
             "block_number",
             "is_a_control"
         );
+        # plots that were not planted (see CXGN::Trial::AccessionChange), when there are any;
+        # the file can be corrected and uploaded with Change Accessions
+        my $has_not_planted = grep { ($_->{type} // '') eq 'plot' && $_->{not_planted} } @{$results->{plots}};
+        push(@headers, "not_planted") if $has_not_planted;
         push(@data, \@headers);
 
         # Add plot rows
@@ -6363,6 +6373,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                     $plot->{block_number},
                     $plot->{is_a_control}
                 );
+                push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                 push(@data, \@d);
 
                 # Add additional subplots for the current plot, if found
@@ -6386,6 +6397,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                             $plot->{block_number},
                             $plot->{is_a_control}
                         );
+                        push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                         push(@data, \@d);
                     }
                 }
@@ -6411,6 +6423,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                             $plot->{block_number},
                             $plot->{is_a_control}
                         );
+                        push(@d, $plot->{not_planted} ? 1 : 0) if $has_not_planted;
                         push(@data, \@d);
                     }
                 }
@@ -6435,6 +6448,7 @@ sub get_trial_plot_order : Path('/ajax/breeders/trial_plot_order') : Args(0) {
                     "", # block
                     "", # control
                 );
+                push(@d, "") if $has_not_planted;
                 push(@data, \@d);
             }
 

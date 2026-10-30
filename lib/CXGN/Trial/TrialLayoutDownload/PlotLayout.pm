@@ -53,9 +53,11 @@ sub retrieve {
     my $trial_stock_type = $self->trial_stock_type();
     my $include_plot_order = $self->include_plot_order() && $self->plot_order() && $self->plot_order() ne '' && $self->plot_start() && $self->plot_start() ne '';
 
-    my @possible_cols = ('plot_name','plot_id','accession_name','accession_id','plot_order','plot_number','block_number','is_a_control','rep_number','range_number','row_number','col_number','seedlot_name','seed_transaction_operator','num_seed_per_plot','pedigree','location_name','trial_name','year', 'planting_date', 'synonyms','variety','tier','plot_geo_json',);
+    my @possible_cols = ('plot_name','plot_id','accession_name','accession_id','plot_order','plot_number','block_number','is_a_control','rep_number','range_number','row_number','col_number','seedlot_name','seed_transaction_operator','num_seed_per_plot','pedigree','location_name','trial_name','year', 'planting_date', 'synonyms','variety','tier','plot_geo_json','not_planted',);
 
     $selected_cols{plot_order} = 1 if $include_plot_order;
+    # plots that were not planted are marked whenever the trial has some
+    $selected_cols{not_planted} = 1 if grep { $_->{not_planted} } values %design;
 
     my @header;
     foreach (@possible_cols){
@@ -85,7 +87,8 @@ sub retrieve {
         my $results = CXGN::Trial->get_sorted_plots($schema, [$self->trial_id], $self->plot_order, $self->plot_start);
         if ( $results->{plots} ) {
             foreach (@{$results->{plots}}) {
-                $design{$_->{plot_number}}->{plot_order} = $_->{order};
+                # plots left out of %design (not planted) are not added back
+                $design{$_->{plot_number}}->{plot_order} = $_->{order} if $design{$_->{plot_number}};
             }
         }
     }
@@ -132,6 +135,8 @@ sub retrieve {
                     push @$line, $accessionprops{$design_info->{accession_id}}->{variety} // "";
                 } elsif ($_ eq 'pedigree'){
                     push @$line, $pedigree_strings->{$design_info->{"accession_name"}};
+                } elsif ($_ eq 'not_planted'){
+                    push @$line, $design_info->{not_planted} ? 1 : 0;
                 } else {
                     push @$line, $design_info->{$_};
                 }
