@@ -2366,9 +2366,15 @@ sub trial_plot_gps_upload : Chained('trial') PathPart('upload_plot_gps') Args(0)
     $c->stash->{rest} = { success => 1 };
 }
 
-# Changes the accessions of plots from a file (plot_name, accession_name and
-# optionally new_plot_name), all in one transaction, with CXGN::Trial::AccessionChange.
+# Changes the accessions of plots from a file: plot_name, accession_name, and
+# optionally new_plot_name and seedlot_name (the seed transactions follow the
+# packets anyway). Other
+# columns are ignored, so a downloaded layout or planting order file (Download
+# Plot Order, whose border and gap rows are skipped) can be corrected and
+# uploaded; uploading it again changes nothing.
 # Args: 'check' (curators get a warning for trials with phenotypes) or 'override'.
+# params: keep_plot_names, preview (1 to get the plan only),
+#   override (1, the same as the Arg 'override')
 sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot_accessions_using_file') Args(1) {
     my $self = shift;
     my $c = shift;
@@ -2458,13 +2464,33 @@ sub trial_change_plot_accessions_upload : Chained('trial') PathPart('change_plot
         schema => $schema,
         trial_id => $trial_id,
     });
-    # the service finds the plots by name; the parser found the accessions
+    # the service finds the plots and the accessions by name, and plans in the order of the plot numbers
     my @changes = map { {
         plot_name => $_,
-        new_stock_id => $parsed_data->{$_}->{new_accession_id},
+        new_stock_name => $parsed_data->{$_}->{new_accession_name},
         new_plot_name => $parsed_data->{$_}->{new_plot_name},
+        seedlot_name => $parsed_data->{$_}->{seedlot_name},
     } } keys %$parsed_data;
-    $self->_change_trial_stocks($c, $accession_change, \@changes, { rename_plots => 'auto' }, _true_param($c->req->param('preview')), 1);
+
+    my $options = {
+        rename_plots => _true_param($c->req->param('keep_plot_names')) ? 'none' : 'auto',
+        # the file says what was planted: the seed transactions follow the packets (shown in the preview)
+        seedlots => 'follow',
+    };
+    my $preview = _true_param($c->req->param('preview'));
+    my $done = $self->_change_trial_stocks($c, $accession_change, \@changes, $options, $preview, 1);
+    if ($done && $parser->has_parse_warnings()) {
+        # rows the parser skipped (other trials in a planting order file)
+        push @{ ($preview ? $c->stash->{rest}->{preview} : $c->stash->{rest})->{warnings} }, @{ $parser->get_parse_warnings()->{warning_messages} || [] };
+    }
+    if ($done && $preview) {
+        # so that a file that is not the whole trial is noticed
+        $c->stash->{rest}->{preview}->{rows_read} = scalar(@changes);
+    } elsif ($done) {
+        # the file stays with the trial (Uploaded Additional Files), as a record of the correction
+        my $result = $c->stash->{trial}->add_additional_uploaded_file($c->user->get_object->get_sp_person_id(), $archived_filename_with_path, $md5->hexdigest());
+        print STDERR "Could not keep $archived_filename_with_path with trial $trial_id: $result->{error}\n" if $result->{error};
+    }
 }
 
 sub trial_additional_file_upload : Chained('trial') PathPart('upload_additional_file') Args(0) {

@@ -1,8 +1,9 @@
 import "../legacy/jquery.js";
 
 /**
- * Changes of what grows on the plots of a field trial, for example Replace
- * Accession (Field Layout Tools -> Edit Field Layout).
+ * Changes of what grows on the plots of a field trial: the Change Accessions
+ * upload (a file of what was planted) and Replace Accession (Field Layout
+ * Tools -> Edit Field Layout).
  *
  * The endpoints answer with a summary (see CXGN::Trial::AccessionChange::summary()):
  * with preview=1 what would change ({ preview: summary }), otherwise what changed
@@ -26,6 +27,9 @@ export function summaryLines(summary, planned, maxItems = 10) {
         }
     };
 
+    if (planned && summary.rows_read !== undefined) {
+        lines.push(`${summary.rows_read} plot(s) read from the file.`);
+    }
     const changes = summary.changes || [];
     lines.push(`${summary.changed} plot(s) ${planned ? "will get" : "got"} another accession${changes.length ? ":" : "."}`);
     list(changes, (c) => `${c.plot_name}: ${c.old_stock_name} -> ${c.new_stock_name}`);
@@ -41,6 +45,27 @@ export function summaryLines(summary, planned, maxItems = 10) {
         list(summary.renamed, (r) => `${r.old_name} -> ${r.new_name}`);
     }
     (summary.not_renamed || []).forEach((r) => lines.push(`Not renamed: ${r.plot_name} (${r.reason})`));
+    const seedlots = summary.seedlots || [];
+    const moves = seedlots.filter((t) => t.type === "move");
+    if (moves.length) {
+        lines.push(`${moves.length} seed transaction(s) ${planned ? "will follow" : "followed"} their packets:`);
+        list(moves, (t) => `${t.seedlot_name}: ${t.from_plot_name} -> ${t.plot_name}`);
+    }
+    const otherSeedlot = seedlots.filter((t) => t.type === "seedlot");
+    if (otherSeedlot.length) {
+        lines.push(`${otherSeedlot.length} plot(s) ${planned ? "will get" : "got"} another seedlot:`);
+        list(otherSeedlot, (t) => `${t.plot_name}: ${t.old_seedlot_name} -> ${t.seedlot_name}`);
+    }
+    const restored = seedlots.filter((t) => t.type === "restore");
+    if (restored.length) {
+        lines.push(`${restored.length} plot(s) ${planned ? "will get" : "got"} back the packet an earlier correction left in no plot:`);
+        list(restored, (t) => `${t.plot_name}: ${t.seedlot_name}`);
+    }
+    const taken = seedlots.filter((t) => t.type === "taken");
+    if (taken.length) {
+        lines.push(`${taken.length} packet(s) ${planned ? "will be" : "are"} in no plot (for example planted into a border); their seed stays taken from the seedlot:`);
+        list(taken, (t) => `${t.seedlot_name} (was linked to ${t.plot_name})`);
+    }
     (summary.entry_numbers || []).forEach((e) => lines.push(`${e.stock_name}${planned ? " will get" : " got"} entry number ${e.entry_number}.`));
     (summary.warnings || []).forEach((w) => lines.push("Note: " + w));
     return lines;
@@ -67,7 +92,8 @@ export function changedPlots(summary) {
  */
 export function nothingChanges(summary) {
     return !summary.changed && !summary.replicates_changed && !(summary.renamed || []).length
-        && !(summary.checks || []).length && !(summary.entry_numbers || []).length;
+        && !(summary.checks || []).length && !(summary.entry_numbers || []).length
+        && !(summary.seedlots || []).length;
 }
 
 /**

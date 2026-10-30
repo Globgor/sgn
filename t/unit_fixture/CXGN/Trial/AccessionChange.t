@@ -21,9 +21,11 @@ use CXGN::Trial::TrialCreate;
 use CXGN::Trial::TrialLayout;
 use CXGN::Trial::TrialLayoutDownload;
 use CXGN::Phenotypes::StorePhenotypes;
+use CXGN::Stock::Seedlot;
 use CXGN::Trial::Download;
 use CXGN::Trial::FieldMap;
 use Spreadsheet::Read;
+use CXGN::Stock::Seedlot::Transaction;
 
 BEGIN { use_ok('CXGN::Trial::AccessionChange'); }
 
@@ -484,6 +486,149 @@ sub grid_3x5 {
     }
     CXGN::Trial::TrialLayout->new({ schema => $schema, trial_id => $trial_id, experiment_type => 'field_layout' })->generate_and_cache_layout();
 }
+
+# seedlots of test_trial: one per accession, with 100 seeds, and 10 of them planted in each plot
+sub seedlot_with_seed {
+    my $accession = shift;
+    my $name = shift // "review_seedlot_$accession";
+    my $seedlot = $schema->resultset('Stock::Stock')->create({ uniquename => $name, name => $name, type_id => cvterm_id('seedlot', 'stock_type'), organism_id => stock($accession)->organism_id });
+    $schema->resultset('Stock::StockRelationship')->create({ subject_id => stock_id($accession), object_id => $seedlot->stock_id, type_id => cvterm_id('collection_of', 'stock_relationship') });
+    CXGN::Stock::Seedlot::Transaction->new(schema => $schema, from_stock => [ $seedlot->stock_id, $name ], to_stock => [ $seedlot->stock_id, $name ], amount => 100, weight_gram => 'NA', factor => 1, operator => 'janedoe', timestamp => '2026-04-01', description => 'harvest')->store();
+    return $seedlot;
+}
+sub plant_from {
+    my ($seedlot, $plot_id) = @_;
+    CXGN::Stock::Seedlot::Transaction->new(schema => $schema, from_stock => [ $seedlot->stock_id, $seedlot->uniquename ], to_stock => [ $plot_id, name_of($plot_id) ], amount => 10, weight_gram => 'NA', operator => 'janedoe', timestamp => '2026-05-01', description => 'planted')->store();
+}
+# the seedlots a plot was planted from
+sub planted_from {
+    my $plot_id = shift;
+    return join(',', sort map { $_->object->uniquename } $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot_id, type_id => $t{seed_transaction} })->all);
+}
+sub seed_count { return CXGN::Stock::Seedlot->new(schema => $schema, seedlot_id => $_[0]->stock_id)->current_count(); }
+
+scenario 'seedlots: the seed transactions follow the packets' => sub {
+    my %before = map { $_ => linked_stock($plot{$_}, 'plot_of') } keys %plot;
+    my %seedlot;
+    foreach my $n (4 .. 10) {
+        $seedlot{ $before{$n} } //= seedlot_with_seed($before{$n});
+        plant_from($seedlot{ $before{$n} }, $plot{$n});
+    }
+    my %count = map { $_ => seed_count($seedlot{$_}) } keys %seedlot;
+    my $ac = $change->();
+
+    # the packets of plots 4 to 7 went one place on, into 5 to 8, and the packet of plot 8 into plot 4
+    # (test_accession3, 1, 4, 5, 1 planned in plots 4 to 8)
+    my @changes = ({ plot_id => $plot{4}, new_stock_id => stock_id($before{8}) }, map { { plot_id => $plot{$_}, new_stock_id => stock_id($before{$_ - 1}) } } 5 .. 8);
+    my $plan = $ac->plan(\@changes, { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply($plan->{errors}, [], 'no errors') or diag(explain $plan->{errors});
+    is_deeply([ map { [ $_->{type}, $_->{from_plot_name} // '', $_->{plot_name} ] } @{$plan->{seedlots}} ],
+        [ [ 'move', 'test_trial25', 'test_trial24' ], [ 'move', 'test_trial24', 'test_trial25' ], [ 'move', 'test_trial28', 'test_trial26' ], [ 'move', 'test_trial26', 'test_trial27' ], [ 'move', 'test_trial27', 'test_trial28' ] ],
+        'each packet follows its accession, the nearest packet of the accession by plot number (plot 4 takes the packet of plot 5, of the same seedlot as that of plot 8)');
+    $ac->apply(\@changes, { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply([ map { planted_from($plot{$_}) } 4 .. 8 ], [ "review_seedlot_$before{8}", map { "review_seedlot_$before{$_}" } 4 .. 7 ], 'plots 4 to 8 were planted from the seedlots of the accessions they have now');
+    is(planted_from($plot{9}), "review_seedlot_$before{9}", 'plot 9 is as it was');
+    is_deeply({ map { $_ => seed_count($seedlot{$_}) } keys %seedlot }, \%count, 'every seedlot has as much seed as before');
+    my $design = cached_design($trial_id);
+    is_deeply([ map { $design->{"test_trial2$_"}->{seedlot_name} // '' } 4 .. 8 ], [ "review_seedlot_$before{8}", map { "review_seedlot_$before{$_}" } 4 .. 7 ], 'the layout has the seedlots');
+
+    # uploading the same state again changes nothing
+    $plan = $ac->plan([ map { { plot_id => $plot{$_}, new_stock_id => stock_id(linked_stock($plot{$_}, 'plot_of')), seedlot_name => planted_from($plot{$_}) } } 4 .. 10 ], { seedlots => 'follow' });
+    is_deeply([ $plan->{seedlots}, scalar(@{$plan->{unchanged}}) ], [ [], 7 ], 'the same seedlots again: nothing to change');
+    # the file of the correction again: its seedlot cells are those of before the packets moved
+    $plan = $ac->plan([ map { { plot_id => $plot{$_}, new_stock_id => stock_id(linked_stock($plot{$_}, 'plot_of')), seedlot_name => "review_seedlot_$before{$_}" } } 4 .. 10 ], { seedlots => 'follow' });
+    is_deeply([ $plan->{errors}, $plan->{seedlots}, $plan->{warnings} ], [ [], [], [] ], 'the same file again: nothing to change, no notes') or diag(explain $plan);
+};
+
+scenario 'seedlots: two packets of the accession as near: the plan says which one it took' => sub {
+    # plots 4 and 6 have test_accession1, plot 5 test_accession2, each planted from the seedlot of its accession
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{$_}, type_id => $t{plot_of} })->update({ object_id => $acc{1} }) for (4, 6);
+    $schema->resultset('Stock::StockRelationship')->search({ subject_id => $plot{5}, type_id => $t{plot_of} })->update({ object_id => $acc{2} });
+    my %seedlot = map { $_ => seedlot_with_seed("test_accession$_") } (1, 2);
+    plant_from($seedlot{1}, $plot{$_}) for (4, 6);
+    plant_from($seedlot{2}, $plot{5});
+    # the packets of plots 4 and 6 are free, both one plot away from plot 5
+    my $plan = $change->()->plan([ { plot_id => $plot{4}, new_stock_id => $acc{2} }, { plot_id => $plot{6}, new_stock_id => $acc{2} }, { plot_id => $plot{5}, new_stock_id => $acc{1} } ], { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply($plan->{errors}, [], 'no errors') or diag(join("\n", @{$plan->{errors}}));
+    my ($move) = grep { $_->{type} eq 'move' && $_->{plot_name} eq 'test_trial25' } @{$plan->{seedlots}};
+    is($move->{from_plot_name}, 'test_trial24', 'plot 5 takes the packet of plot 4');
+    ok((grep { /^Plot test_trial25 takes the packet of plot test_trial24 \(review_seedlot_test_accession1\), but the packet of plot test_trial26 \(review_seedlot_test_accession1\) fits as well; give the seedlot in a seedlot_name column if it was that one\.$/ } @{$plan->{warnings}}), 'and says that the packet of plot 6 fits as well') or diag(explain $plan->{warnings});
+};
+
+scenario 'seedlots: plots of family names are planted from seedlots of their crosses' => sub {
+    my $organism_id = stock('test_accession1')->organism_id;
+    my (%family, %cross, %seedlot);
+    foreach my $n (1, 2) {
+        $family{$n} = $schema->resultset('Stock::Stock')->create({ uniquename => "review_family_$n", name => "review_family_$n", type_id => cvterm_id('family_name', 'stock_type'), organism_id => $organism_id });
+        $cross{$n} = $schema->resultset('Stock::Stock')->create({ uniquename => "review_cross_$n", name => "review_cross_$n", type_id => cvterm_id('cross', 'stock_type'), organism_id => $organism_id });
+        $schema->resultset('Stock::StockRelationship')->create({ subject_id => $cross{$n}->stock_id, object_id => $family{$n}->stock_id, type_id => cvterm_id('cross_member_of', 'stock_relationship') });
+        $seedlot{$n} = seedlot_with_seed("review_cross_$n", "review_seedlot_family_$n");
+    }
+    my $ac = $change->(stock_type => 'family_name');
+    $ac->apply([ map { { plot_id => $plot{$_}, new_stock_id => $family{$_}->stock_id } } (1, 2) ], { rename_plots => 'none', seedlots => 'follow' });
+    plant_from($seedlot{$_}, $plot{$_}) for (1, 2);
+    # the two packets were swapped
+    my $plan = $ac->apply([ { plot_id => $plot{1}, new_stock_id => $family{2}->stock_id }, { plot_id => $plot{2}, new_stock_id => $family{1}->stock_id } ], { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply([ sort map { "$_->{type} $_->{plot_name}" } @{$plan->{seedlots}} ], [ 'move test_trial21', 'move test_trial22' ], 'both packets move');
+    is_deeply([ planted_from($plot{1}), planted_from($plot{2}) ], [ 'review_seedlot_family_2', 'review_seedlot_family_1' ], 'each plot has a seedlot of a cross of its family');
+    $plan = $ac->plan([ { plot_id => $plot{1}, new_stock_id => $family{2}->stock_id, seedlot_name => 'review_seedlot_family_1' } ], { seedlots => 'follow' });
+    is_deeply([ $plan->{errors}, $plan->{seedlots} ], [ [], [] ], 'a seedlot of a cross of another family is not used (the cell of the file as downloaded before the swap)');
+};
+
+scenario 'seedlots: another seedlot of the same accession, and errors' => sub {
+    my $accession = linked_stock($plot{10}, 'plot_of');
+    my $first = seedlot_with_seed($accession);
+    my $second = seedlot_with_seed($accession, 'review_seedlot_second');
+    my $other = seedlot_with_seed('test_accession5');
+    plant_from($first, $plot{10});
+    my $ac = $change->();
+    my $plan = $ac->apply([ { plot_id => $plot{10}, new_stock_id => stock_id($accession), seedlot_name => 'review_seedlot_second' } ], { seedlots => 'follow' });
+    is_deeply([ map { [ $_->{type}, $_->{old_seedlot_name}, $_->{seedlot_name} ] } @{$plan->{seedlots}} ], [ [ 'seedlot', $first->uniquename, 'review_seedlot_second' ] ], 'planned: the plot was planted from the second seedlot');
+    is(planted_from($plot{10}), 'review_seedlot_second', 'it is now');
+    is_deeply([ seed_count($first), seed_count($second) ], [ 100, 90 ], 'the seed counts of both seedlots are corrected');
+    is_deeply([ map { CXGN::Stock::Seedlot->new(schema => $schema, seedlot_id => $_->stock_id)->get_current_count_property() } ($first, $second) ], [ 100, 90 ], 'and stored');
+
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => stock_id($accession), seedlot_name => 'no_such_seedlot' } ], { seedlots => 'follow' });
+    is_deeply($plan->{errors}, [ 'Seedlot no_such_seedlot (plot test_trial210) does not exist.' ], 'a seedlot that does not exist');
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => stock_id($accession), seedlot_name => $other->uniquename } ], { seedlots => 'follow' });
+    is_deeply([ $plan->{errors}, $plan->{seedlots}, $plan->{warnings} ], [ [], [], [] ], 'a seedlot of another accession is not used; the plot has one of its accession, so no note');
+    $plan = $ac->plan([ { plot_id => $plot{10}, new_stock_id => $acc{5}, seedlot_name => $first->uniquename } ], { rename_plots => 'none', seedlots => 'follow' });
+    ok((grep { /^Seedlot \Q${\ $first->uniquename}\E, given for plot test_trial210, does not hold test_accession5, its accession, so it is not used\./ } @{$plan->{warnings}}), 'a note where the plot is left without a seedlot of its accession') or diag(explain $plan->{warnings});
+    $plan = $ac->plan([ { plot_id => $plot{11}, new_stock_id => stock_id('test_accession5'), seedlot_name => $other->uniquename } ], { rename_plots => 'none', seedlots => 'follow' });
+    ok((grep { /^Plot test_trial211 has no seed transaction, so seedlot review_seedlot_test_accession5 is not recorded for it/ } @{$plan->{warnings}}), 'a plot without a seed transaction gets a warning') or diag(explain $plan);
+};
+
+scenario 'seedlots: without the option the seed transactions stay where they are (the plot form, Replace Accession)' => sub {
+    my $accession = linked_stock($plot{10}, 'plot_of');
+    my $seedlot = seedlot_with_seed($accession);
+    plant_from($seedlot, $plot{10});
+    my $plan = $change->()->apply([ { plot_id => $plot{10}, new_stock_id => $acc{5} } ], { rename_plots => 'none' });
+    is_deeply($plan->{seedlots}, [], 'no seed transaction is planned');
+    is(planted_from($plot{10}), $seedlot->uniquename, 'the plot keeps its seed transaction');
+};
+
+scenario 'seedlots: a packet left in no plot goes back to its plot when a later correction needs it there' => sub {
+    my $accession = linked_stock($plot{10}, 'plot_of');
+    my $seedlot = seedlot_with_seed($accession);
+    plant_from($seedlot, $plot{10});
+    my $count = seed_count($seedlot);
+    my $transaction_value = sub { my ($v) = $schema->storage->dbh->selectrow_array("SELECT value FROM stock_relationship WHERE subject_id = ? AND object_id = ? AND type_id = ?", undef, @_, $t{seed_transaction}); return decode_json($v // '{}'); };
+    my $planted = $transaction_value->($plot{10}, $seedlot->stock_id);
+    my $ac = $change->();
+    # a correction by mistake: the plot gets another accession, and its packet is in no plot
+    my $plan = $ac->apply([ { plot_id => $plot{10}, new_stock_id => $acc{5} } ], { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply([ map { $_->{type} } @{$plan->{seedlots}} ], [ 'taken' ], 'the packet becomes seed taken');
+    is(planted_from($plot{10}), '', 'the plot has no seed transaction');
+    my ($taken) = grep { $_->{taken} } map { decode_json($_->[0] // '{}') } @{ $schema->storage->dbh->selectall_arrayref("SELECT value FROM stock_relationship WHERE subject_id = ? AND object_id = ? AND type_id = ?", undef, $seedlot->stock_id, $seedlot->stock_id, $t{seed_transaction}) };
+    is($taken ? $taken->{taken}->{plot_id} : undef, $plot{10}, 'the seed taken keeps the plot it was linked to');
+    is(seed_count($seedlot), $count, 'the seedlot has as much seed as before');
+    # the correction is corrected
+    $plan = $ac->apply([ { plot_id => $plot{10}, new_stock_id => stock_id($accession) } ], { rename_plots => 'none', seedlots => 'follow' });
+    is_deeply([ map { [ $_->{type}, $_->{plot_name}, $_->{seedlot_name} ] } @{$plan->{seedlots}} ], [ [ 'restore', 'test_trial210', $seedlot->uniquename ] ], 'the packet goes back to the plot');
+    is(planted_from($plot{10}), $seedlot->uniquename, 'the plot is planted from the seedlot again');
+    is_deeply($transaction_value->($plot{10}, $seedlot->stock_id), $planted, 'the transaction is as it was');
+    is(seed_count($seedlot), $count, 'and the seedlot has as much seed as before (not recorded a second time)');
+};
 
 # --- an RCBD trial with plants and tissue samples ------------------------------
 my @rcbd_accessions = map { new_accession("review_rcbd_acc_$_")->stock_id } ('A', 'B', 'C', 'D');

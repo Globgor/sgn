@@ -81,6 +81,18 @@ of crosses (the crosses keep their recorded parents).
 
 =item *
 
+with the option C<seedlots =E<gt> 'follow'> (the Change Accessions file, which
+has a preview) or a C<seedlot_name> in a change, moves the seed transactions
+(seedlot to plot) with the packets: a plot that gets another accession takes
+over the transaction of a plot in the same change that lost that accession, or
+of the seedlot in C<seedlot_name>. A transaction that no plot takes, for
+example of a packet planted into a border, becomes seed taken from the
+seedlot, so the inventory stays as it is; it keeps what it was, and goes back
+to its plot when a later correction gives the plot a stock of that seedlot
+again. Without the option the seed transactions stay where they are.
+
+=item *
+
 gives the new stock the entry number of the old one when the old stock leaves
 the trial, the new one is new to the trial, and nothing else claims that entry
 number.
@@ -115,6 +127,8 @@ use Encode qw(encode_utf8);
 use SGN::Model::Cvterm;
 use CXGN::Trial::TrialLayout;
 use CXGN::BreedersToolbox::Projects;
+use CXGN::Stock::Seedlot;
+use CXGN::JSONUtils qw(decode_stored_json);
 
 has 'schema' => ( isa => 'Bio::Chado::Schema', is => 'ro', required => 1 );
 
@@ -157,6 +171,7 @@ sub _build_cvterm_ids {
         [ accession => 'accession', 'stock_type' ],
         [ cross => 'cross', 'stock_type' ],
         [ family_name => 'family_name', 'stock_type' ],
+        [ seedlot => 'seedlot', 'stock_type' ],
         [ plot_of => 'plot_of', 'stock_relationship' ],
         [ plant_of => 'plant_of', 'stock_relationship' ],
         [ subplot_of => 'subplot_of', 'stock_relationship' ],
@@ -166,6 +181,9 @@ sub _build_cvterm_ids {
         [ male_plot_of => 'male_plot_of', 'stock_relationship' ],
         [ female_plant_of => 'female_plant_of', 'stock_relationship' ],
         [ male_plant_of => 'male_plant_of', 'stock_relationship' ],
+        [ seed_transaction => 'seed transaction', 'stock_relationship' ],
+        [ collection_of => 'collection_of', 'stock_relationship' ],
+        [ cross_member_of => 'cross_member_of', 'stock_relationship' ],
         [ plot_number => 'plot number', 'stock_property' ],
         [ block => 'block', 'stock_property' ],
         [ replicate => 'replicate', 'stock_property' ],
@@ -386,8 +404,10 @@ stocks of all changes are read in one query each, and the changes are planned
 in the order of the plot numbers. A change whose new stock is the current one
 only renames the plot (when it has a new_plot_name) or does nothing.
 
-$options: { rename_plots => 'auto' (default) or 'none', curator => 0 }. With
-'none' plots are only renamed to an explicit new_plot_name. With curator 0
+$options: { rename_plots => 'auto' (default) or 'none', seedlots => 'follow',
+curator => 0 }. With 'none' plots are only renamed to an explicit
+new_plot_name. With seedlots 'follow' the seed transactions follow the packets
+(see above). With curator 0
 (a user who is not a curator) changes that only a curator may make are
 errors: plots with phenotypes or high-dimensional data, and plots with samples
 in other trials (the wells of a genotyping plate made from them would get the
@@ -433,7 +453,7 @@ sub _plan {
     my $schema = $self->schema;
     my $ids = $self->_cvterm_ids;
 
-    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, external_samples => [] );
+    my %plan = ( errors => [], warnings => [], changes => [], unchanged => [], replicates => [], renames => [], not_renamed => [], entry_numbers => [], checks => [], plots_with_phenotypes => 0, external_samples => [], seedlots => [] );
     my $errors = $plan{errors};
 
     if ($rename_mode ne 'auto' && $rename_mode ne 'none') {
@@ -465,6 +485,7 @@ sub _plan {
 
     # validate the changes
     my %new_stock_by_unit;
+    my %seedlot_name;
     my %explicit_name;
     my %keep_name;
     my %seen_unit;
@@ -487,6 +508,13 @@ sub _plan {
         if (defined($change->{old_stock_id}) && $change->{old_stock_id} =~ /^\d+$/ && $change->{old_stock_id} != $unit->{stock_id}) {
             push @$errors, "Plot $unit->{plot_name} was changed by someone else in the meantime (it has $unit->{stock_name} now); nothing was changed.";
             next;
+        }
+        if (defined($change->{seedlot_name}) && $change->{seedlot_name} =~ /\S/) {
+            if ($self->_is_plate) {
+                push @$errors, "Wells of a genotyping plate have no seedlots here.";
+                next;
+            }
+            ($seedlot_name{$unit_id} = $change->{seedlot_name}) =~ s/^\s+|\s+$//g;
         }
         my $new_stock_id = $change->{new_stock_id};
         if ((!defined($new_stock_id) || $new_stock_id eq '') && defined($change->{new_stock_name}) && $change->{new_stock_name} =~ /\S/) {
@@ -638,6 +666,9 @@ sub _plan {
     }
     if (!$self->_is_plate) {
         $self->_plan_phenotype_and_cross_warnings(\%plan, $children, \%after);
+        $self->_plan_seedlots(\%plan, $units, \%after, \%seedlot_name, $options);
+        my %seedlot_changed = map { $_->{plot_name} => 1 } @{$plan{seedlots}};
+        $plan{unchanged} = [ grep { !$seedlot_changed{$_} } @{$plan{unchanged}} ];
     }
     # what only a curator may change: the samples in other trials belong to trials whose rights are
     # not checked here, and the layout check of the trial page does not see high-dimensional data
@@ -719,6 +750,7 @@ sub plan_digest {
         (map { "rename $_->{stock_id} $_->{new_name}" } @{$plan->{renames}}),
         (map { "check $_->{plot_id} $_->{new}" } @{$plan->{checks}}),
         (map { "entry $_->{stock_id} $_->{entry_number}" } @{$plan->{entry_numbers}}),
+        (map { "seedlot $_->{type} $_->{transaction_id} $_->{plot_id} $_->{seedlot_id}" } @{$plan->{seedlots}}),
     );
     return md5_hex(encode_utf8(join("\n", sort @parts)));
 }
@@ -748,6 +780,59 @@ sub _execute {
             $child_h->execute($c->{new_stock_id}, \@child_ids, $c->{old_stock_id}, \@child_relationships);
         }
         push @external_ids, @external;
+    }
+
+    # seed transactions follow the packets (see _plan_seedlots)
+    if (@{$plan->{seedlots}}) {
+        my $seed_transaction = $ids->{seed_transaction};
+        my $rank_h = $dbh->prepare("SELECT COALESCE(MAX(rank), -1) + 1 FROM stock_relationship WHERE subject_id = ? AND object_id = ? AND type_id = ?");
+        my $next_rank = sub { $rank_h->execute(@_, $seed_transaction); return ($rank_h->fetchrow_array())[0]; };
+        my $value_h = $dbh->prepare("SELECT value FROM stock_relationship WHERE stock_relationship_id = ?");
+        my $update_h = $dbh->prepare("UPDATE stock_relationship SET subject_id = ?, object_id = ?, rank = ?, value = COALESCE(?, value)
+            WHERE stock_relationship_id = ? AND subject_id = ? AND object_id = ? AND type_id = ?");
+        my %recount;
+        foreach my $s (@{$plan->{seedlots}}) {
+            my ($subject, $object, $value) = ($s->{plot_id}, $s->{seedlot_id}, undef);
+            my ($old_subject, $old_object) = ($s->{plot_id}, $s->{seedlot_id});
+            if ($s->{type} eq 'move') {
+                $old_subject = $s->{from_plot_id};
+            } elsif ($s->{type} eq 'restore') {
+                # seed taken back to the plot it was linked to, as it was before
+                $old_subject = $s->{seedlot_id};
+                $value_h->execute($s->{transaction_id});
+                my ($json) = $value_h->fetchrow_array();
+                my $v = decode_stored_json($json // '{}');
+                my $taken = delete($v->{taken}) || {};
+                foreach my $key ('factor', 'description') {
+                    if (defined($taken->{$key})) { $v->{$key} = $taken->{$key}; } else { delete $v->{$key}; }
+                }
+                $value = encode_json($v);
+            } elsif ($s->{type} eq 'seedlot') {
+                $old_object = $s->{old_seedlot_id};
+                $recount{$old_object} = $recount{$object} = 1;
+            } else {
+                # seed taken from the seedlot: a transaction from the seedlot to itself
+                $subject = $s->{seedlot_id};
+                $value_h->execute($s->{transaction_id});
+                my ($json) = $value_h->fetchrow_array();
+                # the amount must stay, or the inventory would change
+                my $v = decode_stored_json($json // '{}');
+                # what it was, so that it can go back to the plot if a later correction plants it there
+                $v->{taken} = { plot_id => $s->{plot_id} + 0, factor => $v->{factor}, description => $v->{description} };
+                $v->{factor} = -1;
+                $v->{description} = join(' ', grep { defined($_) && length($_) } $v->{description}, "(Correction of trial ".$self->_trial_name.": no plot has this packet; it was linked to plot $s->{plot_name}.)");
+                $value = encode_json($v);
+            }
+            my $rows = $update_h->execute($subject, $object, $next_rank->($subject, $object), $value, $s->{transaction_id}, $old_subject, $old_object, $seed_transaction);
+            if ($rows != 1) {
+                die "The seed transaction of plot ".($s->{from_plot_name} // $s->{plot_name})." was changed by someone else in the meantime; nothing was changed.\n";
+            }
+        }
+        foreach my $seedlot_id (sort { $a <=> $b } keys %recount) {
+            my $seedlot = CXGN::Stock::Seedlot->new(schema => $self->schema, seedlot_id => $seedlot_id);
+            $seedlot->set_current_count_property();
+            $seedlot->set_current_weight_property();
+        }
     }
 
     # replicates of the plots, and of their plants, subplots and tissue samples that have one
@@ -793,7 +878,7 @@ sub _execute {
         $row->update({ value => encode_json($map) });
     }
 
-    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}}) {
+    if (@{$plan->{changes}} || @{$plan->{replicates}} || @{$plan->{renames}} || @{$plan->{checks}} || @{$plan->{seedlots}}) {
         my $layout = CXGN::Trial::TrialLayout->new({
             schema => $self->schema,
             trial_id => $self->trial_id,
@@ -1173,6 +1258,190 @@ sub _plan_phenotype_and_cross_warnings {
     }
 }
 
+# Seed transactions (seedlot -> plot) follow the packets. A plot that gets
+# another accession takes over the transaction of a plot in this change that
+# lost that accession, the nearest one by plot number (a shift moves packets a
+# few places), or the transaction from the seedlot in its seedlot_name. A
+# seedlot_name of another seedlot of the same accession moves the plot's own
+# transaction to that seedlot; one that does not hold the plot's accession (a
+# cell left as it was while the accession was corrected) is not used. So a plot keeps at most one seedlot, and it holds
+# the accession of the plot. A transaction that no plot takes, for example of a
+# packet planted into a border or of a place left empty, becomes seed taken from
+# the seedlot, so the inventory does not change. Seedlots harvested from the
+# changed plots get a warning.
+sub _plan_seedlots {
+    my $self = shift;
+    my $plan = shift;
+    my $units = shift;
+    my $after = shift;
+    my $seedlot_name = shift || {};
+    my $options = shift || {};
+    my $ids = $self->_cvterm_ids;
+    return if !$ids->{seed_transaction} || !$ids->{seedlot} || !$ids->{collection_of};
+    my $dbh = $self->schema->storage->dbh;
+
+    my %changed = map { $_->{plot_id} => 1 } @{$plan->{changes}};
+    my %plot_ids = map { $_ => 1 } (keys %changed, keys %$seedlot_name);
+    return if !%plot_ids;
+
+    my @harvested_from = grep { $changed{$_} } keys %plot_ids;
+    if (@harvested_from) {
+        my $harvest_h = $dbh->prepare("SELECT r.object_id, s.uniquename FROM stock_relationship r
+            JOIN stock s ON s.stock_id = r.subject_id AND s.type_id = ?
+            WHERE r.type_id = ? AND r.object_id = ANY(?) ORDER BY s.uniquename");
+        $harvest_h->execute($ids->{seedlot}, $ids->{seed_transaction}, \@harvested_from);
+        while (my ($plot_id, $name) = $harvest_h->fetchrow_array()) {
+            my $state = $after->{$plot_id};
+            push @{$plan->{warnings}}, "Seedlot $name was harvested from plot $state->{plot_name}, which has $state->{stock_name} now; correct the seedlot if needed.";
+        }
+    }
+
+    # the packets follow only when asked (the file of what was planted, which has a preview);
+    # a seedlot_name in a change asks for it too
+    return if ($options->{seedlots} // '') ne 'follow' && !%$seedlot_name;
+
+    # the planting transactions of these plots, with the stock their seedlot holds
+    my $h = $dbh->prepare("SELECT r.stock_relationship_id, r.subject_id, s.stock_id, s.uniquename, MIN(c.subject_id)
+        FROM stock_relationship r
+        JOIN stock s ON s.stock_id = r.object_id AND s.type_id = ?
+        LEFT JOIN stock_relationship c ON c.object_id = s.stock_id AND c.type_id = ?
+        WHERE r.type_id = ? AND r.subject_id = ANY(?)
+        GROUP BY r.stock_relationship_id, r.subject_id, s.stock_id, s.uniquename ORDER BY r.stock_relationship_id");
+    $h->execute($ids->{seedlot}, $ids->{collection_of}, $ids->{seed_transaction}, [ keys %plot_ids ]);
+    my %own;
+    while (my ($transaction_id, $plot_id, $seedlot_id, $name, $content_id) = $h->fetchrow_array()) {
+        push @{ $own{$plot_id} }, { transaction_id => $transaction_id, plot_id => $plot_id, seedlot_id => $seedlot_id, seedlot_name => $name, content_id => $content_id };
+    }
+
+    # the seedlots named in the change
+    my %seedlot;
+    if (%$seedlot_name) {
+        my $seedlot_h = $dbh->prepare("SELECT s.stock_id, s.uniquename, MIN(c.subject_id) FROM stock s
+            LEFT JOIN stock_relationship c ON c.object_id = s.stock_id AND c.type_id = ?
+            WHERE s.uniquename = ANY(?) AND s.type_id = ? GROUP BY s.stock_id, s.uniquename");
+        $seedlot_h->execute($ids->{collection_of}, [ values %$seedlot_name ], $ids->{seedlot});
+        while (my ($seedlot_id, $name, $content_id) = $seedlot_h->fetchrow_array()) {
+            $seedlot{$name} = { seedlot_id => $seedlot_id, content_id => $content_id };
+        }
+    }
+
+    # packets that an earlier correction turned into seed taken from their seedlot (marked with the
+    # plot they were linked to): they go back to that plot when it needs a packet of what the
+    # seedlot holds, instead of being recorded a second time. Only the seedlots that hold what the
+    # plots need (or a family's crosses) are looked at.
+    my %taken_for;
+    my @needed_stocks = grep { defined } map { $after->{$_}->{stock_id} } keys %plot_ids;
+    if (@needed_stocks) {
+        my $taken_h = $dbh->prepare("SELECT r.stock_relationship_id, s.stock_id, s.uniquename, MIN(c.subject_id), r.value
+            FROM stock_relationship r
+            JOIN stock s ON s.stock_id = r.subject_id AND s.type_id = ?
+            LEFT JOIN stock_relationship c ON c.object_id = s.stock_id AND c.type_id = ?
+            WHERE r.type_id = ? AND r.object_id = r.subject_id AND r.subject_id IN (
+                SELECT h.object_id FROM stock_relationship h WHERE h.type_id = ? AND (h.subject_id = ANY(?)
+                    OR h.subject_id IN (SELECT m.subject_id FROM stock_relationship m WHERE m.type_id = ? AND m.object_id = ANY(?))))
+            GROUP BY r.stock_relationship_id, s.stock_id, s.uniquename, r.value");
+        $taken_h->execute($ids->{seedlot}, $ids->{collection_of}, $ids->{seed_transaction}, $ids->{collection_of}, \@needed_stocks, $ids->{cross_member_of} // 0, \@needed_stocks);
+        while (my ($transaction_id, $seedlot_id, $name, $content_id, $json) = $taken_h->fetchrow_array()) {
+            my $taken = eval { decode_stored_json($json // '{}')->{taken} };
+            next if ref($taken) ne 'HASH' || !defined($taken->{plot_id}) || !$plot_ids{ $taken->{plot_id} };
+            push @{ $taken_for{ $taken->{plot_id} } }, { transaction_id => $transaction_id, seedlot_id => $seedlot_id, seedlot_name => $name, content_id => $content_id };
+        }
+    }
+
+    # what a seedlot holds counts for its stock and, for a cross, for the families the cross is a member of
+    # (plots of a family name are planted from seedlots of its crosses)
+    my %holds;
+    my @contents = grep { defined } map { $_->{content_id} } (values %seedlot, map { @$_ } values %own, values %taken_for);
+    $holds{$_}->{$_} = 1 for @contents;
+    if (@contents && $ids->{cross_member_of}) {
+        my $family_h = $dbh->prepare("SELECT subject_id, object_id FROM stock_relationship WHERE type_id = ? AND subject_id = ANY(?)");
+        $family_h->execute($ids->{cross_member_of}, \@contents);
+        while (my ($cross_id, $family_id) = $family_h->fetchrow_array()) { $holds{$cross_id}->{$family_id} = 1; }
+    }
+    my $holds = sub { my ($content_id, $stock_id) = @_; return defined($content_id) && $holds{$content_id}->{$stock_id}; };
+
+    # what each plot needs now: a given seedlot, or one of its accession
+    my $by_number = sub { _compare_plot_numbers($units->{ $_[0] }->{plot_number}, $units->{ $_[1] }->{plot_number}) || $_[0] <=> $_[1] };
+    my %want;
+    foreach my $plot_id (sort { $by_number->($a, $b) } keys %plot_ids) {
+        my $state = $after->{$plot_id};
+        my $name = $seedlot_name->{$plot_id};
+        # the seedlot the plot has now is no change (a cell left as it was)
+        if (defined($name) && !grep { $_->{seedlot_name} eq $name } @{ $own{$plot_id} || [] }) {
+            my $s = $seedlot{$name};
+            if (!$s) {
+                push @{$plan->{errors}}, "Seedlot $name (plot $state->{plot_name}) does not exist.";
+            } elsif (!$holds->($s->{content_id}, $state->{stock_id})) {
+                # a cell that was not changed with the accession (or a file uploaded again after the
+                # packets moved): not used; a note only if the plot is left without a seedlot of its accession
+                if (!grep { $holds->($_->{content_id}, $state->{stock_id}) } @{ $own{$plot_id} || [] }) {
+                    push @{$plan->{warnings}}, "Seedlot $name, given for plot $state->{plot_name}, does not hold $state->{stock_name}, its accession, so it is not used.";
+                }
+                $want{$plot_id} = { content_id => $state->{stock_id} } if $changed{$plot_id};
+            } else {
+                $want{$plot_id} = { seedlot_id => $s->{seedlot_id}, seedlot_name => $name };
+            }
+        } elsif ($changed{$plot_id}) {
+            $want{$plot_id} = { content_id => $state->{stock_id} };
+        }
+    }
+    return if @{$plan->{errors}};
+    my $fits = sub {
+        my ($t, $want) = @_;
+        return 0 if !$want;
+        return $t->{seedlot_id} == $want->{seedlot_id} if $want->{seedlot_id};
+        return $holds->($t->{content_id}, $want->{content_id});
+    };
+
+    # transactions that do not fit their plot any more are free for the plots that need one
+    my (@free, @need);
+    foreach my $plot_id (sort { $by_number->($a, $b) } keys %want) {
+        my $own = $own{$plot_id} || [];
+        next if grep { $fits->($_, $want{$plot_id}) } @$own;
+        push @free, @$own;
+        push @need, $plot_id if $want{$plot_id};
+    }
+    my $distance = sub {
+        my ($m, $n) = map { $units->{$_}->{plot_number} } @_;
+        return (defined($m) && defined($n) && $m =~ /^\d+$/ && $n =~ /^\d+$/) ? abs($m - $n) : 0;
+    };
+    # the plots with a given seedlot first, so that the others do not take their transactions
+    @need = ((grep { $want{$_}->{seedlot_id} } @need), (grep { !$want{$_}->{seedlot_id} } @need));
+    foreach my $plot_id (@need) {
+        my $want = $want{$plot_id};
+        my $plot_name = $units->{$plot_id}->{plot_name};
+        my @fitting = sort { $distance->($a->{plot_id}, $plot_id) <=> $distance->($b->{plot_id}, $plot_id) || $a->{transaction_id} <=> $b->{transaction_id} } grep { $fits->($_, $want) } @free;
+        my $t = $fitting[0];
+        if ($t) {
+            if (!$want->{seedlot_id} && @fitting > 1 && $distance->($fitting[1]->{plot_id}, $plot_id) == $distance->($t->{plot_id}, $plot_id)) {
+                # two packets of the accession as near: the nearest-by-number rule cannot tell which one went in
+                push @{$plan->{warnings}}, "Plot $plot_name takes the packet of plot $units->{ $t->{plot_id} }->{plot_name} ($t->{seedlot_name}), but the packet of plot $units->{ $fitting[1]->{plot_id} }->{plot_name} ($fitting[1]->{seedlot_name}) fits as well; give the seedlot in a seedlot_name column if it was that one.";
+            }
+            @free = grep { $_ != $t } @free;
+            push @{$plan->{seedlots}}, { %$t, type => 'move', from_plot_id => $t->{plot_id}, from_plot_name => $units->{ $t->{plot_id} }->{plot_name}, plot_id => $plot_id, plot_name => $plot_name };
+            next;
+        }
+        # its own packet, that an earlier correction turned into seed taken
+        my ($r) = sort { $b->{transaction_id} <=> $a->{transaction_id} } grep { $fits->($_, $want) } @{ $taken_for{$plot_id} || [] };
+        if ($r) {
+            push @{$plan->{seedlots}}, { %$r, type => 'restore', plot_id => $plot_id, plot_name => $plot_name };
+            next;
+        }
+        next if !$want->{seedlot_id};
+        # another seedlot of the plot's accession: the plot's own transaction gets it
+        ($t) = grep { $_->{plot_id} == $plot_id } @free;
+        if ($t) {
+            @free = grep { $_ != $t } @free;
+            push @{$plan->{seedlots}}, { %$t, type => 'seedlot', plot_name => $units->{$plot_id}->{plot_name}, old_seedlot_id => $t->{seedlot_id}, old_seedlot_name => $t->{seedlot_name}, seedlot_id => $want->{seedlot_id}, seedlot_name => $want->{seedlot_name} };
+        } else {
+            push @{$plan->{warnings}}, "Plot $units->{$plot_id}->{plot_name} has no seed transaction, so seedlot $want->{seedlot_name} is not recorded for it; record it with Upload Seedlots Planted In Trial.";
+        }
+    }
+    foreach my $t (sort { $a->{transaction_id} <=> $b->{transaction_id} } @free) {
+        push @{$plan->{seedlots}}, { %$t, type => 'taken', plot_name => $units->{ $t->{plot_id} }->{plot_name} };
+    }
+}
+
 =head2 summary($plan)
 
 A short, JSON-safe summary of a plan for AJAX responses.
@@ -1191,6 +1460,7 @@ sub summary {
         not_renamed => $plan->{not_renamed},
         entry_numbers => [ map { { stock_name => $_->{stock_name}, entry_number => $_->{entry_number} } } @{$plan->{entry_numbers}} ],
         checks => [ map { { plot_name => $_->{plot_name}, check => $_->{new} } } @{$plan->{checks}} ],
+        seedlots => [ map { my $s = $_; +{ map { $_ => $s->{$_} } grep { defined($s->{$_}) } qw(type seedlot_name plot_name from_plot_name old_seedlot_name) } } @{$plan->{seedlots}} ],
         plots_with_phenotypes => $plan->{plots_with_phenotypes},
         warnings => $plan->{warnings},
         plan_digest => $self->plan_digest($plan),
