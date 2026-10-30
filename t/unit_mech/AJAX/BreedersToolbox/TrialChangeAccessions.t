@@ -718,14 +718,6 @@ subtest 'BrAPI PUT observationunits changes the germplasm of a plot' => sub {
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'germplasm changed');
     is(plot_state($plot{10})->{name}, 'test_trial210', 'name kept');
     is(cached_accession('test_trial210'), 'test_accession1', 'cached layout');
-
-    # rejected and rejectReason are read only: a PUT does not reject a plot, nor store them as free additional info
-    $body = encode_json({ germplasmDbId => "$acc{1}", germplasmName => 'test_accession1', studyDbId => "$trial_id", additionalInfo => { rejected => JSON::true, rejectReason => 'from a client', kept => 'yes' }, observationUnitPosition => { observationLevel => { levelName => 'plot' } } });
-    $resp = $ua->put("$base/brapi/v2/observationunits/$plot{10}", Content => $body);
-    ok($resp->is_success, 'PUT with additionalInfo.rejected succeeds') or diag($resp->decoded_content);
-    is_deeply([ plot_state($plot{10})->{rejected}, plot_state($plot{10})->{reject_reason} ], [ undef, undef ], 'the plot is not rejected');
-    my ($stored) = $schema->storage->dbh->selectrow_array("SELECT string_agg(value, ' ') FROM stockprop WHERE stock_id = ?", undef, $plot{10});
-    unlike($stored // '', qr/rejectReason|from a client/, 'and the keys are not stored as additional info');
     restore();
 
     # the rights of the trial page: a submitter of the trial's breeding program, not of another one
@@ -748,6 +740,69 @@ subtest 'BrAPI PUT observationunits changes the germplasm of a plot' => sub {
     $resp = $submitter_ua->put("$base/brapi/v2/observationunits/$plot{10}", Content => $body);
     ok($resp->is_success, 'a submitter of the program may') or diag($resp->decoded_content);
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'germplasm changed');
+    restore();
+};
+
+subtest 'BrAPI PUT observationunits marks a plot as not planted or rejected' => sub {
+    my $put = sub {
+        my ($token, $plot_id, $additional_info) = @_;
+        my $ua = LWP::UserAgent->new;
+        $ua->default_header('Content-Type' => 'application/json');
+        $ua->default_header('Authorization' => 'Bearer '.$token);
+        my $resp = $ua->put("$base/brapi/v2/observationunits/$plot_id", Content => encode_json({ additionalInfo => $additional_info, observationUnitPosition => { observationLevel => { levelName => 'plot' } } }));
+        my $brapi = eval { decode_json($resp->decoded_content) } || {};
+        my ($message) = map { $_->{message} } grep { ($_->{messageType} // '') eq 'ERROR' } @{ $brapi->{metadata}->{status} || [] };
+        return { code => $resp->code, error => $message, unit => $brapi->{result} };
+    };
+    my $submitter = Test::WWW::Mechanize->new;
+    $submitter->post_ok("$base/brapi/v1/token", [ username => 'johndoe', password => 'secretpw', grant_type => 'password' ], 'login as johndoe, a submitter of the program');
+    my $submitter_token = decode_json($submitter->content)->{access_token};
+
+    my $r = $put->($submitter_token, $plot{10}, { rejected => JSON::true, rejectReason => 'trampled', kept => 'yes' });
+    is($r->{code}, 200, 'a submitter of the program rejects a plot of a trial without phenotypes') or diag(explain $r);
+    is_deeply([ @{ plot_state($plot{10}) }{qw(rejected reject_reason accession)} ], [ 1, 'trampled', $original->{10}->{accession} ], 'the plot is rejected with the reason and keeps its accession');
+    my ($stored) = $schema->storage->dbh->selectrow_array("SELECT value FROM stockprop WHERE stock_id = ? AND type_id = (SELECT cvterm_id FROM cvterm WHERE name = 'stock_additional_info')", undef, $plot{10});
+    is_deeply(decode_json($stored // '{}'), { kept => 'yes' }, 'the other keys are stored as additional info, rejected and rejectReason are not');
+
+    my $reader = LWP::UserAgent->new;
+    $reader->default_header('Authorization' => 'Bearer '.$submitter_token);
+    my $unit = decode_json($reader->get("$base/brapi/v2/observationunits/$plot{10}")->decoded_content)->{result};
+    is_deeply([ @{ $unit->{additionalInfo} }{qw(rejected rejectReason)} ], [ JSON::true, 'trampled' ], 'the unit says so');
+    $r = $put->($submitter_token, $plot{10}, $unit->{additionalInfo});
+    is($r->{code}, 200, 'sending back what was read succeeds') or diag(explain $r);
+    is_deeply([ @{ plot_state($plot{10}) }{qw(rejected reject_reason)} ], [ 1, 'trampled' ], 'and changes nothing');
+
+    $r = $put->($submitter_token, $plot{10}, { rejected => JSON::false });
+    is($r->{code}, 200, 'rejected false') or diag(explain $r);
+    is_deeply([ @{ plot_state($plot{10}) }{qw(rejected reject_reason)} ], [ undef, undef ], 'takes the rejection back');
+
+    $r = $put->($submitter_token, $plot{10}, { notPlanted => JSON::true });
+    is($r->{code}, 200, 'notPlanted true') or diag(explain $r);
+    is(plot_state($plot{10})->{not_planted}, 1, 'marks the plot as not planted');
+    $r = $put->($submitter_token, $plot{10}, { rejected => JSON::true, rejectReason => 'trampled' });
+    is($r->{code}, 400, 'a plot that is not planted cannot be rejected');
+    like($r->{error} // '', qr/cannot be rejected: it is not planted/, 'and the message says why');
+    $r = $put->($submitter_token, $plot{10}, { notPlanted => JSON::false });
+    is($r->{code}, 200, 'notPlanted false') or diag(explain $r);
+    ok(!plot_state($plot{10})->{not_planted}, 'marks it as planted again');
+    restore();
+
+    # a trial with phenotypes: a curator only, and values of a plot are never deleted through BrAPI
+    my $phenotyped_trial_id = $schema->resultset('Project::Project')->find({ name => 'CASS_6Genotypes_Sampling_2015' })->project_id;
+    my $phenotypes_h = $schema->storage->dbh->prepare("SELECT count(*) FROM nd_experiment_stock nes JOIN nd_experiment_phenotype nep ON nep.nd_experiment_id = nes.nd_experiment_id WHERE nes.stock_id = ?");
+    my ($cass_plot) = grep { $phenotypes_h->execute($_->{plot_id}); ($phenotypes_h->fetchrow_array())[0] > 0 }
+        sort { $a->{plot_number} <=> $b->{plot_number} } values %{ CXGN::Trial::AccessionChange->new({ schema => $schema, trial_id => $phenotyped_trial_id })->load_units() };
+    $r = $put->($submitter_token, $cass_plot->{plot_id}, { rejected => JSON::true, rejectReason => 'flooded' });
+    is($r->{code}, 403, 'a submitter cannot reject a plot of a trial with phenotypes');
+    like($r->{error} // '', qr/traits have been assayed/, 'and the message says why');
+    $r = $put->($access_token, $cass_plot->{plot_id}, { rejected => JSON::true, rejectReason => 'flooded' });
+    is($r->{code}, 200, 'a curator can') or diag(explain $r);
+    is_deeply([ @{ plot_state($cass_plot->{plot_id}) }{qw(rejected reject_reason)} ], [ 1, 'flooded' ], 'the plot is rejected');
+    $r = $put->($access_token, $cass_plot->{plot_id}, { notPlanted => JSON::true });
+    is($r->{code}, 400, 'a plot with phenotypes is not marked as not planted');
+    like($r->{error} // '', qr/marked as not planted/, 'the message names the phenotypes');
+    set_prop($cass_plot->{plot_id}, $_, undef) for qw(rejected reject_reason not_planted);
+    $mech->get_ok("$base/ajax/breeders/trial/$phenotyped_trial_id/refresh_cache", 'refresh the cache of the phenotyped trial');
     restore();
 };
 

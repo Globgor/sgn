@@ -556,6 +556,27 @@ sub observationunits_update {
             }
         }
 
+        #Update: not planted and rejected. A key that is not sent leaves the plot as it is, and sending the
+        #current state (as a client that sends back what it read does) changes nothing.
+        my %status_change;
+        if (ref($raw_additional_info) eq 'HASH') {
+            my %status_key = (notPlanted => 'not_planted', rejected => 'rejected', rejectReason => 'reject_reason');
+            foreach my $key (grep { exists($raw_additional_info->{$_}) } keys %status_key) {
+                my $value = $raw_additional_info->{$key};
+                # JSON true and false
+                $value = $value ? 1 : 0 if ref($value) && $key ne 'rejectReason';
+                $status_change{ $status_key{$key} } = $value;
+            }
+        }
+        if (%status_change) {
+            if ($stock_type ne $plot_cvterm_id) {
+                return CXGN::BrAPI::JSONResponse->return_error($self->status, 'notPlanted, rejected and rejectReason can only be set for plots.', 400);
+            }
+            # a plot is rejected after data was recorded for it, so a curator may do this in a trial with phenotypes
+            my $error_response = $self->_change_plot($c, $user_id, { plot_id => $observation_unit_db_id, %status_change }, 0);
+            return $error_response if $error_response;
+        }
+
         #Update: geo coordinates
         my $geo_coordinates = $observationUnit_position_arrayref->{geoCoordinates} || undef;
         if($geo_coordinates) {
@@ -640,7 +661,7 @@ sub _change_plot {
     if (@{$plan->{errors}}) {
         return CXGN::BrAPI::JSONResponse->return_error($self->status, join(' ', @{$plan->{errors}}), 400);
     }
-    if (!@{$plan->{changes}}) {
+    if (!@{$plan->{changes}} && !@{$plan->{planting}} && !@{$plan->{rejections}}) {
         return;
     }
 
