@@ -718,6 +718,14 @@ subtest 'BrAPI PUT observationunits changes the germplasm of a plot' => sub {
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'germplasm changed');
     is(plot_state($plot{10})->{name}, 'test_trial210', 'name kept');
     is(cached_accession('test_trial210'), 'test_accession1', 'cached layout');
+
+    # rejected and rejectReason are read only: a PUT does not reject a plot, nor store them as free additional info
+    $body = encode_json({ germplasmDbId => "$acc{1}", germplasmName => 'test_accession1', studyDbId => "$trial_id", additionalInfo => { rejected => JSON::true, rejectReason => 'from a client', kept => 'yes' }, observationUnitPosition => { observationLevel => { levelName => 'plot' } } });
+    $resp = $ua->put("$base/brapi/v2/observationunits/$plot{10}", Content => $body);
+    ok($resp->is_success, 'PUT with additionalInfo.rejected succeeds') or diag($resp->decoded_content);
+    is_deeply([ plot_state($plot{10})->{rejected}, plot_state($plot{10})->{reject_reason} ], [ undef, undef ], 'the plot is not rejected');
+    my ($stored) = $schema->storage->dbh->selectrow_array("SELECT string_agg(value, ' ') FROM stockprop WHERE stock_id = ?", undef, $plot{10});
+    unlike($stored // '', qr/rejectReason|from a client/, 'and the keys are not stored as additional info');
     restore();
 
     # the rights of the trial page: a submitter of the trial's breeding program, not of another one
@@ -741,6 +749,14 @@ subtest 'BrAPI PUT observationunits changes the germplasm of a plot' => sub {
     ok($resp->is_success, 'a submitter of the program may') or diag($resp->decoded_content);
     is(plot_state($plot{10})->{accession}, 'test_accession1', 'germplasm changed');
     restore();
+};
+
+subtest 'the plot names are renamed by default until the trial has phenotypes' => sub {
+    my $phenotyped_trial_id = $schema->resultset('Project::Project')->find({ name => 'CASS_6Genotypes_Sampling_2015' })->project_id;
+    $mech->get_ok("$base/ajax/breeders/trial/$trial_id/accession_change_defaults");
+    is_deeply(decode_json($mech->content), { has_phenotypes => 0 }, 'a trial without phenotypes');
+    $mech->get_ok("$base/ajax/breeders/trial/$phenotyped_trial_id/accession_change_defaults");
+    is_deeply(decode_json($mech->content), { has_phenotypes => 1 }, 'a trial with phenotypes');
 };
 
 done_testing();

@@ -772,6 +772,7 @@ sub _plan {
     }
 
     $self->_plan_checks(\%plan, $units, \%after) if !$self->_is_plate;
+    $self->_plan_design_warnings(\%plan, $units, \%after) if !$self->_is_plate && @{$plan{changes}};
 
     # the units' own samples, and samples of them in other trials; _execute takes them from the plan
     my %touched_unit = map { $_ => 1 } keys %new_stock_by_unit, keys %new_name, keys %new_not_planted, map { $_->{plot_id} } @{$plan{replicates}}, @{$plan{checks}};
@@ -1388,6 +1389,122 @@ sub _plan_checks {
     }
 }
 
+# Warnings when the change breaks the design: an accession twice in a block of an RCBD (or in a
+# replicate of an incomplete block design), accessions with unequal numbers of plots where they
+# were equal, an accession without plots. The change is allowed: the preview shows the warnings
+# before the user confirms. Check plots and plots that are not planted after the change do not count.
+my %ONCE_PER_BLOCK = map { $_ => 'block' } qw(rcbd);
+my %ONCE_PER_REPLICATE = map { $_ => 'replicate' } qw(alpha lattice rrc drrc);
+my %NOT_BALANCED = map { $_ => 1 } qw(augmented mad madii madiii madiv greenhouse splitplot p-rep prep westcott urdd);
+sub _plan_design_warnings {
+    my $self = shift;
+    my $plan = shift;
+    my $units = shift;
+    my $after = shift;
+    my $design = lc($self->design_type // '');
+    my %new_check = map { $_->{plot_id} => $_->{new} } @{$plan->{checks}};
+    my $counted = sub {   # [ stock_id, block, replicate ] of the plots that count, before or after the change
+        my ($state, $is_after) = @_;
+        my @plots;
+        foreach my $u (values %$state) {
+            next if !defined($u->{stock_id}) || _is_true($u->{not_planted});
+            my $check = ($is_after && exists($new_check{ $u->{plot_id} })) ? $new_check{ $u->{plot_id} } : _is_true($u->{is_a_control});
+            next if $check;
+            push @plots, $u;
+        }
+        return \@plots;
+    };
+    my ($before, $now) = ($counted->($units, 0), $counted->($after, 1));
+    my %changed = map { ($_->{old_stock_id} => 1, $_->{new_stock_id} => 1) } @{$plan->{changes}};
+    my %name = map { ($_->{old_stock_id} => $_->{old_stock_name}, $_->{new_stock_id} => $_->{new_stock_name}) } @{$plan->{changes}};
+    my $alternatives = "To keep the design, use an accession that is not in the trial yet, or mark the plot as not planted (not_planted 1); a plot whose data must not be used can be rejected later.";
+    my @warnings;
+
+    # once per block (RCBD) or per replicate (alpha, lattice, row-column designs)
+    my $unit_of_design = $ONCE_PER_BLOCK{$design} || $ONCE_PER_REPLICATE{$design};
+    if ($unit_of_design) {
+        my $key = $unit_of_design eq 'block' ? 'block' : 'replicate';
+        my $twice = sub {
+            my %n;
+            foreach my $u (@{$_[0]}) { next if !defined($u->{$key}) || $u->{$key} eq ''; $n{ $u->{stock_id} }->{ $u->{$key} }++; }
+            return { map { my $s = $_; ($s => [ grep { $n{$s}->{$_} > 1 } sort { $a <=> $b } keys %{$n{$s}} ]) } keys %n };
+        };
+        my ($twice_before, $twice_now) = ($twice->($before), $twice->($now));
+        foreach my $stock_id (sort { ($name{$a} // '') cmp ($name{$b} // '') } grep { $changed{$_} } keys %$twice_now) {
+            my %was = map { $_ => 1 } @{ $twice_before->{$stock_id} || [] };
+            my @new = grep { !$was{$_} } @{ $twice_now->{$stock_id} };
+            next if !@new;
+            push @warnings, "$name{$stock_id} will be in more than one plot of $unit_of_design ".join(', ', @new).": in this design (".$self->design_type.") each accession is once in each $unit_of_design, so the analysis cannot separate it from the $unit_of_design effect there.";
+        }
+    }
+
+    # equal numbers of plots per accession, counted over the planned plots (a plot that was not
+    # planted is still a place of the design)
+    my $count = sub {
+        my ($state, $is_after) = @_;
+        my %n;
+        foreach my $u (values %$state) {
+            next if !defined($u->{stock_id});
+            next if ($is_after && exists($new_check{ $u->{plot_id} })) ? $new_check{ $u->{plot_id} } : _is_true($u->{is_a_control});
+            $n{ $u->{stock_id} }++;
+        }
+        return \%n;
+    };
+    my ($n_before, $n_now) = ($count->($units, 0), $count->($after, 1));
+    if ($design ne '' && !$NOT_BALANCED{$design}) {
+        my %sizes = map { $_ => 1 } values %$n_before;
+        if (scalar(keys %sizes) == 1) {
+            my ($k) = keys %sizes;
+            # more plots than the others: what the design cannot absorb (one plot fewer is a missing value)
+            my @more = grep { $changed{$_} && $n_now->{$_} > $k } keys %$n_now;
+            if (@more) {
+                push @warnings, "Every accession had $k plot(s); after the change ".join(', ', map { "$name{$_} has ".$n_now->{$_} } sort { $name{$a} cmp $name{$b} } @more).". The design is no longer balanced, and analyses that assume it (replicates, blocks) are harder to interpret.";
+            }
+        }
+    }
+    # an accession that leaves the trial, in any design; not when all its plots go to accessions
+    # that were not in the trial (Replace Accession by a new one keeps the design)
+    my %in_trial_before = map { (defined($_->{stock_id}) ? ($_->{stock_id} => 1) : ()) } values %$units;
+    my %went_to;
+    foreach my $change (@{$plan->{changes}}) { $went_to{ $change->{old_stock_id} }->{ $change->{new_stock_id} } = 1; }
+    my @gone = sort { $name{$a} cmp $name{$b} } grep { $changed{$_} && !$n_now->{$_} && grep({ $in_trial_before{$_} } keys %{ $went_to{$_} || {} }) } keys %$n_before;
+    push @warnings, join(', ', map { $name{$_} } @gone)." will have no plot left in this trial." if @gone;
+    if (@warnings) {
+        push @{$plan->{warnings}}, map { "Design: $_" } @warnings;
+        push @{$plan->{warnings}}, "Design: $alternatives";
+    }
+}
+
+# the condition on nd_experiment_stock nes that the stock has a phenotype other than a treatment,
+# or high-dimensional data (NIRS, transcriptomics, metabolomics)
+sub _has_values_sql {
+    return "(EXISTS (SELECT 1 FROM nd_experiment_phenotype nep JOIN phenotype p ON p.phenotype_id = nep.phenotype_id
+                LEFT JOIN cvterm trait ON trait.cvterm_id = p.cvalue_id
+                LEFT JOIN dbxref x ON x.dbxref_id = trait.dbxref_id
+                LEFT JOIN db ON db.db_id = x.db_id
+                WHERE nep.nd_experiment_id = nes.nd_experiment_id AND COALESCE(right(db.name, 10), '') <> '_TREATMENT')
+            OR EXISTS (SELECT 1 FROM phenome.nd_experiment_md_json j WHERE j.nd_experiment_id = nes.nd_experiment_id))";
+}
+
+=head2 has_phenotypes()
+
+Whether a plot of the trial, or a plant, subplot or tissue sample of one, has
+a phenotype other than a treatment, or high-dimensional data: the values the
+plan warns about. Data was collected with the plot names then, so the dialogs
+keep the names by default.
+
+=cut
+
+sub has_phenotypes {
+    my $self = shift;
+    my @plot_ids = keys %{ $self->load_units() };
+    return 0 if !@plot_ids;
+    my $children = $self->_is_plate ? {} : $self->_children(\@plot_ids);
+    my @stock_ids = (@plot_ids, map { map { $_->{stock_id} } @{ $children->{$_}->{in_trial} || [] } } @plot_ids);
+    my ($found) = $self->schema->storage->dbh->selectrow_array("SELECT 1 FROM nd_experiment_stock nes WHERE nes.stock_id = ANY(?) AND "._has_values_sql." LIMIT 1", undef, \@stock_ids);
+    return $found ? 1 : 0;
+}
+
 # phenotypes and crosses of the changed plots and of their plants, subplots and tissue samples
 sub _plan_phenotype_and_cross_warnings {
     my $self = shift;
@@ -1411,14 +1528,7 @@ sub _plan_phenotype_and_cross_warnings {
     my %old_stock = map { $_->{plot_id} => $_->{old_stock_name} } @{$plan->{changes}};
 
     # phenotypes other than treatments, or high-dimensional data
-    my $h = $dbh->prepare("SELECT DISTINCT nes.stock_id FROM nd_experiment_stock nes
-        WHERE nes.stock_id = ANY(?) AND (
-            EXISTS (SELECT 1 FROM nd_experiment_phenotype nep JOIN phenotype p ON p.phenotype_id = nep.phenotype_id
-                LEFT JOIN cvterm trait ON trait.cvterm_id = p.cvalue_id
-                LEFT JOIN dbxref x ON x.dbxref_id = trait.dbxref_id
-                LEFT JOIN db ON db.db_id = x.db_id
-                WHERE nep.nd_experiment_id = nes.nd_experiment_id AND COALESCE(right(db.name, 10), '') <> '_TREATMENT')
-            OR EXISTS (SELECT 1 FROM phenome.nd_experiment_md_json j WHERE j.nd_experiment_id = nes.nd_experiment_id))");
+    my $h = $dbh->prepare("SELECT DISTINCT nes.stock_id FROM nd_experiment_stock nes WHERE nes.stock_id = ANY(?) AND "._has_values_sql);
     $h->execute([ grep { !_is_true($after->{ $plot_of{$_} }->{not_planted}) } @stock_ids ]);
     my %phenotyped_plots;
     while (my ($stock_id) = $h->fetchrow_array()) { $phenotyped_plots{ $plot_of{$stock_id} } = 1; }

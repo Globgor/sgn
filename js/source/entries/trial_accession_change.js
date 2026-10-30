@@ -127,6 +127,34 @@ export function changedPlots(summary) {
  * @param {Object} summary - the preview from the server
  * @returns {boolean}
  */
+export function trialHasPhenotypes(trialId) {
+    // whether data was collected with the plot names: then they are kept by default
+    return new Promise((resolve) => {
+        jQuery.ajax({
+            // phenotypes of plots, plants, subplots and samples, and NIRS and other high-dimensional
+            // data; treatments do not count (the same values as the warnings of a change)
+            url: `/ajax/breeders/trial/${trialId}/accession_change_defaults`,
+            success: (response) => resolve(!!(response && response.has_phenotypes == 1)),
+            error: () => resolve(true),   // when in doubt, keep the names
+        });
+    });
+}
+
+/**
+ * Whether the plots are renamed by default: while a trial is planned (no phenotypes yet) the
+ * names follow the accessions (template, then the accession name in the plot name); once data
+ * was collected with the plot names, they are kept unless the user asks.
+ * @param {boolean} hasPhenotypes
+ * @returns {boolean}
+ */
+export function renameByDefault(hasPhenotypes) {
+    return !hasPhenotypes;
+}
+
+/**
+ * @param {object} summary
+ * @returns {boolean} whether the summary changes nothing
+ */
 export function nothingChanges(summary) {
     return !summary.changed && !summary.replicates_changed && !summary.phenotypes_deleted
         && !(summary.planting || []).length && !(summary.rejections || []).length && !(summary.renamed || []).length
