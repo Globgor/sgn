@@ -1,0 +1,50 @@
+name: Documentation links
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'ISSUE_TEMPLATE.md'
+      - 'PULL_REQUEST_TEMPLATE.md'
+      - '.github/workflows/documentation-links.yml'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch to scan
+        required: true
+        default: master
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    if: github.repository == 'Globgor/sgn'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Check documentation links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-all-private
+            --max-concurrency 8
+            --max-retries 1
+            --timeout 5
+            --root-dir '${{ github.workspace }}'
+            './docs/**/*.md'
+            './docs/**/*.html'
+            './docs/**/*.Rmd'
+            'ISSUE_TEMPLATE.md'
+            'PULL_REQUEST_TEMPLATE.md'
+          # Begin in report-only mode so maintainers can review existing link failures.
+          fail: false
+          failIfEmpty: false
+          token: ''
