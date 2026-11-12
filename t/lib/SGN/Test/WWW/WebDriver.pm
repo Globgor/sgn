@@ -122,6 +122,7 @@ sub BUILD {
     $profile->set_preference( 'browser.helperApps.neverAsk.saveToDisk', 'application/octet-stream,text/csv,application/zip,text/plain' );
     
     my $driver = Selenium::Remote::Driver->new(firefox_profile => $profile, base_url => $ENV{SGN_TEST_SERVER}, remote_server_addr => $ENV{SGN_REMOTE_SERVER_ADDR} || 'localhost');
+    $driver->set_implicit_wait_timeout(10000);    # trial only: wait up to 10 s for elements
     
 
     $self->driver($driver);

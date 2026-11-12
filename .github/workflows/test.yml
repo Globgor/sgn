@@ -159,6 +159,7 @@ jobs:
         # need entrypoint.sh to start slurm
         # --nopatch to skip running fixture and db patches (already done in previous step)
         run: |
+          export PERL5OPT="-I$PWD/t/lib -MSleepCap" SLEEP_CAP=2
           # run_files FOLDER FROM TO: run the test files of FOLDER whose path
           # sorts from FROM (included) to TO (excluded); "" = no limit
           run_files() {
@@ -171,6 +172,10 @@ jobs:
             /entrypoint.sh --nopatch $files 2>/dev/null
           }
           ${{ matrix.tests }}
+
+      - name: Sleep time per test file (trial only)
+        if: always()
+        run: cat /tmp/sleep.log || true
 
   test_breedbase:
     # one check under the former job name: it passes only when all parts pass
