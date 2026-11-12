@@ -4,9 +4,59 @@ on:
       - 'docs/**'
       - '**.md'
 
+env:
+  # t/selenium2/breeders runs in two parts of about the same time: these
+  # files in selenium_breeders_1, all other files of the folder (new ones
+  # too) in selenium_breeders_2.
+  BREEDERS_1: >-
+    t/selenium2/breeders/create_genotyping_trial.t
+    t/selenium2/breeders/derived_trait.t
+    t/selenium2/breeders/upload_phenotype/fieldbook_phenotype_upload.t
+    t/selenium2/breeders/upload_phenotype/upload_datacollector_spreadsheet.t
+    t/selenium2/breeders/upload_phenotype/upload_phenotyping_spreadsheet.t
+    t/selenium2/breeders/upload_trial_file.t
+
 jobs:
-  test_breedbase:
+  # The tests run in parallel parts. Every part starts the same containers
+  # and loads the fixture; every /entrypoint.sh call then runs its tests on
+  # a fresh copy of the fixture database, as the former single job did.
+  test_part:
+    name: test_breedbase (${{ matrix.part }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - part: unit_fixture
+            tests: |
+              /entrypoint.sh --nopatch t/unit_fixture 2>/dev/null
+          - part: unit_mech
+            tests: |
+              /entrypoint.sh --nopatch t/unit_mech
+          # selenium tests for a moment as separate folders - will change once full solgs are ready
+          # but anyway, it will is still fully functional for tests purpose
+          - part: selenium_breeders_1
+            tests: |
+              ls $BREEDERS_1
+              /entrypoint.sh --nopatch $BREEDERS_1 2>/dev/null
+          - part: selenium_breeders_2
+            tests: |
+              BREEDERS_2=$(find t/selenium2/breeders -name '*.t' | LC_ALL=C sort | grep -vxF "$(printf '%s\n' $BREEDERS_1)")
+              echo "$BREEDERS_2"
+              /entrypoint.sh --nopatch $BREEDERS_2 2>/dev/null
+          - part: selenium_1
+            tests: |
+              /entrypoint.sh --nopatch t/selenium2/02_trial 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/onto 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/tools 2>/dev/null
+          - part: selenium_2
+            tests: |
+              /entrypoint.sh --nopatch t/selenium2/01_list 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/03_dataset 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/authenticate 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/search 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/stock 2>/dev/null
+
     container:
       image: breedbase/breedbase:latest
       env:
@@ -86,6 +136,7 @@ jobs:
           npm --version
 
       - name: Run unit tests
+        if: matrix.part == 'unit_mech'
         run: prove --recurse t/unit 2>/dev/null
 
       - name: Load/dump fixture database and build node modules
@@ -97,39 +148,23 @@ jobs:
         # https://github.com/actions/runner/issues/241#issuecomment-842566950
         shell: 'script --flush --quiet --return --command "bash --noprofile --norc -eo pipefail {0}"'
 
-      - name: Run unit_fixture tests
+      - name: Print the run time of each test file
+        run: echo "--timer" > ~/.proverc
+
+      - name: Run tests
         # need entrypoint.sh to start slurm
         # --nopatch to skip running fixture and db patches (already done in previous step)
-        run: /entrypoint.sh --nopatch t/unit_fixture 2>/dev/null
+        run: ${{ matrix.tests }}
 
-      - name: Run unit_mech tests
-        run: /entrypoint.sh --nopatch t/unit_mech
-
-      # selenium tests for a moment as separate folders - will change once full solgs are ready
-      # but anyway, it will is still fully functional for tests purpose
-      - name: Run selenium tests 01_list
-        run: /entrypoint.sh --nopatch t/selenium2/01_list 2>/dev/null
-
-      - name: Run selenium tests 02_trial
-        run: /entrypoint.sh --nopatch t/selenium2/02_trial 2>/dev/null
-
-      - name: Run selenium tests dataset
-        run: /entrypoint.sh --nopatch t/selenium2/03_dataset 2>/dev/null
-
-      - name: Run selenium tests authenticate
-        run: /entrypoint.sh --nopatch t/selenium2/authenticate 2>/dev/null
-
-      - name: Run selenium tests breeders
-        run: /entrypoint.sh --nopatch t/selenium2/breeders 2>/dev/null
-
-      - name: Run selenium tests onto
-        run: /entrypoint.sh --nopatch t/selenium2/onto 2>/dev/null
-
-      - name: Run selenium tests search
-        run: /entrypoint.sh --nopatch t/selenium2/search 2>/dev/null
-
-      - name: Run selenium tests stock
-        run: /entrypoint.sh --nopatch t/selenium2/stock 2>/dev/null
-
-      - name: Run selenium tests tools
-        run: /entrypoint.sh --nopatch t/selenium2/tools 2>/dev/null
+  test_breedbase:
+    # one check under the former job name: it passes only when all parts pass
+    needs: test_part
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the result of all test parts
+        env:
+          RESULT: ${{ needs.test_part.result }}
+        run: |
+          echo "Test parts: $RESULT"
+          test "$RESULT" = success
