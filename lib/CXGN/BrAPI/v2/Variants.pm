@@ -56,33 +56,7 @@ sub search {
     my ($data, $total_count) = $marker_search->search();
 
     foreach (@$data){
-        my $info = $_->{info};
-        my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
-        my @cipos = _get_info($info,'CIPOS');
-        my @ciend = _get_info($info,'CIEND');
-        my @svlen = _get_info($info,'SVLEN');
-
-        my %data_obj = (
-            additionalInfo => {},
-            alternate_bases => $_->{alt},
-            ciend => [@ciend],
-            cipos => [@cipos],
-            created => undef,
-            end => $_->{pos} + length($_->{ref}),
-            filtersApplied => $_->{filter} eq "." ? JSON::false : JSON::true,
-            filtersFailed => ( $_->{filter} eq "PASS" || $_->{filter} eq "." ) ? undef : $_->{filter},
-            filtersPassed => $_->{filter} eq "PASS" ? JSON::true : JSON::false,
-            referenceBases => $_->{ref},
-            referenceName =>  $_->{chrom} ? $_->{chrom} : undef,
-            start => $_->{pos},
-            svlen => @svlen,
-            updated => undef,
-            variantDbId => qq|$_->{marker_name}|,
-            variantNames => $_->{marker_name},
-            variantSetDbId => _quote($_->{project_id}, $_->{nd_protocol_id} ),
-            variantType => $svtype,
-        );
-        push @data_out, \%data_obj;
+        push @data_out, CXGN::BrAPI::v2::Variants->variant_from_marker($_);
     }
 
     my %result = (data=>\@data_out);
@@ -114,33 +88,7 @@ sub detail {
     my ($data, $total_count) = $marker_search->search();
 
     foreach (@$data){
-        my $info = $_->{info};
-        my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
-        my @cipos = _get_info($info,'CIPOS');
-        my @ciend = _get_info($info,'CIEND');
-        my @svlen = _get_info($info,'SVLEN');
-
-        my %data_obj = (
-            additionalInfo => {},
-            alternate_bases => $_->{alt},
-            ciend => [@ciend],
-            cipos => [@cipos],
-            created => undef,
-            end => $_->{pos} + length($_->{ref}),
-            filtersApplied => $_->{filter} eq "." ? JSON::false : JSON::true,
-            filtersFailed => ( $_->{filter} eq "PASS" || $_->{filter} eq "." ) ? undef : $_->{filter},
-            filtersPassed => $_->{filter} eq "PASS" ? JSON::true : JSON::false,
-            referenceBases => $_->{ref},
-            referenceName =>  $_->{chrom} ? 'chr_' . $_->{chrom} : undef,
-            start => $_->{pos},
-            svlen => @svlen, #length($_->{alt}),
-            updated => undef,
-            variantDbId => qq|$_->{marker_name}|,
-            variantNames => $_->{marker_name},
-            variantSetDbId => _quote($_->{project_id}, $_->{nd_protocol_id} ),
-            variantType => $svtype,
-        );
-        push @data_out, \%data_obj;
+        push @data_out, CXGN::BrAPI::v2::Variants->variant_from_marker($_);
     }
 
     my %result = (data=>\@data_out);
@@ -248,10 +196,64 @@ sub calls {
     return CXGN::BrAPI::JSONResponse->return_success(\%result, $pagination, \@data_files, $status, 'VariantSets result constructed');
 }
 
+=head2 variant_from_marker
+
+ Usage: my $variant = CXGN::BrAPI::v2::Variants->variant_from_marker($marker);
+ Desc:  Builds one BrAPI v2 Variant from a marker row of
+        CXGN::Marker::SearchBrAPI::search (the VCF columns of the marker).
+        Used by /variants, /variants/{variantDbId} and
+        /variantsets/{variantSetDbId}/variants.
+        start is 0-based (VCF POS - 1) and end is exclusive, as in the
+        BrAPI Variant schema.
+ Ret:   hashref
+
+=cut
+
+sub variant_from_marker {
+    my $class = shift;
+    my $marker = shift;
+    my $info = $marker->{info} // '';
+    my $filter = $marker->{filter} // '.';
+    my $alt = $marker->{alt} // '.';
+
+    my ($svtype) = $info =~ /SVTYPE=(\w+);/;
+    my @svlen = _get_info($info, 'SVLEN');
+    my @alternate_bases = $alt eq '.' ? () : split(/,/, $alt);
+
+    my $start;
+    my $end;
+    if (defined($marker->{pos}) && $marker->{pos} ne '') {
+        $start = $marker->{pos} - 1;
+        $end = $start + length($marker->{ref} // '');
+    }
+
+    return {
+        additionalInfo => {},
+        alternateBases => [ @alternate_bases ],
+        alternate_bases => [ @alternate_bases ],
+        ciend => [ _get_info($info, 'CIEND') ],
+        cipos => [ _get_info($info, 'CIPOS') ],
+        created => undef,
+        end => $end,
+        filtersApplied => $filter eq '.' ? JSON::false : JSON::true,
+        filtersFailed => ( $filter eq 'PASS' || $filter eq '.' ) ? undef : [ split(/;/, $filter) ],
+        filtersPassed => $filter eq 'PASS' ? JSON::true : JSON::false,
+        referenceBases => $marker->{ref},
+        referenceName => ( defined($marker->{chrom}) && $marker->{chrom} ne '' ) ? $marker->{chrom} : undef,
+        start => $start,
+        svlen => @svlen ? $svlen[0] : undef,
+        updated => undef,
+        variantDbId => qq|$marker->{marker_name}|,
+        variantNames => [ qq|$marker->{marker_name}| ],
+        variantSetDbId => _quote($marker->{project_id}, $marker->{nd_protocol_id}),
+        variantType => $svtype,
+    };
+}
+
 sub _get_info {
     my $info = shift;
     my $item = shift;
-    my @array = [];
+    my @array = ();
 
     #match with CIPOS=-22,18;CIEND=-12,32"
     if ( $info =~ /$item=(-?(\d+),?)+/) {

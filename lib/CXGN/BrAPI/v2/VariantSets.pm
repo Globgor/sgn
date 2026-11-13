@@ -8,6 +8,7 @@ use JSON;
 use CXGN::BrAPI::FileResponse;
 use CXGN::BrAPI::Pagination;
 use CXGN::BrAPI::JSONResponse;
+use CXGN::BrAPI::v2::Variants;
 use List::Util qw(sum);
 
 extends 'CXGN::BrAPI::v2::Common';
@@ -422,33 +423,7 @@ sub variants {
     my ($data, $total_count) = $marker_search->search();
 
     foreach (@$data){
-        my $info = $_->{info};
-        my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
-        my @cipos = _get_info($info,'CIPOS');
-        my @ciend = _get_info($info,'CIEND');
-        my @svlen = _get_info($info,'SVLEN');
-
-        my %data_obj = (
-            additionalInfo => {},
-            alternate_bases => $_->{alt},
-            ciend => [@ciend],
-            cipos => [@cipos],
-            created => undef,
-            end => $_->{pos} + length($_->{ref}),
-            filtersApplied => $_->{filter} eq "." ? JSON::false : JSON::true,
-            filtersFailed => ( $_->{filter} eq "PASS" || $_->{filter} eq "." ) ? undef : $_->{filter},
-            filtersPassed => $_->{filter} eq "PASS" ? JSON::true : JSON::false,
-            referenceBases => $_->{ref},
-            referenceName =>  $_->{chrom} ? $_->{chrom} : undef,
-            start => $_->{pos},
-            svlen => @svlen,
-            updated => undef,
-            variantDbId => qq|$_->{marker_name}|,
-            variantNames => $_->{marker_name},
-            variantSetDbId => _quote($_->{project_id}, $_->{nd_protocol_id} ),
-            variantType => $svtype,
-        );
-        push @data_out, \%data_obj;
+        push @data_out, CXGN::BrAPI::v2::Variants->variant_from_marker($_);
     }
 
     my %result = (data=>\@data_out);
@@ -589,33 +564,6 @@ sub _sum {
         $sum += $num;
     }
     return $sum;
-}
-
-sub _get_info {
-    my $info = shift;
-    my $item = shift;
-    my @array = [];
-
-    #match with CIPOS=-22,18;CIEND=-12,32"
-    if ( $info =~ /$item=(-?(\d+),?)+/) {
-        my $match = $&;
-        $match =~ s/$item=//g;
-        my @split_values = split(/,/, $match);
-        @array = map { $_ + 0 } @split_values;
-    }
-
-    return @array ;
-}
-
-sub _quote {
-    my $array = shift;
-    my $protocol = shift;
-
-    foreach (@$array) {
-        $_ = "$_" . "p". $protocol;
-    }
-
-    return $array
 }
 
 1;

@@ -1,0 +1,21 @@
+##fileformat=VCFv4.0
+##Tassel=<ID=GenotypeTable,Version=5,Description="Reference allele is not known. The major allele was used as reference allele">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the reference and alternate alleles in the order listed">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth (only filtered reads used for calling)">
+##FORMAT=<ID=GQ,Number=1,Type=Float,Description="Genotype Quality">
+##FORMAT=<ID=PL,Number=3,Type=Float,Description="Normalized, Phred-scaled likelihoods for AA,AB,BB genotypes where A=ref and B=alt; not applicable if site is not biallelic">
+##INFO=<ID=NS,Number=1,Type=Integer,Description="Number of Samples With Data">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=AF,Number=.,Type=Float,Description="Allele Frequency">
+##FORMAT=<ID=DS,Number=1,Type=Float,Description="estimated ALT dose [P(RA) + P(AA)]">
+##FILTER=<ID=q10,Description="Quality below 10">
+##FILTER=<ID=s50,Description="Less than 50% of samples have data">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=CIEND,Number=2,Type=Integer,Description="Confidence interval around END for imprecise variants">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	UG120001	UG120002	UG120003	UG120004	UG120005	UG120006	UG120007	UG120008	UG120009	UG120010	UG120011	UG120012	UG120013	UG120014	UG120015	UG120016	UG120017	UG120018	UG120019	UG120020	UG120021
+1	91594	S1_91594	G	A,T	.	q10;s50	SVTYPE=DEL;SVLEN=-5;CIPOS=-2,3;CIEND=-1,4;AF=0.375	GT:AD:DP:GQ:DS:PL	./.:0,0:0:.:0.897:.	./.:0,0:0:.:0.481:.	./.:0,0:0:.:0.901:.	./.:0,0:0:.:0.475:.	./.:0,0:0:.:0.913:.	./.:0,0:0:.:0.889:.	./.:0,0:0:.:0.892:.	./.:0,0:0:.:0.928:.	./.:0,0:0:.:0.048:.	0/0:1,0:1:66:0.305:0,3,36	0/0:1,0:1:66:0.484:0,3,36	./.:0,0:0:.:1.104:.	./.:0,0:0:.:0.692:.	0/0:1,0:1:66:0.032:0,3,36	0/0:2,0:2:79:0.019:0,6,72	./.:0,0:0:.:0.679:.	./.:0,0:0:.:0.891:.	0/0:1,0:1:66:0.286:0,3,36	./.:0,0:0:.:0.559:.	./.:0,0:0:.:0.466:.	./.:0,0:0:.:0.985:.
+1	91597	S1_91597	G	A	.	PASS	AR2=0;DR2=0.065;AF=0.001	GT:AD:DP:GQ:DS:PL	0/0:9,0:9:99:0:0,27,255	./.:0,0:0:.:0:.	./.:0,0:0:.:0.001:.	0/0:3,0:3:88:0:0,9,108	0/0:2,0:2:79:0:0,6,72	0/0:6,0:6:98:0:0,18,216	0/0:12,0:12:99:0:0,36,255	./.:0,0:0:.:0:.	0/0:5,0:5:96:0:0,15,180	0/0:3,0:3:88:0:0,9,108	0/0:5,0:5:96:0:0,15,180	0/0:4,0:4:94:0:0,12,144	0/0:2,0:2:79:0:0,6,72	0/0:1,0:1:66:0:0,3,36	0/0:2,0:2:79:0:0,6,72	./.:0,0:0:.:0.001:.	0/0:8,0:8:99:0.001:0,24,255	./.:0,0:0:.:0:.	./.:0,0:0:.:0:.	./.:0,0:0:.:0.001:.	0/0:3,0:3:88:0.001:0,9,108
+1	96576	S1_96576	A	C	.	.	AR2=0.833;DR2=0.852;AF=0.009	GT:AD:DP:GQ:DS:PL	0/0:5,0:5:96:0:0,15,180	0/0:2,0:2:79:0.002:0,6,72	./.:0,0:0:.:0.001:.	0/0:2,0:2:79:0:0,6,72	0/0:1,0:1:66:0:0,3,36	0/0:4,0:4:94:0:0,12,144	0/0:6,0:6:98:0:0,18,216	./.:0,0:0:.:0.001:.	0/0:1,0:1:66:0:0,3,36	0/0:2,0:2:79:0:0,6,72	0/0:7,0:7:99:0:0,21,252	0/0:1,0:1:66:0:0,3,36	0/0:6,0:6:98:0.002:0,18,216	0/0:3,0:3:88:0.002:0,9,108	0/0:5,0:5:96:0.001:0,15,180	0/1:5,1:6:98:0.001:18,0,162	0/0:11,0:11:99:0:0,33,255	0/0:3,0:3:88:0.002:0,9,108	./.:0,0:0:.:0.017:.	0/0:3,0:3:88:0.003:0,9,108	0/0:3,0:3:88:0:0,9,108

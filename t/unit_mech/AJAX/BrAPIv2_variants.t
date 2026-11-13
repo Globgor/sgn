@@ -107,11 +107,44 @@ my $search_id = $response->{result}->{searchResultsDbId};
 $response = get_json("http://localhost:3010/brapi/v2/search/variants/$search_id");
 is_deeply(names($response), [ @$all[5..9] ], 'search/variants with page 1 returns variants 6-10');
 
+# Variant fields follow the BrAPI Variant schema
+my ($sv_project_id, $sv_protocol_id) = upload_vcf('test_genotype_upload_variant_fields.vcf', 'test_variant_fields_project', 'variant_fields_protocol');
+my $sv_variantset_id = $sv_project_id.'p'.$sv_protocol_id;
+
+foreach my $url ("http://localhost:3010/brapi/v2/variants?variantSetDbId=$sv_variantset_id", "http://localhost:3010/brapi/v2/variantsets/$sv_variantset_id/variants") {
+    $response = get_json($url);
+    my %variants = map { $_->{variantDbId} => $_ } @{$response->{result}->{data} || []};
+    is_deeply([ sort keys %variants ], [ 'S1_91594', 'S1_91597', 'S1_96576' ], "$url: all three variants");
+
+    my $sv = $variants{S1_91594} || {};
+    is_deeply($sv->{alternateBases}, [ 'A', 'T' ], "$url: alternateBases");
+    is_deeply($sv->{alternate_bases}, [ 'A', 'T' ], "$url: alternate_bases");
+    is_deeply($sv->{variantNames}, [ 'S1_91594' ], "$url: variantNames");
+    is_deeply($sv->{filtersFailed}, [ 'q10', 's50' ], "$url: filtersFailed");
+    is($sv->{svlen}, -5, "$url: svlen");
+    is_deeply($sv->{cipos}, [ -2, 3 ], "$url: cipos");
+    is_deeply($sv->{ciend}, [ -1, 4 ], "$url: ciend");
+    is($sv->{referenceName}, '1', "$url: referenceName");
+    is($sv->{start}, 91593, "$url: start is 0-based");
+    is($sv->{end}, 91594, "$url: end");
+
+    my $snp = $variants{S1_91597} || {};
+    is_deeply($snp->{alternateBases}, [ 'A' ], "$url: one alternate base");
+    is($snp->{svlen}, undef, "$url: svlen null without SVLEN");
+    is_deeply($snp->{cipos}, [], "$url: cipos empty without CIPOS");
+    is_deeply($snp->{ciend}, [], "$url: ciend empty without CIEND");
+    is($snp->{filtersFailed}, undef, "$url: filtersFailed null for PASS");
+}
+
 # Clean up
 $mech->get("http://localhost:3010/ajax/genotyping_protocol/delete/$protocol_id");
 $response = eval { decode_json($mech->content) } || {};
 is($response->{success}, 1, 'genotyping protocol deleted');
 $schema->resultset("Project::Project")->find({project_id=>$project_id})->delete();
+$mech->get("http://localhost:3010/ajax/genotyping_protocol/delete/$sv_protocol_id");
+$response = eval { decode_json($mech->content) } || {};
+is($response->{success}, 1, 'second genotyping protocol deleted');
+$schema->resultset("Project::Project")->find({project_id=>$sv_project_id})->delete();
 
 $f->clean_up_db();
 
