@@ -53,7 +53,7 @@ sub search {
 
     my %result = (data=>\@data_out);
     my @data_files;
-    my $pagination = CXGN::BrAPI::Pagination->pagination_response($total_count,1,0);
+    my $pagination = CXGN::BrAPI::Pagination->pagination_response($total_count,$page_size,$page);
     return CXGN::BrAPI::JSONResponse->return_success(\%result, $pagination, \@data_files, $status, 'Marker search result constructed');
 }
 

@@ -266,13 +266,15 @@ sub search {
     }
     my $protocolprop_hash_select_sql = scalar(@protocolprop_marker_hash_select_arr) > 0 ? ', '.join ',', @protocolprop_marker_hash_select_arr : '';
 
-    my $protocolprop_q = "SELECT nd_protocolprop.nd_protocol_id, s.key, array_agg(project.project_id)
-        $protocolprop_hash_select_sql
-        FROM nd_protocolprop, jsonb_each(nd_protocolprop.value) as s,  (select DISTINCT nd_experiment_project.project_id as project_id, nd_experiment_protocol.nd_protocol_id from  nd_experiment_protocol  
+    my $protocolprop_from_q = "FROM nd_protocolprop, jsonb_each(nd_protocolprop.value) as s,  (select DISTINCT nd_experiment_project.project_id as project_id, nd_experiment_protocol.nd_protocol_id from  nd_experiment_protocol  
         inner join nd_experiment ON(nd_experiment.nd_experiment_id = nd_experiment_protocol.nd_experiment_id ) 
         inner join nd_experiment_project ON(nd_experiment_project.nd_experiment_id = nd_experiment_protocol.nd_experiment_id))  project
         $where_clause and nd_protocolprop.nd_protocol_id = project.nd_protocol_id  $project_where 
-        GROUP BY nd_protocolprop.nd_protocol_id, nd_protocolprop.value, s.key $protocolprop_hash_select_sql
+        GROUP BY nd_protocolprop.nd_protocol_id, nd_protocolprop.value, s.key $protocolprop_hash_select_sql";
+
+    my $protocolprop_q = "SELECT nd_protocolprop.nd_protocol_id, s.key, array_agg(project.project_id)
+        $protocolprop_hash_select_sql
+        $protocolprop_from_q
         ORDER BY s.key ASC
         $limit_clause
         $offset_clause;";
@@ -280,7 +282,6 @@ sub search {
     my $protocolprop_h = $schema->storage->dbh()->prepare($protocolprop_q);
     $protocolprop_h->execute();
     my @results;
-    my $total_marker_count = 0;
 
     while (my ($protocol_id, $marker_name, $project_id, @protocolprop_info_return) = $protocolprop_h->fetchrow_array()) {
         my $marker_obj = {
@@ -292,7 +293,15 @@ sub search {
             $marker_obj->{$protocolprop_marker_hash_select->[$s]} = $protocolprop_info_return[$s];
         }
         push @results, $marker_obj;
-        $total_marker_count++;
+    }
+
+    # The total is the number of all matching markers, not only the ones on this page
+    my $total_marker_count = scalar(@results);
+    if ($limit || $offset) {
+        my $count_h = $schema->storage->dbh()->prepare("SELECT count(*) FROM (SELECT 1 $protocolprop_from_q) AS matching_markers;");
+        $count_h->execute();
+        my ($count) = $count_h->fetchrow_array();
+        $total_marker_count = $count + 0;
     }
 
     return (\@results, $total_marker_count);

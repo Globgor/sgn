@@ -419,48 +419,41 @@ sub variants {
         limit=>$page_size
     });
 
-    my $start_index = $page*$page_size;
-    my $end_index = $page*$page_size + $page_size - 1;
-    my $counter = 0;
-
     my ($data, $total_count) = $marker_search->search();
 
     foreach (@$data){
-        if ($counter >= $start_index && $counter <= $end_index) {
-            my $info = $_->{info};
-            my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
-            my @cipos = _get_info($info,'CIPOS');
-            my @ciend = _get_info($info,'CIEND');
-            my @svlen = _get_info($info,'SVLEN');
+        my $info = $_->{info};
+        my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
+        my @cipos = _get_info($info,'CIPOS');
+        my @ciend = _get_info($info,'CIEND');
+        my @svlen = _get_info($info,'SVLEN');
 
-            my %data_obj = (
-                additionalInfo => {},
-                alternate_bases => $_->{alt},
-                ciend => [@ciend],
-                cipos => [@cipos],
-                created => undef,
-                end => $_->{pos} + length($_->{ref}),
-                filtersApplied => $_->{filter} eq "." ? JSON::false : JSON::true,
-                filtersFailed => ( $_->{filter} eq "PASS" || $_->{filter} eq "." ) ? undef : $_->{filter},
-                filtersPassed => $_->{filter} eq "PASS" ? JSON::true : JSON::false,
-                referenceBases => $_->{ref},
-                referenceName =>  $_->{chrom} ? $_->{chrom} : undef,
-                start => $_->{pos},
-                svlen => @svlen,
-                updated => undef,
-                variantDbId => qq|$_->{marker_name}|,
-                variantNames => $_->{marker_name},
-                variantSetDbId => _quote($_->{project_id}, $_->{nd_protocol_id} ),
-                variantType => $svtype,
-            );
-            push @data_out, \%data_obj;
-        }
-        $counter++;
+        my %data_obj = (
+            additionalInfo => {},
+            alternate_bases => $_->{alt},
+            ciend => [@ciend],
+            cipos => [@cipos],
+            created => undef,
+            end => $_->{pos} + length($_->{ref}),
+            filtersApplied => $_->{filter} eq "." ? JSON::false : JSON::true,
+            filtersFailed => ( $_->{filter} eq "PASS" || $_->{filter} eq "." ) ? undef : $_->{filter},
+            filtersPassed => $_->{filter} eq "PASS" ? JSON::true : JSON::false,
+            referenceBases => $_->{ref},
+            referenceName =>  $_->{chrom} ? $_->{chrom} : undef,
+            start => $_->{pos},
+            svlen => @svlen,
+            updated => undef,
+            variantDbId => qq|$_->{marker_name}|,
+            variantNames => $_->{marker_name},
+            variantSetDbId => _quote($_->{project_id}, $_->{nd_protocol_id} ),
+            variantType => $svtype,
+        );
+        push @data_out, \%data_obj;
     }
 
     my %result = (data=>\@data_out);
     my @data_files;
-    my $pagination = CXGN::BrAPI::Pagination->pagination_response($total_count,1,0);
+    my $pagination = CXGN::BrAPI::Pagination->pagination_response($total_count,$page_size,$page);
     return CXGN::BrAPI::JSONResponse->return_success(\%result, $pagination, \@data_files, $status, 'Variants result constructed');
 }
 
