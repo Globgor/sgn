@@ -37,13 +37,27 @@ sub add :Path('/image/add') Args(0) {
     my ($self, $c) = @_;
 
     $c->forward('require_logged_in');
+    return if $c->res->redirect;
+
+    # The page is opened from a record's image section; without that record the
+    # template cannot render (type_id is a required argument).
+    my $type    = $c->req->param('type');
+    my $type_id = $c->req->param('type_id');
+    unless ( defined($type) && length($type) && defined($type_id) && $type_id =~ /\A[0-9]+\z/ ) {
+        $c->res->status(400);
+        $c->stash(
+            template => '/generic_message.mas',
+            message  => 'Open the record the image belongs to and use its "Add image" link.',
+           );
+        return;
+    }
 
     $c->stash(
         template => '/image/add_image.mas',
 
         refering_page => $c->req->referer() || undef,
-        type          => $c->req->param('type'),
-        type_id       => $c->req->param('type_id'),
+        type          => $type,
+        type_id       => $type_id,
        );
 }
 
