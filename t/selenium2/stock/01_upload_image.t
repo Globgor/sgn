@@ -1,3 +1,5 @@
+use strict;
+
 use lib 't/lib';
 
 use Test::More 'tests' => 12;
@@ -9,17 +11,17 @@ my $f = SGN::Test::Fixture->new();
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(2);
+    $t->wait_for_ajax();
 
     $t->get_ok('stock/38879/view');
-    sleep(2);
+    $t->wait_for_element("stock_images_section_onswitch", "id");
 
     my $images_onswitch = $t->find_element_ok("stock_images_section_onswitch",  "id",  "click to open image panel");
     $images_onswitch->click();
-    sleep(3);
+    $t->wait_for_element("add_new_image_button", "id");
 
     $t->find_element_ok("add_new_image_button", "id", "find add image button and click")->click();
-    sleep(1);
+    $t->wait_for_element("file", "name");
 
     # Add new image
     my $upload_input = $t->find_element_ok("file", "name", "find image input");
@@ -27,13 +29,13 @@ $t->while_logged_in_as("submitter", sub {
 
     $t->driver()->upload_file($filename);
     $upload_input->send_keys($filename);
-    sleep(1);
+    $t->wait_until(sub { $t->driver->execute_script('return arguments[0].files.length === 1 && arguments[0].files[0].name === "cassava_image.jpg";', $upload_input) });
 
     $t->find_element_ok("upload_image_submit", "id", "submit image upload")->click();
-    sleep(2);
+    $t->wait_for_element("store_image_submit", "id", 120);
 
     $t->find_element_ok("store_image_submit", "id", "store image upload")->click();
-    sleep(3);
+    $t->wait_until(sub { $t->find_element('pagetitle', 'id')->get_attribute('innerHTML') =~ /cassava_image.jpg/ }, 120);
 
     # check image redirected page for image content
     my $page_title = $t->find_element_ok(
@@ -45,11 +47,11 @@ $t->while_logged_in_as("submitter", sub {
 
     # check image content on base page for stock view in image section
     $t->get_ok('stock/38879/view');
-    sleep(3);
+    $t->wait_for_element("stock_images_section_onswitch", "id");
 
     $images_onswitch = $t->find_element_ok("stock_images_section_onswitch",  "id",  "click to open image panel");
     $images_onswitch->click();
-    sleep(3);
+    $t->wait_until(sub { $t->is_visible($t->find_element('stock_images_section_content', 'id')) && $t->find_element('stock_images_section_content', 'id')->get_attribute('innerHTML') =~ /cassava_image.jpg/ });
 
     my $image_section = $t->find_element_ok(
         'stock_images_section_content',
