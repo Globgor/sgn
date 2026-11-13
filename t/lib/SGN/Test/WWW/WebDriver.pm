@@ -359,10 +359,40 @@ sub wait_for_element {
     my ($self, $locator, $how, $timeout) = @_;
     $how = 'xpath' unless defined $how;
     $timeout = 30 unless defined $timeout;
-    return $self->wait_until(sub {
+    my $result = $self->wait_until(sub {
         my $element = $self->driver->find_element($locator, $how);
         return $self->is_visible($element) && !$self->is_covered($element) ? $element : 0;
     }, $timeout, 0.2, "displayed element $how=$locator");
+    $self->_trial_diag($locator, $how) unless $result;
+    return $result;
+}
+
+# FORK TRIAL ONLY: explain a wait_for_element timeout in the log.
+sub _trial_diag {
+    my ($self, $locator, $how) = @_;
+    my @all = eval { @{ $self->driver->find_elements($locator, $how) } };
+    my $info = '';
+    if (@all) {
+        $info = eval { $self->driver->execute_script(q{
+            var el = arguments[0], out = [];
+            for (var e = el; e && e.nodeType === 1; e = e.parentElement) {
+                var s = window.getComputedStyle(e);
+                if (s.display === 'none' || s.visibility === 'hidden' || !e.getClientRects().length) {
+                    out.push(e.tagName + '#' + (e.id || '') + '.' + (e.className || '') +
+                        ' display=' + s.display + ' visibility=' + s.visibility +
+                        ' rects=' + e.getClientRects().length + ' style=' + (e.getAttribute('style') || ''));
+                }
+            }
+            var r = el.getBoundingClientRect();
+            var top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+            out.push('top at centre: ' + (top ? top.tagName + '#' + (top.id || '') + '.' + (top.className || '') : 'none'));
+            out.push('url: ' + location.href + ' readyState=' + document.readyState +
+                ' jQuery.active=' + (window.jQuery ? jQuery.active : 'n/a'));
+            return out.join(' | ');
+        }, $all[0]) } || "script error: $@";
+    }
+    note("TRIAL DIAG $how=$locator: matches=" . scalar(@all) . " :: $info");
+    return;
 }
 
 sub wait_for_ajax {
