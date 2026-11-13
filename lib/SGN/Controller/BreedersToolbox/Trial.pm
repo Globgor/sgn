@@ -532,9 +532,10 @@ sub trial_tree : Path('/breeders/trialtree') Args(0) {
     my $self = shift;
     my $c = shift;
 
-
-    $c->stash->{template} = '/breeders_toolbox/trialtree.mas';
-
+    # The old trial tree page (trialtree.mas) needs data this action never
+    # provided and failed with an internal error; the trials page replaces it.
+    $c->res->redirect('/breeders/trials');
+    return;
 }
 
 #For downloading trial layout in CSV and Excel, for downloading trial phenotypes in CSV and Excel, and for downloading trial phenotyping spreadsheets in Excel.
