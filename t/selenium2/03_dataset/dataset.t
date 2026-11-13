@@ -13,8 +13,8 @@ my $f = SGN::Test::Fixture->new();
 
 $d->while_logged_in_as("submitter", sub {
 
+    # get_ok waits until the page and its AJAX requests are done
     $d->get_ok("/search/datasets", "get root url test");
-    sleep(20);
     $d->logout_ok();
 });
 

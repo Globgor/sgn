@@ -8,10 +8,9 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(1);
     
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     my $add_location_link = $t->find_element_ok(
 	"location_map",
@@ -112,13 +111,19 @@ $t->while_logged_in_as("submitter", sub {
         "id",
         "find location submit and click")
         ->click();
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_alert_text() =~ m/location $location_name added successfully/i });
 
     ok($t->driver->get_alert_text() =~ m/location $location_name added successfully/i, 'new location was saved');
     $t->driver->accept_alert();
+    # The success callback hides the form and refreshes the table after the alert.
+    $t->wait_for_ajax();
+    $t->wait_until(sub { $t->driver->execute_script(q{
+        var modal = document.getElementById('store_location_dialog');
+        return !!modal && modal.getClientRects().length === 0;
+    }) });
 
     $t->get_ok('/breeders/locations');
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_page_source() =~ m/$location_name/ });
 
     my $page_source = $t->driver->get_page_source();
     ok($page_source =~ m/$location_name/, "location name loaded on page");
