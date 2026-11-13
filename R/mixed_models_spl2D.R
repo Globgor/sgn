@@ -61,8 +61,6 @@ adjusted_means = BLUE
 
 for(i in 1:length(trait)){
 
-    Rowf = as.factor(as.numeric(pd$rowNumber))
-    Colf = as.factor(as.numeric(pd$colNumber))
     pd$rowNumber = as.numeric(pd$rowNumber)
     pd$colNumber = as.numeric(pd$colNumber)
 
@@ -78,6 +76,10 @@ for(i in 1:length(trait)){
 
     pd <- pd[!(is.na(pd[c(dependent_variables)])), ]
 
+    # row and column factors of the plots that are left, so that they match the rows of pd
+    Rowf = as.factor(pd$rowNumber)
+    Colf = as.factor(pd$colNumber)
+
  
 
     genotypeEffectType = as.vector(str_match(random_model, 'germplasmName'))
@@ -87,7 +89,7 @@ for(i in 1:length(trait)){
 
     if (genotypeEffectType=="random") {
 
-        mixmodel = mmer(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ vsr(units), dateWarning = F, data=pd)
+        mixmodel = mmes(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, dateWarning = F, data=pd)
 
         print(paste("MIXED MODEL: ", mixmodel))
 	      varcomp<- summary(mixmodel)$varcomp
@@ -97,35 +99,38 @@ for(i in 1:length(trait)){
 
         print("---------")
 
-        res <- mixmodel$U[["u:germplasmName"]] 
+        res <- mixmodel$uList[["vsm(ism(germplasmName))"]]
         BLUP <- as.data.frame(res)
+        colnames(BLUP) <- dependent_variables
         BLUP <- tibble::rownames_to_column(BLUP, var="germplasmName")
         # print(BLUP)
 
         ##adjusted means
         adjusted_means = BLUP
-        adjusted_means[,2] = adjusted_means[,2] +as.numeric(mixmodel$Beta$Estimate[1])
+        adjusted_means[,2] = adjusted_means[,2] +as.numeric(mixmodel$b[1, 1])
 
         print(adjusted_means)
 
 
     } else {
         
-        mixmodel = mmer(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ vsr(units), dateWarning = F, data=pd)
+        mixmodel = mmes(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, dateWarning = F, data=pd)
         
-        Blues <- summary(mixmodel)$beta
+        # mmes() keeps the effect names in the row names
+        blue <- summary(mixmodel)$betas
+        Blues <- data.frame(Trait = dependent_variables, Effect = rownames(blue), blue, row.names = NULL)
         BLUE<-as.data.frame(Blues)
         BLUE <- BLUE[,-1]
         colnames(BLUE)[1] <- "accession name"
 
         Blues$Effect <- gsub("germplasmName","",Blues$Effect)
         inter_name <- as.character(unique(pd$germplasmName[!unique(pd$germplasmName) %in% Blues$Effect]))
-        Blues$Effect[Blues$Effect == "(Intercept)"] <- inter_name[1]
+        Blues$Effect[Blues$Effect == "Intercept"] <- inter_name[1]
         
         ##obtains adjusted blues
         adjustedBLUE <- Blues[,c("Effect", "Estimate", "Std.Error")]
         colnames(adjustedBLUE) <- c("accession name", "predicted value", "std.Error")
-        adjustedBLUE$`predicted value`[2:nrow(adjustedBLUE)] <- adjustedBLUE$`predicted value`[2:nrow(adjustedBLUE)] + mixmodel$Beta$Estimate[1]
+        adjustedBLUE$`predicted value`[2:nrow(adjustedBLUE)] <- adjustedBLUE$`predicted value`[2:nrow(adjustedBLUE)] + mixmodel$b[1, 1]
 
 
         BLUE$`accession name` <- adjustedBLUE$`accession name`

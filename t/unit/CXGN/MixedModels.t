@@ -21,7 +21,7 @@ my ($ff, $error) = $mm->generate_model_sommer();
 print STDERR "MODEL: ".Dumper($ff);
 
 is($ff->[0], "yield ~ locations + years", "sommer fixed factors test");
-is($ff->[1], " ~ vsr(genotypes) + vsr(blocks)", "sommer random factors test");
+is($ff->[1], " ~ vsm(ism(genotypes)) + vsm(ism(blocks))", "sommer random factors test");
 #is($ff->[1], " ~ genotypes+blocks+locations:genotypes", "sommer random factors test");
 
 done_testing();

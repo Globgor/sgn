@@ -3,6 +3,7 @@ use strict;
 use Test::More qw | no_plan |;
 use File::Slurp;
 use File::Temp qw | tempfile |;
+use File::Copy qw | copy |;
 use File::Basename qw | basename dirname |;
 use CXGN::Dataset;
 use CXGN::Dataset::File;
@@ -65,6 +66,12 @@ my $SYSTEM_MODE = $ENV{SYSTEM};
 
 foreach my $engine ("lme4", "sommer") { 
 
+    # each engine runs on its own copy of the phenotype file, so that the
+    # result files checked below come from this engine
+    my $engine_tempfile = $tempfile."_".$engine."_phenotype.txt";
+    copy($pheno_tempfile, $engine_tempfile) || die "Can't copy $pheno_tempfile to $engine_tempfile";
+    $mm->tempfile($engine_tempfile);
+
     $mm->engine($engine);
     
     $mm->dependent_variables( [ "dry matter content percentage|CO_334:0000092" ]); #, "fresh root weight|CO_334:0000012" ] );
@@ -96,11 +103,12 @@ foreach my $engine ("lme4", "sommer") {
     print STDERR "Using tempfile base ".$mm->tempfile()."\n";
 
   SKIP: { 
-      skip "Skip if run under git", 3 unless $SYSTEM_MODE ne "GITACTION";
+      skip "Skip if run under git", 4 unless $SYSTEM_MODE ne "GITACTION";
       
       ok( -e $mm->tempfile().".params", "check existence of parmams file");
       ok( -e $mm->tempfile().".adjustedBLUPs", "check existence of adjustedBLUPs result file");
       ok( -e $mm->tempfile().".BLUPs", "check existence of BLUPs result file");
+      ok( -e $mm->tempfile().".adjustedBLUPs" && scalar(my @lines = read_file($mm->tempfile().".adjustedBLUPs")) > 1, "check that the adjustedBLUPs result file has values");
     };
     #    is( scalar(my @a = read_file($mm->tempfile().".adjustedBLUPs")), 413, "check number of lines in adjustedBLUEs file...");
 
@@ -122,6 +130,10 @@ foreach my $engine ("lme4", "sommer") {
 # It makes no sense to try repair error which is not an error but very specific problem with gitaction workflow environment
 ### END OF ERROR ON GITACTION EXPLANATION
 
+my $blues_tempfile = $tempfile."_lme4_blues_phenotype.txt";
+copy($pheno_tempfile, $blues_tempfile) || die "Can't copy $pheno_tempfile to $blues_tempfile";
+$mm->tempfile($blues_tempfile);
+
 $mm->engine('lme4');
 $mm->dependent_variables( [ "fresh root weight|CO_334:0000012" ] );	
     	
@@ -141,8 +153,8 @@ sleep(2);
 
  SKIP: { 
      skip "Skip if run under git", 2 unless $SYSTEM_MODE ne "GITACTION"; 
-     ok( -e $mm->tempfile() . ".adjustedBLUPs", "check existence of adjustedBLUEs result file");
-     ok( -e $mm->tempfile() . ".BLUPs", "check existence of BLUEs result file");
+     ok( -e $mm->tempfile() . ".adjustedBLUEs", "check existence of adjustedBLUEs result file");
+     ok( -e $mm->tempfile() . ".BLUEs", "check existence of BLUEs result file");
      #    is(scalar(my @a = read_file($mm->tempfile() . ".adjustedBLUEs")), 413, "check number of lines in adjustedBLUPs file...");
 };
 

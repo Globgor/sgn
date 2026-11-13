@@ -75,7 +75,7 @@ for(i in 1:length(trait)){
 
     if (genotypeEffectType=="random") {
 
-        mixmodel = mmer(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, data=pd)
+        mixmodel = mmes(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, data=pd)
         # print(paste("MIXED MODEL: ", mixmodel))
 	    #   varcomp<- summary(mixmodel)$varcomp
         # print(varcomp)
@@ -85,13 +85,14 @@ for(i in 1:length(trait)){
         # print("---------")
 
         ##BLUPS
-        res <- randef(mixmodel) ##obtain the blups
+        res <- mixmodel$uList[["vsm(ism(germplasmName))"]] ##obtain the blups
         BLUP <- as.data.frame(res)
+        colnames(BLUP) <- dependent_variables
         BLUP <- tibble::rownames_to_column(BLUP, var = 'accession name')
         print(BLUP)
 
         ##adjusted means
-        p0 = predict.mmer(mixmodel, D="germplasmName") ##runs the prediction
+        p0 = predict(mixmodel, D="germplasmName") ##runs the prediction
         summary(p0)
         adj = p0$pvals                                        ##obtains the predictions
         adjusted_means = as.data.frame(adj)
@@ -100,24 +101,22 @@ for(i in 1:length(trait)){
 
 
     } else {
-        if (random_model!="") {
-        mixmodel = mmer(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, data=pd)
-        } else {
-        mixmodel = mmer(as.formula(fixed_model),  rcov = ~ units, data=pd)
-
+        if (random_model=="") {
+            stop("sommer needs at least one random factor: mmes() cannot fit a model without random effects")
         }
+        mixmodel = mmes(as.formula(fixed_model), random = as.formula(random_model), rcov = ~ units, data=pd)
 
         varcomp<-summary(mixmodel)$varcomp
         print(paste("MIXED MODEL: ", mixmodel))
 
-        #Computing fixed effects
-        blue = summary(mixmodel)$beta
-        BLUE<-as.data.frame(blue)
+        #Computing fixed effects (mmes() keeps the effect names in the row names)
+        blue = summary(mixmodel)$betas
+        BLUE<-data.frame(Trait = dependent_variables, Effect = rownames(blue), blue, row.names = NULL)
         #print(BLUE)
         #BLUE = merge(x = BLUE, y = fixedeff, by="germplasmName", all=TRUE)
 
         # compute adjusted blues
-        p0 = predict.mmer(mixmodel, D="germplasmName") ##runs the prediction
+        p0 = predict(mixmodel, D="germplasmName") ##runs the prediction
         summary(p0)
         adj = p0$pvals                                        ##obtains the predictions
         adjustedBLUE = as.data.frame(adj)

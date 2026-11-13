@@ -298,12 +298,12 @@ sub generate_model_sommer {
 		if (scalar(@$intersects) != 2) { $error = "intersects needs to be pairs :-(";}
 		#if (scalar(@$random_factors_interaction)== 1) { $error .= "Works only with one interaction for now! :-(";}
 		
-		else { $mmer_variable_slope_intersects .= " + vsr(". join(",", @$intersects) . ")";} # vsr(Days, Subject)
+		else { $mmer_variable_slope_intersects .= " + vsm(". join(", ", map { "ism($_)" } @$intersects) . ")";} # vsm(ism(Days), ism(Subject))
 	    }
 	}
 	
 	if ($mmer_random_factors){
-		$mmer_random_factors = join(" + ", map { "vsr($_)" } map { s/^\s+|\s+$//gr } split(/\+/, $mmer_random_factors));
+		$mmer_random_factors = join(" + ", map { "vsm(ism($_))" } map { s/^\s+|\s+$//gr } split(/\+/, $mmer_random_factors));
 	    $formula .=" ~ " .$mmer_random_factors ;
 	}
 	if ($mmer_fixed_factors_interaction) {
@@ -376,11 +376,11 @@ sub generate_model_spl2D {
 
 	if (!defined $random_factors || $random_factors eq "" || $random_factors eq '""' || (ref($random_factors) eq 'ARRAY' && !grep { defined $_ } @$random_factors)) {
 	    print STDERR "No random factors provided, using only location-based random effects...\n";
-	    $mmer_random_factors = "~ vsr(locationDbId, Rowf) + vsr(locationDbId, Colf) + spl2Da(rowNumber,colNumber, at.var = locationDbId)"; 
+	    $mmer_random_factors = "~ vsm(ism(locationDbId), ism(Rowf)) + vsm(ism(locationDbId), ism(Colf)) + spl2Dc(rowNumber, colNumber, at.var = locationDbId)"; 
 	} else {
 	    # Not empty and contains defined elements, proceed to join the random factors into the model string
 	    print STDERR "Preparing random factors...\n";
-	    $mmer_random_factors = "~" . join(" + ", map { "vsr($_)" } grep { defined $_ } @$random_factors) . " + vsr(locationDbId, Rowf) + vsr(locationDbId, Colf) + spl2Da(rowNumber,colNumber, at.var = locationDbId)";
+	    $mmer_random_factors = "~" . join(" + ", map { "vsm(ism($_))" } grep { defined $_ } @$random_factors) . " + vsm(ism(locationDbId), ism(Rowf)) + vsm(ism(locationDbId), ism(Colf)) + spl2Dc(rowNumber, colNumber, at.var = locationDbId)";
 	}
 
 	
@@ -403,8 +403,8 @@ sub generate_model_spl2D {
 			if (scalar(@$intersects) != 2) { 
 				$error = "intersects needs to be pairs :-(";
 			}else { 
-				$mmer_variable_slope_intersects .= " + vsr(". join(",", @$intersects) . ")";
-			} # vsr(Days, Subject)
+				$mmer_variable_slope_intersects .= " + vsm(". join(", ", map { "ism($_)" } @$intersects) . ")";
+			} # vsm(ism(Days), ism(Subject))
 	    }
 	}
 	
