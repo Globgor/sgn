@@ -65,19 +65,22 @@ fires 'files_add_to_collection:items_added' when done.
 jQuery(document).ready(function () {
 
     var files_pick_all_collections = {};
+    // Ids of the files to add; handed over by the opener in the
+    // 'files_add_to_collection:open' event, so the full selection survives paging.
+    var files_pick_file_ids = [];
+    var files_pick_search_timer = null;
+    var files_pick_request_id = 0;   // only the latest request may update the list
 
     function files_pick_esc(s) {
         return jQuery('<div>').text(s == null ? '' : s).html();
     }
 
-    function files_pick_render(filter_text) {
+    function files_pick_render() {
         var $list = jQuery('#files_pick_list').empty();
-        var needle = (filter_text || '').toLowerCase();
         var shown = 0;
 
         Object.keys(files_pick_all_collections).forEach(function (cid) {
             var collection = files_pick_all_collections[cid];
-            if (needle && collection.name.toLowerCase().indexOf(needle) === -1) { return; }
             shown++;
             $list.append(
                 '<div class="checkbox">' +
@@ -94,15 +97,17 @@ jQuery(document).ready(function () {
         jQuery('#files_pick_empty').toggle(shown === 0 && Object.keys(files_pick_all_collections).length === 0);
     }
 
-    function files_pick_load() {
+    function files_pick_load(search_term) {
+        var request_id = ++files_pick_request_id;
         jQuery('#files_pick_loading').show();
         jQuery('#files_pick_list').empty();
 
         jQuery.ajax({
             url: '/ajax/search/collections',
             type: 'POST',
-            data: { collection_type: 'file', length: 100, start: 0 }
+            data: { collection_type: 'file', name: search_term || '', length: 100, start: 0 }
         }).done(function (response) {
+            if (request_id !== files_pick_request_id) { return; }
             jQuery('#files_pick_loading').hide();
 
             if (response.error) {
@@ -117,15 +122,25 @@ jQuery(document).ready(function () {
                 if (c.user_can_modify) { files_pick_all_collections[c.collection_id] = c; }
             });
 
-            files_pick_render(jQuery('#files_pick_collection_search').val());
+            files_pick_render();
         }).fail(function () {
+            if (request_id !== files_pick_request_id) { return; }
             jQuery('#files_pick_loading').hide();
             jQuery('#files_pick_empty').text('Could not load collections.').show();
         });
     }
 
+    // The name filter is applied by the server, so it covers all collections
+    // and not only the first page of results.
     jQuery('#files_pick_collection_search').on('input', function () {
-        files_pick_render(jQuery(this).val());
+        var term = jQuery(this).val();
+        clearTimeout(files_pick_search_timer);
+        files_pick_search_timer = setTimeout(function () { files_pick_load(term); }, 250);
+    });
+
+    jQuery(document).on('files_add_to_collection:open', function (e, file_ids) {
+        files_pick_file_ids = (file_ids || []).slice();
+        jQuery('#files_add_to_collection_dialog').modal('show');
     });
 
     jQuery('#files_pick_save').click(function () {
@@ -139,12 +154,7 @@ jQuery(document).ready(function () {
             return;
         }
 
-        // The selection lives on the page: read the checked file checkboxes
-        // when Save is clicked rather than keeping a shadow copy here.
-        var file_ids = [];
-        jQuery('input[name="file_select"]:checked').each(function () {
-            file_ids.push(parseInt(jQuery(this).val(), 10));
-        });
+        var file_ids = files_pick_file_ids.slice();
         if (!file_ids.length) {
             jQuery('#files_add_to_collection_dialog').modal('hide');
             return;
@@ -193,7 +203,8 @@ jQuery(document).ready(function () {
 
     // Reload the option list each time the dialog opens.
     jQuery('#files_add_to_collection_dialog').on('show.bs.modal', function () {
-        files_pick_load();
+        jQuery('#files_pick_collection_search').val('');
+        files_pick_load('');
     });
 });
 </script>

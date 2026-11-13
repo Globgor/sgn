@@ -319,7 +319,8 @@ jQuery(document).ready(function () {
 
     jQuery('#file_add_selected_to_collection_button').click(function () {
         if (!file_selected_ids.size) { return; }
-        jQuery('#files_add_to_collection_dialog').modal('show');
+        // Pass the whole kept selection (all pages), not just the visible boxes.
+        jQuery(document).trigger('files_add_to_collection:open', [Array.from(file_selected_ids)]);
     });
 
     // Fired by add_files_to_collection_modal.mas after a successful add.

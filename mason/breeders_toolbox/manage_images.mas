@@ -608,7 +608,8 @@ jQuery(document).ready(function () {
             // row shown here can be rejected by add_items.
             mi_pick_all_collections = {};
             (response.data || []).forEach(function (c) {
-                if (c.user_can_modify) { mi_pick_all_collections[c.collection_id] = c; }
+                // file collections cannot hold images; untyped and mixed ones stay
+                if (c.user_can_modify && c.collection_type !== 'file') { mi_pick_all_collections[c.collection_id] = c; }
             });
 
             mi_render_collection_picker_list(jQuery('#mi_pick_collection_search').val());
