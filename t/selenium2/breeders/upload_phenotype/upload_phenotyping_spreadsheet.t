@@ -13,24 +13,25 @@ my $t = SGN::Test::WWW::WebDriver->new();
 $t->while_logged_in_as("curator", sub {
 
     for my $extension ("xls", "xlsx") {
-        sleep(2);
+        $t->wait_for_ajax();
 
         $t->get_ok('/breeders/trial/137');
-        sleep(4);
+        $t->wait_for_element("trial_upload_files_onswitch", "id");
 
         $t->wait_for_working_dialog();
 
         my $trial_files_onswitch = $t->find_element_ok("trial_upload_files_onswitch", "id", "find and open 'trial upload files onswitch' and click");
         $trial_files_onswitch->click();
-        sleep(2);
+        $t->wait_for_ajax();
+        $t->wait_for_element("upload_spreadsheet_phenotypes_link", "id");
 
         $t->wait_for_working_dialog();
 
         $t->find_element_ok("upload_spreadsheet_phenotypes_link", "id", "click on upload_spreadsheet_link ")->click();
-        sleep(4);
+        $t->wait_for_element("upload_spreadsheet_phenotype_file_format", "id");
 
         $t->find_element_ok("upload_spreadsheet_phenotype_file_format", "id", "click on spreadsheet phenotype file format (detailed / simple) ")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath', "Select 'detailed' as phenotype file format")->click();
 
         my $timestamp_checkbox = $t->find_element_ok("upload_spreadsheet_phenotype_timestamp_checkbox", "id", "click on checkbox phenotype timestamp if was unchecked before");
@@ -39,17 +40,18 @@ $t->while_logged_in_as("curator", sub {
         };
 
         $t->find_element_ok("upload_spreadsheet_phenotype_data_level", "id", "find phenotype spreadsheet data level select")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype spreadsheet data level")->click();
 
         my $upload_input = $t->find_element_ok("upload_spreadsheet_phenotype_file_input", "id", "find file input");
         my $filename = $f->config->{basepath} . "/t/data/trial/upload_phenotypin_spreadsheet.$extension";
         $t->driver()->upload_file($filename);
         $upload_input->send_keys($filename);
-        sleep(1);
+        $t->wait_until(sub { $upload_input->get_attribute('value') =~ /upload_phenotypin_spreadsheet\.$extension$/ });
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-        sleep(3);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /File data verified. Plot names and trait names are valid/ }, 120);
 
         my $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -63,7 +65,8 @@ $t->while_logged_in_as("curator", sub {
         # UPLOAD_PHENOTYPE_SPREADSHEET_VERIFY_STATUS
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-        sleep(10);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful/ }, 120);
 
         my $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -75,21 +78,22 @@ $t->while_logged_in_as("curator", sub {
         #TRY VERIFYING AND UPLOADING THE SAME FILE AGAIN.
 
         $t->get_ok('/breeders/trial/137');
-        sleep(3);
+        $t->wait_for_element("trial_upload_files_onswitch", "id");
 
         $t->wait_for_working_dialog();
 
         $trial_files_onswitch = $t->find_element_ok("trial_upload_files_onswitch", "id", "find and open 'trial upload files onswitch' and click");
         $trial_files_onswitch->click();
-        sleep(2);
+        $t->wait_for_ajax();
+        $t->wait_for_element("upload_spreadsheet_phenotypes_link", "id");
 
         $t->wait_for_working_dialog();
 
         $t->find_element_ok("upload_spreadsheet_phenotypes_link", "id", "click on upload_spreadsheet_link ")->click();
-        sleep(4);
+        $t->wait_for_element("upload_spreadsheet_phenotype_file_format", "id");
 
         $t->find_element_ok("upload_spreadsheet_phenotype_file_format", "id", "click on spreadsheet phenotype file format (detailed / simple) ")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath', "Select 'detailed' as phenotype file format")->click();
 
         $timestamp_checkbox = $t->find_element_ok("upload_spreadsheet_phenotype_timestamp_checkbox", "id", "click on checkbox phenotype timestamp if was unchecked before");
@@ -98,17 +102,18 @@ $t->while_logged_in_as("curator", sub {
         };
 
         $t->find_element_ok("upload_spreadsheet_phenotype_data_level", "id", "find phenotype spreadsheet data level select")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype spreadsheet data level")->click();
 
         $upload_input = $t->find_element_ok("upload_spreadsheet_phenotype_file_input", "id", "find file input");
         $filename = $f->config->{basepath} . "/t/data/trial/upload_phenotypin_spreadsheet.$extension";
         $t->driver()->upload_file($filename);
         $upload_input->send_keys($filename);
-        sleep(1);
+        $t->wait_until(sub { $upload_input->get_attribute('value') =~ /upload_phenotypin_spreadsheet\.$extension$/ });
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-        sleep(3);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /There are 60 values in your file that are the same as values already stored in the database./ }, 120);
 
         $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -123,7 +128,8 @@ $t->while_logged_in_as("curator", sub {
 
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-        sleep(10);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful!/ }, 120);
 
         $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -139,13 +145,13 @@ $t->while_logged_in_as("curator", sub {
         #TRY VERIFYING AND UPLOADING THE SAME FILE AGAIN FROM THE /BREEDERS/PHENOTYPING PAGE.
 
         $t->get_ok('/breeders/phenotyping');
-        sleep(2);
+        $t->wait_for_element("upload_spreadsheet_phenotypes_link", "id");
 
         $t->find_element_ok("upload_spreadsheet_phenotypes_link", "id", "click on upload_spreadsheet_link ")->click();
-        sleep(4);
+        $t->wait_for_element("upload_spreadsheet_phenotype_file_format", "id");
 
         $t->find_element_ok("upload_spreadsheet_phenotype_file_format", "id", "click on spreadsheet phenotype file format (detailed / simple) ")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_file_format"]/option[@value="detailed"]', 'xpath', "Select 'detailed' as phenotype file format")->click();
 
         $timestamp_checkbox = $t->find_element_ok("upload_spreadsheet_phenotype_timestamp_checkbox", "id", "click on checkbox phenotype timestamp if was unchecked before");
@@ -154,17 +160,18 @@ $t->while_logged_in_as("curator", sub {
         };
 
         $t->find_element_ok("upload_spreadsheet_phenotype_data_level", "id", "find phenotype spreadsheet data level select")->click();
-        sleep(1);
+        $t->wait_for_element('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath');
         $t->find_element_ok('//select[@id="upload_spreadsheet_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype spreadsheet data level")->click();
 
         $upload_input = $t->find_element_ok("upload_spreadsheet_phenotype_file_input", "id", "find file input");
         $filename = $f->config->{basepath} . "/t/data/trial/upload_phenotypin_spreadsheet.$extension";
         $t->driver()->upload_file($filename);
         $upload_input->send_keys($filename);
-        sleep(1);
+        $t->wait_until(sub { $upload_input->get_attribute('value') =~ /upload_phenotypin_spreadsheet\.$extension$/ });
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-        sleep(3);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /There are 60 values in your file that are the same as values already stored in the database./ }, 120);
 
         $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -178,7 +185,8 @@ $t->while_logged_in_as("curator", sub {
         ok($verify_status =~ /There are 60 values in your file that are the same as values already stored in the database./, "Verify warnings after store validation 15");
 
         $t->find_element_ok("upload_spreadsheet_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-        sleep(10);
+        $t->wait_for_ajax(120);
+        $t->wait_until(sub { $t->find_element("upload_phenotype_spreadsheet_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful!/ }, 120);
 
         $verify_status = $t->find_element_ok(
             "upload_phenotype_spreadsheet_verify_status",
@@ -192,16 +200,16 @@ $t->while_logged_in_as("curator", sub {
         ok($verify_status =~ /Upload Successful!/, "Verify warnings after store validation 20");
 
         if ($extension eq "xlsx") { # this test only needs to be run once. We will verify that the phenotype raw data section looks good and is editable.
-            sleep(5);
+            $t->wait_for_ajax();
 
             $t->get_ok('/breeders/trial/137');
-            sleep(5);
+            $t->wait_for_element("trial_raw_data_onswitch", "id");
 
             $t->find_element_ok("trial_raw_data_onswitch", "id", "Find phenotype raw data section")->click();
-            sleep(1);
+            $t->wait_for_element("selectRawDataTrait", "id");
 
             $t->find_element_ok("raw_data_trait_select_button", "id", "Request raw phenotype data")->click();
-            sleep(6);
+            $t->wait_for_element('//table[@id="raw_trait_data_table"]//tbody/tr[1]/td[1]', 'xpath');
 
             # Find and store the observation ID of the first row
             my $obs_id = $t->find_element_ok(
@@ -224,7 +232,7 @@ $t->while_logged_in_as("curator", sub {
 
             # Click edit button, make trivial edits to value and timestamp
             $t->find_element_ok("${obs_id}_edit_btn", "id", "Click edit button for first row")->click();
-            sleep(1);
+            $t->wait_for_element("${obs_id}_value_input", "id");
 
             my $value_input = $t->find_element_ok("${obs_id}_value_input", "id", "Find value input for first row");
             $value_input->send_keys(KEYS->{'control'}, 'a');
@@ -236,7 +244,7 @@ $t->while_logged_in_as("curator", sub {
 
             # Click discard and verify values are unchanged
             $t->find_element_ok("${obs_id}_discard_changes_btn", "id", "Click discard button for first row")->click();
-            sleep(1);
+            $t->wait_for_element("${obs_id}_edit_btn", "id");
 
             my $value_after_discard = $t->find_element_ok(
                 '//table[@id="raw_trait_data_table"]//tbody/tr[1]/td[4]',
@@ -248,7 +256,7 @@ $t->while_logged_in_as("curator", sub {
 
             # Click edit again, edit only the value, click save
             $t->find_element_ok("${obs_id}_edit_btn", "id", "Click edit button again for first row")->click();
-            sleep(1);
+            $t->wait_for_element("${obs_id}_value_input", "id");
 
             my $new_value = "888";
             $value_input = $t->find_element_ok("${obs_id}_value_input", "id", "Find value input for second edit of first row");
@@ -256,17 +264,18 @@ $t->while_logged_in_as("curator", sub {
             $value_input->send_keys($new_value);
 
             $t->find_element_ok("${obs_id}_save_changes_btn", "id", "Click save button for first row")->click();
-            sleep(4);
+            $t->wait_for_ajax();
+            $t->wait_until(sub { $t->find_element('//table[@id="raw_trait_data_table"]//tbody/tr[1]/td[4]', 'xpath')->get_text() =~ /^$new_value/ });
 
             # Refresh page and return to raw data section
             $t->get_ok('/breeders/trial/137');
-            sleep(5);
+            $t->wait_for_element("trial_raw_data_onswitch", "id");
 
             $t->find_element_ok("trial_raw_data_onswitch", "id", "Find raw data section after page refresh")->click();
-            sleep(1);
+            $t->wait_for_element("selectRawDataTrait", "id");
 
             $t->find_element_ok("raw_data_trait_select_button", "id", "Request raw phenotype data after page refresh")->click();
-            sleep(6);
+            $t->wait_for_element("//table[\@id='raw_trait_data_table']//tbody/tr[td[1][normalize-space()='$obs_id']]/td[4]", 'xpath');
 
             # Find the row by stored observation ID and verify the edit was retained
             my $updated_value_display = $t->find_element_ok(
@@ -277,7 +286,7 @@ $t->while_logged_in_as("curator", sub {
             $updated_value_display =~ s/^\s+|\s+$//g;
             print STDERR "UPDATED VALUE AFTER REFRESH: $updated_value_display\n";
             ok($updated_value_display =~ /^$new_value/, "Edited value was retained after page refresh");
-            sleep(1);
+            $t->wait_for_ajax();
         }
 
         $f->clean_up_db();
