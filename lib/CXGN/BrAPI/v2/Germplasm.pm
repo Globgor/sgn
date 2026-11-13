@@ -161,25 +161,7 @@ sub search {
 
     my $main_production_site_url = SGN::Context->new()->get_conf('main_production_site_url');
 
-    # Fetch raw relationship values once for this page. Empty string and "0"
-    # must remain distinct from NULL, which becomes "unknown" below.
-    my %cross_types;
-    if (@$result) {
-        my $female_parent_cvterm_id = SGN::Model::Cvterm->get_cvterm_row(
-            $self->bcs_schema, 'female_parent', 'stock_relationship')->cvterm_id();
-        my @stock_ids = map { $_->{stock_id} } @$result;
-        # The stock ids go in as one array parameter, so the page size has no
-        # parameter limit.
-        my $q = "SELECT object_id, value FROM stock_relationship "
-            . "WHERE object_id = ANY(?) AND type_id = ? ORDER BY object_id, rank, stock_relationship_id";
-        my $h = $self->bcs_schema->storage()->dbh()->prepare($q);
-        $h->execute(\@stock_ids, $female_parent_cvterm_id);
-        while (my ($stock_id, $value) = $h->fetchrow_array()) {
-            # Keep the first row, including NULL. An accession normally has one
-            # female link; with several, the lowest rank wins.
-            $cross_types{$stock_id} = $value unless exists $cross_types{$stock_id};
-        }
-    }
+    my %cross_types = _cross_types($self, $result);
 
     my @data;
     foreach (@$result){
@@ -1093,6 +1075,29 @@ sub update {
     return CXGN::BrAPI::JSONResponse->return_success(@result, $pagination, \@data_files, $status, 'Germplasm updated');
 }
 
+# The female_parent relationship value (the cross type) of every stock in
+# $result, read with one query. Empty string and "0" stay distinct from NULL,
+# which the callers turn into "unknown". An accession normally has one female
+# link; with several, the lowest rank wins. The stock ids go in as one array
+# parameter, so the number of stocks has no parameter limit.
+sub _cross_types {
+    my ($self, $result) = @_;
+    my %cross_types;
+    return %cross_types unless @$result;
+    my $female_parent_cvterm_id = SGN::Model::Cvterm->get_cvterm_row(
+        $self->bcs_schema, 'female_parent', 'stock_relationship')->cvterm_id();
+    my @stock_ids = map { $_->{stock_id} } @$result;
+    my $q = "SELECT object_id, value FROM stock_relationship "
+        . "WHERE object_id = ANY(?) AND type_id = ? ORDER BY object_id, rank, stock_relationship_id";
+    my $h = $self->bcs_schema->storage()->dbh()->prepare($q);
+    $h->execute(\@stock_ids, $female_parent_cvterm_id);
+    while (my ($stock_id, $value) = $h->fetchrow_array()) {
+        # keep the first row, including NULL
+        $cross_types{$stock_id} = $value unless exists $cross_types{$stock_id};
+    }
+    return %cross_types;
+}
+
 sub _simple_search {
     my $self = shift;
     my $germplasm_ids_arrayref = shift;
@@ -1155,6 +1160,8 @@ sub _simple_search {
 
     my $main_production_site_url = SGN::Context->new()->get_conf('main_production_site_url');
 
+    my %cross_types = _cross_types($self, $result);
+
     my @data;
     foreach (@$result){
         # my @type_of_germplasm_storage_codes = $_->{'type of germplasm storage code'} ? split ',', $_->{'type of germplasm storage code'} : ();
@@ -1198,11 +1205,7 @@ sub _simple_search {
             }
         }
 
-        my $female_parent_cvterm_id = SGN::Model::Cvterm->get_cvterm_row($self->bcs_schema, 'female_parent', 'stock_relationship')->cvterm_id();
-        my $q = "SELECT value FROM stock_relationship WHERE object_id = ? AND type_id = ?;";
-    	my $h = $self->bcs_schema->storage()->dbh()->prepare($q);
-    	$h->execute($_->{stock_id}, $female_parent_cvterm_id);
-    	my ($cross_type) = $h->fetchrow_array();
+        my $cross_type = $cross_types{$_->{stock_id}};
         if ( ! defined $cross_type) {
             $cross_type = "unknown";
         }

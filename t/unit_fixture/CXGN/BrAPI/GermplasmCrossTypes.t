@@ -55,7 +55,7 @@ my $female_type = SGN::Model::Cvterm->get_cvterm_row(
     $schema, 'female_parent', 'stock_relationship')->cvterm_id();
 
 sub measured_search {
-    my ($ids) = @_;
+    my ($ids, $simple) = @_;
     my $api = CXGN::BrAPI::v2::Germplasm->new({
         bcs_schema => $schema, people_schema => $f->people_schema(),
         phenome_schema => $f->phenome_schema(), metadata_schema => $f->metadata_schema(),
@@ -71,7 +71,10 @@ sub measured_search {
     my ($response, $search_error);
     eval {
         $dbh->{Callbacks} = \%callbacks;
-        $response = $api->search({ germplasmDbIds => $ids }, undef);
+        $response = $simple
+            # the list that store(), germplasm_detail() and update() return
+            ? { result => { data => [ CXGN::BrAPI::v2::Germplasm::_simple_search($api, $ids) ] } }
+            : $api->search({ germplasmDbIds => $ids }, undef);
         1;
     } or $search_error = $@ || 'Germplasm search failed';
     $dbh->{Callbacks} = $old_callbacks;
@@ -116,7 +119,10 @@ eval {
 
     my ($small_response, $small_count) = measured_search(\@small);
     my ($large_response, $large_count) = measured_search(\@large);
-    for my $case ([\@small, $small_response], [\@large, $large_response]) {
+    my ($simple_small_response, $simple_small_count) = measured_search(\@small, 1);
+    my ($simple_large_response, $simple_large_count) = measured_search(\@large, 1);
+    for my $case ([\@small, $small_response], [\@large, $large_response],
+                  [\@small, $simple_small_response], [\@large, $simple_large_response]) {
         my ($ids, $response) = @$case;
         my $rows = $response->{result}->{data};
         is_deeply([sort { $a <=> $b } map { $_->{germplasmDbId} } @$rows],
@@ -132,9 +138,12 @@ eval {
                 "germplasm $row->{germplasmDbId} cross type matches SQL");
         }
     }
-    diag("Cross-type queries: page of 3 = $small_count, page of 6 = $large_count");
+    diag("Cross-type queries: page of 3 = $small_count, page of 6 = $large_count; "
+        . "simple search of 3 = $simple_small_count, of 6 = $simple_large_count");
     cmp_ok($small_count, '>', 0, 'counter sees the cross-type query');
     is($large_count, $small_count, 'cross-type queries do not grow with the page size');
+    cmp_ok($simple_small_count, '>', 0, 'counter sees the cross-type query of the simple search');
+    is($simple_large_count, $simple_small_count, 'simple search: cross-type queries do not grow with the number of germplasm');
     1;
 } or $error = $@ || 'Germplasm cross-type test failed';
 $schema->txn_rollback();
