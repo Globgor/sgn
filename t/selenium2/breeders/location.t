@@ -8,10 +8,11 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(1);
+    $t->wait_for_ajax();
     
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_ajax();
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     my $add_location_link = $t->find_element_ok(
 	"location_map",
@@ -112,13 +113,27 @@ $t->while_logged_in_as("submitter", sub {
         "id",
         "find location submit and click")
         ->click();
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_alert_text() =~ m/location $location_name added successfully/i });
 
     ok($t->driver->get_alert_text() =~ m/location $location_name added successfully/i, 'new location was saved');
     $t->driver->accept_alert();
 
     $t->get_ok('/breeders/locations');
-    sleep(2);
+    $t->wait_for_ajax();
+    $t->wait_until(sub {
+        # DataTables only attaches the current page of rows to the DOM.
+        $t->driver->execute_script(q{
+            var table = jQuery('#location_table').DataTable();
+            var name = arguments[0];
+            var loaded = table.rows().data().toArray().some(function (row) {
+                return row.properties.Name === name;
+            });
+            if (loaded) {
+                table.search(name).draw();
+            }
+        }, $location_name);
+        return $t->driver->get_page_source() =~ m/$location_name/;
+    }, 120);
 
     my $page_source = $t->driver->get_page_source();
     ok($page_source =~ m/$location_name/, "location name loaded on page");

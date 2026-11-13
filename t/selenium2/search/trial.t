@@ -10,7 +10,8 @@ my $d = SGN::Test::WWW::WebDriver->new();
 
 $d->get_ok('/search/trials');
 
-sleep(2);
+$d->wait_until(sub { $d->driver->get_page_source() =~ /Kasese/ && $d->driver->get_page_source() =~ /2014/ });
+$d->wait_for_element("//div[\@id=\"trial_search_results_filter\"]/descendant::label/descendant::input", "xpath");
 
 ok($d->driver->get_page_source()=~/Kasese/, "find trial search result content");
 
@@ -20,20 +21,20 @@ my $trial_search_input = $d->find_element("//div[\@id=\"trial_search_results_fil
 
 $trial_search_input->send_keys("Kasese");
 
-sleep(5);
+$d->wait_until(sub { $d->driver->get_page_source() =~ /loaded into the fixture to test solgs/ && $d->driver->get_page_source() !~ /test_trial/ });
 
 my $page_source = $d->driver->get_page_source();
 
 ok($page_source=~m/loaded into the fixture to test solgs/, "find trial description");
 
-sleep(2);
+$d->wait_for_element("Kasese solgs trial", "link_text");
 
 ok($page_source!~m/test_trial/, "Do not find the test trial now");
 
 ok($d->find_element_ok("Kasese solgs trial", "link_text", "verify search")->click());
 
 
-sleep(2);
+$d->wait_for_ajax();
 
 done_testing();
 

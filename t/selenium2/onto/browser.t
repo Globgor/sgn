@@ -9,10 +9,11 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver -> new();
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(2);
+    $t->wait_for_ajax();
 
     $t->get_ok('/tools/onto');
-    sleep(3);
+    $t->wait_for_element("ontology_browser_input", "id");
+    $t->wait_for_element("term_search", "id");
 
     $t->find_element_ok("ontology_browser_input", "id", "check if 'Find ID' input exist");
 
