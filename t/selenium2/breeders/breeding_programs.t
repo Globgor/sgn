@@ -1,3 +1,5 @@
+use strict;
+
 use lib 't/lib';
 
 use Test::More 'tests' => 10;
@@ -8,7 +10,7 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("curator", sub {
-    sleep(2);
+    $t->wait_for_ajax();
 
     $t->get_ok('/breeders/manage_programs');
 
@@ -16,7 +18,7 @@ $t->while_logged_in_as("curator", sub {
 
     $new_bp_link->click();
 
-    sleep(5);
+    $t->wait_for_element('store_breeding_program_name', 'id');
 
     my $breeding_program_name_input = $t->find_element_ok('store_breeding_program_name', 'id', 'find store breeding program name input');
 
@@ -30,35 +32,36 @@ $t->while_logged_in_as("curator", sub {
 
     $ok_button->click();
 
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_alert_text() });
 
     $t->driver->accept_alert();
 
-    sleep(2); # wait until page is re-loaded
+    $t->wait_for_element('delete_breeding_program_link_WEBTEST', 'id');
 
     $t->get_ok('/breeders/manage_programs');
 
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_page_source() =~ m/WEBTEST/ });
 
     ok($t->driver->get_page_source() =~ m/WEBTEST/, "breeding program addition successful");
 
-    sleep(2);
+    $t->wait_for_element('delete_breeding_program_link_WEBTEST', 'id');
 
     my $delete_link = $t->find_element_ok('delete_breeding_program_link_WEBTEST', 'id', 'find breeding program delete link');
 
-    sleep(2);
+    $t->wait_until(sub { $t->is_visible($delete_link) && $delete_link->is_enabled() });
 
     $delete_link->click();
 
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_alert_text() =~ m/Delete breeding program WEBTEST/i });
 
     $t->driver->accept_alert();
 
-    sleep(2);
+    $t->wait_for_ajax();
+    $t->wait_until(sub { $t->driver->get_page_source() !~ m/WEBTEST/ });
 
     $t->get_ok('/breeders/manage_programs');
 
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_page_source() !~ m/WEBTEST/ });
 
     ok($t->driver->get_page_source() !~ m/WEBTEST/, "breeding program deletion successful");
 });

@@ -43,7 +43,21 @@ Convenience accessors for driver functions:
 
 * find_element_ok() - wraps the find_element in an ok() test.
 
-* select_datatable_tab() - selects a DataTable tab by its target pane ID.
+* select_datatable_tab() - selects a DataTable tab by its target pane ID, then waits for its pane and AJAX.
+
+* wait_until($code, $timeout = 30, $interval = 0.2) - polls a condition, treating exceptions as false; returns its true value or false with one Test::More note on timeout.
+
+* is_visible($element) - checks rendered visibility in the page, independent of the viewport; options use their select element and stale elements return false.
+
+This avoids is_displayed because Selenium 1.46 Firefox checks viewport bounds and misses hidden parents.
+
+* wait_for_element($locator, $how = 'xpath', $timeout = 30) - returns an element once it is displayed, or false on timeout.
+
+* wait_for_ajax($timeout = 60) - waits for a complete document, no active jQuery requests, and no visible working modal for 0.5 continuous seconds. Fetch results require a separate condition.
+
+* wait_for_working_dialog($max = 300) - watches up to three seconds for a visible working modal or active jQuery request; if seen, waits up to $max seconds for the page to be idle for 0.5 continuous seconds, as in wait_for_ajax. Returns true if neither appears.
+
+Wait helpers do not add tests. A timeout produces one Test::More note on stdout and returns false. Internally, wait_until also accepts a fourth argument describing the awaited condition.
 
 For all other driver functions, use the driver() accessor, for example: $swd->driver->get_window_size().
 
@@ -60,9 +74,11 @@ Lukas Mueller <lam87@cornell.edu>
 
 package SGN::Test::WWW::WebDriver;
 
+use strict;
 use Moose;
 
 use Try::Tiny;
+use Time::HiRes qw(time sleep);
 use Test::More;
 use File::Spec::Functions;
 use Selenium::Firefox;
@@ -141,7 +157,7 @@ sub login {
     my $password = shift;
     
     $self->get("/user/login");
-    sleep(2);
+    $self->wait_for_element("username", "id");
     my $d = $self->driver();
     my $username_field = $d->find_element("username", "id");
     $username_field->click();
@@ -150,7 +166,13 @@ sub login {
     $password_field->click();
     $password_field->send_keys($password);
     my $login_button = $d->find_element("submit_password", "id");
+    my $login_url = $d->get_current_url();
     $login_button->click();
+    # The successful login callback redirects away from /user/login.
+    $self->wait_until(sub {
+        return $d->get_current_url() ne $login_url;
+    }, 60, 0.2, 'successful login redirect');
+    $self->wait_for_ajax();
 }
 
 sub logout { 
@@ -186,7 +208,9 @@ sub base_url {
 sub get { 
     my $self = shift;
     my $url = shift;
-    return $self->driver->get($url);
+    my $result = $self->driver->get($url);
+    $self->wait_for_ajax();
+    return $result;
 }
 
 sub get_ok { 
@@ -221,7 +245,8 @@ sub select_datatable_tab {
         "select DataTable tab $tab_id",
     );
     $tab->click();
-    sleep(5);
+    $self->wait_for_element($tab_id, "id");
+    $self->wait_for_ajax();
 
     return $tab;
 }
@@ -260,24 +285,98 @@ sub download_linked_file {
 }
 
 
-sub wait_for_working_dialog {
-    my $self = shift;
-    my $max = shift || 300;
+sub wait_until {
+    my ($self, $code, $timeout, $interval, $description) = @_;
+    $timeout = 30 unless defined $timeout;
+    $interval = 0.2 unless defined $interval;
+    my (undef, $file, $line) = caller;
+    $description ||= "condition at $file:$line";
+    my $deadline = time() + $timeout;
 
-    sleep(3);
-
-    my $is_hidden = 0;
-    my $count = 0;
-    print STDERR "... waiting for working dialog ...\n";
-    while ( !$is_hidden && $count < $max ) {
-        my $wd = $self->find_element("working_modal", "id");
-        $is_hidden = $wd->is_hidden();
-        $count++;
-        sleep(1);
+    while (1) {
+        my $value = eval { $code->() };
+        return $value if $value;
+        my $remaining = $deadline - time();
+        last if $remaining <= 0;
+        sleep($remaining < $interval ? $remaining : $interval);
     }
-    print STDERR "... working dialog dismissed ...\n";
+    note("Timed out waiting for $description");
+    return 0;
+}
+
+sub is_visible {
+    my ($self, $element) = @_;
+    return eval {
+        $self->driver->execute_script(q{
+            var element = arguments[0];
+            if (!element) { return false; }
+            if (element.tagName.toLowerCase() === 'option') {
+                element = element.closest('select');
+            }
+            if (!element) { return false; }
+            var style = window.getComputedStyle(element);
+            return style.display !== 'none' && style.visibility !== 'hidden' &&
+                element.getClientRects().length > 0;
+        }, $element);
+    } || 0;
+}
+
+sub wait_for_element {
+    my ($self, $locator, $how, $timeout) = @_;
+    $how = 'xpath' unless defined $how;
+    $timeout = 30 unless defined $timeout;
+    return $self->wait_until(sub {
+        my $element = $self->find_element($locator, $how);
+        return $self->is_visible($element) ? $element : 0;
+    }, $timeout, 0.2, "displayed element $how=$locator");
+}
+
+sub wait_for_ajax {
+    my ($self, $timeout) = @_;
+    $timeout = 60 unless defined $timeout;
+    my $idle_since;
+    return $self->wait_until(sub {
+        my $idle = eval { $self->driver->execute_script(q{
+            return document.readyState === 'complete' &&
+                (typeof jQuery === 'undefined' || jQuery.active === 0) &&
+                !Array.from(document.querySelectorAll('#working_modal')).some(function (modal) {
+                    return modal.getClientRects().length > 0 &&
+                        window.getComputedStyle(modal).visibility !== 'hidden';
+                });
+        }) };
+        if (!$idle) {
+            $idle_since = undef;
+            return 0;
+        }
+        $idle_since = time() unless defined $idle_since;
+        return time() - $idle_since >= 0.5;
+    }, $timeout, 0.2, 'page idle for 0.5 seconds');
+}
+
+sub wait_for_working_dialog {
+    my ($self, $max) = @_;
+    $max = 300 unless defined $max;
+    my $started = time();
+    my $working = sub {
+        return $self->driver->execute_script(q{
+            var modal = document.getElementById('working_modal');
+            return (typeof jQuery !== 'undefined' && jQuery.active > 0) ||
+                (!!modal && modal.getClientRects().length > 0 &&
+                    window.getComputedStyle(modal).visibility !== 'hidden');
+        });
+    };
+
+    # Absence during this observation window is normal, not a timeout.
+    my $shown = 0;
+    while (1) {
+        $shown = eval { $working->() };
+        last if $shown;
+        my $remaining = $started + 3 - time();
+        return 1 if $remaining <= 0;
+        sleep($remaining < 0.2 ? $remaining : 0.2);
+    }
+
+    return $self->wait_for_ajax($max);
 }
 
 1;
-   
-    
