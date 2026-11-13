@@ -8,10 +8,11 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(1);
+    $t->wait_for_ajax();
     
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_ajax();
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     my $add_location_link = $t->find_element_ok(
 	"location_map",
@@ -112,13 +113,53 @@ $t->while_logged_in_as("submitter", sub {
         "id",
         "find location submit and click")
         ->click();
-    sleep(2);
+    $t->wait_until(sub { $t->driver->get_alert_text() =~ m/location $location_name added successfully/i });
 
     ok($t->driver->get_alert_text() =~ m/location $location_name added successfully/i, 'new location was saved');
     $t->driver->accept_alert();
+    # The success callback hides the form and refreshes the table after the alert.
+    my $location_save_state;
+    $t->wait_until(sub {
+        $location_save_state = $t->driver->execute_script(q{
+            var state = { url: window.location.href, found: false };
+            try {
+                var modal = document.getElementById('store_location_dialog');
+                state.modal_closed = !!modal && modal.getClientRects().length === 0;
+                state.ajax_active = jQuery.active;
+                state.initialized = jQuery.fn.dataTable.isDataTable('#location_table');
+                var rows = state.initialized ? jQuery('#location_table').DataTable().rows().data().toArray() : [];
+                var name = arguments[0];
+                state.names = rows.map(function (row) { return row.properties.Name; });
+                state.found = rows.some(function (row) { return row.properties.Name === name; });
+            } catch (error) {
+                state.error = String(error);
+            }
+            return state;
+        }, $location_name);
+        return $location_save_state->{found} && $location_save_state->{modal_closed} && $location_save_state->{ajax_active} == 0;
+    }, 120, 0.2, 'location save callback and table refresh') or die "Location save callback did not finish before navigation: " . explain($location_save_state);
 
     $t->get_ok('/breeders/locations');
-    sleep(2);
+    $t->wait_for_ajax();
+    my $location_page_state;
+    $t->wait_until(sub {
+        $location_page_state = $t->driver->execute_script(q{
+            var state = { url: window.location.href, ready: document.readyState, found: false };
+            try {
+                state.initialized = typeof jQuery !== 'undefined' && jQuery.fn.dataTable &&
+                    jQuery.fn.dataTable.isDataTable('#location_table');
+                state.ajax_active = typeof jQuery !== 'undefined' ? jQuery.active : null;
+                var rows = state.initialized ? jQuery('#location_table').DataTable().rows().data().toArray() : [];
+                var name = arguments[0];
+                state.names = rows.map(function (row) { return row.properties.Name; });
+                state.found = rows.some(function (row) { return row.properties.Name === name; });
+            } catch (error) {
+                state.error = String(error);
+            }
+            return state;
+        }, $location_name);
+        return $location_page_state->{found} && $t->driver->get_page_source() =~ m/$location_name/;
+    }, 120, 0.2, 'saved location in initialized table and page source') or note(explain($location_page_state));
 
     my $page_source = $t->driver->get_page_source();
     ok($page_source =~ m/$location_name/, "location name loaded on page");
