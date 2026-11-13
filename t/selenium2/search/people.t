@@ -13,7 +13,8 @@ my $last_name = $d->find_element_ok("last_name", "id", "find last_name html elem
 $last_name->send_keys("Sanger");
 my $submit = $d->find_element_ok("submit_people_search", "id", "find people search submit button");
 $submit->click();
-sleep(2);
+$d->wait_for_ajax();
+$d->wait_until(sub { $d->find_element("people_search_results", "id")->get_text() =~ /Sanger/ && $d->driver()->get_page_source() !~ /Doe/ });
 ok($d->driver()->get_page_source() !~ /Doe/, "terms not searched must not be on page");
 ok($d->driver()->get_page_source() =~ /Sanger/, "search term must appear on page");
 
