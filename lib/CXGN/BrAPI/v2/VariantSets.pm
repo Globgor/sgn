@@ -428,7 +428,7 @@ sub variants {
     foreach (@$data){
         if ($counter >= $start_index && $counter <= $end_index) {
             my $info = $_->{info};
-            my $svtype = $1 if ($_->{info} =~ /SVTYPE=(\w+);/) ;
+            my ($svtype) = $_->{info} =~ /SVTYPE=(\w+);/;
             my @cipos = _get_info($info,'CIPOS');
             my @ciend = _get_info($info,'CIEND');
             my @svlen = _get_info($info,'SVLEN');
@@ -607,8 +607,8 @@ sub _get_info {
     if ( $info =~ /$item=(-?(\d+),?)+/) {
         my $match = $&;
         $match =~ s/$item=//g;
-        my @splited = split(/,/, $match);
-        @array = map { $_ + 0 } @splited;
+        my @split_values = split(/,/, $match);
+        @array = map { $_ + 0 } @split_values;
     }
 
     return @array ;
