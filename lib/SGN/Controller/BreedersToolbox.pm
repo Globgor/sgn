@@ -514,12 +514,27 @@ sub manage_plot_phenotyping :Path("/breeders/plot_phenotyping") Args(0) {
 	     $c->res->redirect( uri( path => '/user/login', query => { goto_url => $c->req->uri->path_query } ) );
 	      return;
     }
-    my $stock = $schema->resultset("Stock::Stock")->find( { stock_id=>$stock_id })->uniquename();
+    my $plot = _existing_record($schema, 'Stock::Stock', 'stock_id', $stock_id);
+    if (!$plot) {
+        $c->res->status(400);
+        $c->stash->{message} = 'Open an existing plot, then choose its phenotyping action.';
+        $c->stash->{template} = '/generic_message.mas';
+        return;
+    }
+    my $stock = $plot->uniquename();
 
     $c->stash->{plot_name} = $stock;
     $c->stash->{stock_id} = $stock_id;
     $c->stash->{template} = '/breeders_toolbox/manage_plot_phenotyping.mas';
 
+}
+
+# The record a phenotyping page is opened from, or nothing when the id is missing,
+# not a positive integer within the database's integer range, or unknown.
+sub _existing_record {
+    my ($schema, $source, $column, $id) = @_;
+    return unless defined($id) && $id =~ /\A0*([1-9][0-9]{0,9})\z/ && $1 <= 2147483647;
+    return $schema->resultset($source)->find({ $column => $1 });
 }
 
 sub manage_trial_phenotyping :Path("/breeders/trial_phenotyping") Args(0) {
@@ -532,7 +547,14 @@ sub manage_trial_phenotyping :Path("/breeders/trial_phenotyping") Args(0) {
 	     $c->res->redirect( uri( path => '/user/login', query => { goto_url => $c->req->uri->path_query } ) );
 	      return;
     }
-    my $project_name = $schema->resultset("Project::Project")->find( { project_id=>$trial_id })->name();
+    my $project = _existing_record($schema, 'Project::Project', 'project_id', $trial_id);
+    if (!$project) {
+        $c->res->status(400);
+        $c->stash->{message} = 'Open an existing trial, then choose its phenotyping action.';
+        $c->stash->{template} = '/generic_message.mas';
+        return;
+    }
+    my $project_name = $project->name();
 
     my $trial = CXGN::Trial->new({ bcs_schema => $schema, trial_id => $trial_id });
 
