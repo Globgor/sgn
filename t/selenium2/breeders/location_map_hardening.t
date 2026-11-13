@@ -54,10 +54,11 @@ my $noaa_payload = q{GHCND:X' onmouseover='window.__noaa_xss_fired=true;//};
 my ($probe_id, $nocoord_id);
 
 $t->while_logged_in_as("submitter", sub {
-    sleep(1);
+    $t->wait_for_ajax();
 
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_ajax();
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     $t->find_element_ok("location_map", "id", "location map is on the page");
 
@@ -99,7 +100,8 @@ JS
 
     # reload so the table and map are rebuilt from the stored data
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_ajax();
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     # the new location has real coordinates, so it must add exactly one marker
     my $markers_after_probe = $t->driver->execute_script(
@@ -229,7 +231,8 @@ JS
     $nocoord_id = $store2->{nd_geolocation_id} if $store2;
 
     $t->get_ok('/breeders/locations');
-    sleep(5);
+    $t->wait_for_ajax();
+    $t->wait_for_element('#location_map .leaflet-pane', 'css');
 
     my $markers_after_nocoord = $t->driver->execute_script(
         "return document.querySelectorAll('#location_map .leaflet-marker-icon').length;"

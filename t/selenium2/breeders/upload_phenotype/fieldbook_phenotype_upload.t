@@ -9,21 +9,21 @@ my $f = SGN::Test::Fixture->new();
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub { 
-    sleep(2);
+    $t->wait_for_ajax();
 
     $t->get_ok('/breeders/trial/137');
-    sleep(4);
+    $t->wait_for_element('trial_upload_files_onswitch', 'id');
 
     $t->wait_for_working_dialog();
 
     $t->find_element_ok("trial_upload_files_onswitch", "id", "click on upload_fieldbook_link ")->click();
-    sleep(1);
+    $t->wait_for_element('upload_fieldbook_phenotypes_link', 'id');
 
     $t->find_element_ok("upload_fieldbook_phenotypes_link", "id", "click on upload_fieldbook_link ")->click();
-    sleep(2);
+    $t->wait_for_element('upload_fieldbook_phenotype_file_input', 'id');
 
     my $upload_input = $t->find_element_ok("upload_fieldbook_phenotype_file_input", "id", "find file input");
-    sleep(4);
+    $t->wait_for_element('upload_fieldbook_phenotype_data_level', 'id');
 
     # Change from fieldbook_phenotype_file.csv to fieldbook_phenotype_file_no_fieldbook_image.csv
     # For some reasons, fieldbook_image traits are returned as invalid. Don't know why there is no
@@ -31,17 +31,18 @@ $t->while_logged_in_as("submitter", sub {
     # In fieldbook_phenotype_file_no_fieldbook_image two last rows with fieldbook_image traits were removed
 
     $t->find_element_ok("upload_fieldbook_phenotype_data_level", "id", "find fieldbook phenotype data level select")->click();
-    sleep(1);
+    $t->wait_for_element('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath');
 
     $t->find_element_ok('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype data level")->click();
 
     my $filename = $f->config->{basepath}."/t/data/fieldbook/fieldbook_phenotype_file_no_fieldbook_image.csv";
     $t->driver()->upload_file($filename);
     $upload_input->send_keys($filename);
-    sleep(1);
+    $t->wait_until(sub { $t->driver->execute_script('return arguments[0].files.length === 1 && arguments[0].files[0].name === arguments[1].split("/").pop();', $upload_input, $filename) });
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-    sleep(3);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /File data verified. Plot names and trait names are valid./ }, 120);
 
     my $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
@@ -53,7 +54,8 @@ $t->while_logged_in_as("submitter", sub {
     ok($verify_status =~ /File data verified. Plot names and trait names are valid./, "Verify the positive validation");
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-    sleep(10);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful!/ }, 120);
 
     $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
@@ -66,20 +68,20 @@ $t->while_logged_in_as("submitter", sub {
 
     #back to the trial page and re-upload !!
     $t->get_ok('/breeders/trial/137');
-    sleep(2);
+    $t->wait_for_element('trial_upload_files_onswitch', 'id');
 
     $t->wait_for_working_dialog();
 
     $t->find_element_ok("trial_upload_files_onswitch", "id", "click on upload_fieldbook_link ")->click();
-    sleep(2);
+    $t->wait_for_element('upload_fieldbook_phenotypes_link', 'id');
 
     $t->wait_for_working_dialog();
 
     $t->find_element_ok("upload_fieldbook_phenotypes_link", "id", "click on upload_spreadsheet_link ")->click();
-    sleep(4);
+    $t->wait_for_element('upload_fieldbook_phenotype_data_level', 'id');
 
     $t->find_element_ok("upload_fieldbook_phenotype_data_level", "id", "find fieldbook phenotype data level select")->click();
-    sleep(1);
+    $t->wait_for_element('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath');
 
     $t->find_element_ok('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype data level")->click();
 
@@ -87,10 +89,11 @@ $t->while_logged_in_as("submitter", sub {
     $filename = $f->config->{basepath}."/t/data/fieldbook/fieldbook_phenotype_file_no_fieldbook_image.csv";
     $t->driver()->upload_file($filename);
     $upload_input->send_keys($filename);
-    sleep(1);
+    $t->wait_until(sub { $t->driver->execute_script('return arguments[0].files.length === 1 && arguments[0].files[0].name === arguments[1].split("/").pop();', $upload_input, $filename) });
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-    sleep(3);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /There are 28 values in your file that are the same as values already stored in the database./ }, 120);
     
     $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
@@ -105,7 +108,8 @@ $t->while_logged_in_as("submitter", sub {
     ok($verify_status =~ /There are 28 values in your file that are the same as values already stored in the database./, "Verify 28 values in your file after store validation");
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-    sleep(10);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful!/ }, 120);
 
     $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
@@ -120,13 +124,13 @@ $t->while_logged_in_as("submitter", sub {
     ok($verify_status =~ /Upload Successful!/, "Verify warnings: Upload successful");
 
     $t->get_ok('/fieldbook');
-    sleep(2);
+    $t->wait_for_element('upload_fieldbook_phenotypes_link', 'id');
 
     $t->find_element_ok("upload_fieldbook_phenotypes_link", "id", "click on upload_spreadsheet_link ")->click();
-    sleep(4);
+    $t->wait_for_element('upload_fieldbook_phenotype_data_level', 'id');
 
     $t->find_element_ok("upload_fieldbook_phenotype_data_level", "id", "find fieldbook phenotype data level select")->click();
-    sleep(1);
+    $t->wait_for_element('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath');
 
     $t->find_element_ok('//select[@id="upload_fieldbook_phenotype_data_level"]/option[@value="plots"]', 'xpath', "Select 'plots' as value of phenotype data level")->click();
 
@@ -134,10 +138,11 @@ $t->while_logged_in_as("submitter", sub {
     $filename = $f->config->{basepath}."/t/data/fieldbook/fieldbook_phenotype_file_no_fieldbook_image.csv";
     $t->driver()->upload_file($filename);
     $upload_input->send_keys($filename);
-    sleep(1);
+    $t->wait_until(sub { $t->driver->execute_script('return arguments[0].files.length === 1 && arguments[0].files[0].name === arguments[1].split("/").pop();', $upload_input, $filename) });
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_verify", "id", "submit spreadsheet file for verification")->click();
-    sleep(3);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /There are 28 values in your file that are the same as values already stored in the database./ }, 120);
 
     $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
@@ -151,7 +156,8 @@ $t->while_logged_in_as("submitter", sub {
     ok($verify_status =~ /There are 28 values in your file that are the same as values already stored in the database./, "Verify warnings after store validation");
 
     $t->find_element_ok("upload_fieldbook_phenotype_submit_store", "id", "submit spreadsheet file for storage")->click();
-    sleep(10);
+    $t->wait_for_ajax(120);
+    $t->wait_until(sub { $t->find_element("upload_phenotype_fieldbook_verify_status", "id")->get_attribute('innerHTML') =~ /Upload Successful!/ }, 120);
 
     $verify_status = $t->find_element_ok(
         "upload_phenotype_fieldbook_verify_status",
