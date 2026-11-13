@@ -14,7 +14,7 @@ my $f = SGN::Test::Fixture->new();
 $d->while_logged_in_as("submitter", sub {
 
     $d->get_ok("/search/datasets", "get root url test");
-    sleep(20);
+    $d->wait_for_element('#dataset_search_results tbody tr td:not(.dataTables_empty)', 'css');
     $d->logout_ok();
 });
 

@@ -9,42 +9,44 @@ use SGN::Test::WWW::WebDriver;
 my $d = SGN::Test::WWW::WebDriver->new();
 
 $d->while_logged_in_as('submitter', sub {
-    sleep(1);
     $d->get_ok("/about/index.pl", "get root url test");
 
-    sleep(2);
+    $d->wait_for_element("lists_link", "name");
 
     my $out = $d->find_element_ok("lists_link", "name", "find lists_link")->click();
 
-    sleep(1);
+    $d->wait_for_element("add_list_input", "id");
 
     print "Adding new list...\n";
 
     $d->find_element_ok("add_list_input", "id", "find add list input");
-    sleep(1);
+    $d->wait_for_element("add_list_input", "id");
     my $add_list_input = $d->find_element_ok("add_list_input", "id", "find add list input test");
 
-    sleep(1);
+    $d->wait_for_element("add_list_input", "id");
 
     $add_list_input->send_keys("new_test_list_transform");
 
-    sleep(1);
+    $d->wait_for_element("add_list_button", "id");
 
     $d->find_element_ok("add_list_button", "id", "find add list button test")->click();
-    sleep(1);
+    $d->wait_for_ajax(120);
+    $d->wait_for_element("view_list_new_test_list_transform", "id", 120);
     $d->find_element_ok("view_list_new_test_list_transform", "id", "view list test")->click();
 
-    sleep(1);
+    $d->wait_for_element("dialog_add_list_item", "id");
 
     $d->find_element_ok("dialog_add_list_item", "id", "add test list")->send_keys("test_accession1\ntest_accession2\ntest_accession3_synonym1\n");
 
-    sleep(1);
+    $d->wait_for_element("dialog_add_list_item_button", "id");
 
     $d->find_element_ok("dialog_add_list_item_button", "id", "find dialog_add_list_item_button test")->click();
 
     print "Close list content dialog...\n";
 
-    sleep(2);
+    $d->wait_for_ajax(120);
+    $d->wait_until(sub { $d->find_element("list_item_dialog_datatable", "id")->get_text() =~ /test_accession3_synonym1/ }, 120);
+    $d->wait_for_element("close_list_item_dialog", "id");
 
     my $button = $d->find_element_ok("close_list_item_dialog", "id", "find close_list_item_dialog button test");
 
@@ -56,13 +58,13 @@ $d->while_logged_in_as('submitter', sub {
 
     $delete_link->click() if $delete_link;
 
-    sleep(1);
+    $d->wait_until(sub { $d->driver->get_alert_text() }, 120);
 
     my $text = $d->driver->get_alert_text();
 
     $d->accept_alert_ok();
 
-    sleep(1);
+    $d->wait_until(sub { $d->driver->get_alert_text() }, 120);
 
     $d->accept_alert_ok();
 
