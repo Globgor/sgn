@@ -26,36 +26,36 @@ jobs:
         include:
           - part: unit_fixture_1
             tests: |
-              run_files t/unit_fixture "" "$UNIT_FIXTURE_SPLIT"
+              run_files t/unit_fixture "" "$UNIT_FIXTURE_SPLIT" || rc=1
           - part: unit_fixture_2
             tests: |
-              run_files t/unit_fixture "$UNIT_FIXTURE_SPLIT" ""
+              run_files t/unit_fixture "$UNIT_FIXTURE_SPLIT" "" || rc=1
           - part: unit_mech
             tests: |
-              /entrypoint.sh --nopatch t/unit_mech
+              /entrypoint.sh --nopatch t/unit_mech || rc=1
           # selenium tests for a moment as separate folders - will change once full solgs are ready
           # but anyway, it will is still fully functional for tests purpose
           - part: selenium_breeders_1
             tests: |
-              run_files t/selenium2/breeders "" "$BREEDERS_SPLIT_1"
+              run_files t/selenium2/breeders "" "$BREEDERS_SPLIT_1" || rc=1
           - part: selenium_breeders_2
             tests: |
-              run_files t/selenium2/breeders "$BREEDERS_SPLIT_1" "$BREEDERS_SPLIT_2"
+              run_files t/selenium2/breeders "$BREEDERS_SPLIT_1" "$BREEDERS_SPLIT_2" || rc=1
           - part: selenium_breeders_3
             tests: |
-              run_files t/selenium2/breeders "$BREEDERS_SPLIT_2" ""
+              run_files t/selenium2/breeders "$BREEDERS_SPLIT_2" "" || rc=1
           - part: selenium_1
             tests: |
-              /entrypoint.sh --nopatch t/selenium2/01_list 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/02_trial 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/03_dataset 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/01_list 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/02_trial 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/03_dataset 2>>/tmp/test-stderr.log || rc=1
           - part: selenium_2
             tests: |
-              /entrypoint.sh --nopatch t/selenium2/authenticate 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/onto 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/search 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/stock 2>/dev/null
-              /entrypoint.sh --nopatch t/selenium2/tools 2>/dev/null
+              /entrypoint.sh --nopatch t/selenium2/authenticate 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/onto 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/search 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/stock 2>>/tmp/test-stderr.log || rc=1
+              /entrypoint.sh --nopatch t/selenium2/tools 2>>/tmp/test-stderr.log || rc=1
 
     container:
       image: breedbase/breedbase:latest
@@ -172,9 +172,19 @@ jobs:
             for file in $files; do
               set -- "$@" "$file"
             done
-            /entrypoint.sh --nopatch "$@" 2>/dev/null
+            /entrypoint.sh --nopatch "$@" 2>>/tmp/test-stderr.log
           }
+          rc=0
           ${{ matrix.tests }}
+          exit $rc
+
+      - name: Keep the stderr of the tests (fork trial only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stderr-${{ matrix.part }}
+          path: /tmp/test-stderr.log
+          if-no-files-found: ignore
 
   test_breedbase:
     # one check under the former job name: it passes only when all parts pass
