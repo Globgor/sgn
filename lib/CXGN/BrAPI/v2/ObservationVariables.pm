@@ -3,6 +3,7 @@ package CXGN::BrAPI::v2::ObservationVariables;
 use Moose;
 use Data::Dumper;
 use JSON;
+use CXGN::JSONUtils qw(decode_stored_json);
 use Try::Tiny;
 use CXGN::Trait;
 use CXGN::BrAPI::Pagination;
@@ -280,8 +281,10 @@ sub get_query {
         });
 
         my $additional_info;
-        if (defined $additional_info_string) {
-            $additional_info = decode_json $additional_info_string;
+        if (defined $additional_info_string && length $additional_info_string) {
+            # DBI can return JSON as decoded characters or UTF-8 octets.
+            # decode_json only accepts octets and fails on Unicode text.
+            $additional_info = decode_stored_json($additional_info_string);
         }
         #TODO: This is running many queries each time, can make one big query above if need be
         # Retrieve the trait, which retrieves its scales and methods
@@ -494,7 +497,7 @@ sub observation_variable_ontologies {
             my $info = {};
             if($dbxref_description){
                 # dbxref.description is free text; only use it when it holds a JSON object
-                my $decoded = eval { decode_json($dbxref_description) };
+                my $decoded = eval { decode_stored_json($dbxref_description) };
                 $info = $decoded if ref($decoded) eq 'HASH';
             }
             push @available, {
