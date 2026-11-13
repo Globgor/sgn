@@ -102,7 +102,7 @@ for(i in 1:length(trait)){
         BLUP <- tibble::rownames_to_column(BLUP, var="germplasmName")
         # print(BLUP)
 
-        ##ajusted means
+        ##adjusted means
         adjusted_means = BLUP
         adjusted_means[,2] = adjusted_means[,2] +as.numeric(mixmodel$Beta$Estimate[1])
 

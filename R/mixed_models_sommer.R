@@ -90,7 +90,7 @@ for(i in 1:length(trait)){
         BLUP <- tibble::rownames_to_column(BLUP, var = 'accession name')
         print(BLUP)
 
-        ##ajusted means
+        ##adjusted means
         p0 = predict.mmer(mixmodel, D="germplasmName") ##runs the prediction
         summary(p0)
         adj = p0$pvals                                        ##obtains the predictions
