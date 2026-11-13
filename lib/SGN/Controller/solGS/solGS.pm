@@ -1382,7 +1382,9 @@ sub format_phenotype_dataset_headers {
     foreach my $hd (@headers) {
         my $acronym;
         foreach my $acr ( keys %$acronym_table ) {
-            $acronym = $acr if $acronym_table->{$acr} =~ /$hd/;
+            # A trait name is data, not a pattern: a name with parentheses such as
+            # "plant height (cm)" must match itself, and as a pattern it never does.
+            $acronym = $acr if $acronym_table->{$acr} eq $hd;
             last if $acronym;
         }
 
