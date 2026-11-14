@@ -10,7 +10,7 @@ $profile_name
 
 <& /page/page_title.mas, title => "Profile: '$profile_name'" &>
 
-<&| /page/info_section.mas, title => 'Details', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Details'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -18,12 +18,12 @@ $profile_name
                     <table id = "profile_detail_table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Trait Name</th>
-                                <th>Target Value</th>
-                                <th>Benchmark Variety</th>
-                                <th>Performance</th>
-                                <th>Weight</th>
-                                <th>Trait Type</th>
+                                <th><% __('Trait Name') |h %></th>
+                                <th><% __('Target Value') |h %></th>
+                                <th><% __('Benchmark Variety') |h %></th>
+                                <th><% __('Performance') |h %></th>
+                                <th><% __('Weight') |h %></th>
+                                <th><% __('Trait Type') |h %></th>
                             </tr>
                         </thead>
                     </table>

@@ -9,10 +9,10 @@ $program_id
 <table id="program_cross_table" class="display">
     <thead>
         <tr>
-            <th>Cross Unique ID</th>
-            <th>Female Parent</th>
-            <th>Male Parent</th>
-            <th>Cross Type</th>
+            <th><% __('Cross Unique ID') |h %></th>
+            <th><% __('Female Parent') |h %></th>
+            <th><% __('Male Parent') |h %></th>
+            <th><% __('Cross Type') |h %></th>
         </tr>
     </thead>
 </table>
