@@ -28,40 +28,40 @@ $breeding_program_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="newFolderDialog">Create a new folder for <% $dialog_type %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" id="new_folder_dialog_form" name="new_folder_dialog_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Folder Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Folder Name:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="new_folder_name" id="new_folder_name" class="form-control" type="text" autofocus/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Breeding Program: </label>
+                            <label class="col-sm-4 control-label"><% __('Breeding Program:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="new_folder_breeding_program_select_div">
 % if ($breeding_program_id) {
                                     <input type="text" class="form-control" value="<% $breeding_program_name %>" disabled/>
                                     <input type="hidden" id="new_folder_breeding_program_id" name="new_folder_breeding_program_id" value="<% $breeding_program_id %>" />
 % } else {
-  [Loading...]
+  <% __('[Loading...]') |h %>
 % }
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Parent Folder: </label>
+                            <label class="col-sm-4 control-label"><% __('Parent Folder:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="new_folder_parent_folder_select_div">
 % if ($parent_folder_id) {
                                     <input type="text" class="form-control" value="<% $parent_folder_name %>" disabled/>
                                     <input type="hidden" id="new_folder_parent_folder_id" name="new_folder_parent_folder_id" value="<% $parent_folder_id %>" />
 % } else {
-  [Loading...]
+  <% __('[Loading...]') |h %>
 % }
                                 </div>
                             </div>
@@ -70,8 +70,8 @@ $breeding_program_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="new_folder_submit" id="new_folder_submit" title="Save new folder">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="new_folder_submit" id="new_folder_submit" title="<% __('Save new folder') |h %>"><% __('Save') |h %></button>
             </div>
         </div>
     </div>
@@ -81,19 +81,19 @@ $breeding_program_name => undef
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="newFolderSuccessDialog">New Folder Successful</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="newFolderSuccessDialog"><% __('New Folder Successful') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The folder was created successfully
+                        <% __('The folder was created successfully') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_new_folder_success_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_new_folder_success_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

@@ -49,22 +49,22 @@ $has_child_folders => undef
 <div>
 
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#trials" aria-controls="trials" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-leaf text-success"></span>&nbsp;&nbsp;&nbsp;Trials</a></li>
-    <li role="presentation"><a href="#analyses" aria-controls="analyses" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-stats text-success"></span>&nbsp;&nbsp;&nbsp;Analyses</a></li>
-    <li role="presentation"><a href="#crosses" aria-controls="crosses" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-grain text-success"></span>&nbsp;&nbsp;&nbsp;Crossing Experiments</a></li>
-    <li role="presentation"><a href="#genotyping_trials" aria-controls="genotyping_trials" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th text-success"></span>&nbsp;&nbsp;&nbsp;Genotyping Plates</a></li>
-    <li role="presentation"><a href="#genotyping_projects" aria-controls="genotyping_projects" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th text-success"></span>&nbsp;&nbsp;&nbsp;Genotyping Projects</a></li>
-    <li role="presentation"><a href="#tracking_activities" aria-controls="tracking_activities" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt text-success"></span>&nbsp;&nbsp;&nbsp;Tracking Activities</a></li>
-    <li role="presentation"><a href="#folders" aria-controls="folders" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-folder-open text-danger"></span>&nbsp;&nbsp;&nbsp;Folders</a></li>
-    <li role="presentation"><a href="#breeding_program" aria-controls="breeding_program" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-briefcase text-info"></span>&nbsp;&nbsp;&nbsp;Breeding Program</a></li>
+    <li role="presentation" class="active"><a href="#trials" aria-controls="trials" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-leaf text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Trials') |h %></a></li>
+    <li role="presentation"><a href="#analyses" aria-controls="analyses" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-stats text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Analyses') |h %></a></li>
+    <li role="presentation"><a href="#crosses" aria-controls="crosses" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-grain text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Crossing Experiments') |h %></a></li>
+    <li role="presentation"><a href="#genotyping_trials" aria-controls="genotyping_trials" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Genotyping Plates') |h %></a></li>
+    <li role="presentation"><a href="#genotyping_projects" aria-controls="genotyping_projects" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Genotyping Projects') |h %></a></li>
+    <li role="presentation"><a href="#tracking_activities" aria-controls="tracking_activities" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt text-success"></span>&nbsp;&nbsp;&nbsp;<% __('Tracking Activities') |h %></a></li>
+    <li role="presentation"><a href="#folders" aria-controls="folders" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-folder-open text-danger"></span>&nbsp;&nbsp;&nbsp;<% __('Folders') |h %></a></li>
+    <li role="presentation"><a href="#breeding_program" aria-controls="breeding_program" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-briefcase text-info"></span>&nbsp;&nbsp;&nbsp;<% __('Breeding Program') |h %></a></li>
   </ul>
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade in active" id="trials">
       <div class="well">
-        <h3>Trials in Folder</h3>
+        <h3><% __('Trials in Folder') |h %></h3>
         <table name="folder_datatables_table" class="table table-hover table-bordered">
-        <thead><tr><th>Trial Name</th></tr></thead>
+        <thead><tr><th><% __('Trial Name') |h %></th></tr></thead>
         <tbody>
 % my @trial_ids;
 % foreach (@$trials) {
@@ -76,16 +76,16 @@ $has_child_folders => undef
         </table>
 
         <br/>
-        <button class="btn btn-primary" id="trial_download_phenotypes_button">Download Phenotypes</button>
+        <button class="btn btn-primary" id="trial_download_phenotypes_button"><% __('Download Phenotypes') |h %></button>
 
       </div>
     </div>
 
     <div role="tabpanel" class="tab-pane fade" id="analyses">
       <div class="well">
-        <h3>Analyses in Folder</h3>
+        <h3><% __('Analyses in Folder') |h %></h3>
         <table name="folder_datatables_table" class="table table-hover table-bordered">
-        <thead><tr><th>Analyses Name</th></tr></thead>
+        <thead><tr><th><% __('Analyses Name') |h %></th></tr></thead>
         <tbody>
 % foreach (@$analyses_trials) {
     <tr><td><a href="/analyses/<% $_->folder_id() %>" target=_blank><% $_->name() %></a></td></tr>
@@ -97,9 +97,9 @@ $has_child_folders => undef
 
     <div role="tabpanel" class="tab-pane fade" id="crosses">
       <div class="well">
-        <h3>Crosses in Folder</h3>
+        <h3><% __('Crosses in Folder') |h %></h3>
         <table name="folder_datatables_table" class="table table-hover table-bordered">
-        <thead><tr><th>Cross Unique ID</th></tr></thead>
+        <thead><tr><th><% __('Cross Unique ID') |h %></th></tr></thead>
         <tbody>
 % foreach (@$crossing_trials) {
             <tr><td><a href="/breeders/trial/<% $_->folder_id() %>" target=_blank><% $_->name() %></a></td></tr>
@@ -111,9 +111,9 @@ $has_child_folders => undef
 
     <div role="tabpanel" class="tab-pane fade" id="genotyping_projects">
       <div class="well">
-        <h3>Genotyping Projects in Folder</h3>
+        <h3><% __('Genotyping Projects in Folder') |h %></h3>
         <table name="folder_datatables_table" class="table table-hover table-bordered">
-        <thead><tr><th>Genotyping Project Name</th></tr></thead>
+        <thead><tr><th><% __('Genotyping Project Name') |h %></th></tr></thead>
         <tbody>
 % foreach (@$genotyping_projects) {
             <tr><td><a href="/breeders/trial/<% $_->folder_id() %>" target=_blank><% $_->name() %></a></td></tr>
@@ -125,9 +125,9 @@ $has_child_folders => undef
 
     <div role="tabpanel" class="tab-pane fade" id="tracking_activities">
         <div class="well">
-            <h3>Projects in Folder</h3>
+            <h3><% __('Projects in Folder') |h %></h3>
             <table name="folder_datatables_table" class="table table-hover table-bordered">
-                <thead><tr><th>Tracking Activities Project Name</th></tr></thead>
+                <thead><tr><th><% __('Tracking Activities Project Name') |h %></th></tr></thead>
                 <tbody>
 % foreach (@$tracking_activities) {
                     <tr><td><a href="/breeders/trial/<% $_->folder_id() %>" target=_blank><% $_->name() %></a></td></tr>
@@ -139,9 +139,9 @@ $has_child_folders => undef
 
     <div role="tabpanel" class="tab-pane fade" id="genotyping_trials">
       <div class="well">
-        <h3>Genotyping Plates in Folder</h3>
+        <h3><% __('Genotyping Plates in Folder') |h %></h3>
         <table name="folder_datatables_table" class="table table-hover table-bordered">
-        <thead><tr><th>Genotyping Plate Name</th></tr></thead>
+        <thead><tr><th><% __('Genotyping Plate Name') |h %></th></tr></thead>
         <tbody>
 % my @genotyping_trial_ids;
 % foreach (@$genotyping_trials) {
@@ -153,22 +153,22 @@ $has_child_folders => undef
         </table>
 
         <br/>
-        <button class="btn btn-primary" id="folder_download_genotyping_plates_button">Download Genotyping Plate Layouts</button>
+        <button class="btn btn-primary" id="folder_download_genotyping_plates_button"><% __('Download Genotyping Plate Layouts') |h %></button>
       </div>
     </div>
 
     <div role="tabpanel" class="tab-pane fade" id="folders">
       <div class="well">
-        <h3>Parent Folder</h3>
+        <h3><% __('Parent Folder') |h %></h3>
 % if ($breeding_program->name() ne $project_parent->name()) {
         <a href="/folder/<% $project_parent->project_id %>" target=_blank><% $project_parent->name() %></a>
 % } else {
-      No Parent Folder
+      <% __('No Parent Folder') |h %>
 % }
       </div>
 
       <div class="well">
-        <h3>Child Folders</h3>
+        <h3><% __('Child Folders') |h %></h3>
 % if ($has_child_folders) {
         <table class="table table-hover table-bordered">
         <tbody>
@@ -180,19 +180,19 @@ $has_child_folders => undef
         </tbody>
         </table>
 % } else {
-      No Child Folders
+      <% __('No Child Folders') |h %>
 % }
       </div>
 
       <div class="well">
-        <button class="btn btn-primary" id="move_folder_dialog_link">Move folder</button>
+        <button class="btn btn-primary" id="move_folder_dialog_link"><% __('Move folder') |h %></button>
       </div>
 
     </div>
 
     <div role="tabpanel" class="tab-pane fade" id="breeding_program">
       <div class="well">
-        <h3>Folder's Breeding Program</h3>
+        <h3><% __('Folder\'s Breeding Program') |h %></h3>
         <% $breeding_program->name() %>
       </div>
     </div>
@@ -210,7 +210,7 @@ $has_child_folders => undef
                 <thead></thead>
                 <tbody>
                     <tr>
-                        <td><h5>Folder For Trials</h5></td>
+                        <td><h5><% __('Folder For Trials') |h %></h5></td>
 % if($folder_for_trials){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -219,7 +219,7 @@ $has_child_folders => undef
 
                     </tr>
                     <tr>
-                        <td><h5>Folder For Crosses</h5></td>
+                        <td><h5><% __('Folder For Crosses') |h %></h5></td>
 % if($folder_for_crosses){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -227,7 +227,7 @@ $has_child_folders => undef
 % }
                     </tr>
                     <tr>
-                        <td><h5>Folder For Genotyping Projects</h5></td>
+                        <td><h5><% __('Folder For Genotyping Projects') |h %></h5></td>
 % if($folder_for_genotyping_projects){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -235,7 +235,7 @@ $has_child_folders => undef
 % }
                     </tr>
                     <tr>
-                        <td><h5>Folder For Genotyping Plates</h5></td>
+                        <td><h5><% __('Folder For Genotyping Plates') |h %></h5></td>
 % if($folder_for_genotyping_trials){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -243,7 +243,7 @@ $has_child_folders => undef
 % }
                     </tr>
                     <tr>
-                        <td><h5>Folder For Tracking Activities</h5></td>
+                        <td><h5><% __('Folder For Tracking Activities') |h %></h5></td>
 % if($folder_for_tracking_activities){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -251,7 +251,7 @@ $has_child_folders => undef
 % }
                     </tr>
                     <tr>
-                        <td><h5>Folder For Transformation Projects</h5></td>
+                        <td><h5><% __('Folder For Transformation Projects') |h %></h5></td>
 % if($folder_for_transformations){
                         <td><h4><span class="glyphicon glyphicon-ok"></span></h4></td>
 % } else {
@@ -261,7 +261,7 @@ $has_child_folders => undef
 
                 </tbody>
             </table>
-            <button class="btn btn-sm btn-default" id="change_folder_categories_button">Add Additional Folder Type</button>
+            <button class="btn btn-sm btn-default" id="change_folder_categories_button"><% __('Add Additional Folder Type') |h %></button>
         </div>
     </div>
     <div class="col-sm-6">
@@ -271,8 +271,8 @@ $has_child_folders => undef
             <button class="btn btn-sm btn-primary" id="open_folder_dialog_link">Add Trial and Analyses to Folder</button>
             <br/><br/>
 -->
-            <button class="btn btn-sm btn-default" id="edit_trial_name">Rename Folder</button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn btn-sm btn-default" id="delete_folder_button">Delete Folder</button>
+            <button class="btn btn-sm btn-default" id="edit_trial_name"><% __('Rename Folder') |h %></button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-sm btn-default" id="delete_folder_button"><% __('Delete Folder') |h %></button>
             </center>
         </div>
     </div>
