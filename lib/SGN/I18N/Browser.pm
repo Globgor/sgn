@@ -24,6 +24,11 @@ sub escape_js {
     return;
 }
 
+# Static::Simple's own list, and the gettext files that lie next to the browser catalogs.
+sub static_ignore_extensions {
+    return [qw( tmpl tt tt2 html xhtml mo po pot )];
+}
+
 sub static_include_path {
     my ($c) = @_;
     return [ $c->config->{root}, ( $c->i18n_languages ? ( $c->config->{i18n_locale_dir} // () ) : () ) ];

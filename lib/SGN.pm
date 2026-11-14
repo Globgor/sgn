@@ -78,6 +78,7 @@ __PACKAGE__->config(
     'Plugin::Static::Simple' => {
         dirs => [qw[ css s static img documents static_content data ]],
         include_path => [ \&SGN::I18N::Browser::static_include_path ],
+        ignore_extensions => SGN::I18N::Browser::static_ignore_extensions(),
     },
 
     'Plugin::ConfigLoader' => {
