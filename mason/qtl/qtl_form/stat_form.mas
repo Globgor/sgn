@@ -41,10 +41,10 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
 % if ( $referer =~ /qtl\/form\/stat_form/) 
 %{
 <& /page/page_title.mas, 
-   title => "Step 5: Submit Statistical Parameters" 
+   title => $m->interp->apply_escapes( __("Step 5: Submit Statistical Parameters"), 'h' ) 
 &>
 <& /page/info_section.mas, 
-   title => "Statistical Parameters", 
+   title => $m->interp->apply_escapes( __("Statistical Parameters"), 'h' ), 
    subtitle => $guide 
 &> 
 %}
@@ -52,7 +52,7 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
   <form action="/phenome/qtl_load.pl" method="POST" enctype="MULTIPART/FORM-DATA">  
     <table cellspacing=20>
       <tr>
-        <td>QTL model: 
+        <td><% __('QTL model:') |h %> 
         </td>
 	<td>
           <select name="stat_qtl_model">
@@ -60,7 +60,7 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
             <option>Single-QTL Scan	    
           </select>
 	</td>
-        <td>QTL mapping method:</td>
+        <td><% __('QTL mapping method:') |h %></td>
 	<td>
           <select name="stat_qtl_method">	         
 	    <option>
@@ -81,7 +81,7 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
             <option>Simulate
 	  </select>
 	</td>
-        <td>QTL genotype probability significance level:
+        <td><% __('QTL genotype probability significance level:') |h %>
         </td>
         <td>
           <select name="stat_prob_level">
@@ -118,7 +118,7 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
         </td>       
       </tr>
       <tr>
-        <td>No. of permutations:
+        <td><% __('No. of permutations:') |h %>
         </td>
         <td>
           <select name="stat_permu_test">
@@ -151,12 +151,12 @@ my $qtl_prob = tooltipped_text('QTL genotype probablity method:',
         <td>
         </td>
         <td>
-          <input type="submit" value="Submit"> 
+          <input type="submit" value="<% __('Submit') |h %>"> 
         </td>
         <td>
         </td> 
         <td> 
-          <input type="reset"  value="Reset">
+          <input type="reset"  value="<% __('Reset') |h %>">
         </td>      
       </tr>
     </table>
