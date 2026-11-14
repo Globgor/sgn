@@ -37,7 +37,7 @@ $trial_stock_type
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="reset" class="close" id="add_additional_stocks_dismiss_button_1" name="add_additional_stocks_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="reset" class="close" id="add_additional_stocks_dismiss_button_1" name="add_additional_stocks_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="addAdditionalStocksUsingListDialog"><%$title%></h4>
             </div>
             <div class="modal-body">
@@ -46,12 +46,12 @@ $trial_stock_type
                         <div class="col-sm-11">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Addition Type: </label>
+                                    <label class="col-sm-4 control-label"><% __('Addition Type:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="addition_type">
-                                            <option value="">Select a type</option>
-                                            <option value="new_accessions">add additional accessions</option>
-                                            <option value="additional_plants">add additional plants for accessions already in the greenhouse</option>
+                                            <option value=""><% __('Select a type') |h %></option>
+                                            <option value="new_accessions"><% __('add additional accessions') |h %></option>
+                                            <option value="additional_plants"><% __('add additional plants for accessions already in the greenhouse') |h %></option>
                                         </select>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@ $trial_stock_type
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Default Number of Plants: </label>
+                                    <label class="col-sm-4 control-label"><% __('Default Number of Plants:') |h %> </label>
                                     <div class="col-sm-7" >
                                         <input class="form-control" type="text" id="default_number_plants_per_stock" placeholder="1" value="1" />
                                     </div>
@@ -76,8 +76,8 @@ $trial_stock_type
                     </div>
                     </br>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" id="add_additional_stocks_submit" name="add_additional_stocks_submit">Add</button>
-                        <button id="add_additional_stocks_dismiss_button_2" name="add_additional_stocks_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" id="add_additional_stocks_submit" name="add_additional_stocks_submit"><% __('Add') |h %></button>
+                        <button id="add_additional_stocks_dismiss_button_2" name="add_additional_stocks_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
                     </div>
                 </div>
             </div>
@@ -89,19 +89,19 @@ $trial_stock_type
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="addAdditionalStocksMessage"><%$title%></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The additional stocks were added successfully.
+                        <% __('The additional stocks were added successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="add_additional_stocks_close_button" id="add_additional_stocks_close_button" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" name="add_additional_stocks_close_button" id="add_additional_stocks_close_button" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

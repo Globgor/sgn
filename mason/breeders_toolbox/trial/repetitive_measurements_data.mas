@@ -18,12 +18,12 @@ $trial_stock_type => undef
 </style>
 
 <div class="well well-sm table-responsive">
-    <center><h4>View plots for repetitive measurement traits</h4>
+    <center><h4><% __('View plots for repetitive measurement traits') |h %></h4>
 
     <form class="form-horizontal" role="form">
 	<div style="display: flex; align-items: center; white-space: nowrap; width: 100%; margin: 12px auto;">
         <div style="display: flex; align-items: center; margin-right: 30px; flex: 1;">
-	    	<label for="select_trait_for_repetitive_data_and_plot"  style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;">Select Trait:</label>
+	    	<label for="select_trait_for_repetitive_data_and_plot"  style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;"><% __('Select Trait:') |h %></label>
             <select id="select_trait_for_repetitive_data_and_plot" class="form-control" style="flex: 1; min-width: 100px;">
                 <option value="">[Loading...]</option>
             </select>
@@ -31,42 +31,42 @@ $trial_stock_type => undef
     </div>
     <div style="display: flex; align-items: center; white-space: nowrap; width: 100%;margin: 12px auto;">
          <div style="display: flex; align-items: center; margin-right: 30px;">
-            <label for="repetitive_measurement_start_date" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;">Start Date:</label>
+            <label for="repetitive_measurement_start_date" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;"><% __('Start Date:') |h %></label>
             <input type="text" id="repetitive_measurement_start_date" title="repetitive_measurement_start_date" class="form-control" style="width: 160px; padding: 4px;" />
         </div>
         <div style="display: flex; align-items: center; margin-left: 30px;">
-            <label for="repetitive_measurement_end_date" style="width: 200px; margin-right: 10px; text-align: right; white-space: nowrap;"> End Date:</label>
+            <label for="repetitive_measurement_end_date" style="width: 200px; margin-right: 10px; text-align: right; white-space: nowrap;"> <% __('End Date:') |h %></label>
             <input type="text" id="repetitive_measurement_end_date" title="repetitive_measurement_end_date" class="form-control" style="width: 160px; padding: 4px;"/>
         </div>
     </div>
     <div style="display: flex;align-items: center;margin-right: 30px;">
-            <label for="repetitive_slider_range" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;">DateRange Slider:</label>
+            <label for="repetitive_slider_range" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;"><% __('DateRange Slider:') |h %></label>
             <div id="repetitive_slider_range" style="flex: 1; margin: 10px;"></div>
     </div>
     <div style="display: flex; align-items: center; white-space: nowrap;width: 100%; margin: 12px auto;">
         <div style="display: flex; align-items: center; margin-right: 30px;">
-            <label for="repetitive_measurement_observation_level" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;">Observation Level: </label>
+            <label for="repetitive_measurement_observation_level" style="width: 130px; margin-right: 10px; text-align: right; white-space: nowrap;"><% __('Observation Level:') |h %> </label>
             <select class="form-control" id="repetitive_measurement_observation_level" style="min-width: 160px; padding: 4px;">
-                <option value="plot">Plots</option>
-                <option value="plant">Plants</option>
-                <option value="accession">Accessions</option>
-                <option value="subplot">Subplots</option>
-                <option value="tissue_sample">Tissue Samples</option>
+                <option value="plot"><% __('Plots') |h %></option>
+                <option value="plant"><% __('Plants') |h %></option>
+                <option value="accession"><% __('Accessions') |h %></option>
+                <option value="subplot"><% __('Subplots') |h %></option>
+                <option value="tissue_sample"><% __('Tissue Samples') |h %></option>
             </select>
         </div>
         <div style="display: flex; align-items: center; margin-left: 15px; margin-right: 50px;">
-            <label for="repetitive_measurements_level" style="width: 250px; margin-right: 10px; text-align: right; white-space: nowrap;">Repetitive Measurements Level:</label>
+            <label for="repetitive_measurements_level" style="width: 250px; margin-right: 10px; text-align: right; white-space: nowrap;"><% __('Repetitive Measurements Level:') |h %></label>
             <select class="form-control" id="repetitive_measurements_level" style="min-width: 100px; padding: 4px;">
-                <option value="first">First value</option>
-                <option value="last">Last value</option>
-                <option value="average" selected>Average value</option>
-                <option value="sum">Sum values</option>
-                <option value="all">All values</option>
+                <option value="first"><% __('First value') |h %></option>
+                <option value="last"><% __('Last value') |h %></option>
+                <option value="average" selected><% __('Average value') |h %></option>
+                <option value="sum"><% __('Sum values') |h %></option>
+                <option value="all"><% __('All values') |h %></option>
             </select>
         </div>
     </div>
     <div style="display: flex; align-items: center; justify-content: center; margin-top:20px; margin-bottom: 12px;">
-        <button id="repetitive_measurement_select_button" disabled class="btn btn-primary">Submit</button>
+        <button id="repetitive_measurement_select_button" disabled class="btn btn-primary"><% __('Submit') |h %></button>
     </div>
     <br>
         <table id="repetitive_measurement_data_table" style="width:100%"></table>

@@ -8,18 +8,18 @@ $trial_name => undef
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="setPhenotypesFullyUploadedDialog"><% $trial_name %> Phenotypes Fully Uploaded</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-6 control-label">Phenotypes Fully Uploaded?: </label>
+                            <label class="col-sm-6 control-label"><% __('Phenotypes Fully Uploaded?:') |h %> </label>
                             <div class="col-sm-6" >
                                 <select class="form-control" id="trial_set_phenotypes_fully_loaded_select">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1"><% __('Yes') |h %></option>
+                                    <option value="0"><% __('No') |h %></option>
                                 </select>
                             </div>
                         </div>
@@ -27,8 +27,8 @@ $trial_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_trial_set_phenotypes_fully_loaded_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="trial_set_phenotypes_fully_loaded_submit" id="trial_set_phenotypes_fully_loaded_submit" >Save</button>
+                <button id="close_trial_set_phenotypes_fully_loaded_modal" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="trial_set_phenotypes_fully_loaded_submit" id="trial_set_phenotypes_fully_loaded_submit" ><% __('Save') |h %></button>
             </div>
         </div>
     </div>

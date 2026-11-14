@@ -6,7 +6,7 @@ $data_level => undef
 <& /util/import_javascript.mas, classes => [ ] &>
 
 <div class="well well-sm">
-    <button class="btn btn-primary" id="trial_detail_page_analysis_time_series_accessions_workflow">Get Time-Series Plots For Accessions On Saved Measurements</button>
+    <button class="btn btn-primary" id="trial_detail_page_analysis_time_series_accessions_workflow"><% __('Get Time-Series Plots For Accessions On Saved Measurements') |h %></button>
 </div>
 <hr>
 
@@ -14,20 +14,20 @@ $data_level => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="trialAnalysisTimeSeriesAccessionsWorkflowDialog">Get Time Series</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="trialAnalysisTimeSeriesAccessionsWorkflowDialog"><% __('Get Time Series') |h %></h4>
             </div>
             <div class="modal-body">
 
                 <&| /util/workflow.mas, id=> "trial_analysis_time_series_accessions_workflow_dialog_workflow" &>
-                    <&| /util/workflow.mas:step, title=> "Traits" &>
-                        <& /page/page_title.mas, title=>"Select the input measurements to use in time series" &>
+                    <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Traits"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the input measurements to use in time series"), 'h' ) &>
 
                         <div class="container-fluid">
                             <div class="form-horizontal">
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Trait(s): </label>
+                                    <label class="col-sm-3 control-label"><% __('Trait(s):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="trial_analysis_time_series_accessions_workflow_traits_div"></div>
                                     </div>
@@ -36,37 +36,37 @@ $data_level => undef
                             </div>
 
                             <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;" >Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;" ><% __('Go to Next Step') |h %></button>
                             </center>
                         </div>
                     </&>
-                    <&| /util/workflow.mas:step, title=> "Accessions" &>
-                        <& /page/page_title.mas, title=>"Select the accessions to plot" &>
+                    <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Accessions"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the accessions to plot"), 'h' ) &>
 
                         <div class="container-fluid">
                             <div class="form-horizontal">
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Accessions (Leave empty for all): </label>
+                                    <label class="col-sm-3 control-label"><% __('Accessions (Leave empty for all):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="trial_analysis_time_series_accessions_workflow_accessions_div"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Draw Error Bars: </label>
+                                    <label class="col-sm-3 control-label"><% __('Draw Error Bars:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <select class="form-control" id="trial_analysis_time_series_accessions_workflow_error_bar" name="trial_analysis_time_series_accessions_workflow_error_bar">
-                                            <option value="No">No</option>
-                                            <option value="Yes">Yes</option>
+                                            <option value="No"><% __('No') |h %></option>
+                                            <option value="Yes"><% __('Yes') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Use Cumulative Phenotype: </label>
+                                    <label class="col-sm-3 control-label"><% __('Use Cumulative Phenotype:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <select class="form-control" id="trial_analysis_time_series_accessions_workflow_use_cumulative_pheno" name="trial_analysis_time_series_accessions_workflow_use_cumulative_pheno">
-                                            <option value="No">No</option>
-                                            <option value="Yes">Yes</option>
+                                            <option value="No"><% __('No') |h %></option>
+                                            <option value="Yes"><% __('Yes') |h %></option>
                                         </select>
                                     </div>
                                 </div>
@@ -74,19 +74,19 @@ $data_level => undef
                             </div>
 
                             <center>
-                                <button type="button" class="btn btn-primary" name="trial_analysis_time_series_accessions_workflow_submit" id="trial_analysis_time_series_accessions_workflow_submit" title="Submit">Submit</button>
+                                <button type="button" class="btn btn-primary" name="trial_analysis_time_series_accessions_workflow_submit" id="trial_analysis_time_series_accessions_workflow_submit" title="<% __('Submit') |h %>"><% __('Submit') |h %></button>
                             </center>
                         </div>
                     </&>
-                    <&| /util/workflow.mas:step, title=> "Output" &>
-                        <& /page/page_title.mas, title=>"Results" &>
+                    <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Output"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Results"), 'h' ) &>
 
                         <div id="trial_analysis_time_series_accessions_workflow_results_div"></div>
                     </&>
                 </&>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

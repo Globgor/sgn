@@ -51,23 +51,23 @@ input[type="text"] {
     <form class="form-horizontal" role="form" >
         <div style="display: flex; align-items: flex-start; gap: 25px; width: max-content; margin: 0 auto;">
             <div>
-                <label for="summary_start_date">Start Date: </label>
+                <label for="summary_start_date"><% __('Start Date:') |h %> </label>
 	            <input type="text" id="summary_start_date" title="summary_start_date" />
             </div>
             <div>
-                <label for="summary_end_date">End Date: </label>
+                <label for="summary_end_date"><% __('End Date:') |h %> </label>
 	            <input type="text" id="summary_end_date" title="summary_end_date" />
             </div>
             <div>
-                <label>Data Level: </label>
+                <label><% __('Data Level:') |h %> </label>
                 <div style="margin-top: 4px;">
 % if ($trial_stock_type eq 'analysis_instance') {
-                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_analysis_level" value="analysis_instance" checked> <label for="pheno_summary_analysis_level">Analysis values</label></div>
+                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_analysis_level" value="analysis_instance" checked> <label for="pheno_summary_analysis_level"><% __('Analysis values') |h %></label></div>
 % } else {
-                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_plot_level" value="plots" checked> <label for="pheno_summary_plot_level">Plots</label></div>
-                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_subplot_level" value="subplots"> <label for="pheno_summary_subplot_level">Subplots</label></div>
-                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_plant_level" value="plants"> <label for="pheno_summary_plant_level">Plants</label></div>
-                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_tissue_sample_level" value="tissue_samples"> <label for="pheno_summary_tissue_sample_level">Tissue Samples</label></div>
+                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_plot_level" value="plots" checked> <label for="pheno_summary_plot_level"><% __('Plots') |h %></label></div>
+                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_subplot_level" value="subplots"> <label for="pheno_summary_subplot_level"><% __('Subplots') |h %></label></div>
+                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_plant_level" value="plants"> <label for="pheno_summary_plant_level"><% __('Plants') |h %></label></div>
+                    <div><input type="radio" name="pheno_summary_table_data_level" id="pheno_summary_tissue_sample_level" value="tissue_samples"> <label for="pheno_summary_tissue_sample_level"><% __('Tissue Samples') |h %></label></div>
 % }
                 </div>
             </div>
@@ -75,11 +75,11 @@ input[type="text"] {
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 6px;">
                     <input type="checkbox" id="group_by_accession_check" title="group_by_accession_check" />
-                    <label for="group_by_accession_check">Group by accession</label>
+                    <label for="group_by_accession_check"><% __('Group by accession') |h %></label>
                 </div>
                 <div style="display: flex; align-items: center; gap: 6px;">
                     <input type="checkbox" id="group_by_treatments_check" title="group_by_treatments_check" />
-                    <label for="group_by_treatments_check">Group by treatments</label>
+                    <label for="group_by_treatments_check"><% __('Group by treatments') |h %></label>
                 </div>
             </div>
 % }
@@ -87,7 +87,7 @@ input[type="text"] {
     </form>
     <br>
     <div style="display:flex; align-items:center; white-space:nowrap; width:70%; margin-center: auto;">
-        <label for="summary_phenotype_slider_range" style="margin-right: 10px;">Choose Date Range:</label>
+        <label for="summary_phenotype_slider_range" style="margin-right: 10px;"><% __('Choose Date Range:') |h %></label>
         <div id="summary_phenotype_slider_range" style="width: 80%; margin: 10px auto;"></div>
     </div>
     <hr>
@@ -96,15 +96,15 @@ input[type="text"] {
         <table id="phenotype_summary_data" class="display">
         <thead>
         <tr>
-        <th>Trait</th>
-        <th>Mean</th>
-        <th>Min</th>
-        <th>Max</th>
-        <th>Std Dev</th>
+        <th><% __('Trait') |h %></th>
+        <th><% __('Mean') |h %></th>
+        <th><% __('Min') |h %></th>
+        <th><% __('Max') |h %></th>
+        <th><% __('Std Dev') |h %></th>
         <th>CV</th>
-        <th>Count</th>
-        <th>Percent Missing</th>
-        <th>Histogram</th>
+        <th><% __('Count') |h %></th>
+        <th><% __('Percent Missing') |h %></th>
+        <th><% __('Histogram') |h %></th>
         </tr>
         </thead>
         <tbody>
@@ -112,14 +112,14 @@ input[type="text"] {
         </table>
     </div>
     <div>
-        <button type="button" class="selectAll-dt">Select All</button>
-        <button type="button" class="deselectAll-dt">Deselect All</button>
+        <button type="button" class="selectAll-dt"><% __('Select All') |h %></button>
+        <button type="button" class="deselectAll-dt"><% __('Deselect All') |h %></button>
     </div>
     <br>
     <div class="panel panel-default">
         <div class="panel-body">
 
-            <&| /page/info_section.mas, title => 'Copy Selected Results to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the names currently selected in the first column of the summary table to a new or exisiting list</i>'&>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Selected Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the names currently selected in the first column of the summary table to a new or exisiting list</i>'&>
             <br>
             <p><em><span id="selected_row_count">0</span> row(s) selected.</em></p>
             <div style="text-align:right" id="names_to_list_menu"></div>
@@ -131,29 +131,29 @@ input[type="text"] {
 </div>
 
 <div class="well well-sm" id="raw_data_histogram_well">
-    <center><h4>Raw Data Histogram</h4></center><hr>
+    <center><h4><% __('Raw Data Histogram') |h %></h4></center><hr>
     <div id="trial_summary_hist_div">
         <div class="row">
             <div class="col-sm-8">
                 <form class="form-horizontal">
                     <div class="form-group form-group-sm">
-                        <label for="trial_summary_hist_dropdown" class="col-sm-2 control-label">Select:</label>
+                        <label for="trial_summary_hist_dropdown" class="col-sm-2 control-label"><% __('Select:') |h %></label>
                         <div class="col-sm-10">
                             <div id="traits_assayed_dropdown">
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label">Data level: </label>
+                        <label class="col-sm-2 control-label"><% __('Data level:') |h %> </label>
                         <div class="col-sm-10" >
                             <select class="form-control" id="display_trial_phenosummary_hist">
 %  if ($trial_stock_type eq 'analysis_instance') {
-                                <option id="phenosummary_hist_analysis_instance_level" value="analysis_instance">Values for Analysis</option>
+                                <option id="phenosummary_hist_analysis_instance_level" value="analysis_instance"><% __('Values for Analysis') |h %></option>
 %  } else {
-                                <option id="phenosummary_hist_plot_level" value="plot">Plots</option>
-                                <option id="phenosummary_hist_plant_level" value="plant">Plants</option>
-                                <option id="phenosummary_hist_subplot_level" value="subplot">Subplots</option>
-                                <option id="phenosummary_hist_tissue_sample_level" value="tissue_sample">Tissue Samples</option>
+                                <option id="phenosummary_hist_plot_level" value="plot"><% __('Plots') |h %></option>
+                                <option id="phenosummary_hist_plant_level" value="plant"><% __('Plants') |h %></option>
+                                <option id="phenosummary_hist_subplot_level" value="subplot"><% __('Subplots') |h %></option>
+                                <option id="phenosummary_hist_tissue_sample_level" value="tissue_sample"><% __('Tissue Samples') |h %></option>
 %  }
                             </select>
                         </div>
