@@ -8,8 +8,8 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addHighDimDataDialog">Upload Sequence Metadata</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addHighDimDataDialog"><% __('Upload Sequence Metadata') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -17,16 +17,16 @@
           <&| /util/workflow.mas, id=> "upload_sequence_metadata_workflow" &>
             
             <!-- Step 1: Intro -->
-            <&| /util/workflow.mas:step, title=> "Intro" &>
-              <& /page/page_title.mas, title=>"Upload Sequence Metadata" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload Sequence Metadata"), 'h' ) &>
               <div class="well">
                   <p>This workflow will guide you through the process of uploading sequence metadata to the database using a 
                   <a href="https://m.ensembl.org/info/website/upload/gff3.html">gff3-formatted</a> file.</p>
-                  <p>The following gff3 columns are used by the sequence metadata uploader:</p>
+                  <p><% __('The following gff3 columns are used by the sequence metadata uploader:') |h %></p>
                   <ul>
                     <li>
                       <strong>#1 / seqid:</strong> The name of the database feature (ie chromosome) the metadata is associated with<br />
-                      <em>The names in this column must match existing features in the database.</em>
+                      <em><% __('The names in this column must match existing features in the database.') |h %></em>
                     </li>
                     <li><strong>#4 / start:</strong> The metadata's start position</li>
                     <li><strong>#5 / end:</strong> The metadata's end position</li>
@@ -39,22 +39,22 @@
               </div>
 
               <div class="center">
-                <button class="btn btn-primary" id="sequence_metadata_intro_step">Go to Next Step</button>
+                <button class="btn btn-primary" id="sequence_metadata_intro_step"><% __('Go to Next Step') |h %></button>
               </div>
             </&>
             <!-- End Intro -->
 
 
             <!-- Step 2: Data Type -->
-            <&| /util/workflow.mas:step, title=> "Data Type" &>
-              <& /page/page_title.mas, title=>"Select the type of sequence metadata" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Data Type"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the type of sequence metadata"), 'h' ) &>
               <br /><br />
               <form class="form-horizontal">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Data Type:&nbsp;</label>
+                  <label class="col-sm-3 control-label"><% __('Data Type:') |h %>&nbsp;</label>
                   <div class="col-sm-9">
                     <select class="form-control" id="sequence_metadata_upload_type_select" disabled>
-                      <option value="">Loading...</option>
+                      <option value=""><% __('Loading...') |h %></option>
                     </select>
                     <br />
                     <div class="well">
@@ -68,19 +68,19 @@
               <br /><br />
 
               <div class="center">
-                <button class="btn btn-primary" id="sequence_metadata_upload_type_step">Go to Next Step</button>
+                <button class="btn btn-primary" id="sequence_metadata_upload_type_step"><% __('Go to Next Step') |h %></button>
               </div>
             </&>
             <!-- End Data Type -->
 
 
             <!-- Step 3: Protocol Info -->
-            <&| /util/workflow.mas:step, title=> "Protocol Info" &>
-              <& /page/page_title.mas, title=>"Select a protocol for how your data was generated or create a new protocol" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Protocol Info"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a protocol for how your data was generated or create a new protocol"), 'h' ) &>
 
               <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#sequence_metadata_upload_protocol_select">Select Existing Protocol</a></li>
-                <li><a data-toggle="tab" href="#sequence_metadata_upload_protocol_div">Create New Protocol</a></li>
+                <li class="active"><a data-toggle="tab" href="#sequence_metadata_upload_protocol_select"><% __('Select Existing Protocol') |h %></a></li>
+                <li><a data-toggle="tab" href="#sequence_metadata_upload_protocol_div"><% __('Create New Protocol') |h %></a></li>
               </ul>
 
               <div class="tab-content">
@@ -94,11 +94,11 @@
                 <div id="sequence_metadata_upload_protocol_div" class="tab-pane fade">
                   <form class="form-horizontal" id="sequence_metadata_upload_protocol_form" name="sequence_metadata_upload_file_form">
 
-                    <h3>Protocol Information</h3>
+                    <h3><% __('Protocol Information') |h %></h3>
                     
                     <!-- Protocol Name -->
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Protocol Name: </label>
+                      <label class="col-sm-3 control-label"><% __('Protocol Name:') |h %> </label>
                       <div class="col-sm-9">
                         <input class="form-control" id="sequence_metadata_upload_protocol_name" type="text">
                       </div>
@@ -106,15 +106,15 @@
 
                     <!-- Protocol Description -->
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Protocol Description: </label>
+                      <label class="col-sm-3 control-label"><% __('Protocol Description:') |h %> </label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="sequence_metadata_upload_protocol_description" rows="5" placeholder="Include a description of the methods used to generate the data"></textarea>
+                        <textarea class="form-control" id="sequence_metadata_upload_protocol_description" rows="5" placeholder="<% __('Include a description of the methods used to generate the data') |h %>"></textarea>
                       </div>
                     </div>
 
                     <!-- Sequence Metadata Type -->
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Sequence Metadata Type: </label>
+                      <label class="col-sm-3 control-label"><% __('Sequence Metadata Type:') |h %> </label>
                       <div class="col-sm-9">
                         <input class="form-control" id="sequence_metadata_upload_protocol_sequence_metadata_type" type="text" disabled>
                       </div>
@@ -122,10 +122,10 @@
                     
                     <!-- Reference Genome -->
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Reference Genome: </label>
+                      <label class="col-sm-3 control-label"><% __('Reference Genome:') |h %> </label>
                       <div class="col-sm-9">
                         <select class="form-control" id="sequence_metadata_upload_protocol_reference_genome" disabled>
-                          <option value="">Loading...</option>
+                          <option value=""><% __('Loading...') |h %></option>
                         </select>
                       </div>
                     </div>
@@ -133,43 +133,43 @@
                     <br /><br />
 
                     <!-- Attribute Descriptions -->
-                    <h3>Attribute Descriptions</h3>
+                    <h3><% __('Attribute Descriptions') |h %></h3>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Score Description: </label>
+                      <label class="col-sm-3 control-label"><% __('Score Description:') |h %> </label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="sequence_metadata_upload_score_description" type="text" placeholder="Include a description of the values in the 'score' column">
+                        <input class="form-control" id="sequence_metadata_upload_score_description" type="text" placeholder="<% __('Include a description of the values in the \'score\' column') |h %>">
                       </div>
                     </div>
 
                     <br />
-                    <p><strong>Add a description for each of the key/value pairs included in the attributes column.</strong></p>
-                    <p><em>Specifying the attribute here in the protocol will allow the attribute to be used as a filter in a query.  Make sure the attribute key exactly matches the key used in the gff file.</em></p>
+                    <p><strong><% __('Add a description for each of the key/value pairs included in the attributes column.') |h %></strong></p>
+                    <p><em><% __('Specifying the attribute here in the protocol will allow the attribute to be used as a filter in a query.  Make sure the attribute key exactly matches the key used in the gff file.') |h %></em></p>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Attribute Key: </label>
+                      <label class="col-sm-3 control-label"><% __('Attribute Key:') |h %> </label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="sequence_metadata_upload_new_attribute_key" type="text" placeholder="Enter attribute key">
+                        <input class="form-control" id="sequence_metadata_upload_new_attribute_key" type="text" placeholder="<% __('Enter attribute key') |h %>">
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Attribute Description: </label>
+                      <label class="col-sm-3 control-label"><% __('Attribute Description:') |h %> </label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="sequence_metadata_upload_new_attribute_description" type="text" placeholder="Enter a description of this attribute">
+                        <input class="form-control" id="sequence_metadata_upload_new_attribute_description" type="text" placeholder="<% __('Enter a description of this attribute') |h %>">
                       </div>
                     </div>
 
                     <div class="form-group center">
-                      <button class="btn btn-info" id="sequence_metadata_upload_new_attribute_submit">Save Attribute</button>
+                      <button class="btn btn-info" id="sequence_metadata_upload_new_attribute_submit"><% __('Save Attribute') |h %></button>
                     </div>
 
                     <div>
-                      <p><strong>Saved Attributes:</strong></p>
+                      <p><strong><% __('Saved Attributes:') |h %></strong></p>
                       <table id="sequence_metadata_upload_new_attributes_table" class="table table-striped table-hover">
                         <tr>
-                          <th>Key</th>
-                          <th>Description</th>
+                          <th><% __('Key') |h %></th>
+                          <th><% __('Description') |h %></th>
                           <th></th>
                         </tr>
                       </table>
@@ -178,37 +178,37 @@
                     <br /><br />
 
                     <!-- External Link Templates -->
-                    <h3>External Links</h3>
+                    <h3><% __('External Links') |h %></h3>
 
-                    <p><strong>Add templates for generating external links displayed with the sequence metadata results.</strong></p>
+                    <p><strong><% __('Add templates for generating external links displayed with the sequence metadata results.') |h %></strong></p>
                     <p>External links are defined using templates that can include the feature/chrom name, start and/or end position, and/or any attribute value 
                     as a variable in the URL.  The variable will be replaced with the value for each sequence metadata result and displayed in the query results table.  The variable in the URL takes the form of: <code>{{variable}}</code> where <code>variable</code> can be: <code>feature</code>, <code>start</code>,
                     <code>end</code> or the key of any attribute defined by the sequence metadata protocol.</p>
                     <p>Example: <code>https://wheat.pw.usda.gov/jb/?data=/ggds/whe-iwgsc2018&loc={{Locus}}&highlight={{feature}}:{{start}}..{{end}}</code></p>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Link Title: </label>
+                      <label class="col-sm-3 control-label"><% __('Link Title:') |h %> </label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="sequence_metadata_upload_new_link_title" type="text" placeholder="Enter external link title">
+                        <input class="form-control" id="sequence_metadata_upload_new_link_title" type="text" placeholder="<% __('Enter external link title') |h %>">
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Link URL Template: </label>
+                      <label class="col-sm-3 control-label"><% __('Link URL Template:') |h %> </label>
                       <div class="col-sm-9">
-                        <input class="form-control" id="sequence_metadata_upload_new_link_url" type="text" placeholder="Enter external link URL template">
+                        <input class="form-control" id="sequence_metadata_upload_new_link_url" type="text" placeholder="<% __('Enter external link URL template') |h %>">
                       </div>
                     </div>
 
                     <div class="form-group center">
-                      <button class="btn btn-info" id="sequence_metadata_upload_new_link_submit">Save Link</button>
+                      <button class="btn btn-info" id="sequence_metadata_upload_new_link_submit"><% __('Save Link') |h %></button>
                     </div>
 
                     <div>
-                      <p><strong>Saved Links:</strong></p>
+                      <p><strong><% __('Saved Links:') |h %></strong></p>
                       <table id="sequence_metadata_upload_new_links_table" class="table table-striped table-hover">
                         <tr>
-                          <th>Title</th>
+                          <th><% __('Title') |h %></th>
                           <th>URL</th>
                           <th></th>
                         </tr>
@@ -224,7 +224,7 @@
               <br /><br />
 
               <div class="center">
-                <button class="btn btn-primary" id="sequence_metadata_upload_protocol_step">Go to Next Step</button>
+                <button class="btn btn-primary" id="sequence_metadata_upload_protocol_step"><% __('Go to Next Step') |h %></button>
               </div>
 
               <br /><br />
@@ -234,8 +234,8 @@
 
 
             <!-- Step 4: Upload -->
-            <&| /util/workflow.mas:step, title=> "Upload" &>
-              <& /page/page_title.mas, title=>"Upload your gff3 file" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload your gff3 file"), 'h' ) &>
               <br /><br />
 
               <p>Select your gff3 file to upload.  Then, click the <strong>Verify</strong> button to upload your file and check its format and contents.  If 
@@ -245,7 +245,7 @@
 
               <form id="sequence_metadata_upload_file_form" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Select GFF3 File: </label>
+                  <label class="col-sm-3 control-label"><% __('Select GFF3 File:') |h %> </label>
                   <div class="col-sm-9" >
                       <input type="file" id="sequence_metadata_upload_file_input" name="sequence_metadata_upload_file_input" encoding="multipart/form-data" />
                   </div>
@@ -255,8 +255,8 @@
               <br /><br />
 
               <div class="center">
-                <button id="sequence_metadata_upload_verify" class="btn btn-info">Verify</button>
-                <button id="sequence_metadata_upload_store" class="btn btn-primary" disabled>Store</button>
+                <button id="sequence_metadata_upload_verify" class="btn btn-info"><% __('Verify') |h %></button>
+                <button id="sequence_metadata_upload_store" class="btn btn-primary" disabled><% __('Store') |h %></button>
               </div>
 
               <br /><br />
@@ -272,7 +272,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

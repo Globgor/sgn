@@ -3,10 +3,10 @@
 </%args>
 
 
-<&| /page/info_section.mas, title=>'Sequence Metadata Protocols', is_subsection=>1, collapsible=>1, collapsed=>0, subtitle=>'View and query existing sequence metadata' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Sequence Metadata Protocols'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>0, subtitle=>$m->interp->apply_escapes( __('View and query existing sequence metadata'), 'h' ) &>
     <& /tools/sequence_metadata/protocols_sequence_metadata.mas &>
 </&>
 
-<&| /page/info_section.mas, title=>'Sequence Metadata API', is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>'Query sequence metadata through an API' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Sequence Metadata API'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>$m->interp->apply_escapes( __('Query sequence metadata through an API'), 'h' ) &>
     <& /tools/sequence_metadata/api_sequence_metadata.mas &>
 </&>

@@ -38,11 +38,11 @@ my %params = (
     <div class="quick-query-table-container">
         <table class="table quick-query-table">
             <thead><tr>
-                <th>Reference Genome</th>
-                <th>Species</th>
-                <th>Feature</th>
-                <th>Start</th>
-                <th>End</th>
+                <th><% __('Reference Genome') |h %></th>
+                <th><% __('Species') |h %></th>
+                <th><% __('Feature') |h %></th>
+                <th><% __('Start') |h %></th>
+                <th><% __('End') |h %></th>
                 <th></th>
             </tr></thead>
             <tr>
