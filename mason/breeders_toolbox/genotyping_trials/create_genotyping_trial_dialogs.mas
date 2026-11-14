@@ -48,7 +48,7 @@ $facilities => ();
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label"><% __('Genotyping Plate ID:') |h %> <br/><small>-In Coordinate App this is called "Plate Name"<br/>-This is the globally unique name of the plate</small></label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Plate ID:') |h %> <br/><small><& /util/sentence.mas, text => __x('-In Coordinate App this is called "Plate Name"') &><br/><& /util/sentence.mas, text => __x('-This is the globally unique name of the plate') &></small></label>
                                     <div class="col-sm-7">
                                         <input class="form-control" id="genotyping_trial_name" name="genotyping_trial_name" type="text" placeholder=" e.g. 18DNA00001"/>
                                     </div>
@@ -213,7 +213,7 @@ $facilities => ();
                                     <br/>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Blank Well: <small>(Cornell IGD requires a specific well to be blank.)</small></label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Blank Well: {small}(Cornell IGD requires a specific well to be blank.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &></label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="genotyping_blank_well" name="genotyping_blank_well" type="text" placeholder="e.g. A01"/>
                                         </div>
@@ -234,7 +234,7 @@ $facilities => ();
                                     </div>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Tissue: <small>(If used the same tissue for all wells)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Tissue: {small}(If used the same tissue for all wells){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <select class="form-control" id="genotyping_well_tissue">
                                                 <option value="leaf"><% __('Leaf') |h %></option>
@@ -248,21 +248,21 @@ $facilities => ();
                                     </div>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> NCBI Taxonomy ID: <small>(Official NCBI ID.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} NCBI Taxonomy ID: {small}(Official NCBI ID.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="genotyping_well_ncbi_taxonomy_id" name="genotyping_well_ncbi_taxonomy_id" type="text" />
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Extraction: <small>(If used the same extraction for all wells)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Extraction: {small}(If used the same extraction for all wells){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="genotyping_well_extraction" name="genotyping_well_extraction" type="text" />
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Person: <small>(If same person prepared all wells.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Person: {small}(If same person prepared all wells.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="genotyping_well_dna_person" name="genotyping_well_dna_person" type="text" />
                                         </div>
@@ -276,7 +276,7 @@ $facilities => ();
                                     </div>
                                     <br/>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Notes: <small>(Additional notes for these wells.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Notes: {small}(Additional notes for these wells.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="genotyping_well_notes" name="genotyping_well_notes" type="text" />
                                         </div>
