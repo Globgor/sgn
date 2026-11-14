@@ -19,7 +19,7 @@ $form
 </%args>
 
 
-<& /page/page_title.mas, title => "solGS: Search Traits" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("solGS: Search Traits"), 'h' ) &>
 <&| /page/info_section.mas,
   title => "Search ",
 &>

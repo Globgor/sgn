@@ -47,7 +47,7 @@ $trait_name
 % {
 
 <div id="select_done">
-  <input  class="button" type="button" value="Select" onclick="selectedPops();"/>
+  <input  class="button" type="button" value="<% __('Select') |h %>" onclick="selectedPops();"/>
 </div>
 
 %}
@@ -58,7 +58,7 @@ $trait_name
 %else
 %{
 <&| /page/info_section.mas,
-      title => 'No Search Results',
+      title => $m->interp->apply_escapes( __('No Search Results'), 'h' ),
 &>
 
 %if ( $query )
@@ -67,7 +67,7 @@ $trait_name
 %}
 %else
 %{
-<br>No results. Search again with a trait name.<br />
+<br><% __('No results. Search again with a trait name.') |h %><br />
 %}
 </&>
 %}

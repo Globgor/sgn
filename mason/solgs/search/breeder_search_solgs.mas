@@ -3,7 +3,7 @@
   <& /breeders_toolbox/breeder_search_page.mas &>
 </div>
 
-<button type="button" class="btn btn-success" id="go_back">Back</button>
+<button type="button" class="btn btn-success" id="go_back"><% __('Back') |h %></button>
    
 <script>
 
