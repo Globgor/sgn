@@ -32,7 +32,7 @@ $trial_stock_type => undef
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="createFieldbookDialog_<% $download_type %>">Download <% $download_type %> for <% $trial_name %></h4>
+        <h4 class="modal-title" id="createFieldbookDialog_<% $download_type %>"><& /util/sentence.mas, text => __x('Download {type} for {trial}'), type => $download_type, trial => $trial_name &></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -129,7 +129,7 @@ $trial_stock_type => undef
                                 <input id="create_fieldbook_include_plot_order_<% $download_type %>" type="checkbox" data-toggle="toggle">
                             </div>
                             <div class="layout-item">
-                                <label>Plot&nbsp;Order:</label>
+                                <label><& /util/sentence.mas, text => __x('Plot Order:') &></label>
                                 <select class="form-control" name="create_fieldbook_plot_order_<% $download_type %>" id="create_fieldbook_plot_order_<% $download_type %>">
                                     <option value=""><% __('--Select plot order--') |h %></option>
                                     <option value="by_col_serpentine"><% __('By Column: Serpentine') |h %></option>
@@ -139,7 +139,7 @@ $trial_stock_type => undef
                                 </select>
                             </div>
                             <div class="layout-item">
-                                <label>Starting&nbsp;Plot:</label>
+                                <label><& /util/sentence.mas, text => __x('Starting Plot:') &></label>
                                 <select class="form-control" id="create_fieldbook_plot_start_<% $download_type %>" name="create_fieldbook_plot_start_<% $download_type %>">
                                     <option value=""><% __('--Select start plot--') |h %></option>
                                     <option value="bottom_left"><% __('Bottom Left') |h %></option>
@@ -167,7 +167,7 @@ $trial_stock_type => undef
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="createFieldbookSavedDialog_<% $download_type %>"><% $download_type %> for <% $trial_name %> Created</h4>
+        <h4 class="modal-title" id="createFieldbookSavedDialog_<% $download_type %>"><& /util/sentence.mas, text => __x('{type} for {trial} Created'), type => $download_type, trial => $trial_name &></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
