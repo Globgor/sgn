@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="usagePolicyDialog">Please Note: S.lycopersicoides Data Access Agreement</h4>
+        <h4 class="modal-title" id="usagePolicyDialog"><% __('Please Note: S.lycopersicoides Data Access Agreement') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -27,8 +27,8 @@ The Boyce Thompson Institute and RWTH Aachen University are pleased to make the 
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="usage_policy_disagree_submit">Don't Agree</button>
-        <button type="button" class="btn btn-primary" id="usage_policy_agree_submit">Agree</button>
+        <button type="button" class="btn btn-default" id="usage_policy_disagree_submit"><% __('Don\'t Agree') |h %></button>
+        <button type="button" class="btn btn-primary" id="usage_policy_agree_submit"><% __('Agree') |h %></button>
       </div>
     </div>
   </div>
