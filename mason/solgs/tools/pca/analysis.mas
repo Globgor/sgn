@@ -60,7 +60,7 @@ if ($url !~ /pca\/analysis/) {
 % if ($url =~ /pca\/analysis/) {
 
 <& /page/page_title.mas,
-   title => 'Principal Component Analysis (PCA)'
+   title => $m->interp->apply_escapes( __('Principal Component Analysis (PCA)'), 'h' )
   &>
 
 %}

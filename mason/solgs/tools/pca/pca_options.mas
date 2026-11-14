@@ -25,14 +25,14 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
     <select class="form-control" id="pca_data_type_select">
       <option selected="genotype">Genotype</option>
-      <option value="phenotype">Phenotype</option>
+      <option value="phenotype"><% __('Phenotype') |h %></option>
     </select>
   </div>
 
   <div class=" form-group col-sm-2">
     <input class="btn btn-success"
 	   type="submit"
-	   value="Run PCA"
+	   value="<% __('Run PCA') |h %>"
 	   id="run_pca"/>
 
   </div>
