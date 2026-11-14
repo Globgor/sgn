@@ -52,3 +52,22 @@ msgstr "Спорідненість та інбридинг"
 
 msgid "Breeder Tools"
 msgstr "Інструменти селекціонера"
+
+msgid "Login"
+msgstr "Увійти"
+
+msgid "Username"
+msgstr "Ім'я користувача"
+
+msgid "Show Password"
+msgstr "Показати пароль"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Forgot Username"
+msgstr "Забули ім'я користувача"
+
+#, perl-brace-format
+msgid "What is {question}?"
+msgstr "Скільки буде {question}?"
