@@ -50,6 +50,12 @@ For all other driver functions, use the driver() accessor, for example: $swd->dr
 For downloads, a /download dir needs to be mapped in the breedbase_web docker and in the selenium docker to the same host dir. The download dir can be obtained from this object using $d->download_dir(); .
 
 
+=head1 SLEEP OVERRIDE
+
+Plain C<use SGN::Test::WWW::WebDriver;> replaces unqualified C<sleep> in the calling package with a page-settling wait, bounded by the requested duration except for remote-command latency. It observes jQuery and modal transitions for 0.75 seconds of quiet (0.5 seconds for pauses of one second or less). Existing alerts and sleeps longer than 60 seconds retain real sleeps.
+
+Use C<use SGN::Test::WWW::WebDriver ();> to avoid installing the override, or set C<SGN_TEST_PLAIN_SLEEP=1> to retain real sleeps while bisecting a run. Sleeps without an argument retain Perl's original behavior. Fractional sleeps really sleep, using C<Time::HiRes>. Timers with gaps longer than 0.75 seconds are not observed. Body parsing and application callbacks still require their own result conditions.
+
 =head1 ALERTS
 
 Unexpected alerts stay open (C<unhandledPromptBehavior=ignore>) instead of being dismissed by the next command. Tests must explicitly accept or dismiss them.
@@ -68,6 +74,7 @@ use Moose;
 
 use Try::Tiny;
 use Time::HiRes ();
+use Package::Stash;
 use Test::More;
 use File::Spec::Functions;
 use Selenium::Firefox;
@@ -109,6 +116,54 @@ has 'download_dir' => (is => 'ro',
     );
 
 our $webdriver_instance;
+
+sub import {
+    return if @_ > 1;
+    my $caller = caller;
+    # Replace only unqualified sleeps in the importing test package.
+    Package::Stash->new($caller)->add_symbol('&sleep', \&_settled_sleep);
+}
+
+sub _real_sleep { return Time::HiRes::sleep($_[0]); }
+
+sub _settled_sleep {
+    return CORE::sleep() unless @_;
+    my ($seconds) = @_;
+    my $self = $webdriver_instance;
+    return _real_sleep($seconds) if $ENV{SGN_TEST_PLAIN_SLEEP} || !$self || $seconds <= 0 || $seconds != int($seconds);
+    return _real_sleep($seconds) if eval { $self->driver->get_alert_text(); 1 };
+    # Longer sleeps wait for server-side jobs that the page cannot observe.
+    return _real_sleep($seconds) if $seconds > 60;
+    my $started = Time::HiRes::time();
+    my ($quiet_since, $document);
+    $self->_wait($seconds, sub {
+        my $idle = eval { $self->driver->execute_script(q{
+            var token = performance.timeOrigin || performance.timing.navigationStart;
+            function rendered(e) {
+                return e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden';
+            }
+            if (document.readyState !== 'complete' || (window.jQuery && (jQuery.active || (jQuery.timers && jQuery.timers.length)))) { return false; }
+            var working = document.getElementById('working_modal');
+            if (working && rendered(working)) { return false; }
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                var m = modals[i], dialog = m.querySelector('.modal-dialog');
+                if (!rendered(m)) { continue; }
+                var transform = dialog && getComputedStyle(dialog).transform;
+                if (!m.classList.contains('in') || (transform && transform !== 'none' &&
+                    transform !== 'matrix(1, 0, 0, 1, 0, 0)')) { return false; }
+            }
+            return document.querySelector('.modal-backdrop:not(.in)') ? 0 :
+                token;
+        }) };
+        my $now = Time::HiRes::time();
+        $quiet_since = undef if !$idle || !defined $document || $document != $idle;
+        $quiet_since = $now if $idle && !defined $quiet_since;
+        $document = $idle;
+        return defined $quiet_since && $now - $quiet_since >= ($seconds <= 1 ? 0.5 : 0.75);
+    });
+    return int(Time::HiRes::time() - $started);
+}
 
 sub BUILD {
     my $self = shift;

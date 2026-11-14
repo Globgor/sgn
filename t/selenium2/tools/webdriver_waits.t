@@ -172,6 +172,107 @@ cmp_ok($elapsed, '<', 2.5, 'a previous timeout prevents another full guard wait'
 open_fixture();
 # END STAGE A
 
+# BEGIN STAGE B1: sleep import, idle conditions, alert handling and fallbacks.
+{
+    package SGN::Test::WebDriverWaits::Imported;
+    use SGN::Test::WWW::WebDriver;
+    sub pause { sleep($_[0]); }
+    sub pause_bare { sleep $_[0]; }
+}
+
+{
+    package SGN::Test::WebDriverWaits::Plain;
+    use SGN::Test::WWW::WebDriver ();
+    sub pause { sleep($_[0]); }
+}
+
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause_bare(3);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 0.4, 'settled page observes a quiet window');
+cmp_ok($elapsed, '<', 3, 'settled page shortens bare sleep');
+
+page_script(q{
+    window.webdriverWaitAjaxDone = false;
+    jQuery.ajaxTransport('+*', function (options) {
+        if (options.url.indexOf('webdriver_wait_ajax=1') === -1) { return; }
+        var xhr = new XMLHttpRequest();
+        return {
+            send: function (headers, complete) {
+                xhr.open('GET', options.url, true);
+                xhr.onload = function () {
+                    setTimeout(function () {
+                        window.webdriverWaitAjaxDone = true;
+                        window.webdriverWaitAjaxDoneAt = Date.now() / 1000;
+                        complete(xhr.status, 'OK', {text: xhr.responseText}, xhr.getAllResponseHeaders());
+                    }, 1200);
+                };
+                xhr.onerror = function () { complete(0, 'error'); };
+                xhr.send();
+            },
+            abort: function () { xhr.abort(); }
+        };
+    });
+    jQuery.ajax({url: '/documents/what_is.txt?webdriver_wait_ajax=1', cache: false});
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$returned_at = Time::HiRes::time();
+$elapsed = $returned_at - $started;
+ok($driver->execute_script('return window.webdriverWaitAjaxDone;'), 'sleep waits for the jQuery request');
+my $ajax_times = $driver->execute_script('return [window.webdriverWaitAjaxDoneAt, Date.now() / 1000];');
+cmp_ok($ajax_times->[0] || $ajax_times->[1] + 10, '<=', $ajax_times->[1], 'jQuery completion precedes the end of sleep');
+cmp_ok($elapsed, '>=', 0.35, 'pending jQuery request delays sleep');
+cmp_ok($elapsed, '<', 3.5, 'jQuery wait is bounded by the requested sleep');
+
+page_script(q{setTimeout(function () { alert('webdriver wait test initial'); }, 50);});
+is(wait_for_alert(), 'webdriver wait test initial', 'initial test alert opened');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(2);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 1.8, 'an initial alert retains the requested sleep');
+is($driver->get_alert_text(), 'webdriver wait test initial', 'initial alert remains open');
+$driver->accept_alert();
+
+page_script(q{
+    jQuery.active++;
+    setTimeout(function () { alert('webdriver wait test delayed'); jQuery.active--; }, 1000);
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '<', 2.8, 'sleep returns when an alert appears during polling');
+is($driver->get_alert_text(), 'webdriver wait test delayed', 'delayed alert remains open');
+$driver->accept_alert();
+
+{
+    local $ENV{SGN_TEST_PLAIN_SLEEP} = 1;
+    $started = Time::HiRes::time();
+    SGN::Test::WebDriverWaits::Imported::pause(1);
+    $elapsed = Time::HiRes::time() - $started;
+    cmp_ok($elapsed, '>=', 0.8, 'plain-sleep environment switch keeps a real sleep');
+    $started = Time::HiRes::time();
+    SGN::Test::WebDriverWaits::Imported::pause(0.35);
+    $elapsed = Time::HiRes::time() - $started;
+    cmp_ok($elapsed, '>=', 0.3, 'plain fractional sleep retains its duration');
+}
+
+ok(!SGN::Test::WebDriverWaits::Plain->can('sleep'), 'empty import does not install sleep');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Plain::pause(1);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 0.8, 'empty import leaves a real sleep');
+
+{
+    my $real_sleep;
+    local *SGN::Test::WWW::WebDriver::_real_sleep = sub { $real_sleep = $_[0]; return $_[0]; };
+    local *SGN::Test::WWW::WebDriver::_wait = sub { die 'long sleep entered page polling'; };
+    my $ok = eval { SGN::Test::WebDriverWaits::Imported::pause(61); 1 };
+    ok($ok, 'sleep over 60 seconds avoids page polling');
+    is($real_sleep, 61, 'sleep over 60 seconds selects the real-sleep branch');
+}
+# END STAGE B1
+
 
 alarm(0);
 done_testing();
