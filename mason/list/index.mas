@@ -5,7 +5,7 @@ $user_id
 
 <& /util/import_javascript.mas, classes => [ 'CXGN.List' ] &>
 
-<& /page/page_title.mas, title=>"Available lists" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Available lists"), 'h' ) &>
 <div id="list_div">
 
 </div>
@@ -32,7 +32,7 @@ pasteListMenu("test_area");
 </script>
 
 <form action="javascript:addNewList('new_list_name')">
-Create new list <input type="text" id="new_list_name" on/>
+<% __('Create new list') |h %> <input type="text" id="new_list_name" on/>
 <input type="submit" name="add" />
 </form>
 
