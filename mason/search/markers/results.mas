@@ -94,28 +94,28 @@ jQuery(document).ready(function() {
         autoWidth: false,
         pageLength: GENOTYPED_MARKERS_LIMIT,
         language: {
-            zeroRecords: "No markers found",
+            zeroRecords: <% __('No markers found') |js %>,
         },
         data: [],
         columns: [
             { 
-                title: "Marker", 
+                title: <% __('Marker') |js %>, 
                 data: "marker_name",
                 render: function(data, type, row) {
                     return data && data !== "" ? "<strong><a href='/variant/" + row.variant_name + "/details'>" + data + "</a></strong>" : "";
                 }
             },
             { 
-                title: "Protocol", 
+                title: <% __('Protocol') |js %>, 
                 data: "nd_protocol_name",
                 render: function(data, type, row) {
                     return data && data !== "" ? "<a href='/breeders_toolbox/protocol/" + row.nd_protocol_id + "'>" + data + "</a>" : "";
                 } 
             },
-            { title: "Species", data: "species_name" },
-            { title: "Reference Genome", data: "reference_genome_name" },
-            { title: "Chromosome", data: "chrom" },
-            { title: "Position", data: "pos" },
+            { title: <% __('Species') |js %>, data: "species_name" },
+            { title: <% __('Reference Genome') |js %>, data: "reference_genome_name" },
+            { title: <% __('Chromosome') |js %>, data: "chrom" },
+            { title: <% __('Position') |js %>, data: "pos" },
             { title: "Ref", data: "ref" },
             { title: "Alt", data: "alt" }
         ],
@@ -128,23 +128,23 @@ jQuery(document).ready(function() {
         autoWidth: false,
         pageLength: GENOTYPED_MARKERS_LIMIT,
         language: {
-            zeroRecords: "No markers found",
+            zeroRecords: <% __('No markers found') |js %>,
         },
         data: [],
         columns: [
             { 
-                title: "Marker", 
+                title: <% __('Marker') |js %>, 
                 data: "marker_name", 
                 render: function(data, type, row) {
                     return data && data !== "" ? "<strong><a href='/search/markers/markerinfo.pl?marker_id=" + row.marker_id + "'>" + data + "</a></strong>" : "";
                 }
             },
-            { title: "Protocol", data: "protocol" },
-            { title: "Species", data: "species_name" },
-            { title: "Map", data: "map_name" },
-            { title: "Chromosome", data: "lg_name" },
-            { title: "Position", data: "position" },
-            { title: "Map Units", data: "map_units" },
+            { title: <% __('Protocol') |js %>, data: "protocol" },
+            { title: <% __('Species') |js %>, data: "species_name" },
+            { title: <% __('Map') |js %>, data: "map_name" },
+            { title: <% __('Chromosome') |js %>, data: "lg_name" },
+            { title: <% __('Position') |js %>, data: "position" },
+            { title: <% __('Map Units') |js %>, data: "map_units" },
         ],
         order: [[ 0, "asc" ]]
     });
@@ -254,7 +254,7 @@ function searchGenotypedMarkers() {
             displayGenotypedMarkers(dt, data);
         },
         error: function() {
-            alert("ERROR: Could not perform genotyped marker search");
+            alert(<% __('ERROR: Could not perform genotyped marker search') |js %>);
         }
     });
 
@@ -368,7 +368,7 @@ function searchMappedMarkers() {
             displayMappedMarkers(dt, data);
         },
         error: function() {
-            alert("ERROR: Could not perform mapped marker search");
+            alert(<% __('ERROR: Could not perform mapped marker search') |js %>);
         }
     });
 
