@@ -165,10 +165,14 @@ sub _sentence_page {
 sub _sentence_shown {
     my ( $page, $message, $translated ) = @_;
     my @pieces = split /\{\w+\}/, $message, -1;
-    for my $piece (@pieces) {
-        $piece =~ s/\s+/ /g;
+    for my $i ( 0 .. $#pieces ) {
+        $pieces[$i] =~ s/\s+/ /g;
+        # A value may be empty: the spaces around it then collapse into one.
+        $pieces[$i] =~ s/\A //  if $i > 0;
+        $pieces[$i] =~ s/ \z//  if $i < $#pieces;
     }
-    my $pattern = join '.*?', map { quotemeta($_) } @pieces;
+    # What fills a placeholder never holds the markers of another translated message.
+    my $pattern = join '[^«»]*?', map { quotemeta($_) } @pieces;
     $pattern = quotemeta('«') . $pattern . quotemeta('»') if $translated;
     return $page =~ /$pattern/s;
 }
