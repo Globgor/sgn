@@ -41,48 +41,48 @@ tr.shown td.details-control {
 
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<& /page/page_title.mas, title=>"Image Analysis" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Image Analysis"), 'h' ) &>
 <hr>
 
 <div class="well well-sm">
     <center>
-    <button class="btn btn-primary" id="upload_images_link">Upload New Images</button>
+    <button class="btn btn-primary" id="upload_images_link"><% __('Upload New Images') |h %></button>
     </center>
 </div>
 <& /breeders_toolbox/upload_images.mas &>
 <& /breeders_toolbox/trial/create_spreadsheet_dialog.mas &>
 
-<&| /page/info_section.mas, title=>"Image Search Criteria",  collapsible => 1, collapsed=>0, subtitle => "All images may not have names, descriptions, or tags associated with them."&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Search Criteria"), 'h' ),  collapsible => 1, collapsed=>0, subtitle => $m->interp->apply_escapes( __("All images may not have names, descriptions, or tags associated with them."), 'h' )&>
 
     <div id="image_search_form" class="well well-sm">
         <div class="form-horizontal" >
             <div class="form-group">
-                <label class="col-sm-3 control-label">Select a Field Trial: </label>
+                <label class="col-sm-3 control-label"><% __('Select a Field Trial:') |h %> </label>
                 <div class="col-sm-9" >
                     <div id ="image_analysis_trial_select">
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Image descriptors (name, description, or filename): </label>
+                <label class="col-sm-6 control-label"><% __('Image descriptors (name, description, or filename):') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="image_description_filename_composite" name="image_description_filename_composite" placeholder="e.g. MyImageName" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Submitter: </label>
+                <label class="col-sm-6 control-label"><% __('Submitter:') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="image_submitter" name="image_submitter" placeholder="e.g. JaneDoe" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Image tag: </label>
+                <label class="col-sm-6 control-label"><% __('Image tag:') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="image_tag" name="image_tag" placeholder="e.g. ImageTagName" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Associated stock: </label>
+                <label class="col-sm-6 control-label"><% __('Associated stock:') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="image_stock_uniquename" name="image_stock_uniquename" placeholder="e.g. FieldPlot100" />
                 </div>
@@ -90,26 +90,26 @@ tr.shown td.details-control {
         </div>
 
         <center>
-        <button class="btn btn-primary" id="image_search_submit" >Search</button>
+        <button class="btn btn-primary" id="image_search_submit" ><% __('Search') |h %></button>
         </center>
     </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Image Search Results",  collapsible => 1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Search Results"), 'h' ),  collapsible => 1, collapsed=>0 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
                 <table id="image_analysis_image_search_results" class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <th>Select</th>
-                    <th>Image Thumbnail</th>
-                    <th>Filename</th>
-                    <th>Description</th>
-                    <th>Submitter</th>
-                    <th>Associations</th>
-                    <th>Observations</th>
-                    <th>Tags</th>
+                    <th><% __('Select') |h %></th>
+                    <th><% __('Image Thumbnail') |h %></th>
+                    <th><% __('Filename') |h %></th>
+                    <th><% __('Description') |h %></th>
+                    <th><% __('Submitter') |h %></th>
+                    <th><% __('Associations') |h %></th>
+                    <th><% __('Observations') |h %></th>
+                    <th><% __('Tags') |h %></th>
                 </tr>
                 </thead>
                 </table>
@@ -118,15 +118,15 @@ tr.shown td.details-control {
     </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Image Analysis", collapsible => 1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Analysis"), 'h' ), collapsible => 1, collapsed=>0 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-sm-6 control-label">Image Analysis Service: </label>
+                    <label class="col-sm-6 control-label"><% __('Image Analysis Service:') |h %> </label>
                     <div class="col-sm-6" >
                         <select class="form-control" id="image_analysis_service_select" name="image_analysis_service_select">
-                            <option value="">Select An Analysis Service:</option>
+                            <option value=""><% __('Select An Analysis Service:') |h %></option>
 
 % foreach my $s (keys %services) {
  		            <option value="<% $s %>"><% $services{$s}->{description} %></option>
@@ -142,7 +142,7 @@ tr.shown td.details-control {
                 </div>
                 <br/>
                 <div class="form-group" id="image_analysis_trait_group" style="display: none;">
-                    <label class="col-sm-6 control-label">Trait to be Analyzed: </label>
+                    <label class="col-sm-6 control-label"><% __('Trait to be Analyzed:') |h %> </label>
                     <div class="col-sm-6" >
                         <select class="form-control" id="image_analysis_trait_select" name="image_analysis_service_select"></select>
                     </div>
@@ -151,7 +151,7 @@ tr.shown td.details-control {
 
                 <hr>
                 <center>
-                <button class="btn btn-primary" id="image_analysis_submit" disabled>Submit for Analysis</button>
+                <button class="btn btn-primary" id="image_analysis_submit" disabled><% __('Submit for Analysis') |h %></button>
                 </center>
                 <hr>
 
@@ -167,10 +167,10 @@ tr.shown td.details-control {
                         <thead>
                            <tr>
                                <th></th>
-                               <th>Stock</th>
-                               <th>Trait</th>
+                               <th><% __('Stock') |h %></th>
+                               <th><% __('Trait') |h %></th>
                                <th id="analyzed_header"></th>
-                               <th>Mean Value</th>
+                               <th><% __('Mean Value') |h %></th>
                            </tr>
                        </thead>
                        <caption class="well well-sm" style="caption-side: bottom;margin-top: 10px;">
@@ -178,7 +178,7 @@ tr.shown td.details-control {
                        </caption>
                     </table>
                     <hr>
-                    <center><button class="btn btn-primary" id="image_analysis_save_results">Save Results</button></center>
+                    <center><button class="btn btn-primary" id="image_analysis_save_results"><% __('Save Results') |h %></button></center>
                 </div>
             </div>
         </div>
@@ -190,15 +190,15 @@ tr.shown td.details-control {
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-sm-9">
-                    <label class="col-sm-6 control-label">Image Analysis Usage </label>
+                    <label class="col-sm-6 control-label"><% __('Image Analysis Usage') |h %> </label>
                     </div>
                     <div class="col-sm-3" >
-                        <label class="control-label">Date Range: </label>
+                        <label class="control-label"><% __('Date Range:') |h %> </label>
                         <select class="form-control" id="usage_range_select" name="usage_range_select">
-                            <option value="all">All Dates</option>
-                            <option value="year">Latest Year</option>
-                            <option value="month">Latest Month</option>
-                            <option value="week">Latest Week</option>
+                            <option value="all"><% __('All Dates') |h %></option>
+                            <option value="year"><% __('Latest Year') |h %></option>
+                            <option value="month"><% __('Latest Month') |h %></option>
+                            <option value="week"><% __('Latest Week') |h %></option>
                         </select>
                     </div>
                 </div>
@@ -213,8 +213,8 @@ tr.shown td.details-control {
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modelMetricsDialogTitle">Model Metrics</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="modelMetricsDialogTitle"><% __('Model Metrics') |h %></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -223,7 +223,7 @@ tr.shown td.details-control {
               </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><% __('Close') |h %></button>
           </div>
         </div>
       </div>
@@ -233,19 +233,19 @@ tr.shown td.details-control {
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="runNameModalTitle">Name Image Analysis Run</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="runNameModalTitle"><% __('Name Image Analysis Run') |h %></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-muted" style="font-size:12px;">
-                        All analyzed images below will be saved together as a single analysis run.
+                        <% __('All analyzed images below will be saved together as a single analysis run.') |h %>
                     </p>
 
                     <div class="form-group">
-                        <label for="run_name_input" style="font-size:12px;">Run name</label>
-                        <input type="text" class="form-control" id="run_name_input" placeholder="e.g. Plot 101 leaf area analysis" />
+                        <label for="run_name_input" style="font-size:12px;"><% __('Run name') |h %></label>
+                        <input type="text" class="form-control" id="run_name_input" placeholder="<% __('e.g. Plot 101 leaf area analysis') |h %>" />
                     </div>
 
                     <label style="font-size:12px;">Images included (<span id="run_image_count">0</span>)</label>
@@ -254,8 +254,8 @@ tr.shown td.details-control {
                     <div id="run_name_error" class="text-danger" style="display:none;margin-top:6px;"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="run_name_confirm">Save Results</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+                    <button type="button" class="btn btn-primary" id="run_name_confirm"><% __('Save Results') |h %></button>
                 </div>
             </div>
         </div>
@@ -265,15 +265,15 @@ tr.shown td.details-control {
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="saveResultModalTitle">Image Analysis Save Status</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="saveResultModalTitle"><% __('Image Analysis Save Status') |h %></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body" id="saveResultModalBody">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><% __('Close') |h %></button>
           </div>
         </div>
       </div>
@@ -288,12 +288,12 @@ tr.shown td.details-control {
         </div>
 
         <div class="modal-body">
-            <p>The image you submitted for analysis is associated with a plot. If you save these results a new plant will be created for this plot.</p>
+            <p><% __('The image you submitted for analysis is associated with a plot. If you save these results a new plant will be created for this plot.') |h %></p>
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" id="save_results_continue">Continue</button>
+            <button class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+            <button class="btn btn-primary" id="save_results_continue"><% __('Continue') |h %></button>
         </div>
 
         </div>
@@ -301,33 +301,33 @@ tr.shown td.details-control {
     </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Image Analysis Run Search Criteria", collapsible => 1, collapsed=>0, subtitle => "Search saved image analysis runs." &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Analysis Run Search Criteria"), 'h' ), collapsible => 1, collapsed=>0, subtitle => $m->interp->apply_escapes( __("Search saved image analysis runs."), 'h' ) &>
 
     <div id="run_search_form" class="well well-sm">
         <div class="form-horizontal">
             <div class="form-group">
-                <label class="col-sm-6 control-label">Run name: </label>
+                <label class="col-sm-6 control-label"><% __('Run name:') |h %> </label>
                 <div class="col-sm-6">
                     <input class="form-control" type="text" id="run_search_run_name"
-                           name="run_search_run_name" placeholder="e.g. Seed size March 2025" />
+                           name="run_search_run_name" placeholder="<% __('e.g. Seed size March 2025') |h %>" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Source image filename: </label>
+                <label class="col-sm-6 control-label"><% __('Source image filename:') |h %> </label>
                 <div class="col-sm-6">
                     <input class="form-control" type="text" id="run_search_image_filename"
                            name="run_search_image_filename" placeholder="e.g. 42200_branching" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Source stock name: </label>
+                <label class="col-sm-6 control-label"><% __('Source stock name:') |h %> </label>
                 <div class="col-sm-6">
                     <input class="form-control" type="text" id="run_search_stock_name"
                            name="run_search_stock_name" placeholder="e.g. FieldPlot100" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Pipeline name: </label>
+                <label class="col-sm-6 control-label"><% __('Pipeline name:') |h %> </label>
                 <div class="col-sm-6">
                     <input class="form-control" type="text" id="run_search_pipeline_name"
                            name="run_search_pipeline_name" placeholder="e.g. seed_size_shape" />
@@ -336,22 +336,22 @@ tr.shown td.details-control {
         </div>
 
         <center>
-            <button class="btn btn-primary" id="run_search_submit">Search</button>
+            <button class="btn btn-primary" id="run_search_submit"><% __('Search') |h %></button>
         </center>
     </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Image Analysis Run Search Results", collapsible => 1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Analysis Run Search Results"), 'h' ), collapsible => 1, collapsed=>0 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
                 <table id="image_analysis_run_search_results" class="table table-hover table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Run Name</th>
-                            <th>Source Image Filename</th>
-                            <th>Source Stock</th>
-                            <th>Pipeline Name</th>
+                            <th><% __('Run Name') |h %></th>
+                            <th><% __('Source Image Filename') |h %></th>
+                            <th><% __('Source Stock') |h %></th>
+                            <th><% __('Pipeline Name') |h %></th>
                         </tr>
                     </thead>
                 </table>

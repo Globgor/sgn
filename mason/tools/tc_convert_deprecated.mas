@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'Converting between SGN unigenes and TGI TC sequences' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Converting between SGN unigenes and TGI TC sequences'), 'h' ) &>
 
 <div style="margin: 1em 0; padding: 0.2em 2em 0.4em 2em">
   <p>
@@ -16,14 +16,14 @@
 
 </div>
 
-<&| /page/info_section.mas, title => 'Mapping SGN-U to TGI TC' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Mapping SGN-U to TGI TC'), 'h' ) &>
 
   Use the SGN-U sequences as input to the BLAST tool at
   <a href="http://compbio.dfci.harvard.edu/tgi/">the TGI site</a>.
 
 </&>
 
-<&| /page/info_section.mas, title => 'Mapping TGI TC to SGN-U' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Mapping TGI TC to SGN-U'), 'h' ) &>
 
   Use the TGI TC sequences as input to the <a href="/tools/blast">SGN
   BLAST tool</a>, selecting one of the SGN unigene data sets.

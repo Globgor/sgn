@@ -27,13 +27,13 @@ given URL
 
 <& /util/import_javascript.mas, classes => 'Text.Markup' &>
 
-<&| /page/info_section.mas, title => 'Nucleotide Sequence' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Nucleotide Sequence'), 'h' ) &>
   <div style="margin-left: 3em">
     <& /sequence/with_markup.mas, seq => $seq, width => 80, subdiv => undef, blast_url => $blast_url  &>
   </div>
 </&>
 
-<&| /page/info_section.mas, title => 'Six-frame Translation' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Six-frame Translation'), 'h' ) &>
   <& /sequence/sixframe_translate.mas, %ARGS &>
 </&>
 

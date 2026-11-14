@@ -3,12 +3,12 @@
 
 </%args>
 <br />
-<& /page/page_title.mas, title=>"Genomic Selection" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Genomic Selection"), 'h' ) &>
 
-Note: This tool is not yet available.
+<% __('Note: This tool is not yet available.') |h %>
 <ul>
-<li><h4>Generate Model</h4></li>
-<li><h4>Predict Breeding Values</h4></li>
+<li><h4><% __('Generate Model') |h %></h4></li>
+<li><h4><% __('Predict Breeding Values') |h %></h4></li>
 
 </ul>
 
