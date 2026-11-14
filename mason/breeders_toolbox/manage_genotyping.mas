@@ -11,15 +11,15 @@ $facilities => ();
 <div class="container-fluid">
     <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Important Notice'), 'h' ), collapsible=>1, collapsed=>0, &>
         <p>
-            <b>Important notice:</b> Manage Genotyping Plates page will soon be removed and replaced by Manage Genotyping Projects page. Genotyping project can be used to organize both genotyping plates and associated genotyping data.
+            <& /util/sentence.mas, text => __x('{bold}Important notice:{end_bold} Manage Genotyping Plates page will soon be removed and replaced by Manage Genotyping Projects page. Genotyping project can be used to organize both genotyping plates and associated genotyping data.'), bold => '<b>', end_bold => '</b>' &>
             <br/><br/>
-            <b>For previously created genotyping plates:</b>Please move your genotyping plates to a desired genotyping project. On each genotyping project details page, you will find <b>Genotyping Plates</b> section which displays all of the plates included in the project, as well as a link for <b>Move Genotyping Plates to this Project</b> dialog.
+            <& /util/sentence.mas, text => __x('{bold}For previously created genotyping plates:{end_bold}Please move your genotyping plates to a desired genotyping project. On each genotyping project details page, you will find {bold2}Genotyping Plates{end_bold2} section which displays all of the plates included in the project, as well as a link for {bold3}Move Genotyping Plates to this Project{end_bold3} dialog.'), bold => '<b>', end_bold => '</b>', bold2 => '<b>', end_bold2 => '</b>', bold3 => '<b>', end_bold3 => '</b>' &>
             <br/><br/>
-            <b>For new genotyping plates:</b>You can specify genotyping project during creating or uploading new genotyping plates.
+            <& /util/sentence.mas, text => __x('{bold}For new genotyping plates:{end_bold}You can specify genotyping project during creating or uploading new genotyping plates.'), bold => '<b>', end_bold => '</b>' &>
             <br/><br/>
             <% __('Folders for genotyping plates are now obsoleted.') |h %>
             <br/><br/>
-            Links for adding/uploading genotyping plates and related data have been moved to Manage Genotyping Projects page.
+            <& /util/sentence.mas, text => __x('Links for adding/uploading genotyping plates and related data have been moved to Manage Genotyping Projects page.') &>
             <a href="/breeders/genotyping_projects"><p><% __('Go To Manage Genotyping Projects') |h %></p></a>
         </p>
     </&>

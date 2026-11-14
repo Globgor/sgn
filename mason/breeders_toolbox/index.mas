@@ -98,10 +98,7 @@
 <& /page/page_title.mas, title=>$m->interp->apply_escapes( __('SGN Breeders Toolbox'), 'h' ) &>
  
 <div class="page_introduction">
-<p>The purpose of this page is to give breeders direct links to
-breeder-relevant tools and data on SGN. It is a work in progress and
-your feedback or suggestions are welcome to build this into a
-comprehensive, easy to use and breeder-friendly resource.</p>
+<p><& /util/sentence.mas, text => __x('The purpose of this page is to give breeders direct links to breeder-relevant tools and data on SGN. It is a work in progress and your feedback or suggestions are welcome to build this into a comprehensive, easy to use and breeder-friendly resource.') &></p>
 
 <p>We love feedback!  Please contact <a href="mailto:jv27\@cornell.edu">Joyce van Eck</a>
 with suggestions for improvements!</p>
@@ -190,17 +187,17 @@ with suggestions for improvements!</p>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('SGN tools'), 'h' ) &>
 <ul>
-  <li>Browse the SGN <a href="/search/direct_search.pl?search=markers/">Markers database</a></li>
-  <li>Browse available controlled vocabularies using the SGN <a href="/tools/onto/">Ontology browser</a></li>
-  <li>Develop CAPS markers using the <a href="/tools/caps_designer/caps_input.pl">CAPS Designer</a></li>
-  <li>Check intron locations in transript data using the <a href="/tools/intron_detection/find_introns.pl">Intron Finder</a></li>
-  <li><a href="/phenome/qtl_form.pl">QTL data submssion</a> and on-the-fly QTL analysis <a href="/search/direct_search.pl?search=qtl/">for Solanaceae traits</a></li>
-  <li>SGN gene and phenotype <a href="/phenome/">submission guide</a> </li>
+  <li><& /util/sentence.mas, text => __x('Browse the SGN {link}Markers database{end_link}'), link => '<a href="/search/direct_search.pl?search=markers/">', end_link => '</a>' &></li>
+  <li><& /util/sentence.mas, text => __x('Browse available controlled vocabularies using the SGN {link}Ontology browser{end_link}'), link => '<a href="/tools/onto/">', end_link => '</a>' &></li>
+  <li><& /util/sentence.mas, text => __x('Develop CAPS markers using the {link}CAPS Designer{end_link}'), link => '<a href="/tools/caps_designer/caps_input.pl">', end_link => '</a>' &></li>
+  <li><& /util/sentence.mas, text => __x('Check intron locations in transript data using the {link}Intron Finder{end_link}'), link => '<a href="/tools/intron_detection/find_introns.pl">', end_link => '</a>' &></li>
+  <li><& /util/sentence.mas, text => __x('{link}QTL data submssion{end_link} and on-the-fly QTL analysis {link2}for Solanaceae traits{end_link2}'), link => '<a href="/phenome/qtl_form.pl">', end_link => '</a>', link2 => '<a href="/search/direct_search.pl?search=qtl/">', end_link2 => '</a>' &></li>
+  <li><& /util/sentence.mas, text => __x('SGN gene and phenotype {link}submission guide{end_link}'), link => '<a href="/phenome/">', end_link => '</a>' &> </li>
 </ul>
 </&>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Tools in development'), 'h' ) &>
-<ul><li>SNP discovery tool. This will be part of the <a href="https://www.msu.edu/~douchesd/solcapwebpage.htm">SolCAP</a> project.</li></ul>
+<ul><li><& /util/sentence.mas, text => __x('SNP discovery tool. This will be part of the {link}SolCAP{end_link} project.'), link => '<a href="https://www.msu.edu/~douchesd/solcapwebpage.htm">', end_link => '</a>' &></li></ul>
 </&>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Links'), 'h' ) &>
@@ -217,10 +214,10 @@ with suggestions for improvements!</p>
   <li><a href="https://spreadsheets.google.com/spreadsheet/ccc?key=0AglmOi1fE8ZYdE9RU0dlS2h4S29RMk1ZQXk4aUJBOGc&hl=en_US">Tomato resistance genes </a> (by Douglas Maxwell).</li>
  </ul>
 </li>
-<li><a href="http://www.tomatomap.net/">TomatoMap.Net</a> - a site for Tomato Genetics at Ohio State University.</li>
-<li><a href="http://solcap.msu.edu/">SolCAP</a> - the official SolCAP website at Michigan State University.</li>
-<li><a href="http://www.oardc.ohio-state.edu/vanderknaap/tomato_analyzer.htm">Tomato Analyzer</a> - software for scoring fruit shape and other shapes.</li>
-<li><a href="/help/index.pl#submit">Submitting data to SGN</a> - instruction for data submissions to SGN.</li>
+<li><& /util/sentence.mas, text => __x('{link}TomatoMap.Net{end_link} - a site for Tomato Genetics at Ohio State University.'), link => '<a href="http://www.tomatomap.net/">', end_link => '</a>' &></li>
+<li><& /util/sentence.mas, text => __x('{link}SolCAP{end_link} - the official SolCAP website at Michigan State University.'), link => '<a href="http://solcap.msu.edu/">', end_link => '</a>' &></li>
+<li><& /util/sentence.mas, text => __x('{link}Tomato Analyzer{end_link} - software for scoring fruit shape and other shapes.'), link => '<a href="http://www.oardc.ohio-state.edu/vanderknaap/tomato_analyzer.htm">', end_link => '</a>' &></li>
+<li><& /util/sentence.mas, text => __x('{link}Submitting data to SGN{end_link} - instruction for data submissions to SGN.'), link => '<a href="/help/index.pl#submit">', end_link => '</a>' &></li>
 </ul>
 </&>
 
