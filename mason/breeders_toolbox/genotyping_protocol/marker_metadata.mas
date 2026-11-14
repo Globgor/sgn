@@ -199,7 +199,7 @@
             },
             error: () => {
                 jQuery("#working_modal").modal("hide");
-                alert("Could not update marker metadata");
+                alert(<% __('Could not update marker metadata') |js %>);
             }
         });
     }

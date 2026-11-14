@@ -62,11 +62,11 @@ jQuery(document).ready(function () {
     var pcr_genotypes_data_table_summary = jQuery('#pcr_protocol_genotype_data_summary').DataTable({
         'ajax': '/ajax/pcr_genotyping_data_summary/search?protocol_id_list=<% $protocol_id %>',
         columns: [
-            { title: "Sample Name", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.stock_name+"</a>"; } },
-            { title: "Sample Type", "data": "stock_type" },
-            { title: "Number of Markers", "data": "number_of_markers" },
-            { title: "Description", "data": "genotype_description" },
-            { title: "Download", "data": "null", "render": function ( data, type, row ) { return "<a onclick='downloadSSRData(\""+row.stock_id+"\", \""+row.genotype_id+"\")' >Download</a>"; } },
+            { title: <% __('Sample Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.stock_name+"</a>"; } },
+            { title: <% __('Sample Type') |js %>, "data": "stock_type" },
+            { title: <% __('Number of Markers') |js %>, "data": "number_of_markers" },
+            { title: <% __('Description') |js %>, "data": "genotype_description" },
+            { title: <% __('Download') |js %>, "data": "null", "render": function ( data, type, row ) { return "<a onclick='downloadSSRData(\""+row.stock_id+"\", \""+row.genotype_id+"\")' >Download</a>"; } },
 
         ]
     });
