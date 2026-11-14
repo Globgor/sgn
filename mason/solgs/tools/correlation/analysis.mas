@@ -66,7 +66,7 @@ if ($url !~ /correlation\/analysis/) {
 % if ($url =~ /correlation\/analysis/) {
 
 <& /page/page_title.mas,
-   title => "Correlation Analysis"
+   title => $m->interp->apply_escapes( __("Correlation Analysis"), 'h' )
   &>
   
 %}
@@ -87,7 +87,7 @@ if ($url !~ /correlation\/analysis/) {
     &>
 
 %} else {
-    <input id="run_correlation" class="btn btn-success" type="button" value="Run correlation" />
+    <input id="run_correlation" class="btn btn-success" type="button" value="<% __('Run correlation') |h %>" />
 %}
 
 <& plot.mas,

@@ -27,17 +27,17 @@ $wizard_link_txt = 'Create a new list or dataset' if !$wizard_link_txt;
 
 <div id="lists_datasets_canvas">
 
-    <div id="lists_datasets_message" class="message" style="display:none;">Retrieving lists and datasets...please wait...it may take minutes.
+    <div id="lists_datasets_message" class="message" style="display:none;"><% __('Retrieving lists and datasets...please wait...it may take minutes.') |h %>
     </div>
     <div id="lists_datasets_progress">
     <& /solgs/spinner/spinner.mas &>
     </div>
 
 <ul class="nav nav-tabs" id="<% $analysis_abbr %>_population_tabs" style="margin-top:25px">
-    <li class="active"><a class="population-tab" data-target="#<% $analysis_abbr %>_private_datasets" data-source="dataset" data-ownership="private">Private datasets</a></li>
-    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_public_datasets" data-source="dataset" data-ownership="public">Public datasets</a></li>
-    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_private_lists" data-source="list" data-ownership="private">Private lists</a></li>
-    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_public_lists" data-source="list" data-ownership="public">Public lists</a></li>
+    <li class="active"><a class="population-tab" data-target="#<% $analysis_abbr %>_private_datasets" data-source="dataset" data-ownership="private"><% __('Private datasets') |h %></a></li>
+    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_public_datasets" data-source="dataset" data-ownership="public"><% __('Public datasets') |h %></a></li>
+    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_private_lists" data-source="list" data-ownership="private"><% __('Private lists') |h %></a></li>
+    <li><a class="population-tab" data-target="#<% $analysis_abbr %>_public_lists" data-source="list" data-ownership="public"><% __('Public lists') |h %></a></li>
 </ul>
 
 <div class="tab-content sub_infosectioncontent" id="<% $analysis_abbr %>_pops_data_div">
