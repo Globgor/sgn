@@ -6,26 +6,26 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nirsAnalysisTrainingDialog">Train Spectral Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nirsAnalysisTrainingDialog"><% __('Train Spectral Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "nirs_analysis_training_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through the training of a model using spectra and phenotypes in the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through the training of a model using spectra and phenotypes in the database."), 'h' ) &>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Train Dataset" &>
-                    <& /page/page_title.mas, title=>"Select the dataset you are interested in training (the accessions or plots or tissues samples in the dataset need to have spectra uploaded)" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Train Dataset"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the dataset you are interested in training (the accessions or plots or tissues samples in the dataset need to have spectra uploaded)"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">Dataset: </label>
+                            <label class="col-sm-1 control-label"><% __('Dataset:') |h %> </label>
                             <div class="col-sm-11" >
                                 <div id="nirs_analysis_training_dataset_train_select_div"></div>
                             </div>
@@ -33,33 +33,33 @@
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="nirs_analysis_training_dataset_train_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="nirs_analysis_training_dataset_train_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Test Dataset" &>
-                    <& /page/page_title.mas, title=>"Select the dataset you are interested in testing (optional)" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Test Dataset"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the dataset you are interested in testing (optional)"), 'h' ) &>
                     <br/><br/>
 
                     <div class="form-horizontal" >
                         <div class="form-group">
-                            <label class="col-sm-7 control-label">Select Custom Dataset for Testing? If No, the training and test set will be partitioned from the training dataset you already selected: </label>
+                            <label class="col-sm-7 control-label"><% __('Select Custom Dataset for Testing? If No, the training and test set will be partitioned from the training dataset you already selected:') |h %> </label>
                             <div class="col-sm-5" >
                                 <select class="form-control" id="nirs_analysis_training_dataset_test_select_option">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
+                                    <option value="No"><% __('No') |h %></option>
+                                    <option value="Yes"><% __('Yes') |h %></option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
                     <center>
-                    <button class="btn btn-primary" id="nirs_analysis_training_dataset_test_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="nirs_analysis_training_dataset_test_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                     <br/><br/>
 
                     <div class="form-horizontal" id="nirs_analysis_training_dataset_test_div" style="display:none">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">Dataset (Optional) (the accessions or plots or tissues samples in the dataset need to have spectra uploaded): </label>
+                            <label class="col-sm-1 control-label"><% __('Dataset (Optional) (the accessions or plots or tissues samples in the dataset need to have spectra uploaded):') |h %> </label>
                             <div class="col-sm-11" >
                                 <div id="nirs_analysis_training_dataset_test_select_div"></div>
                             </div>
@@ -67,12 +67,12 @@
                     </div>
 
                 </&>
-                <&| /util/workflow.mas:step, title=> "Trait" &>
-                    <& /page/page_title.mas, title=>"Select the trait you are interested in. If there are no available options, the training and test datasets you selected do not share any traits in common!" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trait"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the trait you are interested in. If there are no available options, the training and test datasets you selected do not share any traits in common!"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">Trait: </label>
+                            <label class="col-sm-1 control-label"><% __('Trait:') |h %> </label>
                             <div class="col-sm-11" >
                                 <div id="nirs_analysis_training_trait_select_div"></div>
                             </div>
@@ -80,24 +80,24 @@
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="nirs_analysis_training_trait_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="nirs_analysis_training_trait_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Model Settings" &>
-                    <& /page/page_title.mas, title=>"Select parameters for spectral modeling" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Model Settings"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select parameters for spectral modeling"), 'h' ) &>
 
                     <center>
-                    <button class="btn btn-info" id="nirs_analysis_training_dataset_info">More Info</button>
+                    <button class="btn btn-info" id="nirs_analysis_training_dataset_info"><% __('More Info') |h %></button>
                     </center>
                     <hr>
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Spectrometer format: </label>
+                            <label class="col-sm-3 control-label"><% __('Spectrometer format:') |h %> </label>
                             <div class="col-sm-9" >
 
                                 <select class="form-control input-sm" id="nirs_analysis_training_format_select">
-                                    <option value="">Select spectrometer format</option>
+                                    <option value=""><% __('Select spectrometer format') |h %></option>
                                     <option selected value="SCIO">SCIO</option>
                                     <option value="QST">QST</option>
                                     <option value="Foss6500">Foss6500</option>
@@ -115,13 +115,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Cross-validation methods: </label>
+                            <label class="col-sm-3 control-label"><% __('Cross-validation methods:') |h %> </label>
                             <div class="col-sm-9" >
 
                                 <select class="form-control input-sm" id="nirs_analysis_training_cv_select">
-                                    <option value="">Select cross-validation</option>
-                                    <option selected value="random">Random</option>
-                                    <option value="stratified">Stratified</option>
+                                    <option value=""><% __('Select cross-validation') |h %></option>
+                                    <option selected value="random"><% __('Random') |h %></option>
+                                    <option value="stratified"><% __('Stratified') |h %></option>
                                     <option value="CV1">CV1</option>
                                     <option value="CV2">CV2</option>
                                     <option value="CV0">CV0</option>
@@ -130,36 +130,36 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Algorithm: </label>
+                            <label class="col-sm-3 control-label"><% __('Algorithm:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="nirs_analysis_training_nirs_model_algorithm">
                                     <option value="pls">PLSR</option>
-                                    <option value="rf">Random Forest</option>
-                                    <option value="svmLinear">SVM with Linear Kernel</option>
-                                    <option value="svmRadial">SVM with Radial Kernel</option>
+                                    <option value="rf"><% __('Random Forest') |h %></option>
+                                    <option value="svmLinear"><% __('SVM with Linear Kernel') |h %></option>
+                                    <option value="svmRadial"><% __('SVM with Radial Kernel') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Number of sampling iterations: </label>
+                            <label class="col-sm-3 control-label"><% __('Number of sampling iterations:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input class="form-control" type="number" id="nirs_analysis_training_niter_select" name="niter_select" min="1" max="100" step="1" value="10">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Tuning length: </label>
+                            <label class="col-sm-3 control-label"><% __('Tuning length:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input class="form-control" type="number" id="nirs_analysis_training_tuneLength_select" name="tuneLength_select" min="1" max="30" step="1" value="10">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Include preprocessing?: </label>
+                            <label class="col-sm-3 control-label"><% __('Include preprocessing?:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type="checkbox" id="nirs_analysis_training_preprocessing_select" name="preprocessing_select" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Show random forest variable importance? (Note this may take a long time to run): </label>
+                            <label class="col-sm-3 control-label"><% __('Show random forest variable importance? (Note this may take a long time to run):') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type="checkbox" id="nirs_analysis_training_rf_var_imp_select" name="rf_var_imp_select" >
                             </div>
@@ -168,19 +168,19 @@
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="nir_analysis_training_model_step">Train the Model</button>
+                    <button class="btn btn-primary" id="nir_analysis_training_model_step"><% __('Train the Model') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Summary" &>
-                    <& /page/page_title.mas, title=>"Summary of the parameters selected for model creation" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Summary"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Summary of the parameters selected for model creation"), 'h' ) &>
 
                     <div id="nir_analysis_training_model_performance_results"></div>
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Do you want to save the model for future predictions?: </label>
+                            <label class="col-sm-3 control-label"><% __('Do you want to save the model for future predictions?:') |h %> </label>
                             <div class="col-sm-9" >
-                                <button class="btn btn-primary" id="nir_analysis_training_model_save_step">Save the Model</button>
+                                <button class="btn btn-primary" id="nir_analysis_training_model_save_step"><% __('Save the Model') |h %></button>
                             </div>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -202,23 +202,23 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nirsAnalysisTrainingInfoDialog">Train Spectral Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nirsAnalysisTrainingInfoDialog"><% __('Train Spectral Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h1>More </h1>
+            <h1><% __('More') |h %> </h1>
             <ul>
-              <li>"CV1": untested lines in tested environments</li>
-              <li>"CV2": tested lines in tested environments</li>
-              <li>"CV0": tested lines in untested environments</li>
-              <li>"CV00": untested lines in untested environments</li>
+              <li><% __('"CV1": untested lines in tested environments') |h %></li>
+              <li><% __('"CV2": tested lines in tested environments') |h %></li>
+              <li><% __('"CV0": tested lines in untested environments') |h %></li>
+              <li><% __('"CV00": untested lines in untested environments') |h %></li>
             </ul>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

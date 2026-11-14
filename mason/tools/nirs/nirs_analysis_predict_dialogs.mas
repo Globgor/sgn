@@ -5,57 +5,57 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nirsAnalysisPredictionDialog">Predict Phenotypes From Spectral Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nirsAnalysisPredictionDialog"><% __('Predict Phenotypes From Spectral Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "nirs_analysis_prediction_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through predicting phenotypes from trained spectral models in the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through predicting phenotypes from trained spectral models in the database."), 'h' ) &>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Test Dataset" &>
-                    <& /page/page_title.mas, title=>"Select the dataset you are interested in predicting phenotypes for (the accessions or plots or tissues samples in the dataset need to have spectra uploaded):" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Test Dataset"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the dataset you are interested in predicting phenotypes for (the accessions or plots or tissues samples in the dataset need to have spectra uploaded):"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">Dataset: </label>
+                            <label class="col-sm-1 control-label"><% __('Dataset:') |h %> </label>
                             <div class="col-sm-11" >
                                 <div id="nirs_analysis_prediction_dataset_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="nirs_analysis_prediction_dataset_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="nirs_analysis_prediction_dataset_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Spectral Model" &>
-                    <& /page/page_title.mas, title=>"Select the spectral model to use in predictions" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Spectral Model"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the spectral model to use in predictions"), 'h' ) &>
 
                     <center>
-                    <button class="btn btn-info" id="nirs_analysis_prediction_dataset_info">More Info</button>
+                    <button class="btn btn-info" id="nirs_analysis_prediction_dataset_info"><% __('More Info') |h %></button>
                     </center>
                     <hr>
 
                     <div id="nirs_analysis_prediction_model_select_div"></div>
 
                     <center>
-                    <button class="btn btn-primary" id="nir_analysis_prediction_model_step">Predict</button>
+                    <button class="btn btn-primary" id="nir_analysis_prediction_model_step"><% __('Predict') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Summary" &>
-                    <& /page/page_title.mas, title=>"Summary of the predictions" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Summary"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Summary of the predictions"), 'h' ) &>
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Do you want to save the prediction results?: </label>
+                            <label class="col-sm-3 control-label"><% __('Do you want to save the prediction results?:') |h %> </label>
                             <div class="col-sm-9" >
-                                <button class="btn btn-primary" id="nir_analysis_prediction_analysis_save_step">Save the Results</button>
+                                <button class="btn btn-primary" id="nir_analysis_prediction_analysis_save_step"><% __('Save the Results') |h %></button>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -79,18 +79,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nirsAnalysisPredictionInfoDialog">Predict Phenotypes from Spectral Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nirsAnalysisPredictionInfoDialog"><% __('Predict Phenotypes from Spectral Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h1>More </h1>
+            <h1><% __('More') |h %> </h1>
 
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
