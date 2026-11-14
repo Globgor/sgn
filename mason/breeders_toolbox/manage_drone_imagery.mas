@@ -16,10 +16,10 @@
 
 <div id="manage_drone_imagery_top_div">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery"), 'h' ) &>
 
     <div class="well well-sm">
-        <center><h4>Please use the Brave or Chrome web-browsers to view these image tools. In the future, other browsers may be supported.</h4></center>
+        <center><h4><% __('Please use the Brave or Chrome web-browsers to view these image tools. In the future, other browsers may be supported.') |h %></h4></center>
     </div>
 
 <%perl>
@@ -39,22 +39,22 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_standard_process_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Run A Standard Process On Orthophotomosaics" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Run A Standard Process On Orthophotomosaics"), 'h' ) &>
 
     <&| /util/workflow.mas, id=> "manage_drone_imagery_standard_process_workflow" &>
-        <&| /util/workflow.mas:step, title=> "Intro" &>
-            <& /page/page_title.mas, title=>"This workflow will guide you through applying a standard process to your aerial imaging bands" &>
-            <p>Here you can take one of the imaging event bands you uploaded all the way through the process to plot image saving. This will require manual steps such as image rotation, cropping, and plot polygon templating. After you have completed this process for one imaging event band, you can apply it to all other imaging event bands and other calculated vegetative indices.</p>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through applying a standard process to your aerial imaging bands"), 'h' ) &>
+            <p><% __('Here you can take one of the imaging event bands you uploaded all the way through the process to plot image saving. This will require manual steps such as image rotation, cropping, and plot polygon templating. After you have completed this process for one imaging event band, you can apply it to all other imaging event bands and other calculated vegetative indices.') |h %></p>
             <br/><br/>
             <center>
-            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
             </center>
         </&>
-        <&| /util/workflow.mas:step, title=> "Imaging Event Band" &>
-            <& /page/page_title.mas, title=>"Select a imaging event band" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Imaging Event Band"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a imaging event band"), 'h' ) &>
 
             <div class="well well-sm">
-                <p>Please select one imaging event band to take through the process. It is recommended to select a band that has high contrast, such as a NIR band.</p>
+                <p><% __('Please select one imaging event band to take through the process. It is recommended to select a band that has high contrast, such as a NIR band.') |h %></p>
             </div>
 
             <div class="well well-sm">
@@ -63,15 +63,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         <table class="table table-bordered table-hover" id="manage_drone_imagery_standard_process_drone_run_bands_table">
                             <thead>
                                 <tr>
-                                    <th>Select</th>
-                                    <th>Imaging Event Band Name</th>
-                                    <th>Band Description</th>
-                                    <th>Band Type</th>
-                                    <th>Imaging Event Name</th>
-                                    <th>Imaging Event Description</th>
-                                    <th>Imaging Event Date</th>
-                                    <th>Field Trial Name</th>
-                                    <th>Field Trial Description</th>
+                                    <th><% __('Select') |h %></th>
+                                    <th><% __('Imaging Event Band Name') |h %></th>
+                                    <th><% __('Band Description') |h %></th>
+                                    <th><% __('Band Type') |h %></th>
+                                    <th><% __('Imaging Event Name') |h %></th>
+                                    <th><% __('Imaging Event Description') |h %></th>
+                                    <th><% __('Imaging Event Date') |h %></th>
+                                    <th><% __('Field Trial Name') |h %></th>
+                                    <th><% __('Field Trial Description') |h %></th>
                                 </tr>
                             </thead>
                         </table>
@@ -79,29 +79,29 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         <br/>
 
                         <center>
-                        <button class="btn btn-primary" id="manage_drone_imagery_standard_process_drone_run_band_step">Go to Next Step</button>
+                        <button class="btn btn-primary" id="manage_drone_imagery_standard_process_drone_run_band_step"><% __('Go to Next Step') |h %></button>
                         </center>
                     </div>
                 </div>
             </div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Use GCPs" &>
-            <& /page/page_title.mas, title=>"Use ground control points (GCPs) to automate the entire standard process" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Use GCPs"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Use ground control points (GCPs) to automate the entire standard process"), 'h' ) &>
 
             <div class="well well-sm">
-                <p>If a previous imaging event on this field experiment has already completed the standard process, then that imaging event can be used to automate the rest of the standard process on this new imaging event.</p>
-                <p>If ground control points (GCPs) were defined for a previous imaging event, then GCPs can automate the standard process for this new imaging event.</p>
+                <p><% __('If a previous imaging event on this field experiment has already completed the standard process, then that imaging event can be used to automate the rest of the standard process on this new imaging event.') |h %></p>
+                <p><% __('If ground control points (GCPs) were defined for a previous imaging event, then GCPs can automate the standard process for this new imaging event.') |h %></p>
             </div>
 
             <div class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Has a previous imaging event on this field trial completed the standard process already?: </label>
+                    <label class="col-sm-6 control-label"><% __('Has a previous imaging event on this field trial completed the standard process already?:') |h %> </label>
                     <div class="col-sm-6">
                         <select class="form-control" id="manage_drone_imagery_standard_process_ground_control_points_option">
-                            <option value="No">No</option>
-                            <option value="Yes">Yes, and it has GCPs defined.</option>
-                            <option value="Yes_camera_rig">Yes, and the same fixed camera rig was used.</option>
+                            <option value="No"><% __('No') |h %></option>
+                            <option value="Yes"><% __('Yes, and it has GCPs defined.') |h %></option>
+                            <option value="Yes_camera_rig"><% __('Yes, and the same fixed camera rig was used.') |h %></option>
                         </select>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Select the aerial imaging event to use as a template: </label>
+                                <label class="col-sm-6 control-label"><% __('Select the aerial imaging event to use as a template:') |h %> </label>
                                 <div class="col-sm-6">
                                     <div id="manage_drone_imagery_standard_process_ground_control_points_select"></div>
                                 </div>
@@ -122,10 +122,10 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
                             <div class="well well-sm">
                                 <ul>
-                                    <li>Click on the ground control points (GCPs) in the image below and save them.</li>
-                                    <li>Please click and save at least three points. The names of the GCPs MUST be consistent across imaging events!</li>
-                                    <li>For best results, use ground control points at the far four corners of the field.</li>
-                                    <li>You can zoom out on your browser (Cntrl + -).</li>
+                                    <li><% __('Click on the ground control points (GCPs) in the image below and save them.') |h %></li>
+                                    <li><% __('Please click and save at least three points. The names of the GCPs MUST be consistent across imaging events!') |h %></li>
+                                    <li><% __('For best results, use ground control points at the far four corners of the field.') |h %></li>
+                                    <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
                                 </ul>
                             </div>
 
@@ -134,8 +134,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
                                 <br/><br/>
                                 <center>
-                                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_step">Draw Computed Plot Polygons</button>
-                                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_step_confirm">Confirm and Save</button>
+                                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_step"><% __('Draw Computed Plot Polygons') |h %></button>
+                                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_step_confirm"><% __('Confirm and Save') |h %></button>
                                 </center>
                             </div>
 
@@ -153,7 +153,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Select the aerial imaging event to use as a template. The same rotation, cropping, and plot-polygon template will be applied: </label>
+                                <label class="col-sm-6 control-label"><% __('Select the aerial imaging event to use as a template. The same rotation, cropping, and plot-polygon template will be applied:') |h %> </label>
                                 <div class="col-sm-6">
                                     <div id="manage_drone_imagery_standard_process_previous_camera_rig_select"></div>
                                 </div>
@@ -161,25 +161,25 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         </div>
                     </div>
                     <center>
-                    <button class="btn btn-primary" id="manage_drone_imagery_standard_process_previous_camera_rig_step_confirm">Confirm and Save</button>
+                    <button class="btn btn-primary" id="manage_drone_imagery_standard_process_previous_camera_rig_step_confirm"><% __('Confirm and Save') |h %></button>
                     </center>
                 </div>
             </div>
             <div id="manage_drone_imagery_standard_process_ground_control_points_skip_div" style="display:none">
                 <center>
-                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_skip_step">Skip and Go to Next Step</button>
+                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_ground_control_points_skip_step"><% __('Skip and Go to Next Step') |h %></button>
                 </center>
             </div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Rotate" &>
-            <& /page/page_title.mas, title=>"Rotate your selected imaging event band" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Rotate"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Rotate your selected imaging event band"), 'h' ) &>
 
             <div class="well well-sm">
                 <ul>
-                    <li>Here you can do a rotation of your imaging event image.</li>
-                    <li>You can zoom out on your browser (Cntrl + -).</li>
-                    <li>Your image should have precise row-to-row parallel alignment.</li>
+                    <li><% __('Here you can do a rotation of your imaging event image.') |h %></li>
+                    <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
+                    <li><% __('Your image should have precise row-to-row parallel alignment.') |h %></li>
                 </ul>
             </div>
 
@@ -187,7 +187,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
                 <form class="form-horizontal">
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-6 control-label">Rotate Counter-Clockwise Degrees (Use Left and Right Arrows For Fine Tuning): </label>
+                        <label class="col-sm-6 control-label"><% __('Rotate Counter-Clockwise Degrees (Use Left and Right Arrows For Fine Tuning):') |h %> </label>
                         <div class="col-sm-6">
                             <input type="range" min="-180" max="180" step="0.01" id="drone_imagery_standard_process_rotate_degrees_input" name="drone_imagery_standard_process_rotate_degrees_input" value="0.00"><div id="drone_imagery_standard_process_rotate_degrees_input_text"></div>
                         </div>
@@ -195,9 +195,9 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                 </form>
 
                 <!--button class="btn btn-primary" id="drone_imagery_standard_process_rotate_stitched_view">Rotate Image (Does Not Save)</button-->
-                <button class="btn btn-default" id="drone_imagery_standard_process_rotate_stitched_crosshairs">Draw Crosshairs Assist</button>
+                <button class="btn btn-default" id="drone_imagery_standard_process_rotate_stitched_crosshairs"><% __('Draw Crosshairs Assist') |h %></button>
                 <!--button class="btn btn-default" id="drone_imagery_standard_process_rotate_stitched_restart">Restart</button-->
-                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_rotate_step">Save Rotated Image And Go To Next Step</button>
+                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_rotate_step"><% __('Save Rotated Image And Go To Next Step') |h %></button>
             </div>
 
             <div id="manage_drone_imagery_standard_process_rotate_load_div">
@@ -207,18 +207,18 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <div id="drone_imagery_standard_process_rotate_original_stitched_div"></div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Cropping" &>
-            <& /page/page_title.mas, title=>"Crop your imaging event band to specific area of interest" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Cropping"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Crop your imaging event band to specific area of interest"), 'h' ) &>
 
             <div class="well well-sm">
                 <ul>
-                    <li>Here you can do a rough cropping of the stitched ortho image to focus only on the actual field experiment.</li>
-                    <li>You can zoom out on your browser (Cntrl + -).</li>
-                    <li>Click on four points in the image to make a four-sided polygon.</li>
-                    <li>Only the last polygon that you draw will be used for the cropping.</li>
+                    <li><% __('Here you can do a rough cropping of the stitched ortho image to focus only on the actual field experiment.') |h %></li>
+                    <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
+                    <li><% __('Click on four points in the image to make a four-sided polygon.') |h %></li>
+                    <li><% __('Only the last polygon that you draw will be used for the cropping.') |h %></li>
                 </ul>
                 <br/>
-                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_cropping_step">Save and Go to Next Step</button>
+                <button class="btn btn-primary" id="manage_drone_imagery_standard_process_cropping_step"><% __('Save and Go to Next Step') |h %></button>
             </div>
 
             <div id="manage_drone_imagery_standard_process_crop_load_div">
@@ -233,7 +233,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Previously Used Image Cropping For This Field Trial: </label>
+                                <label class="col-sm-6 control-label"><% __('Previously Used Image Cropping For This Field Trial:') |h %> </label>
                                 <div class="col-sm-6">
                                     <div id="plot_polygons_standard_process_previously_saved_image_cropping_templates">
                                     </div>
@@ -242,31 +242,31 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-primary" id="drone_imagery_standard_process_cropping_use_previous_cropping">Use Image Cropping</button>
+                <button class="btn btn-primary" id="drone_imagery_standard_process_cropping_use_previous_cropping"><% __('Use Image Cropping') |h %></button>
             </div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Thresholding" &>
-            <& /page/page_title.mas, title=>"Threshold your imaging event band to remove background" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Thresholding"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Threshold your imaging event band to remove background"), 'h' ) &>
 
             <div class="well">
-                <&| /page/info_section.mas, title => 'Remove Background Using Percentage Threshold', collapsible=>1, collapsed => 0, subtitle=> 'Remove the background by specifying percentage threshold value' &>
+                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Remove Background Using Percentage Threshold'), 'h' ), collapsible=>1, collapsed => 0, subtitle=> $m->interp->apply_escapes( __('Remove the background by specifying percentage threshold value'), 'h' ) &>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-6 control-label">Discard Lowest Percent of Pixel Values: </label>
+                                        <label class="col-sm-6 control-label"><% __('Discard Lowest Percent of Pixel Values:') |h %> </label>
                                         <div class="col-sm-6">
-                                            <input class="form-control" id="drone_imagery_standard_process_remove_background_lower_threshold_percentage" name="drone_imagery_standard_process_remove_background_lower_threshold_percentage" type="number" max="99" min="0" placeholder="e.g. 10% of lowest pixel values (Min 0, Max 100)" value=25 disabled/>
+                                            <input class="form-control" id="drone_imagery_standard_process_remove_background_lower_threshold_percentage" name="drone_imagery_standard_process_remove_background_lower_threshold_percentage" type="number" max="99" min="0" placeholder="<% __('e.g. 10% of lowest pixel values (Min 0, Max 100)') |h %>" value=25 disabled/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-6 control-label">Discard Highest Percent of Pixel Values: </label>
+                                        <label class="col-sm-6 control-label"><% __('Discard Highest Percent of Pixel Values:') |h %> </label>
                                         <div class="col-sm-6">
-                                            <input class="form-control" id="drone_imagery_standard_process_remove_background_upper_threshold_percentage" name="drone_imagery_standard_process_remove_background_upper_threshold_percentage" type="number" max="99" min="0" placeholder="e.g. 10% of highest pixel values (Min 0, Max 100)" value=25 disabled/>
+                                            <input class="form-control" id="drone_imagery_standard_process_remove_background_upper_threshold_percentage" name="drone_imagery_standard_process_remove_background_upper_threshold_percentage" type="number" max="99" min="0" placeholder="<% __('e.g. 10% of highest pixel values (Min 0, Max 100)') |h %>" value=25 disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -277,7 +277,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             </div>
 
             <center>
-                <button id="drone_imagery_standard_process_remove_background_defined_percentage_submit" class="btn btn-primary">Apply Threshold</button>
+                <button id="drone_imagery_standard_process_remove_background_defined_percentage_submit" class="btn btn-primary"><% __('Apply Threshold') |h %></button>
             </center>
 
             <hr>
@@ -287,7 +287,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             </div>
 
             <div class="well well-sm">
-                <&| /page/info_section.mas, title => 'Histogram of pixel values', collapsible=>1, collapsed => 0, subtitle=> 'Histogram of Pixel Values' &>
+                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Histogram of pixel values'), 'h' ), collapsible=>1, collapsed => 0, subtitle=> $m->interp->apply_escapes( __('Histogram of Pixel Values'), 'h' ) &>
                     <center>
                         <canvas id="drone_imagery_standard_process_remove_background_histogram_div"></canvas>
                     </center>
@@ -295,7 +295,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             </div>
 
             <div class="well well-sm">
-                <&| /page/info_section.mas, title => 'Denoised Original Image', collapsible=>1, collapsed => 0, subtitle=> 'Denoised Original Image' &>
+                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Denoised Original Image'), 'h' ), collapsible=>1, collapsed => 0, subtitle=> $m->interp->apply_escapes( __('Denoised Original Image'), 'h' ) &>
                     <center>
                         <canvas id="drone_imagery_standard_process_remove_background_original"></canvas>
                     </center>
@@ -303,18 +303,18 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             </div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Plot Polygons" &>
-            <& /page/page_title.mas, title=>"Define plot polygons relative to the field layout" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Plot Polygons"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Define plot polygons relative to the field layout"), 'h' ) &>
 
-            <& /page/detail_page_2_col_section.mas, info_section_collapsible=>1, info_section_collapsed=>0, info_section_title => "<h4 style='display:inline'>Generate Polygon Template Tool</h4>", info_section_subtitle => 'Overlay a uniform grid over the image.', icon_class => "glyphicon glyphicon-th-large", info_section_id => "manage_drone_imagery_standard_process_generate_plot_polygons_section" &>
+            <& /page/detail_page_2_col_section.mas, info_section_collapsible=>1, info_section_collapsed=>0, info_section_title => "<h4 style='display:inline'>Generate Polygon Template Tool</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Overlay a uniform grid over the image.'), 'h' ), icon_class => "glyphicon glyphicon-th-large", info_section_id => "manage_drone_imagery_standard_process_generate_plot_polygons_section" &>
 
             <div class="well well-sm">
                 <div id="drone_imagery_standard_process_plot_polygons_top_section"></div>
 
-                <button id="drone_imagery_standard_process_plot_polygons_clear" class="btn btn-danger">Clear All Polygons</button>
-                <button id="drone_imagery_standard_process_plot_polygons_clear_one" class="btn btn-danger">Clear One Polygon</button>
-                <button id="drone_imagery_standard_process_plot_polygons_get_distance" class="btn btn-default">Find Distance Between Points</button>
-                <button id="drone_imagery_standard_process_plot_polygons_switch_image_url" class="btn btn-default">Switch Between Original and Background Removed Image</button>
+                <button id="drone_imagery_standard_process_plot_polygons_clear" class="btn btn-danger"><% __('Clear All Polygons') |h %></button>
+                <button id="drone_imagery_standard_process_plot_polygons_clear_one" class="btn btn-danger"><% __('Clear One Polygon') |h %></button>
+                <button id="drone_imagery_standard_process_plot_polygons_get_distance" class="btn btn-default"><% __('Find Distance Between Points') |h %></button>
+                <button id="drone_imagery_standard_process_plot_polygons_switch_image_url" class="btn btn-default"><% __('Switch Between Original and Background Removed Image') |h %></button>
             </div>
 
             <div id="manage_drone_imagery_standard_process_plot_polygons_load_div">
@@ -325,9 +325,9 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
             <hr>
             <div class="well well-sm">
-                <h2>Either, Manually Assign Plot Numbers to Generated Polygons</h2>
+                <h2><% __('Either, Manually Assign Plot Numbers to Generated Polygons') |h %></h2>
 
-                <&| /page/info_section.mas, title => 'Manually Assign Plot Numbers to Polygon Numbers', collapsible=>1, collapsed => 1, subtitle=> 'Table for manually assigning plot numbers to polygon numbers.' &>
+                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Manually Assign Plot Numbers to Polygon Numbers'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('Table for manually assigning plot numbers to polygon numbers.'), 'h' ) &>
                     <div id="drone_imagery_standard_process_generated_polygons_table"></div>
                 </&>
             </div>
@@ -340,13 +340,13 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             </div>
 
         </&>
-        <&| /util/workflow.mas:step, title=> "Apply" &>
-            <& /page/page_title.mas, title=>"Apply these same steps to other imaging event bands in the current imaging event" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Apply"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Apply these same steps to other imaging event bands in the current imaging event"), 'h' ) &>
 
             <div class="well well-sm">
                 <ul>
-                    <li>Here you can apply the same actions you did for the previous steps 1 to 6, to additional imaging event bands in this imaging event.</li>
-                    <li>Thresholding will be done dynamically, by removing the top and bottom 20% of pixel values.</li>
+                    <li><% __('Here you can apply the same actions you did for the previous steps 1 to 6, to additional imaging event bands in this imaging event.') |h %></li>
+                    <li><% __('Thresholding will be done dynamically, by removing the top and bottom 20% of pixel values.') |h %></li>
                 </ul>
             </div>
 
@@ -356,15 +356,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         <table class="table table-bordered table-hover" id="manage_drone_imagery_standard_process_drone_run_bands_apply_table">
                             <thead>
                                 <tr>
-                                    <th>Select</th>
-                                    <th>Imaging Event Band Name</th>
-                                    <th>Band Description</th>
-                                    <th>Band Type</th>
-                                    <th>Imaging Event Name</th>
-                                    <th>Imaging Event Description</th>
-                                    <th>Imaging Event Date</th>
-                                    <th>Field Trial Name</th>
-                                    <th>Field Trial Description</th>
+                                    <th><% __('Select') |h %></th>
+                                    <th><% __('Imaging Event Band Name') |h %></th>
+                                    <th><% __('Band Description') |h %></th>
+                                    <th><% __('Band Type') |h %></th>
+                                    <th><% __('Imaging Event Name') |h %></th>
+                                    <th><% __('Imaging Event Description') |h %></th>
+                                    <th><% __('Imaging Event Date') |h %></th>
+                                    <th><% __('Field Trial Name') |h %></th>
+                                    <th><% __('Field Trial Description') |h %></th>
                                 </tr>
                             </thead>
                         </table>
@@ -372,18 +372,18 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                         <br/>
 
                         <center>
-                        <button class="btn btn-primary" id="manage_drone_imagery_standard_process_drone_run_band_apply_step">Go to Next Step</button>
+                        <button class="btn btn-primary" id="manage_drone_imagery_standard_process_drone_run_band_apply_step"><% __('Go to Next Step') |h %></button>
                         </center>
                     </div>
                 </div>
             </div>
         </&>
-        <&| /util/workflow.mas:step, title=> "Indices" &>
-            <& /page/page_title.mas, title=>"Create and apply these same steps to vegetative indices" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Indices"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Create and apply these same steps to vegetative indices"), 'h' ) &>
 
             <form class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Vegetative Indices To Apply: </label>
+                    <label class="col-sm-6 control-label"><% __('Vegetative Indices To Apply:') |h %> </label>
                     <div class="col-sm-6">
                         <input name="drone_imagery_standard_process_apply_indices_select" value="TGI" type="checkbox" checked> Triangular Greenness Index (TGI) <br/>
                         <input name="drone_imagery_standard_process_apply_indices_select" value="VARI" type="checkbox" checked> Visible Atmospheric Resistant Index (VARI) <br/>
@@ -396,25 +396,25 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <br/>
 
             <center>
-            <button type="button" class="btn btn-primary" id="manage_drone_imagery_standard_process_indices_step">Go to Next Step</button>
+            <button type="button" class="btn btn-primary" id="manage_drone_imagery_standard_process_indices_step"><% __('Go to Next Step') |h %></button>
             </center>
         </&>
-        <&| /util/workflow.mas:step, title=> "Phenotypes" &>
-            <& /page/page_title.mas, title=>"Calculate phenotypes for all plot polygon images" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Phenotypes"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Calculate phenotypes for all plot polygon images"), 'h' ) &>
 
             <form class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Zonal Statistics to Calculate and Save in Database: </label>
+                    <label class="col-sm-6 control-label"><% __('Zonal Statistics to Calculate and Save in Database:') |h %> </label>
                     <div class="col-sm-6">
                         <input name="drone_imagery_standard_process_phenotypes_select" value="zonal" type="checkbox" checked disabled> Zonal Statistics: nonzero_pixel_count, total_pixel_sum, mean_pixel_value, harmonic_mean_value, median_pixel_value, variance_pixel_value, stdev_pixel_value, pstdev_pixel_value, min_pixel_value, max_pixel_value, minority_pixel_value, minority_pixel_count, majority_pixel_value, majority_pixel_count, pixel_variety_count <br/>
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Apply same standard process to all uploaded imaging events that use the same camera rig: </label>
+                    <label class="col-sm-6 control-label"><% __('Apply same standard process to all uploaded imaging events that use the same camera rig:') |h %> </label>
                     <div class="col-sm-6">
                         <select class="form-control" id="drone_imagery_standard_process_camera_rig_apply_select">
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
+                            <option value="No"><% __('No') |h %></option>
+                            <option value="Yes"><% __('Yes') |h %></option>
                         </select>
                     </div>
                 </div>
@@ -424,7 +424,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <div id="drone_imagery_standard_process_week_term_div"></div>
 
             <center>
-            <button type="button" class="btn btn-info" id="manage_drone_imagery_standard_process_phenotypes_step">Finish</button>
+            <button type="button" class="btn btn-info" id="manage_drone_imagery_standard_process_phenotypes_step"><% __('Finish') |h %></button>
             </center>
         </&>
     </&>
@@ -435,22 +435,22 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="project_drone_imagery_ground_control_points_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Save Ground Control Points" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Save Ground Control Points"), 'h' ) &>
 
     <div id="project_drone_imagery_ground_control_points_title_div"></div>
 
     <div class="well well-sm">
         <ul>
-            <li>Click on the ground control points (GCPs) in the image below and save them.</li>
-            <li>Please click and save at least three points. The names of the GCPs MUST be consistent across imaging events!.</li>
-            <li>You can move to different images (e.g. blue, green, red, NIR, BGR) which are available after the standard process has been completed.</li>
-            <li>You can zoom out on your browser (Cntrl + -).</li>
+            <li><% __('Click on the ground control points (GCPs) in the image below and save them.') |h %></li>
+            <li><% __('Please click and save at least three points. The names of the GCPs MUST be consistent across imaging events!.') |h %></li>
+            <li><% __('You can move to different images (e.g. blue, green, red, NIR, BGR) which are available after the standard process has been completed.') |h %></li>
+            <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
         </ul>
     </div>
 
     <div id="project_drone_imagery_ground_control_points_next_buttons" style="display:none">
-        <button class="btn btn-default" id="project_drone_imagery_ground_control_points_previous_image">View Previous Image Type</button>
-        <button class="btn btn-default" id="project_drone_imagery_ground_control_points_next_image">View Next Image Type</button>
+        <button class="btn btn-default" id="project_drone_imagery_ground_control_points_previous_image"><% __('View Previous Image Type') |h %></button>
+        <button class="btn btn-default" id="project_drone_imagery_ground_control_points_next_image"><% __('View Next Image Type') |h %></button>
         <br/><br/>
     </div>
 
@@ -471,38 +471,38 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="saveGroundControlPointsDialog">Save Ground Control Points</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="saveGroundControlPointsDialog"><% __('Save Ground Control Points') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <div class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Ground Control Point Name (Can overwrite if same name is used. Names MUST be consistent across imaging events!): </label>
+                    <label class="col-sm-6 control-label"><% __('Ground Control Point Name (Can overwrite if same name is used. Names MUST be consistent across imaging events!):') |h %> </label>
                     <div class="col-sm-6">
-                        <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_name" name="project_drone_imagery_ground_control_points_form_input_name" type="text" placeholder="e.g. NorthWest Corner, or Point 1" />
+                        <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_name" name="project_drone_imagery_ground_control_points_form_input_name" type="text" placeholder="<% __('e.g. NorthWest Corner, or Point 1') |h %>" />
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Latitude (optional): </label>
+                    <label class="col-sm-6 control-label"><% __('Latitude (optional):') |h %> </label>
                     <div class="col-sm-6">
                         <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_latitude" name="project_drone_imagery_ground_control_points_form_input_latitude" type="text" />
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Longitude (optional): </label>
+                    <label class="col-sm-6 control-label"><% __('Longitude (optional):') |h %> </label>
                     <div class="col-sm-6">
                         <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_longitude" name="project_drone_imagery_ground_control_points_form_input_longitude" type="text" />
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">X Pos: </label>
+                    <label class="col-sm-6 control-label"><% __('X Pos:') |h %> </label>
                     <div class="col-sm-6">
                         <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_x_pos" name="project_drone_imagery_ground_control_points_form_input_x_pos" type="text" />
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Y Pos: </label>
+                    <label class="col-sm-6 control-label"><% __('Y Pos:') |h %> </label>
                     <div class="col-sm-6">
                         <input class="form-control" id="project_drone_imagery_ground_control_points_form_input_y_pos" name="project_drone_imagery_ground_control_points_form_input_y_pos" type="text" />
                     </div>
@@ -511,8 +511,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="project_drone_imagery_ground_control_points_form_save">Save GCP</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="project_drone_imagery_ground_control_points_form_save"><% __('Save GCP') |h %></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -520,36 +520,36 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_standard_process_raw_images_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Run A Standard Process On Raw Images" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Run A Standard Process On Raw Images"), 'h' ) &>
 
     <&| /util/workflow.mas, id=> "manage_drone_imagery_standard_process_raw_images_workflow" &>
-        <&| /util/workflow.mas:step, title=> "Intro" &>
-            <& /page/page_title.mas, title=>"This workflow will guide you through applying a standard process to your aerial imaging bands" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through applying a standard process to your aerial imaging bands"), 'h' ) &>
 
             <div class="well well-sm">
-                <p>This process will allow you to manually assign plot-polygons to the raw images.</p>
+                <p><% __('This process will allow you to manually assign plot-polygons to the raw images.') |h %></p>
             </div>
 
             <br/><br/>
             <center>
-            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
             </center>
         </&>
-        <&| /util/workflow.mas:step, title=> "Plot Polygons" &>
-            <& /page/page_title.mas, title=>"Manually assign plot-polygons to raw images" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Plot Polygons"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manually assign plot-polygons to raw images"), 'h' ) &>
 
             <div class="well well-sm">
                 <ul>
-                    <li>(1) Select an image from the grid below and adjust the rotation.</li>
-                    <li>(2) Click the four corners encompassing a group of plots of interest. Alternatively, paste a previously used template.</li>
-                    <li>(3) Type the plot numbers corresponding to the drawn plot-polygons in the drawn table.</li>
-                    <li>(4) Click assign plot-polygons to save. Repeat steps 1 to 4 until all plots have been assigned an image.</li>
+                    <li><% __('(1) Select an image from the grid below and adjust the rotation.') |h %></li>
+                    <li><% __('(2) Click the four corners encompassing a group of plots of interest. Alternatively, paste a previously used template.') |h %></li>
+                    <li><% __('(3) Type the plot numbers corresponding to the drawn plot-polygons in the drawn table.') |h %></li>
+                    <li><% __('(4) Click assign plot-polygons to save. Repeat steps 1 to 4 until all plots have been assigned an image.') |h %></li>
                 </ul>
             </div>
 
             <div class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-2 control-label">Click Raw Image Stack: </label>
+                    <label class="col-sm-2 control-label"><% __('Click Raw Image Stack:') |h %> </label>
                     <div class="col-sm-10">
                         <div id="drone_imagery_standard_process_raw_images_image_id_select_div"></div>
                     </div>
@@ -562,80 +562,80 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <canvas id="drone_imagery_standard_process_raw_images_show_another_image_second"></canvas>
 
             <hr>
-            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_in_place" onclick="return false;">Paste Previously Used Plot-Polygon</button>
-            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_view_image" onclick="return false;">View Another Image Also</button>
-            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_view_image_second" onclick="return false;">View Another Image Also</button>
+            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_in_place" onclick="return false;"><% __('Paste Previously Used Plot-Polygon') |h %></button>
+            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_view_image" onclick="return false;"><% __('View Another Image Also') |h %></button>
+            <button class="btn btn-default btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon_view_image_second" onclick="return false;"><% __('View Another Image Also') |h %></button>
 
             <hr>
             <form class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Rotate Counter-Clockwise Degrees: </label>
+                    <label class="col-sm-6 control-label"><% __('Rotate Counter-Clockwise Degrees:') |h %> </label>
                     <div class="col-sm-6">
-                        <input class="form-control" id="drone_imagery_standard_process_raw_images_rotate_degrees_input" name="drone_imagery_standard_process_raw_images_rotate_degrees_input" type="text" placeholder="Number of degrees to rotate" value="0.00"/>
+                        <input class="form-control" id="drone_imagery_standard_process_raw_images_rotate_degrees_input" name="drone_imagery_standard_process_raw_images_rotate_degrees_input" type="text" placeholder="<% __('Number of degrees to rotate') |h %>" value="0.00"/>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_rotate_image" onclick="return false;">Rotate Image</button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_rotate_image" onclick="return false;"><% __('Rotate Image') |h %></button>
             <hr>
 
             <form class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Trained Mask R-CNN Models: </label>
+                    <label class="col-sm-6 control-label"><% __('Trained Mask R-CNN Models:') |h %> </label>
                     <div class="col-sm-6">
                         <div id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_models_div"></div>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_predict_button" onclick="return false;">Predict Mask</button>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_modal_button" onclick="return false;">Retrain Mask R-CNN</button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_predict_button" onclick="return false;"><% __('Predict Mask') |h %></button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_modal_button" onclick="return false;"><% __('Retrain Mask R-CNN') |h %></button>
             <hr>
 
             <hr>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_save_polygon" onclick="return false;">Save Plot-Polygon</button>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_paste_polygon" onclick="return false;">Paste Plot-Polygon</button>
-            <button class="btn btn-danger btn-sm" id="drone_imagery_standard_process_raw_images_clear_polygon" onclick="return false;">Start Over</button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_save_polygon" onclick="return false;"><% __('Save Plot-Polygon') |h %></button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_paste_polygon" onclick="return false;"><% __('Paste Plot-Polygon') |h %></button>
+            <button class="btn btn-danger btn-sm" id="drone_imagery_standard_process_raw_images_clear_polygon" onclick="return false;"><% __('Start Over') |h %></button>
             <hr>
 
             <hr>
             <form class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-6 control-label">Previously used plot-polygons: </label>
+                    <label class="col-sm-6 control-label"><% __('Previously used plot-polygons:') |h %> </label>
                     <div class="col-sm-6">
                         <div id="drone_imagery_standard_process_raw_images_previous_polygons_div"></div>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon" onclick="return false;">Paste Previously Used Plot-Polygon To A New Point</button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_paste_previous_polygon" onclick="return false;"><% __('Paste Previously Used Plot-Polygon To A New Point') |h %></button>
             <hr>
 
             <div class="form-horizontal">
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-3 control-label">Number of Rows: </label>
+                    <label class="col-sm-3 control-label"><% __('Number of Rows:') |h %> </label>
                     <div class="col-sm-9">
                         <input type="number" class="form-control" id="drone_imagery_standard_process_raw_images_number_rows" name="drone_imagery_standard_process_raw_images_number_rows" placeholder="0"/>
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-3 control-label">Number of Columns: </label>
+                    <label class="col-sm-3 control-label"><% __('Number of Columns:') |h %> </label>
                     <div class="col-sm-9">
                         <input type="number" class="form-control" id="drone_imagery_standard_process_raw_images_number_columns" name="drone_imagery_standard_process_raw_images_number_columns" placeholder="0"/>
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
-                    <label class="col-sm-3 control-label">Template Name: </label>
+                    <label class="col-sm-3 control-label"><% __('Template Name:') |h %> </label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="drone_imagery_standard_process_raw_images_partial_template_name" name="drone_imagery_standard_process_raw_images_partial_template_name" placeholder="e.g. 3rd Range 2x4"/>
+                        <input type="text" class="form-control" id="drone_imagery_standard_process_raw_images_partial_template_name" name="drone_imagery_standard_process_raw_images_partial_template_name" placeholder="<% __('e.g. 3rd Range 2x4') |h %>"/>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_draw_polygons" onclick="return false;">Draw Plot-Polygon (Does Not Save)</button>
+            <button class="btn btn-primary btn-sm" id="drone_imagery_standard_process_raw_images_draw_polygons" onclick="return false;"><% __('Draw Plot-Polygon (Does Not Save)') |h %></button>
             <hr>
 
             <div id="drone_imagery_standard_process_raw_images_polygon_assign_table" name="drone_imagery_standard_process_raw_images_polygon_assign_table"></div>
 
             <br/><br/>
             <center>
-            <button class="btn btn-primary" id="drone_imagery_standard_process_raw_images_assign_plot" onclick="return false;">Assign Plot Images (Saves)</button>
+            <button class="btn btn-primary" id="drone_imagery_standard_process_raw_images_assign_plot" onclick="return false;"><% __('Assign Plot Images (Saves)') |h %></button>
             </center>
 
             <hr>
@@ -647,31 +647,31 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_rotate_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Rotate Stitched Image" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Rotate Stitched Image"), 'h' ) &>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can rotate the stitched image so that the rows and columns align exactly vertically and horizontally.</li>
-            <li>The rotation can be done on decimals of degrees.</li>
-            <li>Negative values mean clock-wise and positive values mean counter-clockwise.</li>
-            <li>Crosshairs are only for assisting in alignment and they will not be saved.</li>
+            <li><% __('Here you can rotate the stitched image so that the rows and columns align exactly vertically and horizontally.') |h %></li>
+            <li><% __('The rotation can be done on decimals of degrees.') |h %></li>
+            <li><% __('Negative values mean clock-wise and positive values mean counter-clockwise.') |h %></li>
+            <li><% __('Crosshairs are only for assisting in alignment and they will not be saved.') |h %></li>
         </ul>
     </div>
     <div class="well well-sm">
 
         <form class="form-horizontal">
             <div class="form-group form-group-sm">
-                <label class="col-sm-6 control-label">Rotate Counter-Clockwise Degrees: </label>
+                <label class="col-sm-6 control-label"><% __('Rotate Counter-Clockwise Degrees:') |h %> </label>
                 <div class="col-sm-6">
-                    <input class="form-control" id="drone_imagery_rotate_degrees_input" name="drone_imagery_rotate_degrees_input" type="text" placeholder="Number of degrees to rotate" value="0.00"/>
+                    <input class="form-control" id="drone_imagery_rotate_degrees_input" name="drone_imagery_rotate_degrees_input" type="text" placeholder="<% __('Number of degrees to rotate') |h %>" value="0.00"/>
                 </div>
             </div>
         </form>
 
-        <button class="btn btn-primary" id="drone_imagery_rotate_stitched_view">Rotate Image (Does Not Save)</button>
-        <button class="btn btn-default" id="drone_imagery_rotate_stitched_crosshairs">Draw Crosshairs Assist</button>
-        <button class="btn btn-default" id="drone_imagery_rotate_stitched_restart">Restart</button>
-        <button class="btn btn-primary" id="drone_imagery_rotate_stitched_submit">Save Rotated Image</button>
+        <button class="btn btn-primary" id="drone_imagery_rotate_stitched_view"><% __('Rotate Image (Does Not Save)') |h %></button>
+        <button class="btn btn-default" id="drone_imagery_rotate_stitched_crosshairs"><% __('Draw Crosshairs Assist') |h %></button>
+        <button class="btn btn-default" id="drone_imagery_rotate_stitched_restart"><% __('Restart') |h %></button>
+        <button class="btn btn-primary" id="drone_imagery_rotate_stitched_submit"><% __('Save Rotated Image') |h %></button>
     </div>
 
     <div id="manage_drone_imagery_rotate_load_div">
@@ -684,17 +684,17 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_crop_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Crop Stitched Image To Field Experiment" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Crop Stitched Image To Field Experiment"), 'h' ) &>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can do a rough cropping of the stitched ortho image to focus only on the actual field experiment.</li>
-            <li>You can zoom out on your browser (Cntrl + -).</li>
-            <li>Click on four points in the image to make a four-sided polygon.</li>
-            <li>Only the last polygon that you draw will be used for the cropping.</li>
+            <li><% __('Here you can do a rough cropping of the stitched ortho image to focus only on the actual field experiment.') |h %></li>
+            <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
+            <li><% __('Click on four points in the image to make a four-sided polygon.') |h %></li>
+            <li><% __('Only the last polygon that you draw will be used for the cropping.') |h %></li>
         </ul>
         <br/>
-        <button class="btn btn-primary" id="drone_imagery_crop_stitched_submit">Crop Image To Selected Polygon</button>
+        <button class="btn btn-primary" id="drone_imagery_crop_stitched_submit"><% __('Crop Image To Selected Polygon') |h %></button>
     </div>
 
     <div class="well well-sm">
@@ -702,7 +702,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-6 control-label">Previously Used Image Cropping For This Field Trial: </label>
+                        <label class="col-sm-6 control-label"><% __('Previously Used Image Cropping For This Field Trial:') |h %> </label>
                         <div class="col-sm-6">
                             <div id="plot_polygons_previously_saved_image_cropping_templates">
                             </div>
@@ -711,7 +711,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                 </div>
             </div>
         </form>
-        <button class="btn btn-primary" id="drone_imagery_cropping_use_previous_cropping">Use Image Cropping</button>
+        <button class="btn btn-primary" id="drone_imagery_cropping_use_previous_cropping"><% __('Use Image Cropping') |h %></button>
     </div>
 
     <div id="manage_drone_imagery_crop_load_div">
@@ -723,14 +723,14 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_vegetative_index_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Convert to Vegetative Index" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Convert to Vegetative Index"), 'h' ) &>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can convert to a vegetative index.</li>
-            <li>If you have a NIR band, you can calculate "Normalized difference vegetative index", NDVI.</li>
-            <li>If you have an RGB image, you can calculate "Visible atmospheric resistant index", VARI, or "Triangular greenness index", TGI.</li>
-            <li>If you have red or blue or green, or images from any spectral band, you can calculate ratios to use as your vegetative index.</li>
+            <li><% __('Here you can convert to a vegetative index.') |h %></li>
+            <li><% __('If you have a NIR band, you can calculate "Normalized difference vegetative index", NDVI.') |h %></li>
+            <li><% __('If you have an RGB image, you can calculate "Visible atmospheric resistant index", VARI, or "Triangular greenness index", TGI.') |h %></li>
+            <li><% __('If you have red or blue or green, or images from any spectral band, you can calculate ratios to use as your vegetative index.') |h %></li>
         </ul>
     </div>
 
@@ -760,7 +760,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         <hr>
     </div>
 
-    <button class="btn btn-success" id="drone_imagery_rgb_vegetative_index_submit">Finish and Save Vegetative Index</button>
+    <button class="btn btn-success" id="drone_imagery_rgb_vegetative_index_submit"><% __('Finish and Save Vegetative Index') |h %></button>
     <hr>
 
     <canvas id="drone_imagery_vegetative_index_original_stitched_div"></canvas>
@@ -768,15 +768,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_remove_background_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Remove Background" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Remove Background"), 'h' ) &>
 
     <div class="well">
-        <&| /page/info_section.mas, title => 'Remove Background Using Graphical Threshold', collapsible=>1, collapsed => 1, subtitle=> 'Remove the background using a simple threshold value' &>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Remove Background Using Graphical Threshold'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('Remove the background using a simple threshold value'), 'h' ) &>
 
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="well well-sm">
-                        <h5>The background can be removed by placing a threshold on pixel values</h5>
+                        <h5><% __('The background can be removed by placing a threshold on pixel values') |h %></h5>
                         <ul>
                             <li><b>1.</b> Click on the two right-most, highest peaks in the histogram. The right most peak represents the pixels we are interested in, while the peak immediately to the left of that peak represents the soil background.</li>
                             <li><b>2.</b> Click on the "Find Minimum" button.</li>
@@ -791,64 +791,64 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
                     <canvas id="drone_imagery_remove_background_histogram_div"></canvas>
                     <hr>
-                    <button class="btn btn-primary" id="drone_imagery_remove_background_find_minimum">Find Minimum (Does Not Save)</button>
-                    <button class="btn btn-default" id="drone_imagery_remove_background_start_over">Start Over</button>
-                    <button class="btn btn-primary" id="drone_imagery_remove_background_submit">Save</button>
+                    <button class="btn btn-primary" id="drone_imagery_remove_background_find_minimum"><% __('Find Minimum (Does Not Save)') |h %></button>
+                    <button class="btn btn-default" id="drone_imagery_remove_background_start_over"><% __('Start Over') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_remove_background_submit"><% __('Save') |h %></button>
                     <hr>
                 </div>
             </div>
         </&>
     </div>
     <div class="well">
-        <&| /page/info_section.mas, title => 'Remove Background Using User Defined Threshold', collapsible=>1, collapsed => 1, subtitle=> 'Remove the background using a simple threshold value' &>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Remove Background Using User Defined Threshold'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('Remove the background using a simple threshold value'), 'h' ) &>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Discard Pixels with Value Lower Than: </label>
+                                <label class="col-sm-6 control-label"><% __('Discard Pixels with Value Lower Than:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_remove_background_lower_threshold" name="drone_imagery_remove_background_lower_threshold" type="number" max="255" min="0" placeholder="e.g. 10 (Min 0)" />
+                                    <input class="form-control" id="drone_imagery_remove_background_lower_threshold" name="drone_imagery_remove_background_lower_threshold" type="number" max="255" min="0" placeholder="<% __('e.g. 10 (Min 0)') |h %>" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Discard Pixels with Value Higher Than: </label>
+                                <label class="col-sm-6 control-label"><% __('Discard Pixels with Value Higher Than:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_remove_background_upper_threshold" name="drone_imagery_remove_background_upper_threshold" type="number" max="255" min="0" placeholder="e.g. 200 (Max 255)"/>
+                                    <input class="form-control" id="drone_imagery_remove_background_upper_threshold" name="drone_imagery_remove_background_upper_threshold" type="number" max="255" min="0" placeholder="<% __('e.g. 200 (Max 255)') |h %>"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="drone_imagery_remove_background_defined_submit" class="btn btn-primary">Apply Threshold</button>
+                    <button id="drone_imagery_remove_background_defined_submit" class="btn btn-primary"><% __('Apply Threshold') |h %></button>
                 </div>
             </div>
         </&>
     </div>
     <div class="well">
-        <&| /page/info_section.mas, title => 'Remove Background Using Percentage Threshold', collapsible=>1, collapsed => 1, subtitle=> 'Remove the background by specifying percentage threshold value' &>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Remove Background Using Percentage Threshold'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('Remove the background by specifying percentage threshold value'), 'h' ) &>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Discard Lowest Percent of Pixel Values: </label>
+                                <label class="col-sm-6 control-label"><% __('Discard Lowest Percent of Pixel Values:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_remove_background_lower_threshold_percentage" name="drone_imagery_remove_background_lower_threshold_percentage" type="number" max="99" min="0" placeholder="e.g. 10% of lowest pixel values (Min 0, Max 100)" />
+                                    <input class="form-control" id="drone_imagery_remove_background_lower_threshold_percentage" name="drone_imagery_remove_background_lower_threshold_percentage" type="number" max="99" min="0" placeholder="<% __('e.g. 10% of lowest pixel values (Min 0, Max 100)') |h %>" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Discard Highest Percent of Pixel Values: </label>
+                                <label class="col-sm-6 control-label"><% __('Discard Highest Percent of Pixel Values:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_remove_background_upper_threshold_percentage" name="drone_imagery_remove_background_upper_threshold_percentage" type="number" max="99" min="0" placeholder="e.g. 10% of highest pixel values (Min 0, Max 100)"/>
+                                    <input class="form-control" id="drone_imagery_remove_background_upper_threshold_percentage" name="drone_imagery_remove_background_upper_threshold_percentage" type="number" max="99" min="0" placeholder="<% __('e.g. 10% of highest pixel values (Min 0, Max 100)') |h %>"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="drone_imagery_remove_background_defined_percentage_submit" class="btn btn-primary">Apply Threshold</button>
+                    <button id="drone_imagery_remove_background_defined_percentage_submit" class="btn btn-primary"><% __('Apply Threshold') |h %></button>
                 </div>
             </div>
         </&>
@@ -865,18 +865,18 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_plot_polygons_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Define Plot Polygons" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Define Plot Polygons"), 'h' ) &>
 
     <div id="manage_drone_imagery_plot_polygons_div_title"></div>
 
-    <& /page/detail_page_2_col_section.mas, info_section_collapsible=>1, info_section_collapsed=>0, info_section_title => "<h4 style='display:inline'>Generate Polygon Template Tool</h4>", info_section_subtitle => 'Overlay a uniform grid over the image.', icon_class => "glyphicon glyphicon-th-large", info_section_id => "manage_drone_imagery_generate_plot_polygons_section" &>
+    <& /page/detail_page_2_col_section.mas, info_section_collapsible=>1, info_section_collapsed=>0, info_section_title => "<h4 style='display:inline'>Generate Polygon Template Tool</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Overlay a uniform grid over the image.'), 'h' ), icon_class => "glyphicon glyphicon-th-large", info_section_id => "manage_drone_imagery_generate_plot_polygons_section" &>
 
     <div class="well well-sm">
         <div id="drone_imagery_plot_polygons_top_section"></div>
 
-        <button id="drone_imagery_plot_polygons_clear" class="btn btn-danger">Clear All Polygons</button>
-        <button id="drone_imagery_plot_polygons_clear_one" class="btn btn-danger">Remove One Polygon</button>
-        <button id="drone_imagery_plot_polygons_get_distance" class="btn btn-default">Find Distance Between Points</button>
+        <button id="drone_imagery_plot_polygons_clear" class="btn btn-danger"><% __('Clear All Polygons') |h %></button>
+        <button id="drone_imagery_plot_polygons_clear_one" class="btn btn-danger"><% __('Remove One Polygon') |h %></button>
+        <button id="drone_imagery_plot_polygons_get_distance" class="btn btn-default"><% __('Find Distance Between Points') |h %></button>
     </div>
 
     <div id="manage_drone_imagery_plot_polygons_load_div">
@@ -895,19 +895,19 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_calculate_phenotypes_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Calculate Phenotypes" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Calculate Phenotypes"), 'h' ) &>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can calculate phenotypes for all plot polygons at once.</li>
+            <li><% __('Here you can calculate phenotypes for all plot polygons at once.') |h %></li>
         </ul>
     </div>
 
     <hr>
-    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats">Zonal Statistics</button>
-    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_sift">Calculate SIFT Features</button>
-    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_surf">Calculate SURF Features</button>
-    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_orb">Calculate ORB Features</button>
+    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats"><% __('Zonal Statistics') |h %></button>
+    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_sift"><% __('Calculate SIFT Features') |h %></button>
+    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_surf"><% __('Calculate SURF Features') |h %></button>
+    <button class="btn btn-primary" id="drone_imagery_calculate_phenotypes_orb"><% __('Calculate ORB Features') |h %></button>
     <hr>
 
     <div id="manage_drone_imagery_calculate_phenotypes_show_zonal_stats" style="overflow:scroll"></div>
@@ -920,13 +920,13 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_quality_control_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Quality Control Plot Images" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Quality Control Plot Images"), 'h' ) &>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can obsolete plot images that are not correct.</li>
-            <li>This is useful when using raw images because the process is more noisy.</li>
-            <li>Clicking a checkbox will automatically obsolete the image!</li>
+            <li><% __('Here you can obsolete plot images that are not correct.') |h %></li>
+            <li><% __('This is useful when using raw images because the process is more noisy.') |h %></li>
+            <li><% __('Clicking a checkbox will automatically obsolete the image!') |h %></li>
         </ul>
     </div>
 
@@ -935,15 +935,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
 <div id="manage_drone_imagery_field_trial_time_series_div" style="display:none">
 
-    <& /page/page_title.mas, title=>"Manage Aerial Imagery: Field Trial Image TimeSeries" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Aerial Imagery: Field Trial Image TimeSeries"), 'h' ) &>
 
     <div id="manage_drone_imagery_field_trial_time_series_div_title"></div>
 
     <div class="well well-sm">
         <ul>
-            <li>Here you can view the plot polygon templates on the imagery over the course of the field trial. All of the image bands are visible here (e.g. blue, green, RGB, etc).</li>
-            <li>Click on a plot polygon to go to the plot detail page.</li>
-            <li>You can zoom out on your browser (Cntrl + -).</li>
+            <li><% __('Here you can view the plot polygon templates on the imagery over the course of the field trial. All of the image bands are visible here (e.g. blue, green, RGB, etc).') |h %></li>
+            <li><% __('Click on a plot polygon to go to the plot detail page.') |h %></li>
+            <li><% __('You can zoom out on your browser (Cntrl + -).') |h %></li>
         </ul>
     </div>
 
@@ -968,8 +968,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryTImeSeriesHoverDialog">Plot Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryTImeSeriesHoverDialog"><% __('Plot Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -980,17 +980,17 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
 </div>
 
 <div id="manage_drone_imagery_loading_div" style="display:none">
-    <& /page/page_title.mas, title=>"Loading..." &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Loading..."), 'h' ) &>
     <div class="well well-sm">
         <center>
-        <h3>Please wait...</h3>
+        <h3><% __('Please wait...') |h %></h3>
         <hr>
         <img src="/img/wheel.gif" />
         </center>
@@ -1001,24 +1001,24 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryAssignPlotDialog">Assign Plot</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryAssignPlotDialog"><% __('Assign Plot') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <form class="form-horizontal" id="drone_imagery_assign_plot_form">
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">Plot Name:</label>
+                    <label class="col-sm-5 control-label"><% __('Plot Name:') |h %></label>
                     <div class="col-sm-7">
-                        <input class="form-control" id="drone_imagery_plot_polygon_assign_plot_name" name="drone_imagery_plot_polygons_autocomplete" type="text" placeholder="Auto-completes plot name..." />
+                        <input class="form-control" id="drone_imagery_plot_polygon_assign_plot_name" name="drone_imagery_plot_polygons_autocomplete" type="text" placeholder="<% __('Auto-completes plot name...') |h %>" />
                     </div>
                 </div>
             </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_plot_polygon_assign_add">Assign Plot</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_plot_polygon_assign_add"><% __('Assign Plot') |h %></button>
       </div>
     </div>
   </div>
@@ -1028,24 +1028,24 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryRemovePlotPolygonDialog">Remove Plot Polygon</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryRemovePlotPolygonDialog"><% __('Remove Plot Polygon') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <form class="form-horizontal" id="drone_imagery_plot_polygon_remove_polygon_form">
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">Polygon Identifier:</label>
+                    <label class="col-sm-5 control-label"><% __('Polygon Identifier:') |h %></label>
                     <div class="col-sm-7">
-                        <input class="form-control" id="drone_imagery_plot_polygon_remove_polygon_number" name="drone_imagery_plot_polygon_remove_polygon_number" type="number" placeholder="e.g. 3" />
+                        <input class="form-control" id="drone_imagery_plot_polygon_remove_polygon_number" name="drone_imagery_plot_polygon_remove_polygon_number" type="number" placeholder="<% __('e.g. 3') |h %>" />
                     </div>
                 </div>
             </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_plot_polygon_remove_polygon_submit">Remove Plot Polygon</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_plot_polygon_remove_polygon_submit"><% __('Remove Plot Polygon') |h %></button>
       </div>
     </div>
   </div>
@@ -1055,38 +1055,38 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryMergeChannelsDialog">Merge Imaging Event Bands Into Single 3-channel image</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryMergeChannelsDialog"><% __('Merge Imaging Event Bands Into Single 3-channel image') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <form class="form-horizontal" id="drone_imagery_merge_bands_form">
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">First Band:</label>
+                    <label class="col-sm-5 control-label"><% __('First Band:') |h %></label>
                     <div class="col-sm-7">
                         <div id="drone_imagery_merge_bands_band1_select"></div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">Second Band:</label>
+                    <label class="col-sm-5 control-label"><% __('Second Band:') |h %></label>
                     <div class="col-sm-7">
                         <div id="drone_imagery_merge_bands_band2_select"></div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">Third Band:</label>
+                    <label class="col-sm-5 control-label"><% __('Third Band:') |h %></label>
                     <div class="col-sm-7">
                         <div id="drone_imagery_merge_bands_band3_select"></div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-5 control-label">Merge Image Type:</label>
+                    <label class="col-sm-5 control-label"><% __('Merge Image Type:') |h %></label>
                     <div class="col-sm-7">
                         <select class="form-control" id="drone_run_merge_image_type" name="drone_run_merge_image_type">
-                            <option value="">Select One</option>
-                            <option value="BGR">BGR (Band 1 = Blue, Band 2 = Green, Band 3 = Red)</option>
-                            <option value="NRN">NRN (Band 1 = NIR, Band 2 = Red, Band 3 = NIR)</option>
-                            <option value="NReN">NReN (Band 1 = NIR, Band 2 = Red Edge, Band 3 = NIR)</option>
+                            <option value=""><% __('Select One') |h %></option>
+                            <option value="BGR"><% __('BGR (Band 1 = Blue, Band 2 = Green, Band 3 = Red)') |h %></option>
+                            <option value="NRN"><% __('NRN (Band 1 = NIR, Band 2 = Red, Band 3 = NIR)') |h %></option>
+                            <option value="NReN"><% __('NReN (Band 1 = NIR, Band 2 = Red Edge, Band 3 = NIR)') |h %></option>
                         </select>
                     </div>
                 </div>
@@ -1102,8 +1102,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_merge_bands_submit">Merge Bands</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_merge_bands_submit"><% __('Merge Bands') |h %></button>
       </div>
     </div>
   </div>
@@ -1113,8 +1113,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelDialog">Select the Channel to Calculate Zonal Statistics On</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelDialog"><% __('Select the Channel to Calculate Zonal Statistics On') |h %></h4>
       </div>
       <div class="modal-body">
           <div class="container-fluid">
@@ -1123,8 +1123,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats_channel_select">Calculate Zonal Statistics</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats_channel_select"><% __('Calculate Zonal Statistics') |h %></button>
       </div>
     </div>
   </div>
@@ -1134,23 +1134,23 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryDeleteDroneRunDialog">Delete a Imaging Event</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryDeleteDroneRunDialog"><% __('Delete a Imaging Event') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <div class="well">
                 <ul>
-                    <li>Deleting an imaging event will remove the imaging event and all image bands permanently.</li>
-                    <li>All images in the imaging event will be deleted (obsoleted).</li>
-                    <li>Phenotypes that were generated for plots in this imaging event will be deleted permanently.</li>
+                    <li><% __('Deleting an imaging event will remove the imaging event and all image bands permanently.') |h %></li>
+                    <li><% __('All images in the imaging event will be deleted (obsoleted).') |h %></li>
+                    <li><% __('Phenotypes that were generated for plots in this imaging event will be deleted permanently.') |h %></li>
                 </ul>
             </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_delete_drone_run_confirm">Delete Imaging Event</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_delete_drone_run_confirm"><% __('Delete Imaging Event') |h %></button>
       </div>
     </div>
   </div>
@@ -1160,8 +1160,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelTrialDialog">Calculate Zonal Statistics</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalcPhenotypesZonalChannelTrialDialog"><% __('Calculate Zonal Statistics') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1169,19 +1169,19 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
 
         <div class="form-group">
-            <label class="col-sm-5 control-label">Phenotype Process:</label>
+            <label class="col-sm-5 control-label"><% __('Phenotype Process:') |h %></label>
             <div class="col-sm-7">
                 <select class="form-control" id="drone_imagery_generate_phenotypes_process_type" name="drone_imagery_generate_phenotypes_process_type">
-                    <option value="minimal,minimal_vi">Minimal</option>
-                    <option value="extended">Extended</option>
+                    <option value="minimal,minimal_vi"><% __('Minimal') |h %></option>
+                    <option value="extended"><% __('Extended') |h %></option>
                 </select>
             </div>
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats_trial_select">Calculate Zonal Statistics</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_calculate_phenotypes_zonal_stats_trial_select"><% __('Calculate Zonal Statistics') |h %></button>
       </div>
     </div>
   </div>
@@ -1191,8 +1191,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryMinimalVIStandardProcessDialog">Run Minimal Vegetative Index Standard Process</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryMinimalVIStandardProcessDialog"><% __('Run Minimal Vegetative Index Standard Process') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1201,8 +1201,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_minimal_vi_standard_process_select">Run Minimal Vegetative Index Standard Process</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_minimal_vi_standard_process_select"><% __('Run Minimal Vegetative Index Standard Process') |h %></button>
       </div>
     </div>
   </div>
@@ -1212,8 +1212,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryExtenededStandardProcessDialog">Run Extended Standard Process</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryExtenededStandardProcessDialog"><% __('Run Extended Standard Process') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1222,8 +1222,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_extended_standard_process_select">Run Extended Standard Process</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_extended_standard_process_select"><% __('Run Extended Standard Process') |h %></button>
       </div>
     </div>
   </div>
@@ -1233,52 +1233,52 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryDownloadPhenotypesDialog">Download drone image phenotypes and plot images</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryDownloadPhenotypesDialog"><% __('Download drone image phenotypes and plot images') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_download_phenotypes_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Field Trial" &>
-                    <& /page/page_title.mas, title=>"Select the field trial you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial you are interested in"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_download_phenotypes_trial_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Trait Selection" &>
-                    <& /page/page_title.mas, title=>"Select the observation variable(s) you are interested in downloading" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trait Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the observation variable(s) you are interested in downloading"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Observation Variables Phenotyped in the Selected Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Observation Variables Phenotyped in the Selected Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_download_phenotypes_trait_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_trait_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_trait_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Download" &>
-                    <& /page/page_title.mas, title=>"Download!" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Download"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Download!"), 'h' ) &>
 
                     <div id ="drone_imagery_download_phenotypes_file_div">
                     </div>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_confirm_step">Submit</button>
+                    <button class="btn btn-primary" id="drone_imagery_download_phenotypes_confirm_step"><% __('Submit') |h %></button>
                     </center>
                 </&>
             </&>
@@ -1287,7 +1287,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1297,20 +1297,20 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryKerasCNNDialog">Train and Predict Using Keras CNN Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryKerasCNNDialog"><% __('Train and Predict Using Keras CNN Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-            <button class="btn btn-primary" id="drone_imagery_keras_cnn_train_link">Train Keras CNN Model Using Images and Phenotypes In Database</button>
+            <button class="btn btn-primary" id="drone_imagery_keras_cnn_train_link"><% __('Train Keras CNN Model Using Images and Phenotypes In Database') |h %></button>
             <br/><br/>
-            <button class="btn btn-primary" id="drone_imagery_keras_cnn_predict_link">Predict Phenotypes Using Images and Trained Keras Model CNN</button>
+            <button class="btn btn-primary" id="drone_imagery_keras_cnn_predict_link"><% __('Predict Phenotypes Using Images and Trained Keras Model CNN') |h %></button>
             <br/><br/>
-            <button class="btn btn-primary" id="drone_imagery_keras_cnn_autoencoder_vegetation_indices_link">Calculate NDVI and NDRE from Keras CNN Autoencoder Model</button>
+            <button class="btn btn-primary" id="drone_imagery_keras_cnn_autoencoder_vegetation_indices_link"><% __('Calculate NDVI and NDRE from Keras CNN Autoencoder Model') |h %></button>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1320,26 +1320,26 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryTrainKerasCNNDialog">Train Keras CNN Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryTrainKerasCNNDialog"><% __('Train Keras CNN Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_train_keras_model_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through training a keras model using images and phenotypes in the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through training a keras model using images and phenotypes in the database."), 'h' ) &>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial(s)" &>
-                    <& /page/page_title.mas, title=>"Select the field trial(s) you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial(s)"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial(s) you are interested in"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial(s): </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial(s):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_train_keras_cnn_trial_select_div"></div>
                             </div>
@@ -1347,21 +1347,21 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Trait Selection" &>
-                    <& /page/page_title.mas, title=>"Select the trait you are interested in predicting" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trait Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the trait you are interested in predicting"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Trait Phenotyped in the Selected Field Trial(s) To Predict: </label>
+                            <label class="col-sm-3 control-label"><% __('Trait Phenotyped in the Selected Field Trial(s) To Predict:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_train_keras_cnn_trait_select_div"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Traits Phenotyped in the Selected Field Trial(s) As Auxiliary Trait(s): </label>
+                            <label class="col-sm-3 control-label"><% __('Traits Phenotyped in the Selected Field Trial(s) As Auxiliary Trait(s):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_train_keras_cnn_aux_trait_select_div"></div>
                             </div>
@@ -1369,15 +1369,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_trait_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_trait_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Population Selection" &>
-                    <& /page/page_title.mas, title=>"Select the population(s) you are specifically interested in predicting. Leave blank if you want to train on images from all germplasm in the selected field trial(s)." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Population Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the population(s) you are specifically interested in predicting. Leave blank if you want to train on images from all germplasm in the selected field trial(s)."), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Population(s) to include in training (Leave blank to include images from all germplasm in the selected field trials): </label>
+                            <label class="col-sm-5 control-label"><% __('Population(s) to include in training (Leave blank to include images from all germplasm in the selected field trials):') |h %> </label>
                             <div class="col-sm-7" >
                                 <div id="drone_imagery_train_keras_cnn_population_select_div"></div>
                             </div>
@@ -1385,63 +1385,63 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_population_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_population_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Imaging Event Selection" &>
-                    <& /page/page_title.mas, title=>"Select the imaging event(s) you are interested in using in the model" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Imaging Event Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging event(s) you are interested in using in the model"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_train_keras_drone_runs_table">
                         <thead>
                             <tr>
-                                <th>Select <br/><input type="checkbox" id="drone_image_train_keras_drone_runs_table_select_all" checked>Select All</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %> <br/><input type="checkbox" id="drone_image_train_keras_drone_runs_table_select_all" checked><% __('Select All') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_drone_run_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_drone_run_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Images Selection" &>
-                    <& /page/page_title.mas, title=>"Select the types of images you are interested in using in the model" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Images Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the types of images you are interested in using in the model"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_train_keras_plot_polygon_image_type_table">
                         <thead>
                             <tr>
                                 <!--th>Select <br/><input type="checkbox" id="drone_image_train_keras_plot_polygon_image_type_table_select_all" checked>Select All</th-->
-                                <th>Select</th>
-                                <th>Field Trial</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Band Name</th>
-                                <th>Imaging Event Band Type</th>
-                                <th>Plot Polygon Type</th>
-                                <th>Number of Images</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Band Name') |h %></th>
+                                <th><% __('Imaging Event Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
+                                <th><% __('Number of Images') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_plot_polygon_type_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_plot_polygon_type_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Confirm" &>
-                    <& /page/page_title.mas, title=>"Train the model!" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Train the model!"), 'h' ) &>
 
                     <br/><br/>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Model Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Model Type:') |h %> </label>
                             <div class="col-sm-8" >
                                 <select class="form-control" id="drone_image_train_keras_model_type" name="drone_image_train_keras_model_type" >
                                     <option value="KerasCNNSequentialSoftmaxCategorical">Keras CNN Sequential 16-32-64-128-512 Linear Regression</option>
@@ -1456,29 +1456,29 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Model Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Model Name:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" type="text" id="drone_image_train_keras_model_name" name="drone_image_train_keras_model_name" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Model Description: </label>
+                            <label class="col-sm-4 control-label"><% __('Model Description:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" type="text" id="drone_image_train_keras_model_desc" name="drone_image_train_keras_model_desc" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Genotyping Protocol for GRM: </label>
+                            <label class="col-sm-4 control-label"><% __('Genotyping Protocol for GRM:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="drone_image_train_keras_model_genotyping_protocol_div"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Use Parents of Accessions For In-silico Hybrid: </label>
+                            <label class="col-sm-4 control-label"><% __('Use Parents of Accessions For In-silico Hybrid:') |h %> </label>
                             <div class="col-sm-8" >
                                 <select class="form-control" id="drone_image_train_keras_model_use_parents_grm" name="drone_image_train_keras_model_use_parents_grm" >
-                                    <option value="yes">Yes, GRM for parents of accessions if genotyped</option>
-                                    <option value="no">No, GRM for accessions if genotyped</option>
+                                    <option value="yes"><% __('Yes, GRM for parents of accessions if genotyped') |h %></option>
+                                    <option value="no"><% __('No, GRM for accessions if genotyped') |h %></option>
                                 </select>
                             </div>
                         </div>
@@ -1486,7 +1486,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_confirm_step">Train and Save Keras CNN Model</button>
+                    <button class="btn btn-primary" id="drone_imagery_train_keras_model_confirm_step"><% __('Train and Save Keras CNN Model') |h %></button>
                     </center>
 
                     <div id="drone_imagery_train_keras_model_results_div">
@@ -1498,7 +1498,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1508,26 +1508,26 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryPredictKerasCNNDialog">Predict Phenotypes Using Trained Keras CNN Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryPredictKerasCNNDialog"><% __('Predict Phenotypes Using Trained Keras CNN Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_predict_keras_model_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through predicting phenotypes from trained Kera CNN Models and images in the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through predicting phenotypes from trained Kera CNN Models and images in the database."), 'h' ) &>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial" &>
-                    <& /page/page_title.mas, title=>"Select the field trial(s) you are interested in sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial(s) you are interested in sourcing images from for prediction"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_predict_keras_cnn_trial_select_div"></div>
                             </div>
@@ -1535,22 +1535,22 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Keras CNN Model Selection" &>
-                    <& /page/page_title.mas, title=>"Select the Keras CNN Model for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Keras CNN Model Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the Keras CNN Model for prediction"), 'h' ) &>
 
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Trained Keras CNN Model: </label>
+                            <label class="col-sm-3 control-label"><% __('Trained Keras CNN Model:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_predict_keras_cnn_model_select_div"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Traits Phenotyped in the Selected Field Trial(s) As Auxiliary Trait(s) (Currently Only For Mixed MLP/CNN Model): </label>
+                            <label class="col-sm-3 control-label"><% __('Traits Phenotyped in the Selected Field Trial(s) As Auxiliary Trait(s) (Currently Only For Mixed MLP/CNN Model):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_predict_keras_cnn_aux_trait_select_div"></div>
                             </div>
@@ -1559,15 +1559,15 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Population Selection" &>
-                    <& /page/page_title.mas, title=>"Select the population(s) you are specifically interested in predicting. Leave blank if you want to train on images from all germplasm in the selected field trial(s)." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Population Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the population(s) you are specifically interested in predicting. Leave blank if you want to train on images from all germplasm in the selected field trial(s)."), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Population(s) to include in training (Leave blank to include images from all germplasm in the selected field trials): </label>
+                            <label class="col-sm-5 control-label"><% __('Population(s) to include in training (Leave blank to include images from all germplasm in the selected field trials):') |h %> </label>
                             <div class="col-sm-7" >
                                 <div id="drone_imagery_predict_keras_cnn_population_select_div"></div>
                             </div>
@@ -1575,66 +1575,66 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_population_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_population_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Imaging Event Selection" &>
-                    <& /page/page_title.mas, title=>"Select the imaging event(s) you are interested in sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Imaging Event Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging event(s) you are interested in sourcing images from for prediction"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_predict_keras_drone_runs_table">
                         <thead>
                             <tr>
-                                <th>Select <br/><input type="checkbox" id="drone_image_predict_keras_drone_runs_table_select_all" checked>Select All</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %> <br/><input type="checkbox" id="drone_image_predict_keras_drone_runs_table_select_all" checked><% __('Select All') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_drone_run_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_drone_run_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Images Selection" &>
-                    <& /page/page_title.mas, title=>"Select the types of images you are interested sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Images Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the types of images you are interested sourcing images from for prediction"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_predict_keras_plot_polygon_image_type_table">
                         <thead>
                             <tr>
                                 <!--th>Select <br/><input type="checkbox" id="drone_image_predict_keras_plot_polygon_image_type_table_select_all" checked>Select All</th-->
-                                <th>Select</th>
-                                <th>Field Trial</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Band Name</th>
-                                <th>Imaging Event Band Type</th>
-                                <th>Plot Polygon Type</th>
-                                <th>Number of Images</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Band Name') |h %></th>
+                                <th><% __('Imaging Event Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
+                                <th><% __('Number of Images') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_plot_polygon_type_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_plot_polygon_type_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Confirm" &>
-                    <& /page/page_title.mas, title=>"Predict Phenotypes!" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Predict Phenotypes!"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Prediction Model: </label>
+                            <label class="col-sm-3 control-label"><% __('Prediction Model:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="drone_imagery_keras_model_prediction_select">
-                                    <option value="standard_cnn">Standard CNN Prediction</option>
-                                    <option value="cnn_prediction_mixed_model">CNN Prediction For Mixed Model Prediction</option>
+                                    <option value="standard_cnn"><% __('Standard CNN Prediction') |h %></option>
+                                    <option value="cnn_prediction_mixed_model"><% __('CNN Prediction For Mixed Model Prediction') |h %></option>
                                 </select>
                             </div>
                         </div>
@@ -1646,7 +1646,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_confirm_step">Submit</button>
+                    <button class="btn btn-primary" id="drone_imagery_predict_keras_model_confirm_step"><% __('Submit') |h %></button>
                     </center>
 
                     <div id="drone_imagery_predict_keras_model_results_div">
@@ -1658,7 +1658,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1668,26 +1668,26 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryAutoencoderKerasCNNVIDialog">NDVI and NDRE from autoencoder Keras CNN</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryAutoencoderKerasCNNVIDialog"><% __('NDVI and NDRE from autoencoder Keras CNN') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_autoencoder_keras_model_vi_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through extracted NDVI and NDRE values for autoencoder Keras CNN." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through extracted NDVI and NDRE values for autoencoder Keras CNN."), 'h' ) &>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial Training" &>
-                    <& /page/page_title.mas, title=>"Select the field trial(s) you are interested in sourcing images from for training" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial Training"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial(s) you are interested in sourcing images from for training"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_autoencoder_keras_cnn_vi_trial_training_select_div"></div>
                             </div>
@@ -1695,62 +1695,62 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_field_trial_training_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_field_trial_training_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Training" &>
-                    <& /page/page_title.mas, title=>"Select the imaging event(s) you are interested in sourcing images from for training" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Training"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging event(s) you are interested in sourcing images from for training"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_autoencoder_keras_vi_drone_runs_training_table">
                         <thead>
                             <tr>
-                                <th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_drone_runs_training_table_select_all" checked>Select All</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %> <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_drone_runs_training_table_select_all" checked><% __('Select All') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_drone_run_training_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_drone_run_training_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Images Training" &>
-                    <& /page/page_title.mas, title=>"Select the types of images you are interested sourcing images from for training" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Images Training"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the types of images you are interested sourcing images from for training"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_training_table">
                         <thead>
                             <tr>
                                 <!--th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_training_table_select_all" checked>Select All</th-->
-                                <th>Select</th>
-                                <th>Field Trial</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Band Name</th>
-                                <th>Imaging Event Band Type</th>
-                                <th>Plot Polygon Type</th>
-                                <th>Number of Images</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Band Name') |h %></th>
+                                <th><% __('Imaging Event Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
+                                <th><% __('Number of Images') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_training_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_training_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial Prediction" &>
-                    <& /page/page_title.mas, title=>"Select the field trial(s) you are interested in sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial Prediction"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial(s) you are interested in sourcing images from for prediction"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_autoencoder_keras_cnn_vi_trial_select_div"></div>
                             </div>
@@ -1758,62 +1758,62 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Prediction" &>
-                    <& /page/page_title.mas, title=>"Select the imaging event(s) you are interested in sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Prediction"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging event(s) you are interested in sourcing images from for prediction"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_autoencoder_keras_vi_drone_runs_table">
                         <thead>
                             <tr>
-                                <th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_drone_runs_table_select_all" checked>Select All</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %> <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_drone_runs_table_select_all" checked><% __('Select All') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_drone_run_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_drone_run_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Images Prediction" &>
-                    <& /page/page_title.mas, title=>"Select the types of images you are interested sourcing images from for prediction" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Images Prediction"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the types of images you are interested sourcing images from for prediction"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_table">
                         <thead>
                             <tr>
                                 <!--th>Select <br/><input type="checkbox" id="drone_image_autoencoder_keras_vi_plot_polygon_image_type_table_select_all" checked>Select All</th-->
-                                <th>Select</th>
-                                <th>Field Trial</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Band Name</th>
-                                <th>Imaging Event Band Type</th>
-                                <th>Plot Polygon Type</th>
-                                <th>Number of Images</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Band Name') |h %></th>
+                                <th><% __('Imaging Event Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
+                                <th><% __('Number of Images') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_plot_polygon_type_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Confirm" &>
-                    <& /page/page_title.mas, title=>"Calculate NDVI and NDRE Autoencoder Phenotypes" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Calculate NDVI and NDRE Autoencoder Phenotypes"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Autoencoder Model: </label>
+                            <label class="col-sm-3 control-label"><% __('Autoencoder Model:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="drone_imagery_keras_model_autoencoder_vi_select">
                                     <option value="keras_autoencoder_64_32_filters_16_latent">Keras Autoencoder</option>
@@ -1823,7 +1823,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_confirm_step">Submit</button>
+                    <button class="btn btn-primary" id="drone_imagery_autoencoder_keras_vi_model_confirm_step"><% __('Submit') |h %></button>
                     </center>
 
                     <div id="drone_imagery_autoencoder_keras_vi_model_results_div">
@@ -1835,7 +1835,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1845,8 +1845,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryStandardProcessCompleteDialog">Standard Process Complete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryStandardProcessCompleteDialog"><% __('Standard Process Complete') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1857,7 +1857,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Finish</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><% __('Finish') |h %></button>
       </div>
     </div>
   </div>
@@ -1867,18 +1867,18 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryPlotPolygonTemplateDialog">Plot Template Options</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryPlotPolygonTemplateDialog"><% __('Plot Template Options') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-            <&| /page/info_section.mas, title => 'Copy/Paste Template', collapsible=>1, collapsed => 0, subtitle=> 'Copy/Paste this template onto the image.' &>
-                <button class="btn btn-primary" id="drone_imagery_plot_polygon_template_options_paste_click">Click To Paste</button>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy/Paste Template'), 'h' ), collapsible=>1, collapsed => 0, subtitle=> $m->interp->apply_escapes( __('Copy/Paste this template onto the image.'), 'h' ) &>
+                <button class="btn btn-primary" id="drone_imagery_plot_polygon_template_options_paste_click"><% __('Click To Paste') |h %></button>
             </&>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -1888,8 +1888,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalculateGDDDialog">Calculate Growing Degree Days</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalculateGDDDialog"><% __('Calculate Growing Degree Days') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1901,7 +1901,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
             <div class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Base Temperature:</label>
+                    <label class="col-sm-3 control-label"><% __('Base Temperature:') |h %></label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="drone_imagery_calculate_gdd_base_temperature_input">
                             <option value="40">40F</option>
@@ -1924,7 +1924,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Formula:</label>
+                    <label class="col-sm-3 control-label"><% __('Formula:') |h %></label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="drone_imagery_calculate_gdd_formula_input">
                             <option value="average_daily_temp_sum">GDD = sum_over_days ( ( (Max Temp + Min Temp)/2 ) - Base Temp)</option>
@@ -1936,8 +1936,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_upload_gdd_submit">Calculate</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_upload_gdd_submit"><% __('Calculate') |h %></button>
       </div>
     </div>
   </div>
@@ -1947,8 +1947,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalculatePrecipitationDialog">Calculate Precipitation Sum</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalculatePrecipitationDialog"><% __('Calculate Precipitation Sum') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -1960,7 +1960,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
             <div class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Formula:</label>
+                    <label class="col-sm-3 control-label"><% __('Formula:') |h %></label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="drone_imagery_calculate_precipitation_sum_formula_input">
                             <option value="average_daily_precipitation_sum">Precipitation Sum = sum_over_days ( Average Daily Precipitation )</option>
@@ -1972,8 +1972,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_upload_precipitation_sum_submit">Calculate</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_upload_precipitation_sum_submit"><% __('Calculate') |h %></button>
       </div>
     </div>
   </div>
@@ -1983,35 +1983,35 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCompareImagesDialog">Compare Images</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCompareImagesDialog"><% __('Compare Images') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_compare_images_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Comparison" &>
-                    <& /page/page_title.mas, title=>"Select the comparison you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Comparison"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the comparison you are interested in"), 'h' ) &>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Comparison: </label>
+                            <label class="col-sm-3 control-label"><% __('Comparison:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select id="drone_imagery_compare_images_comparison_select" class="form-control">
-                                    <option value="compare_pixel_values_two_images">Compare pixel values for two different aerial field images</option>
+                                    <option value="compare_pixel_values_two_images"><% __('Compare pixel values for two different aerial field images') |h %></option>
                                 </select>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_compare_images_comparison_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_compare_images_comparison_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial(s)" &>
-                    <& /page/page_title.mas, title=>"Select the field trials you are interested in comparing" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial(s)"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trials you are interested in comparing"), 'h' ) &>
 
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial(s): </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial(s):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_compare_images_trial_select_div"></div>
                             </div>
@@ -2021,24 +2021,24 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_compare_images_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_compare_images_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Imaging Event(s)" &>
-                    <& /page/page_title.mas, title=>"Select the imaging events you are interested in comparing" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Imaging Event(s)"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging events you are interested in comparing"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_compare_images_drone_runs_table">
                         <thead>
                             <tr>
-                                <th>Select</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -2046,24 +2046,24 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_compare_images_drone_runs_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_compare_images_drone_runs_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Imaging Event Band(s)" &>
-                    <& /page/page_title.mas, title=>"Select the imaging event bands you are interested in comparing" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Imaging Event Band(s)"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the imaging event bands you are interested in comparing"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_compare_images_drone_run_bands_table">
                         <thead>
                             <tr>
-                                <th>Select</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Imaging Event GDD</th>
-                                <th>Camera Type</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Imaging Event GDD') |h %></th>
+                                <th><% __('Camera Type') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -2071,22 +2071,22 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_compare_images_drone_run_bands_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_compare_images_drone_run_bands_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Image Selection" &>
-                    <& /page/page_title.mas, title=>"Select the images you are interested in comparing" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Image Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the images you are interested in comparing"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_imagery_compare_images_images_type_table">
                         <thead>
                             <tr>
-                                <th>Select</th>
-                                <th>Field Trial</th>
-                                <th>Imaging Event Name</th>
-                                <th>Band Name</th>
-                                <th>Band Type</th>
-                                <th>Plot Polygon Type</th>
-                                <th>Number of Images</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Band Name') |h %></th>
+                                <th><% __('Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
+                                <th><% __('Number of Images') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -2094,11 +2094,11 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_compare_images_images_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_compare_images_images_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Result" &>
-                    <& /page/page_title.mas, title=>"Image comparison results" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Result"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Image comparison results"), 'h' ) &>
 
                     <div id="drone_imagery_compare_images_result_div"></div>
                 </&>
@@ -2108,7 +2108,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -2118,21 +2118,21 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadDroneImageryStandardProcessAdditionalRawImagesDialog">Upload Additional Raw Image Captures</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDroneImageryStandardProcessAdditionalRawImagesDialog"><% __('Upload Additional Raw Image Captures') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_drone_imagery_additional_raw_images_form" name="upload_drone_imagery_additional_raw_images_form">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Drone Images ZipFile (.zip): </label>
+                            <label class="col-sm-3 control-label"><% __('Drone Images ZipFile (.zip):') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type="file" id="upload_drone_imagery_additional_raw_images_zipfile" name="upload_drone_imagery_additional_raw_images_zipfile" encoding="multipart/form-data" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Micasense Radiometric Calibration Images ZipFile (.zip with 5 images in it): </label>
+                            <label class="col-sm-3 control-label"><% __('Micasense Radiometric Calibration Images ZipFile (.zip with 5 images in it):') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type="file" id="upload_drone_imagery_additional_raw_images_calibration_zipfile" name="upload_drone_imagery_additional_raw_images_calibration_zipfile" encoding="multipart/form-data" />
                             </div>
@@ -2143,13 +2143,13 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     </form><br/>
 
                     <center>
-                        <button type="button" class="btn btn-info" name="upload_drone_imagery_additional_raw_images_submit" id="upload_drone_imagery_additional_raw_images_submit">Submit</button>
+                        <button type="button" class="btn btn-info" name="upload_drone_imagery_additional_raw_images_submit" id="upload_drone_imagery_additional_raw_images_submit"><% __('Submit') |h %></button>
                     </center>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -2159,27 +2159,27 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryRetrainMaskRCNNDialog">Retrain Mask R-CNN Model</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryRetrainMaskRCNNDialog"><% __('Retrain Mask R-CNN Model') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <div class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Model Name (Must be unique):</label>
+                    <label class="col-sm-3 control-label"><% __('Model Name (Must be unique):') |h %></label>
                     <div class="col-sm-9" >
                         <input class="form-control" type="text" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_model_name" name="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_model_name" >
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Model Description:</label>
+                    <label class="col-sm-3 control-label"><% __('Model Description:') |h %></label>
                     <div class="col-sm-9" >
                         <input class="form-control" type="text" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_model_desc" name="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_model_desc" >
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Model Type:</label>
+                    <label class="col-sm-3 control-label"><% __('Model Type:') |h %></label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn_model_type">
                             <option value="Mask R-CNN">Mask R-CNN</option>
@@ -2191,8 +2191,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+        <button type="button" class="btn btn-primary" id="drone_imagery_standard_process_raw_images_retrain_mask_rcnn"><% __('Submit') |h %></button>
       </div>
     </div>
   </div>
@@ -2202,8 +2202,8 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryImagingVehiclesDialog">Available Imaging Vehicles</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryImagingVehiclesDialog"><% __('Available Imaging Vehicles') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -2211,19 +2211,19 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
             <table class="table table-bordered table-hover" id="drone_imagery_view_imaging_vehicles_table">
                 <thead>
                     <tr>
-                        <th>Vehicles Name</th>
-                        <th>Description</th>
-                        <th>Battery Usage</th>
+                        <th><% __('Vehicles Name') |h %></th>
+                        <th><% __('Description') |h %></th>
+                        <th><% __('Battery Usage') |h %></th>
                     </tr>
                 </thead>
             </table>
 
-            <button class="btn btn-primary" name="drone_run_imaging_vehicle_add_new">Add New Imaging Vehicle</button>
+            <button class="btn btn-primary" name="drone_run_imaging_vehicle_add_new"><% __('Add New Imaging Vehicle') |h %></button>
 
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
       </div>
     </div>
   </div>
