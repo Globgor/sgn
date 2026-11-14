@@ -47,11 +47,16 @@ foreach my $path (keys %stubs) {
     close($fh);
 }
 
+# The preamble that SGN::View::Mason gives to every component.
+open(my $view, '<', 'lib/SGN/View/Mason.pm') or die "Can't read the Mason view: $!";
+my ($preamble) = join('', <$view>) =~ /preamble\s*=>\s*"([^"]*)"/;
+close $view;
+
 my $interp = HTML::Mason::Interp->new(
     comp_root => [ [ stubs => $stub_root ], [ main => $mason_root ] ],
     data_dir => $data_dir,
     autohandler_name => '',
-    preamble => "use utf8; ",
+    preamble => $preamble,
 );
 
 sub render {
