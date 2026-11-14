@@ -11,6 +11,7 @@ use SGN::Model::Cvterm;
 use CXGN::Genotype::SequenceMetadata;
 use CXGN::Genotype::Protocol;
 use CXGN::Marker::SearchMatView;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -188,20 +189,20 @@ sub sequence_metadata_upload_verify_POST : Args(0) {
 
     # Check Logged In Status
     if (!$c->user){
-        $c->stash->{rest} = {error => 'You must be logged in to do this!'};
+        $c->stash->{rest} = {error => __('You must be logged in to do this!')};
         $c->detach();
     }
     my $user_id = $c->user()->get_object()->get_sp_person_id();
     my $user_role = $c->user->get_object->get_user_type();
     if ( $user_role ne 'submitter' && $user_role ne 'curator' ) {
-        $c->stash->{rest} = {error => 'You do not have permission in the database to do this! Please contact us.'};
+        $c->stash->{rest} = {error => __('You do not have permission in the database to do this! Please contact us.')};
         $c->detach();
     }
 
     # Check for uploaded file
     my $upload = $c->req->upload('file');
     if ( !defined $upload || $upload eq '' ) {
-        $c->stash->{rest} = {error => 'You must provide the upload file!'};
+        $c->stash->{rest} = {error => __('You must provide the upload file!')};
         $c->detach();
     }
 
@@ -229,7 +230,7 @@ sub sequence_metadata_upload_verify_POST : Args(0) {
     my @attributes = ();
     my $use_existing_protocol = $c->req->param('use_existing_protocol');
     if ( !defined $use_existing_protocol || $use_existing_protocol eq '' ) {
-        $c->stash->{rest} = {error => 'use_existing_protocol not provided!'};
+        $c->stash->{rest} = {error => __('use_existing_protocol not provided!')};
         $c->detach();
     }
 
@@ -242,7 +243,7 @@ sub sequence_metadata_upload_verify_POST : Args(0) {
         # Get exisiting protocol id
         my $protocol_id = $c->req->param('existing_protocol_id');
         if ( !defined $protocol_id || $protocol_id eq '' ) {
-            $c->stash->{rest} = {error => 'protocol_id not provided!'};
+            $c->stash->{rest} = {error => __('protocol_id not provided!')};
             $c->detach();
         }
 
@@ -271,7 +272,7 @@ sub sequence_metadata_upload_verify_POST : Args(0) {
         # Get new protocol attributes
         my $protocol_attribute_count = $c->req->param('new_protocol_attribute_count');
         if ( !defined $protocol_attribute_count || $protocol_attribute_count eq '' ) {
-            $c->stash->{rest} = {error => 'protocol_attribute_count not provided!'};
+            $c->stash->{rest} = {error => __('protocol_attribute_count not provided!')};
             $c->detach();
         }
         for ( my $i = 1; $i <= $protocol_attribute_count; $i++ ){
@@ -284,7 +285,7 @@ sub sequence_metadata_upload_verify_POST : Args(0) {
         # Get new protocol species
         $species = $c->req->param('species');
         if ( !defined $species || $species eq '' ) {
-            $c->stash->{rest} = {error => 'species name not provided!'};
+            $c->stash->{rest} = {error => __('species name not provided!')};
             $c->detach();
         }
 
@@ -343,12 +344,12 @@ sub sequence_metadata_store_POST : Args(0) {
 
     # Check Logged In Status
     if (!$c->user){
-        $c->stash->{rest} = {error => 'You must be logged in to do this!'};
+        $c->stash->{rest} = {error => __('You must be logged in to do this!')};
         $c->detach();
     }
     my $user_role = $c->user->get_object->get_user_type();
     if ( $user_role ne 'submitter' && $user_role ne 'curator' ) {
-        $c->stash->{rest} = {error => 'You do not have permission in the database to do this! Please contact us.'};
+        $c->stash->{rest} = {error => __('You do not have permission in the database to do this! Please contact us.')};
         $c->detach();
     }
 
@@ -360,7 +361,7 @@ sub sequence_metadata_store_POST : Args(0) {
 
     # Check for processed filepath
     if ( !defined $processed_filepath || $processed_filepath eq '' ) {
-        $c->stash->{rest} = {error => 'The path to the previously processed and verified file must be defined!'};
+        $c->stash->{rest} = {error => __('The path to the previously processed and verified file must be defined!')};
         $c->detach();
     }
 
@@ -378,30 +379,30 @@ sub sequence_metadata_store_POST : Args(0) {
         my $protocol_attribute_count = $c->req->param('new_protocol_attribute_count');
         my $protocol_link_count = $c->req->param('new_protocol_link_count');
         if ( !defined $protocol_name || $protocol_name eq '' ) {
-            $c->stash->{rest} = {error => 'The new protocol name must be defined!'};
+            $c->stash->{rest} = {error => __('The new protocol name must be defined!')};
             $c->detach();
         }
         if ( !defined $protocol_description || $protocol_description eq '' ) {
-            $c->stash->{rest} = {error => 'The new protocol description must be defined!'};
+            $c->stash->{rest} = {error => __('The new protocol description must be defined!')};
             $c->detach();
         }
         if ( !defined $protocol_sequence_metadata_type_id || $protocol_sequence_metadata_type_id eq '' ) {
-            $c->stash->{rest} = {error => 'The new protocol sequence metadata type must be defined!'};
+            $c->stash->{rest} = {error => __('The new protocol sequence metadata type must be defined!')};
             $c->detach();
         }
         if ( !defined $protocol_reference_genome || $protocol_reference_genome eq '' ) {
-            $c->stash->{rest} = {error => 'The new protocol reference genome must be defined!'};
+            $c->stash->{rest} = {error => __('The new protocol reference genome must be defined!')};
             $c->detach();
         }
         if ( !defined $protocol_species || $protocol_species eq '' ) {
-            $c->stash->{rest} = {error => 'The new protocol species must be defined!'};
+            $c->stash->{rest} = {error => __('The new protocol species must be defined!')};
             $c->detach();
         }
 
         # Check validity of sequence metadata type id (exists as cvterm)
         my $sequence_metadata_type_cvterm = $schema->resultset('Cv::Cvterm')->find({ cvterm_id => $protocol_sequence_metadata_type_id });
         if ( !defined $sequence_metadata_type_cvterm ) {
-            $c->stash->{rest} = {error => 'Could not find matching CVTerm for sequence metadata type!'};
+            $c->stash->{rest} = {error => __('Could not find matching CVTerm for sequence metadata type!')};
             $c->detach();
         }
 
@@ -457,11 +458,11 @@ sub sequence_metadata_store_POST : Args(0) {
         $type_id = $c->req->param('existing_protocol_sequence_metadata_type');
 
         if ( !defined $protocol_id || $protocol_id eq '' ) {
-            $c->stash->{rest} = {error => 'The existing protocol id must be defined!'};
+            $c->stash->{rest} = {error => __('The existing protocol id must be defined!')};
             $c->detach();
         }
         if ( !defined $type_id || $type_id eq '' ) {
-            $c->stash->{rest} = {error => 'The existing protocol sequence metadata type must be defined!'};
+            $c->stash->{rest} = {error => __('The existing protocol sequence metadata type must be defined!')};
             $c->detach();
         }
 

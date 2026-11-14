@@ -8,6 +8,7 @@ use Try::Tiny;
 use List::MoreUtils qw /any /;
 use CXGN::People::Person;
 use CXGN::Login;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -23,7 +24,7 @@ sub generate_sampling_trial_POST : Args(0) {
     my $c = shift;
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'You do not have the required privileges to create a sampling trial.' };
+        $c->stash->{rest} = { error => __('You do not have the required privileges to create a sampling trial.') };
         $c->detach();
     }
 
@@ -33,23 +34,23 @@ sub generate_sampling_trial_POST : Args(0) {
     print STDERR Dumper $sampling_data;
 
     if ( !$sampling_data->{elements} || !$sampling_data->{description} || !$sampling_data->{location} || !$sampling_data->{year} || !$sampling_data->{name} || !$sampling_data->{breeding_program} || !$sampling_data->{sampling_facility} || !$sampling_data->{sample_type} ) {
-        $c->stash->{rest} = { error => "Please provide all parameters in the basic sampling trial information section" };
+        $c->stash->{rest} = { error => __("Please provide all parameters in the basic sampling trial information section") };
         $c->detach();
     }
     if ( !$sampling_data->{replicates}) {
-        $c->stash->{rest} = { error => "Please provide number of replicates" };
+        $c->stash->{rest} = { error => __("Please provide number of replicates") };
         $c->detach();
     }
 
     my $location = $schema->resultset("NaturalDiversity::NdGeolocation")->find( { nd_geolocation_id => $sampling_data->{location} } );
     if (!$location) {
-        $c->stash->{rest} = { error => "Unknown location" };
+        $c->stash->{rest} = { error => __("Unknown location") };
         $c->detach();
     }
 
     my $breeding_program = $schema->resultset("Project::Project")->find( { project_id => $sampling_data->{breeding_program} });
     if (!$breeding_program) {
-        $c->stash->{rest} = { error => "Unknown breeding program" };
+        $c->stash->{rest} = { error => __("Unknown breeding program") };
         $c->detach();
     }
 
@@ -110,11 +111,11 @@ sub parse_sampling_trial_file_POST : Args(0) {
     my $sampling_trial_name = $c->req->param('sampling_trial_name');
     my $upload_xls = $c->req->upload('sampling_trial_layout_upload');
     if (!$upload_xls ){
-        $c->stash->{rest} = {error => "You must upload a sampling trial file!" };
+        $c->stash->{rest} = {error => __("You must upload a sampling trial file!") };
         return;
     }
     if (!$sampling_trial_name){
-        $c->stash->{rest} = {error => 'Sampling trial name must be given!'};
+        $c->stash->{rest} = {error => __('Sampling trial name must be given!')};
         return;
     }
     my $sample_tissue_types_string = $c->config->{sample_tissue_types};
@@ -140,7 +141,7 @@ sub parse_sampling_trial_file_POST : Args(0) {
 
     if ($upload_original_name =~ /\s/ || $upload_original_name =~ /\// || $upload_original_name =~ /\\/ ) {
         print STDERR "File name must not have spaces or slashes.\n";
-        $c->stash->{rest} = {error => "Uploaded file name must not contain spaces or slashes." };
+        $c->stash->{rest} = {error => __("Uploaded file name must not contain spaces or slashes.") };
         return;
     }
 
@@ -153,7 +154,7 @@ sub parse_sampling_trial_file_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload sampling trial!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload sampling trial!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -162,7 +163,7 @@ sub parse_sampling_trial_file_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload sampling trial!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload sampling trial!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -171,7 +172,7 @@ sub parse_sampling_trial_file_POST : Args(0) {
     }
 
     if ($user_role ne 'curator' && $user_role ne 'submitter') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to upload a sampling trial. Please contact us." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to upload a sampling trial. Please contact us.") };
         $c->detach();
     }
 
@@ -259,7 +260,7 @@ sub store_sampling_trial_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload sampling trial!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload sampling trial!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -268,7 +269,7 @@ sub store_sampling_trial_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload a sampling trial!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload a sampling trial!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -277,7 +278,7 @@ sub store_sampling_trial_POST : Args(0) {
     }
 
     if ($user_role ne 'curator' && $user_role ne 'submitter') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to upload a sampling trial." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to upload a sampling trial.") };
         $c->detach();
     }
 
@@ -285,19 +286,19 @@ sub store_sampling_trial_POST : Args(0) {
     my $sampling_data = decode_json $c->req->param("sampling_data");
     #print STDERR Dumper $plate_info;
     if ( !$sampling_data->{design} || !$sampling_data->{description} || !$sampling_data->{location} || !$sampling_data->{year} || !$sampling_data->{name} || !$sampling_data->{breeding_program} || !$sampling_data->{sampling_facility} || !$sampling_data->{sample_type} ) {
-        $c->stash->{rest} = { error => "Please provide all parameters in the sampling trial information section" };
+        $c->stash->{rest} = { error => __("Please provide all parameters in the sampling trial information section") };
         $c->detach();
     }
 
     my $location = $schema->resultset("NaturalDiversity::NdGeolocation")->find( { nd_geolocation_id => $sampling_data->{location} } );
     if (!$location) {
-        $c->stash->{rest} = { error => "Unknown location" };
+        $c->stash->{rest} = { error => __("Unknown location") };
         $c->detach();
     }
 
     my $breeding_program = $schema->resultset("Project::Project")->find( { project_id => $sampling_data->{breeding_program} });
     if (!$breeding_program) {
-        $c->stash->{rest} = { error => "Unknown breeding program" };
+        $c->stash->{rest} = { error => __("Unknown breeding program") };
         $c->detach();
     }
 
@@ -373,7 +374,7 @@ sub store_sampling_trial_POST : Args(0) {
     #print STDERR Dumper $saved_design;
 
     $c->stash->{rest} = {
-        message => "Successfully stored the sampling trial.",
+        message => __("Successfully stored the sampling trial."),
         trial_id => $message->{trial_id},
         saved_design => $saved_design
     };
