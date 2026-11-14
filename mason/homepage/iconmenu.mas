@@ -197,8 +197,8 @@ pages.
       <div class="submenu GenomesSequencesSubMenu">
         <li><a href="/organism/Solanum_lycopersicum/genome"><% __('Tomato Genome Project') |h %></a></li>
         <!-- <li><a href="/organism/Solanum_lycopersicum/genome">Search/browse tomato genome</a></li> -->
-        <li><a href="/organism/Solanum_pimpinellifolium/genome"><i>Solanum pimpinellifolium</i> genome</a></li>
-        <li><a href="/organism/Nicotiana_benthamiana/genome"><i>Nicotiana benthamiana</i> genome</a></li>
+        <li><a href="/organism/Solanum_pimpinellifolium/genome"><& /util/sentence.mas, text => __x('{species} genome'), species => '<i>Solanum pimpinellifolium</i>' &></a></li>
+        <li><a href="/organism/Nicotiana_benthamiana/genome"><& /util/sentence.mas, text => __x('{species} genome'), species => '<i>Nicotiana benthamiana</i>' &></a></li>
         
         <li><a href=""></a>&nbsp;<li>
         <li><a href="/sequencing/sol100.pl"><% __('SOL100 genomes') |h %></a></li>
