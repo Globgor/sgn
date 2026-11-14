@@ -19,6 +19,7 @@ use CXGN::Tools::Run;
 use CXGN::Dataset;
 use CXGN::Dataset::File;
 use CXGN::Stock::RelatedStocks;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' }
@@ -79,7 +80,7 @@ sub delete_breeding_program :Path('/breeders/program/delete') Args(1) {
     	$c->stash->{rest} = [ 1 ];
     }
     else {
-        $c->stash->{rest} = { error => "You need to be logged in with curator privileges to delete a breeding program." };
+        $c->stash->{rest} = { error => __("You need to be logged in with curator privileges to delete a breeding program.") };
     }
 }
 
@@ -105,12 +106,12 @@ sub add_data_agreement :Path('/breeders/trial/add/data_agreement') Args(0) {
     my $data_agreement = $c->req->param('text');
 
     if (!$c->user()) {
-	$c->stash->{rest} = { error => 'You need to be logged in to add a data agreement' };
+	$c->stash->{rest} = { error => __('You need to be logged in to add a data agreement') };
 	return;
     }
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-	$c->stash->{rest} = { error => 'You do not have the required privileges to add a data agreement to this trial.' };
+	$c->stash->{rest} = { error => __('You do not have the required privileges to add a data agreement to this trial.') };
 	return;
     }
 
@@ -143,11 +144,11 @@ sub add_data_agreement :Path('/breeders/trial/add/data_agreement') Args(0) {
 	    $projectprop = $projectprop_rs->first();
 	    $projectprop->value($data_agreement);
 	    $projectprop->update();
-	    $c->stash->{rest} = { message => 'Updated data agreement.' };
+	    $c->stash->{rest} = { message => __('Updated data agreement.') };
 	}
 	else {
 	    $projectprop = $project->create_projectprops( { 'data_agreement' => $data_agreement,}, {autocreate=>1});
-	    $c->stash->{rest} = { message => 'Inserted new data agreement.'};
+	    $c->stash->{rest} = { message => __('Inserted new data agreement.')};
 	}
     };
     if ($@) {
@@ -168,7 +169,7 @@ sub get_data_agreement :Path('/breeders/trial/data_agreement/get') :Args(0) {
     my $data_agreement_cvterm_id_rs = $schema->resultset('Cv::Cvterm')->search( { name => 'data_agreement' });
 
     if ($data_agreement_cvterm_id_rs->count() == 0) {
-	$c->stash->{rest} = { error => "No data agreements have been added yet." };
+	$c->stash->{rest} = { error => __("No data agreements have been added yet.") };
 	return;
     }
 

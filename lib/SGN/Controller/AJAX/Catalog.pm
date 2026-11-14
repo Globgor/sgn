@@ -13,6 +13,7 @@ use CXGN::List;
 use CXGN::Stock::Seedlot;
 use CXGN::Stock::CompileCatalogItems;
 use Sort::Key::Natural qw(natkeysort);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -45,7 +46,7 @@ sub add_catalog_item_POST : Args(0) {
 
     if (!$c->user()) {
         print STDERR "User not logged in... not adding a catalog item.\n";
-        $c->stash->{rest} = {error_string => "You must be logged in to add a catalog item." };
+        $c->stash->{rest} = {error_string => __("You must be logged in to add a catalog item.") };
         return;
     }
 
@@ -65,7 +66,7 @@ sub add_catalog_item_POST : Args(0) {
     my $item_rs = $stock_lookup->get_stock_exact();
 
     if (!defined $item_rs) {
-        $c->stash->{rest} = {error_string => "Item name is not in the database or not unique in the database!",};
+        $c->stash->{rest} = {error_string => __("Item name is not in the database or not unique in the database!"),};
         return;
     } else {
         $item_stock_id = $item_rs->stock_id();
@@ -104,13 +105,13 @@ sub add_catalog_item_POST : Args(0) {
 
     my $sp_person_id = CXGN::People::Person->get_person_by_username($dbh, $contact_person);
     if (!$sp_person_id) {
-        $c->stash->{rest} = {error_string => "Contact person has no record in the database!",};
+        $c->stash->{rest} = {error_string => __("Contact person has no record in the database!"),};
         return;
     }
 #    print STDERR "PERSON ID =".Dumper($sp_person_id)."\n";
     my $program_rs = $schema->resultset('Project::Project')->find({project_id => $item_breeding_program_id});
     if (!$program_rs) {
-        $c->stash->{rest} = {error_string => "Breeding program is not in the database!",};
+        $c->stash->{rest} = {error_string => __("Breeding program is not in the database!"),};
         return;
     }
 
@@ -134,7 +135,7 @@ sub add_catalog_item_POST : Args(0) {
     $stock_catalog->store();
 
     if (!$stock_catalog->store()){
-        $c->stash->{rest} = {error_string => "Error saving catalog item",};
+        $c->stash->{rest} = {error_string => __("Error saving catalog item"),};
         return;
     }
 
@@ -177,7 +178,7 @@ sub upload_catalog_items_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -186,7 +187,7 @@ sub upload_catalog_items_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload catalog items!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload catalog items!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -253,7 +254,7 @@ sub upload_catalog_items_POST : Args(0) {
             my $item_rs = $stock_lookup->get_stock_exact();
 
             if (!defined $item_rs) {
-                $c->stash->{rest} = {error_string => "Item name is not unique in the database!",};
+                $c->stash->{rest} = {error_string => __("Item name is not unique in the database!"),};
                 return;
             } else {
                 $item_stock_id = $item_rs->stock_id();
@@ -310,7 +311,7 @@ sub upload_catalog_items_POST : Args(0) {
             $stock_catalog->store();
 
             if (!$stock_catalog->store()){
-                $c->stash->{rest} = {error_string => "Error saving catalog items",};
+                $c->stash->{rest} = {error_string => __("Error saving catalog items"),};
                 return;
             }
         }
@@ -487,13 +488,13 @@ sub edit_catalog_image_POST : Args(0) {
     print STDERR "IMAGE ID =".Dumper(\@images)."\n";
     if (!$c->user()) {
         print STDERR "User not logged in... not adding a catalog item.\n";
-        $c->stash->{rest} = {error_string => "You must be logged in to add a catalog image." };
+        $c->stash->{rest} = {error_string => __("You must be logged in to add a catalog image.") };
         return;
     }
 
     my $item_rs = $schema->resultset("Stock::Stock")->find({uniquename => $item_name});
     if (!$item_rs) {
-        $c->stash->{rest} = {error_string => "Item name is not in the database!",};
+        $c->stash->{rest} = {error_string => __("Item name is not in the database!"),};
         return;
     } else {
         $item_stock_id = $item_rs->stock_id();
@@ -510,7 +511,7 @@ sub edit_catalog_image_POST : Args(0) {
     $stock_catalog->store();
 
     if (!$stock_catalog->store()){
-        $c->stash->{rest} = {error_string => "Error saving catalog image",};
+        $c->stash->{rest} = {error_string => __("Error saving catalog image"),};
         return;
     }
 
@@ -531,7 +532,7 @@ sub delete_catalog_item_POST : Args(0) {
     my $catalog_obj = CXGN::Stock::Catalog->new({ bcs_schema => $schema, prop_id => $item_prop_id });
     $catalog_obj->delete();
     if ($catalog_obj->delete() == 0) {
-        $c->stash->{rest} = { error_string => "An error occurred attempting to delete a catalog item." };
+        $c->stash->{rest} = { error_string => __("An error occurred attempting to delete a catalog item.") };
         return;
     }
 
@@ -557,13 +558,13 @@ sub add_catalog_item_list_POST : Args(0) {
 
     if (!$c->user()) {
         print STDERR "User not logged in... not adding catalog items.\n";
-        $c->stash->{rest} = {error_string => "You must be logged in to add catalog items." };
+        $c->stash->{rest} = {error_string => __("You must be logged in to add catalog items.") };
         return;
     }
 
     my $sp_person_id = CXGN::People::Person->get_person_by_username($dbh, $list_contact_person);
     if (!$sp_person_id) {
-        $c->stash->{rest} = {error_string => "Contact person has no record in the database!",};
+        $c->stash->{rest} = {error_string => __("Contact person has no record in the database!"),};
         return;
     }
 
@@ -606,7 +607,7 @@ sub add_catalog_item_list_POST : Args(0) {
             my $item_rs = $stock_lookup->get_stock_exact();
 
             if (!defined $item_rs) {
-                $c->stash->{rest} = {error_string => "Item name is not unique in the database!",};
+                $c->stash->{rest} = {error_string => __("Item name is not unique in the database!"),};
                 return;
             } else {
                 $item_stock_id = $item_rs->stock_id();
@@ -648,7 +649,7 @@ sub add_catalog_item_list_POST : Args(0) {
             $stock_catalog->store();
 
             if (!$stock_catalog->store()){
-                $c->stash->{rest} = {error_string => "Error saving catalog items",};
+                $c->stash->{rest} = {error_string => __("Error saving catalog items"),};
                 return;
             }
         }

@@ -8,6 +8,7 @@ use JSON;
 use Data::Dumper;
 use Try::Tiny;
 use CXGN::BreederSearch;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; };
 
@@ -93,7 +94,7 @@ sub get_data : Path('/ajax/breeder/search') Args(0) {
 ##    return;
 ##  }
   if (@results >= 10_000) {
-    $c->stash->{rest} = { list => \@results, message => 'Over 10,000 matches. Speeds may be affected, consider narrowing your search' };
+    $c->stash->{rest} = { list => \@results, message => __('Over 10,000 matches. Speeds may be affected, consider narrowing your search') };
     return;
   }
   elsif (@results < 1) {
