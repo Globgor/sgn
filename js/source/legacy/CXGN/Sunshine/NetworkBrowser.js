@@ -197,7 +197,7 @@ CXGN.Sunshine.NetworkBrowser.prototype = {
     },
 
     getImage: function(name, type, level, relationships, hilite) {	
-	if (!name && !type) { alert("No name or type supplied. How am I supposed to do anything????"); }
+	if (!name && !type) { alert(gettext("No name or type supplied. How am I supposed to do anything????")); }
 	//	var count = 0;
 	var x = MochiKit.DOM.getElement("network_browser");
 	this.setName(name);
