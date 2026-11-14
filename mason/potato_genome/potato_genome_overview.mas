@@ -1,7 +1,7 @@
 
 
 <div class="boxbgcolor5">
-<div class="boxheading">Potato Genome Sequencing Resources</div>
+<div class="boxheading"><% __('Potato Genome Sequencing Resources') |h %></div>
 <div class="boxcontent">
 
 Download BAC by BAC data: <a href="ftp://ftp.solgenomics.net/potato_genome/">SGN FTP site</a><br />
