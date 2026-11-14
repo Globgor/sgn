@@ -118,7 +118,7 @@ jQuery(document).ready(function(){
 
         var project_name = jQuery("#new_genotyping_project_name").val();
         if (!project_name) {
-            alert("Genotyping project name is required");
+            alert(<% __('Genotyping project name is required') |js %>);
             return;
         }
 
@@ -126,25 +126,25 @@ jQuery(document).ready(function(){
 
         var data_type = jQuery("#data_type").val();
         if (!data_type) {
-            alert("Data type is required");
+            alert(<% __('Data type is required') |js %>);
             return;
         }
 
         var project_breeding_program = jQuery("#genotyping_project_breeding_program_select").val();
         if (!project_breeding_program) {
-            alert ("Breeding program is required");
+            alert (<% __('Breeding program is required') |js %>);
             return;
         }
 
         var project_year = jQuery("#genotyping_project_year_select").val();
         if (!project_year) {
-            alert ("Year is required");
+            alert (<% __('Year is required') |js %>);
             return;
         }
 
         var project_description = jQuery("#genotyping_project_description").val();
         if (!project_description) {
-            alert ("Description is required");
+            alert (<% __('Description is required') |js %>);
             return;
         }
 
@@ -179,7 +179,7 @@ jQuery(document).ready(function(){
             },
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred saving genotyping project.');
+                alert(<% __('An error occurred saving genotyping project.') |js %>);
                 jQuery('#create_genotyping_project_dialog').modal("hide");
             },
         });
