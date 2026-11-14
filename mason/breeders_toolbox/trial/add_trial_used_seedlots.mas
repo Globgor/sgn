@@ -7,24 +7,24 @@ $trial_stock_type
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="upload_trial_used_seedlot_dialog">Upload Used Seedlots in Trial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="upload_trial_used_seedlot_dialog"><% __('Upload Used Seedlots in Trial') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="trial_seedlot_used_upload_spreadsheet_info_format">Spreadsheet format</a>
+                            <a id="trial_seedlot_used_upload_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="trial_upload_used_seedlot_form" name="trial_upload_used_seedlot_form">
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File:</label>
+                            <label class="col-sm-4 control-label"><% __('Upload File:') |h %></label>
                             <div class="col-sm-8" >
                                 <input type="file" name="trial_upload_used_seedlot_file" id="trial_upload_used_seedlot_file" encoding="multipart/form-data" />
                             </div>
@@ -34,8 +34,8 @@ $trial_stock_type
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="trial_upload_used_seedlot_submit" type="button" class="btn btn-default" >Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button id="trial_upload_used_seedlot_submit" type="button" class="btn btn-default" ><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -45,17 +45,17 @@ $trial_stock_type
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="trialUploadUsedSeedlotInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="trialUploadUsedSeedlotInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for recording which seedlots were planted in which plots in this trial.</b>
+                    <b><% __('This is for recording which seedlots were planted in which plots in this trial.') |h %></b>
                     <br/>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -71,29 +71,29 @@ $trial_stock_type
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>seedlot_name (must exist in the database. the seedlot that was planted in the plot)</li>
                     <li>plot_name (must exist in the database. the plot that the seedlot was planted in)</li>
                     <li>
                         num_seed_per_plot (number of seeds transferred from seedlot to the plot)
-                        <br/><b>AND/OR</b></br>
+                        <br/><b><% __('AND/OR') |h %></b></br>
                         weight_gram_seed_per_plot (weight in grams of seed transferred from seedlot to the plot)
                     </li>
                     </ul>
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                     <li>description (any additional information)</li>
                     </ul>
-                    <b>Notes:</b>
+                    <b><% __('Notes:') |h %></b>
                     <ul>
-                    <li>For plots of family name stock type, seedlots of cross members in the family can be used.</li>
+                    <li><% __('For plots of family name stock type, seedlots of cross members in the family can be used.') |h %></li>
                     </ul>
                 </div>
                 <& /help/file_upload_type.mas, type => "Seedlots", optional_column => 1 &>
             </div>
             <div class="modal-footer">
-                <button id="close_seedlot_info_trial_upload_used_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_seedlot_info_trial_upload_used_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -103,19 +103,19 @@ $trial_stock_type
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadTrialUsedSeedlotSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadTrialUsedSeedlotSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        File uploaded successfully.
+                        <% __('File uploaded successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_upload_trial_used_seedlot_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="dismiss_upload_trial_used_seedlot_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

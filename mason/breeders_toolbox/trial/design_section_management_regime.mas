@@ -14,7 +14,7 @@ $user_can_modify => undef
     <br>
     
 % if ($user_can_modify) {
-    <button id="edit_management_regime" class="btn btn-sm btn-primary">Add management factor</button>
+    <button id="edit_management_regime" class="btn btn-sm btn-primary"><% __('Add management factor') |h %></button>
 % }
 
     
