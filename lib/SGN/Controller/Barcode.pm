@@ -13,6 +13,7 @@ use PDF::LabelPage;
 use Math::Base36 ':all';
 use CXGN::QRcode;
 use Data::Dumper;
+use Locale::TextDomain ( 'sgn', undef );
 
 our %urlencode;
 
@@ -472,7 +473,7 @@ sub generate_unique_barcode_labels : Path('/barcode/unique') Args(0) {
 
     if (! $c->user()) {
 	$c->stash->{template} = 'generic_message.mas';
-	$c->stash->{message} = 'You must be logged in to use the unique barcode tool.';
+	$c->stash->{message} = __('You must be logged in to use the unique barcode tool.');
 	return;
     }
 

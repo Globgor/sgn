@@ -14,6 +14,7 @@ use CXGN::BreedingProgram ; # the BP object
 use SGN::Model::Cvterm; # maybe need this for the projectprop.type_id breeding_program
 use URI::FromHash 'uri';
 use JSON;
+use Locale::TextDomain ( 'sgn', undef );
 
 ##use CXGN::People::Roles;
 
@@ -59,7 +60,7 @@ sub program_info : Chained('get_breeding_program') PathPart('') Args(0) {
     my $program = $c->stash->{program};
 
     if (!$program) {
-	$c->stash->{message} = "The requested breeding program does not exist or has been deleted.";
+	$c->stash->{message} = __("The requested breeding program does not exist or has been deleted.");
 	$c->stash->{template} = 'generic_message.mas';
 	return;
     }
