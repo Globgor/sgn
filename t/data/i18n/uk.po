@@ -12,6 +12,9 @@ msgstr "Пошук"
 msgid "Advanced"
 msgstr "Розширений"
 
+msgid "Language"
+msgstr "Мова"
+
 msgctxt "verb"
 msgid "Search"
 msgstr "Шукати"
