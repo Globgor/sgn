@@ -12,19 +12,19 @@ $breeding_program_id => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="reset" class="close" id="upload_crosses_dismiss_button_2" name="upload_crosses_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCrossesDialog">Upload Crosses</h4>
+                <button type="reset" class="close" id="upload_crosses_dismiss_button_2" name="upload_crosses_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCrossesDialog"><% __('Upload Crosses') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "crosses_upload_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Introduction" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Introduction"), 'h' ) &>
                             <ul>
                                 <li>Crosses can be of different types (biparental, self, open, backcross, sib, polycross, bulk, bulk_open, bulk_self, doubled_haploid, or dihaploid_induction)</li>
                                     <ul class="a">
-                                        <li>cross type descriptions:</li>
+                                        <li><% __('cross type descriptions:') |h %></li>
                                         <ul class="b">
                                             <li><b>biparental:</b> An individual plant pollinated by another individual plant.</li>
                                             <li><b>self:</b> A self pollinated individual plant.</li>
@@ -40,51 +40,51 @@ $breeding_program_id => undef
                                         </ul>
                                     </ul>
                                 </li>
-                                <li>An individual cross can be linked to a female plot or plant, as well as a male plot or plant.</li>
-                                <li>A cross can have a number of properties associated to it, such as number of flowers, pollination date, etc.</li>
-                                <li>A cross can produce seed, which goes into a seedlot.</li>
-                                <li>A cross can ultimately produce progeny, which then become named accessions in the database.</li>
+                                <li><% __('An individual cross can be linked to a female plot or plant, as well as a male plot or plant.') |h %></li>
+                                <li><% __('A cross can have a number of properties associated to it, such as number of flowers, pollination date, etc.') |h %></li>
+                                <li><% __('A cross can produce seed, which goes into a seedlot.') |h %></li>
+                                <li><% __('A cross can ultimately produce progeny, which then become named accessions in the database.') |h %></li>
                             </ul>
 
                             <br/><br/>
                             <center>
-                                <button id="next_step_intro_button" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_intro_button" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Crossing experiment" &>
-                            <& /page/page_title.mas, title=>"Select a crossing experiment for your crosses" &>
-                            <center><label style="color:DarkOliveGreen" class="col-sm-12 control-label">If you are uploading an Intercross file and using auto-generated cross unique IDs, please use manage Intercross section</label></center>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Crossing experiment"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a crossing experiment for your crosses"), 'h' ) &>
+                            <center><label style="color:DarkOliveGreen" class="col-sm-12 control-label"><% __('If you are uploading an Intercross file and using auto-generated cross unique IDs, please use manage Intercross section') |h %></label></center>
                             <br>
                             <br>
                             <div id="manage_page_section_1" style="display:none">
-                                <p>Crossing experiments are for grouping crosses together. The grouping is most often done for crosses derived from the same field trial, the same year, or for crosses that have the same breeding objective.</p>
+                                <p><% __('Crossing experiments are for grouping crosses together. The grouping is most often done for crosses derived from the same field trial, the same year, or for crosses that have the same breeding objective.') |h %></p>
                                 <center>
-                                    <button class="btn btn-info" name="create_crossingtrial_link">If you need to create a new crossing experiment, click here</button><br/><br/>
-                                    <button id="next_step_crossing_trial_button" class="btn btn-primary" onclick="Workflow.complete(this);">If you already have a crossing experiment, go to Next Step</button>
+                                    <button class="btn btn-info" name="create_crossingtrial_link"><% __('If you need to create a new crossing experiment, click here') |h %></button><br/><br/>
+                                    <button id="next_step_crossing_trial_button" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('If you already have a crossing experiment, go to Next Step') |h %></button>
                                 </center>
                             </div>
 
                             <div id="crossing_experiment_page_section_1" style="display:none">
                                 <center>
                                     <div class="form-group">
-                                        <label class="col-sm-5 control-label">You are uploading crosses for crossing experiment: </label>
+                                        <label class="col-sm-5 control-label"><% __('You are uploading crosses for crossing experiment:') |h %> </label>
                                         <div class="col-sm-6" >
                                             <input class="form-control" name="experiment_name_1" id="experiment_name_1" disabled value="<% $trial_name %>">
                                         </div>
                                     </div>
                                     <br/><br/><br/><br/>
-                                    <button class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                    <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </div>
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Upload your crosses" &>
-                            <& /page/page_title.mas, title=>"Enter basic information about the crosses and upload your file" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload your crosses"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the crosses and upload your file"), 'h' ) &>
                             <br/>
                             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_crosses_form" name="upload_crosses_form">
                                 <div id="manage_page_section_2" style="display:none">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Breeding Program: </label>
+                                        <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <div id="upload_crosses_breeding_program_select_div">
                                             </div>
@@ -92,7 +92,7 @@ $breeding_program_id => undef
                                     </div><br/>
                                     <div id="manage_page_crossing_experiment" style="display:none">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Crossing Experiment: </label>
+                                            <label class="col-sm-3 control-label"><% __('Crossing Experiment:') |h %> </label>
                                             <div class="col-sm-9">
                                                 <div id="upload_crosses_crossing_experiment_select_div" name="upload_crosses_crossing_experiment_select_div" >
                                                 </div>
@@ -102,7 +102,7 @@ $breeding_program_id => undef
                                 </div>
                                 <div id="crossing_experiment_page_section_2" style="display:none">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Crossing Experiment: </label>
+                                        <label class="col-sm-3 control-label"><% __('Crossing Experiment:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <input class="form-control" name="experiment_name" id="experiment_name" disabled value="<% $trial_name %>">
                                             <input name="experiment_id" id="experiment_id" type="hidden" value="<% $trial_id %>">
@@ -113,11 +113,11 @@ $breeding_program_id => undef
                                 <div class="well well-sm">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_crosses_spreadsheet_format_info">Spreadsheet format</a>
+                                                    <a id="upload_crosses_spreadsheet_format_info"><% __('Spreadsheet format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -126,7 +126,7 @@ $breeding_program_id => undef
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-5 control-label">Upload File: </label>
+                                                        <label class="col-sm-5 control-label"><% __('Upload File:') |h %> </label>
                                                         <div class="col-sm-7">
                                                             <input type="file" name="upload_crosses_file" id="upload_crosses_file" encoding="multipart/form-data" />
                                                         </div>
@@ -161,26 +161,26 @@ $breeding_program_id => undef
 
                             <div id="submit_button_section">
                                 <center>
-                                    <button type="button" onclick="Workflow.complete(this, false);" class="btn btn-primary" name="upload_crosses_submit" id="upload_crosses_submit">Upload File</button>
+                                    <button type="button" onclick="Workflow.complete(this, false);" class="btn btn-primary" name="upload_crosses_submit" id="upload_crosses_submit"><% __('Upload File') |h %></button>
                                 </center>
                             </div>
 
                         </&>
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your crosses are now in the database" &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your crosses are now in the database"), 'h' ) &>
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                The crosses file was uploaded successfully
+                                <% __('The crosses file was uploaded successfully') |h %>
                             </p>
 
                             <ul>
-                                <li>You may want to proceed to the cross detail page(s) for the cross(es) you just created.</li>
-                                <li>You can print barcodes for the crosses.</li>
-                                <li>You can add crossing information as it becomes available (e.g. number of seeds, progeny, etc).</li>
+                                <li><% __('You may want to proceed to the cross detail page(s) for the cross(es) you just created.') |h %></li>
+                                <li><% __('You can print barcodes for the crosses.') |h %></li>
+                                <li><% __('You can add crossing information as it becomes available (e.g. number of seeds, progeny, etc).') |h %></li>
                             </ul>
                             <br/>
                             <center>
-                            <button  class="btn btn-primary" name="upload_crosses_success_complete_button">The crosses were saved to the database with no errors! Congrats Click Here</button><br/><br/>
+                            <button  class="btn btn-primary" name="upload_crosses_success_complete_button"><% __('The crosses were saved to the database with no errors! Congrats Click Here') |h %></button><br/><br/>
                             </center>
                         </&>
 
@@ -189,7 +189,7 @@ $breeding_program_id => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="upload_crosses_dismiss_button_1" name="upload_crosses_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="upload_crosses_dismiss_button_1" name="upload_crosses_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -199,8 +199,8 @@ $breeding_program_id => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCrossesErrorDialog">Upload Crosses File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCrossesErrorDialog"><% __('Upload Crosses File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -210,7 +210,7 @@ $breeding_program_id => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -220,15 +220,15 @@ $breeding_program_id => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="crossSpreadsheetInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="crossSpreadsheetInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <br>
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    To set up crosses in the database, please provide required information. The first row (header) must contain the following:
+                    <% __('To set up crosses in the database, please provide required information. The first row (header) must contain the following:') |h %>
                     <br>
 
                     <table class="table table-bordered table-hover" id = "cross_parents_header">
@@ -245,7 +245,7 @@ $breeding_program_id => undef
                     <style>
                         ul.a {text-indent};
                     </style>
-                    <b>Required columns:</b>
+                    <b><% __('Required columns:') |h %></b>
                     <ul>
                         <li><b>cross_unique_id</b> (must NOT exist in the database)</li>
                         <li><b>cross_combination</b> (required in the header, but value for cross combination (e.g. female accession/male accession) may be left blank)</li>
@@ -272,15 +272,15 @@ $breeding_program_id => undef
                         <li><%$additional_info%></li>
 %}
                     </ul>
-                    <b>Additional cross information:</b>
+                    <b><% __('Additional cross information:') |h %></b>
                     <ul>
-                        <li>After cross unique ids are stored in the database, you can add field crossing data (e.g. pollination date, total number of flowers pollinated, total number of fruits set) or progenies to each cross unique id.</li>
-                        <li>Field crossing data and progenies can be uploaded via links in crossing experiment detail page or can be added directly in each cross detail page.</li>
+                        <li><% __('After cross unique ids are stored in the database, you can add field crossing data (e.g. pollination date, total number of flowers pollinated, total number of fruits set) or progenies to each cross unique id.') |h %></li>
+                        <li><% __('Field crossing data and progenies can be uploaded via links in crossing experiment detail page or can be added directly in each cross detail page.') |h %></li>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
