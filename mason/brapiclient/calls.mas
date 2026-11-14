@@ -1,10 +1,10 @@
 <%args>
 </%args>
 
-<h4>Calls</h4>
+<h4><% __('Calls') |h %></h4>
 
 <div id="brapi_calls_home_div">
-<button class="btn btn-primary" id="brapi_home_show_calls">Show Calls</button>
+<button class="btn btn-primary" id="brapi_home_show_calls"><% __('Show Calls') |h %></button>
 
 </div>
 

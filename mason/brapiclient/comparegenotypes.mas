@@ -3,9 +3,9 @@
 
 </%args>
 
-<& /page/page_title.mas, title=>"Compare genotypes using BrAPI" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Compare genotypes using BrAPI"), 'h' ) &>
 
-  Server: <input id="server_address" size="40" value="" /><br />
+  <% __('Server:') |h %> <input id="server_address" size="40" value="" /><br />
 
   malt.pw.usda.gov/t3/wheatplus
 
@@ -14,10 +14,10 @@
 
 <br />
 
-Genotype 1 name: <input id="genotype1" size="40" value="IITA-TMS-IBA000017" /><br />
-Genotype 2 name: <input id="genotype2" size="40" value="95NA-00063"  /><br />
+<% __('Genotype 1 name:') |h %> <input id="genotype1" size="40" value="IITA-TMS-IBA000017" /><br />
+<% __('Genotype 2 name:') |h %> <input id="genotype2" size="40" value="95NA-00063"  /><br />
 
-<button id="submit">Submit</button>
+<button id="submit"><% __('Submit') |h %></button>
 
 
 

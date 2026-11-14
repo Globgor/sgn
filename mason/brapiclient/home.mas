@@ -3,35 +3,35 @@
 
 <& /page/page_title.mas, title=>"BrAPI" &>
 
-<h1>Modules</h1>
+<h1><% __('Modules') |h %></h1>
 <div class="well">
 <ul>
-    <li><a href="/brapihome/germplasm">Germplasm Search and Exchange</a></li>
+    <li><a href="/brapihome/germplasm"><% __('Germplasm Search and Exchange') |h %></a></li>
 </ul>
 </div>
 <div class="well">
 <ul>
-    <li><a href="/brapihome/phenotyping_handhelds">Phenotyping Handhelds</a></li>
+    <li><a href="/brapihome/phenotyping_handhelds"><% __('Phenotyping Handhelds') |h %></a></li>
 </ul>
 </div>
 <div class="well">
 <ul>
-    <li><a href="/brapihome/phenotype">Phenotype Retrieval</a></li>
+    <li><a href="/brapihome/phenotype"><% __('Phenotype Retrieval') |h %></a></li>
 </ul>
 </div>
 <div class="well">
 <ul>
-    <li><a href="/brapihome/genotype">Genotype Retrieval</a></li>
+    <li><a href="/brapihome/genotype"><% __('Genotype Retrieval') |h %></a></li>
 </ul>
 </div>
 
-<&| /page/info_section.mas, title=>'Calls Testing', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Calls Testing'), 'h' ), collapsible=>1, collapsed=>1 &>
 
 <div id="brapi_home_url_select_div">
 
-    <h4>URL Select</h4>
+    <h4><% __('URL Select') |h %></h4>
     <select name="brapi_home_url_select" id="brapi_home_url_select" class="form-control" />
-        <option value="">local</option>
+        <option value=""><% __('local') |h %></option>
         <option value="https://cassbase.org">cassbase.org</option>
         <option value="https://cassavabase.org">cassavabase.org</option>
         <option value="https://musabase.org">musabase.org</option>
