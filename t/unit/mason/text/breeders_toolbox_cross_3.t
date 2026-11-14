@@ -49,7 +49,7 @@ page_texts_ok(
 page_texts_ok(
     '/breeders_toolbox/cross/target_numbers_usage_info_dialog.mas',
     'Crossing tool allows you to record crossing activities at accession, plot or plant level. As a result, the same parental combination can be associated with several cross unique ids depending on the number of female plots/plants and the number of male plots/plants. Once you set target numbers, this section will automatically track and aggregate actual numbers of seeds and/or numbers of progenies from different cross unique ids having the same parental combination. The progress will be updated every time you store new data in the database',
-    'You can set target numbers of seeds and/or target numbers of progenies for parental combinations that you plan to include in this cossing experiment. Once target numbers are stored in the database, this section will automatically track crossing acitvities in this crossing experiment. Target numbers can be added before or after actual crossing activities are stored in the database.',
+    'You can set target numbers of seeds and/or target numbers of progenies for parental combinations that you plan to include in this cossing experiment. Once target numbers are stored in the database, this section will automatically track crossing activities in this crossing experiment. Target numbers can be added before or after actual crossing activities are stored in the database.',
     'Tracking Progress of Each Parental Combination:',
     'Target Numbers of Seeds and/or Progenies:',
     'How to Use Target Numbers Section',

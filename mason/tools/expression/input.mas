@@ -390,7 +390,7 @@ function dump(arr,level) {
 				dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
 			}
 		}
-	} else { //Stings/Chars/Numbers etc.
+	} else { //Strings/Chars/Numbers etc.
 		dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
 	}
 	return dumped_text;

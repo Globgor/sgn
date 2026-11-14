@@ -32,7 +32,7 @@ my $permu_level = tooltipped_text('Significance level of permutation test:',
                                   (LOD threshold) is run');
 my $genome_scan = tooltipped_text('Genome scan size (cM):', 'not required for 
                                    Marker Regression');
-my $qtl_prob = tooltipped_text('QTL genotype probablity method:', 
+my $qtl_prob = tooltipped_text('QTL genotype probability method:', 
                                'not required for Marker Regression');
 
 </%perl>

@@ -147,7 +147,7 @@ function handleSubmit() {
           }
         },
         error: function(response) {
-          alert( <% __('An Error occured while storing vectors.') |js %>);
+          alert( <% __('An Error occurred while storing vectors.') |js %>);
         }
     });
 }

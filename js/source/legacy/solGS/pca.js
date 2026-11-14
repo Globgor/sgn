@@ -1258,7 +1258,7 @@ jQuery(document).ready(function () {
                                             })
                                             .fail(function (res) {
                                                 var msg =
-                                                    "Error occured running the PCA.";
+                                                    "Error occurred running the PCA.";
                                                 solGS.pca.feedBackOnFailure(
                                                     pcaPopId,
                                                     msg
@@ -1309,7 +1309,7 @@ jQuery(document).ready(function () {
                                     }
                                 })
                                 .fail(function (res) {
-                                    var msg = "Error occured running the PCA.";
+                                    var msg = "Error occurred running the PCA.";
                                     solGS.pca.feedBackOnFailure(pcaPopId, msg);
                                     jQuery(runPcaBtnId).show();
                                 });
@@ -1317,7 +1317,7 @@ jQuery(document).ready(function () {
                     }
                 })
                 .fail(function () {
-                    var msg = "Error occured checking for cached output.";
+                    var msg = "Error occurred checking for cached output.";
                     solGS.pca.feedBackOnFailure(pcaPopId, msg);
                     jQuery(runPcaBtnId).show();
                 });

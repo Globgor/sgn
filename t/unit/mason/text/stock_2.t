@@ -80,7 +80,7 @@ page_texts_ok(
     'Accession Related Documentation, such as protocols or permits for the accession.',
     'Accession Related Reports, such as supplementary information or publications.',
     'This is for uploading any additional files you may have for the accession.',
-    'Possible additional files inlude, but are not limited to:',
+    'Possible additional files include, but are not limited to:',
     'Accession Related Recordings, whether audio or video.',
 );
 

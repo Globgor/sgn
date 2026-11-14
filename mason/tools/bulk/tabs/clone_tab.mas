@@ -13,7 +13,7 @@ $debug => ''
 	<% $ug_build_select %>
 	<br />
 	
-	<% __('Enter a list of identifiers or upload a file containing identifers, one per line:') |h %><br />
+	<% __('Enter a list of identifiers or upload a file containing identifiers, one per line:') |h %><br />
 	<table summary="" width="100%"><tr><td>
 	      <textarea id="ids" name="ids" rows="5" cols="20"></textarea>
 	    </td>

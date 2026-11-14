@@ -20,12 +20,12 @@ use Test::More;
 my @scripts = (
     [ 'js/source/legacy/qualityControl/qualityControl.js',
         'gettext("This population has no valid traits to qclate.")',
-        'gettext("Error 3 occured preparing the additive genetic data for qualityControl analysis.")',
+        'gettext("Error 3 occurred preparing the additive genetic data for qualityControl analysis.")',
         'gettext("Running qualityControl... please wait...")',
         'gettext("This population has no phenotype data.")',
-        'gettext("Error 1 occured preparing the phenotype data for qualityControl analysis.")',
+        'gettext("Error 1 occurred preparing the phenotype data for qualityControl analysis.")',
         'gettext("There is no qualityControl output for this dataset.")',
-        'gettext("Error 2 occured running the qualityControl analysis.")',
+        'gettext("Error 2 occurred running the qualityControl analysis.")',
     ],
 );
 

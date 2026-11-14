@@ -533,7 +533,7 @@ jQuery(document).ready(function () {
                         })
                         .fail(function () {
                             jQuery(kinshipMsgDiv)
-                            .html(gettext("Error occured running the kinship."))
+                            .html(gettext("Error occurred running the kinship."))
                             .show()
                             .fadeOut(8400);
 
@@ -557,7 +557,7 @@ jQuery(document).ready(function () {
             }
             })
             .fail(function () {
-            jQuery(kinshipMsgDiv).html(gettext("Error occured running the kinship.")).show().fadeOut(8400);
+            jQuery(kinshipMsgDiv).html(gettext("Error occurred running the kinship.")).show().fadeOut(8400);
             jQuery(`${canvas} .multi-spinner-container`).hide();
             jQuery(runKinshipBtnId).show();
             });

@@ -21,7 +21,7 @@ use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
     '/help/workflow_guided/tissue_sample_help.mas',
-    'You selected to sample on the accession level, meaning that you wil not sample from a field trial. In this case there is no field layout to download!',
+    'You selected to sample on the accession level, meaning that you will not sample from a field trial. In this case there is no field layout to download!',
     'An error occurred checking trial for tissue samples.',
     'An error occurred creating tissue sample entries',
     'An error occurred checking trial for plants.',

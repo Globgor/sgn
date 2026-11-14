@@ -705,7 +705,7 @@ chr1A	.	.	1342766	1342766	0.0394888300035745	.	.	ID=Kukri_c2408_857;qvalue=0.039
     {
       "type_name": "GWAS Results",
       "type_id": 86274,
-      "type_definition": "Report of quantitative trait loci (QTLs) indentified by running rrBLUP analysis on phenotype trials and genotype trials within the T3 database."
+      "type_definition": "Report of quantitative trait loci (QTLs) identified by running rrBLUP analysis on phenotype trials and genotype trials within the T3 database."
     },
     {
       "type_id": 86275,

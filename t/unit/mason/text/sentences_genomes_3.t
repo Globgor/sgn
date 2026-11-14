@@ -23,7 +23,7 @@ page_sentences_ok(
     'Introgression lines (ILs) in which large genomic regions of {i}{species2}{end_i} are replaced with the corresponding segments from {i}{species}{end_i} can show remarkably superior agronomic performance.',
     'Our work paves a path toward further tomato improvement and for deciphering the mechanisms underlying the myriad other agronomic traits that can be improved with {i}{species}{end_i} germplasm.',
     'Because of its extreme stress tolerance and unusual morphology, it is an important donor of germplasm for the cultivated tomato {i}{species2}{end_i}.',
-    'It was sequenced by a group of scientists at MPI Golm and the Univeristy of Aachen and collaborators, under the direction of {person} and {person2}.',
+    'It was sequenced by a group of scientists at MPI Golm and the University of Aachen and collaborators, under the direction of {person} and {person2}.',
     '{link}{i}{species}{end_i}{end_link} is a wild tomato that is relatively distant from the domesticated {link2}{i}{species2}{end_i}{end_link2}.',
 );
 

@@ -15,11 +15,11 @@
 
 <h4><% __('Output options') |h %></h4>
 
-<p><% __('You can choose different output options. The "Overview graph" option will show a graphic represenations of the hits in the database. The "Coverage graph" displays a graphical representation how the matches line up on the query sequence. The "Bioperl" parser displays a formatted version of the BLAST report with embedded links to other pages on the site. The "Basic" version shows the raw output of the BLAST report. Note that if the query contains several sequences (such as multi-fasta), the output will always default to the "Basic" parse option.') |h %></p>
+<p><% __('You can choose different output options. The "Overview graph" option will show a graphic representations of the hits in the database. The "Coverage graph" displays a graphical representation how the matches line up on the query sequence. The "Bioperl" parser displays a formatted version of the BLAST report with embedded links to other pages on the site. The "Basic" version shows the raw output of the BLAST report. Note that if the query contains several sequences (such as multi-fasta), the output will always default to the "Basic" parse option.') |h %></p>
 
 <h4><% __('Results') |h %></h4>
 
-<p><% __('The Results section will show the ouput (depending on your chosen Output options) when a BLAST analysis has been run. When the analysis is finished, the Input parameters sections will be collapsed and the Results section opened. To re-run a query, simply click on the + sign in the Input parameter section header to view that section again and adjust the parameters.') |h %></p>
+<p><% __('The Results section will show the output (depending on your chosen Output options) when a BLAST analysis has been run. When the analysis is finished, the Input parameters sections will be collapsed and the Results section opened. To re-run a query, simply click on the + sign in the Input parameter section header to view that section again and adjust the parameters.') |h %></p>
 
 <p><% __('The raw BLAST report can be downloaded using the download link in the Results section header.') |h %></p>
 

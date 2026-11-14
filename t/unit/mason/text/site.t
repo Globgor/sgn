@@ -31,7 +31,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/site/list.mas',
-    'Items listed here have mulitple case mismatches and must be fixed manually. If accessions need to be merged, contact the database directly.',
+    'Items listed here have multiple case mismatches and must be fixed manually. If accessions need to be merged, contact the database directly.',
     'Multiple synonym matches have to be resolved manually. Contact database administrators if necessary.',
     'Click the Adjust Case button to align the case in the list with what is in the database.',
     'Replace synonyms with corresponding DB name',

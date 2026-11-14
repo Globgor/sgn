@@ -40,7 +40,7 @@ page_sentences_ok(
 page_sentences_ok(
     '/genomes/Solanum_lycopersicum/inbreds.mas',
     'Breeders develop inbreds for introducing valuable genetic variation from multiple wild species and/or accessions while maintaining a genetic background of the domesticated species. This is achieved by outcrossing followed by multiple genetrations of backcrossing and selection.',
-    'This line was developed in Guatamala {citation} were it has been tested over multiple seasons and consistently shows very good resistance against high begomovirus pressure there.',
+    'This line was developed in Guatemala {citation} were it has been tested over multiple seasons and consistently shows very good resistance against high begomovirus pressure there.',
 );
 
 page_sentences_ok(

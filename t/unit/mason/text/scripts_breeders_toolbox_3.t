@@ -28,7 +28,7 @@ page_script_texts_ok(
 
 page_script_texts_ok(
     '/breeders_toolbox/manage_samples.mas',
-    'Automatic export to genotyping vendors is currently not avaiable; however, you can download the layout and submit to vendor manually.',
+    'Automatic export to genotyping vendors is currently not available; however, you can download the layout and submit to vendor manually.',
 );
 
 page_script_texts_ok(

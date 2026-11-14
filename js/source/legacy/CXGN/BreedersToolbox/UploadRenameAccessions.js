@@ -101,7 +101,7 @@ jQuery(document).ready(function ($) {
             success: function(response) {
                 jQuery('#working_modal').modal('hide');
                 if (response.error) {
-                    alert('An Error Occured: No accessions were renamed! Try Fixing Your File For The Issues Identified In the Validation. '+response.error);
+                    alert('An Error Occurred: No accessions were renamed! Try Fixing Your File For The Issues Identified In the Validation. '+response.error);
                 }
                 else {
 		    //alert("RESPONSE: "+JSON.stringify(response));

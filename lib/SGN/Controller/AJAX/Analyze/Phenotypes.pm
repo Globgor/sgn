@@ -35,7 +35,7 @@ sub analyze_trial_phenotypes : Path('/analyze/phenotypes/trials') Args(0) {
     my $id_string = $c->req->param("ids");
     @trial_ids = split(',',$id_string);
   }
-  elsif ($format eq 'list_id') {        #get trial names from list and tranform them to ids
+  elsif ($format eq 'list_id') {        #get trial names from list and transform them to ids
 
     my $trial_list_id = $c->req->param("trial_list_list_select");
 
@@ -55,7 +55,7 @@ sub analyze_trial_phenotypes : Path('/analyze/phenotypes/trials') Args(0) {
     print STDERR "trial_id_hash =" . Dumper($trial_id_hash);
   }
   else {
-    die "Unable to determine paramter format \n";
+    die "Unable to determine parameter format \n";
   }
 
   #$self->trial_download_log($c, @trial_ids, "trial analyze phenotypes");

@@ -19,7 +19,7 @@ $curator => undef
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add subplots to a list'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Add subplots in this trial to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add subplots to a list'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Add subplots in this trial to a new or existing list</i>'&>
         <br>
             <table style="width:100%">
                 <tr>

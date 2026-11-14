@@ -362,7 +362,7 @@ function complete_intro_step() {
     }
   });
 
-  // Proceeed to Next Step
+  // Proceed to Next Step
   Workflow.complete('#sequence_metadata_intro_step');
   Workflow.focus('#upload_sequence_metadata_workflow', 1);
 
@@ -546,7 +546,7 @@ function upload_and_verify() {
           add_message("success", "File successfully verified");
         }
         else {
-          add_message("error", "ERROR: File not successfully verfied!");
+          add_message("error", "ERROR: File not successfully verified!");
         }
 
         if ( response.results.missing_features && response.results.missing_features.length > 0 ) {

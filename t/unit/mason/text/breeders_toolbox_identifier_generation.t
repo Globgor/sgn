@@ -33,7 +33,7 @@ page_texts_ok(
     '/breeders_toolbox/identifier_generation/manage_identifier_generation.mas',
     'It is often necessary to pre-create identifiers. This is used in ACAI and the Banana Agronomy project for pre-printing barcode identifiers that are later assigned to trials in the field. This can also be used for pre-printing barcode identifiers that are later assigned to samples in the lab.',
     'A description of what the identifier is used for',
-    'View, add, and dowload identifiers.',
+    'View, add, and download identifiers.',
     'Manage Identifier Generation',
     'Current Identifier Number:',
     'Add New Identifier',

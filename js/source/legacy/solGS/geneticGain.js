@@ -143,7 +143,7 @@ solGS.geneticGain = {
       },
       error: function (res) {
         jQuery(`${canvas} .multi-spinner-container`).hide();
-        solGS.showMessage(ggMsgDiv, "Error occured plotting the genetic gain.");
+        solGS.showMessage(ggMsgDiv, "Error occurred plotting the genetic gain.");
         jQuery("#check_genetic_gain").show();
       },
     });
@@ -172,7 +172,7 @@ solGS.geneticGain = {
       },
       error: function () {
         jQuery(ggMsgDiv)
-          .html(gettext("Error occured checking for GEBV data for the training population."))
+          .html(gettext("Error occurred checking for GEBV data for the training population."))
           .show();
       },
     });
@@ -207,7 +207,7 @@ solGS.geneticGain = {
       },
       error: function () {
         jQuery(ggMsgDiv)
-          .html(gettext("Error occured checking for GEBV data for the selection population."))
+          .html(gettext("Error occurred checking for GEBV data for the selection population."))
           .show();
       },
     });
@@ -262,7 +262,7 @@ solGS.geneticGain = {
       error: function () {
         jQuery(ggMsgDiv)
           .html(
-            "Error occured checking for predicted traits for the selection population " +
+            "Error occurred checking for predicted traits for the selection population " +
               selectionPopId
           )
           .show();

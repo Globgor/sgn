@@ -304,7 +304,7 @@ jQuery(document).ready(function () {
         }
       })
       .fail(function () {
-        var msg = "Error occured creating the selection index form.";
+        var msg = "Error occurred creating the selection index form.";
         jQuery(siMsgDiv).empty().append(msg);
       });
   }, 5000);
@@ -415,7 +415,7 @@ jQuery(document).on("click", "#calculate_si", function () {
               }
             })
             .fail(function (res) {
-              jQuery(siMsgDiv).html(gettext("Error occured running correlation analysis.")).fadeOut(8400);
+              jQuery(siMsgDiv).html(gettext("Error occurred running correlation analysis.")).fadeOut(8400);
             });
 
           jQuery("#si_canvas #selected_pop").val("");
@@ -433,7 +433,7 @@ jQuery(document).on("click", "#calculate_si", function () {
         }
       })
       .fail(function () {
-        var msg = "error occured calculating selection index.";
+        var msg = "error occurred calculating selection index.";
         jQuery(siMsgDiv).html(msg).show();
       });
   }

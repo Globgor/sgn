@@ -22,7 +22,7 @@ use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 page_texts_ok(
     '/breeders_toolbox/upload_transactions_dialogs.mas',
     'You can upload 4 different types of seedlot transactions. All of the transactions in each file have to be the same type.',
-    'Transferring seeds from existing seedlot to a new seedlot. A new seedlot is created beforing adding new transaction.',
+    'Transferring seeds from existing seedlot to a new seedlot. A new seedlot is created before adding new transaction.',
     'Upload Template Information For Existing Seedlot to Unspecified Seedlots/Plots Transactions',
     'Upload Template Information For Existing Seedlot to Existing Seedlot Transactions',
     'Upload Template Information For Accession/Cross to Existing Seedlot Transactions',

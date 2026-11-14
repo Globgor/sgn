@@ -31,7 +31,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/display/bulk_gene.mas',
-    'Enter a list of gene identifier or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of gene identifier or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'Download gene information',
     'And/or upload list file:',
     'Protein sequence',
@@ -73,7 +73,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/display/features.mas',
-    'Enter a list of feature identifier or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of feature identifier or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'Download feature information',
     'And/or upload list file:',
     'feature sequence',

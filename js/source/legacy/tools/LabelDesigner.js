@@ -800,7 +800,7 @@ function updateFields(data_type, source_id, data_level){
         },
         success: function(response) {
             if (response.error) {
-                alert("An error occured while retrieving the design elements of this trial: " + JSON.stringify(response.error));
+                alert("An error occurred while retrieving the design elements of this trial: " + JSON.stringify(response.error));
                 getDataSourceSelect();
             } else {
                 add_fields = response.fields;
@@ -1242,7 +1242,7 @@ function switchLabelDependentOptions(label) {
         $('#d3-add-type-input').focus();
         enableDrawArea();
     }
-    //set addtional options
+    //set additional options
     document.getElementById("top_margin").value = convertPixelsToPageDimensions(label_sizes[label].top_margin);
     document.getElementById("left_margin").value = convertPixelsToPageDimensions(label_sizes[label].left_margin);
     document.getElementById("horizontal_gap").value = convertPixelsToPageDimensions(label_sizes[label].horizontal_gap);

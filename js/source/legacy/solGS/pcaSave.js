@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
                         solGS.submitJob.loginAlert();
                     } 
                 }).fail(function () {
-                    solGS.alertMessage("Error occured checking for user status");
+                    solGS.alertMessage("Error occurred checking for user status");
                 });
 
                 solGS.analysisSave.getPcaResultDetails(pcaArgs).done(function (res) {

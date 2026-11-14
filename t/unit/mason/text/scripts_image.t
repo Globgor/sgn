@@ -43,7 +43,7 @@ page_script_texts_ok(
 
 page_script_texts_ok(
     '/image/print_images.mas',
-    'An error occured while setting the display image',
+    'An error occurred while setting the display image',
 );
 
 done_testing;

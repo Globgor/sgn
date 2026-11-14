@@ -20,7 +20,7 @@ use Test::More;
 my @scripts = (
     [ 'js/source/entries/dataset_scatterplot.js',
         'gettext(\'outliers successfully stored!\')',
-        'gettext(\'outliers successfully reseted!\')',
+        'gettext(\'outliers successfully reset!\')',
     ],
     [ 'js/source/entries/decision_meeting.js',
         'gettext(\'Please select one meeting first.\')',

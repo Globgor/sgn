@@ -19,7 +19,7 @@ use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
     '/breeders_toolbox/cross/index.mas',
-    '{bold}WARNING!{end_bold} Changing the parameters can have unpredicatable results in downstream analyses if they are inconsistent with other data.',
+    '{bold}WARNING!{end_bold} Changing the parameters can have unpredictable results in downstream analyses if they are inconsistent with other data.',
 );
 
 page_sentences_ok(

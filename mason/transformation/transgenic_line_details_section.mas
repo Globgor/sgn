@@ -15,7 +15,7 @@ $can_obsolete
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add accessions to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding transgenic lines (accessions) to a new or exisiting list</i>'&>
+                        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add accessions to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding transgenic lines (accessions) to a new or existing list</i>'&>
                             <br>
                             <div id="transgenic_lines_to_new_list" style="display:none"></div>
                             <div id="transgenic_lines_add_to_list"></div>

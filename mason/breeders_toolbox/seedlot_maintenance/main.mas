@@ -29,7 +29,7 @@
         $seedlot_subtitle = "Login to add Seedlot maintenance events";
     }
     elsif ( $c->user()->check_roles("curator") || $c->user()->check_roles("submitter") ) {
-        $seedlot_subtitle = '<button class="btn btn-sm btn-primary" style="margin:3px" id="record_events">Record Maintenace</button> <button class="btn btn-sm btn-primary" style="margin:3px" id="upload_events">Upload Maintenance</button>'
+        $seedlot_subtitle = '<button class="btn btn-sm btn-primary" style="margin:3px" id="record_events">Record Maintenance</button> <button class="btn btn-sm btn-primary" style="margin:3px" id="upload_events">Upload Maintenance</button>'
     }
 </%perl>
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Seedlot Maintenance Events"), 'h' ),  collapsible => 1, collapsed => !!$tool, subtitle => $seedlot_subtitle &>

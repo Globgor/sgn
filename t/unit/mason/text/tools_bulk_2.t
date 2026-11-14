@@ -29,7 +29,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/bac_end_tab.mas',
-    'Enter a list of identifiers or upload a file containing identifers separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of identifiers or upload a file containing identifiers separated by whitespace (returns, spaces or tabs):',
     'Download BAC end information:',
     'raw sequence and/or quality',
     'trimmed seq. and/or quality',
@@ -39,7 +39,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/bac_tab.mas',
-    'Enter a list of identifiers or upload a file containing identifers separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of identifiers or upload a file containing identifiers separated by whitespace (returns, spaces or tabs):',
     'Clone name with chromosome (C01HBa0001A01)',
     'Arizona-style clone name (LE_HBa0001A01)',
     'Old Cornell-style clone name (P001A01)',
@@ -49,7 +49,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/clone_tab.mas',
-    'Enter a list of identifiers or upload a file containing identifers, one per line:',
+    'Enter a list of identifiers or upload a file containing identifiers, one per line:',
     'Please select the information you would like for each identifier:',
     'TUS number (used to order clones)',
     'automatic (BLAST) annotation',
@@ -59,7 +59,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/converter_tab.mas',
-    'Enter a list of identifiers (SGN unigene ids or TOM1 array ids) or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of identifiers (SGN unigene ids or TOM1 array ids) or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'Convert unigene ids to tomato genome ids',
     'Convert to newest version',
     'And/or upload list file:',
@@ -69,7 +69,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/feature_tab.mas',
-    'Enter a list of feature identifier or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of feature identifier or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'Download feature information',
     'And/or upload list file:',
     'feature sequence',
@@ -79,7 +79,7 @@ page_texts_ok(
 
 page_texts_ok(
     '/tools/bulk/tabs/gene_tab.mas',
-    'Enter a list of gene identifier or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of gene identifier or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'Download gene information',
     'And/or upload list file:',
     'Protein sequence',
@@ -90,7 +90,7 @@ page_texts_ok(
 page_texts_ok(
     '/tools/bulk/tabs/unigene_tab.mas',
     'Check this box to convert each unigene in the list to its equivalent in the most current corresponding unigene build(s), if available',
-    'Enter a list of identifiers or upload a file containing one identifer separated by whitespace (returns, spaces or tabs):',
+    'Enter a list of identifiers or upload a file containing one identifier separated by whitespace (returns, spaces or tabs):',
     'longest ORF from 6-frame translation',
     'Download unigene information',
     'automatic (BLAST) annotation',

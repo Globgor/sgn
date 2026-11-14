@@ -160,7 +160,7 @@
         // Parse query arguments
         parseArgs();
 
-        // Display the maintenance events, set intitial timestamp
+        // Display the maintenance events, set initial timestamp
         resetUI();
 
         // Event change / Click listeners
@@ -324,7 +324,7 @@
     }
 
     /**
-     * Build the display of each of the maintenace events and their values
+     * Build the display of each of the maintenance events and their values
      */
     function setEvents() {
         let html = "";

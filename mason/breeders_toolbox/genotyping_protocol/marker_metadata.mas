@@ -209,7 +209,7 @@
                 method: 'DELETE',
                 success: (resp) => {
                     if ( resp?.error ) {
-                        alert("Could not delete marker meatadata: " + resp.error);
+                        alert("Could not delete marker metadata: " + resp.error);
                     }
                     else {
                         loadMetadata();

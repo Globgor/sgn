@@ -15,7 +15,7 @@ $facilities
         
     <li><% __('The intertek quality control marker sets can be used in 2 ways:') |h %></li>
     <ol>1. <& /util/sentence.mas, text => __x('{bold}Storing new fingerprint of your germplasm {end_bold} that has been genotyped using the qc marker sets as a new protocol.'), bold => '<b>', end_bold => '</b>' &> <& /util/sentence.mas, text => __x('This requires two files for the storage: {em}Intertek grid file{end_em} which has allele calls for each genotype.'), em => '<em>', end_em => '</em>' &> Download sample file <a href="docs/intertek_grid.csv" title="<% __('sample grid file') |h %>"> here.</a> <& /util/sentence.mas, text => __x('The second file is a {em}Map file{end_em} which has all the SNP information.'), em => '<em>', end_em => '</em>' &> Download sample file <a href="docs/SNP_file.csv" title="<% __('sample SNP file') |h %>"> here.</a> </ol><br/>
-    <ol>2.<& /util/sentence.mas, text => __x('{bold} Run genotype quality control{end_bold} with the qc markers by comparing with existing protocol in the database.'), bold => '<b>', end_bold => '</b>' &> This requries just the <a href="docs/intertek_grid.csv" title="<% __('sample grid file') |h %>">grid file</a>
+    <ol>2.<& /util/sentence.mas, text => __x('{bold} Run genotype quality control{end_bold} with the qc markers by comparing with existing protocol in the database.'), bold => '<b>', end_bold => '</b>' &> This requires just the <a href="docs/intertek_grid.csv" title="<% __('sample grid file') |h %>">grid file</a>
     </ol><br/>
     <li><% __('The steps below will guide you through uploading a new fingerprint or performing a quality control.') |h %></li>
     </ul>

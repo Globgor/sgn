@@ -1,7 +1,7 @@
 <h3><% __('Importing CSS') |h %></h3>
 
 <p>
-  <& /util/sentence.mas, text => __x('To import CSS one should use the {component} mason component instead of a {link_tag} element. This will ensure that a link is added to the {head_tag} instead of being part of the {body_tag}. One provides this mason componant with a list of strings which are one of the following:'), component => '<code>/util/import_css.mas</code>', link_tag => '<code>&lt;link&gt;</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>' &>
+  <& /util/sentence.mas, text => __x('To import CSS one should use the {component} mason component instead of a {link_tag} element. This will ensure that a link is added to the {head_tag} instead of being part of the {body_tag}. One provides this mason component with a list of strings which are one of the following:'), component => '<code>/util/import_css.mas</code>', link_tag => '<code>&lt;link&gt;</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>' &>
   <ul>
     <li><% __('The relative path to the CSS file from the /static/css folder.') |h %></li>
     <li><% __('The absolute site path to the CSS file.') |h %></li>
@@ -19,7 +19,7 @@
 <h3><% __('Importing JavaScript') |h %></h3>
 
 <p>
-  <& /util/sentence.mas, text => __x('To import JavaScript one should use the {component} mason component. This will ensure that the script is loaded in the {head_tag} instead of being part of the {body_tag}. One provides this mason componant with a list of strings which are the path to the JavaScript file with slashes replaced by periods (e.g. {expression}) and the file extension removed.'), component => '<code>/util/import_javascript.mas</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>', expression => '<code>s/\\/\\./g</code>' &>
+  <& /util/sentence.mas, text => __x('To import JavaScript one should use the {component} mason component. This will ensure that the script is loaded in the {head_tag} instead of being part of the {body_tag}. One provides this mason component with a list of strings which are the path to the JavaScript file with slashes replaced by periods (e.g. {expression}) and the file extension removed.'), component => '<code>/util/import_javascript.mas</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>', expression => '<code>s/\\/\\./g</code>' &>
   <pre><%text><& /util/import_javascript.mas, classes => [qw[ CXGN.Effects CXGN.Phenome.Locus MochiKit.DOM ]] &></%text></pre>
 </p>
 
@@ -87,7 +87,7 @@
 
 <hr>
 
-<h3><% __('HTML Muliple Selects (get_select_box has many options e.g. search for trials in breeding_program_name)') |h %></h3>
+<h3><% __('HTML Multiple Selects (get_select_box has many options e.g. search for trials in breeding_program_name)') |h %></h3>
 <p><% __('Source:') |h %></p>
 <pre>
 &lt;& /util/import_javascript.mas, classes => ['CXGN.BreedersToolbox.HTMLSelect'] &&gt;

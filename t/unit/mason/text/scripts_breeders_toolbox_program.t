@@ -47,7 +47,7 @@ page_script_texts_ok(
 page_script_texts_ok(
     '/breeders_toolbox/program/traits.mas',
     'Error retrieving traits assayed in this breeding program',
-    'An error occured retrieving trait histogram data.',
+    'An error occurred retrieving trait histogram data.',
 );
 
 page_script_texts_ok(

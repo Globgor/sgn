@@ -24,7 +24,7 @@ my @scripts = (
         'gettext("Please select an analysis population.")',
         'gettext("Running correlation... please wait...")',
         'gettext("There is no correlation output for this dataset.")',
-        'gettext("Error occured running the correlation analysis.")',
+        'gettext("Error occurred running the correlation analysis.")',
     ],
     [ 'js/source/legacy/solGS/analysisStatus.js',
         'gettext("Jobs cleared from recent activity.")',
@@ -43,7 +43,7 @@ my @scripts = (
         'gettext("Cancel")',
     ],
     [ 'js/source/legacy/solGS/combineTrials.js',
-        'gettext(\'Error occured getting combined trials unique id\')',
+        'gettext(\'Error occurred getting combined trials unique id\')',
         'gettext(\'combined Trials id missing.\')',
     ],
     [ 'js/source/legacy/solGS/correlation.js',
@@ -51,7 +51,7 @@ my @scripts = (
     ],
     [ 'js/source/legacy/solGS/gebvPhenoRegression.js',
         'gettext(\'There is no GEBVs vs observed phenotypes regression data.\')',
-        'gettext(\'Error occured requesting for theGEBVs vs observed phenotypes regression data.\')',
+        'gettext(\'Error occurred requesting for theGEBVs vs observed phenotypes regression data.\')',
     ],
 );
 

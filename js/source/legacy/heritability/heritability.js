@@ -189,7 +189,7 @@ function formatGenCorInputData (popId, type, indexFile) {
         error: function(response) {
             jQuery(divPlace +"#heritability_message")
                 .css({"padding-left": '0px'})
-                .html(gettext("Error 3 occured preparing the additive genetic data for heritability analysis."));
+                .html(gettext("Error 3 occurred preparing the additive genetic data for heritability analysis."));
              
             jQuery.unblockUI();
         }         
@@ -283,7 +283,7 @@ function runPhenoHeritabilityAnalysis () {
         error: function(response) {                          
             jQuery("#heritability_message")
                 .css({"padding-left": '0px'})
-                .html(gettext("Error 2 occured running the heritability analysis."));
+                .html(gettext("Error 2 occurred running the heritability analysis."));
             
         jQuery("#run_pheno_heritability").show();
         }                

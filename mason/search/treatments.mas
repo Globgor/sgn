@@ -82,7 +82,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Selected Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the treatment names currently selected in the search results table to a new or exisiting list</i>'&>
+                    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Selected Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the treatment names currently selected in the search results table to a new or existing list</i>'&>
                     <br>
                     <p><em><& /util/sentence.mas, text => __x('{span}{count}{end_span} treatment(s) selected.'), span => '<span id="treatment_result_count">', end_span => '</span>', count => '0' &></em></p>
                     <div style="text-align:right" id="treatments_to_list_menu"></div>
@@ -210,7 +210,7 @@ function parseArgs() {
 }
 
 /**
- * Copy the specifed treatment information to the user's clipboard
+ * Copy the specified treatment information to the user's clipboard
  * - name = treatment name
  * - accession = treatment accession term
  * - id = treatment cvterm id

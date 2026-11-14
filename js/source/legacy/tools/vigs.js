@@ -581,7 +581,7 @@ $(document).ready(function () {
 		var coverage = $("#coverage_val").val();
 		var seq_length = $("#seq_length").val();
 
-		var xscale = +(700/seq_length); // to transform sequence legth to pixels
+		var xscale = +(700/seq_length); // to transform sequence length to pixels
 		var img_h = +(img_height-52);
 		var img_width = 700;
 

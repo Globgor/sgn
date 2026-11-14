@@ -21,7 +21,7 @@ page_sentences_ok(
     '/phenotypes/submission_guide.mas',
     'For submitting phenotyping experiments to SGN you will be asked to fill in a few steps. Phenotypes are linked with plant accessions. If the accession is already in the database, you will have to make sure the accession in your file has exactly the same name. Search the {link}phenotype database{end_link} for existing accessions. Since phenotypes are scored on single plants in the field or a greenhouse, or on plots of several plants, you will need to assign in each experiment unique identifiers for each one of your experimental units (a single plant or a plot).',
     '{strong}Organism name:{end_strong} Start typing the species scientific name. An autocomplete list should pop up. If your organism is not in the list, please {link}contact us{end_link}.',
-    'Where the experiment was performed. We also support {link}WGS84 geodetic datum{end_link}. For a full geolocation fill in the longitude, latitide, and altitude fields.',
+    'Where the experiment was performed. We also support {link}WGS84 geodetic datum{end_link}. For a full geolocation fill in the longitude, latitude, and altitude fields.',
     '{strong}Repeat number{end_strong} (optional)',
 );
 

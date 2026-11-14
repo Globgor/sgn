@@ -37,7 +37,7 @@ sub run_perl {
 }
 
 my @modules = (
-    [ 'lib/SGN/Controller/AJAX/Accessions/Rename.pm', 'SGN::Controller::AJAX::Accessions::Rename', [ '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to rename accessions.")', '__("The rename accessions funtion requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again.")', '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to rename accessions.")' ] ],
+    [ 'lib/SGN/Controller/AJAX/Accessions/Rename.pm', 'SGN::Controller::AJAX::Accessions::Rename', [ '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to rename accessions.")', '__("The rename accessions function requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again.")', '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to rename accessions.")' ] ],
 );
 
 for my $module (@modules) {

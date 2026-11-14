@@ -20,12 +20,12 @@ use Test::More;
 my @scripts = (
     [ 'js/source/legacy/heritability/heritability.js',
         'gettext("This trial has no valid traits to calculate heritability.")',
-        'gettext("Error 3 occured preparing the additive genetic data for heritability analysis.")',
+        'gettext("Error 3 occurred preparing the additive genetic data for heritability analysis.")',
         'gettext("Running heritability...")',
         'gettext("This population has no phenotype data.")',
         'gettext("Please check if the data has replicates.")',
         'gettext("Please, check if there is numerical data and replicates for this trial.")',
-        'gettext("Error 2 occured running the heritability analysis.")',
+        'gettext("Error 2 occurred running the heritability analysis.")',
     ],
 );
 

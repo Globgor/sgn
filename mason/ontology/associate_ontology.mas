@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-/ontology/associate_ontology.mas - a component for printing a generic 'associate_ontology' javasript form and displaying the ontology annotation
+/ontology/associate_ontology.mas - a component for printing a generic 'associate_ontology' javascript form and displaying the ontology annotation
 
 =head1 DESCRIPTION
 
@@ -27,7 +27,7 @@ defaults to /ajax/cvterm/autocomplete
 
 the uri for associating the cvterm with your object
 
-=iterm relationships_uri
+=item relationships_uri
 
 populate the relationships drop down menu. defaults to /ajax/cvterm/relationships
 
@@ -39,7 +39,7 @@ populate the evidence code menu. Defaults to /ajax/cvterm/evidence
 
 populate the evidence description menu. Defaults to /ajax/cvterm/evidence_description
 
-=iterm show_form
+=item show_form
 
 whether the associate form should be printed. Usually only if the user is logged-in
 

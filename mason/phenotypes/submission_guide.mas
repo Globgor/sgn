@@ -43,7 +43,7 @@ Naama Menda (nm249@cornell.edu)
   </li>
   <li>
     <strong> <% __('Location') |h %></strong><br />
-    <& /util/sentence.mas, text => __x('Where the experiment was performed. We also support {link}WGS84 geodetic datum{end_link}. For a full geolocation fill in the longitude, latitide, and altitude fields.'), link => '<a href="http://en.wikipedia.org/wiki/WGS84">', end_link => '</a>' &>
+    <& /util/sentence.mas, text => __x('Where the experiment was performed. We also support {link}WGS84 geodetic datum{end_link}. For a full geolocation fill in the longitude, latitude, and altitude fields.'), link => '<a href="http://en.wikipedia.org/wiki/WGS84">', end_link => '</a>' &>
   </li>
   </ul>
 </&>

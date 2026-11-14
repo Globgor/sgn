@@ -184,7 +184,7 @@ $identifier_prefix => ''
 
     <button id="property_submit" ><% __('Save') |h %></button>
 
-    <p><& /util/sentence.mas, text => __x('{bold}WARNING!{end_bold} Changing the parameters can have unpredicatable results in downstream analyses if they are inconsistent with other data.'), bold => '<b>', end_bold => '</b>' &></p>
+    <p><& /util/sentence.mas, text => __x('{bold}WARNING!{end_bold} Changing the parameters can have unpredictable results in downstream analyses if they are inconsistent with other data.'), bold => '<b>', end_bold => '</b>' &></p>
 
 </div>
 

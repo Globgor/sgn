@@ -202,7 +202,7 @@ solGS.combinedTrials = {
 
 		},
 		error: function(res) {
-    		    alert(gettext('Error occured getting combined trials unique id'));
+    		    alert(gettext('Error occurred getting combined trials unique id'));
 		}
 
 	    });
@@ -304,7 +304,7 @@ solGS.combinedTrials = {
             },
             error: function(res) {
 		jQuery.unblockUI();
-		alert('An error occured retrieving phenotype' +
+		alert('An error occurred retrieving phenotype' +
                       'and genotype data for trials..');
             }
 	});

@@ -50,9 +50,9 @@
    <textarea class="form-control" id="sequence" name="sequence" ></textarea><br>
 
    <div class="form-inline">
-   	<label><span style="cursor:default" title="<% __('lenght(s) of motif, seperated by comma without space(eg. 4,6)') |h %>"><% __('Motif width(s)') |h %></span></label>
+   	<label><span style="cursor:default" title="<% __('lenght(s) of motif, separated by comma without space(eg. 4,6)') |h %>"><% __('Motif width(s)') |h %></span></label>
    	<input class="form-control" type="text" name="widths_of_motifs" style="width: 110px;" value="12,14">&nbsp;&nbsp;&nbsp;
-   	<label><span style="cursor:default" title="<% __('Number of sites expected in each sequence, seperated by comma without space(eg. 4,6)') |h %>"><% __('Expected sites') |h %></span></label>
+   	<label><span style="cursor:default" title="<% __('Number of sites expected in each sequence, separated by comma without space(eg. 4,6)') |h %>"><% __('Expected sites') |h %></span></label>
    	<input class="form-control" type="text" name="numbers_of_sites" style="width: 110px;" value="3,5"> <br><br>
    </div>
 

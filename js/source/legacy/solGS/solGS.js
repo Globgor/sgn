@@ -80,7 +80,7 @@ solGS.submitJob = {
         }
       },
       error: function () {
-        alert(gettext("Error occured checking for cached output."));
+        alert(gettext("Error occurred checking for cached output."));
       },
     });
   },
@@ -412,7 +412,7 @@ solGS.submitJob = {
 
     checkName.fail(function (res) {
       var message =
-        "Error occured submitting the job. Please contact the developers." +
+        "Error occurred submitting the job. Please contact the developers." +
         "\n\nHint: " +
         response.result;
       solGS.alertMessage(message);
@@ -602,7 +602,7 @@ solGS.submitJob = {
         }
       },
       error: function () {
-        var message = "Error occured calling the function to save your analysis profile.";
+        var message = "Error occurred calling the function to save your analysis profile.";
         solGS.alertMessage(message);
       },
     });
@@ -619,7 +619,7 @@ solGS.submitJob = {
           solGS.submitJob.submissionFeedback(res.arguments);
         } else {
           var message =
-            "Error occured submitting the job. Please contact the developers." +
+            "Error occurred submitting the job. Please contact the developers." +
             "\n\nHint: " +
             res.result;
           solGS.alertMessage(message);
@@ -627,7 +627,7 @@ solGS.submitJob = {
       },
       error: function (response) {
         var message =
-          "Error occured submitting the job. Please contact the developers." +
+          "Error occurred submitting the job. Please contact the developers." +
           "\n\nHint: " +
           res.result;
         solGS.alertMessage(message);

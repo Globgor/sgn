@@ -4,7 +4,7 @@
 
 /ontology/browser.mas - a mason component that displays an ontology browser
 
-=head1 DESCRITPION
+=head1 DESCRIPTION
 
 The ontology browser is relying on JavaScript and uses AJAX requests to pull in the data. The AJAX requests are handled by a Catalyst controller SGN::Controller::AJAX::Onto. The JavaScript code is in js/CXGN/Tools/Onto.js.
 

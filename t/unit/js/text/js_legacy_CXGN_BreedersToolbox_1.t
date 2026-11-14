@@ -27,7 +27,7 @@ my @scripts = (
         'gettext("The plot list did not pass validation. Names in the list must be uniquenames with plot stock type in the database")',
         'gettext("A list of plants is required")',
         'gettext("The plant list did not pass validation. Names in the list must be uniquenames with plant stock type in the database")',
-        'gettext(\'An error occured retrieving population data.\')',
+        'gettext(\'An error occurred retrieving population data.\')',
         'gettext("Member Name")',
         'gettext("Member Type")',
         'gettext("Description")',

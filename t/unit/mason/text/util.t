@@ -22,7 +22,7 @@ use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 page_texts_ok(
     '/util/styleguide.mas',
     'This section is used from trial detail page and stock detail page, but ideally it would be used on all detail pages. The info_section_id specifies what to show in the main section. Buttons can be passed into the buttons_html.',
-    'HTML Muliple Selects (get_select_box has many options e.g. search for trials in breeding_program_name)',
+    'HTML Multiple Selects (get_select_box has many options e.g. search for trials in breeding_program_name)',
     'Genotyping Plate Symbol(96 or 384 well plate)[Manage Genotyping Plates]',
     'There is still a pending step. Complete it to see the final endscreen.',
     'The relative path to the CSS file from the /static/css folder.',

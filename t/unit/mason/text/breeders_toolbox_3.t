@@ -52,10 +52,10 @@ page_texts_ok(
 page_texts_ok(
     '/breeders_toolbox/discard_undo_seedlot_usage.mas',
     'Deleting a seedlot permanently removes that seedlot and all associated transactions from database. Discarding a seedlot inactivates the seedlot, but information related to that seedlot is still kept in the database.',
-    'Using a List: Several seedlots can be discarded at once by using a list with seedlots list type. The link can be found at the buttom of Manage Seedlots (Available Seedlots) page.',
+    'Using a List: Several seedlots can be discarded at once by using a list with seedlots list type. The link can be found at the bottom of Manage Seedlots (Available Seedlots) page.',
     'Discarded seedlots still can be viewed in seedlot details pages and are searchable. However, links for adding new transaction, editing details and transaction are removed.',
     'Discarding a seedlot can be reversed with UNDO function, but deletion a seedlot cannot be undone.',
-    'Discarded seedlot can be reversed by using UNDO option at the buttom of Seedlot Details page',
+    'Discarded seedlot can be reversed by using UNDO option at the bottom of Seedlot Details page',
     'Only users with curator role can mark seedlots as "DISCARDED" or undo discarding seedlots.',
 );
 

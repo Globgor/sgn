@@ -22,8 +22,8 @@ use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 page_texts_ok(
     '/tools/motifs_finder/index.mas',
     'This value is the number of time the sampler is restarted and can be changed to sample over a larger (or smaller) number of separate initial models.',
-    'Number of sites expected in each sequence, seperated by comma without space(eg. 4,6)',
-    'lenght(s) of motif, seperated by comma without space(eg. 4,6)',
+    'Number of sites expected in each sequence, separated by comma without space(eg. 4,6)',
+    'lenght(s) of motif, separated by comma without space(eg. 4,6)',
     'Insert a sequence file in a tab-delimited format',
     'Upload Sequence file:',
     'Advance options help',

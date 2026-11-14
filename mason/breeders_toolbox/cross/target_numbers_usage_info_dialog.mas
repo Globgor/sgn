@@ -14,7 +14,7 @@
                     <h4>
                         <% __('Target Numbers of Seeds and/or Progenies:') |h %>
                     </h4>
-                    <p><% __('You can set target numbers of seeds and/or target numbers of progenies for parental combinations that you plan to include in this cossing experiment. Once target numbers are stored in the database, this section will automatically track crossing acitvities in this crossing experiment. Target numbers can be added before or after actual crossing activities are stored in the database.') |h %></p>
+                    <p><% __('You can set target numbers of seeds and/or target numbers of progenies for parental combinations that you plan to include in this cossing experiment. Once target numbers are stored in the database, this section will automatically track crossing activities in this crossing experiment. Target numbers can be added before or after actual crossing activities are stored in the database.') |h %></p>
                     <br>
                     <h4>
                         <% __('How to Record Target Numbers:') |h %>

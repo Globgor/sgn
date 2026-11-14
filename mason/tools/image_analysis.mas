@@ -995,7 +995,7 @@ jQuery(document).ready(function(){
         let plantId = table_data[0].observationUnitDbId;
         
         if (jQuery('#image_analysis_service_select option:selected').text() === "Citrus Image Multi Analysis" || jQuery('#image_analysis_service_select option:selected').text() === "Image Multi Object Multi Trait Analysis") {
-            if (submit_results.stock_type_name === "plot") { //shold this be !== "plant"?
+            if (submit_results.stock_type_name === "plot") { //should this be !== "plant"?
                 jQuery.ajax({
                     type: 'GET',
                     contentType: 'application/json',

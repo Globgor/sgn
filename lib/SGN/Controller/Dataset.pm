@@ -139,7 +139,7 @@ sub publish_dataset_authorize_finish : Path('/dataset/publish/authorize') Args(0
 
     if ( $error ) {
         $c->stash->{template} = 'generic_message.mas';
-        $c->stash->{message} = "Could not authorize the appication: $error";
+        $c->stash->{message} = "Could not authorize the application: $error";
         return;
     }
 

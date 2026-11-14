@@ -253,7 +253,7 @@ jQuery(document).ready(function () {
                 }
             }).fail(function (res) {
                 jQuery(`${canvas} .multi-spinner-container`).hide();
-                jQuery(corrMsgDiv).html(gettext("Error occured running the correlation analysis.")).fadeOut(8400);
+                jQuery(corrMsgDiv).html(gettext("Error occurred running the correlation analysis.")).fadeOut(8400);
             });
         }
     });

@@ -188,7 +188,7 @@ sub seq_windows_and_ranges {
     return map {
         my $window = $_;
 
-        # find ranges appicable to this window
+        # find ranges applicable to this window
         my @window_ranges =
             grep { $_->start >= $window->start && $_->end <= $window->end }
             @ranges;
