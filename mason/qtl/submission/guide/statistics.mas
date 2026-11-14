@@ -13,13 +13,13 @@ Isaak Y Tecle (iyt2@cornell.edu)
 </%doc>
 
 <&| /page/info_section.mas, 
-   title      => "Step 5: Statistical parameters",
+   title      => $m->interp->apply_escapes( __("Step 5: Statistical parameters"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>
 
 
-The qtl analysis uses R/QTL package and implements an interval mapping with the following parameters. <br/>
+<% __('The qtl analysis uses R/QTL package and implements an interval mapping with the following parameters.') |h %> <br/>
 
 <ul>
   <li>

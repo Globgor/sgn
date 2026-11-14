@@ -12,7 +12,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 </%doc>
 <&| /page/info_section.mas, 
-   title      => "Further reading",
+   title      => $m->interp->apply_escapes( __("Further reading"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>

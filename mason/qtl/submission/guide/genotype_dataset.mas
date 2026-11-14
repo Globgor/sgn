@@ -13,12 +13,12 @@ Isaak Y Tecle (iyt2@cornell.edu)
 </%doc>
 
 <&| /page/info_section.mas, 
-   title      => "Step 4: Genotype dataset",
+   title      => $m->interp->apply_escapes( __("Step 4: Genotype dataset"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>
 
-The genotype dataset should be in a text file and in the following format. The plant names in the genotype dataset must be exactly the same as the ones submitted in the phenotype dataset file in the previous step.
+<% __('The genotype dataset should be in a text file and in the following format. The plant names in the genotype dataset must be exactly the same as the ones submitted in the phenotype dataset file in the previous step.') |h %>
 <ul>
   <li><strong>First row</strong>: first column refers to the label of the rows of lines. The rest of the columns are marker names.
 </li>
