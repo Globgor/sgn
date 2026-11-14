@@ -24,25 +24,25 @@ $q ||= CXGN::Genomic::Search::Clone->new->new_query;
 </%perl>
 
   <table class="search_form_title" summary=""><tr><td>
-    <span class="search_form_title">Genomic clone search</span>
+    <span class="search_form_title"><% __('Genomic clone search') |h %></span>
   </td><td align="right">
     <a class="search_form_random" href="/maps/physical/clone_info.pl?random=yes">
-    Select a genomic clone at random
+    <% __('Select a genomic clone at random') |h %>
     </a>
   </td></tr></table>
 
 <form action="/maps/physical/clone_search.pl" method="get">
   <div class="indentedcontent">
       <% $q->to_html %>
-    <h3>Related Links:</h3>
+    <h3><% __('Related Links:') |h %></h3>
     <ul>
-    <li><a href="/maps/physical/list_bacs_by_plate.pl">Browse BACs by Overgo Plate</a></li>
-    <li><a href="/cview/map.pl?map_id=1&amp;physical=1">About Physical Mapping</a></li>
-    <li><a href="/maps/physical/overgo_stats.pl">Overgo Project</a></li>
-    <li><a href="/maps/physical/overgo_process_explained.pl">Overgo plating process</a></li>
-    <li><a href="http://www.genome.arizona.edu/fpc/tomato/">Tomato FPC Map at AGI</a></li>
-    <li><a href="/supplement/plantcell-14-1441/bac_annotation.pl">Old (2000) chromosome 6 tomato BAC annotation</a></li>
-    <li><a href="/solanaceae-project/seed_bac_selection.pl">Guidelines for seed BAC selection</a></li>
+    <li><a href="/maps/physical/list_bacs_by_plate.pl"><% __('Browse BACs by Overgo Plate') |h %></a></li>
+    <li><a href="/cview/map.pl?map_id=1&amp;physical=1"><% __('About Physical Mapping') |h %></a></li>
+    <li><a href="/maps/physical/overgo_stats.pl"><% __('Overgo Project') |h %></a></li>
+    <li><a href="/maps/physical/overgo_process_explained.pl"><% __('Overgo plating process') |h %></a></li>
+    <li><a href="http://www.genome.arizona.edu/fpc/tomato/"><% __('Tomato FPC Map at AGI') |h %></a></li>
+    <li><a href="/supplement/plantcell-14-1441/bac_annotation.pl"><% __('Old (2000) chromosome 6 tomato BAC annotation') |h %></a></li>
+    <li><a href="/solanaceae-project/seed_bac_selection.pl"><% __('Guidelines for seed BAC selection') |h %></a></li>
     </ul>
   </div>
 </form>
