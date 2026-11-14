@@ -43,7 +43,7 @@ var Ontology = {
                 if (error) { alert(error) ; }
             },
 	    error: function () {
-                alert('Error submitting ontology term');
+                alert(gettext('Error submitting ontology term'));
             }
 
 	} );
