@@ -51,7 +51,7 @@
          id1 = response[0].germplasmId;
        },
        error: function(response) { 
-         alert("An error occurred.");
+         alert(<% __('An error occurred.') |js %>);
        }
      });
 
@@ -65,7 +65,7 @@
          id2 = response[0].germplasmId;
        },
        error: function(response) { 
-         alert("An error occurred");
+         alert(<% __('An error occurred') |js %>);
   
        }
      });
