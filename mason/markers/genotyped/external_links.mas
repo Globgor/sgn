@@ -22,7 +22,7 @@
 
 
 <div id="external-links">
-    <div id="external-links-table"><p><em>Loading...</em></p></div>
+    <div id="external-links-table"><p><em><% __('Loading...') |h %></em></p></div>
     <div id="external-links-flankingseq"></div>
 </div>
 
