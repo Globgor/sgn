@@ -23,10 +23,10 @@ $display_order
         var display_order = jQuery('#display_order').val();
         jQuery.ajax( { 
            url: '/ajax/image/<% $image_id %>/<% $type %>/<% $id %>/display_order/'+display_order,
-           error: function(e) { alert('an error occurred'); },
+           error: function(e) { alert(<% __('an error occurred') |js %>); },
            success: function(r) {
              if (r.error) { alert(r.error); return; }
-             alert('Successfully changed display_order');
+             alert(<% __('Successfully changed display_order') |js %>);
            }
         });
      });

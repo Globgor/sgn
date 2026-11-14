@@ -95,7 +95,7 @@ jQuery(document).ready(function() {
             compare_images_selected_image_ids.push(jQuery(this).val());
         });
         if (compare_images_selected_image_ids.length != 2){
-            alert('Please select two image types!');
+            alert(<% __('Please select two image types!') |js %>);
             return false;
         } else {
     
@@ -116,7 +116,7 @@ jQuery(document).ready(function() {
                 },
                 error: function(response){
                     jQuery("#working_modal").modal("hide");
-                    alert('Error comparing images!')
+                    alert(<% __('Error comparing images!') |js %>)
                 }
             });
         }
