@@ -19,12 +19,12 @@ $composable_meta_root_cvterm => undef
 
 <& /util/import_javascript.mas, classes => ['CXGN.BreederSearch', 'CXGN.ComposeTrait'] &>
 
-<& /page/page_title.mas, title=>"Compose a new trait" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Compose a new trait"), 'h' ) &>
 </br>
 
 <div class="panel panel-default">
     <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapse0">
-        <div class="panel-title"><a href="#form" class="accordion-toggle">Trait Combinations</a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
+        <div class="panel-title"><a href="#form" class="accordion-toggle"><% __('Trait Combinations') |h %></a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
     </div>
     <div id="collapse0" class="panel-collapse collapse in">
         <div class="panel-body form-horizontal container-fluid" style="overflow:hidden">
@@ -38,56 +38,56 @@ $composable_meta_root_cvterm => undef
 
 <div class="panel panel-default">
   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
-    <div class="panel-title"><a href="#form" class="accordion-toggle">Base Trait</a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
+    <div class="panel-title"><a href="#form" class="accordion-toggle"><% __('Base Trait') |h %></a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
   </div>
   <div id="collapse1" class="panel-collapse collapse in">
     <div class="panel-body form-horizontal container-fluid" style="overflow:hidden">
         <div class="col-sm-12 col-md-12 col-lg-12">
         <div id="object_div" class="col-md-6" style="display: none;">
-            <label for="object_select_div" class="control-label">Object</label>
-            <p class="help-block"><small>Pick the object on which the new trait is measured</small></p>
+            <label for="object_select_div" class="control-label"><% __('Object') |h %></label>
+            <p class="help-block"><small><% __('Pick the object on which the new trait is measured') |h %></small></p>
             <div id="object_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="object_select_all" name="object_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="object_select_clear" name="object_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="object_select_all" name="object_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="object_select_clear" name="object_select_clear"/><% __('Clear') |h %></button>
         </div>
         <div id="attribute_div" class="col-md-6" style="display: none;">
-            <label for="attribute_select_div" class="control-label">Attribute</label>
-            <p class="help-block"><small>Pick the attribute the new trait measures</small></p>
+            <label for="attribute_select_div" class="control-label"><% __('Attribute') |h %></label>
+            <p class="help-block"><small><% __('Pick the attribute the new trait measures') |h %></small></p>
             <div id="attribute_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="attribute_select_all" name="attribute_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="attribute_select_clear" name="attribute_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="attribute_select_all" name="attribute_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="attribute_select_clear" name="attribute_select_clear"/><% __('Clear') |h %></button>
         </div>
 
         <div id="method_div" class="col-md-6" style="display: none;">
-            <label for="method_select_div" class="control-label">Method</label>
-            <p class="help-block"><small>Pick the method by which the new trait is measured</small></p>
+            <label for="method_select_div" class="control-label"><% __('Method') |h %></label>
+            <p class="help-block"><small><% __('Pick the method by which the new trait is measured') |h %></small></p>
             <div id="method_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="method_select_all" name="method_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="method_select_clear" name="method_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="method_select_all" name="method_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="method_select_clear" name="method_select_clear"/><% __('Clear') |h %></button>
         </div>
         <div id="unit_div" class="col-md-6" style="display: none;">
-            <label for="unit_select_div" class="control-label">Unit</label>
-            <p class="help-block"><small>Pick the units in which the new trait is measured</small></p>
+            <label for="unit_select_div" class="control-label"><% __('Unit') |h %></label>
+            <p class="help-block"><small><% __('Pick the units in which the new trait is measured') |h %></small></p>
             <div id="unit_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="unit_select_all" name="unit_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="unit_select_clear" name="unit_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="unit_select_all" name="unit_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="unit_select_clear" name="unit_select_clear"/><% __('Clear') |h %></button>
         </div>
 
         <div id="trait_div" class="col-md-6" style="display: none;">
-            <label for="trait_select_div" class="control-label">Trait</label>
-            <p class="help-block"><small>Pick an existing trait</small></p>
-            <input type="text" id="trait_search" class="form-control input-sm" placeholder="Search traits...">
+            <label for="trait_select_div" class="control-label"><% __('Trait') |h %></label>
+            <p class="help-block"><small><% __('Pick an existing trait') |h %></small></p>
+            <input type="text" id="trait_search" class="form-control input-sm" placeholder="<% __('Search traits...') |h %>">
             <div id="trait_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="trait_select_all" name="trait_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="trait_select_clear" name="trait_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="trait_select_all" name="trait_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="trait_select_clear" name="trait_select_clear"/><% __('Clear') |h %></button>
         </div>
 
         <div id="meta_div" class="col-md-6" style="display: none;">
-            <label for="meta_select_div" class="control-label">Metadata</label>
-            <p class="help-block"><small>Pick a metadata property</small></p>
+            <label for="meta_select_div" class="control-label"><% __('Metadata') |h %></label>
+            <p class="help-block"><small><% __('Pick a metadata property') |h %></small></p>
             <div id="meta_select_div"></div><br>
-            <button class="btn btn-default btn-sm" id="meta_select_all" name="meta_select_all"/>Select All</button>
-            <button class="btn btn-default btn-sm" id="meta_select_clear" name="meta_select_clear"/>Clear</button>
+            <button class="btn btn-default btn-sm" id="meta_select_all" name="meta_select_all"/><% __('Select All') |h %></button>
+            <button class="btn btn-default btn-sm" id="meta_select_clear" name="meta_select_clear"/><% __('Clear') |h %></button>
         </div>
         </div>
 </div>
@@ -96,47 +96,47 @@ $composable_meta_root_cvterm => undef
 
 <div class="panel panel-default">
   <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">
-    <div class="panel-title"><a href="#form" class="accordion-toggle">Time Terms</a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
+    <div class="panel-title"><a href="#form" class="accordion-toggle"><% __('Time Terms') |h %></a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
   </div>
   <div id="collapse2" class="panel-collapse collapse in">
     <div class="panel-body form-horizontal container-fluid" style="overflow:hidden">
     <div class="col-sm-12 col-md-12 col-lg-12">
     <div id="tod_div" class="col-md-6" style="display: none;">
-      <label for="tod_select_div" class="control-label">Time of Day</label>
+      <label for="tod_select_div" class="control-label"><% __('Time of Day') |h %></label>
       <p class="help-block"><small><i>Optional</i> Pick the time of day at which the new trait is measured</small></p>
       <div id="tod_select_div"></div><br>
-      <button class="btn btn-default btn-sm" id="tod_select_all" name="tod_select_all"/>Select All</button>
-      <button class="btn btn-default btn-sm" id="tod_select_clear" name="tod_select_clear"/>Clear</button>
+      <button class="btn btn-default btn-sm" id="tod_select_all" name="tod_select_all"/><% __('Select All') |h %></button>
+      <button class="btn btn-default btn-sm" id="tod_select_clear" name="tod_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="toy_div" class="col-md-6" style="display: none;">
-      <label for="toy_select_div" class="control-label">Time of Year</label>
+      <label for="toy_select_div" class="control-label"><% __('Time of Year') |h %></label>
       <p class="help-block"><small><i>Optional</i> Pick the day, week, or month in which the new trait is measured</small></p>
       <input type="text" id="toy_search" class="form-control input-sm" placeholder="Search minute, hour, day, week, month...">
       <div id="toy_select_div"></div><br>
-      <button class="btn btn-default btn-sm" id="toy_select_all" name="toy_select_all"/>Select All</button>
-      <button class="btn btn-default btn-sm" id="toy_select_clear" name="toy_select_clear"/>Clear</button>
+      <button class="btn btn-default btn-sm" id="toy_select_all" name="toy_select_all"/><% __('Select All') |h %></button>
+      <button class="btn btn-default btn-sm" id="toy_select_clear" name="toy_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="tiy_div" class="col-md-6" style="display: none;">
-      <label for="tiy_select_div" class="control-label">Time in Years</label>
+      <label for="tiy_select_div" class="control-label"><% __('Time in Years') |h %></label>
       <p class="help-block"><small><i>Optional</i> Pick the year in which the new trait is measured</small></p>
       <input type="text" id="tiy_search" class="form-control input-sm" placeholder="Search year...">
       <div id="tiy_select_div"></div><br>
-      <button class="btn btn-default btn-sm" id="tiy_select_all" name="tiy_select_all"/>Select All</button>
-      <button class="btn btn-default btn-sm" id="tiy_select_clear" name="tiy_select_clear"/>Clear</button>
+      <button class="btn btn-default btn-sm" id="tiy_select_all" name="tiy_select_all"/><% __('Select All') |h %></button>
+      <button class="btn btn-default btn-sm" id="tiy_select_clear" name="tiy_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="gen_div" class="col-md-6" style="display: none;">
-      <label for="gen_select_div" class="control-label">Generation</label>
+      <label for="gen_select_div" class="control-label"><% __('Generation') |h %></label>
       <p class="help-block"><small><i>Optional</i> Pick the generation on which the new trait is measured</small></p>
       <div id="gen_select_div"></div><br>
-      <button class="btn btn-default btn-sm" id="gen_select_all" name="gen_select_all"/>Select All</button>
-      <button class="btn btn-default btn-sm" id="gen_select_clear" name="gen_select_clear"/>Clear</button>
+      <button class="btn btn-default btn-sm" id="gen_select_all" name="gen_select_all"/><% __('Select All') |h %></button>
+      <button class="btn btn-default btn-sm" id="gen_select_clear" name="gen_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="evt_div" class="col-md-6" style="display: none;">
-      <label for="evt_select_div" class="control-label">Event</label>
+      <label for="evt_select_div" class="control-label"><% __('Event') |h %></label>
       <p class="help-block"><small><i>Optional</i> Pick the breeding event to which you selected time term relates.</small></p>
       <div id="evt_select_div"></div><br>
-      <button class="btn btn-default btn-sm" id="evt_select_all" name="evt_select_all"/>Select All</button>
-      <button class="btn btn-default btn-sm" id="evt_select_clear" name="evt_select_clear"/>Clear</button>
+      <button class="btn btn-default btn-sm" id="evt_select_all" name="evt_select_all"/><% __('Select All') |h %></button>
+      <button class="btn btn-default btn-sm" id="evt_select_clear" name="evt_select_clear"/><% __('Clear') |h %></button>
     </div>
     </div>
   </div>
@@ -146,23 +146,23 @@ $composable_meta_root_cvterm => undef
 
   <div class="panel panel-default">
     <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">
-      <div class="panel-title"><a href="#form" class="accordion-toggle">Combinations</a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
+      <div class="panel-title"><a href="#form" class="accordion-toggle"><% __('Combinations') |h %></a><span class="pull-right clickable" onmouseover="" style="cursor: pointer;"><i class="glyphicon glyphicon-chevron-up"></i></span></div>
     </div>
     <div id="collapse3" class="panel-collapse collapse in">
       <div class="panel-body form-horizontal container-fluid" style="overflow:hidden">
 <div class="col-sm-12 col-md-12 col-lg-12">
 <div class="col-md-6">
-  <center><label class="control-label">Existing Traits</label></center>
-  <center><p class="help-block"><small>Existing traits that match the current selections</small></p></center>
+  <center><label class="control-label"><% __('Existing Traits') |h %></label></center>
+  <center><p class="help-block"><small><% __('Existing traits that match the current selections') |h %></small></p></center>
   <select multiple class="form-control" id="existing_traits"></select>
   </br>
   <div id="existing_traits_to_list"></div>
 </div>
 <div class="col-md-6">
-  <center><label class="control-label">New Traits</label></center>
-  <center><p class="help-block"><small>New traits that can be made from the current selections</small></p></center>
+  <center><label class="control-label"><% __('New Traits') |h %></label></center>
+  <center><p class="help-block"><small><% __('New traits that can be made from the current selections') |h %></small></p></center>
   <select multiple class="form-control" id="new_traits"></select></br>
-  <center><button id="compose_trait" title="Select at least one new trait to create before submitting" class="btn btn-primary">Submit</button></center>
+  <center><button id="compose_trait" title="<% __('Select at least one new trait to create before submitting') |h %>" class="btn btn-primary"><% __('Submit') |h %></button></center>
 </div>
 </div>
 
@@ -176,13 +176,13 @@ $composable_meta_root_cvterm => undef
     <div class="modal-dialog" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="traitsSavedDialog">Results</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="traitsSavedDialog"><% __('Results') |h %></h4>
             </div>
             <div id="traits_saved_body" class="container-fluid">
             </div>
             <div class="modal-footer">
-                <button id="traits_saved_close_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="traits_saved_close_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

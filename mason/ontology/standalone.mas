@@ -5,9 +5,9 @@ $db_name => undef
 $expand => undef
 </%args>
 
-<& /page/page_title.mas, title=>"Ontology browser" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Ontology browser"), 'h' ) &>
 
-<&| /page/info_section.mas, title=>"Search and browse ontologies", collapsible=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Search and browse ontologies"), 'h' ), collapsible=>1 &>
   <& /ontology/browser.mas, root_nodes=>$root_nodes, db_name=>$db_name, expand=>$expand &>
 </&>
 
