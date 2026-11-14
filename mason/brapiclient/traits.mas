@@ -3,8 +3,8 @@
 
 <div id="brapi_home_traits_div">
 
-    <h4>Traits</h4>
-    <button class="btn btn-primary" name="brapi_home_traits_submit" id="brapi_home_traits_submit">Get Traits</button>
+    <h4><% __('Traits') |h %></h4>
+    <button class="btn btn-primary" name="brapi_home_traits_submit" id="brapi_home_traits_submit"><% __('Get Traits') |h %></button>
     <br/><br/>
     <div id="brapi_traits_data_result_div">
     </div>

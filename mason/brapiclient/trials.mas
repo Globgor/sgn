@@ -3,10 +3,10 @@
 
 <div id="brapi_home_trial_search_div">
 
-    <h4>Trial Search</h4>
+    <h4><% __('Trial Search') |h %></h4>
     <input name="brapi_home_trials_locationid" id="brapi_home_trials_locationid" class="form-control" type="text" placeholder="LocationDbId e.g. 23" value="23"/>
     <input name="brapi_home_trials_programid" id="brapi_home_trials_programid" class="form-control" type="text" placeholder="ProgramDbId e.g. 134" value="134"/>
-    <button class="btn btn-primary" name="brapi_home_trial_search_submit" id="brapi_home_trial_search_submit">Get Trials</button>
+    <button class="btn btn-primary" name="brapi_home_trial_search_submit" id="brapi_home_trial_search_submit"><% __('Get Trials') |h %></button>
     <br/><br/>
     <div id="brapi_trials_result_div">
     </div>

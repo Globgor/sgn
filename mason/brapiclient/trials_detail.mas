@@ -3,9 +3,9 @@
 
 <div id="brapi_home_trial_details_div">
 
-    <h4>Trial Detail</h4>
+    <h4><% __('Trial Detail') |h %></h4>
     <input name="brapi_home_trials_id" id="brapi_home_trials_id" class="form-control" type="text" placeholder="TrialDbId e.g. 145" value="145"/>
-    <button class="btn btn-primary" name="brapi_home_trial_detail_submit" id="brapi_home_trial_detail_submit">Get Trial Details</button>
+    <button class="btn btn-primary" name="brapi_home_trial_detail_submit" id="brapi_home_trial_detail_submit"><% __('Get Trial Details') |h %></button>
     <br/><br/>
     <div id="brapi_trials_details_div">
     </div>

@@ -3,9 +3,9 @@
 
 <div id="brapi_home_trait_detail_div">
 
-    <h4>Germplasm Details</h4>
+    <h4><% __('Germplasm Details') |h %></h4>
     <input name="brapi_home_traitdbid" id="brapi_home_traitdbid" class="form-control" type="text" placeholder="TraitDbId e.g. 70741" value="70741"/>
-    <button class="btn btn-primary" name="brapi_home_traitdbid_submit" id="brapi_home_traitdbid_submit">Get Trait Details</button>
+    <button class="btn btn-primary" name="brapi_home_traitdbid_submit" id="brapi_home_traitdbid_submit"><% __('Get Trait Details') |h %></button>
     <br/><br/>
     <div id="brapi_trait_detail_result_div">
     </div>
