@@ -54,7 +54,7 @@ Effects.Hotlist = {
 					button.setAttribute("onClick", "Hotlist.add('" + buttonId + "', '" + content + "'); return false;");
 				}
 			}
-			else { alert("You sent a bad switchTo variable to switchHotlistButton"); }
+			else { alert(gettext("You sent a bad switchTo variable to switchHotlistButton")); }
 		}
 	}
 }
