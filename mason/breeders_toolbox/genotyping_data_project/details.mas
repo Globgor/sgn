@@ -18,7 +18,7 @@ $trial_owner
         <table class="table table-hover table-bordered" >
 
             <tr>
-                <td><b>Genotyping Project Name</b></td>
+                <td><b><% __('Genotyping Project Name') |h %></b></td>
                 <td>
                     <div id="trial_name">
 % if ($trial_name) {
@@ -31,7 +31,7 @@ $trial_owner
             </tr>
 
             <tr>
-                <td><b>Breeding Program </b></td>
+                <td><b><% __('Breeding Program') |h %> </b></td>
                 <td>
                     <span id="breeding_program">
 % if ($breeding_program_name) {
@@ -45,7 +45,7 @@ $trial_owner
             </tr>
 
             <tr>
-                <td><b>Location</b></td>
+                <td><b><% __('Location') |h %></b></td>
                 <td>
                     <div id="trial_location">
 % if ($location_name) {
@@ -58,7 +58,7 @@ $trial_owner
             </tr>
 
             <tr>
-                <td><b>Year</b></td>
+                <td><b><% __('Year') |h %></b></td>
                 <td>
                     <div id="trial_year">
 % if ($year) {
@@ -70,7 +70,7 @@ $trial_owner
                 </td>
             </tr>
 
-            <tr><td><b>Genotyping Facility</b></td>
+            <tr><td><b><% __('Genotyping Facility') |h %></b></td>
                 <td>
                     <div id="trial_genotyping_facility">
 % if ($genotyping_facility) {
@@ -82,7 +82,7 @@ $trial_owner
                 </td>
             </tr>
 
-            <tr><td><b>Data Type</b></td>
+            <tr><td><b><% __('Data Type') |h %></b></td>
                 <td>
                     <div id="trial_data_type">
 % if ($genotype_data_type) {
@@ -94,7 +94,7 @@ $trial_owner
                 </td>
             </tr>
 
-            <tr><td><b>Description</b></td>
+            <tr><td><b><% __('Description') |h %></b></td>
                 <td>
                     <div id="trial_description">
 % if ($trial_description) {
@@ -105,7 +105,7 @@ $trial_owner
                     </div>
                 </td>
             </tr>
-            <tr><td><b>Created by</b></td>
+            <tr><td><b><% __('Created by') |h %></b></td>
                 <td>
                     <div id="trial_owner">
 % if ($trial_owner) {

@@ -6,7 +6,7 @@ $trial_id
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables'] &>
 
 
-<&| /page/info_section.mas, id=>'delete_genotyping_plate_section', title => 'Delete Genotyping Plate(s)', subtitle => '<font color="red">Deletion cannot be undone. Cannot delete any plate associated with genotyping data</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_genotyping_plate_section', title => $m->interp->apply_escapes( __('Delete Genotyping Plate(s)'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone. Cannot delete any plate associated with genotyping data</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -14,11 +14,11 @@ $trial_id
                 </table>
             </div>
         </div>
-        <button class="btn btn-default" id="delete_all_genotyping_plates" role="button">Delete all genotyping plates in this project</button><br/><br/>
+        <button class="btn btn-default" id="delete_all_genotyping_plates" role="button"><% __('Delete all genotyping plates in this project') |h %></button><br/><br/>
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_protocol_section', title => 'Delete Genotyping Protocol and All Data', subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_protocol_section', title => $m->interp->apply_escapes( __('Delete Genotyping Protocol and All Data'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -29,21 +29,21 @@ $trial_id
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_genotyping_project_data_section', title => 'Delete Genotyping Project Data', subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_genotyping_project_data_section', title => $m->interp->apply_escapes( __('Delete Genotyping Project Data'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-default" id="delete_genotyping_project_data" role="button">Delete Genotyping Project Data</button><br/><br/>
+                <button class="btn btn-default" id="delete_genotyping_project_data" role="button"><% __('Delete Genotyping Project Data') |h %></button><br/><br/>
             </div>
         </div>
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_genotyping_project_section', title => 'Delete Genotyping Project', subtitle => '<font color="red">Deletion cannot be undone. Please delete genotyping plates and/or genotyping data first</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_genotyping_project_section', title => $m->interp->apply_escapes( __('Delete Genotyping Project'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone. Please delete genotyping plates and/or genotyping data first</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-default" id="delete_genotyping_project" role="button">Delete Genotyping Project</button><br/><br/>
+                <button class="btn btn-default" id="delete_genotyping_project" role="button"><% __('Delete Genotyping Project') |h %></button><br/><br/>
             </div>
         </div>
     </div>

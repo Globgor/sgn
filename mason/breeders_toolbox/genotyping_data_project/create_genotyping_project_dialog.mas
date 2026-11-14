@@ -9,35 +9,35 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <div style="text-align: center">
-                    <h4 class="modal-title" id="createGenotypingProjectdialog">Add New Genotyping Project</h4>
+                    <h4 class="modal-title" id="createGenotypingProjectdialog"><% __('Add New Genotyping Project') |h %></h4>
                 </div>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <&| /util/workflow.mas, id=> "add_genotyping_project_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Genotyping Project" &>
-                            <p>Genotyping Project can be used to group a series of genotyping plates and genotyping data. Genotyping Project should match Vendor Project if you have one.</p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Genotyping Project"), 'h' ) &>
+                            <p><% __('Genotyping Project can be used to group a series of genotyping plates and genotyping data. Genotyping Project should match Vendor Project if you have one.') |h %></p>
                             <hr>
                             <div style="text-align: center">
-                                <button id="next_step_add_new_genotyping_project" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_add_new_genotyping_project" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
                         <form class="form-horizontal" role="form" name="create_genotyping_project_form" id="create_genotyping_project_form">
-                            <&| /util/workflow.mas:step, title=> "Add a genotyping project" &>
-                            <& /page/page_title.mas, title=>"Enter basic information about the genotyping project" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Add a genotyping project"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the genotyping project"), 'h' ) &>
                                 <br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Genotyping Project Name: </label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Project Name:') |h %> </label>
                                     <div class="col-sm-7">
-                                        <input class="form-control" id="new_genotyping_project_name" name="new_genotyping_project_name" type="text" placeholder="Should match Vendor Project if you have one"/>
+                                        <input class="form-control" id="new_genotyping_project_name" name="new_genotyping_project_name" type="text" placeholder="<% __('Should match Vendor Project if you have one') |h %>"/>
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Genotyping Facility: </label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Facility:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="genotyping_project_facility_select" name="genotyping_project_facility_select">
 %  foreach my $facility (@$facilities) {
@@ -47,35 +47,35 @@ $facilities
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Data Type: </label>
+                                    <label class="col-sm-5 control-label"><% __('Data Type:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="data_type">
-                                            <option value="">Select a data type</option>
+                                            <option value=""><% __('Select a data type') |h %></option>
                                             <option value="snp">SNP</option>
                                             <option value="ssr">SSR</option>
                                         </select>
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Breeding Program: </label>
+                                    <label class="col-sm-5 control-label"><% __('Breeding Program:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="genotyping_project_breeding_program_select_div"></span>
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Year: </label>
+                                    <label class="col-sm-5 control-label"><% __('Year:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="genotyping_project_year_select_div"></span>
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Location of Data Generation (optional): </label>
+                                    <label class="col-sm-5 control-label"><% __('Location of Data Generation (optional):') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="genotyping_project_location_select_div"></span>
                                     </div>
                                 </div><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Description: </label>
+                                    <label class="col-sm-5 control-label"><% __('Description:') |h %> </label>
                                     <div class="col-sm-7">
                                         <textarea class="form-control" id="genotyping_project_description" name="genotyping_project_description" maxlength="250"></textarea>
                                     </div>
@@ -84,14 +84,14 @@ $facilities
                                 <br/>
                                 <br/>
                                 <div style="text-align: center">
-                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="add_new_genotyping_project_submit" id="add_new_genotyping_project_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="add_new_genotyping_project_submit" id="add_new_genotyping_project_submit"><% __('Submit') |h %></button>
                                 </div>
                             </&>
                         </form>
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your genotyping project is now in the database" &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your genotyping project is now in the database"), 'h' ) &>
                             <ul>
-                                <li>You may want to proceed to add genotyping plates and/or genotyping data in the genotyping project you just created.</li>
+                                <li><% __('You may want to proceed to add genotyping plates and/or genotyping data in the genotyping project you just created.') |h %></li>
                             </ul>
                             <br/>
                         </&>
@@ -99,7 +99,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="add_new_genotyping_project_close_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="add_new_genotyping_project_close_modal" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

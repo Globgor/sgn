@@ -6,10 +6,10 @@ $trial_id
     <table id="genotyping_project_archived_vcf_table" width="100%" class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>File Name</th>
-                <th>Date Uploaded</th>
-                <th>Uploaded By</th>
-                <th>Options</th>
+                <th><% __('File Name') |h %></th>
+                <th><% __('Date Uploaded') |h %></th>
+                <th><% __('Uploaded By') |h %></th>
+                <th><% __('Options') |h %></th>
             </tr>
         </thead>
         <tbody id="genotyping_project_archived_vcf_table_body"></tbody>
