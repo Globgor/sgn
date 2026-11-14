@@ -17,8 +17,8 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="calendarDialog">Your Calendar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="calendarDialog"><% __('Your Calendar') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -28,14 +28,14 @@
 
             <div class="well well-sm">
                 <center>
-                    <p><b>Having trouble viewing events on the calendar?</b> <br/>Are you associated with the breeding program you are interested in viewing?</p>
-                    <a class="btn btn-primary" id="calendar_bp_user_roles_show" href="/breeders/manage_roles/">Calendar Permissions</a>
+                    <p><b><% __('Having trouble viewing events on the calendar?') |h %></b> <br/><% __('Are you associated with the breeding program you are interested in viewing?') |h %></p>
+                    <a class="btn btn-primary" id="calendar_bp_user_roles_show" href="/breeders/manage_roles/"><% __('Calendar Permissions') |h %></a>
                 </center>
             </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -47,26 +47,26 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addEventDialog">Add New Event</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addEventDialog"><% __('Add New Event') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
   	  <form class="form-horizontal" role="form" name="day_dialog_add_event_form" id="day_dialog_add_event_form">
     	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Project: </label>
+      	      <label class="col-sm-2 control-label"><% __('Project:') |h %> </label>
       	      <div class="col-sm-10">
 		<select class="form-control" name="event_project_select" id="event_project_select"></select>
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Event Type: </label>
+      	      <label class="col-sm-2 control-label"><% __('Event Type:') |h %> </label>
       	      <div class="col-sm-10">
 	        <select class="form-control" name="event_type_select" id="event_type_select" ></select>
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Start: </label>
+      	      <label class="col-sm-2 control-label"><% __('Start:') |h %> </label>
       	      <div class="col-sm-10">
 	        <div class="input-group date">
     		  <input type="text" class="form-control datepicker" name="event_start" id="event_start">
@@ -77,10 +77,10 @@
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">End: </label>
+      	      <label class="col-sm-2 control-label"><% __('End:') |h %> </label>
       	      <div class="col-sm-10">
 	        <div class="input-group date">
-    		  <input type="text" class="form-control datepicker" name="event_end" id="event_end" placeholder="Leave Blank if Not Applicable">
+    		  <input type="text" class="form-control datepicker" name="event_end" id="event_end" placeholder="<% __('Leave Blank if Not Applicable') |h %>">
     		  <div class="input-group-addon">
         	    <span class="glyphicon glyphicon-th"></span>
     		  </div>
@@ -88,13 +88,13 @@
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Description: </label>
+      	      <label class="col-sm-2 control-label"><% __('Description:') |h %> </label>
       	      <div class="col-sm-10">
 		<input class="form-control" name="event_description" id="event_description" type="text" >
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Web URL: </label>
+      	      <label class="col-sm-2 control-label"><% __('Web URL:') |h %> </label>
       	      <div class="col-sm-10">
 	        <div class="input-group">
 		  <span class="input-group-addon" id="basic-addon2">http://www.</span>
@@ -106,8 +106,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="add_event_submit" id="add_event_submit">Add Event</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="add_event_submit" id="add_event_submit"><% __('Add Event') |h %></button>
       </div>
     </div>
   </div>
@@ -117,44 +117,44 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="eventDialog">Event Info</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="eventDialog"><% __('Event Info') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 	  <table class="table table-hover">
 	    <thead>
 	      <tr>
-	        <th>Attribute</th>
-	        <th>Value</th>
+	        <th><% __('Attribute') |h %></th>
+	        <th><% __('Value') |h %></th>
 	      </tr>
 	    </thead>
 	    <tbody>
     	      <tr>
-      	        <td>Project Name: </td>
+      	        <td><% __('Project Name:') |h %> </td>
       	        <td id="event_info_title"></td>
     	      <tr>
     	      <tr>
-      	        <td>Start Date: </td>
+      	        <td><% __('Start Date:') |h %> </td>
       	        <td id="event_info_start_display"></td>
 		<input id="event_info_start" type="hidden" />
     	      </tr>
     	      <tr>
-      	        <td>End Date: </td>
+      	        <td><% __('End Date:') |h %> </td>
       	        <td id="event_info_end_display"></td>
 		<input id="event_info_end" type="hidden" />
     	      </tr>
     	      <tr>
-      	        <td>Event Type: </td>
+      	        <td><% __('Event Type:') |h %> </td>
       	        <td id="event_info_property"></td>
 		<input id="event_info_cvterm_id" type="hidden" />
     	      </tr>
     	      <tr>
-      	        <td>Event Description: </td>
+      	        <td><% __('Event Description:') |h %> </td>
       	        <td id="event_info_description"></td>
     	      </tr>
     	      <tr>
-      	        <td>Event Web URL: </td>
+      	        <td><% __('Event Web URL:') |h %> </td>
       	        <td id="event_info_url"></td>
 		<input id="event_info_url_raw" type="hidden" />
     	      </tr>
@@ -170,10 +170,10 @@
 	<form name="event_dialog_delete_event_form" id="event_dialog_delete_event_form">
           <input type="hidden" name="event_projectprop_id" id="event_projectprop_id" />
         </form>
-	<button type="button" class="btn btn-primary" name="event_edit_display" id="event_edit_display">Edit Event</button>
-	<button type="button" class="btn btn-danger" name="delete_event_submit" id="delete_event_submit">Delete Event</button>
-	<button type="button" class="btn btn-info" name="export_event_display" id="export_event_display">Export Event</button>
-	<button type="button" class="btn btn-default" data-dismiss="modal" id="event_dialog_dismiss">Close</button>
+	<button type="button" class="btn btn-primary" name="event_edit_display" id="event_edit_display"><% __('Edit Event') |h %></button>
+	<button type="button" class="btn btn-danger" name="delete_event_submit" id="delete_event_submit"><% __('Delete Event') |h %></button>
+	<button type="button" class="btn btn-info" name="export_event_display" id="export_event_display"><% __('Export Event') |h %></button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" id="event_dialog_dismiss"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -184,26 +184,26 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editEventDialog">Edit Event</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editEventDialog"><% __('Edit Event') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
   	  <form class="form-horizontal" role="form" name="edit_event_form" id="edit_event_form">
     	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Project: </label>
+      	      <label class="col-sm-2 control-label"><% __('Project:') |h %> </label>
       	      <div class="col-sm-10">
 		<select class="form-control" name="edit_event_project_select" id="edit_event_project_select"></select>
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Event Type: </label>
+      	      <label class="col-sm-2 control-label"><% __('Event Type:') |h %> </label>
       	      <div class="col-sm-10">
 		<select class="form-control" name="edit_event_type_select" id="edit_event_type_select" ></select>
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Start: </label>
+      	      <label class="col-sm-2 control-label"><% __('Start:') |h %> </label>
       	      <div class="col-sm-10">
 	        <div class="input-group date">
     		  <input type="text" class="form-control datepicker" name="edit_event_start" id="edit_event_start">
@@ -214,10 +214,10 @@
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">End: </label>
+      	      <label class="col-sm-2 control-label"><% __('End:') |h %> </label>
       	      <div class="col-sm-10">
 	        <div class="input-group date">
-    		  <input type="text" class="form-control datepicker" name="edit_event_end" id="edit_event_end" placeholder="Leave Blank if Not Applicable">
+    		  <input type="text" class="form-control datepicker" name="edit_event_end" id="edit_event_end" placeholder="<% __('Leave Blank if Not Applicable') |h %>">
     		  <div class="input-group-addon">
         	    <span class="glyphicon glyphicon-th"></span>
     		  </div>
@@ -225,13 +225,13 @@
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Description: </label>
+      	      <label class="col-sm-2 control-label"><% __('Description:') |h %> </label>
       	      <div class="col-sm-10">
 		<input class="form-control" name="edit_event_description" id="edit_event_description" type="text" >
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Web URL: </label>
+      	      <label class="col-sm-2 control-label"><% __('Web URL:') |h %> </label>
       	      <div class="col-sm-10">
 		<input type="hidden" id="edit_event_projectprop_id" name="edit_event_projectprop_id" />
   		<input type="text" name="edit_event_url" id="edit_event_url" class="form-control" placeholder="example.com">
@@ -241,8 +241,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="edit_event_submit" id="edit_event_submit">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="edit_event_submit" id="edit_event_submit"><% __('Save') |h %></button>
       </div>
     </div>
   </div>
