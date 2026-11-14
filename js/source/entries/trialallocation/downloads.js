@@ -45,7 +45,7 @@ export function createDownloadTools({ qs, key, sanitizeTrialName, collectLayoutJ
 
   function downloadExcelWorkbook(filename, sheets) {
     if (!window.JSZip) {
-      alert('The XLSX export library is not available on this page.');
+      alert(gettext('The XLSX export library is not available on this page.'));
       return;
     }
 
@@ -236,7 +236,7 @@ ${worksheetEntries.map(sheet => `  <Relationship Id="rId${sheet.id}" Type="http:
     const rows = collectPlantingMapRows(layout, settings);
 
     if (!rows.length) {
-      alert('Place trials, borders, or fillers before downloading the planting map.');
+      alert(gettext('Place trials, borders, or fillers before downloading the planting map.'));
       return;
     }
 
@@ -298,7 +298,7 @@ ${worksheetEntries.map(sheet => `  <Relationship Id="rId${sheet.id}" Type="http:
     qs("#export-full-jpg-btn")?.addEventListener("click", function () {
       const exportGrid = createFullGridExportElement();
       if (!exportGrid) {
-        alert("Set the field rows and columns before exporting the full grid.");
+        alert(gettext("Set the field rows and columns before exporting the full grid."));
         return;
       }
 
@@ -317,7 +317,7 @@ ${worksheetEntries.map(sheet => `  <Relationship Id="rId${sheet.id}" Type="http:
         link.click();
       }).catch(error => {
         console.error("Full grid export failed:", error);
-        alert("Could not export the full field grid.");
+        alert(gettext("Could not export the full field grid."));
       }).finally(() => {
         exportGrid.remove();
       });

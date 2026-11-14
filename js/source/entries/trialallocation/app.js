@@ -244,7 +244,7 @@ export function initTrialAllocation() {
     const yearInput = qs('#layout-year');
     const year = String(yearInput?.value || '').trim();
     if (isValidLayoutYear(year)) return true;
-    alert('Year must be in YYYY format, greater than 1960 and smaller than 2100.');
+    alert(gettext('Year must be in YYYY format, greater than 1960 and smaller than 2100.'));
     yearInput?.focus();
     return false;
   }
@@ -909,7 +909,7 @@ export function initTrialAllocation() {
 
     if (tool === 'unused') {
       if (isCellOccupied(r, c) || manualBorders.has(k)) {
-        alert('This plot already contains a trial, filler, or border.');
+        alert(gettext('This plot already contains a trial, filler, or border.'));
         return;
       }
       if (cellIsUnused(r, c)) {
@@ -923,7 +923,7 @@ export function initTrialAllocation() {
 
     if (tool === 'border') {
       if (!manualBorders.has(k) && isCellOccupied(r, c)) {
-        alert('Borders cannot be placed on trial or filler plots.');
+        alert(gettext('Borders cannot be placed on trial or filler plots.'));
         return;
       }
       if (manualBorders.has(k)) {
@@ -936,7 +936,7 @@ export function initTrialAllocation() {
     }
 
     if (tool === 'filler') {
-      alert('Select a trial plot to place a filler inside the trial.');
+      alert(gettext('Select a trial plot to place a filler inside the trial.'));
       return;
     }
 
@@ -1408,11 +1408,11 @@ export function initTrialAllocation() {
     const select = qs('#existing-trial-select');
     const projectId = select?.value || '';
     if (!projectId) {
-      alert('Select an existing trial first.');
+      alert(gettext('Select an existing trial first.'));
       return;
     }
     if (selectedExistingTrialAlreadyAdded(projectId)) {
-      alert('This existing trial is already included in the layout.');
+      alert(gettext('This existing trial is already included in the layout.'));
       return;
     }
 
@@ -1484,7 +1484,7 @@ export function initTrialAllocation() {
       },
       error: function(xhr, __, error) {
         console.error('Failed to add existing trial:', error, xhr?.responseText);
-        alert('Could not add the selected existing trial.');
+        alert(gettext('Could not add the selected existing trial.'));
       },
       complete: function() {
         if (btn) {
@@ -1570,13 +1570,13 @@ export function initTrialAllocation() {
   function rotateTrialFromPalette(i, direction = 'cw') {
     const roots = [...new Set(qsa(`.trial-group[data-trial="${i}"]`).map(group => group.dataset.root))];
     if (!roots.length) {
-      alert('Place this trial in the grid before rotating it.');
+      alert(gettext('Place this trial in the grid before rotating it.'));
       return;
     }
 
     const root = roots[0];
     if (isLockedRoot(root)) {
-      alert('This trial is part of a saved layout and cannot be rotated.');
+      alert(gettext('This trial is part of a saved layout and cannot be rotated.'));
       return;
     }
 
@@ -1598,7 +1598,7 @@ export function initTrialAllocation() {
       success: function(data) {
         if (!data.success) {
           $select.html(`<option value="">Failed to load</option>`);
-          alert("Could not load Accessions List");
+          alert(gettext("Could not load Accessions List"));
           return;
         }
 
@@ -1640,7 +1640,7 @@ export function initTrialAllocation() {
       error: function(xhr, status, error) {
         console.error("Error loading Accessions List:", status, error);
         $select.html(`<option value="">Failed to load</option>`);
-        alert("Error loading Accessions List.");
+        alert(gettext("Error loading Accessions List."));
       }
     });
   }
@@ -1659,7 +1659,7 @@ export function initTrialAllocation() {
       success: function(data) {
         if (!data.success) {
           $select.html(`<option value="">Failed to load</option>`);
-          alert("Could not load Controls List");
+          alert(gettext("Could not load Controls List"));
           return;
         }
 
@@ -1690,7 +1690,7 @@ export function initTrialAllocation() {
       error: function(xhr, status, error) {
         console.error("Error loading Controls List:", status, error);
         $select.html(`<option value="">Failed to load</option>`);
-        alert("Error loading Controls List.");
+        alert(gettext("Error loading Controls List."));
       }
     });
   }
@@ -1700,7 +1700,7 @@ export function initTrialAllocation() {
     const formEl = qs('#tname' + i)?.closest('.border.rounded');
     if (existingProjectTrials.has(+i) || lockedTrialForms.has(+i) || databaseSavedTrialIndexes.has(String(i)) || formEl?.dataset.existingProject === '1' || formEl?.dataset.locked === '1') {
       if (btn) btn.disabled = true;
-      alert('Generate Design is not available for existing saved trials.');
+      alert(gettext('Generate Design is not available for existing saved trials.'));
       return;
     }
     const design  = $(`#tdesign${i}`).val();
@@ -1800,7 +1800,7 @@ export function initTrialAllocation() {
     const fromPal = el.id.startsWith('palette');
     if (!fromPal && isLockedRoot(el.dataset.root)) {
       e.preventDefault();
-      alert('This trial is part of a saved layout and cannot be moved.');
+      alert(gettext('This trial is part of a saved layout and cannot be moved.'));
       return;
     }
     const rect = el.getBoundingClientRect();
@@ -1829,7 +1829,7 @@ export function initTrialAllocation() {
     e.preventDefault();
 
     if (!gridReady) {
-      alert('Grid is still loading. Please wait.');
+      alert(gettext('Grid is still loading. Please wait.'));
       return;
     }
 
@@ -1846,7 +1846,7 @@ export function initTrialAllocation() {
 
     if (col < 0 || row < 0) return;
     if (src === 'grid' && isLockedRoot(root)) {
-      alert('This trial is part of a saved layout and cannot be moved.');
+      alert(gettext('This trial is part of a saved layout and cannot be moved.'));
       return;
     }
 
@@ -1856,7 +1856,7 @@ export function initTrialAllocation() {
     /* request design from server */
     const cached = trialDesignCache[tn];
     if (!cached) {
-      alert("Please click 'Generate Design' before placing the trial.");
+      alert(gettext("Please click 'Generate Design' before placing the trial."));
       return;
     }
 
@@ -1947,7 +1947,7 @@ export function initTrialAllocation() {
     })
       .fail(function (xhr, status, error) {
         console.error('AJAX error:', error);
-        alert('Error generating design.');
+        alert(gettext('Error generating design.'));
       });
   }
 
@@ -1985,7 +1985,7 @@ export function initTrialAllocation() {
     const box = e.currentTarget;
     const root = box.closest('.trial-group')?.dataset.root;
     if (isLockedRoot(root)) {
-      alert('This trial is part of a saved layout and cannot be changed.');
+      alert(gettext('This trial is part of a saved layout and cannot be changed.'));
       return;
     }
     const useStandard = qs('#standard-filler-toggle')?.checked;
@@ -2195,7 +2195,7 @@ export function initTrialAllocation() {
     }
 
     if (rowStart < 0 || colStart < 0 || rowStart >= totalRows || colStart >= totalCols) {
-      alert('Could not place trial: starting plot is outside the field.');
+      alert(gettext('Could not place trial: starting plot is outside the field.'));
       return;
     }
 
@@ -2235,12 +2235,12 @@ export function initTrialAllocation() {
     }
 
     if (blockingConflict) {
-      alert('Could not place trial: the selected path contains another trial, border, or filler plot.');
+      alert(gettext('Could not place trial: the selected path contains another trial, border, or filler plot.'));
       return;
     }
 
     if (coords.length < total) {
-      alert('Could not place trial: not enough available plots from this starting position.');
+      alert(gettext('Could not place trial: not enough available plots from this starting position.'));
       return;
     }
 
@@ -2593,7 +2593,7 @@ export function initTrialAllocation() {
   /* Rotate 90 degrees in either direction around the current footprint. */
   function transposeTrial(root, direction = 'cw'){
     if (isLockedRoot(root)) {
-      alert('This trial is part of a saved layout and cannot be changed.');
+      alert(gettext('This trial is part of a saved layout and cannot be changed.'));
       return;
     }
     const parts = [...document.querySelectorAll(`.trial-group[data-root="${root}"]`)];
@@ -2601,7 +2601,7 @@ export function initTrialAllocation() {
 
     const rotation = rotatedTrialCells(root, direction === 'ccw' ? 'ccw' : 'cw');
     if (!rotation || rotationHasConflict(rotation.cells, root)) {
-      alert('Cannot rotate - no free space at current position.');
+      alert(gettext('Cannot rotate - no free space at current position.'));
       return;
     }
 
@@ -3097,7 +3097,7 @@ export function initTrialAllocation() {
     if (!trialIndex) return;
 
     if (lockedTrialForms.has(trialIndex) && !existingProjectTrials.has(trialIndex)) {
-      alert('This trial is part of a saved layout. Remove it from the saved layout view on the grid instead.');
+      alert(gettext('This trial is part of a saved layout. Remove it from the saved layout view on the grid instead.'));
       return;
     }
 
@@ -3211,13 +3211,13 @@ export function initTrialAllocation() {
 
   function deleteSavedTrialFromLayout(root, trialIndex) {
     if (!userIsCurator) {
-      alert('Only curators can remove saved trials from a layout.');
+      alert(gettext('Only curators can remove saved trials from a layout.'));
       return;
     }
 
     const layout = collectLayoutJson();
     if (!layout.farm.location_id || !layout.year) {
-      alert('Select location and year before removing a saved trial.');
+      alert(gettext('Select location and year before removing a saved trial.'));
       return;
     }
     if (!window.confirm('Remove this trial from the saved layout view? This does not delete the trial from the database.')) {
@@ -3239,27 +3239,27 @@ export function initTrialAllocation() {
         if (response.success) {
           removeTrialRootFromView(root, trialIndex);
           loadExistingTrialsForContext();
-          alert('Trial removed from the saved layout view.');
+          alert(gettext('Trial removed from the saved layout view.'));
         } else {
           alert(response.error || 'Could not remove trial from the saved layout view.');
         }
       },
       error: function(_, __, error) {
         console.error('Delete saved trial failed:', error);
-        alert('Could not remove trial from the saved layout view.');
+        alert(gettext('Could not remove trial from the saved layout view.'));
       }
     });
   }
 
   function deleteCurrentLayoutView() {
     if (!userIsCurator) {
-      alert('Only curators can delete a saved layout view.');
+      alert(gettext('Only curators can delete a saved layout view.'));
       return;
     }
 
     const layout = collectLayoutJson();
     if (!layout.farm.location_id || !layout.year) {
-      alert('Select location and year before deleting the layout view.');
+      alert(gettext('Select location and year before deleting the layout view.'));
       return;
     }
     if (!window.confirm('Delete the whole saved layout view for this location, year, and season? This does not delete the trials from the database.')) {
@@ -3286,14 +3286,14 @@ export function initTrialAllocation() {
           lockLayoutContext(false);
           makeTrials();
           loadExistingTrialsForContext();
-          alert('Saved layout view deleted.');
+          alert(gettext('Saved layout view deleted.'));
         } else {
           alert(response.error || 'Could not delete the saved layout view.');
         }
       },
       error: function(_, __, error) {
         console.error('Delete layout failed:', error);
-        alert('Could not delete the saved layout view.');
+        alert(gettext('Could not delete the saved layout view.'));
       }
     });
   }
@@ -3466,7 +3466,7 @@ export function initTrialAllocation() {
   function saveCurrentLayout() {
     const layout = collectLayoutJson();
     if (!layout.farm.location_id || !layout.year) {
-      alert('Select location and year before saving the layout.');
+      alert(gettext('Select location and year before saving the layout.'));
       return;
     }
     if (!requireValidLayoutYear()) return;
@@ -3478,11 +3478,11 @@ export function initTrialAllocation() {
           return;
         }
         markLayoutViewSaved(layout);
-        alert('Layout saved.');
+        alert(gettext('Layout saved.'));
       })
       .fail(function(_, __, error) {
         console.error('Save layout failed:', error);
-        alert('Could not save layout.');
+        alert(gettext('Could not save layout.'));
       });
   }
 
@@ -3559,17 +3559,17 @@ export function initTrialAllocation() {
     const saveButton = qs('#save-trials-db-btn');
 
     if (!layout.farm.location_id || !layout.year) {
-      alert('Select location and year before saving the trials.');
+      alert(gettext('Select location and year before saving the trials.'));
       return;
     }
     if (!requireValidLayoutYear()) return;
     const hasNewTrialToCreate = (newTrialLayout.placed_trials || []).some(trial => !trial.existing_project_id);
     if (hasNewTrialToCreate && !layout.breeding_program.program_id) {
-      alert('Select a breeding program before saving the trials.');
+      alert(gettext('Select a breeding program before saving the trials.'));
       return;
     }
     if (!newTrialLayout.placed_trials.length) {
-      alert('There are no new trials or existing-trial coordinate updates to save in the database.');
+      alert(gettext('There are no new trials or existing-trial coordinate updates to save in the database.'));
       return;
     }
     const placedTrialIndexes = new Set(newTrialLayout.placed_trials.map(trial => String(trial.trial_index)));
@@ -3607,7 +3607,7 @@ export function initTrialAllocation() {
       },
       error: function(xhr, __, error) {
         console.error('Save trials failed:', error, xhr?.responseText);
-        alert('Could not save trials in the database.');
+        alert(gettext('Could not save trials in the database.'));
         restoreSaveTrialsButton(saveButton);
       }
     });
@@ -3700,7 +3700,7 @@ export function initTrialAllocation() {
       });
 
       if (conflict) {
-        alert("It is not possible to turn entire row or column unutilized because there is a trial or border already placed.");
+        alert(gettext("It is not possible to turn entire row or column unutilized because there is a trial or border already placed."));
         e.target.value = lastUnusedRows;
         return;
       }
@@ -3725,7 +3725,7 @@ export function initTrialAllocation() {
       });
 
       if (conflict) {
-        alert("It is not possible to turn entire row or column unutilized because there is a trial or border already placed.");
+        alert(gettext("It is not possible to turn entire row or column unutilized because there is a trial or border already placed."));
         e.target.value = lastUnusedCols;
         return;
       }
