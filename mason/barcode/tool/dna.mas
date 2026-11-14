@@ -1,8 +1,8 @@
 
-<h1>Cassavabase DNA extraction tool</h1>
+<h1><% __('Cassavabase DNA extraction tool') |h %></h1>
 
 <table>
-<tr><th>ROW</th><th>COLUMN</th></tr>
+<tr><th><% __('ROW') |h %></th><th><% __('COLUMN') |h %></th></tr>
 <tr><td>
 % foreach my $row ('A'..'H') { 
 <& /barcode/tool/generate.mas, code=>$row &>
