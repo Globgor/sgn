@@ -63,6 +63,8 @@ jobs:
         HOME: /root
         MODE: 'TESTING'
         SYSTEM: 'GITACTION'
+        # Assets are built once below before any test starts SGN.
+        SGN_WEBPACK_WATCH: '1'
         PGPASSWORD: postgres
         PGUSER: postgres
         SGN_TEST_SERVER: http://test_breedbase:3010
@@ -123,9 +125,9 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install JS deps
+      - name: Build JS assets
         working-directory: js
-        run: npm install
+        run: npm run build
 
       - name: Pin Node binaries
         run: |
@@ -143,7 +145,7 @@ jobs:
 
       - name: Load/dump fixture database
         # --noserver: each /entrypoint.sh call below starts its own server,
-        # which builds the JS (lib/SGN.pm)
+        # using the JS assets built above
         run: |
           echo "--version" > ~/.proverc
           perl t/test_fixture.pl --dumpupdatedfixture --noserver
