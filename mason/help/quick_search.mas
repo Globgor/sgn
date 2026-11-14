@@ -1,6 +1,6 @@
 
 
-<& /page/page_title.mas, title=>"Quick Search Help" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Quick Search Help"), 'h' ) &>
 
   <center>
     
@@ -37,13 +37,13 @@
                 following:</p>
 
                 <dl>
-                  <dt><strong>Identifier searches</strong></dt>
+                  <dt><strong><% __('Identifier searches') |h %></strong></dt>
 
                   <dd>Identifier searches perform exact match
                   searches on clone, est, unigene and marker
                   identifiers in the database</dd>
 
-                  <dt><br /><strong>Annotation searches</strong></dt>
+                  <dt><br /><strong><% __('Annotation searches') |h %></strong></dt>
 
                   <dd>The annotation searches search the manual and
                   automatic annotation that are available for
@@ -53,18 +53,18 @@
                   annotation matches, the number of unigenes is not
                   reported to save on querying time.</dd>
 
-                  <dt><br /><strong>People search</strong></dt>
+                  <dt><br /><strong><% __('People search') |h %></strong></dt>
 
                   <dd>Searches the last name as a sub-string match
                   in the SGN People Directory.</dd>
 
-                  <dt><br /><strong>Library search</strong></dt>
+                  <dt><br /><strong><% __('Library search') |h %></strong></dt>
 
                   <dd>Searches the libraries on name, tissue,
                   development stage, authors, and other fields as a
                   substring search.</dd>
 
-                  <dt><br /><strong>SGN Pages search</strong></dt>
+                  <dt><br /><strong><% __('SGN Pages search') |h %></strong></dt>
 
                   <dd>Performs a Google search on the
                   sgn.cornell.edu domain. Please note that when we
@@ -74,7 +74,7 @@
                   will not be valid. However, we will try to keep
                   site rearrangements to a minimum.</dd>
 
-                  <dt><br /><strong>Pages on the entire web</strong></dt>
+                  <dt><br /><strong><% __('Pages on the entire web') |h %></strong></dt>
 
                   <dd>Performs a Google search without the
                   sgn.cornell.edu domain constraint. Searches the

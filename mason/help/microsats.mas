@@ -1,5 +1,5 @@
 
-<& /page/page_title.mas, title=>"SSR Marker Help" &>    
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("SSR Marker Help"), 'h' ) &>    
 
     <p>While microsatellites or simple sequence repeats (SSRs)
     normally occur in non-coding regions of the genome, they can
@@ -27,8 +27,8 @@
       <li>tetra to hexonuclotides &gt; 6 repeats</li>
     </ul>
     <p>
-    <a href="/search/markers/markersearch.pl?searchtype=startswith&amp;name=&amp;submit=search&amp;mapped=on&amp;confidence=0&amp;offsetstart=&amp;offsetend=&amp;chromosomes=all&amp;species=all&amp;maps=all&amp;types=SSR&amp;techniques=all">See all SSR markers in marker search results</a><br />
-    <a href="/documents/markers/microsat_list.txt">Old text version SSR list</a>
+    <a href="/search/markers/markersearch.pl?searchtype=startswith&amp;name=&amp;submit=search&amp;mapped=on&amp;confidence=0&amp;offsetstart=&amp;offsetend=&amp;chromosomes=all&amp;species=all&amp;maps=all&amp;types=SSR&amp;techniques=all"><% __('See all SSR markers in marker search results') |h %></a><br />
+    <a href="/documents/markers/microsat_list.txt"><% __('Old text version SSR list') |h %></a>
     </p>
     
   </center>

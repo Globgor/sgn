@@ -5,9 +5,9 @@ The <a href="/search/markers/markersearch.pl">marker search</a> is a
 tool for locating markers in SGN's database. 
 </p>
 
-<img src="/documents/help/screenshots/marker_search_form.png" alt="screenshot of marker search form" style="margin: auto; border: 1px solid black;" />
+<img src="/documents/help/screenshots/marker_search_form.png" alt="<% __('screenshot of marker search form') |h %>" style="margin: auto; border: 1px solid black;" />
 
-<h4>1. Marker name</h4>
+<h4><% __('1. Marker name') |h %></h4>
 <p>
 If you know the name of your marker, type it in. By default, the database will be searched for all markers with a name that <i>starts with</i> what you type in.For example, if you type in "TG1", your results might include TG1, TG10, TG11, TG150, etc.
 </p><p>
@@ -17,27 +17,27 @@ If you know the name of your marker, type it in. By default, the database will b
 The search is not case-sensitive; "Tm2" and "TM2" are equivalent searches, though those two names could refer to two different markers in our database.
 </p>
 
-<h4>2. BAC associations</h4>
+<h4><% __('2. BAC associations') |h %></h4>
 <p>
 Some markers have been associated with BACS from the <a href="/about/tomato_sequencing.pl">tomato sequencing project</a>. Most of these associations come from the <a href="http://siren/maps/physical/overgo_process_explained.pl">overgo plating process</a> in which markers were hybridized to BAC DNA. Other associations are computational, meaning they were made by BLAST comparisons. Still others are "manual" associations, meaning they were associated in some other way and then entered into our database. 
 </p>
 
 
-<h4>3. Species</h4>
+<h4><% __('3. Species') |h %></h4>
 <p>
-In this multiple-select box you will see a list of the common names of species (or groups of species, such as "tomato") that make up the mapping populations in our collection of maps. Selecting a species here limits your search results to markers that have been mapped in that species. 
+<% __('In this multiple-select box you will see a list of the common names of species (or groups of species, such as "tomato") that make up the mapping populations in our collection of maps. Selecting a species here limits your search results to markers that have been mapped in that species.') |h %> 
 </p>
 
 
-<h4>4. Mapped by</h4>
+<h4><% __('4. Mapped by') |h %></h4>
 <p>
-This multiple-select box shows a list of experimental protocols. Selecting one or more of these protocols, for example CAPS, will limit the search results to markers that have been mapped with this protocol.
+<% __('This multiple-select box shows a list of experimental protocols. Selecting one or more of these protocols, for example CAPS, will limit the search results to markers that have been mapped with this protocol.') |h %>
 </p>
 
 
-<h4>5. Group</h4>
+<h4><% __('5. Group') |h %></h4>
 <p>
-Some of our markers have been grouped into collections for organizational purposes, or because all markers in that group are part of a particular project. Here are the meanings of the markers in our collections:
+<% __('Some of our markers have been grouped into collections for organizational purposes, or because all markers in that group are part of a particular project. Here are the meanings of the markers in our collections:') |h %>
 </p>
 <ul>
 <li><b>COS</b> - Conserved Ortholog Set, markers that have been mapped in both tomato and <i>Arabidopsis</i>. </li>
@@ -48,25 +48,25 @@ Some of our markers have been grouped into collections for organizational purpos
 </ul>
 
 
-<h4>6. Chromosomes</h4>
+<h4><% __('6. Chromosomes') |h %></h4>
 <p>
-Choose a chromosome from this box to limit results to markers mapped on that chromosome or linkage group.
+<% __('Choose a chromosome from this box to limit results to markers mapped on that chromosome or linkage group.') |h %>
 </p>
 
 
-<h4>7. Position</h4>
+<h4><% __('7. Position') |h %></h4>
 <p>
-If you are interested in a particular region of the chromosome, enter the bounds of that region here. 
+<% __('If you are interested in a particular region of the chromosome, enter the bounds of that region here.') |h %> 
 </p>
 
 
-<h4>8. Confidence</h4>
+<h4><% __('8. Confidence') |h %></h4>
 <p>
 Some of our markers have a confidence assigned by the mapping program MapMaker. To view only markers with a certain level of confidence or greater, select that confidence from this list. Markers not mapped by MapMaker will have a confidence listed as "uncalculated". Leaving this setting on "uncalculated", the default, will not exclude any markers.
 </p>
 
 
-<h4>9. Maps</h4>
+<h4><% __('9. Maps') |h %></h4>
 <p>
 This multiple-select box shows a list of our available maps. For more information on these maps, see the <a href="/cview/">map overview page</a>.
 </p>

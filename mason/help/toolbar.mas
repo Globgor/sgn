@@ -1,5 +1,5 @@
 
-<& /page/page_title.mas, title=>"Toolbar Help" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Toolbar Help"), 'h' ) &>
 
 <%perl>
 use CXGN::Page::Toolbar::SGN;
