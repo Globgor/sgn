@@ -11,11 +11,11 @@ $user_id
 </%perl>
 
 <br />
-<& /page/page_title.mas, title => "Tracking Activities" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Tracking Activities"), 'h' ) &>
 
 <div class="container-fluid">
 
-<&| /page/info_section.mas, title=>"Tracking Activities" , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Tracking Activities"), 'h' ) , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
 
 <& /tracking_activities/activity_project_tree.mas, user_id=>$user_id, locations=>$locations, programs=>$programs, roles=>$roles &>
 

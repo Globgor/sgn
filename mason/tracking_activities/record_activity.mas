@@ -20,36 +20,36 @@ $vector_id => undef
 
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery/dataTables', 'CXGN.BreedersToolbox.HTMLSelect.js', 'CXGN.List', 'flatpickr_min'] &>
 
-<& /page/page_title.mas, title=>"Record Activity" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Record Activity"), 'h' ) &>
 
 <div class="well ">
-    <center><label class="col-sm-12 control-label">Please scan a tracking identifier barcode</label></center>
+    <center><label class="col-sm-12 control-label"><% __('Please scan a tracking identifier barcode') |h %></label></center>
     <br/>
     <form class="form-horizontal" >
     <br/>
         <div class="form-group">
-            <label class="col-sm-3 control-label">Identifier Name: </label>
+            <label class="col-sm-3 control-label"><% __('Identifier Name:') |h %> </label>
             <div class="col-sm-5">
                 <input class="form-control" id="record_page_identifier_name_input" name="record_page_identifier_name_input" type="text" value="">
             </div>
             <div class="col-sm-2">
-                <button id="identifier_name_barcode" class="btn btn-block btn-default"><span class="glyphicon glyphicon-qrcode"></span> Scan Barcode</button>
+                <button id="identifier_name_barcode" class="btn btn-block btn-default"><span class="glyphicon glyphicon-qrcode"></span> <% __('Scan Barcode') |h %></button>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">Material Name: </label>
+            <label class="col-sm-3 control-label"><% __('Material Name:') |h %> </label>
             <div class="col-sm-5" >
                 <input class="form-control" name="record_page_material_name" id="record_page_material_name" disabled value="<% $material_name %>">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label">Input Type: </label>
+            <label class="col-sm-3 control-label"><% __('Input Type:') |h %> </label>
             <div class="col-sm-5">
 % if ($type_select_options) {
                 <select id="record_page_type_select">
-                    <option value="">Please select a type</option>
+                    <option value=""><% __('Please select a type') |h %></option>
 % foreach my $type(@$type_select_options){
                     <option value="<%$type->[0]%>"><%$type->[1]%></option>
 % }
@@ -58,13 +58,13 @@ $vector_id => undef
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">Input: </label>
+            <label class="col-sm-3 control-label"><% __('Input:') |h %> </label>
             <div class="col-sm-5">
                 <input class="form-control" id="record_page_info_input" name="record_page_info_input" type="text" value="">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">Notes:</label>
+            <label class="col-sm-3 control-label"><% __('Notes:') |h %></label>
             <div class="col-sm-5">
                 <textarea class="form-control" id="record_page_notes" name="record_page_notes" ></textarea>
             </div>
@@ -76,7 +76,7 @@ $vector_id => undef
             </div>
         </div>
         <center>
-            <button id="record_page_activity_info_submit" name="record_page_activity_info_submit" class="btn btn-primary">Save</button>
+            <button id="record_page_activity_info_submit" name="record_page_activity_info_submit" class="btn btn-primary"><% __('Save') |h %></button>
         </center>
     </form>
 </div>
@@ -84,10 +84,10 @@ $vector_id => undef
 
 % if ($identifier_id) {
     <td>
-        <a href='/breeders/trial/<%$project_id%>'><p>Go to Project Page</p></a>
+        <a href='/breeders/trial/<%$project_id%>'><p><% __('Go to Project Page') |h %></p></a>
     </td>
 
-    <&| /page/info_section.mas, title => 'Summary', collapsible => 1, collapsed => 0, subtitle => '' &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Summary'), 'h' ), collapsible => 1, collapsed => 0, subtitle => '' &>
         <div class = "well well-sm">
             <div class = "panel panel-default">
                 <div class = "panel-body">
@@ -106,7 +106,7 @@ $vector_id => undef
             </div>
         </div>
     </&>
-    <&| /page/info_section.mas, title => 'Activity Details', collapsible => 1, collapsed => 0, subtitle => '' &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Activity Details'), 'h' ), collapsible => 1, collapsed => 0, subtitle => '' &>
         <div class = "well well-sm">
             <div class = "panel panel-default">
                 <div class = "panel-body">
@@ -136,19 +136,19 @@ $vector_id => undef
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="recordPageSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="recordPageSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        New information was saved.
+                        <% __('New information was saved.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="record_page_dismiss_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="record_page_dismiss_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
