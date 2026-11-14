@@ -26,12 +26,12 @@ $debug => ''
 
 
 <br />
-Enter a list of identifiers or upload a file containing identifers separated by whitespace (returns, spaces or tabs):<br />
+<% __('Enter a list of identifiers or upload a file containing identifers separated by whitespace (returns, spaces or tabs):') |h %><br />
 <table summary="" width="100%"><tr><td>
 <textarea name="ids" rows="5" cols="20"></textarea>
 </td>
 <td>
-<i>Example:</i>
+<i><% __('Example:') |h %></i>
 <pre style="border: 1px solid gray; width: 10em; height: 5em">
 LE_HBa0033F11
 SL_MboI0001A07
@@ -41,22 +41,22 @@ SL_EcoRI0022A07
 </td></tr></table>
 <br />
 <br />
-And/or upload list file: <br /><input type="file" name="file" />
+<% __('And/or upload list file:') |h %> <br /><input type="file" name="file" />
 <br />
 <br />
 
 </td><td valign="top" bgcolor="#EEEEEE" width="320">
-<b>Download BAC information:</b> <br />
+<b><% __('Download BAC information:') |h %></b> <br />
 <div style="margin: 1em; white-space: nowrap">
-  <input type="checkbox" name="arizona_clone_name" checked="checked"  /> Arizona-style clone name (LE_HBa0001A01) <br />
-  <input type="checkbox" name="cornell_clone_name" checked="checked"  /> Old Cornell-style clone name (P001A01)<br />
-  <input type="checkbox" name="chr_clone_name" checked="checked"  /> Clone name with chromosome (C01HBa0001A01)<br />
-  <input type="checkbox" name="clone_type" checked="checked" /> clone type <br />
-  <input type="checkbox" name="org_name" checked="checked" /> organism name <br />
-  <input type="checkbox" name="accession_name" checked="checked" /> accession name <br />
-  <input type="checkbox" name="library_name" checked="checked" /> library name <br />
-  <input type="checkbox" name="estimated_length" checked="checked" /> estimated length <br />
-  <input type="checkbox" name="genbank_accession" checked="checked" /> genbank accession<br />
+  <input type="checkbox" name="arizona_clone_name" checked="checked"  /> <% __('Arizona-style clone name (LE_HBa0001A01)') |h %> <br />
+  <input type="checkbox" name="cornell_clone_name" checked="checked"  /> <% __('Old Cornell-style clone name (P001A01)') |h %><br />
+  <input type="checkbox" name="chr_clone_name" checked="checked"  /> <% __('Clone name with chromosome (C01HBa0001A01)') |h %><br />
+  <input type="checkbox" name="clone_type" checked="checked" /> <% __('clone type') |h %> <br />
+  <input type="checkbox" name="org_name" checked="checked" /> <% __('organism name') |h %> <br />
+  <input type="checkbox" name="accession_name" checked="checked" /> <% __('accession name') |h %> <br />
+  <input type="checkbox" name="library_name" checked="checked" /> <% __('library name') |h %> <br />
+  <input type="checkbox" name="estimated_length" checked="checked" /> <% __('estimated length') |h %> <br />
+  <input type="checkbox" name="genbank_accession" checked="checked" /> <% __('genbank accession') |h %><br />
 <!--	<input type="checkbox" name="overgo_matches" checked="checked" DISABLED /> overgo matches<br /> -->
 </div>
 
@@ -68,6 +68,6 @@ And/or upload list file: <br /><input type="file" name="file" />
 
 <input type="hidden" name="idType" value="bac" />
 <input type="reset" />&nbsp;&nbsp;
-<input type="submit" value="Submit"><br />
+<input type="submit" value="<% __('Submit') |h %>"><br />
 </form>
 
