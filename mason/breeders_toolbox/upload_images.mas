@@ -215,10 +215,10 @@ function load_upload_images_collections() {
             }
             var collections = (response.collections || []).filter(function(c) { return c.user_can_modify; });
             if (!collections.length) {
-                select.append(jQuery('<option>').val('').text('No image collections available'));
+                select.append(jQuery('<option>').val('').text(<% __('No image collections available') |js %>));
                 return;
             }
-            select.append(jQuery('<option>').val('').text('Select a collection'));
+            select.append(jQuery('<option>').val('').text(<% __('Select a collection') |js %>));
             collections.forEach(function(c) {
                 select.append(jQuery('<option>').val(c.collection_id).text(c.name));
             });
