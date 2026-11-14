@@ -391,7 +391,7 @@ export function init(trial_id, trial_name) {
         },
         error: function(r){
           jQuery("#working_modal").modal("hide");
-          alert("Error retrieving field trial to field trial linkage.");
+          alert(gettext("Error retrieving field trial to field trial linkage."));
         }
       });
 }

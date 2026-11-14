@@ -1542,18 +1542,18 @@ import '../legacy/CXGN/I18N.js';
     function buildSavePayloadFromState(){
       var meetingCtx = getSelectedMeetingContext();
       if (!meetingCtx) {
-        alert('Please select one meeting first.');
+        alert(gettext('Please select one meeting first.'));
         return null;
       }
 
       if (!STATE.list_id) {
-        alert('Please select one accession list first.');
+        alert(gettext('Please select one accession list first.'));
         return null;
       }
 
       var accessions = getDecisionRowsForSave();
       if (!accessions.length) {
-        alert('There are no accession decisions to save.');
+        alert(gettext('There are no accession decisions to save.'));
         return null;
       }
 
@@ -1636,12 +1636,12 @@ import '../legacy/CXGN/I18N.js';
     function getRequiredMeetingAndListContext(){
       var meetingCtx = getSelectedMeetingContext();
       if (!meetingCtx) {
-        alert('Please select one meeting first.');
+        alert(gettext('Please select one meeting first.'));
         return null;
       }
 
       if (!STATE.list_id) {
-        alert('Please select one accession list first.');
+        alert(gettext('Please select one accession list first.'));
         return null;
       }
 
@@ -1700,7 +1700,7 @@ import '../legacy/CXGN/I18N.js';
         var id = $(this).val() || '';
 
         if (id && !getSelectedMeetingContext()) {
-          alert('Please select one meeting first.');
+          alert(gettext('Please select one meeting first.'));
           $(this).val('');
           STATE.list_id = '';
           STATE.rows = [];
@@ -1869,7 +1869,7 @@ import '../legacy/CXGN/I18N.js';
         }
 
         if (!meetingDate || !meetingYearFull) {
-          alert('Please select one meeting first so the year can be taken from the meeting date.');
+          alert(gettext('Please select one meeting first so the year can be taken from the meeting date.'));
           this.value = '';
           applyDecisionColor(this);
           STATE.decisionsMap.set(keyFor(acc, bp), '');
@@ -2689,7 +2689,7 @@ import '../legacy/CXGN/I18N.js';
   window.requireSelectedDecisionMeeting = function(){
     var sel = getSelectedMeeting();
     if (!sel) {
-      alert('Please select one meeting first.');
+      alert(gettext('Please select one meeting first.'));
       return null;
     }
     return sel;
@@ -2874,7 +2874,7 @@ import '../legacy/CXGN/I18N.js';
       var original = $btn.text();
 
       if (!meetingId) {
-        alert('Meeting ID not found.');
+        alert(gettext('Meeting ID not found.'));
         return;
       }
 

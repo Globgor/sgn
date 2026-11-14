@@ -232,7 +232,7 @@ export function init(datasetId, datasetName, baseWidth) {
                     url: '/ajax/dataset/store_outliers/' + LocalThis.datasetId,
                     data: { outliers: stringOutliers, outlier_cutoffs: stringOutlierCutoffs },
                     success: function (response) {
-                        alert('outliers successfully stored!');
+                        alert(gettext('outliers successfully stored!'));
                         LocalThis.storedOutliersIds = [...allOutliers];
                         d3.select("svg").remove();
                         LocalThis.render();
@@ -250,7 +250,7 @@ export function init(datasetId, datasetName, baseWidth) {
                     url: '/ajax/dataset/store_outliers/' + LocalThis.datasetId,
                     data: { outliers: "", outlier_cutoffs: "" },
                     success: function (response) {
-                        alert('outliers successfully reseted!');
+                        alert(gettext('outliers successfully reseted!'));
                         LocalThis.storedOutliersIds = [];
                         d3.select("svg").remove();
                         LocalThis.render();
@@ -271,7 +271,7 @@ export function init(datasetId, datasetName, baseWidth) {
                     url: '/ajax/dataset/store_outliers/' + LocalThis.datasetId,
                     data: { outliers: stringFilteredNonTrait, outlier_cutoffs: "" },
                     success: function (response) {
-                        alert('outliers successfully reseted!');
+                        alert(gettext('outliers successfully reseted!'));
                         LocalThis.storedOutliersIds = filteredNonTrait;
                         d3.select("svg").remove();
                         LocalThis.render();
@@ -355,7 +355,7 @@ export function init(datasetId, datasetName, baseWidth) {
                     url: '/ajax/dataset/store_outliers/' + LocalThis.datasetId,
                     data: { outliers: stringOutliers, outlier_cutoffs: stringOutlierCutoffs },
                     success: function (response) {
-                        alert('outliers successfully stored!');
+                        alert(gettext('outliers successfully stored!'));
                         LocalThis.storedOutliersIds = [...allOutliers];
                         d3.select("svg").remove();
                         LocalThis.render();
