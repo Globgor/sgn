@@ -21,9 +21,7 @@
 
 <div id="marker_metadata_upload" style="display:none">
     <p>
-        To upload metadata and alleles for markers in this protocol, go to the 
-        <a href="/breeders/genotyping_projects">Manage Genotyping Projects</a>
-        page and select the <strong>Add Marker Metadata</strong> button.
+        <& /util/sentence.mas, text => __x('To upload metadata and alleles for markers in this protocol, go to the {link}Manage Genotyping Projects{end_link} page and select the {strong}Add Marker Metadata{end_strong} button.'), link => '<a href="/breeders/genotyping_projects">', end_link => '</a>', strong => '<strong>', end_strong => '</strong>' &>
     </p>
 </div>
 
@@ -45,7 +43,7 @@
                 <p><strong><% __('Description:') |h %></strong><textarea class="form-control" id="edit_marker_metadata_description" name="Description" rows="3"></textarea></p>
                 <p><strong><% __('Alleles (one per line):') |h %></strong><textarea class="form-control" id="edit_marker_metadata_alleles" name="Alleles" rows="5"></textarea></p>
                 <p><strong><% __('References (one per line):') |h %></strong><textarea class="form-control" id="edit_marker_metadata_references" name="References" rows="5"></textarea></p>
-                <span>The references include the associated trait categories and external database references.  The format of each reference is <code>{database name}:{entity name}</code></span>
+                <span><& /util/sentence.mas, text => __x('The references include the associated trait categories and external database references.') &>  The format of each reference is <code>{database name}:{entity name}</code></span>
                 <input type="hidden" id="edit_marker_metadata_locus_id" />
             </div>
             <div class="modal-footer">
