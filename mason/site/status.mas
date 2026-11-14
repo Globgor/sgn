@@ -4,9 +4,9 @@
 $logins => {}
 </%args>
 
-<& /page/page_title.mas, title=>"Site Status" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Site Status"), 'h' ) &>
 
-<&| /page/info_section.mas, title=>"Logins" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Logins"), 'h' ) &>
 
 % foreach my $ut (keys %{$logins->{detailed}}) { 
   <br />
