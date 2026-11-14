@@ -80,7 +80,7 @@ solGS.submitJob = {
         }
       },
       error: function () {
-        alert("Error occured checking for cached output.");
+        alert(gettext("Error occured checking for cached output."));
       },
     });
   },
@@ -121,10 +121,10 @@ solGS.submitJob = {
       height: 200,
       width: 600,
       modal: true,
-      title: "Job submission",
+      title: gettext("Job submission"),
       buttons: {
         OK: {
-          text: "Yes",
+          text: gettext("Yes"),
           class: "btn btn-success",
           id: "queue_job",
           click: function () {
@@ -181,12 +181,12 @@ solGS.submitJob = {
 
   loginAlert: function () {
     jQuery("<div />")
-      .html("To use this feature, you need to log in and start over the process.")
+      .html(gettext("To use this feature, you need to log in and start over the process."))
       .dialog({
         height: 200,
         width: 250,
         modal: true,
-        title: "Login",
+        title: gettext("Login"),
         buttons: {
           OK: {
             click: function () {
@@ -202,7 +202,7 @@ solGS.submitJob = {
               jQuery(this).dialog("close");
             },
             class: "btn btn-primary",
-            text: "Cancel",
+            text: gettext("Cancel"),
           },
         },
       });
@@ -332,7 +332,7 @@ solGS.submitJob = {
         height: 400,
         width: 400,
         modal: true,
-        title: "Info about the analysis",
+        title: gettext("Info about the analysis"),
         buttons: {
           Submit: {
             click: function (e) {
@@ -341,7 +341,7 @@ solGS.submitJob = {
             },
             id: "submit_job",
             class: "btn btn-success",
-            text: "Submit",
+            text: gettext("Submit"),
           },
 
           Cancel: {
@@ -349,7 +349,7 @@ solGS.submitJob = {
               jQuery(this).dialog("close");
             },
             class: "btn btn-primary",
-            text: "Cancel",
+            text: gettext("Cancel"),
           },
         },
       });
@@ -387,7 +387,7 @@ solGS.submitJob = {
     var analysisName = jQuery("#analysis_name").val();
 
     if (!analysisName) {
-      jQuery("#form-feedback-analysis-name").text("Analysis name is blank. Please give a name.");
+      jQuery("#form-feedback-analysis-name").text(gettext("Analysis name is blank. Please give a name."));
     } else {
       var checkName = solGS.submitJob.checkAnalysisName(analysisName);
 
@@ -396,7 +396,7 @@ solGS.submitJob = {
           jQuery("#analysis_name").css("border", "solid #FF0000");
 
           jQuery("#form-feedback-analysis-name").text(
-            "The same name exists for another analysis. Please give a new name."
+            gettext("The same name exists for another analysis. Please give a new name.")
           );
         } else {
           var email = jQuery("#user_email").val();
@@ -425,7 +425,7 @@ solGS.submitJob = {
     if (!email.match(emailRegex)) {
       jQuery("#user_email").css("border", "solid #FF0000");
 
-      jQuery("#form-feedback-user-email").text("Please provide a proper email address.");
+      jQuery("#form-feedback-user-email").text(gettext("Please provide a proper email address."));
 
       emailPass = 0;
     } else {
@@ -654,7 +654,7 @@ solGS.submitJob = {
         height: 200,
         width: 400,
         modal: true,
-        title: "Prediction Modeling Message",
+        title: gettext("Prediction Modeling Message"),
         buttons: {
           Yes: {
             text: "OK",
