@@ -4,14 +4,14 @@
 <table class="table table-hover table-bordered" id="identifier_generator_list_table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Prefix</th>
-            <th>Number of Digits</th>
-            <th>Current Number</th>
-            <th>Next Identifier</th>
-            <th>History</th>
-            <th>Download Next Identifiers</th>
+            <th><% __('Name') |h %></th>
+            <th><% __('Description') |h %></th>
+            <th><% __('Prefix') |h %></th>
+            <th><% __('Number of Digits') |h %></th>
+            <th><% __('Current Number') |h %></th>
+            <th><% __('Next Identifier') |h %></th>
+            <th><% __('History') |h %></th>
+            <th><% __('Download Next Identifiers') |h %></th>
         </tr>
     </thead>
 </table>
@@ -20,8 +20,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="identifierGenerationHistoryDialog">Identifier Generation History</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="identifierGenerationHistoryDialog"><% __('Identifier Generation History') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
