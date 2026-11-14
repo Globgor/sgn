@@ -13,7 +13,7 @@
 		<!-- Modal content-->
 		   <div class="modal-content">
 		   <div class="modal-header">
-		   <h4 class="modal-title">Searching for Motifs</h4>
+		   <h4 class="modal-title"><% __('Searching for Motifs') |h %></h4>
 		</div>
 
 			<div class="modal-body">
@@ -42,7 +42,7 @@
 	</script>
 
 <center>
- <h3 id="tool_title">Motifs Finder Tool</h3>
+ <h3 id="tool_title"><% __('Motifs Finder Tool') |h %></h3>
  <form action="/test" method="POST" id="run_motifs">
    <label>
    Sequence:<span id="example">(<a class="blue_text" onclick="example()" style="cursor:pointer">example sequence</a>)</span>
@@ -50,15 +50,15 @@
    <textarea class="form-control" id="sequence" name="sequence" ></textarea><br>
 
    <div class="form-inline">
-   	<label><span style="cursor:default" title="lenght(s) of motif, seperated by comma without space(eg. 4,6)">Motif width(s)</span></label>
+   	<label><span style="cursor:default" title="<% __('lenght(s) of motif, seperated by comma without space(eg. 4,6)') |h %>"><% __('Motif width(s)') |h %></span></label>
    	<input class="form-control" type="text" name="widths_of_motifs" style="width: 110px;" value="12,14">&nbsp;&nbsp;&nbsp;
-   	<label><span style="cursor:default" title="Number of sites expected in each sequence, seperated by comma without space(eg. 4,6)">Expected sites</span></label>
+   	<label><span style="cursor:default" title="<% __('Number of sites expected in each sequence, seperated by comma without space(eg. 4,6)') |h %>"><% __('Expected sites') |h %></span></label>
    	<input class="form-control" type="text" name="numbers_of_sites" style="width: 110px;" value="3,5"> <br><br>
    </div>
 
 	<div class="container" id="well_width">
 	  <div class="well">
-	   <span style="cursor:default" title="Insert a sequence file in a tab-delimited format">Upload Sequence file:</span>
+	   <span style="cursor:default" title="<% __('Insert a sequence file in a tab-delimited format') |h %>"><% __('Upload Sequence file:') |h %></span>
 	   <input type="file" class="btn btn-default" name="sequence_file" encoding="multipart/form-data"/>
 		</div>
 	</div>
@@ -76,19 +76,19 @@
 	<p>
 
 	<div class="form-inline" >
-	   <label style="cursor:default" title="This value is the number of time the sampler is restarted and can be changed to sample over a larger (or smaller) number of separate initial models.">Number of seeds</label>
+	   <label style="cursor:default" title="<% __('This value is the number of time the sampler is restarted and can be changed to sample over a larger (or smaller) number of separate initial models.') |h %>"><% __('Number of seeds') |h %></label>
    	   <input class="form-control" type="text" name="number_of_seeds" value="20" size="2">&nbsp; &nbsp; &nbsp;
 
-       <label><input type="checkbox" name="fragmentation" value="-F" checked>&nbsp;Fragmentation</label>&nbsp; &nbsp; &nbsp;
-   	   <label><input type="checkbox" name="rev_complement" value="-r" unchecked>&nbsp;Reverse Complement</label>
+       <label><input type="checkbox" name="fragmentation" value="-F" checked>&nbsp;<% __('Fragmentation') |h %></label>&nbsp; &nbsp; &nbsp;
+   	   <label><input type="checkbox" name="rev_complement" value="-r" unchecked>&nbsp;<% __('Reverse Complement') |h %></label>
 	   </p>
          </div>
     </div>
 
    <br>
 
-   <button type="reset" id="clear_form" value="clear" title="Clear form">Clear</button>&nbsp; &nbsp; &nbsp;
-   <button class="btn btn-primary"  id="button" value="Run_Motifs_Finder">Run Motifs Finder</button>
+   <button type="reset" id="clear_form" value="clear" title="<% __('Clear form') |h %>"><% __('Clear') |h %></button>&nbsp; &nbsp; &nbsp;
+   <button class="btn btn-primary"  id="button" value="Run_Motifs_Finder"><% __('Run Motifs Finder') |h %></button>
 
   </form>
 
@@ -113,7 +113,7 @@
 
 	<a class="collapser_link" href="javascript:folding_section('#usage_view','#tmp_img_usage');">
         <img id="tmp_img_usage" class="sub_collapser_img" src="/static/documents/img/collapser_plus.png" width="20" height="20" />
-			Usage Help
+			<% __('Usage Help') |h %>
 	<hr style="\&quot;color:" #006699;="" margin:="" 10px="" 20px;="" \"="">
 		</a>
     </div>
@@ -121,7 +121,7 @@
       <div id="usage_view" class="collapse center_section"  >
 
     	<p>
-	<b>Usage:</b><br />
+	<b><% __('Usage:') |h %></b><br />
 	1. Paste a <b>sequence</b> like in the example:<br />
 	<span style="background-color:#DCDCDC;">&nbsp;&nbsp;>gene_name<br />&nbsp;&nbsp;ATGGATCAGTCGGTGTTGGCGATCT&nbsp;&nbsp;<br />&nbsp;&nbsp;ACAGCTTGGCCAACTCCAGAAATTG&nbsp;&nbsp;</span><br />
 	&nbsp;&nbsp;Or Upload a <b>sequence file</b>. It must be in <b>FASTA format</b>.<br />
@@ -144,7 +144,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Advance options help</h4>
+        <h4 class="modal-title"><% __('Advance options help') |h %></h4>
       </div>
       <div class="modal-body">
 	<ul class="list-group">
@@ -155,7 +155,7 @@
         <!--<p><b>Number of seeds:</b> </p> -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
 
