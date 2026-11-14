@@ -601,14 +601,14 @@ jQuery(document).ready(function() {
         manage_drone_imagery_calculate_statistics_field_trial_id_array = jQuery('#drone_imagery_calculate_statistics_field_trial_id').val();
 
         if (manage_drone_imagery_calculate_statistics_field_trial_id_array.length > 1) {
-            alert('Please only select a single field trial for now!');
+            alert(<% __('Please only select a single field trial for now!') |js %>);
             return false;
         }
 
         manage_drone_imagery_calculate_statistics_field_trial_id_string = manage_drone_imagery_calculate_statistics_field_trial_id_array.join(",");
         manage_drone_imagery_calculate_statistics_observation_variable_type = jQuery('#drone_imagery_calculate_statistics_select_observation_variable_type').val();
         if (manage_drone_imagery_calculate_statistics_field_trial_id_string == '') {
-            alert('Please select a field trial first!');
+            alert(<% __('Please select a field trial first!') |js %>);
         } else {
             if (manage_drone_imagery_calculate_statistics_observation_variable_type == 'time_ontology') {
                 get_select_box('traits', 'drone_imagery_calculate_statistics_trait_select_div', { 'name' : 'drone_imagery_calculate_statistics_trait_id_select', 'id' : 'drone_imagery_calculate_statistics_trait_id_select', 'empty':1, 'multiple':1, 'size': 20, 'trial_ids':manage_drone_imagery_calculate_statistics_field_trial_id_string, 'stock_type':'plot', 'contains_composable_cv_type':manage_drone_imagery_calculate_statistics_observation_variable_type, 'select_format':'component_table_select' });
@@ -631,7 +631,7 @@ jQuery(document).ready(function() {
         manage_drone_imagery_calculate_statistics_multiseason_field_trial_id_array = jQuery('#drone_imagery_calculate_statistics_multiseason_field_trial_id').val();
 
         if (manage_drone_imagery_calculate_statistics_multiseason_field_trial_id_array.length > 1) {
-            alert('Please only select a single field trial for now!');
+            alert(<% __('Please only select a single field trial for now!') |js %>);
             return false;
         }
 
@@ -660,13 +660,13 @@ jQuery(document).ready(function() {
         else {
             manage_drone_imagery_calculate_statistics_trait_ids = jQuery('#drone_imagery_calculate_statistics_trait_id_select').val();
             if (manage_drone_imagery_calculate_statistics_trait_ids == null || manage_drone_imagery_calculate_statistics_trait_ids == undefined) {
-                alert('Please select at least one observation variable!');
+                alert(<% __('Please select at least one observation variable!') |js %>);
                 return false;
             }
         }
 
         if (manage_drone_imagery_calculate_statistics_trait_ids.length < 1){
-            alert('Please select at least one observation variable!');
+            alert(<% __('Please select at least one observation variable!') |js %>);
         } else {
             Workflow.complete("#drone_imagery_calculate_statistics_trait_select_step");
             Workflow.focus('#drone_imagery_calculate_statistics_workflow', 3);
@@ -866,15 +866,15 @@ jQuery(document).ready(function() {
         manage_drone_imagery_calculate_statistics_select = jQuery('#drone_imagery_calculate_statistics_select_input').val();
 
         if (manage_drone_imagery_calculate_statistics_select == 'marss_germplasmname_block' && manage_drone_imagery_calculate_statistics_observation_variable_type != 'time_ontology') {
-            alert('The MARSS model fit and prediction only works for Time Series traits! Please go to Trait Selection and select time series traits.');
+            alert(<% __('The MARSS model fit and prediction only works for Time Series traits! Please go to Trait Selection and select time series traits.') |js %>);
             return false;
         }
         if (jQuery('#drone_image_calculate_statistics_genotyping_protocol_include_pedigree_select').val() == 'yes' && jQuery('#drone_image_calculate_statistics_genotyping_protocol_compute_from_parents_select').val() != 'yes') {
-            alert('You can only use pedigree info in the relationship matrix if you will compute the genotypes from the parents!');
+            alert(<% __('You can only use pedigree info in the relationship matrix if you will compute the genotypes from the parents!') |js %>);
             return false;
         }
         if (jQuery('#drone_image_calculate_statistics_genotyping_protocol_use_parental_grms_select').val() == 'yes' && jQuery('#drone_image_calculate_statistics_genotyping_protocol_compute_from_parents_select').val() != 'yes') {
-            alert('You can only use parental relationship matrices if you will compute the genotypes from the parents!');
+            alert(<% __('You can only use parental relationship matrices if you will compute the genotypes from the parents!') |js %>);
             return false;
         }
 
@@ -882,7 +882,7 @@ jQuery(document).ready(function() {
         if (jQuery('#drone_image_calculate_statistics_permanent_env_structure_select').val() == 'phenotype_correlation') {
             manage_drone_imagery_calculate_statistics_rr_structure_phenotype_correlation = jQuery('#drone_imagery_calculate_statistics_permanent_env_structure_phenotype_correlation_select').val();
             if (!manage_drone_imagery_calculate_statistics_rr_structure_phenotype_correlation || manage_drone_imagery_calculate_statistics_rr_structure_phenotype_correlation.length < 3) {
-                alert('Please select at least three phenotypes to use in random regression phenotype correlation structure!');
+                alert(<% __('Please select at least three phenotypes to use in random regression phenotype correlation structure!') |js %>);
                 return false;
             }
         }
@@ -1026,7 +1026,7 @@ jQuery(document).ready(function() {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert('Error calculating statistics!')
+                alert(<% __('Error calculating statistics!') |js %>)
             }
         });
     });
@@ -1042,15 +1042,15 @@ jQuery(document).ready(function() {
         var generic_save_analysis_template_breeding_program_id = jQuery('#generic_save_analysis_template_breeding_program_id').val();
 
         if (generic_save_analysis_template_analysis_name == '') {
-            alert('Please give an analysis template name');
+            alert(<% __('Please give an analysis template name') |js %>);
             return false;
         }
         if (generic_save_analysis_template_analysis_description == '') {
-            alert('Please give an analysis template description');
+            alert(<% __('Please give an analysis template description') |js %>);
             return false;
         }
         if (generic_save_analysis_template_analysis_year == '') {
-            alert('Please give an analysis template year');
+            alert(<% __('Please give an analysis template year') |js %>);
             return false;
         }
 
@@ -1653,20 +1653,20 @@ jQuery(document).ready(function() {
                                         }
                                     },
                                     error: function(response){
-                                        alert('Error saving analysis multiple!');
+                                        alert(<% __('Error saving analysis multiple!') |js %>);
                                     }
                                 });
                             }
                         },
                         error: function(response){
-                            alert('Error saving analysis multiple!');
+                            alert(<% __('Error saving analysis multiple!') |js %>);
                         }
                     });
                 }
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('Error saving analysis multiple!');
+                alert(<% __('Error saving analysis multiple!') |js %>);
             }
         });
     });
@@ -1926,7 +1926,7 @@ jQuery(document).ready(function() {
 
     jQuery('#drone_imagery_calculate_statistics_analysis_save_blups_spatial').click(function(){
         if (manage_drone_imagery_calculate_statistics_field_trial_id_array.length>1) {
-            alert('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis');
+            alert(<% __('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis') |js %>);
             return false;
         }
 
@@ -1983,7 +1983,7 @@ jQuery(document).ready(function() {
 
     jQuery('#drone_imagery_calculate_statistics_analysis_save_blups_pe').click(function(){
         if (manage_drone_imagery_calculate_statistics_field_trial_id_array.length>1) {
-            alert('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis');
+            alert(<% __('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis') |js %>);
             return false;
         }
 

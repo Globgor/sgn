@@ -2912,7 +2912,7 @@ jQuery(document).ready(function() {
 
     jQuery('#upload_drone_image_field_trial_select_continue').click(function(){
         if (jQuery('#drone_run_field_trial_id').val() == ''){
-            alert('Please select a field trial first');
+            alert(<% __('Please select a field trial first') |js %>);
         } else {
             jQuery.ajax({
                 url : '/ajax/breeders/trial/'+jQuery('#drone_run_field_trial_id').val()+'/details',
@@ -2934,7 +2934,7 @@ jQuery(document).ready(function() {
                     return false;
                 },
                 error: function(response){
-                    alert('Error checking field trial details!');
+                    alert(<% __('Error checking field trial details!') |js %>);
                 }
             });
         }
@@ -2995,7 +2995,7 @@ jQuery(document).ready(function() {
                 return false;
             },
             error: function(response){
-                alert('Error getting vehicle!');
+                alert(<% __('Error getting vehicle!') |js %>);
             }
         });
     }
@@ -3012,11 +3012,11 @@ jQuery(document).ready(function() {
         var vehicle_batteries = jQuery('#drone_run_new_imaging_vehicle_battery_names').val();
 
         if (vehicle_name == '' || vehicle_desc == '') {
-            alert('Please give a vehicle name and description!');
+            alert(<% __('Please give a vehicle name and description!') |js %>);
             return false;
         }
         if (vehicle_batteries == '') {
-            alert('Please give at least default battery name!');
+            alert(<% __('Please give at least default battery name!') |js %>);
             return false;
         }
 
@@ -3028,7 +3028,7 @@ jQuery(document).ready(function() {
                     alert(response.error);
                 }
                 else if (response.success) {
-                    alert('Vehicle added!');
+                    alert(<% __('Vehicle added!') |js %>);
                     get_select_box('imaging_event_vehicles', 'drone_run_imaging_vehicle_div', {'id':'drone_run_imaging_vehicle_id', 'name':'drone_run_imaging_vehicle_id'});
                     upload_drone_imagery_vehicle_id = response.new_vehicle_id;
                     _show_vehicle_battery_select();
@@ -3037,7 +3037,7 @@ jQuery(document).ready(function() {
                 return false;
             },
             error: function(response){
-                alert('Error adding new imaging vehicle!');
+                alert(<% __('Error adding new imaging vehicle!') |js %>);
             }
         });
     });
@@ -3055,23 +3055,23 @@ jQuery(document).ready(function() {
             selected.push(jQuery(this).val());
         });
         if (selected.length > 1){
-            alert('Only select one drone run!');
+            alert(<% __('Only select one drone run!') |js %>);
         } else {
             if (selected.length == 0 && jQuery('#drone_run_name').val() == ''){
-                alert('Select a drone run or create a new one!');
+                alert(<% __('Select a drone run or create a new one!') |js %>);
             } else if (selected.length == 1 && jQuery('#drone_run_name').val() != ''){
-                alert('If you selected a drone run, do not try to make a new one at the same time!');
+                alert(<% __('If you selected a drone run, do not try to make a new one at the same time!') |js %>);
             } else if (selected.length == 1 && jQuery('#drone_run_name').val() == ''){
                 jQuery('#drone_run_id').val(selected[0]);
                 Workflow.complete('#drone_image_upload_drone_run_continue');
                 Workflow.focus('#drone_imagery_upload_workflow', 3);
             } else if (selected.length == 0 && jQuery('#drone_run_name').val() != '') {
                 if (jQuery('#drone_run_description').val() == ''){
-                    alert('Please give a drone run description.');
+                    alert(<% __('Please give a drone run description.') |js %>);
                 } else if (jQuery('#drone_run_date').val() == ''){
-                    alert('Please give a drone run date.');
+                    alert(<% __('Please give a drone run date.') |js %>);
                 } else if (jQuery('#drone_run_type') == ''){
-                    alert('Please select a drone run type');
+                    alert(<% __('Please select a drone run type') |js %>);
                 } else {
                     jQuery('#drone_run_id').val('');
                     jQuery.ajax({
@@ -3090,7 +3090,7 @@ jQuery(document).ready(function() {
                             return false;
                         },
                         error: function(response){
-                            alert('Error checking drone run name!');
+                            alert(<% __('Error checking drone run name!') |js %>);
                         }
                     });
                 }
@@ -3127,11 +3127,11 @@ jQuery(document).ready(function() {
         var drone_run_base_date = jQuery('#drone_run_base_date').val();
 
         if (drone_run_band_unstitched == '') {
-            alert('Please select whether you are uploading orthomosaic images.');
+            alert(<% __('Please select whether you are uploading orthomosaic images.') |js %>);
             return false;
         }
         if (drone_run_id == '' && drone_run_camera_info == '') {
-            alert('Please select the camera type used.');
+            alert(<% __('Please select the camera type used.') |js %>);
             return false;
         }
 
@@ -3140,7 +3140,7 @@ jQuery(document).ready(function() {
             return false;
         }
         if (drone_run_camera_info == '') {
-            alert('Please select the camera type used.');
+            alert(<% __('Please select the camera type used.') |js %>);
             return false;
         }
 
@@ -3163,7 +3163,7 @@ jQuery(document).ready(function() {
 
         if (drone_run_band_unstitched == 'no') {
             if (drone_run_band_number == '') {
-                alert('Please select the number of drone run bands you will upload');
+                alert(<% __('Please select the number of drone run bands you will upload') |js %>);
             } else {
                 if (drone_run_band_number == 5 && drone_run_camera_info == 'micasense_5'){
                     jQuery('input[name="drone_run_band_name_1"]').val(drone_run_name+'_'+drone_run_date+'_Blue');
@@ -3219,17 +3219,17 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_one').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_one_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_one_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_one_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_one_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3241,31 +3241,31 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_two').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_two_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_two_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_two_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_two_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_two_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_two_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_two_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_two_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3277,45 +3277,45 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_three').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_three_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_three_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_three_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_three_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_three_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_three_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_three_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_three_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_three_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_three_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_three_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_three_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3327,59 +3327,59 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_four').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_four_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_four_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_four_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_four_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_four_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_four_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_four_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_four_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_four_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_four_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_four_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_four_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_four_4').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_four_4').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_four_4').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_four_4').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3391,73 +3391,73 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_five').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_five_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_five_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_five_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_five_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_five_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_five_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_five_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_five_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_five_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_five_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_five_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_five_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_five_4').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_five_4').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_five_4').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_five_4').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_five_5').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_five_5').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_five_5').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_five_5').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3469,87 +3469,87 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_six').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_six_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_six_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_six_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_six_4').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_4').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_4').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_4').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_six_5').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_5').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_5').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_5').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_six_6').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_six_6').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_six_6').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_six_6').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3561,101 +3561,101 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_seven').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_seven_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_4').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_4').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_4').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_4').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_5').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_5').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_5').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_5').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_6').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_6').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_6').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_6').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_seven_7').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_seven_7').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_seven_7').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_seven_7').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3667,115 +3667,115 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_eight').click(function(e){
         e.preventDefault();
         if (jQuery('#drone_run_band_name_eight_1').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_1').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_1').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_1').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_2').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_2').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_2').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_2').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_3').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_3').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_3').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_3').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_4').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_4').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_4').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_4').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_5').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_5').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_5').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_5').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_6').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_6').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_6').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_6').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_7').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_7').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_7').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_7').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_name_eight_8').val() == ''){
-            alert('Give a new drone run band name!');
+            alert(<% __('Give a new drone run band name!') |js %>);
             return;
         } else if (jQuery('#drone_run_band_description_eight_8').val() == ''){
-            alert('Please give a drone run band description.');
+            alert(<% __('Please give a drone run band description.') |js %>);
             return;
         } else if (jQuery('#drone_run_band_type_eight_8').val() == ''){
-            alert('Please select a drone run band type.');
+            alert(<% __('Please select a drone run band type.') |js %>);
             return;
         }
         if (jQuery('#drone_run_band_stitched_ortho_image_eight_8').val() == '') {
-            alert('Please select an image');
+            alert(<% __('Please select an image') |js %>);
             return;
         }
 
@@ -3787,13 +3787,13 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_odm').click(function(e){
         e.preventDefault();
         if (jQuery('#upload_drone_images_zipfile_odm').val() == ''){
-            alert('Please select a zipfile of images');
+            alert(<% __('Please select a zipfile of images') |js %>);
             return;
         }
 
         var file_input = document.getElementById('upload_drone_images_zipfile_odm');
         if (!file_input.files[0] || file_input.files.length > 1) {
-            alert('Please select only a single zipfile.');
+            alert(<% __('Please select only a single zipfile.') |js %>);
             return;
         }
 
@@ -3805,18 +3805,18 @@ jQuery(document).ready(function() {
     jQuery('#upload_drone_imagery_select_images_odm_micasense').click(function(e){
         e.preventDefault();
         if (jQuery('#upload_drone_images_zipfile_odm_micasense').val() == ''){
-            alert('Please select a zipfile of images');
+            alert(<% __('Please select a zipfile of images') |js %>);
             return;
         }
 
         var file_input = document.getElementById('upload_drone_images_zipfile_odm_micasense');
         if (!file_input.files[0] || file_input.files.length > 1) {
-            alert('Please select only a single zipfile.');
+            alert(<% __('Please select only a single zipfile.') |js %>);
             return;
         }
 
         if (jQuery('#upload_drone_images_panel_zipfile_odm_micasense').val() == ''){
-            alert('Please select a zipfile of Micasense radiocalibration panel images');
+            alert(<% __('Please select a zipfile of Micasense radiocalibration panel images') |js %>);
             return;
         }
 
@@ -3826,73 +3826,73 @@ jQuery(document).ready(function() {
     });
 
     jQuery('#upload_drone_imagery_odm_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_odm_micasense_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_bulk_previous_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_bulk_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_one_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_two_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_three_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_four_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_five_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_six_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_seven_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
 
     jQuery('#upload_drone_imagery_eight_band_form').submit(function() {
-        jQuery('#working_msg').html('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.');
+        jQuery('#working_msg').html(<% __('This can potentially take time to complete. Ensure the file(s) have completely transferred to the server before closing this tab.') |js %>);
         jQuery('#working_modal').modal('show');
         return true;
     });
