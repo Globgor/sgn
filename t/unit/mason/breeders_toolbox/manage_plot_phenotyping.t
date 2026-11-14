@@ -23,6 +23,7 @@ use Cwd qw | abs_path |;
 use File::Path qw | make_path |;
 use File::Temp qw | tempdir |;
 use HTML::Mason::Interp;
+use SGN::I18N::Browser ();
 
 my $mason_root = abs_path('mason');
 
@@ -57,6 +58,7 @@ my $interp = HTML::Mason::Interp->new(
     data_dir => $data_dir,
     autohandler_name => '',
     preamble => $preamble,
+    escape_flags => { js => \&SGN::I18N::Browser::escape_js },
 );
 
 sub render {

@@ -115,7 +115,7 @@ jQuery(document).ready(function() {
         event.preventDefault();
         var end_date = jQuery('#repetitive_measurement_end_date').val();
         if (!end_date) {
-            alert(<% __('Please select an end date to view repetitive measurements.') |js %>);
+            alert('Please select an end date to view repetitive measurements.');
             return;
         }
         jQuery('#working_modal').modal('show');

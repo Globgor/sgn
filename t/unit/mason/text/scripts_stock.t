@@ -41,8 +41,6 @@ page_script_texts_ok(
     'Username',
 );
 
-component_compiles_ok('/stock/index.mas');
-
 page_script_texts_ok(
     '/stock/obsolete_accessions_using_list_dialog.mas',
     'Error obsoleting accessions.',

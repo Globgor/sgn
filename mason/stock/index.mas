@@ -570,7 +570,7 @@ function jqueryStuff() {
                     "/<% $basepath %>/", "<% $jbrowse_url %>");
                 if ( href ) { // if the exact dataset is found, create and display its link
                     jQuery('#jbrowse_check').replaceWith(jQuery('<a id="jbrowse_link"></a>').attr('href', href)
-                        .text(<% __('View the tracks for this accession in JBrowse') |js %>));
+                        .text('View the tracks for this accession in JBrowse'));
                 }
                 else { // if not found, display message that dataset doesn't exist
                     jQuery('#jbrowse_check').html(" <i>This accession does not have any data in Jbrowse.</i>");
@@ -587,9 +587,9 @@ function jqueryStuff() {
 
             qrCodeDisplay.toggle();
             if (qrCodeDisplay.is(':visible')) {
-                jQuery(this).text(<% __('Hide QR Code') |js %>);
+                jQuery(this).text('Hide QR Code');
             } else {
-                jQuery(this).text(<% __('Show QR Code') |js %>);
+                jQuery(this).text('Show QR Code');
             }
         });
 

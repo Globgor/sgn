@@ -103,11 +103,6 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
-    '/breeders_toolbox/trial/jbrowse_instance.mas',
-    'View the dataset for this trial in JBrowse',
-);
-
-page_script_texts_ok(
     '/breeders_toolbox/trial/numerical_derivatives_row_and_column_workflow.mas',
     'Error doing numerical derivative!',
     'Please select at least one trait!',

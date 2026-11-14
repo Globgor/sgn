@@ -22,18 +22,6 @@ use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 component_compiles_ok('/breeders_toolbox/trial/phenotype_heatmap.mas');
 
 page_script_texts_ok(
-    '/breeders_toolbox/trial/phenotype_summary.mas',
-    'An error occured retrieving trait histogram data.',
-    'Error retrieving traits assayed in this trial',
-    'No data available',
-);
-
-page_script_texts_ok(
-    '/breeders_toolbox/trial/repetitive_measurements_data.mas',
-    'Please select an end date to view repetitive measurements.',
-);
-
-page_script_texts_ok(
     '/breeders_toolbox/trial/set_phenotypes_fully_uploaded.mas',
     'An error occurred trying to set phenotypes fully uploaded.',
     'Successfully saved',

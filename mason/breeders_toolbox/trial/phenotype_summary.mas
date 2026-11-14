@@ -414,7 +414,7 @@ input[type="text"] {
             "ajax": '/ajax/breeders/trial/'+ trial_id + '/phenotypes?display='+jQuery('input[name="pheno_summary_table_data_level"]:checked').val() + '&trial_stock_type='+type + '&start_date='+start_date+'&end_date='+end_date+'&include_dateless_items=1&group_by_treatments='+group_by_treatments+'&group_by_accession='+group_by_accession,
             "processing": true,
             'language':{
-                "zeroRecords": <% __('No data available') |js %>,
+                "zeroRecords": "No data available",
                 "processing": "Loading..."
             }
         });
@@ -545,7 +545,7 @@ input[type="text"] {
                         },
                         error: function(response) {
                             jQuery("#working_modal").modal("hide");
-                            alert(<% __('An error occured retrieving trait histogram data.') |js %>);
+                            alert('An error occured retrieving trait histogram data.');
                         }
                     });
                 } else {
@@ -556,7 +556,7 @@ input[type="text"] {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert(<% __('Error retrieving traits assayed in this trial') |js %>);
+                alert('Error retrieving traits assayed in this trial');
             }
 
         });
@@ -626,7 +626,7 @@ input[type="text"] {
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert(<% __('An error occured retrieving trait histogram data.') |js %>);
+                alert('An error occured retrieving trait histogram data.');
             }
         });
     }
