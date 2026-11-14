@@ -119,7 +119,7 @@ function <% $div_name %>_getProps() {
     url: '/stock/prop/get',
     data: { stock_id: <% $stock_id %> },
     success: function(response) { <% $div_name %>_renderProps(response);  },
-    error: function(response) { alert('an error occurred'); } 
+    error: function(response) { alert(<% __('an error occurred') |js %>); } 
   });
  
 }
@@ -168,7 +168,7 @@ function <% $div_name %>_addProp() {
   var prop_type = jQuery('#<% $div_name %>_select').val();
   var prop = jQuery('#<% $div_name %>_prop').val();
   prop = prop.trim();
-  if (prop === '') { alert("Please fill in the field."); return; }
+  if (prop === '') { alert(<% __('Please fill in the field.') |js %>); return; }
 
   jQuery.ajax( {
     type: 'POST',
@@ -219,7 +219,7 @@ function <% $div_name %>_deleteProp(stockprop_value, stockprop_id) {
             }
             if ('error'   in response) {  alert(response.error);   }
            },
-           error: function(response) { alert('An error occurred. Please try again later.');
+           error: function(response) { alert(<% __('An error occurred. Please try again later.') |js %>);
            },
          complete: function() {
            <% $div_name %>_getProps();

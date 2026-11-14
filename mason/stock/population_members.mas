@@ -21,11 +21,11 @@ jQuery(document).ready(function(){
         'autoWidth': false,
         destroy: true,
         columns: [
-            { title: "Member Name", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.name+"</a>"; } },
-            { title: "Member Type", "data": "stock_type" },
-            { title: "Description", "data": "description" },
-            { title: "Synonyms", "data": "synonyms[, ]" },
-            { title: "Remove From Population", "data": null, "render": function ( data, type, row ) { return "<a name='populations_member_remove' data-stock_relationship_id='"+row.stock_relationship_id+"'>X</a>"; } },
+            { title: <% __('Member Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.name+"</a>"; } },
+            { title: <% __('Member Type') |js %>, "data": "stock_type" },
+            { title: <% __('Description') |js %>, "data": "description" },
+            { title: <% __('Synonyms') |js %>, "data": "synonyms[, ]" },
+            { title: <% __('Remove From Population') |js %>, "data": null, "render": function ( data, type, row ) { return "<a name='populations_member_remove' data-stock_relationship_id='"+row.stock_relationship_id+"'>X</a>"; } },
         ],
         "fnInitComplete": function(oSettings, json) {
             //console.log(json);

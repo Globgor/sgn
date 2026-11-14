@@ -126,7 +126,7 @@ jQuery(document).ready(function(){
             'autoWidth': false,
             'order': false,
             'columns': [
-                { title: "Accession", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.related_transformant_id+"/view'>"+row.related_transformant_name+"</a>"; } },
+                { title: <% __('Accession') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.related_transformant_id+"/view'>"+row.related_transformant_name+"</a>"; } },
             ],
 
             "fnInitComplete": function(oSettings, json) {
@@ -153,7 +153,7 @@ jQuery(document).ready(function(){
             'autoWidth': false,
             'order': false,
             'columns': [
-                { title: "Accession", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.control_transformant_id+"/view'>"+row.control_transformant_name+"</a>"; } },
+                { title: <% __('Accession') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.control_transformant_id+"/view'>"+row.control_transformant_name+"</a>"; } },
             ],
 
             "fnInitComplete": function(oSettings, json) {
