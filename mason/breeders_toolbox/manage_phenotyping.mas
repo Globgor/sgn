@@ -7,7 +7,7 @@ $locations => undef
 
 <& /util/import_javascript.mas, classes => [ 'CXGN.BreedersToolbox.Trial','CXGN.BreedersToolbox.FieldBook','CXGN.BreedersToolbox.UploadPhenotype', 'CXGN.BreedersToolbox.UploadImages', 'CXGN.BreederSearch', 'CXGN.Trial' ] &>
 
-<& /page/page_title.mas, title=>"Manage Phenotypic Data" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Phenotypic Data"), 'h' ) &>
 
 <div class="container-fluid">
 
@@ -22,7 +22,7 @@ $locations => undef
 
 <div class="well">
 
-<&| /page/info_section.mas, title=>'Your Uploaded Files', is_subsection=>1, subtitle=>'[<a id="upload_spreadsheet_phenotypes_link" >Upload Phenotype Spreadsheet</a>] [<a id="upload_images_link" >Upload Images</a>] <br/> [<a name="create_spreadsheet_link" >Create Phenotype Spreadsheet</a>]' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Your Uploaded Files'), 'h' ), is_subsection=>1, subtitle=>'[<a id="upload_spreadsheet_phenotypes_link" >Upload Phenotype Spreadsheet</a>] [<a id="upload_images_link" >Upload Images</a>] <br/> [<a name="create_spreadsheet_link" >Create Phenotype Spreadsheet</a>]' &>
   <br/>
   <& /breeders_toolbox/file_list.mas, files=>$phenotype_files, allow_delete=>1 &>
 
@@ -31,7 +31,7 @@ $locations => undef
 </div>
 <div class="well">
 
-<&| /page/info_section.mas, title=>'Your Obsoleted Files', subtitle=>'These files will not be shown anywhere else on the website', is_subsection=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Your Obsoleted Files'), 'h' ), subtitle=>$m->interp->apply_escapes( __('These files will not be shown anywhere else on the website'), 'h' ), is_subsection=>1 &>
 
   <& /breeders_toolbox/file_list.mas, files=>$deleted_phenotype_files, allow_delete=>0 &>
 
