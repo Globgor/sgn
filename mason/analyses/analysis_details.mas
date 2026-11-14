@@ -16,7 +16,7 @@ $analysis_metadata
         <table class="table table-hover table-bordered" >
 
             <tr>
-                <td><b>Analysis Name</b></td>
+                <td><b><% __('Analysis Name') |h %></b></td>
                 <td>
                     <div id="trial_name">
 % if ($trial_name) {
@@ -29,7 +29,7 @@ $analysis_metadata
             </tr>
 
             <tr>
-                <td><b>Breeding Program </b></td>
+                <td><b><% __('Breeding Program') |h %> </b></td>
                 <td>
                     <span id="breeding_program">
 % if ($breeding_program_name) {
@@ -43,7 +43,7 @@ $analysis_metadata
             </tr>
 
             <tr>
-                <td><b>Year</b></td>
+                <td><b><% __('Year') |h %></b></td>
                 <td>
                     <div id="trial_year">
 % if ($year) {
@@ -55,7 +55,7 @@ $analysis_metadata
                 </td>
             </tr>
 
-            <tr><td><b>Description</b></td>
+            <tr><td><b><% __('Description') |h %></b></td>
                 <td>
                     <div id="trial_description">
 % if ($trial_description) {
@@ -67,7 +67,7 @@ $analysis_metadata
                 </td>
             </tr>
 
-            <tr><td><b>Protocol</b></td>
+            <tr><td><b><% __('Protocol') |h %></b></td>
                 <td>
                     <div id="analysis_protocol">
 %  print $analysis_metadata->analysis_protocol;
@@ -75,7 +75,7 @@ $analysis_metadata
                 </td>
             </tr>
 
-            <tr><td><b>Dataset</b></td>
+            <tr><td><b><% __('Dataset') |h %></b></td>
                 <td>
                     <div id="analysis_dataset_id">
 %  print "<a href=/dataset/".$analysis_metadata->dataset_id.">".$analysis_metadata->dataset_id."</a>";
@@ -83,7 +83,7 @@ $analysis_metadata
                 </td>
             </tr>
 
-            <tr><td><b>Created</b></td>
+            <tr><td><b><% __('Created') |h %></b></td>
                 <td>
                     <div id="analysis_create_timestamp">
 %  print $analysis_metadata->create_timestamp;
@@ -91,7 +91,7 @@ $analysis_metadata
                 </td>
             </tr>
 
-            <tr><td><b>Result Summary</b></td>
+            <tr><td><b><% __('Result Summary') |h %></b></td>
                 <td>
                     <div id="analysis_result_summary">
 %  if ($analysis_metadata->result_summary) {
