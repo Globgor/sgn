@@ -80,3 +80,21 @@ msgstr "Обробка"
 
 msgid "Progress"
 msgstr "Хід виконання"
+
+msgid "My Profile"
+msgstr "Мій профіль"
+
+msgid "Lists"
+msgstr "Списки"
+
+msgid "Datasets"
+msgstr "Набори даних"
+
+msgid "Calendar"
+msgstr "Календар"
+
+msgid "Your Calendar"
+msgstr "Ваш календар"
+
+msgid "Logout"
+msgstr "Вийти"
