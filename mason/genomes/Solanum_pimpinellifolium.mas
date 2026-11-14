@@ -8,11 +8,7 @@
 
 <div class="page_introduction">
 
-  <a href="/chado/organism.pl?organism_id=770"><i>Solanum
-  pimpinellifolium</i></a> is the wild tomato that is most closely
-  related to the domesticated <a href="/chado/organism.pl?organism_id=1"><i>Solanum
-  lycopersicum</i></a>.  It was sequenced by a group of scientists at
-  the <a href="http://cshl.org">Cold Spring Harbor Laboratory</a>.
+  <& /util/sentence.mas, text => __x('{link}{i}{species}{end_i}{end_link} is the wild tomato that is most closely related to the domesticated {link2}{i}{domesticated_species}{end_i}{end_link2}.'), link => '<a href="/chado/organism.pl?organism_id=770">', i => '<i>', species => 'Solanum pimpinellifolium', end_i => '</i>', end_link => '</a>', link2 => '<a href="/chado/organism.pl?organism_id=1">', domesticated_species => 'Solanum lycopersicum', end_link2 => '</a>' &>  <& /util/sentence.mas, text => __x('It was sequenced by a group of scientists at the {link}{institution}{end_link}.'), link => '<a href="http://cshl.org">', institution => 'Cold Spring Harbor Laboratory', end_link => '</a>' &>
 
 </div>
 
@@ -52,10 +48,8 @@
 </div -->  
 
 <div>
- These data have been published and are freely accessible. Please cite <a href="http://www.nature.com/nature/journal/v485/n7400/full/nature11119.html">Nature 485, 635-641</a> when using this resource. <br /><br />
- Please contact D. Ware or Z. B. Lippman (E-mail:
-  <a href="mailto:ware@cshl.edu">ware@cshl.edu</a> or
-  <a href="mailto:lippman@cshl.edu">lippman@cshl.edu</a>) with any questions.
+ <& /util/sentence.mas, text => __x('These data have been published and are freely accessible.') &> <& /util/sentence.mas, text => __x('Please cite {link}{citation}{end_link} when using this resource.'), link => '<a href="http://www.nature.com/nature/journal/v485/n7400/full/nature11119.html">', citation => 'Nature 485, 635-641', end_link => '</a>' &> <br /><br />
+ <& /util/sentence.mas, text => __x('Please contact {person} or {person2} (E-mail: {link}{email}{end_link} or {link2}{email2}{end_link2}) with any questions.'), person => 'D. Ware', person2 => 'Z. B. Lippman', link => '<a href="mailto:ware@cshl.edu">', email => 'ware@cshl.edu', end_link => '</a>', link2 => '<a href="mailto:lippman@cshl.edu">', email2 => 'lippman@cshl.edu', end_link2 => '</a>' &>
 
 </div>
 </&>
