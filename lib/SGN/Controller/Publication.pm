@@ -14,7 +14,6 @@ use File::Slurp;
 use URI::FromHash 'uri';
 
 use CXGN::Chado::Publication ;
-use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller' }
 with 'Catalyst::Component::ApplicationAttribute';
@@ -90,7 +89,7 @@ sub view_by_doi : Path('/doi/pub/') CaptureArgs(3) {
 	    } );
     
     if( $matching_pubs->count > 1 ) {
-        $c->throw_client_error( public_message => __('Multiple matching publications') );
+        $c->throw_client_error( public_message => 'Multiple matching publications' );
     }    
     
     my ( $publication ) = $matching_pubs->all
@@ -214,7 +213,7 @@ sub get_pub : Chained('/')  PathPart('publication')  CaptureArgs(1) {
 	    return 1;
 	}
 	$pub_id > 0
-            or $c->throw_client_error( public_message => __('Publication ID must be a positive integer.') );
+            or $c->throw_client_error( public_message => 'Publication ID must be a positive integer.' );
     }
     my $matching_pubs;
     
@@ -225,7 +224,7 @@ sub get_pub : Chained('/')  PathPart('publication')  CaptureArgs(1) {
 	    } );
     }
     if( $matching_pubs->count > 1 ) {
-        $c->throw_client_error( public_message => __('Multiple matching publications') );
+        $c->throw_client_error( public_message => 'Multiple matching publications' );
     }    
     
     my ( $publication ) = $matching_pubs->all

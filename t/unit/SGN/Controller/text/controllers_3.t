@@ -38,7 +38,6 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/Propagation.pm', 'SGN::Controller::Propagation', [ '__(\'The requested propagation group ID does not exist.\')' ] ],
-    [ 'lib/SGN/Controller/Publication.pm', 'SGN::Controller::Publication', [ '__(\'Multiple matching publications\')', '__(\'Publication ID must be a positive integer.\')', '__(\'Multiple matching publications\')' ] ],
     [ 'lib/SGN/Controller/QuickSearch.pm', 'SGN::Controller::QuickSearch', [ '__(\'Must provide a search term\')' ] ],
     [ 'lib/SGN/Controller/Seedlot.pm', 'SGN::Controller::Seedlot', [ '__(\'Seedlot Maintenance Events are not enabled on this server!\')', '__(\'Your account must have either submitter or curator privileges to add seedlot maintenance events.\')', '__(\'Seedlot Maintenance Events are not enabled on this server!\')' ] ],
     [ 'lib/SGN/Controller/SiteStatus.pm', 'SGN::Controller::SiteStatus', [ '__(\'You do not have the required privileges to view this page\')' ] ],

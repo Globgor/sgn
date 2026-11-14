@@ -42,7 +42,6 @@ my @modules = (
     [ 'lib/SGN/Controller/Genefamily.pm', 'SGN::Controller::Genefamily', [ '__(\'Need a family to display!\')' ] ],
     [ 'lib/SGN/Controller/Image.pm', 'SGN::Controller::Image', [ '__(\'No image file uploaded.\')' ] ],
     [ 'lib/SGN/Controller/KinaseClones.pm', 'SGN::Controller::KinaseClones', [ '__("Thank you. Your message has been sent.")' ] ],
-    [ 'lib/SGN/Controller/Locus.pm', 'SGN::Controller::Locus', [ '__(\'Locus ID must be a positive integer.\')', '__(\'Multiple matching loci\')' ] ],
 );
 
 for my $module (@modules) {
