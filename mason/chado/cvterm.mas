@@ -142,7 +142,7 @@ my $edit_privs = $curator ;
   }
 
   function deleteCvterm() {
-    if (confirm("Are you sure you want to delete this cvterm? Generally, this is a bad idea.")){
+    if (confirm(<% __('Are you sure you want to delete this cvterm? Generally, this is a bad idea.') |js %>)){
       jQuery.ajax({
         url: '/ajax/trait/delete',
         data : {
@@ -156,13 +156,13 @@ my $edit_privs = $curator ;
           if (response.error) {
             alert(response.error);
           } else {
-            alert("Cvterm deleted.");
+            alert(<% __('Cvterm deleted.') |js %>);
             window.location.reload();
           }
         },
         error : function (error) {
           jQuery('#working_modal').modal("hide");
-          alert("An error occurred deleting cvterm.");
+          alert(<% __('An error occurred deleting cvterm.') |js %>);
         }
       });
     }
@@ -291,7 +291,7 @@ my $edit_privs = $curator ;
         },
         error: function() {
           jQuery('#working_modal').modal('hide');
-          alert("An error occurred deleting the synonym.");
+          alert(<% __('An error occurred deleting the synonym.') |js %>);
         }
       });
     });
@@ -299,7 +299,7 @@ my $edit_privs = $curator ;
     jQuery('#add_synonym_btn').click(function() {
       var synonym = jQuery('#new_synonym_input').val();
       if (!synonym) {
-        alert("Please enter a synonym.");
+        alert(<% __('Please enter a synonym.') |js %>);
         return;
       }
       jQuery('#working_modal').modal('show');
@@ -321,7 +321,7 @@ my $edit_privs = $curator ;
         },
         error: function() {
           jQuery('#working_modal').modal('hide');
-          alert("An error occurred adding the synonym.");
+          alert(<% __('An error occurred adding the synonym.') |js %>);
         }
       });
     });
@@ -355,7 +355,7 @@ my $edit_privs = $curator ;
         parent_terms.push(jQuery(this).text());
       });
       if (parent_terms.length === 0) {
-        alert("Please add at least one parent term.");
+        alert(<% __('Please add at least one parent term.') |js %>);
         return;
       }
       jQuery('#working_modal').modal('show');
@@ -377,7 +377,7 @@ my $edit_privs = $curator ;
         },
         error: function() {
           jQuery('#working_modal').modal('hide');
-          alert("An error occurred adding parent terms.");
+          alert(<% __('An error occurred adding parent terms.') |js %>);
         }
       });
     });
@@ -393,7 +393,7 @@ my $edit_privs = $curator ;
         }
         var rels = response.relationships;
         if (!rels || rels.length === 0) {
-          jQuery('#relationships_div').html('None');
+          jQuery('#relationships_div').html(<% __('None') |js %>);
           return;
         }
         var html = '';
@@ -403,7 +403,7 @@ my $edit_privs = $curator ;
         jQuery('#relationships_div').html(html);
       },
       error: function() {
-        jQuery('#relationships_div').html('Error loading relationships.');
+        jQuery('#relationships_div').html(<% __('Error loading relationships.') |js %>);
       }
     });
 
@@ -547,13 +547,13 @@ my $edit_privs = $curator ;
           if (response.error) {
             alert(response.error);
           } else {
-            alert("Changes saved.");
+            alert(<% __('Changes saved.') |js %>);
             window.location.reload();
           }
         },
         error : function () {
           jQuery('#working_modal').modal("hide");
-          alert("An error occurred editing cvterm details.");
+          alert(<% __('An error occurred editing cvterm details.') |js %>);
         }
       });
 

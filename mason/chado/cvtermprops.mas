@@ -158,7 +158,7 @@ function <% $div_name %>_getProps() {
     url: '/cvterm/prop/get',
     data: { cvterm_id: <% $cvterm_id %> },
     success: function(response) { <% $div_name %>_renderProps(response);  },
-    error: function(response) { alert('an error occurred'); }
+    error: function(response) { alert(<% __('an error occurred') |js %>); }
   });
 }
 
@@ -224,7 +224,7 @@ function <% $div_name %>_addProp() {
 
 //    alert('PROP READ: '+prop);
 
-  if (prop === '') { alert("Please fill in the field."); return; }
+  if (prop === '') { alert(<% __('Please fill in the field.') |js %>); return; }
 
   jQuery.ajax( {
     type: 'POST',
@@ -264,7 +264,7 @@ function <% $div_name %>_deleteProp(cvtermprop_value, cvtermprop_id) {
 
       },
       error: function(response) {
-        alert('An error occurred. Please try again later.');
+        alert(<% __('An error occurred. Please try again later.') |js %>);
       }
 
     });
