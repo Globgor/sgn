@@ -8,10 +8,10 @@ $file => ''
 $filetype => ''
 </%args>
 
-<& /page/page_title.mas, title=>'Download Barcodes' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Download Barcodes'), 'h' ) &>
 
 % if (!@not_found && !$error) {
-  All stocks in the list have been found in the database. Please click the link below to download the barcode label file.<br />
+  <% __('All stocks in the list have been found in the database. Please click the link below to download the barcode label file.') |h %><br />
 % }
 % elsif ($error){
     <b>Download Plot Phenotyping Barcode </b>is <%$error%> For general barcode printing use <b>Download Stock Barcodes section.</b>
@@ -30,7 +30,7 @@ $filetype => ''
 
 %   }
 %   else {
-    No stocks were found. Please verify your input and try again.
+    <% __('No stocks were found. Please verify your input and try again.') |h %>
 %   }
 
 
