@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-	     <h4>Solanum lycopersicoides genome adheres to the <a href="https://www.nature.com/nature/journal/v461/n7261/full/461168a.html"> Toronto Agreement</a> on prepublication data release.</h4>
+	     <h4><& /util/sentence.mas, text => __x('Solanum lycopersicoides genome adheres to the {link}Toronto Agreement{end_link} on prepublication data release.'), link => '<a href="https://www.nature.com/nature/journal/v461/n7261/full/461168a.html"> ', end_link => '</a>' &></h4>
 The Boyce Thompson Institute and RWTH Aachen University are pleased to make the pre-publication 
  Solanum lycopersicoides LA2951 genome sequences publicly available as a resource for plant breeding and biology. 
 
