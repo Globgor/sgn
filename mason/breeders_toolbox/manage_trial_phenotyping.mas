@@ -15,7 +15,7 @@ $trial_stock_type => undef
 
         <form class="form-horizontal" role="form" action="/barcode/direct_trial_phenotyping">
             <div class="form-group form-group-sm">
-                <label class="col-sm-4 control-label">Plot Name: </label>
+                <label class="col-sm-4 control-label"><% __('Plot Name:') |h %> </label>
                 <div class="col-sm-8" id="plot_name_1">
 
                 </div>
@@ -27,19 +27,19 @@ $trial_stock_type => undef
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-4 control-label">Plot No: </label>
+                <label class="col-sm-4 control-label"><% __('Plot No:') |h %> </label>
                 <div class="col-sm-8" id="plot_no">
 
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-4 control-label">Block No: </label>
+                <label class="col-sm-4 control-label"><% __('Block No:') |h %> </label>
                 <div class="col-sm-8" id="block_no">
 
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-4 control-label">Rep No: </label>
+                <label class="col-sm-4 control-label"><% __('Rep No:') |h %> </label>
                 <div class="col-sm-8" id="rep_no">
 
                 </div>
@@ -59,14 +59,14 @@ $trial_stock_type => undef
     <div class="col-md-10 col-lg-10">
 
         <div class="form-group form-group-sm" id="all_traits">
-          <label class="col-sm-4 control-label" for="select_traits_for_trait_file">Select trait: </label>
+          <label class="col-sm-4 control-label" for="select_traits_for_trait_file"><% __('Select trait:') |h %> </label>
           <div class="col-sm-8">
             <select class="form-control" id="select_traits_for_trait_file"></select>
           </div>
         </div>
 
         <div class="form-group form-group-sm">
-          <label class="col-sm-4 control-label">Or Use Trait List: </label>
+          <label class="col-sm-4 control-label"><% __('Or Use Trait List:') |h %> </label>
             <div class="col-sm-8">
               <input type="checkbox"  id="use_trait_list" value="use_trait_list"/>
           </div>
@@ -76,7 +76,7 @@ $trial_stock_type => undef
 
         <div id="show_trait_textbox" style="display: none">
           <div class="form-group form-group-sm" >
-              <label class="col-sm-4 control-label">Enter a List of Trait Names: </label>
+              <label class="col-sm-4 control-label"><% __('Enter a List of Trait Names:') |h %> </label>
               <div class="col-sm-8" id="show_trait_selectbox">
 
               </div>
@@ -86,7 +86,7 @@ $trial_stock_type => undef
 
         <div id="show_trait_list_box" style="display: none">
             <div class="form-group form-group-sm">
-              <label class="col-sm-4 control-label">Or Paste From a List: </label>
+              <label class="col-sm-4 control-label"><% __('Or Paste From a List:') |h %> </label>
               <div class="col-sm-8">
                   <div id="list_menu_traits"></div>
                   <script defer="defer">
@@ -108,7 +108,7 @@ $trial_stock_type => undef
         </div>
         <br /><br />
         <div class="form-group form-group-sm" id = "new_pheno_input" style="display: none">
-            <label class="col-sm-4 control-label">Enter trait value: </label>
+            <label class="col-sm-4 control-label"><% __('Enter trait value:') |h %> </label>
             <div class="col-sm-3">
                 <input type="number" class="form-control" id="select_pheno_value" name="select_pheno_value"></input>
             </div>
@@ -123,7 +123,7 @@ $trial_stock_type => undef
             </div>
         </div>
         <div class="form-group form-group-sm" id = "stored_pheno_input" style="display: none">
-            <label class="col-sm-4 control-label">Stored trait value: </label>
+            <label class="col-sm-4 control-label"><% __('Stored trait value:') |h %> </label>
             <div class="col-sm-3">
                 <input class="form-control" name="stored_pheno_value" id="stored_pheno_value" disabled ></input>
             </div>
@@ -139,7 +139,7 @@ $trial_stock_type => undef
     <div id="virtualKeyboard"></div>
     <hr>
 </div>-->
-<&| /page/info_section.mas, id=> "trial_detail_traits_assayed", title => "Traits assayed", collapsible=>1, collapsed=>1, hide_if_empty=>1, subtitle=>"[<a id='trial_download_phenotypes_button'>Download Trial Data</a>]" &>
+<&| /page/info_section.mas, id=> "trial_detail_traits_assayed", title => $m->interp->apply_escapes( __("Traits assayed"), 'h' ), collapsible=>1, collapsed=>1, hide_if_empty=>1, subtitle=>"[<a id='trial_download_phenotypes_button'>Download Trial Data</a>]" &>
 
     <& /breeders_toolbox/trial/phenotype_summary.mas, trial_id => $trial_id, trial_stock_type => $trial_stock_type &>
 

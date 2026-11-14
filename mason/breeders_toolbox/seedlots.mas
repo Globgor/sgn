@@ -12,7 +12,7 @@ $user_role => undef
 $default_seedlot_material_type => undef
 </%args>
 
-<& /page/page_title.mas, title=>"Available Seedlots" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Available Seedlots"), 'h' ) &>
 
 <style>
 .ui-autocomplete {
@@ -22,29 +22,29 @@ $default_seedlot_material_type => undef
 
   <& /util/import_javascript.mas, classes => [ 'bootstrap_min.js', 'jquery.iframe-post-form','CXGN.List','CXGN.BreedersToolbox.Accessions', 'CXGN.BreedersToolbox.UploadPedigrees', 'jquery', 'jquery.dataTables', 'CXGN.BreedersToolbox.Crosses', 'jqueryui' ] &>
 
-<&| /page/info_section.mas, title=>"About Seedlots",  collapsible => 1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("About Seedlots"), 'h' ),  collapsible => 1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <b><p>What are seedlots?</p></b>
+                <b><p><% __('What are seedlots?') |h %></p></b>
                 <ul>
-                <li>Seedlots represent physical plant materials in packets/containers.</li>
-                <li>Plant material can be seed, root, clone, plant, tissue culture or gametophyte.</li>
-                <li>If you would like to set a default material type for seedlots, please contact us.</li>
-                <li>These materials can be from crosses or for named accessions.</li>
-                <li>Seedlots can have a specific location, box, weight(g), and count.</li>
-                <li>Plant material can be transferred into and out of a seedlot. Such as from a seedlot into a plot.</li>
-                <li>Seedlots can belong to breeding programs and organizations.</li>
+                <li><% __('Seedlots represent physical plant materials in packets/containers.') |h %></li>
+                <li><% __('Plant material can be seed, root, clone, plant, tissue culture or gametophyte.') |h %></li>
+                <li><% __('If you would like to set a default material type for seedlots, please contact us.') |h %></li>
+                <li><% __('These materials can be from crosses or for named accessions.') |h %></li>
+                <li><% __('Seedlots can have a specific location, box, weight(g), and count.') |h %></li>
+                <li><% __('Plant material can be transferred into and out of a seedlot. Such as from a seedlot into a plot.') |h %></li>
+                <li><% __('Seedlots can belong to breeding programs and organizations.') |h %></li>
                 </ul>
 
-                <b><p>How do I inventory my seed?</p></b>
+                <b><p><% __('How do I inventory my seed?') |h %></p></b>
                 <ul>
-                <li>Make sure your seedlots are in the database. Use "Add New Seedlot" to add a single seedlot or "Upload New Seedlots" to add many.</li>
-                <li>Make sure your seedlots are barcoded. You can print these barcodes from the database.</li>
-                <li>The inventory app is currently not available but you can continue using it if it is installed on your tablet device.
+                <li><% __('Make sure your seedlots are in the database. Use "Add New Seedlot" to add a single seedlot or "Upload New Seedlots" to add many.') |h %></li>
+                <li><% __('Make sure your seedlots are barcoded. You can print these barcodes from the database.') |h %></li>
+                <li><% __('The inventory app is currently not available but you can continue using it if it is installed on your tablet device.') |h %>
                 <!-- li>3) Use the "Inventory" Android Application to scan seedlot barcodes and record weight. Then click "Upload Inventory" on the Manage Seedlots page to upload this info into the database. If you do not want to use the Inventory Android Application you can create your own CSV file and upload that.</li --><!-- the app is currently not available - re-instate when it is available again -->
                 <!-- li><b>For more info about the "Seed Inventory" Android Application go to <a href="https://play.google.com/store/apps/details?id=org.wheatgenetics.inventory/">Inventory</a>.</b></li -->
-                It is also possible to manually enter a transaction by going to the seedlot detail page and clicking "Add New Transaction".</li>
+                <% __('It is also possible to manually enter a transaction by going to the seedlot detail page and clicking "Add New Transaction".') |h %></li>
                 </ul>
             </div>
         </div>
@@ -59,7 +59,7 @@ $default_seedlot_material_type => undef
         <button class="btn btn-sm btn-primary" style="margin:3px" name="seedlot_upload_inventory">Upload Inventory</button>' . $maintenance_button
         : "Login to add or upload seedlots";
 </%perl>
-<&| /page/info_section.mas, title=>"Seedlots",  collapsible => 1, subtitle => $seedlot_subtitle &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Seedlots"), 'h' ),  collapsible => 1, subtitle => $seedlot_subtitle &>
 
 <br/>
 
@@ -67,70 +67,70 @@ $default_seedlot_material_type => undef
     <div class="panel panel-default">
         <div class="panel-body">
 
-<&| /page/info_section.mas, title=>"Search Seedlots",  collapsible => 1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Search Seedlots"), 'h' ),  collapsible => 1, collapsed=>0 &>
 
 <div class="well well-sm">
     <form class="form-horizontal" id="search_seedlot_form" name="search_seedlot_form">
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Seedlot Name: </label>
+            <label class="col-sm-3 control-label"><% __('Seedlot Name:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_seedlot_name" type="text" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Breeding Program: </label>
+            <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_breeding_program" type="text" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Contents (Accession Uniquename): </label>
+            <label class="col-sm-3 control-label"><% __('Contents (Accession Uniquename):') |h %> </label>
             <div class="col-sm-7" >
                 <input class="form-control" id="search_seedlot_form_contents_accession" type="text" />
             </div>
             <div class="col-sm-2 form-check form-check-inline align-bottom">
               <input class="form-check-input" type="checkbox" id="exact_accession" value="1">
-              <label class="form-check-label" for="exact_accession">exact match</label>
+              <label class="form-check-label" for="exact_accession"><% __('exact match') |h %></label>
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Contents (Cross Unique ID): </label>
+            <label class="col-sm-3 control-label"><% __('Contents (Cross Unique ID):') |h %> </label>
             <div class="col-sm-7" >
                 <input class="form-control" id="search_seedlot_form_contents_cross" type="text" />
             </div>
             <div class="col-sm-2 form-check form-check-inline align-bottom">
               <input class="form-check-input" type="checkbox" id="exact_cross" value="1">
-              <label class="form-check-label" for="exact_cross">exact match</label>
+              <label class="form-check-label" for="exact_cross"><% __('exact match') |h %></label>
             </div>
         </div>
 % if (!$default_seedlot_material_type) {
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Material Type: </label>
+            <label class="col-sm-3 control-label"><% __('Material Type:') |h %> </label>
             <div class="col-sm-9" >
                 <div id="search_seedlot_form_material_type_div"></div>
             </div>
         </div>
 % }
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Location: </label>
+            <label class="col-sm-3 control-label"><% __('Location:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_location" type="text" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Box Name: </label>
+            <label class="col-sm-3 control-label"><% __('Box Name:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_box_name" type="text" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Minimum Count: </label>
+            <label class="col-sm-3 control-label"><% __('Minimum Count:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_minimum_count" type="number" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Minimum Weight (g): </label>
+            <label class="col-sm-3 control-label"><% __('Minimum Weight (g):') |h %> </label>
 
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_minimum_weight" type="number" />
@@ -145,44 +145,44 @@ $default_seedlot_material_type => undef
         </div  -->
 
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Quality: </label>
+            <label class="col-sm-3 control-label"><% __('Quality:') |h %> </label>
             <div class="col-sm-9" >
                 <input class="form-control" id="search_seedlot_form_quality" type="text" />
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Trial Usage: </label>
+            <label class="col-sm-3 control-label"><% __('Trial Usage:') |h %> </label>
             <div class="col-sm-9">
                 <div class="col-sm-5" style="padding-left: 0; padding-right: 5px">
-                    <input class="form-control" id="search_seedlot_form_trial_name" type="text" placeholder="Trial Name" />
+                    <input class="form-control" id="search_seedlot_form_trial_name" type="text" placeholder="<% __('Trial Name') |h %>" />
                 </div>
                 <div class="col-sm-7" style="padding-left: 5px; padding-right: 0">
                     <select class="form-control" id="search_seedlot_form_trial_usage">
-                        <option value="">Select trial / seedlot usage...</option>
+                        <option value=""><% __('Select trial / seedlot usage...') |h %></option>
                         <option value="source">Trial --> Seedlot: Find seedlots that are derived from this trial</option>
                         <option value="sink">Seedlot --> Trial: Find seedlots that provided seed to this trial</option>
-                        <option value="source|sink">Either of the above</option>
+                        <option value="source|sink"><% __('Either of the above') |h %></option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Discarded: </label>
+            <label class="col-sm-3 control-label"><% __('Discarded:') |h %> </label>
             <div class="col-sm-9 form-check form-check-inline align-bottom">
               <input class="form-check-input" type="checkbox" id="search_seedlot_form_exclude_discarded" />
-              <label class="form-check-label" for="search_seedlot_form_exclude_discarded">exclude discarded seedlots from the search results?</label>
+              <label class="form-check-label" for="search_seedlot_form_exclude_discarded"><% __('exclude discarded seedlots from the search results?') |h %></label>
             </div>
         </div>
 
     </form>
     <div style="text-align: center">
-        <button class="btn btn-primary" id="submit_seedlot_search">Search</button>
+        <button class="btn btn-primary" id="submit_seedlot_search"><% __('Search') |h %></button>
     </div>
 </div>
 </&>
 
 <div style="text-align: center">
-    Enter search terms and click the "Search" button to view results.
+    <% __('Enter search terms and click the "Search" button to view results.') |h %>
 </div>
 
 <br />
@@ -205,31 +205,31 @@ $default_seedlot_material_type => undef
 </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Mark seedlots as DISCARDED using a list",  collapsible => 1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Mark seedlots as DISCARDED using a list"), 'h' ),  collapsible => 1, collapsed=>1 &>
 % if ($user_role eq "curator" ) {
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-sm btn-default" style="margin:3px" id ="discard_seedlot_usage_info" name = "discard_seedlot_usage_info">Usage Help <span class="glyphicon glyphicon-question-sign"></span></button><button class="btn btn-sm btn-primary" style="margin:3px" id="discard_seedlot_link">Mark Seedlots as Discarded</button>
+                <button class="btn btn-sm btn-default" style="margin:3px" id ="discard_seedlot_usage_info" name = "discard_seedlot_usage_info"><% __('Usage Help') |h %> <span class="glyphicon glyphicon-question-sign"></span></button><button class="btn btn-sm btn-primary" style="margin:3px" id="discard_seedlot_link"><% __('Mark Seedlots as Discarded') |h %></button>
             </div>
         </div>
     </div>
 % } else {
-    You need to be logged in or you do not have sufficient privileges to mark seedlots as DISCARDED using lists.
+    <% __('You need to be logged in or you do not have sufficient privileges to mark seedlots as DISCARDED using lists.') |h %>
 % }
 </&>
 
-<&| /page/info_section.mas, title=>"Delete seedlots using a list",  collapsible => 1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Delete seedlots using a list"), 'h' ),  collapsible => 1, collapsed=>1 &>
 % if ($user_role eq "curator" ) {
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-sm btn-primary" style="margin:3px" id="delete_seedlots_link">Delete seedlots using a list</button>
+                <button class="btn btn-sm btn-primary" style="margin:3px" id="delete_seedlots_link"><% __('Delete seedlots using a list') |h %></button>
             </div>
         </div>
     </div>
 % } else {
-    You need to be logged in or you do not have sufficient privileges to delete seedlots.
+    <% __('You need to be logged in or you do not have sufficient privileges to delete seedlots.') |h %>
 % }
 </&>
 

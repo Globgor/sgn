@@ -7,31 +7,31 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-<& /page/page_title.mas, title => "Breeding Progress" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Breeding Progress"), 'h' ) &>
 
 <& /util/import_javascript.mas, classes => [ 'CXGN.BreedersToolbox.HTMLSelect' ] &>
   
   <table class="table">
     <tr>
-      <th width="100">Select Trait</th>
+      <th width="100"><% __('Select Trait') |h %></th>
 
     </tr>
 
     <tr>
       <td>
-	<div id="trait_selector_div">[loading...]</div>
+	<div id="trait_selector_div"><% __('[loading...]') |h %></div>
       </td>
 
 
     </tr>
   </table>
 
-  <button class="btn" id="display_stats_button">Show Stats</button>
+  <button class="btn" id="display_stats_button"><% __('Show Stats') |h %></button>
   
   <table id="progress_stats_datatable">
   </table>
   <br />
-  <button class="btn" id="display_graph_button">Show Graph</button>
+  <button class="btn" id="display_graph_button"><% __('Show Graph') |h %></button>
   <div id="trait_averages_bargraph"></div>
   <script>
 jQuery(window).ready(function () {

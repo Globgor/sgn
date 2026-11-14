@@ -21,9 +21,9 @@ $stock_type => undef
             </div>
         </div>
         <br>
-        <&| /page/info_section.mas, title => 'Copy Seedlots to a List', collapsible=>1, collapsed=>1, subtitle=>'<i>Copy the seedlot names showing in table to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Seedlots to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Copy the seedlot names showing in table to a new or exisiting list</i>'&>
             <br/>
-            <div style="text-align:right" id="accession_seedlots_to_list_menu">[LOADING...]</div>
+            <div style="text-align:right" id="accession_seedlots_to_list_menu"><% __('[LOADING...]') |h %></div>
             <div id="accession_seedlot_names" style="display: none;"></div>
         </&>
     </div>
