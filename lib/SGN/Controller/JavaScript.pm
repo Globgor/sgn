@@ -199,6 +199,10 @@ sub _resolve_jsan_dependencies {
         $jsan->add( $f );
     }
 
+    # Apply page-language defaults after DataTables, including entry-module dependencies.
+    if ( grep { m{/jquery/dataTables(?:-min)?\.js$} } $jsan->uris ) {
+        $jsan->add('CXGN/TableLanguage');
+    }
     return $jsan->uris;
 }
 
