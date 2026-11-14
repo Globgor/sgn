@@ -7,6 +7,7 @@ use Data::Dumper;
 use DateTime;
 use List::MoreUtils qw(uniq);
 use CXGN::Stock::SequencingInfo;
+use Locale::TextDomain ( 'sgn', undef );
 
 __PACKAGE__->config(
     default   => 'application/json',
@@ -144,11 +145,11 @@ sub store_sequencing_info :Path('/ajax/genomes/store_sequencing_info') Args(0) {
     print STDERR "Params for store: ".Dumper($params);
 
     if (!$c->user()) {
-	$c->stash->{rest} = { error => "You need to be logged in to add sequencing information" };
+	$c->stash->{rest} = { error => __("You need to be logged in to add sequencing information") };
 	return;
     }
     if (!$c->user()->check_roles("curator")) {
-	$c->stash->{rest} = { error => "You need to be logged in as a curator to submit this information" };
+	$c->stash->{rest} = { error => __("You need to be logged in as a curator to submit this information") };
 	return;
     }
 
@@ -204,7 +205,7 @@ tion." };
 	});
 
     if ($si->sp_person_id() && $si->sp_person_id() != $c->user()->get_object()->get_sp_person_id()) {
-	$c->stash->{rest} = { error => "You don't own this entry so it cannot be deleted." };
+	$c->stash->{rest} = { error => __("You don't own this entry so it cannot be deleted.") };
 	return;
     }
 
@@ -226,7 +227,7 @@ tion." };
 	$c->stash->{rest} = { success => 1 };
     }
     else {
-	$c->stash->{rest} = { error => "An error occurred during deletion." }
+	$c->stash->{rest} = { error => __("An error occurred during deletion.") }
     }
 }
 

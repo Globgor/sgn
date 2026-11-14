@@ -10,6 +10,7 @@ Chado (i.e. Bio::Chado::Schema) features
 use Moose;
 use namespace::autoclean;
 use SGN::View::Feature qw / feature_types feature_organisms /  ;
+use Locale::TextDomain ( 'sgn', undef );
  
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -88,7 +89,7 @@ sub get_feature : Chained('/') CaptureArgs(1) PathPart('feature') {
 
     if( $identifier_type eq 'feature_id' ) {
         $id > 0
-            or $c->throw_client_error( public_message => 'Feature ID must be a positive integer.' );
+            or $c->throw_client_error( public_message => __('Feature ID must be a positive integer.') );
     }
 
     #debug mode
@@ -104,7 +105,7 @@ sub get_feature : Chained('/') CaptureArgs(1) PathPart('feature') {
             );
 
     if( $matching_features->count > 1 ) {
-        $c->throw_client_error( public_message => 'Multiple matching features' );
+        $c->throw_client_error( public_message => __('Multiple matching features') );
     }
 
     my ( $feature ) = $matching_features->all;

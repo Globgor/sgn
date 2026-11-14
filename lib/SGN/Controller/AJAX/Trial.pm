@@ -58,6 +58,7 @@ use CXGN::Tools::Run;
 use CXGN::Job;
 use Cwd;
 use CXGN::Phenotypes::StorePhenotypes;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -163,21 +164,21 @@ sub generate_experimental_design_POST : Args(0) {
     }
 
     if ( !$start_number ) {
-        $c->stash->{rest} = { error => "You need to select the starting plot number."};
+        $c->stash->{rest} = { error => __("You need to select the starting plot number.")};
 
     }
 
     if ($design_type eq 'Westcott'){
         if (!$westcott_check_1){
-            $c->stash->{rest} = { error => "You need to provide name of check 1 for westcott design."};
+            $c->stash->{rest} = { error => __("You need to provide name of check 1 for westcott design.")};
             return;
         }
         if (!$westcott_check_2){
-            $c->stash->{rest} = { error => "You need to provide name of check 2 for westcott design."};
+            $c->stash->{rest} = { error => __("You need to provide name of check 2 for westcott design.")};
             return;
         }
         if (!$westcott_col){
-            $c->stash->{rest} = { error => "You need to provide number of columns for westcott design."};
+            $c->stash->{rest} = { error => __("You need to provide number of columns for westcott design.")};
             return;
         }
         push @control_names_crbd, $westcott_check_1;
@@ -186,22 +187,22 @@ sub generate_experimental_design_POST : Args(0) {
 
     if ($design_type eq 'splitplot'){
         if (scalar(keys(%{$treatments}))<1){
-            $c->stash->{rest} = { error => "You need to provide at least one treatment for a splitplot design."};
+            $c->stash->{rest} = { error => __("You need to provide at least one treatment for a splitplot design.")};
             return;
         }
         if (!$num_plants_per_plot){
-            $c->stash->{rest} = { error => "You need to provide number of plants per treatment for a splitplot design."};
+            $c->stash->{rest} = { error => __("You need to provide number of plants per treatment for a splitplot design.")};
             return;
         }
         if ($num_plants_per_plot <1){
-            $c->stash->{rest} = { error => "You need to provide number of plants per treatment for a splitplot design."};
+            $c->stash->{rest} = { error => __("You need to provide number of plants per treatment for a splitplot design.")};
             return;
         }
     }
 
     if ($design_type eq 'RRC'){
         if (!$fieldmap_row_number){
-            $c->stash->{rest} = { error => "You need to provide number of rows for a resolvable row-column design."};
+            $c->stash->{rest} = { error => __("You need to provide number of rows for a resolvable row-column design.")};
             return;
         }
     }
@@ -218,7 +219,7 @@ sub generate_experimental_design_POST : Args(0) {
 
     if ($design_type eq 'URDD'){
         if (!$row_in_design_number || !$col_in_design_number){
-            $c->stash->{rest} = { error => "You need to provide number of rows and cols for a unreplicated diagonal design."};
+            $c->stash->{rest} = { error => __("You need to provide number of rows and cols for a unreplicated diagonal design.")};
             return;
         }
     }
@@ -280,17 +281,17 @@ sub generate_experimental_design_POST : Args(0) {
     my $location_number = scalar(@locations);
 
     if (!$c->user()) {
-        $c->stash->{rest} = {error => "You need to be logged in to add a trial" };
+        $c->stash->{rest} = {error => __("You need to be logged in to add a trial") };
         return;
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {  #user must have privileges to add a trial
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to add a trial." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to add a trial.") };
         return;
     }
     #print "TOTAL PLOTS $p_rep_total_plots AND CALCULATED PLOTS $calculated_total_plot\n";
     if($p_rep_total_plots != $calculated_total_plot){
-        $c->stash->{rest} = {error => "Treatment repeats do not equal number of plots in design" };
+        $c->stash->{rest} = {error => __("Treatment repeats do not equal number of plots in design") };
         return;
     }
 
@@ -304,7 +305,7 @@ sub generate_experimental_design_POST : Args(0) {
 
         $geolocation_lookup->set_location_name($location);
         if (!$geolocation_lookup->get_geolocation()){
-            $c->stash->{rest} = { error => "Trial location not found" };
+            $c->stash->{rest} = { error => __("Trial location not found") };
             return;
         }
 
@@ -353,7 +354,7 @@ sub generate_experimental_design_POST : Args(0) {
             $trial_design->set_stock_list(\@stock_names);
             $design_info{'number_of_stocks'} = scalar(@stock_names);
         } else {
-            $c->stash->{rest} = {error => "No list of stocks supplied." };
+            $c->stash->{rest} = {error => __("No list of stocks supplied.") };
             return;
         }
         if ($seedlot_hash_json){
@@ -437,11 +438,11 @@ sub generate_experimental_design_POST : Args(0) {
             $trial_design->set_design_type($design_type);
             $design_info{'design_type'} = $design_type;
         } else {
-            $c->stash->{rest} = {error => "No design type supplied." };
+            $c->stash->{rest} = {error => __("No design type supplied.") };
             return;
         }
         if (!$trial_design->has_design_type()) {
-            $c->stash->{rest} = {error => "Design type not supported." };
+            $c->stash->{rest} = {error => __("Design type not supported.") };
             return;
         }
         if ($fieldmap_col_number) {
@@ -494,7 +495,7 @@ sub generate_experimental_design_POST : Args(0) {
         if ($trial_design->get_design()) {
             %design = %{$trial_design->get_design()};
         } else {
-            $c->stash->{rest} = {error => "Could not generate design" };
+            $c->stash->{rest} = {error => __("Could not generate design") };
             return;
         }
 
@@ -561,11 +562,11 @@ sub save_experimental_design_POST : Args(0) {
     print STDERR "Saving trial... :-)\n";
 
     if (!$c->user()) {
-        $c->stash->{rest} = {error => "You need to be logged in to add a trial" };
+        $c->stash->{rest} = {error => __("You need to be logged in to add a trial") };
         return;
     }
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to add a trial." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to add a trial.") };
         return;
     }
 
@@ -615,7 +616,7 @@ sub save_experimental_design_POST : Args(0) {
 
         my $existing = $schema->resultset("Project::Project")->find( { name => $trial_name });
         if ($existing) {
-            $c->stash->{rest} = { error => "A folder or trial with that name already exists in the database. Please select another name." };
+            $c->stash->{rest} = { error => __("A folder or trial with that name already exists in the database. Please select another name.") };
             return;
         }
 
@@ -751,7 +752,7 @@ sub save_experimental_design_POST : Args(0) {
         $trial_activity_obj->parent_id($trial_id);
         my $activity_prop_id = $trial_activity_obj->store();
         if (!$activity_prop_id) {
-            $c->stash->{rest} = {error => "Error saving trial activity info" };
+            $c->stash->{rest} = {error => __("Error saving trial activity info") };
             return;
         }
 
@@ -871,7 +872,7 @@ sub verify_trial_name_GET : Args(0) {
     my %errors;
 
     if (!$trial_name) {
-        $c->stash->{rest} = {error => "No trial name supplied"};
+        $c->stash->{rest} = {error => __("No trial name supplied")};
         $c->detach;
     }
 
@@ -901,7 +902,7 @@ sub verify_stock_list_POST : Args(0) {
     }
 
     if (!@stock_names) {
-        $c->stash->{rest} = {error => "No stock names supplied"};
+        $c->stash->{rest} = {error => __("No stock names supplied")};
         $c->detach;
     }
 
@@ -936,7 +937,7 @@ sub verify_cross_list_POST : Args(0) {
     }
 
     if (!@stock_names) {
-        $c->stash->{rest} = {error => "No stock names supplied"};
+        $c->stash->{rest} = {error => __("No stock names supplied")};
         $c->detach;
     }
 
@@ -965,7 +966,7 @@ sub verify_family_name_list_POST : Args(0) {
     }
 
     if (!@stock_names) {
-        $c->stash->{rest} = {error => "No stock names supplied"};
+        $c->stash->{rest} = {error => __("No stock names supplied")};
         $c->detach;
     }
 
@@ -1085,13 +1086,13 @@ sub upload_trial_file_POST : Args(0) {
         my %valid_attrs = map { $_ => 1 } qw(breedingProgram trialName accessionName plotNumber blockNumber rangeNumber repNumber rowNumber colNumber);
         my $attrs_ok = $format_name && !grep { ref $_ eq 'HASH' ? 0 : !$valid_attrs{$_} } @$name_attributes;
         if (!$attrs_ok) {
-            $c->stash->{rest} = {error => "Invalid plot name template."};
+            $c->stash->{rest} = {error => __("Invalid plot name template.")};
             return;
         }
 
         my $program_row = $chado_schema->resultset('Project::Project')->find({ name => $program });
         if (!$program_row) {
-            $c->stash->{rest} = {error => "Breeding program not found."};
+            $c->stash->{rest} = {error => __("Breeding program not found.")};
             return;
         }
         my $projects = CXGN::BreedersToolbox::Projects->new({ schema => $chado_schema });
@@ -1127,17 +1128,17 @@ sub upload_trial_file_POST : Args(0) {
 
     if ($upload_original_name =~ /\s/ || $upload_original_name =~ /\// || $upload_original_name =~ /\\/ ) {
         print STDERR "File name must not have spaces or slashes.\n";
-        $c->stash->{rest} = {error => "Uploaded file name must not contain spaces or slashes." };
+        $c->stash->{rest} = {error => __("Uploaded file name must not contain spaces or slashes.") };
         return;
     }
 
     if (!$c->user()) {
         print STDERR "User not logged in... not uploading a trial.\n";
-        $c->stash->{rest} = {error => "You need to be logged in to upload a trial." };
+        $c->stash->{rest} = {error => __("You need to be logged in to upload a trial.") };
         return;
     }
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to upload a trial." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to upload a trial.") };
         return;
     }
 
@@ -1748,7 +1749,7 @@ sub upload_soil_data_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload soil data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload soil data!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1757,7 +1758,7 @@ sub upload_soil_data_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload soil data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload soil data!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -1766,7 +1767,7 @@ sub upload_soil_data_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload soil data'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload soil data')};
         $c->detach();
     }
 
@@ -1804,7 +1805,7 @@ sub upload_soil_data_POST : Args(0) {
         my $return_error = '';
         my $parse_errors;
         if (!$parser->has_parse_errors() ){
-            $c->stash->{rest} = {error_string => "Could not get parsing errors"};
+            $c->stash->{rest} = {error_string => __("Could not get parsing errors")};
         } else {
             $parse_errors = $parser->get_parse_errors();
             #print STDERR Dumper $parse_errors;

@@ -8,6 +8,7 @@ use File::Path qw/make_path/;
 use CXGN::Page::FormattingHelpers qw/modesel simple_selectbox_html /;
 use CXGN::Tools::Text qw/trim/;
 use SGN::View::Feature qw/mrna_cds_protein_sequence get_descriptions/;
+use Locale::TextDomain ( 'sgn', undef );
 #use Carp::Always;
 
 BEGIN { extends 'Catalyst::Controller' }
@@ -219,7 +220,7 @@ sub bulk_gene_type_validate :Local :Args(0) {
 
     unless ($type && $type ~~ [qw/cdna cds protein/]) {
         $c->throw_client_error(
-            public_message => 'Invalid data type chosen',
+            public_message => __('Invalid data type chosen'),
             http_status    => 200,
         );
     }
@@ -257,7 +258,7 @@ sub bulk_gene_submit :Path('/bulk/gene/submit') :Args(0) {
 
     unless ($ids) {
         $c->throw_client_error(
-            public_message => 'At least one identifier must be given',
+            public_message => __('At least one identifier must be given'),
             http_status => 200,
         );
     }
@@ -349,7 +350,7 @@ sub populate_gene_sequences :Local {
 
         unless (defined $index) {
             $c->throw_client_error(
-                public_message => 'Invalid data type',
+                public_message => __('Invalid data type'),
                 http_status    => 200,
             );
         }
@@ -444,7 +445,7 @@ sub bulk_feature_submit :Path('/bulk/feature/submit') :Args(0) {
     $ids = trim($ids);
 
     unless ($ids) {
-        $c->throw_client_error(public_message => 'At least one identifier must be given');
+        $c->throw_client_error(public_message => __('At least one identifier must be given'));
     }
 
     $c->stash( sequence_identifiers => [ split /\s+/, $ids ] );

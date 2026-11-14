@@ -6,6 +6,7 @@ use CXGN::Dataset;
 use Data::Dumper;
 use strict;
 use warnings;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -29,7 +30,7 @@ sub dataset :Chained('/') Path('dataset') Args(1) {
     if ($@) {
         print STDERR "Dataset retrieval error: $@ \n";
         $c->stash->{template} = 'generic_message.mas';
-	    $c->stash->{message} = "The requested dataset does not exist or has been deleted.";
+	    $c->stash->{message} = __("The requested dataset does not exist or has been deleted.");
 	    return;
     }
     
@@ -111,7 +112,7 @@ sub publish_dataset_authorize_start : Path('/dataset/publish/authorize') Args(1)
     my $config = $c->get_conf('dataset_archive_clients') || {};
     if ( ! exists $config->{$service} ) {
         $c->stash->{template} = "generic_message.mas";
-        $c->stash->{message} = "The selected service does not exist in the server configuration";
+        $c->stash->{message} = __("The selected service does not exist in the server configuration");
         return;
     }
     my $selected = $config->{$service};

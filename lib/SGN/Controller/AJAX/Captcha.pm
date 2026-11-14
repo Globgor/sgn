@@ -7,6 +7,7 @@ use LWP::UserAgent;
 use HTTP::Request;
 use JSON;
 use Digest::SHA qw(hmac_sha256_base64);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; }
 
@@ -34,7 +35,7 @@ sub captcha : Path("/ajax/captcha") Args(0) {
 
     # Check the captcha config
     if ( !defined $config || !defined $config->{server} || !defined $config->{client_id} || !defined $config->{client_secret} || !defined $config->{signing_key} ) {
-        $c->stash->{rest} = { error => 'Missing server captcha config' };
+        $c->stash->{rest} = { error => __('Missing server captcha config') };
         return;
     }
 

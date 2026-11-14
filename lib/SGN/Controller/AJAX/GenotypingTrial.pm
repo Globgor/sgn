@@ -14,6 +14,7 @@ use CXGN::Genotype::CreatePlateOrder;
 use CXGN::Genotype::StoreGenotypingProject;
 use CXGN::Stock::TissueSample::Search;
 use CXGN::Genotype::Delete;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -29,7 +30,7 @@ sub generate_genotype_trial_POST : Args(0) {
     my $c = shift;
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'You do not have the required privileges to create a genotyping plate.' };
+        $c->stash->{rest} = { error => __('You do not have the required privileges to create a genotyping plate.') };
         $c->detach();
     }
 
@@ -39,7 +40,7 @@ sub generate_genotype_trial_POST : Args(0) {
     #print STDERR Dumper $plate_info;
 
     if ( !$plate_info->{elements} || !$plate_info->{genotyping_facility_submit} || !$plate_info->{genotyping_project_id} || !$plate_info->{name} || !$plate_info->{sample_type} || !$plate_info->{plate_format} ) {
-        $c->stash->{rest} = { error => "Please provide all parameters in the plate information section" };
+        $c->stash->{rest} = { error => __("Please provide all parameters in the plate information section") };
         $c->detach();
     }
 
@@ -48,7 +49,7 @@ sub generate_genotype_trial_POST : Args(0) {
     my $genotyping_facility = $trial->get_genotyping_facility();
 
     if ( $genotyping_facility eq 'igd' && $plate_info->{genotyping_facility_submit} eq 'yes' && $plate_info->{blank_well} eq ''){
-        $c->stash->{rest} = { error => "To submit to Cornell IGD you need to provide the blank well!" };
+        $c->stash->{rest} = { error => __("To submit to Cornell IGD you need to provide the blank well!") };
         $c->detach();
     }
 
@@ -115,23 +116,23 @@ sub parse_genotype_trial_file_POST : Args(0) {
 
 
     if ($upload_xls && $upload_coordinate){
-        $c->stash->{rest} = {error => "Do not upload both XLS and Coordinate file at the same time!" };
+        $c->stash->{rest} = {error => __("Do not upload both XLS and Coordinate file at the same time!") };
         return;
     }
     if ($upload_xls && $upload_coordinate_custom){
-        $c->stash->{rest} = {error => "Do not upload both XLS and Custom Coordinate file at the same time!" };
+        $c->stash->{rest} = {error => __("Do not upload both XLS and Custom Coordinate file at the same time!") };
         return;
     }
     if ($upload_coordinate && $upload_coordinate_custom){
-        $c->stash->{rest} = {error => "Do not upload both Coordinate file and Custom Coordinate file at the same time!" };
+        $c->stash->{rest} = {error => __("Do not upload both Coordinate file and Custom Coordinate file at the same time!") };
         return;
     }
     if (!$upload_xls && !$upload_coordinate && !$upload_coordinate_custom){
-        $c->stash->{rest} = {error => "You must upload a genotyping plate file!" };
+        $c->stash->{rest} = {error => __("You must upload a genotyping plate file!") };
         return;
     }
     if (!$genotyping_plate_name){
-        $c->stash->{rest} = {error => 'Genotyping plate id must be given!'};
+        $c->stash->{rest} = {error => __('Genotyping plate id must be given!')};
         return;
     }
     my $parser;
@@ -166,7 +167,7 @@ sub parse_genotype_trial_file_POST : Args(0) {
 
     if ($upload_original_name =~ /\s/ || $upload_original_name =~ /\// || $upload_original_name =~ /\\/ ) {
         print STDERR "File name must not have spaces or slashes.\n";
-        $c->stash->{rest} = {error => "Uploaded file name must not contain spaces or slashes." };
+        $c->stash->{rest} = {error => __("Uploaded file name must not contain spaces or slashes.") };
         return;
     }
 
@@ -179,7 +180,7 @@ sub parse_genotype_trial_file_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload genotyping plate!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload genotyping plate!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -188,7 +189,7 @@ sub parse_genotype_trial_file_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload a genotyping plate!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload a genotyping plate!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -197,7 +198,7 @@ sub parse_genotype_trial_file_POST : Args(0) {
     }
 
     if ($user_role ne 'curator' && $user_role ne 'submitter') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to upload a genotyping plate." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to upload a genotyping plate.") };
         $c->detach();
     }
 
@@ -289,7 +290,7 @@ sub store_genotype_trial_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload genotyping plate!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload genotyping plate!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -298,7 +299,7 @@ sub store_genotype_trial_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload a genotyping plate!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload a genotyping plate!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -307,7 +308,7 @@ sub store_genotype_trial_POST : Args(0) {
     }
 
     if ($user_role ne 'curator' && $user_role ne 'submitter') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to upload a genotyping plate." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to upload a genotyping plate.") };
         $c->detach();
     }
 
@@ -316,7 +317,7 @@ sub store_genotype_trial_POST : Args(0) {
 #    print STDERR "PLATE INFO =".Dumper($plate_info)."\n";
 
     if ( !$plate_info->{design} || !$plate_info->{genotyping_facility_submit} || !$plate_info->{genotyping_project_id} || !$plate_info->{name} || !$plate_info->{sample_type} || !$plate_info->{plate_format} ) {
-        $c->stash->{rest} = { error => "Please provide all parameters in the plate information section" };
+        $c->stash->{rest} = { error => __("Please provide all parameters in the plate information section") };
         $c->detach();
     }
 
@@ -447,7 +448,7 @@ sub store_genotype_trial_POST : Args(0) {
     };
 
     $c->stash->{rest} = {
-        message => "Successfully stored the genotyping plate.",
+        message => __("Successfully stored the genotyping plate."),
         trial_id => $message->{trial_id},
         plate_data => $brapi_plate_data
     };
@@ -467,7 +468,7 @@ sub get_genotypingserver_credentials : Path('/ajax/breeders/genotyping_credentia
     }
     else {
         $c->stash->{rest} = {
-            error => "Insufficient privileges for this operation."
+            error => __("Insufficient privileges for this operation.")
         };
     }
 }
@@ -643,7 +644,7 @@ sub set_project_for_genotyping_plate_POST : Args(0) {
     my $genotyping_plate_ids = decode_json $c->req->param("genotyping_plate_ids");
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'You do not have the required privileges to move genotyping plates to this project.' };
+        $c->stash->{rest} = { error => __('You do not have the required privileges to move genotyping plates to this project.') };
         $c->detach();
     }
 
@@ -663,7 +664,7 @@ sub set_project_for_genotyping_plate_POST : Args(0) {
     $genotyping_project_obj->set_project_for_genotyping_plate();
 
     if (!$genotyping_project_obj->set_project_for_genotyping_plate()){
-        $c->stash->{rest} = {error => "Error adding genotyping plate to this project",};
+        $c->stash->{rest} = {error => __("Error adding genotyping plate to this project"),};
         return;
     }
 
@@ -706,7 +707,7 @@ sub plate_genotyping_data_delete_GET : Args(0) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to delete genotyping data! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to delete genotyping data! Please contact us.') };
         $c->detach();
     }
 

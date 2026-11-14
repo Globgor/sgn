@@ -21,6 +21,7 @@ use DateTime;
 use Data::Dumper;
 use CXGN::UploadFile;
 use File::Basename qw | basename dirname|;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -59,7 +60,7 @@ sub filesharedump_upload_POST : Args(0) {
     my $archived_filename_with_path = $uploader->archive();
     my $md5 = $uploader->get_md5($archived_filename_with_path);
     if (!$archived_filename_with_path) {
-        $c->stash->{rest} = {error => "Could not store uploaded file!"};
+        $c->stash->{rest} = {error => __("Could not store uploaded file!")};
         return;
     }
     unlink $upload_tempfile;
@@ -119,7 +120,7 @@ sub _check_user_login {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -128,7 +129,7 @@ sub _check_user_login {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();

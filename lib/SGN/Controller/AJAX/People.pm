@@ -24,6 +24,7 @@ use List::MoreUtils qw /any /;
 use Try::Tiny;
 use CXGN::People::Schema;
 use CXGN::People::Roles;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -91,11 +92,11 @@ sub add_person_role_GET : Args(0) {
     my $c = shift;
     my $user = $c->user();
     if (!$user){
-        $c->stash->{rest} = {error=>'You must be logged in first!'};
+        $c->stash->{rest} = {error=>__('You must be logged in first!')};
         $c->detach;
     }
     if (!$user->check_roles("curator")) {
-        $c->stash->{rest} = {error=>'You must be logged in with the correct role!'};
+        $c->stash->{rest} = {error=>__('You must be logged in with the correct role!')};
         $c->detach;
     }
     my $sp_person_id = $c->req->param('sp_person_id');
@@ -122,7 +123,7 @@ sub list_roles :Chained('roles') PathPart('list') Args(0) {
 
     print STDERR "roles list\n";
     if (! $c->user()) {
-	$c->stash->{rest} = { error => "You must be logged in to use this function." };
+	$c->stash->{rest} = { error => __("You must be logged in to use this function.") };
 	return;
     }
     
@@ -147,7 +148,7 @@ sub list_roles_for_user :Chained('roles') PathPart('list') Args(1) {
 
     print STDERR "roles list\n";
     if (! $c->user()) {
-	$c->stash->{rest} = { error => "You must be logged in to use this function." };
+	$c->stash->{rest} = { error => __("You must be logged in to use this function.") };
 	return;
     }
 
@@ -255,12 +256,12 @@ sub delete :Chained('roles') PathPart('delete/association') Args(1) {
     my $sp_person_role_id = shift;
 
     if (! $c->user()) {
-	$c->stash->{rest} = { error => "You must be logged in to use this function." };
+	$c->stash->{rest} = { error => __("You must be logged in to use this function.") };
 	return;
     }
 
     if (! $c->user()->has_role("curator")) {
-	$c->stash->{rest} = { error => "You don't have the necessary privileges for maintaining user roles." };
+	$c->stash->{rest} = { error => __("You don't have the necessary privileges for maintaining user roles.") };
 	return;
     }
 
@@ -269,12 +270,12 @@ sub delete :Chained('roles') PathPart('delete/association') Args(1) {
     my $row = $schema->resultset("SpPersonRole")->find( { sp_person_role_id => $sp_person_role_id } );
 
     if (!$row) {
-	$c->stash->{rest} = { error => 'The relationship does not exist.' };
+	$c->stash->{rest} = { error => __('The relationship does not exist.') };
 	return;
     }
     $row->delete();
 
-    $c->stash->{rest} = { message => "Role associated with user deleted." };
+    $c->stash->{rest} = { message => __("Role associated with user deleted.") };
 }
 
 

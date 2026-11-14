@@ -16,6 +16,7 @@ use CXGN::Phenome::Locus;
 use CXGN::Phenome::Schema;
 use CXGN::Tools::Organism;
 use CXGN::Phenome::Locus::LinkageGroup;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller' }
 with 'Catalyst::Component::ApplicationAttribute';
@@ -248,7 +249,7 @@ sub get_locus : Chained('/')  PathPart('locus')  CaptureArgs(1) {
 	    $c->stash->{locus}     = CXGN::Phenome::Locus->new($c->dbc->dbh);
 	    return 1;
 	} elsif ( $locus_id < 0 ) {
-	    $c->throw_client_error( public_message => 'Locus ID must be a positive integer.' );
+	    $c->throw_client_error( public_message => __('Locus ID must be a positive integer.') );
 	}
     }
     #remove version numbers from locus name locus123.1.2
@@ -263,7 +264,7 @@ sub get_locus : Chained('/')  PathPart('locus')  CaptureArgs(1) {
 	} );
     
     if( $matching_loci->count > 1 ) {
-        $c->throw_client_error( public_message => 'Multiple matching loci' );
+        $c->throw_client_error( public_message => __('Multiple matching loci') );
     }    
     
     my ( $locus ) = $matching_loci->all

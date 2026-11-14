@@ -32,6 +32,7 @@ use LWP::UserAgent;
 use CXGN::ZipFile;
 use Text::CSV;
 use SGN::Controller::AJAX::DroneImagery::DroneImagery;
+use Locale::TextDomain ( 'sgn', undef );
 our $VERSION = '0.01';
 #use Inline::Python;
 
@@ -54,7 +55,7 @@ sub upload_drone_imagery_check_drone_name_GET : Args(0) {
     my ($user_id, $user_name, $user_role) = _check_user_login($c);
     my $project_rs = $schema->resultset("Project::Project")->search({name=>$drone_name});
     if ($project_rs->count > 0) {
-        $c->stash->{rest} = { error => "Please use a globally unique drone run name! The name you specified has already ben used." };
+        $c->stash->{rest} = { error => __("Please use a globally unique drone run name! The name you specified has already ben used.") };
         $c->detach();
     }
     else {
@@ -78,7 +79,7 @@ sub upload_drone_imagery_POST : Args(0) {
 
     my $selected_trial_id = $c->req->param('drone_run_field_trial_id');
     if (!$selected_trial_id) {
-        $c->stash->{rest} = { error => "Please select a field trial!" };
+        $c->stash->{rest} = { error => __("Please select a field trial!") };
         $c->detach();
     }
     my $selected_drone_run_id = $c->req->param('drone_run_id');
@@ -92,12 +93,12 @@ sub upload_drone_imagery_POST : Args(0) {
     my $new_drone_run_battery_name = $c->req->param('drone_run_imaging_vehicle_battery_name');
 
     if (!$new_drone_run_vehicle_id) {
-        $c->stash->{rest} = { error => "Please give an imaging event vehicle id!" };
+        $c->stash->{rest} = { error => __("Please give an imaging event vehicle id!") };
         $c->detach();
     }
 
     if (!$selected_drone_run_id && !$new_drone_run_name) {
-        $c->stash->{rest} = { error => "Please select an imaging event or create a new imaging event!" };
+        $c->stash->{rest} = { error => __("Please select an imaging event or create a new imaging event!") };
         $c->detach();
     }
     # if ($selected_drone_run_id && $new_drone_run_name){
@@ -105,24 +106,24 @@ sub upload_drone_imagery_POST : Args(0) {
     #     $c->detach();
     # }
     if ($new_drone_run_name && !$new_drone_run_type){
-        $c->stash->{rest} = { error => "Please give a new imaging event type!" };
+        $c->stash->{rest} = { error => __("Please give a new imaging event type!") };
         $c->detach();
     }
     if ($new_drone_run_name && !$new_drone_run_date){
-        $c->stash->{rest} = { error => "Please give a new imaging event date!" };
+        $c->stash->{rest} = { error => __("Please give a new imaging event date!") };
         $c->detach();
     }
     if ($new_drone_run_name && $new_drone_run_date !~ /^\d{4}\/\d{2}\/\d{2}\s\d\d:\d\d:\d\d$/){
-        $c->stash->{rest} = { error => "Please give a new imaging event date in the format YYYY/MM/DD HH:mm:ss!" };
+        $c->stash->{rest} = { error => __("Please give a new imaging event date in the format YYYY/MM/DD HH:mm:ss!") };
         $c->detach();
     }
     if ($new_drone_run_name && $new_drone_base_date && $new_drone_run_date !~ /^\d{4}\/\d{2}\/\d{2}\s\d\d:\d\d:\d\d$/){
-        $c->stash->{rest} = { error => "Please give a new imaging event base date in the format YYYY/MM/DD HH:mm:ss!" };
+        $c->stash->{rest} = { error => __("Please give a new imaging event base date in the format YYYY/MM/DD HH:mm:ss!") };
         $c->detach();
     }
 
     if ($new_drone_run_name && !$new_drone_run_desc){
-        $c->stash->{rest} = { error => "Please give a new imaging event description!" };
+        $c->stash->{rest} = { error => __("Please give a new imaging event description!") };
         $c->detach();
     }
 
@@ -134,16 +135,16 @@ sub upload_drone_imagery_POST : Args(0) {
     my $new_drone_run_band_stitching_odm_radiocalibration = $c->req->param('drone_image_upload_drone_run_band_stitching_odm_radiocalibration') eq "Yes" ? 1 : 0;
 
     if (!$new_drone_run_camera_info) {
-        $c->stash->{rest} = { error => "Please indicate the type of camera!" };
+        $c->stash->{rest} = { error => __("Please indicate the type of camera!") };
         $c->detach();
     }
 
     if ($new_drone_run_band_stitching eq 'no' && !$new_drone_run_band_numbers) {
-        $c->stash->{rest} = { error => "Please give the number of new imaging event bands!" };
+        $c->stash->{rest} = { error => __("Please give the number of new imaging event bands!") };
         $c->detach();
     }
     if (!$new_drone_run_band_stitching) {
-        $c->stash->{rest} = { error => "Please indicate if the images are stitched!" };
+        $c->stash->{rest} = { error => __("Please indicate if the images are stitched!") };
         $c->detach();
     }
 
@@ -152,11 +153,11 @@ sub upload_drone_imagery_POST : Args(0) {
         my $upload_file = $c->req->upload('upload_drone_images_zipfile');
         my $upload_panel_file = $c->req->upload('upload_drone_images_panel_zipfile');
         if (!$upload_file) {
-            $c->stash->{rest} = { error => "Please provide a zipfile of raw images!" };
+            $c->stash->{rest} = { error => __("Please provide a zipfile of raw images!") };
             $c->detach();
         }
         if (!$upload_panel_file && $new_drone_run_camera_info eq 'micasense_5') {
-            $c->stash->{rest} = { error => "Please provide a zipfile of images of the Micasense radiometric calibration panels!" };
+            $c->stash->{rest} = { error => __("Please provide a zipfile of images of the Micasense radiometric calibration panels!") };
             $c->detach();
         }
 
@@ -165,7 +166,7 @@ sub upload_drone_imagery_POST : Args(0) {
         $h->execute();
         my ($odm_running_count) = $h->fetchrow_array();
         if ($odm_running_count >= $c->config->{opendronemap_max_processes}) {
-            $c->stash->{rest} = { error => "There are already the maximum number of OpenDroneMap processes running on this machine! Please check back later when those processes are complete." };
+            $c->stash->{rest} = { error => __("There are already the maximum number of OpenDroneMap processes running on this machine! Please check back later when those processes are complete.") };
             $c->detach();
         }
     }
@@ -209,7 +210,7 @@ sub upload_drone_imagery_POST : Args(0) {
         }
         my $drone_run_date_obj = Time::Piece->strptime($new_drone_run_date, "%Y/%m/%d %H:%M:%S");
         if (exists($seen_field_trial_drone_run_dates{$drone_run_date_obj->epoch})) {
-            $c->stash->{rest} = { error => "An imaging event has already occured on this field trial at the same date and time! Please give a unique date/time for each imaging event!" };
+            $c->stash->{rest} = { error => __("An imaging event has already occured on this field trial at the same date and time! Please give a unique date/time for each imaging event!") };
             $c->detach();
         }
 
@@ -353,15 +354,15 @@ sub upload_drone_imagery_POST : Args(0) {
             my $new_drone_run_band_desc = $c->req->param('drone_run_band_description_1');
             my $new_drone_run_band_type = $c->req->param('drone_run_band_type_1');
             if (!$new_drone_run_band_name) {
-                $c->stash->{rest} = { error => "Please give a new imaging event band name!" };
+                $c->stash->{rest} = { error => __("Please give a new imaging event band name!") };
                 $c->detach();
             }
             if (!$new_drone_run_band_desc){
-                $c->stash->{rest} = { error => "Please give a new imaging event band description!" };
+                $c->stash->{rest} = { error => __("Please give a new imaging event band description!") };
                 $c->detach();
             }
             if (!$new_drone_run_band_type){
-                $c->stash->{rest} = { error => "Please give a new imaging event band type!" };
+                $c->stash->{rest} = { error => __("Please give a new imaging event band type!") };
                 $c->detach();
             }
             if (!exists($image_types_allowed->{$new_drone_run_band_type})) {
@@ -376,7 +377,7 @@ sub upload_drone_imagery_POST : Args(0) {
 
             my $upload_file = $c->req->upload('drone_run_band_stitched_ortho_image_1');
             if (!$upload_file) {
-                $c->stash->{rest} = { error => "Please provide a zipfile OR a stitched ortho image!" };
+                $c->stash->{rest} = { error => __("Please provide a zipfile OR a stitched ortho image!") };
                 $c->detach();
             }
 
@@ -396,11 +397,11 @@ sub upload_drone_imagery_POST : Args(0) {
                     $c->detach();
                 }
                 if (!$new_drone_run_band_desc){
-                    $c->stash->{rest} = { error => "Please give a new imaging event band description!" };
+                    $c->stash->{rest} = { error => __("Please give a new imaging event band description!") };
                     $c->detach();
                 }
                 if (!$new_drone_run_band_type){
-                    $c->stash->{rest} = { error => "Please give a new imaging event band type!" };
+                    $c->stash->{rest} = { error => __("Please give a new imaging event band type!") };
                     $c->detach();
                 }
                 if (!exists($image_types_allowed->{$new_drone_run_band_type})) {
@@ -415,7 +416,7 @@ sub upload_drone_imagery_POST : Args(0) {
 
                 my $upload_file = $c->req->upload('drone_run_band_stitched_ortho_image_'.$_);
                 if (!$upload_file) {
-                    $c->stash->{rest} = { error => "Please provide a zipfile OR a stitched ortho image!" };
+                    $c->stash->{rest} = { error => __("Please provide a zipfile OR a stitched ortho image!") };
                     $c->detach();
                 }
 
@@ -487,11 +488,11 @@ sub upload_drone_imagery_POST : Args(0) {
         my $stitching_work_pix = $c->req->param('upload_drone_images_stitching_work_pix');
 
         if (!$upload_file) {
-            $c->stash->{rest} = { error => "Please provide a drone image zipfile of raw images to stitch!" };
+            $c->stash->{rest} = { error => __("Please provide a drone image zipfile of raw images to stitch!") };
             $c->detach();
         }
         if (!$upload_panel_file && $new_drone_run_camera_info eq 'micasense_5') {
-            $c->stash->{rest} = { error => "Please provide a zipfile of images of the Micasense radiometric calibration panels!" };
+            $c->stash->{rest} = { error => __("Please provide a zipfile of images of the Micasense radiometric calibration panels!") };
             $c->detach();
         }
 
@@ -678,11 +679,11 @@ sub upload_drone_imagery_POST : Args(0) {
         my $drone_run_raw_image_boundaries_column_alley_width = $c->req->param('drone_run_raw_image_boundaries_column_alley_width');
 
         if (!$upload_file) {
-            $c->stash->{rest} = { error => "Please provide a drone image zipfile of raw images to stitch!" };
+            $c->stash->{rest} = { error => __("Please provide a drone image zipfile of raw images to stitch!") };
             $c->detach();
         }
         if (!$upload_panel_file && $new_drone_run_camera_info eq 'micasense_5') {
-            $c->stash->{rest} = { error => "Please provide a zipfile of images of the Micasense radiometric calibration panels!" };
+            $c->stash->{rest} = { error => __("Please provide a zipfile of images of the Micasense radiometric calibration panels!") };
             $c->detach();
         }
 
@@ -892,11 +893,11 @@ sub upload_drone_imagery_POST : Args(0) {
         my $upload_panel_file = $c->req->upload('upload_drone_images_panel_zipfile');
 
         if (!$upload_file) {
-            $c->stash->{rest} = { error => "Please provide a drone image zipfile of raw images!" };
+            $c->stash->{rest} = { error => __("Please provide a drone image zipfile of raw images!") };
             $c->detach();
         }
         if (!$upload_panel_file && $new_drone_run_camera_info eq 'micasense_5') {
-            $c->stash->{rest} = { error => "Please provide a zipfile of images of the Micasense radiometric calibration panels!" };
+            $c->stash->{rest} = { error => __("Please provide a zipfile of images of the Micasense radiometric calibration panels!") };
             $c->detach();
         }
 
@@ -1408,7 +1409,7 @@ sub _check_user_login {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1417,7 +1418,7 @@ sub _check_user_login {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();

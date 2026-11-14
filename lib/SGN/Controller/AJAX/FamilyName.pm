@@ -21,6 +21,7 @@ use Data::Dumper;
 use CXGN::FamilyName;
 use JSON;
 use CXGN::Pedigree::AddFamilyAndMembers;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 __PACKAGE__->config(
@@ -139,7 +140,7 @@ sub remove_family_member_POST : Args(0) {
     }
 
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to modify family members. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to modify family members. Please contact us.") };
         $c->detach();
     }
 
@@ -175,7 +176,7 @@ sub delete_family_POST : Args(0) {
     }
 
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete family. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete family. Please contact us.") };
         $c->detach();
     }
 
@@ -212,7 +213,7 @@ sub add_family_members_using_list_POST : Args(0) {
     my $user_name = $c->user()->get_object()->get_username();
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can add family members'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can add family members')};
         $c->detach();
     }
 

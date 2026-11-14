@@ -45,6 +45,7 @@ use CXGN::Transformation::Transformation;
 use Sort::Naturally;
 use CXGN::Stock::Vector;
 use Time::Piece;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' };
@@ -1959,7 +1960,7 @@ sub get_drone_imagery_parameter_select : Path('/ajax/html/select/drone_imagery_p
         $parameter_type_id = SGN::Model::Cvterm->get_cvterm_row($schema, 'drone_run_band_cropped_polygon', 'project_property')->cvterm_id();
     }
     else {
-        $c->stash->{rest} = { error => "Parameter not supported!" };
+        $c->stash->{rest} = { error => __("Parameter not supported!") };
         $c->detach();
     }
 

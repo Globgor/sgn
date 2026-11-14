@@ -20,6 +20,7 @@ use File::Temp 'tempfile';
 use File::Basename;
 use File::Copy;
 use utf8;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 
@@ -40,7 +41,7 @@ sub get_list_action :Path('/list/get') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-	$c->stash->{rest} = { error => 'You must be logged in to use lists.', };
+	$c->stash->{rest} = { error => __('You must be logged in to use lists.'), };
 	return;
     }
 
@@ -182,7 +183,7 @@ sub set_type :Path('/list/type') Args(2) {
     my $list = CXGN::List->new( { dbh=> $c->dbc->dbh(), list_id => $list_id });
 
     if ($list->owner() != $user_id) {
-	$c->stash->{rest} = { error => "Only the list owner can change the type of a list" };
+	$c->stash->{rest} = { error => __("Only the list owner can change the type of a list") };
 	return;
     }
 
@@ -206,7 +207,7 @@ sub new_list_action :Path('/list/new') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-	$c->stash->{rest} = { error => "You must be logged in to use lists", };
+	$c->stash->{rest} = { error => __("You must be logged in to use lists"), };
 	return;
     }
 
@@ -325,7 +326,7 @@ sub available_lists : Path('/list/available') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-	$c->stash->{rest} = { error => "You must be logged in to use lists.", };
+	$c->stash->{rest} = { error => __("You must be logged in to use lists."), };
 	return;
     }
 
@@ -342,7 +343,7 @@ sub available_public_lists : Path('/list/available_public') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-        $c->stash->{rest} = { error => "You must be logged in to use lists." };
+        $c->stash->{rest} = { error => __("You must be logged in to use lists.") };
         $c->detach();
     }
 
@@ -369,12 +370,12 @@ sub add_item :Path('/list/item/add') Args(0) {
     $element =~ s/^\s*(.+?)\s*$/$1/;
 
     if (!$element) {
-	$c->stash->{rest} = { error => "You must provide an element to add to the list" };
+	$c->stash->{rest} = { error => __("You must provide an element to add to the list") };
 	return;
     }
 
     if (!$list_id) {
-	$c->stash->{rest} = { error => "Please specify a list_id." };
+	$c->stash->{rest} = { error => __("Please specify a list_id.") };
 	return;
     }
 
@@ -459,7 +460,7 @@ sub copy_public_list : Path('/list/public/copy') Args(0) {
     my $public = $list->check_if_public();
     my $user_id = $self->get_user($c);
     if (!$user_id || $public == 0) {
-	$c->stash->{rest} = { error => 'You must be logged in to use lists and list must be public!' };
+	$c->stash->{rest} = { error => __('You must be logged in to use lists and list must be public!') };
 	return;
     }
 
@@ -536,7 +537,7 @@ sub add_bulk : Path('/list/add/bulk') Args(0) {
     }
 
     if (!$elements) {
-        $c->stash->{rest} = { error => "You must provide one or more elements to add to the list" };
+        $c->stash->{rest} = { error => __("You must provide one or more elements to add to the list") };
         return;
     }
 
@@ -602,7 +603,7 @@ sub exists_list_action : Path('/list/exists') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-	$c->stash->{rest} = { error => 'You need to be logged in to use lists.' };
+	$c->stash->{rest} = { error => __('You need to be logged in to use lists.') };
     }
 
     my $list_info = CXGN::List::exists_list($c->dbc->dbh(), $name, $user_id);
@@ -627,7 +628,7 @@ sub exists_item_action : Path('/list/exists_item') :Args(0) {
     my $user_id = $self->get_user($c);
 
     if ($self->get_list_owner($c, $list_id) != $user_id) {
-	$c->stash->{rest} = { error => "You have insufficient privileges to manipulate this list.", };
+	$c->stash->{rest} = { error => __("You have insufficient privileges to manipulate this list."), };
 	return;
     }
 
@@ -1088,7 +1089,7 @@ sub desynonymize_list: Path('/list/desynonymize') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-    	$c->stash->{rest} = { error => 'You must be logged in to use lists.', };
+    	$c->stash->{rest} = { error => __('You must be logged in to use lists.'), };
     	return;
     }
     my $schema = $c->dbic_schema("Bio::Chado::Schema", undef, $user_id);
@@ -1113,7 +1114,7 @@ sub available_marker_sets : Path('/marker_sets/available') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-        $c->stash->{rest} = { error => "You must be logged in to use marker alleles.", };
+        $c->stash->{rest} = { error => __("You must be logged in to use marker alleles."), };
         return;
     }
 
@@ -1139,7 +1140,7 @@ sub delete_markerset : Path('/markerset/delete') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-    	$c->stash->{rest} = { error => 'You must be logged in to delete marker alleles.', };
+    	$c->stash->{rest} = { error => __('You must be logged in to delete marker alleles.'), };
     	return;
     }
 
@@ -1172,7 +1173,7 @@ sub get_markerset_items :Path('/markerset/items') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-    	$c->stash->{rest} = { error => 'You must be logged in to use marker alleles.', };
+    	$c->stash->{rest} = { error => __('You must be logged in to use marker alleles.'), };
     	return;
     }
 
@@ -1202,7 +1203,7 @@ sub get_markerset_type :Path('/markerset/type') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-    	$c->stash->{rest} = { error => 'You must be logged in to use marker alleles.', };
+    	$c->stash->{rest} = { error => __('You must be logged in to use marker alleles.'), };
     	return;
     }
 
@@ -1233,19 +1234,19 @@ sub adjust_case : Path('/ajax/list/adjust_case') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-        $c->stash->{rest} = { error => "You must be logged in to use lists.", };
+        $c->stash->{rest} = { error => __("You must be logged in to use lists."), };
         return;
     }
 
     my $list = CXGN::List->new( { dbh => $c->dbc->dbh, list_id => $list_id } );
 
     if ($user_id != $list->owner()) {
-	$c->stash->{rest} = { error => "You don't own this list and you cannot modify it." };
+	$c->stash->{rest} = { error => __("You don't own this list and you cannot modify it.") };
 	return;
     }
 
     if ($list->type() ne "accessions") {
-	$c->stash->{rest} = { error => "Only lists with type 'accessions' can be adjusted for case in the database." };
+	$c->stash->{rest} = { error => __("Only lists with type 'accessions' can be adjusted for case in the database.") };
     }
 
     my $lt = CXGN::List::Transform->new();
@@ -1260,7 +1261,7 @@ sub adjust_case : Path('/ajax/list/adjust_case') Args(0) {
     print STDERR "Converted data: ".Dumper($data);
 
     if (! $data) {
-	$c->stash->{rest} = { error => "No data!" };
+	$c->stash->{rest} = { error => __("No data!") };
 	return;
     }
     my $error_message = "";
@@ -1299,19 +1300,19 @@ sub adjust_synonyms :Path('/ajax/list/adjust_synonyms') Args(0) {
 
     my $user_id = $self->get_user($c);
     if (!$user_id) {
-        $c->stash->{rest} = { error => "You must be logged in to use lists.", };
+        $c->stash->{rest} = { error => __("You must be logged in to use lists."), };
         return;
     }
 
     my $list = CXGN::List->new( { dbh => $c->dbc->dbh, list_id => $list_id } );
 
     if ($user_id != $list->owner()) {
-	$c->stash->{rest} = { error => "You don't own this list and you cannot modify it." };
+	$c->stash->{rest} = { error => __("You don't own this list and you cannot modify it.") };
 	return;
     }
 
     if ($list->type() ne "accessions") {
-	$c->stash->{rest} = { error => "Only lists with type 'accessions' can be adjusted for synonyms in the database." };
+	$c->stash->{rest} = { error => __("Only lists with type 'accessions' can be adjusted for synonyms in the database.") };
     }
 
     my $lt = CXGN::List::Transform->new();
@@ -1327,7 +1328,7 @@ sub adjust_synonyms :Path('/ajax/list/adjust_synonyms') Args(0) {
     print STDERR Dumper($data);
 
     if (! $data) {
-	$c->stash->{rest} = { error => "No data!" };
+	$c->stash->{rest} = { error => __("No data!") };
 	return;
     }
     my $error_message = "";

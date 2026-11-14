@@ -21,6 +21,7 @@ use CXGN::UploadFile;
 use DateTime;
 use CXGN::Phenotypes::HighDimensionalPhenotypesSearch;
 use CXGN::Phenotypes::StorePhenotypes;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -76,7 +77,7 @@ sub generate_spectral_plot_POST : Args(0) {
     # print STDERR Dumper \@training_data_input;
 
     if (scalar(@training_data_input) < 5) {
-        $c->stash->{rest} = { error => "Not enough data! Need atleast 5 samples with a phenotype and spectra! Maybe choose a different device type?"};
+        $c->stash->{rest} = { error => __("Not enough data! Need atleast 5 samples with a phenotype and spectra! Maybe choose a different device type?")};
         $c->detach();
     }
 
@@ -217,7 +218,7 @@ sub generate_results_POST : Args(0) {
         }
 
         if (scalar(keys %testing_pheno_data) == 0 ) {
-            $c->stash->{rest} = { error => "Not enough data! Are you sure phenotypes were uploaded for the trait in your testing dataset?"};
+            $c->stash->{rest} = { error => __("Not enough data! Are you sure phenotypes were uploaded for the trait in your testing dataset?")};
             $c->detach();
         }
     }
@@ -243,7 +244,7 @@ sub generate_results_POST : Args(0) {
     # print STDERR Dumper \%testing_pheno_data;
 
     if (scalar(keys %training_pheno_data) == 0 ) {
-        $c->stash->{rest} = { error => "Not enough data! Are you sure phenotypes were uploaded for the trait in your training dataset?"};
+        $c->stash->{rest} = { error => __("Not enough data! Are you sure phenotypes were uploaded for the trait in your training dataset?")};
         $c->detach();
     }
 
@@ -305,7 +306,7 @@ sub generate_results_POST : Args(0) {
     # print STDERR Dumper \@training_data_input;
 
     if (scalar(@training_data_input) < 10) {
-        $c->stash->{rest} = { error => "Not enough data! Need atleast 10 samples with a phenotype and spectra! Maybe choose a different device type?"};
+        $c->stash->{rest} = { error => __("Not enough data! Need atleast 10 samples with a phenotype and spectra! Maybe choose a different device type?")};
         $c->detach();
     }
 

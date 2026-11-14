@@ -12,6 +12,7 @@ use Bio::BLAST2::Database;
 use Data::Dumper;
 use File::Temp qw | tempfile |; 
 use CXGN::Graphics::VigsGraph;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -185,7 +186,7 @@ sub run_bowtie2 :Path('/tools/vigs/result') :Args(0) {
    
 
 	if ($err) {
-		$c->stash->{rest} = {error => "Bowtie execution failed"};
+		$c->stash->{rest} = {error => __("Bowtie execution failed")};
 	} 
 	else {
 		$id = $urlencode{basename($seq_filename)};
