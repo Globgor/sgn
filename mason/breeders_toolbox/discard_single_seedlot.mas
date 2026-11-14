@@ -7,30 +7,30 @@ $uniquename
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="discardSeedlotDialog">Mark this Seedlot as DISCARDED </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="discardSeedlotDialog"><% __('Mark this Seedlot as DISCARDED') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" id="discard_seedlot_form" name="discard_seedlot_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Seedlot Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Seedlot Name:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" name="discard_seedlot_name" id="discard_seedlot_name" disabled value="<% $uniquename %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Reason for Discarding: </label>
+                            <label class="col-sm-4 control-label"><% __('Reason for Discarding:') |h %> </label>
                             <div class="col-sm-8" >
-                                <textarea class="form-control" id="reason_for_discarding_details_page" name="reason_for_discarding_details_page" placeholder="Required"></textarea>
+                                <textarea class="form-control" id="reason_for_discarding_details_page" name="reason_for_discarding_details_page" placeholder="<% __('Required') |h %>"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="discard_single_seedlot_submit" id="discard_single_seedlot_submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="discard_single_seedlot_submit" id="discard_single_seedlot_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -40,19 +40,19 @@ $uniquename
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="savedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="savedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        This seedlot was marked as DISCARDED.
+                        <% __('This seedlot was marked as DISCARDED.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -62,19 +62,19 @@ $uniquename
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="undoDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="undoDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        This seedlot was restored.
+                        <% __('This seedlot was restored.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_undo_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_undo_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>

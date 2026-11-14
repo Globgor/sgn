@@ -51,12 +51,12 @@ $drone_run_date => undef
 
 <& /page/page_title.mas, title=>"Imaging Event Project: ".$trial_name &>
 
-<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Imaging Event Details</h4>", info_section_subtitle => 'View basic information about the imaging event project.', buttons_html => '<button class="btn btn-primary btn-sm" id="edit_drone_run_details" style="margin:3px">Edit Imaging Event Details</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "drone_run_project_details", trial_name => $trial_name, trial_description => $trial_description, identifier_prefix => $identifier_prefix, drone_run_date=>$drone_run_date &>
+<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Imaging Event Details</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View basic information about the imaging event project.'), 'h' ), buttons_html => '<button class="btn btn-primary btn-sm" id="edit_drone_run_details" style="margin:3px">Edit Imaging Event Details</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "drone_run_project_details", trial_name => $trial_name, trial_description => $trial_description, identifier_prefix => $identifier_prefix, drone_run_date=>$drone_run_date &>
 
 % my $data_agreement_link = '<button class="btn btn-sm btn-primary" disabled style="margin:3px">Add/edit data agreement</button>';
 % if ($user_can_modify) { $data_agreement_link = '<button class="btn btn-sm btn-primary" style="margin:3px" id="add_data_agreement">Add/edit data agreement</button>'; }
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Data Agreement License</h4>", info_section_subtitle => 'View and edit the public data agreement on this experiment.', icon_class => "glyphicon glyphicon-inbox", info_section_id => "trial_data_agreement_section", buttons_html => $data_agreement_link &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Data Agreement License</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and edit the public data agreement on this experiment.'), 'h' ), icon_class => "glyphicon glyphicon-inbox", info_section_id => "trial_data_agreement_section", buttons_html => $data_agreement_link &>
 
 <& /breeders_toolbox/add_data_agreement_dialogs.mas, trial_id => $trial_id &>
 
@@ -65,25 +65,25 @@ $drone_run_date => undef
 <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content ui-front">
         <div class="modal-header text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="droneRunDetailsEditDialog">Edit Imaging Event Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="droneRunDetailsEditDialog"><% __('Edit Imaging Event Details') |h %></h4>
         </div>
         <div class="modal-body" id="drone_run_details_edit_body">
             <div class="container-fluid">
             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="edit_drone_run_name">Imaging Event Name: </label>
+                    <label class="col-sm-3 control-label" for="edit_drone_run_name"><% __('Imaging Event Name:') |h %> </label>
                     <div class="col-sm-8">
                       <div class="input-group">
-                        <input class="form-control col-sm-8" id="edit_drone_run_name" title="name" type="text" value="<%$trial_name%>"/>
+                        <input class="form-control col-sm-8" id="edit_drone_run_name" title="<% __('name') |h %>" type="text" value="<%$trial_name%>"/>
                       </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="edit_trial_description">Description: </label>
+                    <label class="col-sm-3 control-label" for="edit_trial_description"><% __('Description:') |h %> </label>
                     <div class="col-sm-8">
                       <div class="input-group">
-                        <textarea class="form-control" id="edit_drone_run_description" title="description" rows="5" maxlength="250"><% $trial_description %></textarea>
+                        <textarea class="form-control" id="edit_drone_run_description" title="<% __('description') |h %>" rows="5" maxlength="250"><% $trial_description %></textarea>
                       </div>
                     </div>
                 </div>
@@ -91,8 +91,8 @@ $drone_run_date => undef
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" id="edit_drone_run_details_cancel_button">Cancel</button>
-            <button type="button" class="btn btn-primary" id="save_drone_run_details">Save Changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="edit_drone_run_details_cancel_button"><% __('Cancel') |h %></button>
+            <button type="button" class="btn btn-primary" id="save_drone_run_details"><% __('Save Changes') |h %></button>
         </div>
     </div>
 </div>

@@ -7,20 +7,20 @@ $timestamp => localtime()
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="discardSeedlotsDialog">Mark Seedlots as Discarded </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="discardSeedlotsDialog"><% __('Mark Seedlots as Discarded') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" id="discard_seedlots_form" name="discard_seedlots_form">
                         <div class="form-group" id="seedlot_list_section" >
-                            <label class="col-sm-4 control-label">List of Seedlots:</label>
+                            <label class="col-sm-4 control-label"><% __('List of Seedlots:') |h %></label>
                             <div class="col-sm-8" id="select_seedlot_list" name="select_seedlot_list"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Reason for Discarding: </label>
+                            <label class="col-sm-4 control-label"><% __('Reason for Discarding:') |h %> </label>
                             <div class="col-sm-8" >
-                                <textarea class="form-control" id="reason_for_discarding" name="reason_for_discarding" placeholder="Required"></textarea>
+                                <textarea class="form-control" id="reason_for_discarding" name="reason_for_discarding" placeholder="<% __('Required') |h %>"></textarea>
 
                             </div>
                         </div>
@@ -28,8 +28,8 @@ $timestamp => localtime()
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="discard_seedlots_submit" id="discard_seedlots_submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="discard_seedlots_submit" id="discard_seedlots_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -39,19 +39,19 @@ $timestamp => localtime()
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="discardSeedlotSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="discardSeedlotSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The seedlots were marked as DISCARDED.
+                        <% __('The seedlots were marked as DISCARDED.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_discard_seedlot_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_discard_seedlot_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
