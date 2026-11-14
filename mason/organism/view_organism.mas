@@ -42,13 +42,13 @@ my $image_subtitle =
 
 <& /page/page_title.mas, title=>"Details for $taxon <i>$organism_name</i>" &>
 
-<&| /page/info_section.mas, title=>'Basic information' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Basic information'), 'h' ) &>
 <& /organism/basic_info.mas, name=>$organism_name, common_name=>$common_name, description=>$description, comment=>$comment, synonyms=> \@synonyms &>
 </&>
 
 <& /organism/taxonomy.mas, taxonomy=>$taxonomy &>
 
-<&| /page/info_section.mas, title=>"Images" , subtitle=>$image_subtitle &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Images"), 'h' ) , subtitle=>$image_subtitle &>
 <& /image/print_images.mas, images => $images &>
 </&>
 
@@ -57,17 +57,17 @@ my $image_subtitle =
 
 % if ($taxon ne 'species' && $taxon ne 'subspecies') { return; }
 
-<&| /page/info_section.mas, title=>'Metabolic details' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Metabolic details'), 'h' ) &>
 <% $solcyc_link %>
 </&>
 
-<&| /page/info_section.mas, title=>'Genome data', collapsible=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Genome data'), 'h' ), collapsible=>1 &>
 <& /organism/genomic_details.mas, ploidy => $ploidy, genome_size=>$genome_size, chromosome_number => $chromosome_number, loci=>$loci, maps=>$maps &>
 
 
 </&>
 
-<&| /page/info_section.mas, title=>'Transcript Information', collapsible => 1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Transcript Information'), 'h' ), collapsible => 1 &>
 
 % my @links = map { qq|<a href="/content/library_info.pl?library=$_">$_</a>| } @libraries;
 
@@ -79,7 +79,7 @@ my $image_subtitle =
 </&>
 
 
-<&| /page/info_section.mas, title=>'Phenomic Details', collapsible=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Phenomic Details'), 'h' ), collapsible=>1 &>
 
 Number of phenotyped lines : <% $phenotypes %>
 <br />
@@ -89,7 +89,7 @@ Number of ontology annotations : <% $onto_count %>
 <br /><br />
 
 
-<&| /page/info_section.mas, title=>'QTL data', is_subsection=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('QTL data'), 'h' ), is_subsection=>1 &>
 
 % if ($qtl_data) {
   <& /page/columnar_table.mas,
