@@ -24,14 +24,14 @@
 </%perl>
 
 
-<& /page/page_title.mas, title=>"In Silico PCR" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("In Silico PCR"), 'h' ) &>
 
 <form id="PCRform" method="post" action="/tools/pcr_results/" enctype="multipart/form-data">
-<&| /page/info_section.mas, id=>"pcr_parameter_section", title=>"PCR Primers", collapsible=>1, collapsed=>0, subtitle=>'<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#pcr_help" style="padding:0px">Help <span class="glyphicon glyphicon-question-sign"></span></button>' &>
+<&| /page/info_section.mas, id=>"pcr_parameter_section", title=>$m->interp->apply_escapes( __("PCR Primers"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#pcr_help" style="padding:0px">Help <span class="glyphicon glyphicon-question-sign"></span></button>' &>
   <table>
   	<tr>
   		<td>
-      <label class="blast_select_label" for="fprimer">Forward Primer </label>
+      <label class="blast_select_label" for="fprimer"><% __('Forward Primer') |h %> </label>
       	</td>
       	<td>
       		<input id="fprimer" class="form-control" size="65" value="ACGATGTGATTTCTCGCTTGATGTTCTA" name="fprimer" />
@@ -41,12 +41,12 @@
   	<tr>
   		<td></td>
       <td>
-  			<input id="frevcom" type="checkbox" name="frevcom"/> <label class="blast_select_label" for="frevcom">Reverse Complement </label>
+  			<input id="frevcom" type="checkbox" name="frevcom"/> <label class="blast_select_label" for="frevcom"><% __('Reverse Complement') |h %> </label>
       </td>
     </tr>
   	<tr>
   		<td>
-        <label class="blast_select_label" for="rprimer">Reverse Primer </label>
+        <label class="blast_select_label" for="rprimer"><% __('Reverse Primer') |h %> </label>
     	</td>
     	<td>
     		<input id="rprimer" class="form-control" size="65" value="TTTCTTATTAAGGTATGATGCTAGATGTCTAA" name="rprimer" />
@@ -57,12 +57,12 @@
   		<td>
       </td>
       <td>
-  			<input id="rrevcom" type="checkbox" name="rrevcom"  checked /> <label class="blast_select_label" for="rrevcom">Reverse Complement </label>
+  			<input id="rrevcom" type="checkbox" name="rrevcom"  checked /> <label class="blast_select_label" for="rrevcom"><% __('Reverse Complement') |h %> </label>
       </td>
     </tr>
     <tr>
       <td>
-        <label class="blast_select_label" for="productLength">Product Maximum Length </label>
+        <label class="blast_select_label" for="productLength"><% __('Product Maximum Length') |h %> </label>
       </td>
       <td>
         <input id="product_length" class="blast_select_box form-control" size="5" value="5000" name="productLength" />
@@ -71,7 +71,7 @@
     </tr>
     <tr>
       <td>
-        <label class="blast_select_label" for="allowedMismatches">Allowed Mismatches</label>
+        <label class="blast_select_label" for="allowedMismatches"><% __('Allowed Mismatches') |h %></label>
       </td>
       <td>
         <input id="allowed_mm" class="blast_select_box form-control" size="5" value="0" name="allowedMismatches" />
@@ -82,7 +82,7 @@
 </&>
 
 
-<&| /page/info_section.mas, id=>"blast_parameter_section", title=>"BLAST parameters", collapsible=>1, collapsed=>0, subtitle=>'<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#blast_help" style="padding:0px">Help <span class="glyphicon glyphicon-question-sign"></span></button>' &>
+<&| /page/info_section.mas, id=>"blast_parameter_section", title=>$m->interp->apply_escapes( __("BLAST parameters"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#blast_help" style="padding:0px">Help <span class="glyphicon glyphicon-question-sign"></span></button>' &>
   <input type="hidden" name="outformat" value="0" />
   
   <div class="form-group form-inline">
@@ -97,7 +97,7 @@
       </tr>
       <tr>
         <td>
-          <label class="blast_select_label" for="database_select">Database </label>
+          <label class="blast_select_label" for="database_select"><% __('Database') |h %> </label>
         </td>
         <td>
           <span id='database_select' ></span>
@@ -120,7 +120,7 @@
       </tr -->
       <tr>
       	<td>
-        <label class="blast_select_label" for="evalue">e value</label>
+        <label class="blast_select_label" for="evalue"><% __('e value') |h %></label>
       	</td>
           <td >
           	<input class="blast_select_box form-control" type="text" size="10" value="10" name="evalue" />
@@ -137,7 +137,7 @@
 
       <tr>
         <td>
-          <label class="blast_select_label" for="filterq">Filter low complexity</label>
+          <label class="blast_select_label" for="filterq"><% __('Filter low complexity') |h %></label>
         
         </td>
           <td><input type="checkbox" checked="checked" name="filterq" /></td>
@@ -148,7 +148,7 @@
 </&>
 </form>
     <center>
-      <button id="run_blast" class="btn btn-primary">Run</button>
+      <button id="run_blast" class="btn btn-primary"><% __('Run') |h %></button>
       <!-- <button id="run_blast" class="btn btn-primary" type="submit" form="PCRform" formaction="/tools/pcr_results" formmethod="post" formenctype="multipart/form-data">Run</button> -->
     </center>
 
@@ -161,15 +161,15 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">PCR Parameters Help</h4>
+      <h4 class="modal-title"><% __('PCR Parameters Help') |h %></h4>
     </div>
     
     <div class="modal-body">
-      <p>Paste your primers, the maximum distance between them and the number of missmatches</p>
+      <p><% __('Paste your primers, the maximum distance between them and the number of missmatches') |h %></p>
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
     </div>
   </div>
     
@@ -183,15 +183,15 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">BLAST Parameters Help</h4>
+      <h4 class="modal-title"><% __('BLAST Parameters Help') |h %></h4>
     </div>
     
     <div class="modal-body">
-      <p>Select a genomic database and the other BLAST parameters</p>
+      <p><% __('Select a genomic database and the other BLAST parameters') |h %></p>
     </div>
     
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
     </div>
   </div>
     
