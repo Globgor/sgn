@@ -422,7 +422,7 @@ my $edit_privs = $curator ;
 </table>
 
 % if ($is_obsolete) {
-<b>Obsolete:</b> TRUE <br />
+<& /util/sentence.mas, text => __x('{bold}Obsolete:{end_bold} {value}'), bold => '<b>', end_bold => '</b>', value => 'TRUE' &> <br />
 % }
 
 <br />
