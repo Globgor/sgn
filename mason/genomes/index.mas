@@ -21,7 +21,7 @@ Lukas Mueller
 
 </%doc>
 
-<& /page/page_title.mas, title=> "Genome Projects" &>
+<& /page/page_title.mas, title=> $m->interp->apply_escapes( __("Genome Projects"), 'h' ) &>
 
 <div style="width: 30em; margin: 0 auto">
 
