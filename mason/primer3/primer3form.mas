@@ -10,7 +10,7 @@
 
 <HR></HR>
 
-<h1> Copyright Notice and Disclaimer </h1>
+<h1> <% __('Copyright Notice and Disclaimer') |h %> </h1>
 <p>
  Copyright (c) 1996,1997,1998,1999,2000,2001,2004,2006,2007
 Whitehead Institute for Biomedical Research, Steve Rozen, and Helen Skaletsky
