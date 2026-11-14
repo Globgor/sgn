@@ -95,7 +95,7 @@ $(document).ready(function () {
 			minWidth:400,
 			maxHeight:400,
 			closeOnEscape:true,
-			title: "Gene Functional annotation",
+			title: gettext("Gene Functional annotation"),
 		});
 	});
 
@@ -111,7 +111,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Parameters used",
+			title: gettext("Parameters used"),
 		});
 	});
 
@@ -127,7 +127,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Modify parameters help",
+			title: gettext("Modify parameters help"),
 		});
 	});
 
@@ -144,7 +144,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Distribution of n-mers help",
+			title: gettext("Distribution of n-mers help"),
 		});
 	});
 
@@ -158,7 +158,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Best region help",
+			title: gettext("Best region help"),
 		});
 	});
 
@@ -172,7 +172,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Sequence overview help",
+			title: gettext("Sequence overview help"),
 		});
 	});
 
@@ -186,7 +186,7 @@ $(document).ready(function () {
 			resizable:false,
 			width:500,
 			closeOnEscape:true,
-			title: "Description of genes mapped help",
+			title: gettext("Description of genes mapped help"),
 		});
 	});
 
@@ -242,7 +242,7 @@ $(document).ready(function () {
 				}
 			},
 			error: function(response) {
-				alert("An error occurred. The service may not be available right now. Bowtie2 could not be executed");
+				alert(gettext("An error occurred. The service may not be available right now. Bowtie2 could not be executed"));
 				//safari_alert();
 				enable_ui();
 			}
@@ -288,7 +288,7 @@ $(document).ready(function () {
 					$("#t_num").val(coverage);
 
 					if (+response.score < 0) {
-						$("#no_results").html("Note: The score value is very low!. Increasing the number of targets or the n-mer length, or decreasing the mismatches the score value will increase");
+						$("#no_results").html(gettext("Note: The score value is very low!. Increasing the number of targets or the n-mer length, or decreasing the mismatches the score value will increase"));
 					}
 					
 					//show result sections
@@ -309,9 +309,9 @@ $(document).ready(function () {
 
 					//set collapse and zoom buttons
 					$("#collapse").val(1);
-					$("#collapse").html("Expand Graph");
+					$("#collapse").html(gettext("Expand Graph"));
 					$("#zoom").val(0);
-					$("#zoom").html("Zoom In");
+					$("#zoom").html(gettext("Zoom In"));
 
 					createMap(1,0,score_array,expr_msg,ids,m_aoa);
 
@@ -350,7 +350,7 @@ $(document).ready(function () {
 				}
 			},
 			error: function(response) {
-				alert("An error occurred. The service may not be available right now.");
+				alert(gettext("An error occurred. The service may not be available right now."));
 				//safari_alert();
 				enable_ui();
 			}
@@ -708,11 +708,11 @@ $(document).ready(function () {
 		var seq_length = $("#seq_length").val();
 
 		if (collapsed == 0) {
-			$("#collapse").html("Expand Graph");
+			$("#collapse").html(gettext("Expand Graph"));
 			$("#collapse").val(1);
 			collapsed = 1;
 		} else {
-			$("#collapse").html("Collapse Graph");
+			$("#collapse").html(gettext("Collapse Graph"));
 			$("#collapse").val(0);
 			collapsed = 0;
 		}
@@ -726,11 +726,11 @@ $(document).ready(function () {
 		var seq_length = $("#seq_length").val();
 
 		if (zoom == 0) {
-			$("#zoom").html("Zoom Out");
+			$("#zoom").html(gettext("Zoom Out"));
 			$("#zoom").val(1);
 			zoom = 1;
 		} else {
-			$("#zoom").html("Zoom In");
+			$("#zoom").html(gettext("Zoom In"));
 			$("#zoom").val(0);
 			zoom = 0;
 		}
@@ -948,7 +948,7 @@ $(document).ready(function () {
 				//getCustomRegion(score_array,best_seq,seq)
 			}
 		} else {
-			alert("there are no parameters to change");
+			alert(gettext("there are no parameters to change"));
 		}
 		return [score_array,seq,best_seq,expr_msg,ids,m_aoa]
 	}

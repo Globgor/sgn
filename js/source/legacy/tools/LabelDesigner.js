@@ -373,7 +373,7 @@ $(document).ready(function($) {
                     jQuery("#label_designer_data_level").focus();
                 },
                 error: function(response) {
-                    alert('There was a problem checking the data levels available for your field trial. Please contact us.');
+                    alert(gettext('There was a problem checking the data levels available for your field trial. Please contact us.'));
                 }
             });
         } else if (data_type == 'Genotyping Plates') {
@@ -439,7 +439,7 @@ $(document).ready(function($) {
                     jQuery("#label_designer_data_level").focus();
                 },
                 error: function(response) {
-                    alert('There was a problem checking the data levels available for your field trial. Please contact us.');
+                    alert(gettext('There was a problem checking the data levels available for your field trial. Please contact us.'));
                 }
             });
         }
@@ -588,12 +588,12 @@ $(document).ready(function($) {
     $("#d3-add").on("click", function() {
         var type = document.getElementById("d3-add-type-input").value;
         if (!type || type == 'Select an element type') {
-            alert("A valid type must be selected.");
+            alert(gettext("A valid type must be selected."));
             return;
         }
         var field = $('#d3-add-field-input').find('option:selected').text();
         if (!field || field == 'Select a field') {
-            alert("A valid field must be selected.");
+            alert(gettext("A valid field must be selected."));
             return;
         }
         // check if add_fields[field] is defined. If so, add {}s
@@ -716,7 +716,7 @@ function downloadLabels (design, download_type) {
     var label_elements = document.getElementsByClassName('label-element');
     label_elements = Array.prototype.slice.call(label_elements); // convert to array
     if (label_elements.length < 1) {
-        alert("No elements in the design. Please add design elements before downloading");
+        alert(gettext("No elements in the design. Please add design elements before downloading"));
         return;
     }
     var data_type = $('#source_select :selected').parent().attr('label');
@@ -724,12 +724,12 @@ function downloadLabels (design, download_type) {
     var source_name = $("#source_select :selected").text();
     //console.log("Id is "+source_id+" and name is "+source_name);
     if (!source_id || source_id == 'Please select a trial' || source_id == 'Select a plot list') {
-        alert("No data source selected. Please select a data source before downloading");
+        alert(gettext("No data source selected. Please select a data source before downloading"));
         return;
     }
 
     if (!design) {
-        alert("No design. Please define a design before downloading");
+        alert(gettext("No design. Please define a design before downloading"));
         return;
     }
     design.label_elements = label_elements.filter(checkIfVisible).map(getLabelDetails);
@@ -770,7 +770,7 @@ function downloadLabels (design, download_type) {
         },
         error: function(request, status, err) {
             enable_ui();
-            alert("Error. Unable to download labels.");
+            alert(gettext("Error. Unable to download labels."));
         }
     });
 }
@@ -828,7 +828,7 @@ function updateFields(data_type, source_id, data_level){
             }
         },
         error: function(request, status, err) {
-            alert("Unable to retrieve design elements of this trial. Please confirm this trial has a design, or try again with a different trial. Please contact us!");
+            alert(gettext("Unable to retrieve design elements of this trial. Please confirm this trial has a design, or try again with a different trial. Please contact us!"));
         }
     });
 }
@@ -1616,12 +1616,12 @@ function retrievePageParams() {
 
     var page = d3.select("#page_format").node().value;
     if (!page || page == 'Select a page format') {
-        alert("No page format select. Please select a page format");
+        alert(gettext("No page format select. Please select a page format"));
         return;
     }
     var label = d3.select("#label_format").node().value;
     if (!label || label == 'Select a label format') {
-        alert("No label format select. Please select a label format");
+        alert(gettext("No label format select. Please select a label format"));
         return;
     }
     var label_sizes = page_formats[page].label_sizes;
@@ -1766,7 +1766,7 @@ function saveLabelDesign() {
     var label_elements = document.getElementsByClassName('label-element');
     label_elements = Array.prototype.slice.call(label_elements); // convert to array
     if (label_elements.length < 1) {
-        alert("No elements in the design. Please add design elements before saving");
+        alert(gettext("No elements in the design. Please add design elements before saving"));
         return;
     }
 
