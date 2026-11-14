@@ -21,6 +21,7 @@ use CXGN::Dataset::File;
 use CXGN::Tools::Run;
 use CXGN::Job;
 use Cwd qw(cwd);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -106,7 +107,7 @@ sub extract_trait_data :Path('/ajax/solgwas/getdata') Args(0) {
 
     my $F;
     if (! open($F, "<", $temppath)) {
-	$c->stash->{rest} = { error => "Can't find data." };
+	$c->stash->{rest} = { error => __("Can't find data.") };
 	return;
     }
 
