@@ -28,9 +28,9 @@ $trial_name => undef
             </tbody>
           </table>
           <b><% __('Column Definitions:') |h %></b><br>
-          <b>accession_name:</b> (required) the unique name of the Accession record, must exist in the database<br>
-          <b>trial_names:</b> (required) the name(s) of the Trials to assign entry numbers in (can include more than one comma-separated Trial name)<br>
-          <b>entry_number:</b> The entry number to assign to the Accession in all of the specified Trial(s).  The entry number should be unique in this set of Trial(s).<br>
+          <& /util/sentence.mas, text => __x('{column} (required) the unique name of the Accession record, must exist in the database'), column => '<b>accession_name:</b>' &><br>
+          <& /util/sentence.mas, text => __x('{column} (required) the name(s) of the Trials to assign entry numbers in (can include more than one comma-separated Trial name)'), column => '<b>trial_names:</b>' &><br>
+          <& /util/sentence.mas, text => __x('{column} The entry number to assign to the Accession in all of the specified Trial(s). The entry number should be unique in this set of Trial(s).'), column => '<b>entry_number:</b>' &><br>
           <br>
           <form method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_entry_numbers_form" name="upload_entry_numbers_form">
             <label for="upload_entry_numbers_file" style="display: inline-block;"><% __('Entry Numbers File:') |h %></label>
