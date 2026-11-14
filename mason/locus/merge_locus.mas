@@ -51,7 +51,7 @@ $curator => undef
 
 <& /util/import_javascript.mas, classes => ["CXGN.Phenome.Locus", "CXGN.Phenome.Locus"] &>
 
-<a href="javascript:Tools.toggleMergeFormDisplay()">[Merge locus]</a> Warning: Merged locus will be set to obsolete! Unobsoleting is possible only directly via the database! <br>
+<a href="javascript:Tools.toggleMergeFormDisplay()"><& /util/sentence.mas, text => __x('[Merge locus]') &></a> <& /util/sentence.mas, text => __x('Warning: Merged locus will be set to obsolete! Unobsoleting is possible only directly via the database!') &> <br>
 <div id='mergeLocusForm' style="display:none">
   
   <div id='locus_merge'>
