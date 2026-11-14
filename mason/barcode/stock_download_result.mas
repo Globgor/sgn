@@ -38,5 +38,5 @@ $filetype => ''
 
 % if (@found > 0) {
 <br /><br />
-<a target="_blank" href="<% $file %>" >Download <% $filetype %> file</a>
+<a target="_blank" href="<% $file %>" ><& /util/sentence.mas, text => __x('Download {filetype} file'), filetype => $filetype &></a>
 %}
