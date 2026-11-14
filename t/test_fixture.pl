@@ -267,7 +267,7 @@ print STDERR "# Prove finished, stopping web server PID $server_pid... ";
 
 END { kill 15, $server_pid if $server_pid }
 waitpid $server_pid, 0;
-sleep(3);
+sleep(3) unless $noserver;
 print STDERR "Done.\n";
 
 if (!$nocleanup) {
