@@ -150,13 +150,13 @@ jQuery(document).ready(function() {
            alert(response.error);
          }
          else {
-            alert("SUCCESS!");
+            alert(<% __('SUCCESS!') |js %>);
             location.reload();
          }
       },
       error: function(response) {
          jQuery('#working_modal').modal("hide");
-         alert("An error occurred!");
+         alert(<% __('An error occurred!') |js %>);
       }
     });
   }
