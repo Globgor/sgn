@@ -1361,41 +1361,24 @@ sub format_phenotype_dataset_headers {
 
     $all_headers = SGN::Controller::solGS::Utils->clean_traits($all_headers);
 
-    my $traits = $all_headers;
+    # the columns by position: a trait keeps its own acronym, also when another
+    # trait has the same name after cleaning, or its name has a metadata header
+    # or a regular expression character in it
+    my %is_meta = map { $_ => 1 } @$meta_headers;
+    my @headers = split( /\t/, $all_headers, -1 );
+    my @traits  = map { $is_meta{$_} ? '' : $_ } @headers;
 
-    foreach my $mh (@$meta_headers) {
-        $traits =~ s/($mh)//g;
-    }
-
-    write_file( $traits_file, { binmode => ':utf8' }, $traits )
+    write_file( $traits_file, { binmode => ':utf8' }, join( "\t", @traits ) )
       if $traits_file && $traits_file =~ /pop_list/;
 
-    my @filtered_traits = split( /\t/, $traits );
-
     my $acronymized_traits =
-      SGN::Controller::solGS::Utils->acronymize_traits( \@filtered_traits );
-    my $acronym_table = $acronymized_traits->{acronym_table};
+      SGN::Controller::solGS::Utils->acronymize_traits( \@traits );
+    my @acronyms =
+      split( /\t/, $acronymized_traits->{acronymized_traits} // '', -1 );
 
-    my $formatted_headers;
-    my @headers = split( "\t", $all_headers );
-
-    foreach my $hd (@headers) {
-        # the trait with exactly this name first: a name that is part of another
-        # trait name ("plant height", "plant height at maturity") must not get
-        # the acronym of the other trait
-        my ($acronym) = grep { $acronym_table->{$_} eq $hd } sort keys %$acronym_table;
-        if ( !$acronym ) {
-            foreach my $acr ( sort keys %$acronym_table ) {
-                $acronym = $acr if $acronym_table->{$acr} =~ /$hd/;
-                last if $acronym;
-            }
-        }
-
-        $formatted_headers .= $acronym ? $acronym : $hd;
-        $formatted_headers .= "\t" unless ( $headers[-1] eq $hd );
-    }
-
-    return $formatted_headers;
+    return join( "\t",
+        map { length $acronyms[$_] ? $acronyms[$_] : $headers[$_] }
+          0 .. $#headers );
 
 }
 

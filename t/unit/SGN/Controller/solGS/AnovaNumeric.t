@@ -148,4 +148,18 @@ subtest 'a trait name inside another trait name keeps its own column' => sub {
     is_deeply([keys %seen], ["germplasmName\tPHAM\tPH"], 'each trait has its own acronym in 40 of 40 headers');
 };
 
+subtest 'every trait column gets its own name' => sub {
+    my $format = sub {
+        return eval { SGN::Controller::solGS::solGS->format_phenotype_dataset_headers(
+            join("\t", 'germplasmName', 'replicate', @_), ['germplasmName', 'replicate']) } // "died: $@";
+    };
+    is($format->('height|CO_334:0000001', 'height|CO_334:0000002', 'yield'), "germplasmName\treplicate\theight\theight.2\tyield",
+        'traits with the same name after cleaning');
+    is($format->('dry weight|CO_334:0000001', 'dry weight|CO_334:0000002'), "germplasmName\treplicate\tDW\tDW.2",
+        'also as the last columns');
+    is($format->('0', '100'), "germplasmName\treplicate\t0\t100", 'a trait named 0');
+    is($format->('replicate height', 'height'), "germplasmName\treplicate\tRH\theight", 'a metadata header in a trait name');
+    is($format->('replicate [cm', 'height'), "germplasmName\treplicate\tR[CM\theight", 'and a regular expression character with it');
+};
+
 done_testing();
