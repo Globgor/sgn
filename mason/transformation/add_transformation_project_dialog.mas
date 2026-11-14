@@ -10,41 +10,41 @@ $locations
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header">
-                <button type="reset" class="close" id="add_transformation_project_dismiss_button_1" name="add_transformation_project_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h4 class="modal-title" id="createTransformationProjectDialog">Add New Transformation Project</h4></center>
+                <button type="reset" class="close" id="add_transformation_project_dismiss_button_1" name="add_transformation_project_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="createTransformationProjectDialog"><% __('Add New Transformation Project') |h %></h4></center>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "add_transformation_project_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"What are Transformation Projects?" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("What are Transformation Projects?"), 'h' ) &>
 
-                            <p>You can use Transformation Projects to manage and organize your transformation experiemnts</p>
+                            <p><% __('You can use Transformation Projects to manage and organize your transformation experiemnts') |h %></p>
                             <ul>
-                                <li>Each transformation experiment is linked to a globally unique transformation ID.</li>
-                                <li>Transformation ID captures information about plant material and vector construct used in that experiment.</li>
-                                <li>You can use transformation details page to automatically add new transformant (accession) names to database by simply indicating the number of transformants generated.</li>
-                                <li>Each auto-generated transformant (accession) name has transformation ID as basename and an incremental serial number. </li>
+                                <li><% __('Each transformation experiment is linked to a globally unique transformation ID.') |h %></li>
+                                <li><% __('Transformation ID captures information about plant material and vector construct used in that experiment.') |h %></li>
+                                <li><% __('You can use transformation details page to automatically add new transformant (accession) names to database by simply indicating the number of transformants generated.') |h %></li>
+                                <li><% __('Each auto-generated transformant (accession) name has transformation ID as basename and an incremental serial number.') |h %> </li>
                             </ul>
                             <hr>
                             <center>
-                                <button id="next_step_add_new_intro" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_add_new_intro" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
                         <form class="form-horizontal" role="form" name="create_transformation_project_form" id="create_transformation_project_form">
-                            <&| /util/workflow.mas:step, title=> "Add a transformation project" &>
-                                <& /page/page_title.mas, title=>"Enter basic information about the transformation project" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Add a transformation project"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the transformation project"), 'h' ) &>
                                     <br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-lable">Project Name: </label>
+                                        <label class="col-sm-3 control-lable"><% __('Project Name:') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" type="text" id="transformation_project_name" name="transformation_project_name"  />
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Breeding Program: </label>
+                                        <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="transformation_project_program" name="transformation_project_program">
                                                 <option value="">Select Breeding Program</option>
@@ -61,10 +61,10 @@ foreach my $program (@$programs) {
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Location: </label>
+                                        <label class="col-sm-3 control-label"><% __('Location:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="transformation_project_location" name="transformation_project_location">
-                                                <option value="">Select Location</option>
+                                                <option value=""><% __('Select Location') |h %></option>
 <%perl>
     foreach my $location_hashref (@$locations) {
         my $properties = $location_hashref->{'properties'};
@@ -77,13 +77,13 @@ foreach my $program (@$programs) {
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Year:</label>
+                                        <label class="col-sm-3 control-label"><% __('Year:') |h %></label>
                                         <div class="col-sm-9">
                                             <div id="transformation_project_year" name="transformation_project_year" ></div>
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Description:</label>
+                                        <label class="col-sm-3 control-label"><% __('Description:') |h %></label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control" id="transformation_project_description" name="transformation_project_description" ></textarea>
                                         </div>
@@ -92,17 +92,17 @@ foreach my $program (@$programs) {
                                 <br/>
                                 <br/>
                                 <center>
-                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="create_transformation_project_submit" id="create_transformation_project_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="create_transformation_project_submit" id="create_transformation_project_submit"><% __('Submit') |h %></button>
                                 </center>
                             </&>
                         </form>
 
                         <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your transformation project is now in the database" &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your transformation project is now in the database"), 'h' ) &>
                             <ul>
-                                <li>Please click on 'Refresh' button to view your newly created project on the manage page.</li>
-                                <li>You can use your transformation project page to create transformation IDs.</li>
-                                <li><b>If your transformation project is automatically linked to the tracking tool, please set up a naming format for the autogenerated names of your transformation project before using the tracking tool.</b></li>
+                                <li><% __('Please click on \'Refresh\' button to view your newly created project on the manage page.') |h %></li>
+                                <li><% __('You can use your transformation project page to create transformation IDs.') |h %></li>
+                                <li><b><% __('If your transformation project is automatically linked to the tracking tool, please set up a naming format for the autogenerated names of your transformation project before using the tracking tool.') |h %></b></li>
                             </ul>
                             <br/>
                         </&>
@@ -110,7 +110,7 @@ foreach my $program (@$programs) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="add_transformation_project_dismiss_button_2" name="add_transformation_project_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="add_transformation_project_dismiss_button_2" name="add_transformation_project_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
