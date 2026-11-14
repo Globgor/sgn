@@ -8,7 +8,7 @@
       <tr>
         <td>
           <center>
-            <h3>Conserved Ortholog Set (COS) markers</h3>
+            <h3><% __('Conserved Ortholog Set (COS) markers') |h %></h3>
           </center>
 
           <p>We have used a computational method to screen the
@@ -59,7 +59,7 @@
             potentially paralogous and eliminated.</li>
           </ul><br />
 
-          <h4>Functional annotation of COS markers</h4>
+          <h4><% __('Functional annotation of COS markers') |h %></h4>
 
           <p>COS-markers were functionally annotated using the MIPS
           role categories as they were defined at the time of the
