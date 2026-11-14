@@ -71,13 +71,13 @@ my $src_feature = "SL2.50";
 
 <& /markers/basic_marker_info.mas, marker=>$marker, dbh=>$dbh &>
 
-<&| /page/info_section.mas, title=>"Synonyms", collapsible=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Synonyms"), 'h' ), collapsible=>1 &>
 % if (@other_names) { 
     <% join "<br />", @other_names %>
 % }
 </&>
 
-<&| /page/info_section.mas, title=>"Locus associations", collapsible=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Locus associations"), 'h' ), collapsible=>1 &>
 <& /markers/kfg.mas, marker=>$marker &>
 </&>
 

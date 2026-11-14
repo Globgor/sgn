@@ -209,7 +209,7 @@ if($experiments and @{$experiments}) {
 
 </%perl>
 
-<&| /page/info_section.mas, title=>'Universal primers for Asterid species'&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Universal primers for Asterid species'), 'h' )&>
   <% $html %>
 </&>
 
