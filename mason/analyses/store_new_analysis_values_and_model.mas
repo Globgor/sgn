@@ -556,19 +556,19 @@ jQuery(document).ready(function() {
 
         if (generic_save_analysis_analysis_to_save_boolean == 'yes') {
             if (generic_save_analysis_analysis_name == '') {
-                alert('Please give an analysis name');
+                alert(<% __('Please give an analysis name') |js %>);
                 return false;
             }
             if (generic_save_analysis_analysis_description == '') {
-                alert('Please give an analysis description');
+                alert(<% __('Please give an analysis description') |js %>);
                 return false;
             }
             if (generic_save_analysis_analysis_year == '') {
-                alert('Please give an analysis year');
+                alert(<% __('Please give an analysis year') |js %>);
                 return false;
             }
             if (generic_save_analysis_breeding_program_id == '') {
-                alert('Please give a breeding program');
+                alert(<% __('Please give a breeding program') |js %>);
                 return false;
             }
             if (generic_save_analysis_protocol == '') {
@@ -576,68 +576,68 @@ jQuery(document).ready(function() {
                 return false;
             }
             if (generic_save_analysis_accession_names == '') {
-                alert('Please give analysis accession names');
+                alert(<% __('Please give analysis accession names') |js %>);
                 return false;
             }
             if (generic_save_analysis_trait_names == '') {
-                alert('Please give analysis trait names');
+                alert(<% __('Please give analysis trait names') |js %>);
                 return false;
             }
             if (generic_save_analysis_statistical_ontology_term == '') {
-                alert('Please give a statistical ontology term');
+                alert(<% __('Please give a statistical ontology term') |js %>);
                 return false;
             }
             if (generic_save_analysis_result_values == '') {
-                alert('Please give analysis result values');
+                alert(<% __('Please give analysis result values') |js %>);
                 return false;
             }
             if (generic_save_analysis_result_values_type == '') {
-                alert('Please give analysis result values type');
+                alert(<% __('Please give analysis result values type') |js %>);
                 return false;
             }
             if (generic_save_analysis_result_summary_values == '') {
-                alert('Please give analysis result summary info');
+                alert(<% __('Please give analysis result summary info') |js %>);
                 return false;
             }
         }
         if ( (generic_save_analysis_model_id != '' || generic_save_analysis_select_model_id != '') && generic_save_analysis_model_name != '') {
-            alert('If Model ID is given, then you should not give a new model name!');
+            alert(<% __('If Model ID is given, then you should not give a new model name!') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id != '' || generic_save_analysis_select_model_id != '') && generic_save_analysis_model_description != '') {
-            alert('If Model ID is given, then you should not give a new model description!');
+            alert(<% __('If Model ID is given, then you should not give a new model description!') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_name == '') {
-            alert('Please give a model name');
+            alert(<% __('Please give a model name') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_description == '') {
-            alert('Please give a model description');
+            alert(<% __('Please give a model description') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_is_public == '') {
-            alert('Please tell if a model is public');
+            alert(<% __('Please tell if a model is public') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_language == '') {
-            alert('Please give a model language');
+            alert(<% __('Please give a model language') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_type == '') {
-            alert('Please give a model type');
+            alert(<% __('Please give a model type') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_properties == '') {
-            alert('Please give a model properties JSON object');
+            alert(<% __('Please give a model properties JSON object') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_application_name == '') {
-            alert('Please give a model application name');
+            alert(<% __('Please give a model application name') |js %>);
             return false;
         }
         if ( (generic_save_analysis_model_id == '' && generic_save_analysis_select_model_id == '') && generic_save_analysis_model_application_version == '') {
-            alert('Please give a model application version');
+            alert(<% __('Please give a model application version') |js %>);
             return false;
         }
 
@@ -708,7 +708,7 @@ jQuery(document).ready(function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('Error saving analysis!');
+                alert(<% __('Error saving analysis!') |js %>);
             }
         });
     });
