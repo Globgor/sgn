@@ -328,6 +328,271 @@ cmp_ok($navigation->[1], '<=', $navigation->[2], 'the new document existed befor
 cmp_ok(($navigation->[2] - $navigation->[1]) / 1000, '>=', 0.6, 'the new document receives its own quiet window');
 cmp_ok($elapsed, '<', 3.5, 'reload wait is bounded by the requested sleep');
 # END STAGE B2
+# BEGIN STAGE B3: fetch observation.
+open_fixture();
+page_script(q{
+    window.webdriverWaitNativeFetch = window.fetch;
+    window.webdriverWaitNativeJson = Response.prototype.json;
+    window.webdriverWaitNativeText = Response.prototype.text;
+    window.webdriverWaitSawResource = false;
+    if (window.PerformanceObserver) {
+        try {
+            window.webdriverWaitObserver = new PerformanceObserver(function (list) {
+                list.getEntries().forEach(function (entry) {
+                    if (entry.name === window.webdriverWaitFetchUrl && entry.initiatorType === 'fetch' && entry.responseEnd > 0) {
+                        window.webdriverWaitSawResource = true;
+                        window.webdriverWaitSawResourceAt = Date.now() / 1000;
+                    }
+                });
+            });
+            window.webdriverWaitObserver.observe({entryTypes: ['resource']});
+        } catch (error) {
+            window.webdriverWaitObserver = null;
+        }
+    }
+    window.fetch = function () {
+        window.webdriverWaitOriginalPromise = window.webdriverWaitNativeFetch.apply(this, arguments);
+        return window.webdriverWaitOriginalPromise;
+    };
+});
+$t->_page_script('return true;');
+my $same_promise = page_script(q{
+    window.webdriverWaitFetchDone = 'pending';
+    window.webdriverWaitFetchMethods = false;
+    window.webdriverWaitFetchUrl = new URL('/documents/what_is.txt?webdriver_wait_fetch=1', location.href).href;
+    var promise = fetch(window.webdriverWaitFetchUrl);
+    var same = promise === window.webdriverWaitOriginalPromise;
+    promise.then(function (response) {
+        window.webdriverWaitFetchMethods = response.json === window.webdriverWaitNativeJson &&
+            response.text === window.webdriverWaitNativeText;
+        if (!response.ok) { throw new Error('HTTP ' + response.status); }
+        return response.text();
+    }).then(function () { window.webdriverWaitFetchDone = 'done'; window.webdriverWaitFetchDoneAt = Date.now() / 1000; },
+        function (error) { window.webdriverWaitFetchDone = 'error: ' + error; });
+    return same;
+});
+ok($same_promise, 'fetch returns the original native promise');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$returned_at = Time::HiRes::time();
+$elapsed = $returned_at - $started;
+my $fetch_state = $driver->execute_script(q{
+    return [window.webdriverWaitFetchDone, window.webdriverWaitFetchMethods,
+        window.webdriverWaitSawResource,
+        window.webdriverWaitFetchDoneAt, window.webdriverWaitSawResourceAt, Date.now() / 1000];
+});
+is($fetch_state->[0], 'done', 'sleep does not return before native fetch completes');
+cmp_ok($fetch_state->[3] || $fetch_state->[5] + 10, '<=', $fetch_state->[5], 'native fetch body completes before sleep returns');
+ok($fetch_state->[1], 'fetch does not replace response body methods');
+
+open_fixture();
+page_script(q{
+    window.webdriverWaitNativeFetch = window.fetch;
+    window.fetch = function () {
+        var native = window.webdriverWaitNativeFetch.apply(this, arguments);
+        var promise = new Promise(function (resolve, reject) {
+            native.then(function (response) {
+                setTimeout(function () { resolve(response); }, 1000);
+            }, reject);
+        });
+        window.webdriverWaitOriginalPromise = promise;
+        return promise;
+    };
+});
+$t->_page_script('return true;');
+$same_promise = page_script(q{
+    window.webdriverWaitDelayedDone = 'pending';
+    var promise = fetch('/documents/what_is.txt?webdriver_wait_delayed=1');
+    var same = promise === window.webdriverWaitOriginalPromise;
+    promise.then(function (response) { return response.text(); }).then(function () {
+        window.webdriverWaitDelayedDone = 'done';
+        window.webdriverWaitDelayedDoneAt = Date.now() / 1000;
+    }, function (error) { window.webdriverWaitDelayedDone = 'error: ' + error; });
+    return same;
+});
+ok($same_promise, 'delayed fetch returns the original promise');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(8);
+$returned_at = Time::HiRes::time();
+$elapsed = $returned_at - $started;
+is($driver->execute_script('return window.webdriverWaitDelayedDone;'), 'done', 'sleep waits for a delayed fetch promise');
+my $delayed_times = $driver->execute_script('return [window.webdriverWaitDelayedDoneAt, Date.now() / 1000];');
+cmp_ok($delayed_times->[0] || $delayed_times->[1] + 10, '<=', $delayed_times->[1], 'delayed fetch completes before sleep returns');
+cmp_ok($elapsed, '>=', 0.6, 'unresolved fetch delays sleep');
+cmp_ok($elapsed, '<', 5, 'tracked delayed fetch allows sleep to return early');
+
+open_fixture();
+page_script(q{
+    window.webdriverWaitJson = Response.prototype.json;
+    window.webdriverWaitBodyDone = false;
+    window.fetch = function () {
+        var stream = new ReadableStream({
+            start: function (controller) {
+                setTimeout(function () {
+                    controller.enqueue(new TextEncoder().encode('{"ok":true}'));
+                    controller.close();
+                }, 1400);
+            }
+        });
+        window.webdriverWaitResponse = new Response(stream, {headers: {'Content-Type': 'application/json'}});
+        window.webdriverWaitOriginalPromise = Promise.resolve(window.webdriverWaitResponse);
+        return window.webdriverWaitOriginalPromise;
+    };
+});
+$t->_page_script('return true;');
+$same_promise = page_script(q{
+    var promise = fetch('/documents/what_is.txt?webdriver_wait_fake=1');
+    var same = promise === window.webdriverWaitOriginalPromise;
+    promise.then(function (response) {
+        window.webdriverWaitJsonSame = response.json === window.webdriverWaitJson;
+        return response.json();
+    }).then(function (value) {
+        window.webdriverWaitBodyDone = value.ok;
+        window.webdriverWaitBodyDoneAt = Date.now() / 1000;
+    });
+    return same;
+});
+ok($same_promise, 'fetch preserves the original promise for a delayed body');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(2);
+$returned_at = Time::HiRes::time();
+$elapsed = $returned_at - $started;
+ok($driver->execute_script('return window.webdriverWaitBodyDone;'), 'sleep does not return before the delayed body is read');
+my $body_times = $driver->execute_script('return [window.webdriverWaitBodyDoneAt, Date.now() / 1000];');
+cmp_ok($body_times->[0] || $body_times->[1] + 10, '<=', $body_times->[1], 'delayed body completes before sleep returns');
+ok($driver->execute_script('return window.webdriverWaitJsonSame;'), 'delayed response keeps its original json method');
+cmp_ok($elapsed, '>=', 1, 'unobservable body completion does not cause an early return');
+
+open_fixture();
+page_script(q{
+    window.webdriverWaitNativeFetch = window.fetch;
+    window.fetch = function () {
+        window.webdriverWaitOriginalPromise = window.webdriverWaitNativeFetch.apply(this, arguments);
+        return window.webdriverWaitOriginalPromise;
+    };
+});
+$t->_page_script('return true;');
+$same_promise = page_script(q{
+    var controller = new AbortController();
+    controller.abort();
+    window.webdriverWaitAbortName = '';
+    window.webdriverWaitAbortCount = 0;
+    var promise = fetch('/documents/what_is.txt?webdriver_wait_abort=1', {signal: controller.signal});
+    var same = promise === window.webdriverWaitOriginalPromise;
+    promise.catch(function (error) {
+        window.webdriverWaitAbortName = error.name;
+        window.webdriverWaitAbortCount++;
+    });
+    return same;
+});
+ok($same_promise, 'aborted fetch returns the original promise');
+my $deadline = Time::HiRes::time() + 2;
+my $abort_name = '';
+while (Time::HiRes::time() < $deadline) {
+    $abort_name = $driver->execute_script('return window.webdriverWaitAbortName;');
+    last if $abort_name;
+    Time::HiRes::sleep(0.05);
+}
+is($abort_name, 'AbortError', 'aborted fetch preserves its rejection');
+is($driver->execute_script('return window.webdriverWaitAbortCount;'), 1, 'application observes the rejection once');
+
+
+open_fixture();
+{
+    local $ENV{SGN_TEST_PLAIN_SLEEP} = 1;
+    $t->find_element('body', 'css');
+    SGN::Test::WebDriverWaits::Imported::pause(0.1);
+    ok(!$driver->execute_script('return !!window.__sgnTestWait;'), 'plain sleep and lookup do not inject the page hook');
+}
+page_script(q{
+    var send = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function () {
+        var xhr = this, args = arguments;
+        setTimeout(function () { send.apply(xhr, args); }, 1000);
+    };
+});
+$t->_page_script('return true;');
+page_script(q{
+    window.webdriverWaitXhrDone = false;
+    window.webdriverWaitJqDone = false;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/documents/what_is.txt?webdriver_wait_xhr=1', true);
+    xhr.addEventListener('loadend', function () { window.webdriverWaitXhrDone = true; });
+    xhr.send();
+    jQuery.ajax('/documents/what_is.txt?webdriver_wait_jquery_xhr=1')
+        .always(function () { window.webdriverWaitJqDone = true; });
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(8);
+$elapsed = Time::HiRes::time() - $started;
+ok($driver->execute_script('return window.webdriverWaitXhrDone;'), 'sleep waits for raw XHR loadend');
+ok($driver->execute_script('return window.webdriverWaitJqDone;'), 'sleep waits for concurrent jQuery XHR');
+cmp_ok($elapsed, '>=', 0.6, 'pending XHR delays sleep');
+cmp_ok($elapsed, '<', 5, 'completed XHR and jQuery requests do not stick');
+
+open_fixture();
+$t->_page_script('return true;');
+page_script(q{
+    window.webdriverWaitAbortLoadend = false;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/documents/what_is.txt?webdriver_wait_xhr_abort=1', true);
+    xhr.addEventListener('loadend', function () { window.webdriverWaitAbortLoadend = true; });
+    xhr.send();
+    xhr.abort();
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$elapsed = Time::HiRes::time() - $started;
+ok($driver->execute_script('return window.webdriverWaitAbortLoadend;'), 'aborted XHR fires loadend');
+cmp_ok($elapsed, '<', 2.8, 'aborted XHR does not stick');
+
+open_fixture();
+$t->_page_script('return true;');
+page_script(q{
+    window.webdriverWaitErrorLoadend = false;
+    window.webdriverWaitXhrError = false;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:1/webdriver-wait-error', true);
+    xhr.addEventListener('error', function () { window.webdriverWaitXhrError = true; });
+    xhr.addEventListener('loadend', function () { window.webdriverWaitErrorLoadend = true; });
+    xhr.send();
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$elapsed = Time::HiRes::time() - $started;
+ok($driver->execute_script('return window.webdriverWaitXhrError && window.webdriverWaitErrorLoadend;'),
+    'failed XHR fires error and loadend');
+cmp_ok($elapsed, '<', 2.8, 'failed XHR does not stick');
+
+open_fixture();
+$t->_page_script('return true;');
+my $send_threw = page_script(q{
+    try { new XMLHttpRequest().send(); } catch (error) { return true; }
+    return false;
+});
+ok($send_threw, 'invalid XHR send preserves the synchronous exception');
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(2);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 0.4, 'XHR send exception leaves a bounded safe wait');
+
+open_fixture();
+page_script(q{
+    window.webdriverWaitNativeFetch = window.fetch;
+    window.fetch = function () { return Promise.resolve(new Response('unmatched')); };
+});
+$t->_page_script('return true;');
+page_script(q{
+    var url = '/documents/what_is.txt?webdriver_wait_unmatched=1';
+    fetch(url);
+    setTimeout(function () { window.webdriverWaitNativeFetch(url); }, 500);
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(2);
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 1.8, 'a later unwrapped fetch cannot match an earlier request');
+
+# END STAGE B3
 
 alarm(0);
 done_testing();

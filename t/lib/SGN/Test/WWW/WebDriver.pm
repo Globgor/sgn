@@ -52,9 +52,9 @@ For downloads, a /download dir needs to be mapped in the breedbase_web docker an
 
 =head1 SLEEP OVERRIDE
 
-Plain C<use SGN::Test::WWW::WebDriver;> replaces unqualified C<sleep> in the calling package with a page-settling wait, bounded by the requested duration except for remote-command latency. It observes jQuery and modal transitions for 0.75 seconds of quiet (0.5 seconds for pauses of one second or less). Existing alerts and sleeps longer than 60 seconds retain real sleeps. Leaving documents receive only document-token checks while no alert is open; page settling resumes on the new document. A page that fires beforeunload without leaving (for example, a download link) receives full sleeps.
+Plain C<use SGN::Test::WWW::WebDriver;> replaces unqualified C<sleep> in the calling package with a page-settling wait, bounded by the requested duration except for remote-command latency. It observes jQuery, fetch, raw XMLHttpRequest, animations and modal transitions for 0.75 seconds of quiet (0.5 seconds for pauses of one second or less). Existing alerts and sleeps longer than 60 seconds retain real sleeps. Leaving documents receive only document-token checks while no alert is open; page settling resumes on the new document. A page that fires beforeunload without leaving (for example, a download link) receives full sleeps.
 
-Use C<use SGN::Test::WWW::WebDriver ();> to avoid installing the override, or set C<SGN_TEST_PLAIN_SLEEP=1> to retain real sleeps while bisecting a run. Sleeps without an argument retain Perl's original behavior. Fractional sleeps really sleep, using C<Time::HiRes>. Timers with gaps longer than 0.75 seconds are not observed. Body parsing and application callbacks still require their own result conditions.
+Use C<use SGN::Test::WWW::WebDriver ();> to avoid installing the override, or set C<SGN_TEST_PLAIN_SLEEP=1> to retain real sleeps while bisecting a run. Sleeps without an argument retain Perl's original behavior. Requests started before the first sleep on a page are not observed; find_element does not install the hook. Requests that are neither jQuery, fetch nor XHR are not observed. Unmatched fetch timing keeps the full requested sleep; more than 128 unmatched requests disable acceleration for that document. Fetch completion also waits for its original promise; observing rejection marks that promise handled for browser unhandledrejection reporting. XHR loadend clears successful, failed and aborted sends; jQuery.active remains an independent busy condition. Fractional sleeps really sleep, using C<Time::HiRes>. Timers with gaps longer than 0.75 seconds are not observed. Body parsing and application callbacks still require their own result conditions.
 
 =head1 ALERTS
 
@@ -151,6 +151,7 @@ sub _settled_sleep {
                 return e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden';
             }
             if (document.readyState !== 'complete' || (window.jQuery && (jQuery.active || (jQuery.timers && jQuery.timers.length)))) { return false; }
+            if (window.__sgnTestWait.requests.length || window.__sgnTestWait.unknown) { return false; }
             var working = document.getElementById('working_modal');
             if (working && rendered(working)) { return false; }
             var modals = document.querySelectorAll('.modal');
@@ -272,8 +273,51 @@ sub get_ok {
     
 use constant PAGE_HOOK => <<'JS';
 (function () {
-    var state = window.__sgnTestWait = {leaving: false};
+    var state = window.__sgnTestWait = {leaving: false, requests: [], unknown: false};
     window.addEventListener('beforeunload', function () { state.leaving = true; });
+    function track(request) {
+        if (!state.unknown) { state.requests.push(request); }
+        if (state.requests.length > 128) { state.unknown = true; state.requests = []; }
+    }
+    function finish(request) {
+        var i = state.requests.indexOf(request);
+        if (i >= 0) { state.requests.splice(i, 1); }
+    }
+    try {
+        state.observer = new PerformanceObserver(function (list) {
+            list.getEntries().forEach(function (entry) {
+                if (entry.initiatorType !== 'fetch' || !entry.responseEnd) { return; }
+                var request = state.requests.find(function (r) {
+                    return r.url === entry.name && entry.startTime >= r.start && entry.startTime <= r.end;
+                });
+                if (request) { request.timed = true; if (request.settled) { finish(request); } }
+            });
+        });
+        state.observer.observe({entryTypes: ['resource']});
+    } catch (ignored) { /* Missing timing leaves fetch requests pending: full sleep. */ }
+    var fetch = window.fetch;
+    if (fetch) { window.fetch = function () {
+        var request = {start: performance.now(), url: null};
+        var promise = fetch.apply(this, arguments);
+        request.end = performance.now();
+        try {
+            if (typeof arguments[0] === 'string') {
+                request.url = new URL(arguments[0], document.baseURI).href.replace(/#.*$/, '');
+            }
+        } catch (ignored) { /* Unmatched metadata keeps the full sleep. */ }
+        track(request);
+        function settled() { request.settled = true; if (request.timed) { finish(request); } }
+        promise.then(settled, settled);
+        return promise;
+    }; }
+    var send = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function () {
+        var xhr = this, request = {};
+        function done() { finish(request); xhr.removeEventListener('loadend', done); }
+        xhr.addEventListener('loadend', done); track(request);
+        try { return send.apply(xhr, arguments); }
+        catch (error) { done(); throw error; }
+    };
 })();
 JS
 
