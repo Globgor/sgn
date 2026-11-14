@@ -7,6 +7,7 @@ use List::MoreUtils qw | any |;
 use Data::Dumper;
 use Try::Tiny;
 use CXGN::Population;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -34,14 +35,14 @@ sub create_population :Path('/ajax/population/new') Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to create a population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create a population!')};
             $c->detach();
         }
         $user_id = $user_info[0];
         $user_role = $user_info[1];
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to create a population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create a population!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -49,7 +50,7 @@ sub create_population :Path('/ajax/population/new') Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can create a population'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can create a population')};
         $c->detach();
     }
 
@@ -86,14 +87,14 @@ sub add_members_to_population :Path('/ajax/population/add_members') Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to add population members!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to add population members!')};
             $c->detach();
         }
         $user_id = $user_info[0];
         $user_role = $user_info[1];
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to add population members!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to add population members!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -101,7 +102,7 @@ sub add_members_to_population :Path('/ajax/population/add_members') Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can add population members'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can add population members')};
         $c->detach();
     }
 
@@ -132,14 +133,14 @@ sub delete_population :Path('/ajax/population/delete') Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to delete a population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to delete a population!')};
             $c->detach();
         }
         $user_id = $user_info[0];
         $user_role = $user_info[1];
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to delete a population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to delete a population!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -147,7 +148,7 @@ sub delete_population :Path('/ajax/population/delete') Args(0) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = {error=>'Only a curator can delete a population'};
+        $c->stash->{rest} = {error=>__('Only a curator can delete a population')};
         $c->detach();
     }
 
@@ -160,7 +161,7 @@ sub delete_population :Path('/ajax/population/delete') Args(0) {
     my $population = CXGN::Population->new( { schema => $schema, , population_stock_id => $population_id });
 
     if (!$population->population_stock_id()) {
-        $c->stash->{rest} = { error => "No such population exists. Cannot delete." };
+        $c->stash->{rest} = { error => __("No such population exists. Cannot delete.") };
         return;
     }
 
@@ -189,14 +190,14 @@ sub remove_population_member :Path('/ajax/population/remove_member') Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to remove an accession from population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to remove an accession from population!')};
             $c->detach();
         }
         $user_id = $user_info[0];
         $user_role = $user_info[1];
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to remove an accession from population!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to remove an accession from population!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -204,7 +205,7 @@ sub remove_population_member :Path('/ajax/population/remove_member') Args(0) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = {error=>'Only a curator can remove an accession from population'};
+        $c->stash->{rest} = {error=>__('Only a curator can remove an accession from population')};
         $c->detach();
     }
 
