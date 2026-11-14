@@ -85,42 +85,27 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
 
 
   <p>
-  The SOL community will create a common Solanaceae-based genomic
-  framework that includes sequences and phenotypes of 100 genomes
-  encompassing the phylogenetic diversity of the group. Specific
-  objectives are to:
+  <& /util/sentence.mas, text => __x('The SOL community will create a common Solanaceae-based genomic framework that includes sequences and phenotypes of 100 genomes encompassing the phylogenetic diversity of the group. Specific objectives are to:') &>
   </p>
 
   <ol>
      <li>
-        Tie the available tomato, tobacco, potato and Asterid relatives
-        coffee and Mimulus (monkey-flower) genome sequences to a common
-        SOL physical and genetic map as well as other Asterid taxonomic
-        groups, such as Antirrhinum, sweet potato and mint.
+        <& /util/sentence.mas, text => __x('Tie the available tomato, tobacco, potato and Asterid relatives coffee and Mimulus (monkey-flower) genome sequences to a common SOL physical and genetic map as well as other Asterid taxonomic groups, such as Antirrhinum, sweet potato and mint.') &>
      </li>
      <li>
-       Select 100 Solanaceae species and Asterid outgroups (SOL-100)
-       that broadly span the evolutionary tree and reflect important
-       human uses.
+       <& /util/sentence.mas, text => __x('Select 100 Solanaceae species and Asterid outgroups (SOL-100) that broadly span the evolutionary tree and reflect important human uses.') &>
      </li>
      <li>
-       Apply emerging novel genome sequencing technologies to SOL-100
-       and link the sequences to the common SOL physical and genetic
-       maps.
+       <& /util/sentence.mas, text => __x('Apply emerging novel genome sequencing technologies to SOL-100 and link the sequences to the common SOL physical and genetic maps.') &>
      </li>
      <li>
-       Genetically map simple and complex phenotypes affecting chemical,
-       morphological, yield and fitness-related traits in the SOL-100
-       species.
+       <& /util/sentence.mas, text => __x('Genetically map simple and complex phenotypes affecting chemical, morphological, yield and fitness-related traits in the SOL-100 species.') &>
      </li>
      <li>
-       Construct bioinformatic vehicles to effectively access and
-       utilize the information generated within SOL-100.
+       <& /util/sentence.mas, text => __x('Construct bioinformatic vehicles to effectively access and utilize the information generated within SOL-100.') &>
      </li>
      <li>
-       Foster a broadly-based international community of interacting
-       scientists committed to exploring and conserving natural
-       biodiversity.
+       <& /util/sentence.mas, text => __x('Foster a broadly-based international community of interacting scientists committed to exploring and conserving natural biodiversity.') &>
      </li>
   </ol>
 </&>
@@ -165,9 +150,7 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
 %}
 
   <p>
-  The tree below shows organisms that have been proposed for
-  sequencing by the SOL-100 project. Highlighted species are already 
-  being sequenced.
+  <& /util/sentence.mas, text => __x('The tree below shows organisms that have been proposed for sequencing by the SOL-100 project. Highlighted species are already being sequenced.') &>
   </p>
 
   <& /organism/tree.mas, organism_tree => $organism_tree &>
@@ -181,18 +164,7 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
   &>
 
   <p>
-    The International SOL Genome Project (SOL) is a "virtual umbrella"
-    organization for promoting, coordinating and actively seeking
-    additional scientists, countries and funding agencies to participate
-    in an expedition to understand, utilize and conserve natural
-    biodiversity (see <a href="/solanaceae-project/">http://solgenomics.net/solanaceae-project/</a>). SOL
-    includes scientists from more than 30 countries that are united and
-    excited about the sustainable and equitable use of natural
-    biodiversity in biological research, plant breeding and conservation
-    of these resources for the future. The SOL community has sequenced
-    both the tomato genome and the potato genome through grants from
-    national funding agencies as well as international collaborative
-    projects.
+    <& /util/sentence.mas, text => __x('The International SOL Genome Project (SOL) is a "virtual umbrella" organization for promoting, coordinating and actively seeking additional scientists, countries and funding agencies to participate in an expedition to understand, utilize and conserve natural biodiversity (see {link}{address}{end_link}).'), link => '<a href="/solanaceae-project/">', address => 'http://solgenomics.net/solanaceae-project/', end_link => '</a>' &> <& /util/sentence.mas, text => __x('SOL includes scientists from more than 30 countries that are united and excited about the sustainable and equitable use of natural biodiversity in biological research, plant breeding and conservation of these resources for the future.') &> <& /util/sentence.mas, text => __x('The SOL community has sequenced both the tomato genome and the potato genome through grants from national funding agencies as well as international collaborative projects.') &>
   </p>
 
 
@@ -201,7 +173,7 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
 </&>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Submit genome to SGN"), 'h' ) &>
-<% __('If you are sequencing a SOL-100 genome, please submit the genome to SGN.') |h %> <br /><br /><b>Submission to SGN requires prior submission to <a href="http://ncbi.nlm.nih.gov">Genbank</a></b> and a <b><a href="http://www.ncbi.nlm.nih.gov/genomes/static/gprj_help.html#what_projectID">Genbank Project ID</a></b>. Please contact <a href="mailto:smtwhite@ncbi.nlm.nih.gov">Brian Smith-White</a> at Genbank or <a href="mailto:sgn-feedback@solgenomics.net">SGN</a> for more information.
+<% __('If you are sequencing a SOL-100 genome, please submit the genome to SGN.') |h %> <br /><br /><& /util/sentence.mas, text => __x('{bold}Submission to SGN requires prior submission to {link}Genbank{end_link}{end_bold} and a {bold}{link2}Genbank Project ID{end_link2}{end_bold}. Please contact {link3}{person}{end_link3} at Genbank or {link4}SGN{end_link4} for more information.'), bold => '<b>', end_bold => '</b>', link => '<a href="http://ncbi.nlm.nih.gov">', end_link => '</a>', link2 => '<a href="http://www.ncbi.nlm.nih.gov/genomes/static/gprj_help.html#what_projectID">', end_link2 => '</a>', link3 => '<a href="mailto:smtwhite@ncbi.nlm.nih.gov">', person => 'Brian Smith-White', end_link3 => '</a>', link4 => '<a href="mailto:sgn-feedback@solgenomics.net">', end_link4 => '</a>' &>
 </&>
 
 
