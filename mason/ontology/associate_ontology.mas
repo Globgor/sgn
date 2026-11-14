@@ -131,7 +131,7 @@ $trait_db_name => 'SP'
             <select id = "db_name" onchange = "jQuery('#term_name').val('');" >
               <option value="GO"><% __('GO (gene ontology)') |h %></option>
               <option value="PO"><% __('PO (plant ontology)') |h %></option>
-              <option value="<% $trait_db_name %>"><% $trait_db_name %>  phenotype ontology</option>
+              <option value="<% $trait_db_name %>"><& /util/sentence.mas, text => __x('{name} phenotype ontology'), name => $trait_db_name &></option>
             </select>
             </td>
           <td><b><% __('Type a term name') |h %></b><br /><input type="text" size ="60"  id="term_name" name="term_name" />
