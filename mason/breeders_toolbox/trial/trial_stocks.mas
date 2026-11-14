@@ -45,12 +45,12 @@ jQuery(document).ready(function(){
                 },
             },
             columns: [
-                { title: "Stock Name", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Stock Name') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.stock_type == 'cross') { return "<a href='/cross/"+row.stock_id+"'>"+row.accession_name+"</a>";
                     } else { return "<a href='/stock/"+row.stock_id+"/view'>"+row.accession_name+"</a>";}
                 }},
-                { title: "Stock Species", "data": "organism" },
-                { title: "Stock Type", "data": "stock_type" },
+                { title: <% __('Stock Species') |js %>, "data": "organism" },
+                { title: <% __('Stock Type') |js %>, "data": "stock_type" },
             ],
             "fnInitComplete": function(oSettings, json) {
                 //console.log(json);

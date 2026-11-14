@@ -117,7 +117,7 @@ jQuery(document).ready(function() {
             export_imaging_events_drone_run_ids.push(jQuery(this).val());
         });
         if (export_imaging_events_drone_run_ids.length < 1) {
-            alert('Please select at least one imaging event.');
+            alert(<% __('Please select at least one imaging event.') |js %>);
             return false;
         }
         else {
@@ -145,7 +145,7 @@ jQuery(document).ready(function() {
                 }
             },
             error: function(response){
-                alert('Error exporting imaging events!');
+                alert(<% __('Error exporting imaging events!') |js %>);
             }
         });
     });

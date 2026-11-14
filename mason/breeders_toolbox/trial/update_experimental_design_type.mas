@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred updating trial status');
+                alert(<% __('An error occurred updating trial status') |js %>);
             }
         });
     });

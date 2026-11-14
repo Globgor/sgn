@@ -29,41 +29,41 @@ jQuery(document).ready(function(){
             'destroy': true,
             'ajax':'/ajax/breeders/trial/'+ <% $trial_id %> + '/crosses_and_details_in_trial',
             columns: [
-                { title: "Cross Unique ID", "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
-                { title: "Cross Combination", "data": "cross_combination" },
-                { title: "Cross Type", "data": "cross_type" },
-                { title: "Female Parent", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.female_parent_id+"/view'>"+row.female_parent_name+"</a>"; } },
-                { title: "Female Ploidy", "data": "female_ploidy_level" },
-                { title: "Male Parent", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Cross Unique ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
+                { title: <% __('Cross Combination') |js %>, "data": "cross_combination" },
+                { title: <% __('Cross Type') |js %>, "data": "cross_type" },
+                { title: <% __('Female Parent') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.female_parent_id+"/view'>"+row.female_parent_name+"</a>"; } },
+                { title: <% __('Female Ploidy') |js %>, "data": "female_ploidy_level" },
+                { title: <% __('Male Parent') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.male_parent_id === null){
                         return 'NA';
                     } else {
                         return "<a href='/stock/"+row.male_parent_id+"/view'>"+row.male_parent_name+"</a>";
                     }
                 }},
-                { title: "Male Ploidy", "data": "male_ploidy_level" },
-                { title: "Female Plot", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Male Ploidy') |js %>, "data": "male_ploidy_level" },
+                { title: <% __('Female Plot') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.female_plot_id === null){
                         return 'NA';
                     } else {
                         return "<a href='/stock/"+row.female_plot_id+"/view'>"+row.female_plot_name+"</a>";
                     }
                 }},
-                { title: "Male Plot", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Male Plot') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.male_plot_id === null){
                         return 'NA';
                     } else {
                         return "<a href='/stock/"+row.male_plot_id+"/view'>"+row.male_plot_name+"</a>";
                     }
                 }},
-                { title: "Female Plant", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Female Plant') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.female_plant_id === null){
                         return 'NA';
                     } else {
                         return "<a href='/stock/"+row.female_plant_id+"/view'>"+row.female_plant_name+"</a>";
                     }
                 }},
-                { title: "Male Plant", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Male Plant') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.male_plant_id === null){
                         return 'NA';
                     } else {

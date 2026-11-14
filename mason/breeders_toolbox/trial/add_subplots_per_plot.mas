@@ -383,14 +383,14 @@ jQuery(document).ready(function() {
                     alert(response.error);
                 }
                 else {
-                    alert("Successfully created subplot entries.");
+                    alert(<% __('Successfully created subplot entries.') |js %>);
                     jQuery('#add_subplots_dialog').modal("hide");
                     window.location.replace('/breeders/trial/'+<% $trial_id %>);
                 }
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert("An error occurred saving subplot entries");
+                alert(<% __('An error occurred saving subplot entries') |js %>);
             },
         });
 
@@ -401,7 +401,7 @@ jQuery(document).ready(function() {
         var uploadFile = jQuery("#trial_upload_subplots_file").val();
         jQuery('#upload_subplots_dialog_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/upload_subplots");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery("#upload_subplots_dialog_form").submit();
@@ -414,7 +414,7 @@ jQuery(document).ready(function() {
             jQuery('#working_modal').modal("show");
             if (uploadedSubplotsFile === '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function (response) {
@@ -426,7 +426,7 @@ jQuery(document).ready(function() {
                 return;
             }
             if (response.success) {
-                alert("File uploaded successfully");
+                alert(<% __('File uploaded successfully') |js %>);
                 window.location.replace('/breeders/trial/'+<% $trial_id %>);
             }
         }
@@ -437,7 +437,7 @@ jQuery(document).ready(function() {
         var uploadFile = jQuery("#trial_upload_subplots_with_index_number_file").val();
         jQuery('#upload_subplots_with_index_number_dialog_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/upload_subplots_with_subplot_index_number");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery("#upload_subplots_with_index_number_dialog_form").submit();
@@ -450,7 +450,7 @@ jQuery(document).ready(function() {
             jQuery('#working_modal').modal("show");
             if (uploadedSubplotsFile === '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function (response) {
@@ -462,7 +462,7 @@ jQuery(document).ready(function() {
                 return;
             }
             if (response.success) {
-                alert("File uploaded successfully");
+                alert(<% __('File uploaded successfully') |js %>);
                 window.location.replace('/breeders/trial/'+<% $trial_id %>);
             }
         }
@@ -473,7 +473,7 @@ jQuery(document).ready(function() {
         var uploadFile = jQuery("#trial_upload_subplots_with_number_of_subplots_file").val();
         jQuery('#upload_subplots_with_num_subplots_dialog_form').attr("action", "/ajax/breeders/trial/<% $trial_id %>/upload_subplots_with_number_of_subplots");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery("#upload_subplots_with_num_subplots_dialog_form").submit();
@@ -486,7 +486,7 @@ jQuery(document).ready(function() {
             jQuery('#working_modal').modal("show");
             if (uploadedSubplotsFile === '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function (response) {
@@ -498,7 +498,7 @@ jQuery(document).ready(function() {
                 return;
             }
             if (response.success) {
-                alert("File uploaded successfully");
+                alert(<% __('File uploaded successfully') |js %>);
                 window.location.replace('/breeders/trial/'+<% $trial_id %>);
             }
         }

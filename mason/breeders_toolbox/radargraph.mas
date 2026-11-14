@@ -174,7 +174,7 @@ function get_dataset_id() {
         selected_ids.push(jQuery(this).val());
     });
     if (selected_ids.length < 1) {
-        alert('Please select at least one dataset!');
+        alert(<% __('Please select at least one dataset!') |js %>);
         return false;
     }
     return selected_ids;

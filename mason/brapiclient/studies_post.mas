@@ -33,7 +33,7 @@ jQuery.ajax({
 			},
 			error: function(response) { 
 				jQuery('#working_modal').modal("hide");
-				alert("An error occurred.");
+				alert(<% __('An error occurred.') |js %>);
 			}
     	});
 

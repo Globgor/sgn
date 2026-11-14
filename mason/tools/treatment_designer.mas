@@ -203,14 +203,14 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                     } else if (response.error) {
                         alert(response.error);
                     } else {
-                        alert("New treatment saved.");
+                        alert(<% __('New treatment saved.') |js %>);
                         window.location.reload();
                     }
                 },
                 error: function(response) { 
                     jQuery('#working_modal').modal("hide");
                     console.log(response);
-                    alert("An error occurred, check console.");
+                    alert(<% __('An error occurred, check console.') |js %>);
                 }
             });
         });
@@ -288,7 +288,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                 jQuery('#new_treatment_default_value_container').show();
                 jQuery('#new_treatment_maximum_value_container').show();
                 jQuery('#new_treatment_add_categories_container').hide();
-                jQuery('#new_treatment_default_value_label').html("Default value:");
+                jQuery('#new_treatment_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_treatment_default_value').val('');
                 jQuery('#new_treatment_min_value').val('');
                 jQuery('#new_treatment_max_value').val('');
@@ -298,7 +298,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                 jQuery('#new_treatment_default_value_container').show();
                 jQuery('#new_treatment_maximum_value_container').hide();
                 jQuery('#new_treatment_add_categories_container').show();
-                jQuery('#new_treatment_default_value_label').html("Default category:");
+                jQuery('#new_treatment_default_value_label').html(<% __('Default category:') |js %>);
                 jQuery('#new_treatment_default_value').val('');
                 jQuery('#new_treatment_min_value').val('');
                 jQuery('#new_treatment_max_value').val('');
@@ -317,7 +317,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                 jQuery('#new_treatment_default_value_container').show();
                 jQuery('#new_treatment_maximum_value_container').show();
                 jQuery('#new_treatment_add_categories_container').hide();
-                jQuery('#new_treatment_default_value_label').html("Default value:");
+                jQuery('#new_treatment_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_treatment_default_value').val('');
                 jQuery('#new_treatment_min_value').val('0');
                 jQuery('#new_treatment_max_value').val('100');
@@ -327,7 +327,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                 jQuery('#new_treatment_default_value_container').show();
                 jQuery('#new_treatment_maximum_value_container').show();
                 jQuery('#new_treatment_add_categories_container').hide();
-                jQuery('#new_treatment_default_value_label').html("Default value:");
+                jQuery('#new_treatment_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_treatment_default_value').val('');
                 jQuery('#new_treatment_min_value').val('0');
                 jQuery('#new_treatment_max_value').val('');
@@ -337,7 +337,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
                 jQuery('#new_treatment_default_value_container').show();
                 jQuery('#new_treatment_maximum_value_container').show();
                 jQuery('#new_treatment_add_categories_container').hide();
-                jQuery('#new_treatment_default_value_label').html("Default value:");
+                jQuery('#new_treatment_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_treatment_default_value').val('');
                 jQuery('#new_treatment_min_value').val('0');
                 jQuery('#new_treatment_max_value').val('1');
@@ -369,12 +369,12 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
             let new_ordinal = jQuery('#new_treatment_category_ordinal').val();
 
             if (! new_ordinal) {
-                alert("Assign an ordinal value to the new category.");
+                alert(<% __('Assign an ordinal value to the new category.') |js %>);
                 return;
             }
 
             if (new_category.includes('/') || new_category.includes('=')){
-                alert("No special characters.");
+                alert(<% __('No special characters.') |js %>);
                 return;
             }
 
@@ -425,7 +425,7 @@ Will be the treatment root term by default if none are added."></span>&nbsp;<% _
             let db_name = jQuery('#treatment_cvtermpath_rebuild_select').val();
 
             if (!db_name || db_name == null || db_name == "") {
-                alert("Please select a CV before rebuilding its cvterm paths.");
+                alert(<% __('Please select a CV before rebuilding its cvterm paths.') |js %>);
                 return;
             }
 

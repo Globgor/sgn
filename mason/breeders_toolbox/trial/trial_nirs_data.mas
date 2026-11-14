@@ -72,7 +72,7 @@ jQuery(document).ready(function() {
         });
 
         if (selected.length !== 1) {
-            alert('Please select one protocol.');
+            alert(<% __('Please select one protocol.') |js %>);
         } else {
             const selectedProtocolId = selected[0];
             get_nirs_protocols(selectedProtocolId);
@@ -94,7 +94,7 @@ jQuery(document).ready(function() {
             })
             .catch((error) => {
                 console.error('Error fetching NIRS data:', error);
-                alert('An error occurred while fetching data');
+                alert(<% __('An error occurred while fetching data') |js %>);
             })
             .finally(() => {
                 jQuery('#working_modal').modal('hide');
@@ -180,11 +180,11 @@ jQuery(document).ready(function() {
         jQuery('#nirs_data_table').DataTable( {
             'destroy': true,
             'columns': [
-                { title: 'Sample Name' },
-                { title: 'Sample ID' },
-                { title: 'Accession' },
-                { title: 'Spectra Graph'},
-                { title: 'Plot on Large Graph'}
+                { title: <% __('Sample Name') |js %> },
+                { title: <% __('Sample ID') |js %> },
+                { title: <% __('Accession') |js %> },
+                { title: <% __('Spectra Graph') |js %>},
+                { title: <% __('Plot on Large Graph') |js %>}
             ],
             'columnDefs': [
                 {

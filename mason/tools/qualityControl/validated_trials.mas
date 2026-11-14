@@ -177,7 +177,7 @@ function drawD3Barplot(statsByTrait, selectedTrait) {
   const traitStats = statsByTrait[selectedTrait];
 
   if (!traitStats) {
-    alert('No data available for the selected trait!');
+    alert(<% __('No data available for the selected trait!') |js %>);
     return;
   }
 
@@ -598,7 +598,7 @@ $(document).ready(function () {
       },
       error: function (xhr, status, error) {
         console.error('Error:', error);
-        alert('An error occurred while calculating statistics.');
+        alert(<% __('An error occurred while calculating statistics.') |js %>);
       },
       complete: function () {
         $('#loading_spinner').hide();
@@ -865,11 +865,11 @@ function fetchProjectData() {
                 displayData(allData); 
                 updatePaginationControls(allData);
             } else {
-                alert("No valid data found or data format issue");
+                alert(<% __('No valid data found or data format issue') |js %>);
             }
         },
         error: function() {
-            alert("An error occurred while fetching project data.");
+            alert(<% __('An error occurred while fetching project data.') |js %>);
         }
     });
 }

@@ -220,16 +220,16 @@ $(window).ready( function() {
         var program_name = "<%$program_name%>";
 
         if (identifier_name == '') {
-            alert("Please scan an identifier name barcode");
+            alert(<% __('Please scan an identifier name barcode') |js %>);
             return;
         }
 
         if (selected_type == '') {
-            alert("Please select a type");
+            alert(<% __('Please select a type') |js %>);
             return;
         }
         if (input == '') {
-            alert("Please provide an input");
+            alert(<% __('Please provide an input') |js %>);
             return;
         }
 
@@ -262,7 +262,7 @@ $(window).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving new information');
+                alert(<% __('An error occurred saving new information') |js %>);
             }
         });
     });

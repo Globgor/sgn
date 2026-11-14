@@ -51,21 +51,21 @@ jQuery(document).ready( function() {
         'autoWidth': false,
         'ajax': '/ajax/list/details/' + <% $list_id %>,
         'columns': [
-            { title: "Seedlot Name", "data": null, "render": function ( data, type, row ){return "<a href='/breeders/seedlot/"+row.seedlot_id+"'>"+row.seedlot_name+"</a>"}},
-            { title: "Content Name", "data": null, "render": function ( data, type, row ) {
+            { title: <% __('Seedlot Name') |js %>, "data": null, "render": function ( data, type, row ){return "<a href='/breeders/seedlot/"+row.seedlot_id+"'>"+row.seedlot_name+"</a>"}},
+            { title: <% __('Content Name') |js %>, "data": null, "render": function ( data, type, row ) {
                 if (row.content_type == 'accession'){
                     return "<a href='/stock/"+row.content_id+"/view'>"+row.content_name+"</a>"
                 } else if (row.content_type == 'cross') {
                     return "<a href='/cross/"+row.content_id+"'>"+row.content_name+"</a>"
                 }
             }},
-            { title: "Content Type", "data": "content_type" },
-            { title: "Material Type", "data": "material_type" },
-            { title: "Description", "data": "description" },
-            { title: "Box Name", "data": "box_name" },
-            { title: "Current Count", "data": "current_count" },
-            { title: "Current Weight", "data": "current_weight" },
-            { title: "Quality", "data": "quality" },
+            { title: <% __('Content Type') |js %>, "data": "content_type" },
+            { title: <% __('Material Type') |js %>, "data": "material_type" },
+            { title: <% __('Description') |js %>, "data": "description" },
+            { title: <% __('Box Name') |js %>, "data": "box_name" },
+            { title: <% __('Current Count') |js %>, "data": "current_count" },
+            { title: <% __('Current Weight') |js %>, "data": "current_weight" },
+            { title: <% __('Quality') |js %>, "data": "quality" },
         ],
     });
 

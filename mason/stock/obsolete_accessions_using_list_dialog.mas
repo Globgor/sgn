@@ -79,7 +79,7 @@ jQuery(document).ready(function(){
         const obsolete_note = jQuery('#obsolete_accessions_note').val();
 
         if (!accession_list_id) {
-            alert("Please select a list");
+            alert(<% __('Please select a list') |js %>);
             return;
         }
 
@@ -113,7 +113,7 @@ jQuery(document).ready(function(){
                     },
                     error: function(response){
                         jQuery('#working_modal').modal('hide');
-                        alert("Error obsoleting accessions.");
+                        alert(<% __('Error obsoleting accessions.') |js %>);
                     }
                 });
             }

@@ -58,7 +58,7 @@
           $("#nav_dialog").modal("show");
         });
       } else {
-        alert("Old browser version detected. Please upgrade your browser.");
+        alert(<% __('Old browser version detected. Please upgrade your browser.') |js %>);
       }
     }
 

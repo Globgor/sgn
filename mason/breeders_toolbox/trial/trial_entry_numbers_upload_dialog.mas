@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
   jQuery('#upload_entry_numbers_submit').click( function() {
     var uploadFile = jQuery("#upload_entry_numbers_file").val();
     if (uploadFile === '') {
-      alert("Please select a file");
+      alert(<% __('Please select a file') |js %>);
       return;
     }
 
@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
       error: function() {
         jQuery('#working_modal').modal("hide");
         jQuery("#upload_entry_numbers_file").val("");
-        alert("ERROR: Could not upload and process file due to server error!");
+        alert(<% __('ERROR: Could not upload and process file due to server error!') |js %>);
       }
     });
   });

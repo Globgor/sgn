@@ -367,13 +367,13 @@
             //console.log("Location name to store is "+name);
             //console.log("Location country name to store is "+country_name+" and country code is "+country_code);
 
-            if (name == '') { alert('A location name is required.');  return; }
-            if (abbreviation == '') { alert('A location abbreviation is required.');  return; }
-            if ($('#location_country').val() == '') { alert('A location country is required.');  return; }
-            if (type == '') { alert('A location type is required.');  return; }
-            if (latitude == '') { alert('A location latitude is required.');  return; }
-            if (longitude == '') { alert('A location longitude is required.');  return; }
-            if (altitude == '') { alert('A location altitude is required.');  return; }
+            if (name == '') { alert(<% __('A location name is required.') |js %>);  return; }
+            if (abbreviation == '') { alert(<% __('A location abbreviation is required.') |js %>);  return; }
+            if ($('#location_country').val() == '') { alert(<% __('A location country is required.') |js %>);  return; }
+            if (type == '') { alert(<% __('A location type is required.') |js %>);  return; }
+            if (latitude == '') { alert(<% __('A location latitude is required.') |js %>);  return; }
+            if (longitude == '') { alert(<% __('A location longitude is required.') |js %>);  return; }
+            if (altitude == '') { alert(<% __('A location altitude is required.') |js %>);  return; }
 
             $.ajax({
                 type: 'POST',
@@ -413,13 +413,13 @@
                                         alert('Found NOAA Station from given NOAA StationID: '+response.name);
                                     }
                                     else {
-                                        alert('Could not verify the NOAA StationID you provided, however, your details were still updated.');
+                                        alert(<% __('Could not verify the NOAA StationID you provided, however, your details were still updated.') |js %>);
                                     }
                                     $('#store_location_dialog').modal("hide");
                                     refreshLocationTableAndMap();
                                 },
                                 error: function() {
-                                    alert('The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!');
+                                    alert(<% __('The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!') |js %>);
                                     $('#store_location_dialog').modal("hide");
                                     refreshLocationTableAndMap();
                                 }
@@ -427,7 +427,7 @@
                         }
                     }
                 },
-                error: function() { alert('An error occurred while storing the location details. Please try again later.'); }
+                error: function() { alert(<% __('An error occurred while storing the location details. Please try again later.') |js %>); }
             });
         });
     });

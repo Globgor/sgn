@@ -40,7 +40,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving crossing experiment to field trial linkage.");
+                alert(<% __('Error retrieving crossing experiment to field trial linkage.') |js %>);
             }
         });
     });

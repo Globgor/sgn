@@ -140,7 +140,7 @@ function loadTrialCollections() {
         error: function () {
             jQuery('#trial_collections_loading').hide();
             jQuery('#trial_collections_empty')
-                .text('Could not load collections.').show();
+                .text(<% __('Could not load collections.') |js %>).show();
         }
     });
 }
@@ -170,7 +170,7 @@ function getStocksWithImages() {
             _load_stock_image_results();
         },
         error: function(response) {
-            alert('Error fetching stock names');
+            alert(<% __('Error fetching stock names') |js %>);
         }
     });
 }
@@ -203,13 +203,13 @@ function _load_stock_image_results() {
             }
         },
         'columns': [
-            { 'title': 'Image', 
+            { 'title': <% __('Image') |js %>, 
               'data': 0, },
             { 'title': 'File Name/Details', 'data': 1 },
-            { 'title': 'Description', 'data': 2 },
-            { 'title': 'Submitter', 'data': 3 },
-            { 'title': 'Associations', 'data': 4 },
-            { 'title': 'Accession Name', 'data': 5 },
+            { 'title': <% __('Description') |js %>, 'data': 2 },
+            { 'title': <% __('Submitter') |js %>, 'data': 3 },
+            { 'title': <% __('Associations') |js %>, 'data': 4 },
+            { 'title': <% __('Accession Name') |js %>, 'data': 5 },
         ],
         columnDefs: [
             { "targets": [1,3,4], "type": 'html' },

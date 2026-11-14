@@ -28,7 +28,7 @@ jQuery(document).ready(function () {
            if (response.message) { alert(response.message); }
         },
         error: function(response) { 
-           alert('An error occurred fetching the data agreement data.');
+           alert(<% __('An error occurred fetching the data agreement data.') |js %>);
         }
       });
     }

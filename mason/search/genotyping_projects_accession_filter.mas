@@ -82,7 +82,7 @@ jQuery(document).ready(function() {
                     alert(response.error);
                 }
                 if ( response?.results?.counts?.ranked_genotyping_projects?.length === 0 ) {
-                    alert("No genotyping projects found for accessions");
+                    alert(<% __('No genotyping projects found for accessions') |js %>);
                 }
                 else {
                     GENO_SEARCH_ACC_RESULTS = response?.results || {};

@@ -154,7 +154,7 @@ jQuery(document).ready(function() {
         });
 
         if(selected.length > 1 || selected.length == 0) {
-            alert('Please select one dataset!');
+            alert(<% __('Please select one dataset!') |js %>);
             return false;
         }
         else {
@@ -173,7 +173,7 @@ jQuery(document).ready(function() {
         });
 
         if(selected.length > 1 || selected.length == 0) {
-            alert('Please select one dataset!');
+            alert(<% __('Please select one dataset!') |js %>);
             return false;
         }
         else {
@@ -211,7 +211,7 @@ jQuery(document).ready(function() {
                 window.location.href = response.download_file_link;
             },
             error: function(response){
-                alert('Error downloading high dim phenotype relationship matrix file!');
+                alert(<% __('Error downloading high dim phenotype relationship matrix file!') |js %>);
                 jQuery('#working_modal').modal('hide');
             }
         });

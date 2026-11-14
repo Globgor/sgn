@@ -32,7 +32,7 @@ jQuery(document).ready(function() {
             brapi_create_paginated_table(response.result.data, response.metadata.pagination, 'brapi_germplasm_attributes_result_div', jQuery('#brapi_home_url_select').val()+'/brapi/v1/attributes', undefined);
           },
           error: function(response) {
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
 
@@ -44,7 +44,7 @@ jQuery(document).ready(function() {
             brapi_create_paginated_table(response.result.data, response.metadata.pagination, 'brapi_germplasm_attributes_categories_result_div', jQuery('#brapi_home_url_select').val()+'/brapi/v1/attributes/categories', undefined);
           },
           error: function(response) {
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });
@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
             brapi_create_paginated_table(response.result.data, response.metadata.pagination, 'brapi_germplasm_dbid_attributes_result_div', jQuery('#brapi_home_url_select').val()+'/brapi/v1/germplasm'+jQuery('#brapi_home_germplasm_attribute_dbid').val()+'/attributes', undefined);
           },
           error: function(response) {
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });

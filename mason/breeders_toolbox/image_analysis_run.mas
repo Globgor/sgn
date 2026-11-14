@@ -218,7 +218,7 @@ jQuery(document).ready(function () {
                 jQuery('#per_image_results_loading').hide();
                 jQuery('#run_images_summary_loading').hide();
                 console.error('Failed to load run images:', xhr.responseText);
-                jQuery('#per_image_empty').text('Could not load the image list.').show();
+                jQuery('#per_image_empty').text(<% __('Could not load the image list.') |js %>).show();
             }
         });
     }

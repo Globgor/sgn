@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
         const control_stock_id = jQuery('#transformation_control_id').val();
 
         if (!control_stock_id) {
-            alert ("Please select a control");
+            alert (<% __('Please select a control') |js %>);
             return;
         }
 
@@ -145,12 +145,12 @@ jQuery(document).ready(function(){
     jQuery('#set_as_a_control_submit').click(function(){
         const transformation_id = jQuery('#transformation_id_as_control').val();
         if (!transformation_id) {
-            alert ("Error retrieving transformation ID info");
+            alert (<% __('Error retrieving transformation ID info') |js %>);
             return;
         }
 
         if (is_a_control) {
-            alert ("This transformation ID has already been set as a control");
+            alert (<% __('This transformation ID has already been set as a control') |js %>);
             return;
         } else {
             setAsAControl(transformation_id, program_name)

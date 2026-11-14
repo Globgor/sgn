@@ -350,7 +350,7 @@ jQuery(document).ready(function() {
                     return;
                 },
                 error: function() {
-                    alert("Error preparing Day dialog!");
+                    alert(<% __('Error preparing Day dialog!') |js %>);
                 }
             });
             jQuery('#day_dialog').modal('show');
@@ -392,7 +392,7 @@ jQuery(document).ready(function() {
             return false;
         },
         eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
-            if (!confirm("Are you sure about this change?")) {
+            if (!confirm(<% __('Are you sure about this change?') |js %>)) {
                 revertFunc();
                 return;
             }
@@ -414,9 +414,9 @@ jQuery(document).ready(function() {
                 }),
                 success: function(data) {
                     if (data.status ==3) {
-                        alert("You do not have the permissions to edit this event.");
+                        alert(<% __('You do not have the permissions to edit this event.') |js %>);
                     } else if (data.error ==1) {
-                        alert("The was a problem editing this event.");
+                        alert(<% __('The was a problem editing this event.') |js %>);
                     } else if (data.success == 1) {
                         event.start = data.start;
                         event.start_drag = data.start_drag;
@@ -430,12 +430,12 @@ jQuery(document).ready(function() {
                 },
                 error: function() {
                     revertFunc();
-                    alert("Error! Did Not Update Event! E.001");
+                    alert(<% __('Error! Did Not Update Event! E.001') |js %>);
                 }
             });
         },
         eventResize: function(event, delta, revertFunc, jsEvent, ui, view) {
-            if (!confirm("Are you sure about this change?")) {
+            if (!confirm(<% __('Are you sure about this change?') |js %>)) {
                 revertFunc();
                 return;
             }
@@ -457,9 +457,9 @@ jQuery(document).ready(function() {
                 }),
                 success: function(data) {
                     if (data.status ==3) {
-                        alert("You do not have the permissions to edit this event.");
+                        alert(<% __('You do not have the permissions to edit this event.') |js %>);
                     } else if (data.error ==1) {
-                        alert("The was a problem editing this event.");
+                        alert(<% __('The was a problem editing this event.') |js %>);
                     } else if (data.success == 1) {
                         event.start = data.start;
                         event.start_drag = data.start_drag;
@@ -473,7 +473,7 @@ jQuery(document).ready(function() {
                 },
                 error: function() {
                     revertFunc();
-                    alert("Error! Did Not Update Event! E.001");
+                    alert(<% __('Error! Did Not Update Event! E.001') |js %>);
                 }
             });
         },
@@ -488,17 +488,17 @@ jQuery(document).ready(function() {
             data: jQuery('form#day_dialog_add_event_form').serialize(),
             success: function(data) {
                 if(data.status == 1){
-                    alert("Event Successfully Added!");
+                    alert(<% __('Event Successfully Added!') |js %>);
                     jQuery('#day_dialog').modal('hide');
                     jQuery('#calendar').fullCalendar('refetchEvents');
                 }else if(data.status == 2){
-                    alert("Error! Event Not Added! E.002");
+                    alert(<% __('Error! Event Not Added! E.002') |js %>);
                 }else if(data.status == 3){
-                    alert("You do not have the permissions to add an event.");
+                    alert(<% __('You do not have the permissions to add an event.') |js %>);
                 }
             },
             error: function() {
-                alert("Error! Event Not Added! E.001");
+                alert(<% __('Error! Event Not Added! E.001') |js %>);
             }
         });
     });
@@ -506,7 +506,7 @@ jQuery(document).ready(function() {
     jQuery('button#delete_event_submit').click( function(event) {
         event.preventDefault();
         jQuery('button#export_event_display').popover('hide');
-        if (!confirm("Are you sure you want to delete this event?")) {
+        if (!confirm(<% __('Are you sure you want to delete this event?') |js %>)) {
             return;
         }
         jQuery.ajax({
@@ -518,13 +518,13 @@ jQuery(document).ready(function() {
                 jQuery('#event_dialog').modal('hide');
                 jQuery('#calendar').fullCalendar( 'refetchEvents' );
                 if (data.status==3){
-                    alert("You do not have the permissions to delete an event.");
+                    alert(<% __('You do not have the permissions to delete an event.') |js %>);
                 } else if (data.status==0){
-                    alert("The event was not deleted!");
+                    alert(<% __('The event was not deleted!') |js %>);
                 }
             },
             error: function() {
-                alert("Did Not Delete Event! E.001");
+                alert(<% __('Did Not Delete Event! E.001') |js %>);
             }
         });
     });
@@ -551,7 +551,7 @@ jQuery(document).ready(function() {
                 return;
             },
             error: function() {
-                alert("Error Preparing Edit Event Dialog!");
+                alert(<% __('Error Preparing Edit Event Dialog!') |js %>);
             }
         });
 
@@ -565,7 +565,7 @@ jQuery(document).ready(function() {
 
     jQuery('button#edit_event_submit').click( function(event) {
         event.preventDefault();
-        if (!confirm("Are you sure you want to save this edit?")) {
+        if (!confirm(<% __('Are you sure you want to save this edit?') |js %>)) {
             return;
         }
         jQuery.ajax({
@@ -579,13 +579,13 @@ jQuery(document).ready(function() {
                     jQuery('#edit_event_dialog').modal('hide');
                     jQuery('#calendar').fullCalendar( 'refetchEvents' );
                 } else if (data.status == 0) {
-                    alert("Event Already Existed! Your Edit Was Not Saved!");
+                    alert(<% __('Event Already Existed! Your Edit Was Not Saved!') |js %>);
                 } else if (data.status == 3) {
-                    alert("You do not have the permissions to edit thie event.");
+                    alert(<% __('You do not have the permissions to edit thie event.') |js %>);
                 }
             },
             error: function() {
-                alert("Did Not Save Edit! E.001");
+                alert(<% __('Did Not Save Edit! E.001') |js %>);
             }
         });
     });

@@ -112,19 +112,19 @@ jQuery(document).ready(function(){
     jQuery('#new_transformation_identifier_submit').click(function() {
         var transformation_identifier = jQuery("#new_transformation_identifier_name").val();
         if (!transformation_identifier) {
-            alert("Transformation ID is required");
+            alert(<% __('Transformation ID is required') |js %>);
             return;
         }
 
         var plant_material = jQuery("#plant_material").val();
         if (!plant_material) {
-            alert("Plant material is required");
+            alert(<% __('Plant material is required') |js %>);
             return;
         }
 
         var vector_construct = jQuery("#vector_construct").val();
         if (!vector_construct) {
-            alert ("Vector construct is required");
+            alert (<% __('Vector construct is required') |js %>);
             return;
         }
 
@@ -164,7 +164,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred creating transformation ID');
+                alert(<% __('An error occurred creating transformation ID') |js %>);
             }
         });
 

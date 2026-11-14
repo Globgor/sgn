@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 // Depends on CXGN.BreedersToolbox.HTMLSelect
 
 function delete_phenotype_data_by_trial_id(trial_id) {
@@ -15,13 +16,13 @@ function delete_phenotype_data_by_trial_id(trial_id) {
            alert(response.error);
 		       }
 		    else {
-		       alert('The phenotypic data has been deleted.'); // to do: give some idea how many items were deleted.
+		       alert(gettext('The phenotypic data has been deleted.')); // to do: give some idea how many items were deleted.
 		    window.location.href="/breeders/trial/"+trial_id;
 		}
             },
       error: function(response) {
 		    jQuery('#working_modal').modal('hide');
-		    alert("An error occurred.");
+		    alert(gettext("An error occurred."));
             }
 	});
  }
@@ -45,14 +46,14 @@ function delete_layout_data_by_trial_id(trial_id) {
                 else {
                     jQuery('#working_modal').modal('hide');
                     jQuery('#working_msg').html('');
-                    alert('The field trial has been deleted.'); // to do: give some idea how many items were deleted.
+                    alert(gettext('The field trial has been deleted.')); // to do: give some idea how many items were deleted.
                     window.location.href="/breeders/trial/"+trial_id;
                 }
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
                 jQuery('#working_msg').html('');
-                alert("An error occurred.");
+                alert(gettext("An error occurred."));
             }
         });
     }
@@ -78,7 +79,7 @@ function load_breeding_program_info(trial_id) {
 	url:'/breeders/programs_by_trial/'+trial_id,
 	success: function(response) {
             if (response.error) {
-		jQuery('#breeding_programs').html('[ An error occurred fetching the breeding program information ]');
+		jQuery('#breeding_programs').html(gettext('[ An error occurred fetching the breeding program information ]'));
             }
             else {
 		var programs = response.projects;
@@ -90,7 +91,7 @@ function load_breeding_program_info(trial_id) {
             }
 	},
 	error: function() {
-	    jQuery('#breeding_programs').html('[ An error occurred ]');
+	    jQuery('#breeding_programs').html(gettext('[ An error occurred ]'));
 	}
     });
 }
@@ -144,7 +145,7 @@ function create_DataCollector() {
 	 error: function () {
 	     //jQuery('#working').dialog("close");
 	     jQuery('#working_modal').modal("hide");
-             alert('An error occurred creating a DataCollector file.');
+             alert(gettext('An error occurred creating a DataCollector file.'));
              jQuery('#open_download_DataCollector_dialog').dialog("close");
 	 }
      });
@@ -169,7 +170,7 @@ function compute_derived_trait() {
     var trait = jQuery('#derived_trait_select').val();
     var trialID = parseInt(jQuery('#trialIDDiv').text());
     if (trait === '') {
-		alert("No trait selected");
+		alert(gettext("No trait selected"));
 	    }
 
      new jQuery.ajax({
@@ -193,13 +194,13 @@ function compute_derived_trait() {
 		 jQuery('#open_derived_trait_dialog').dialog("close");
 		 jQuery('#working_modal').modal("hide");
 		 jQuery('derived_trait_saved_dialog_message');
-		 alert("Successfully derived and uploaded phenotype");
+		 alert(gettext("Successfully derived and uploaded phenotype"));
 		// alert("Successfully derived and uploaded ' "+trait+" ' values for this trial");
              }
 	 },
 	 error: function () {
 	     jQuery('#working_modal').modal("hide");
-             alert('An error occurred creating trait.');
+             alert(gettext('An error occurred creating trait.'));
 	 }
      });
 }
@@ -223,13 +224,13 @@ function delete_field_map() {
       if (response.error) {
 		      alert("Error deleting field map: "+response.error);
       } else {
-              alert("Field map deletion successful.");
+              alert(gettext("Field map deletion successful."));
 		      location.reload();
           }
 	 },
 	 error: function () {
 	     jQuery('#working_modal').modal("hide");
-             alert('An error occurred deleting field map.');
+             alert(gettext('An error occurred deleting field map.'));
 	 }
   });
 }
@@ -262,7 +263,7 @@ function replace_accessions() {
  	 },
  	 error: function () {
  	     jQuery('#working_modal').modal("hide");
-              alert('An error occurred replacing accessions.');
+              alert(gettext('An error occurred replacing accessions.'));
  	 }
  });
 }
@@ -425,7 +426,7 @@ function trial_detail_page_setup_dialogs() {
 		jQuery( this ).dialog( "close" );
 		return;
 	    },
-	    Create: {text: "Create", id:"create_derived_trait_submit_button", click:function() {
+	    Create: {text: gettext("Create"), id:"create_derived_trait_submit_button", click:function() {
 		compute_derived_trait();
 		jQuery( this ).dialog( "close" );
 		}
@@ -474,7 +475,7 @@ function trial_detail_page_setup_dialogs() {
 		jQuery('#derived_trait_select').html(html);
 	    },
 	    error: function(response) {
-		alert("An error occurred trying to retrieve derived traits.");
+		alert(gettext("An error occurred trying to retrieve derived traits."));
 	    }
 	});
 
@@ -500,7 +501,7 @@ delete_field_map();
 
 
 jQuery('#delete_field_map_hm_link').click(function () {
-    if (confirm("Are you sure you want to delete the spatial layout of this trial?")) {
+    if (confirm(gettext("Are you sure you want to delete the spatial layout of this trial?"))) {
         delete_field_map();
     } else {
         return;
@@ -653,7 +654,7 @@ jQuery(document).ready(function ($) {
             $('#working_modal').modal("show");
             if (uploadedtrialcoordFile === '') {
                 $('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(gettext("No file selected"));
             }
         },
         complete: function (response) {
@@ -661,7 +662,7 @@ jQuery(document).ready(function ($) {
 
             // Check if response exists and is valid
             if (!response || typeof response !== 'object') {
-                alert("Error: No response received from server. Please try again.");
+                alert(gettext("Error: No response received from server. Please try again."));
                 return;
             }
 
@@ -682,7 +683,7 @@ jQuery(document).ready(function ($) {
 
             // Catch-all for unexpected responses
             console.error("Unexpected server response:", response);
-            alert("An unexpected error occurred. The server response was not in the expected format. Please check the console for details or contact support.");
+            alert(gettext("An unexpected error occurred. The server response was not in the expected format. Please check the console for details or contact support."));
 
         }
     });
@@ -691,7 +692,7 @@ jQuery(document).ready(function ($) {
         var uploadFile = $("#trial_coordinates_uploaded_file").val();
         $('#upload_trial_coordinates_form').attr("action", "/ajax/breeders/trial/coordsupload");
         if (uploadFile === '') {
-	    alert("Please select a file");
+	    alert(gettext("Please select a file"));
 	    return;
         }
         $("#upload_trial_coordinates_form").submit();

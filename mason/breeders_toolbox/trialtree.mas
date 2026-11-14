@@ -53,7 +53,7 @@ $breeding_programs
 
       },
       error: function(response) { 
-        alert("An error occurred");
+        alert(<% __('An error occurred') |js %>);
       }
   });
 
@@ -99,7 +99,7 @@ $breeding_programs
         if (selected.length !== 0) { 
 	  window.open('/breeders/trials/phenotype/download/'+selected.join(","));
         }
-        else { alert("No leaf nodes selected for download."); }
+        else { alert(<% __('No leaf nodes selected for download.') |js %>); }
        
     });
 
@@ -108,7 +108,7 @@ $breeding_programs
         if (selected.length !== 0) { 
 	  window.open('/breeders/trials/phenotype/download/'+selected.join(",")+'?format=csv');
         }
-        else { alert("No leaf nodes selected for download."); }
+        else { alert(<% __('No leaf nodes selected for download.') |js %>); }
        
     });
 

@@ -103,7 +103,7 @@
       var require_login = "<%  $c->get_conf('brapi_require_login') %>";
       if (require_login === '1'){
           auth_token = "<%  CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
-          if (!auth_token){ alert("Login required to display graphical filtering"); }
+          if (!auth_token){ alert(<% __('Login required to display graphical filtering') |js %>); }
       } 
       BrAPI("/brapi/v2",'v2.0',auth_token)
         .search_observationunits({

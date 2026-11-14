@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 /*
 
@@ -92,7 +93,7 @@ CXGN.List.prototype = {
                 }
             },
             error: function(response) {
-                alert("An error occurred.");
+                alert(gettext("An error occurred."));
             }
         });
         return list;
@@ -139,7 +140,7 @@ CXGN.List.prototype = {
                 }
             },
             error: function () {
-                alert('An error occurred. Cannot determine type. ');
+                alert(gettext('An error occurred. Cannot determine type. '));
             }
         });
 
@@ -200,7 +201,7 @@ CXGN.List.prototype = {
         var newListId = 0;
 
         if (name == '') {
-            alert('Please provide a name for the new list.');
+            alert(gettext('Please provide a name for the new list.'));
             return 0;
         }
 
@@ -224,7 +225,7 @@ CXGN.List.prototype = {
             alert('A list with name "'+ name + '" already exists. Please choose another list name.');
             return 0;
         }
-        alert("An error occurred. Cannot create new list right now.");
+        alert(gettext("An error occurred. Cannot create new list right now."));
         return 0;
     },
 
@@ -241,7 +242,7 @@ CXGN.List.prototype = {
                 lists = response;
             },
             error: function(response) {
-                alert("An error occurred");
+                alert(gettext("An error occurred"));
             }
         });
         return lists;
@@ -260,7 +261,7 @@ CXGN.List.prototype = {
                 lists = response;
             },
             error: function(response) {
-                alert("An error occurred");
+                alert(gettext("An error occurred"));
             }
         });
         return lists;
@@ -636,7 +637,7 @@ CXGN.List.prototype = {
             var textToCopy = columnData.join('\n');
 
             navigator.clipboard.writeText(textToCopy).then(function () {
-                alert('Item names copied');
+                alert(gettext('Item names copied'));
             }).catch(function (err) {
                 console.error('Copy failed', err);
             });
@@ -713,7 +714,7 @@ CXGN.List.prototype = {
 
         jQuery('#list_item_dialog_validate').click( function() {
             if (jQuery('#dialog_add_list_item').val()) {
-                if (confirm("There is content in the 'Add New Items' field that has not yet been added to the list. Do you want to proceed with validation?")) {
+                if (confirm(gettext("There is content in the 'Add New Items' field that has not yet been added to the list. Do you want to proceed with validation?"))) {
                     validateList(list_id,undefined,type_select_id);
                 }
             } else {
@@ -945,7 +946,7 @@ CXGN.List.prototype = {
                     alert("The name of the list was changed to "+new_name);
                 }
             },
-            error: function(response) { alert("An error occurred."); }
+            error: function(response) { alert(gettext("An error occurred.")); }
         });
         this.renderLists('list_dialog');
     },
@@ -964,7 +965,7 @@ CXGN.List.prototype = {
                     alert("The description of the list was changed to "+new_description);
                 }
             },
-            error: function(response) { alert("An error occurred."); }
+            error: function(response) { alert(gettext("An error occurred.")); }
         });
         this.renderLists('list_dialog');
     },
@@ -980,7 +981,7 @@ CXGN.List.prototype = {
                     return;
                 }
             },
-            error: function(response) { alert("An error occurred in sort."); }
+            error: function(response) { alert(gettext("An error occurred in sort.")); }
         });
         this.renderItems('list_item_dialog', list_id);
     },
@@ -1573,7 +1574,7 @@ function addMultipleItemsToList(div, list_id) {
     var lo = new CXGN.List();
     var content = jQuery('#'+div).val();
     if (content == '') {
-        alert("No items - Please enter items to add to the list.");
+        alert(gettext("No items - Please enter items to add to the list."));
         return;
     }
     //    var items = content.split("\n");
@@ -1628,14 +1629,14 @@ function togglePublicList(list_id) {
             if (r.error) {
                 alert(r.error);
             } else if (r.r == 1) {
-                alert("List set to Private");
+                alert(gettext("List set to Private"));
             } else if (r.r == 0) {
-                alert("List set to Public");
+                alert(gettext("List set to Public"));
             }
             lo.renderLists('list_dialog');
         },
         error: function() {
-            alert("Error Setting List to Public! List May Not Exist.");
+            alert(gettext("Error Setting List to Public! List May Not Exist."));
         }
     });
     var lo = new CXGN.List();
@@ -1654,7 +1655,7 @@ function makePublicList(list_id) {
             }
         },
         error: function() {
-            alert("Error Setting List to Public! List May Not Exist.");
+            alert(gettext("Error Setting List to Public! List May Not Exist."));
         }
     });
 }
@@ -1671,7 +1672,7 @@ function makePrivateList(list_id) {
             }
         },
         error: function() {
-            alert("Error Setting List to Private! List May Not Exist.");
+            alert(gettext("Error Setting List to Private! List May Not Exist."));
         }
     });
 }
@@ -1685,11 +1686,11 @@ function copyPublicList(list_id) {
             if (r.error) {
                 alert(r.error);
             } else if (r.success == 'true') {
-                alert("Public List Copied to Your Lists.");
+                alert(gettext("Public List Copied to Your Lists."));
             }
         },
         error: function() {
-            alert("Error Copying Public List! List May Not Exist.");
+            alert(gettext("Error Copying Public List! List May Not Exist."));
         }
     });
     var lo = new CXGN.List();
@@ -1729,7 +1730,7 @@ function addNewList(div_id) {
     var name = jQuery('#'+div_id).val();
 
     if (name == '') {
-        alert("Please specify a name for the list.");
+        alert(gettext("Please specify a name for the list."));
         return;
     }
 
@@ -1763,7 +1764,7 @@ function validateList(list_id, list_type, html_select_id) {
         list_type = jQuery('#'+html_select_id).val();
     }
     if ( !list_type || list_type === '' || list_type === '(none)' ) {
-        alert("You must select the list type before validating");
+        alert(gettext("You must select the list type before validating"));
         return;
     }
 
@@ -1810,7 +1811,7 @@ function fuzzySearchList(list_id, list_type) {
 
 function deleteSelectedListGroup(list_ids) {
     var arrayLength = list_ids.length;
-    if (confirm('Delete the selected lists? This cannot be undone.')) {
+    if (confirm(gettext('Delete the selected lists? This cannot be undone.'))) {
         for (var i=0; i<arrayLength; i++) {
             var lo = new CXGN.List();
             lo.deleteList(list_ids[i]);
@@ -1838,7 +1839,7 @@ function downloadSelectedListGroup(list_ids) {
             responseType: 'blob'
         },
         error: function(xhr, status, error) {
-            alert("An error occurred.");
+            alert(gettext("An error occurred."));
         }
     })
 }
@@ -1961,7 +1962,7 @@ function pasteTraitList(div_name) {
 
 function makePublicSelectedListGroup(list_ids) {
     var arrayLength = list_ids.length;
-    if (confirm('Make selected lists public?')) {
+    if (confirm(gettext('Make selected lists public?'))) {
         for (var i=0; i<arrayLength; i++) {
             makePublicList(list_ids[i]);
         }
@@ -1972,7 +1973,7 @@ function makePublicSelectedListGroup(list_ids) {
 
 function makePrivateSelectedListGroup(list_ids) {
     var arrayLength = list_ids.length;
-    if (confirm('Make selected lists private?')) {
+    if (confirm(gettext('Make selected lists private?'))) {
         for (var i=0; i<arrayLength; i++) {
             makePrivateList(list_ids[i]);
         }
@@ -1990,7 +1991,7 @@ function makePrivateSelectedListGroup(list_ids) {
 function combineSelectedListGroup(list_ids, type = 'union') {
     var arrayLength = list_ids.length;
     var list_name = jQuery('#new_combined_list_name').val();
-    if ( !list_name || list_name === '' ) return alert("You must enter a new list name first");
+    if ( !list_name || list_name === '' ) return alert(gettext("You must enter a new list name first"));
 
     if ( confirm('Combine selected lists into a new list called '+list_name+'?') ) {
         var lo = new CXGN.List();
@@ -2033,7 +2034,7 @@ function combineSelectedListGroup(list_ids, type = 'union') {
         // Get unique set of items
         arrayItems = [...new Set(arrayItems)];
         if ( !arrayItems || arrayItems.length === 0 ) {
-            return alert("The selected lists don't have any list items in common.  New list not created.");
+            return alert(gettext("The selected lists don't have any list items in common.  New list not created."));
         }
 
         // Add combined items to new list
@@ -2078,11 +2079,11 @@ function validate_interactive(response, type, list_id) {
         alert(`WARNING: The following seedlots have been discarded: ${discarded_seedlots.join(', ')}`);
     }
     if (type == 'accessions' && valid == 1) {
-        alert("This list passed validation.");
+        alert(gettext("This list passed validation."));
         return;
     }
     else if (missing !== undefined  && type != 'accessions' && missing.length == 0) {
-        alert("This list passed validation.");
+        alert(gettext("This list passed validation."));
         return;
     } else {
         if (type == 'accessions') {
@@ -2109,7 +2110,7 @@ function validate_interactive(response, type, list_id) {
     		bInfo: false,
     		paging: false,
     		columns: [
-    		    { title: 'List' },
+    		    { title: gettext('List') },
     		    { title: 'DB' },
     		]
     	    });
@@ -2136,7 +2137,7 @@ function validate_interactive(response, type, list_id) {
     		    bInfo: false,
     		    paging: false,
     		    columns: [
-    			{ title: 'List' },
+    			{ title: gettext('List') },
     			{ title: 'DB'   }
     		    ]
     		});
@@ -2146,7 +2147,7 @@ function validate_interactive(response, type, list_id) {
 
     	    }
     	    else {
-    		jQuery('#wrong_case_message_div').html('No mismatched cases found.');
+    		jQuery('#wrong_case_message_div').html(gettext('No mismatched cases found.'));
     	    }
 
     	    if (multiple_wrong_case !== undefined && multiple_wrong_case.length > 0) {
@@ -2158,7 +2159,7 @@ function validate_interactive(response, type, list_id) {
     		    bInfo: false,
     		    paging: false,
     		    columns: [
-    			{ title : 'List' },
+    			{ title : gettext('List') },
     			{ title : 'DB' }
     		    ]
     		});
@@ -2171,7 +2172,7 @@ function validate_interactive(response, type, list_id) {
     		jQuery.ajax( {
     		    url : '/ajax/list/adjust_case',
     		    data: { 'list_id' : list_id },
-    		    error: function() { alert('An error occurred'); },
+    		    error: function() { alert(gettext('An error occurred')); },
     		    success: function(r) {
 
     			if (r.error) { alert(r.error); }
@@ -2200,7 +2201,7 @@ function validate_interactive(response, type, list_id) {
     		jQuery.ajax( {
     		    url : '/ajax/list/adjust_synonyms',
     		    data: { 'list_id' : list_id },
-    		    error: function() { alert('An error occurred'); },
+    		    error: function() { alert(gettext('An error occurred')); },
     		    success: function(r) {
 
     			if (r.error) { alert(r.error); return 1; }
@@ -2229,14 +2230,14 @@ function validate_interactive(response, type, list_id) {
     		    paging: false,
     		    columns: [
 
-    			{ title : 'List elements matching synonym' },
-    			{ title : 'Corresponding db names' }
+    			{ title : gettext('List elements matching synonym') },
+    			{ title : gettext('Corresponding db names') }
     		    ]
     		});
     	    }
     	    else {
     		jQuery('#synonym_matches_div').hide();
-    		jQuery('#synonym_message').html('No synonym matches found.');
+    		jQuery('#synonym_message').html(gettext('No synonym matches found.'));
     	    }
 
 	    var multiple_synonym_matches_table = new Array();
@@ -2254,8 +2255,8 @@ function validate_interactive(response, type, list_id) {
     		    bInfo: false,
     		    paging: false,
     		    columns: [
-    			{title : 'Item' },
-    			{title: 'Synonym'}
+    			{title : gettext('Item') },
+    			{title: gettext('Synonym')}
     		    ]
     		});
     	    }

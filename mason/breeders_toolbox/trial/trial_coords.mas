@@ -88,7 +88,7 @@ var trial_id = <% $trial_id %>;
             jQuery("#trial_coords").css("display", "none");
             jQuery("#delete_button").css("display", "inline-block");
             if (false_coord){
-                alert("Psudo row and column numbers have been used in displaying the field map. Plots row and column numbers were generated from block_number and displayed in zigzag format. You can upload row and column numbers for this trial to reflect the field layout.");
+                alert(<% __('Psudo row and column numbers have been used in displaying the field map. Plots row and column numbers were generated from block_number and displayed in zigzag format. You can upload row and column numbers for this trial to reflect the field layout.') |js %>);
             }
 		}
 
@@ -442,7 +442,7 @@ jQuery(document).ready( function() {
       },
       error: function () {
         jQuery('#working_modal').modal("hide");
-        alert('An error occurred replacing plot accession');
+        alert(<% __('An error occurred replacing plot accession') |js %>);
       }
     });
   }

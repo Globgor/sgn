@@ -223,7 +223,7 @@ jQuery(document).ready(function(){
             jQuery('#working_modal').modal("show");
             if (uploadedSeedlotInventoryFile === '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function (response) {

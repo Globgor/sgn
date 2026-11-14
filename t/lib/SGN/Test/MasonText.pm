@@ -7,9 +7,10 @@ SGN::Test::MasonText - test that a Mason component shows its text in the user's 
 =head1 SYNOPSIS
 
     use lib 't/lib';
-    use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
+    use SGN::Test::MasonText qw( page_texts_ok page_script_texts_ok component_compiles_ok );
 
     page_texts_ok( '/search/trials.mas', 'Search Trials', 'Trial name' );
+    page_script_texts_ok( '/site/toolbar/login.mas', 'An error occurred' );
     component_compiles_ok('/breeders_toolbox/trial.mas');
 
 =head1 DESCRIPTION
@@ -23,6 +24,10 @@ the page as it is. Then, with a catalog made for the test in which the
 translation of C<Text> is C<«Text»>, each text must be there in that form. A
 text that is not wrapped in C<__()> fails the second check.
 
+C<page_script_texts_ok> checks JSON strings in rendered script blocks in both
+languages. It checks the output of the Mason C<|js> escape, including the
+escaping of characters that are unsafe in an HTML script block.
+
 =cut
 
 use strict;
@@ -35,6 +40,7 @@ use File::Path qw( make_path );
 use File::Temp qw( tempdir );
 use HTML::Entities qw( decode_entities );
 use HTML::Mason::Interp;
+use JSON::PP ();
 use SGN::I18N::Browser ();
 use Locale::Messages qw( bindtextdomain bind_textdomain_codeset bind_textdomain_filter );
 use Locale::Util qw( set_locale );
@@ -43,7 +49,7 @@ use Test::More;
 
 use SGN::Test::Anything;
 
-our @EXPORT_OK = qw( page_texts_ok component_compiles_ok render );
+our @EXPORT_OK = qw( page_texts_ok page_script_texts_ok component_compiles_ok render );
 
 my $LANGUAGE = 'uk';    # any language with a system locale; the test catalog is made here
 my $TIMEOUT  = 20;      # seconds; a component that loops on an Anything must not hang the test
@@ -146,6 +152,40 @@ sub page_texts_ok {
         setlocale( LC_MESSAGES, 'C' );
     }
     return ok( !@problems, "$component shows its text in the user's language" ) || diag( join "\n", @problems );
+}
+
+=head2 page_script_texts_ok( $component, @texts )
+
+One test: each text appears as a JSON string in a rendered script block in
+English and, with the test catalog, as its translated JSON string. A text
+that is absent from the rendered page cannot be checked this way.
+
+=cut
+
+sub _script_has_text {
+    my ( $page, $text ) = @_;
+    my $json = JSON::PP->new->allow_nonref->encode($text);
+    $json =~ s/([<>&\x{2028}\x{2029}])/sprintf '\\u%04x', ord $1/ge;
+    while ( $page =~ m{<script\b[^>]*>(.*?)</script\s*>}sig ) {
+        return 1 if index( $1, $json ) >= 0;
+    }
+    return 0;
+}
+
+sub page_script_texts_ok {
+    my ( $component, @texts ) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    _use_catalog(@texts);
+    setlocale( LC_MESSAGES, 'C' );
+    my $english = eval { render($component) };
+    my @problems = defined $english ? map { "English script text is missing: $_" } grep { !_script_has_text( $english, $_ ) } @texts : ("does not render: $@");
+    if ( !@problems ) {
+        set_locale( LC_MESSAGES, $LANGUAGE, undef, 'utf-8' ) or push @problems, "no system locale for $LANGUAGE";
+        my $translated = eval { render($component) } // q{};
+        push @problems, map { "translated script text is missing: $_" } grep { !_script_has_text( $translated, "«$_»" ) } @texts;
+        setlocale( LC_MESSAGES, 'C' );
+    }
+    return ok( !@problems, "$component shows its script text in the user's language" ) || diag( join "\n", @problems );
 }
 
 =head2 component_compiles_ok( $component )

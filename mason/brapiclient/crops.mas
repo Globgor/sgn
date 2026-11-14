@@ -26,7 +26,7 @@ jQuery("#brapi_home_show_crops").click(function() {
         jQuery("#brapi_crops_div").empty().html(html);
       },
       error: function(response) {
-        alert('An error occurred getting crops');
+        alert(<% __('An error occurred getting crops') |js %>);
       }
     });
 });

@@ -149,7 +149,7 @@ jQuery(document).ready(function(){
         console.log(trial_analysis_genotype_comparison_workflow_accessions_ids);
 
         if ( !trial_analysis_genotype_comparison_workflow_trait_ids || trial_analysis_genotype_comparison_workflow_trait_ids.length < 1) {
-            alert('Please select at least one trait!');
+            alert(<% __('Please select at least one trait!') |js %>);
             return false;
         }
         else {
@@ -169,13 +169,13 @@ jQuery(document).ready(function(){
     jQuery('#trial_analysis_genotype_comparison_weightings_submit').click(function(){
         jQuery('input[name="trial_analysis_genotype_comparison_workflow_trait_weights"]').each(function() {
             if (jQuery(this).val() == '') {
-                alert('Please give weights!');
+                alert(<% __('Please give weights!') |js %>);
                 return false;
             }
             trial_analysis_genotype_comparison_workflow_trait_weights_values.push([jQuery(this).data('trait_id'), jQuery(this).val()]);
         });
         if (trial_analysis_genotype_comparison_workflow_trait_weights_values.length != trial_analysis_genotype_comparison_workflow_trait_ids.length) {
-            alert('Please give weights!');
+            alert(<% __('Please give weights!') |js %>);
             return false;
         }
 
@@ -193,7 +193,7 @@ jQuery(document).ready(function(){
         trial_analysis_genotype_comparison_workflow_genotyping_protocol_genotypes = jQuery('#trial_analysis_genotype_comparison_workflow_genotype_filter_div').val();
 
         if (!trial_analysis_genotype_comparison_workflow_genotyping_protocol_id) {
-            alert('Please select a genotyping protocol!');
+            alert(<% __('Please select a genotyping protocol!') |js %>);
             return false;
         }
         else {
@@ -226,7 +226,7 @@ jQuery(document).ready(function(){
                 },
                 error: function(response){
                     jQuery("#working_modal").modal("hide");
-                    alert('Error doing genotype comparison!');
+                    alert(<% __('Error doing genotype comparison!') |js %>);
                 }
             });
         }

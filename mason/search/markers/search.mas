@@ -244,7 +244,7 @@ function getReferences(callback) {
             return callback(data && data.reference_genomes ? data.reference_genomes : []);
         },
         error: function() {
-            alert("ERROR: Could not get reference genomes");
+            alert(<% __('ERROR: Could not get reference genomes') |js %>);
         }
     });
 }
@@ -262,7 +262,7 @@ function getMaps(callback) {
             return callback(data && data.maps ? data.maps : []);
         },
         error: function() {
-            alert("ERROR: Could not get maps");
+            alert(<% __('ERROR: Could not get maps') |js %>);
         }
     });
 }
@@ -313,7 +313,7 @@ function getGenotypedChromosomes(callback) {
             return callback(data && data.chromosomes ? data.chromosomes : []);
         },
         error: function() {
-            alert("ERROR: Could not get genotyped chromosomes");
+            alert(<% __('ERROR: Could not get genotyped chromosomes') |js %>);
         }
     });
 }
@@ -332,7 +332,7 @@ function getMappedChromosomes(callback) {
             return callback(data && data.chromosomes ? data.chromosomes : []);
         },
         error: function() {
-            alert("ERROR: Could not get mapped chromosomes");
+            alert(<% __('ERROR: Could not get mapped chromosomes') |js %>);
         }
     });
 }
@@ -383,7 +383,7 @@ function getGenotypedProtocols(callback) {
             return callback(data && data.protocols ? data.protocols : []);
         },
         error: function() {
-            alert("ERROR: Could not get genotyped protocols");
+            alert(<% __('ERROR: Could not get genotyped protocols') |js %>);
         }
     });
 }
@@ -402,7 +402,7 @@ function getMappedProtocols(callback) {
             return callback(data && data.protocols ? data.protocols : []);
         },
         error: function() {
-            alert("ERROR: Could not get mapped protocols");
+            alert(<% __('ERROR: Could not get mapped protocols') |js %>);
         }
     });
 }
@@ -673,7 +673,7 @@ function search() {
 
     // Check for required params
     if ( (start && !end) || (end && !start) ) {
-        alert("Both the start and end position are required when filtering by position");
+        alert(<% __('Both the start and end position are required when filtering by position') |js %>);
         return;
     }
 

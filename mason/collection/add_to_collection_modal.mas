@@ -168,7 +168,7 @@ jQuery(document).ready(function () {
             renderFolderList('');
         }).fail(function () {
             jQuery('#folder_picker_loading').hide();
-            jQuery('#folder_picker_empty').text('Could not load folders.').show();
+            jQuery('#folder_picker_empty').text(<% __('Could not load folders.') |js %>).show();
         });
     }
 
