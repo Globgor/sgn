@@ -39,7 +39,7 @@ Convenience accessors for driver functions:
 
 * get_ok() - the get() wrapped around and ok
 
-* find_element() - forwards to the driver find_element() function
+* find_element() - finds immediately, then waits up to 60 seconds for modal overlays; hidden elements and timed-out lookups return the original element. After a timeout, further lookups on that document skip the guard.
 
 * find_element_ok() - wraps the find_element in an ok() test.
 
@@ -63,6 +63,7 @@ package SGN::Test::WWW::WebDriver;
 use Moose;
 
 use Try::Tiny;
+use Time::HiRes ();
 use Test::More;
 use File::Spec::Functions;
 use Selenium::Firefox;
@@ -121,7 +122,8 @@ sub BUILD {
     $profile->set_preference( 'browser.download.manager.showWhenStarting', 0 );
     $profile->set_preference( 'browser.helperApps.neverAsk.saveToDisk', 'application/octet-stream,text/csv,application/zip,text/plain' );
     
-    my $driver = Selenium::Remote::Driver->new(firefox_profile => $profile, base_url => $ENV{SGN_TEST_SERVER}, remote_server_addr => $ENV{SGN_REMOTE_SERVER_ADDR} || 'localhost');
+    my $driver = Selenium::Remote::Driver->new(firefox_profile => $profile, base_url => $ENV{SGN_TEST_SERVER}, remote_server_addr => $ENV{SGN_REMOTE_SERVER_ADDR} || 'localhost',
+        extra_capabilities => { unhandledPromptBehavior => 'ignore' });
     
 
     $self->driver($driver);
@@ -196,9 +198,48 @@ sub get_ok {
     ok($self->get($url), $test_name);
 }
     
+sub _wait {
+    my ($self, $seconds, $condition) = @_;
+    my $deadline = Time::HiRes::time() + $seconds;
+    while (Time::HiRes::time() < $deadline) {
+        return 1 if eval { $self->driver->get_alert_text(); 1 };
+        return 1 if eval { $condition->() } && Time::HiRes::time() < $deadline;
+        my $remaining = $deadline - Time::HiRes::time();
+        last if $remaining <= 0;
+        Time::HiRes::sleep($remaining < 0.2 ? $remaining : 0.2);
+    }
+    return 0;
+}
+
 sub find_element { 
     my $self = shift;
-    return $self->driver->find_element(@_);
+    my $element = $self->driver->find_element(@_);
+    my $ready = $self->_wait(60, sub {
+        return !eval { $self->driver->execute_script(q{
+            if (window.__sgnTestCoverTimedOut) { return false; }
+            var e = arguments[0];
+            if (e && e.tagName.toLowerCase() === 'option') { e = e.closest('select'); }
+            if (!e || !e.isConnected || !e.getClientRects().length ||
+                getComputedStyle(e).visibility !== 'visible') { return false; }
+            var r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+            if (x < 0 || y < 0 || x >= window.innerWidth || y >= window.innerHeight) {
+                e.scrollIntoView({block: 'center', inline: 'center'});
+                r = e.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2;
+            }
+            var top = document.elementFromPoint(x, y);
+            if (!top) { return false; }
+            if (top.closest('#working_modal, .modal-backdrop')) { return true; }
+            var modal = top.closest('.modal');
+            return !!modal && !modal.contains(e);
+        }, $element) };
+    });
+    unless ($ready) {
+        note("Timed out waiting for uncovered element $_[0]");
+        eval { $self->driver->execute_script(
+            'arguments[0].ownerDocument.defaultView.__sgnTestCoverTimedOut = true;', $element
+        ) } unless eval { $self->driver->get_alert_text(); 1 };
+    }
+    return $element;
 }
 
 sub find_element_ok { 
@@ -270,7 +311,7 @@ sub wait_for_working_dialog {
     my $count = 0;
     print STDERR "... waiting for working dialog ...\n";
     while ( !$is_hidden && $count < $max ) {
-        my $wd = $self->find_element("working_modal", "id");
+        my $wd = $self->driver->find_element("working_modal", "id");
         $is_hidden = $wd->is_hidden();
         $count++;
         sleep(1);
