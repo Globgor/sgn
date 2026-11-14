@@ -370,11 +370,11 @@ jQuery(document).ready(function () {
     jQuery('#trial_stock_barcode').click(function() {
 
         if (trial_stock_type == 'family_name') {
-            jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for family names used in this trial');
+            jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for family names used in this trial') |js %>);
         } else if (trial_stock_type == 'cross') {
-            jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for Cross unique ids used in this trial');
+            jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for Cross unique ids used in this trial') |js %>);
         } else {
-            jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for accessions used in this trial');
+            jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for accessions used in this trial') |js %>);
         }
 
     	jQuery.ajax ( {
@@ -390,14 +390,14 @@ jQuery(document).ready(function () {
         		jQuery('#trial_accessions').html(trial_accessions_html);
             },
             error: function(response){
-        		      alert("Error retrieving accessions.");
+        		      alert(<% __('Error retrieving accessions.') |js %>);
             }
         });
     });
 
     jQuery('#trial_plot_barcode').click(function() {
 
-        jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for plots used in this trial');
+        jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for plots used in this trial') |js %>);
 
         jQuery.ajax ( {
             url : '/ajax/breeders/trial/'+<% $trial_id %>+'/plots',
@@ -412,21 +412,21 @@ jQuery(document).ready(function () {
                 jQuery('#trial_accessions').html(trial_plots_html);
             },
             error: function(response){
-                alert("Error retrieving plots.");
+                alert(<% __('Error retrieving plots.') |js %>);
             }
         });
     });
 
     jQuery('#trial_plant_barcode').click(function() {
 
-        jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for plants used in this trial');
+        jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for plants used in this trial') |js %>);
 
         jQuery.ajax ( {
             url : '/ajax/breeders/trial/'+<% $trial_id %>+'/plants',
 
             success: function(response){
                 if (response.plants == '') {
-                    alert("Trial has no plant entries.");
+                    alert(<% __('Trial has no plant entries.') |js %>);
                 }
                 var trial_plants_html = '<textarea class="form-control" id="stock_names" name="stock_names" >';
                 for (i=0; i<response.plants[0].length; i++) {
@@ -437,7 +437,7 @@ jQuery(document).ready(function () {
                 jQuery('#trial_accessions').html(trial_plants_html);
             },
             error: function(response){
-                alert("Error retrieving plants.");
+                alert(<% __('Error retrieving plants.') |js %>);
             }
 
         });
@@ -451,7 +451,7 @@ jQuery(document).ready(function () {
     jQuery('#cross_barcodes').click(function() {
         jQuery('#generate_crossing_experiment_barcode_dialog').modal("hide");
         jQuery('#generate_trial_barcode_dialog').modal("show");
-        jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for cross unique ids');
+        jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for cross unique ids') |js %>);
         jQuery.ajax ( {
             url : '/ajax/breeders/trial/'+<% $trial_id %>+'/get_crosses',
 
@@ -468,7 +468,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving crosses.");
+                alert(<% __('Error retrieving crosses.') |js %>);
             }
         });
     });
@@ -477,7 +477,7 @@ jQuery(document).ready(function () {
     jQuery('#female_accession_barcodes').click(function() {
         jQuery('#generate_crossing_experiment_barcode_dialog').modal("hide");
         jQuery('#generate_trial_barcode_dialog').modal("show");
-        jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for female accessions');
+        jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for female accessions') |js %>);
 
         jQuery.ajax ( {
             url : '/ajax/breeders/trial/'+<% $trial_id %>+'/get_female_accessions',
@@ -495,7 +495,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving female accessions.");
+                alert(<% __('Error retrieving female accessions.') |js %>);
             }
         });
     });
@@ -504,7 +504,7 @@ jQuery(document).ready(function () {
     jQuery('#male_accession_barcodes').click(function() {
         jQuery('#generate_crossing_experiment_barcode_dialog').modal("hide");
         jQuery('#generate_trial_barcode_dialog').modal("show");
-        jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for male accessions');
+        jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for male accessions') |js %>);
 
         jQuery.ajax ( {
             url : '/ajax/breeders/trial/'+<% $trial_id %>+'/get_male_accessions',
@@ -522,7 +522,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving male accessions.");
+                alert(<% __('Error retrieving male accessions.') |js %>);
             }
         });
     });
@@ -536,10 +536,10 @@ jQuery(document).ready(function () {
 
             success: function(response){
                 if (response.female_plots == '') {
-                    alert("This crossing experiment has no female plot entry.");
+                    alert(<% __('This crossing experiment has no female plot entry.') |js %>);
                 } else {
                     jQuery('#generate_trial_barcode_dialog').modal("show");
-                    jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for female plots');
+                    jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for female plots') |js %>);
                 }
                 var female_plots_html = '<textarea class="form-control" id="stock_names" name="stock_names" >';
 
@@ -553,7 +553,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving female plots.");
+                alert(<% __('Error retrieving female plots.') |js %>);
             }
         });
     });
@@ -567,10 +567,10 @@ jQuery(document).ready(function () {
 
             success: function(response){
                 if (response.male_plots == '') {
-                    alert("This crossing experiment has no male plot entry.");
+                    alert(<% __('This crossing experiment has no male plot entry.') |js %>);
                 } else {
                     jQuery('#generate_trial_barcode_dialog').modal("show");
-                    jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for male plots');
+                    jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for male plots') |js %>);
                 }
                 var male_plots_html = '<textarea class="form-control" id="stock_names" name="stock_names" >';
 
@@ -584,7 +584,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving male plots.");
+                alert(<% __('Error retrieving male plots.') |js %>);
             }
         });
     });
@@ -598,10 +598,10 @@ jQuery(document).ready(function () {
 
             success: function(response){
                 if (response.female_plants == '') {
-                    alert("This crossing experiment has no female plant entry.");
+                    alert(<% __('This crossing experiment has no female plant entry.') |js %>);
                 } else {
                     jQuery('#generate_trial_barcode_dialog').modal("show");
-                    jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for female plants');
+                    jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for female plants') |js %>);
                 }
                 var female_plants_html = '<textarea class="form-control" id="stock_names" name="stock_names" >';
 
@@ -615,7 +615,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving female plants.");
+                alert(<% __('Error retrieving female plants.') |js %>);
             }
         });
     });
@@ -629,10 +629,10 @@ jQuery(document).ready(function () {
 
             success: function(response){
                 if (response.male_plants == '') {
-                    alert("This crossing experiment has no male plant entry.");
+                    alert(<% __('This crossing experiment has no male plant entry.') |js %>);
                 } else {
                     jQuery('#generate_trial_barcode_dialog').modal("show");
-                    jQuery('#barcode_dialog_subtitle2').text('Generate barcodes for male plants');
+                    jQuery('#barcode_dialog_subtitle2').text(<% __('Generate barcodes for male plants') |js %>);
                 }
                 var male_plants_html = '<textarea class="form-control" id="stock_names" name="stock_names" >';
 
@@ -646,7 +646,7 @@ jQuery(document).ready(function () {
 
             },
             error: function(response){
-                alert("Error retrieving male plants.");
+                alert(<% __('Error retrieving male plants.') |js %>);
             }
         });
     });
