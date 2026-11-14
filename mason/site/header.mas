@@ -3,7 +3,7 @@
 </%args>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html<% $html_attributes %>>
 
 <head>
   <& header/head.mas &>
@@ -24,3 +24,18 @@
       <div class="col-sm-12 col-md-10 col-lg-10 col-xl-8">
 
 <& /cookie_popup.mas &>
+<%init>
+# With a language enabled, tell the browser the language of the page (lang, and
+# xml:lang for this XHTML doctype) and the direction of right-to-left scripts.
+my $html_attributes = '';
+if ( my $language = $c->stash->{language} ) {
+    my $tag = $m->interp->apply_escapes( $language, 'h' );
+    $html_attributes = qq{ lang="$tag" xml:lang="$tag"};
+    $html_attributes .= ' dir="rtl"' if $right_to_left{ ( split /-/, lc $language )[0] };
+}
+</%init>
+<%once>
+# Languages written from right to left: the two-letter codes that Unicode CLDR 48
+# marks right-to-left, and Central Kurdish.
+my %right_to_left = map { $_ => 1 } qw( ae ar ckb dv fa he ks ps sd ug ur yi );
+</%once>
