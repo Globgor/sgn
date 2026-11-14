@@ -23,6 +23,6 @@ eval {
 </div>
 -->
 
-<h4>Featured Locus</h4>
+<h4><% __('Featured Locus') |h %></h4>
 <% $loci %>
-<button class="btn btn-info btn-sm" onclick='location.href="/oldloci.pl"'>See previous...</button>    <button class="btn btn-primary btn-sm" onclick=location.href="/search/direct_search.pl?search=loci">Search other loci...</button>
+<button class="btn btn-info btn-sm" onclick='location.href="/oldloci.pl"'><% __('See previous...') |h %></button>    <button class="btn btn-primary btn-sm" onclick=location.href="/search/direct_search.pl?search=loci"><% __('Search other loci...') |h %></button>
