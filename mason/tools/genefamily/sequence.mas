@@ -9,25 +9,25 @@ $seq => undef
 </%args>
 
 
-<h1>Sequence Details</h1>
+<h1><% __('Sequence Details') |h %></h1>
 
-<h2>Identifier</h2>
+<h2><% __('Identifier') |h %></h2>
 
 <% $seq_id %></h1>
 
-<h2>Viewing Build</h2>
+<h2><% __('Viewing Build') |h %></h2>
 
 <% $build %>
 
-<h2>Family</h2>
+<h2><% __('Family') |h %></h2>
 
 <a href="/tools/genefamily/details/<% $build %>/<% $family %>"><% $family %></a>
 
-<h2>Description</h2>
+<h2><% __('Description') |h %></h2>
 
 <% $desc %>
 
-<h2>Sequence</h2>
+<h2><% __('Sequence') |h %></h2>
 
 Length: <% length($seq) %>
 
