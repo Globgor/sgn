@@ -37,7 +37,7 @@ solGS.anova = {
 
     jQuery("#anova_msg").dialog({
       modal: true,
-      title: "Alert",
+      title: gettext("Alert"),
       buttons: {
         OK: {
           click: function () {

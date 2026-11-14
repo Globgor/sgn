@@ -21,7 +21,7 @@ jQuery(document).ready(function() {
                 }            
             },
             error: function() {
-                alert('Error occurred while clearing cache');
+                alert(gettext('Error occurred while clearing cache'));
             }
         });
     });

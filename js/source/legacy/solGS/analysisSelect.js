@@ -172,7 +172,7 @@ jQuery(document).on("change", "#analysis_select", function () {
                 }
                 
             }).fail(function () {
-                jQuery("#dataset_trials_analysis_message").html("Error retrieving tool compatibility.").show();
+                jQuery("#dataset_trials_analysis_message").html(gettext("Error retrieving tool compatibility.")).show();
             });
         }
     } else {
@@ -190,12 +190,12 @@ jQuery(document).ready(function () {
         var analysisPopId = solGS.analysisSelect.getAnalysisPopId();
 
         if (!analysisType) {
-            jQuery("#dataset_trials_analysis_message").html("Please select an analysis type.").show();
+            jQuery("#dataset_trials_analysis_message").html(gettext("Please select an analysis type.")).show();
             return;
         }
 
         if (!analysisPopId) {   
-            jQuery("#dataset_trials_analysis_message").html("Please select an analysis population.").show();
+            jQuery("#dataset_trials_analysis_message").html(gettext("Please select an analysis population.")).show();
             return;
         }
 
@@ -223,7 +223,7 @@ jQuery(document).ready(function () {
             var corrMsgDiv = solGS.correlation.corrMsgDiv;
 
             jQuery(`${canvas} .multi-spinner-container`).show();
-            jQuery(corrMsgDiv).html("Running correlation... please wait...").show();
+            jQuery(corrMsgDiv).html(gettext("Running correlation... please wait...")).show();
 
             solGS.correlation.runPhenoCorrelation(corrArgs).done(function (res) {
                 if (res.error) {
@@ -249,11 +249,11 @@ jQuery(document).ready(function () {
                     jQuery(corrMsgDiv).empty();
                 } else {
                     jQuery(`${canvas} .multi-spinner-container`).hide();
-                    jQuery(corrMsgDiv).html("There is no correlation output for this dataset.").fadeOut(8400);
+                    jQuery(corrMsgDiv).html(gettext("There is no correlation output for this dataset.")).fadeOut(8400);
                 }
             }).fail(function (res) {
                 jQuery(`${canvas} .multi-spinner-container`).hide();
-                jQuery(corrMsgDiv).html("Error occured running the correlation analysis.").fadeOut(8400);
+                jQuery(corrMsgDiv).html(gettext("Error occured running the correlation analysis.")).fadeOut(8400);
             });
         }
     });
