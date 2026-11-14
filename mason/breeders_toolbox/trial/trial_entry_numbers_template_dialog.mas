@@ -160,7 +160,7 @@ $trial_name => undef
     
     // Verify at least one trial is selected
     if ( trials.length === 0 ) {
-      return alert("Please select at least one Trial");
+      return alert(<% __('Please select at least one Trial') |js %>);
     }
 
     // Generate the Upload Template
@@ -195,12 +195,12 @@ $trial_name => undef
       }
       else {
         console.log(resp);
-        alert("ERROR: Could not generate upload template!");
+        alert(<% __('ERROR: Could not generate upload template!') |js %>);
       }
     })
     .fail(function() {
       jQuery("#set_entry_numbers_template_loading").hide();
-      alert("ERROR: Could not generate upload template!");
+      alert(<% __('ERROR: Could not generate upload template!') |js %>);
     });
   }
 </script>

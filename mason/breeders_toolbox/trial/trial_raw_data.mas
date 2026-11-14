@@ -170,7 +170,7 @@ function save_single_observation(observation_id) {
 		},
 		error : function() {
 			jQuery('#working_modal').modal("hide");
-			alert("Server error, check console.");
+			alert(<% __('Server error, check console.') |js %>);
 		}
 	});
 }
@@ -240,7 +240,7 @@ jQuery(window).ready( function() {
 	   	})
         .fail(() => {
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred while processing the request.');
+            alert(<% __('An error occurred while processing the request.') |js %>);
         });;
     });
 	/*
@@ -416,10 +416,10 @@ jQuery(window).ready( function() {
 			jQuery('#raw_trait_data_table').DataTable( {
 				'destroy': true,
 				'columns': [
-						{ title: 'observation id'},
-						{ title: 'observation unit' },
-						{ title: 'observation variable' },
-						{ title: 'value, timestamp' },
+						{ title: <% __('observation id') |js %>},
+						{ title: <% __('observation unit') |js %> },
+						{ title: <% __('observation variable') |js %> },
+						{ title: <% __('value, timestamp') |js %> },
 						{ title: 'Sort Date', visible: false },//this column will be hidden !!!
 						{ title: 'collector' },
 						{ title: '', }
@@ -431,10 +431,10 @@ jQuery(window).ready( function() {
 			jQuery('#raw_trait_data_table').DataTable( {
 				'destroy': true,
 				'columns': [
-						{ title: 'observation id'},
-						{ title: 'observation unit' },
-						{ title: 'observation variable' },
-						{ title: 'value, timestamp' },
+						{ title: <% __('observation id') |js %>},
+						{ title: <% __('observation unit') |js %> },
+						{ title: <% __('observation variable') |js %> },
+						{ title: <% __('value, timestamp') |js %> },
 						{ title: 'Sort Date', visible: false },//this column will be hidden !!!
 						{ title: 'collector' }
 					],

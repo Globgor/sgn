@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
               jQuery("#seedlots_counts").html(html);
           },
           error: function(response){
-              alert('Error displaying seedlots count');
+              alert(<% __('Error displaying seedlots count') |js %>);
           }
 
       });

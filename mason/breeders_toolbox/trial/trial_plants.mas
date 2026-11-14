@@ -75,7 +75,7 @@ jQuery(document).ready(function () {
             },
             error: function(response) {
                 jQuery('#trial_plants_html').html("error");
-                alert("An error occurred");
+                alert(<% __('An error occurred') |js %>);
             }
         });
     });
@@ -129,28 +129,28 @@ jQuery(document).ready(function () {
                                         if (response.error) {
                                             alert("The new list was created, but an error occurred adding items to it: " + response.error);
                                         } else {
-                                            alert("List created.");
+                                            alert(<% __('List created.') |js %>);
                                             var lo = new CXGN.List();
                                             jQuery('#plant_select_existing_list_name').html(lo.listSelect('plant_select_existing_list_name', ['plants'], undefined, undefined, undefined));
                                         }
                                     },
                                     error : function(error) {
                                         jQuery('#working_modal').modal("hide");
-                                        alert("The new list was created, but a server error occurred adding items to it.");
+                                        alert(<% __('The new list was created, but a server error occurred adding items to it.') |js %>);
                                     }
                                 });
                             }
                         },
                         error : function() {
                             jQuery('#working_modal').modal("hide");
-                            alert("The new list was created, but a server error occurred adding items to it.");
+                            alert(<% __('The new list was created, but a server error occurred adding items to it.') |js %>);
                         }
                     });
                 }
             },
             error : function() {
                 jQuery('#working_modal').modal("hide");
-                alert("A server error occurred making new list.");
+                alert(<% __('A server error occurred making new list.') |js %>);
             }
         })
     });
@@ -175,18 +175,18 @@ jQuery(document).ready(function () {
                 if (response.error) {
                     alert("Error adding items to list: " + response.error);
                 } else {
-                    alert("Plants added to list.");
+                    alert(<% __('Plants added to list.') |js %>);
                 }
             },
             error : function() {
                 jQuery('#working_modal').modal("hide");
-                alert("Server error adding plants to list.");
+                alert(<% __('Server error adding plants to list.') |js %>);
             }
         });
     });
 
     jQuery('#plant_select_delete_plants').click(function() {
-        if (confirm("Are you sure you want to delete the selected plants? Any associated tissue samples will also be deleted. This action cannot be undone.")) {
+        if (confirm(<% __('Are you sure you want to delete the selected plants? Any associated tissue samples will also be deleted. This action cannot be undone.') |js %>)) {
             let plant_ids = jQuery('.exp_design_plant_select:checkbox:checked')
                 .map(function() {
                     return this.id.replace('select_plant_', '');
@@ -208,13 +208,13 @@ jQuery(document).ready(function () {
                     if (response.error) {
                         alert("Error: " + response.error);
                     } else {
-                        alert("Plants deleted.");
+                        alert(<% __('Plants deleted.') |js %>);
                         window.location.reload();
                     }
                 },
                 error : function(response) {
                     jQuery('#working_modal').modal("hide");
-                    alert("A server error occurred, check console.");
+                    alert(<% __('A server error occurred, check console.') |js %>);
                 }
             });
         } 

@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
               jQuery("#plots_counts").html(html);
           },
           error: function(response){
-              alert('Error displaying plots count');
+              alert(<% __('Error displaying plots count') |js %>);
           }
 
       });
