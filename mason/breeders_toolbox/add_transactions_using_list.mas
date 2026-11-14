@@ -146,10 +146,10 @@ jQuery(document).ready(function(){
             var seedlot_validation = 1;
             seedlot_validation = lo.legacy_validate(seedlot_list_id, 'seedlots', true);
             if (seedlot_validation != 1) {
-                alert("This seedlot list did not pass validation. Names in the list must exist in the database and are not marked as discarded.");
+                alert(<% __('This seedlot list did not pass validation. Names in the list must exist in the database and are not marked as discarded.') |js %>);
                 return;
             } else if (!unit_type) {
-                alert("Please select a unit type");
+                alert(<% __('Please select a unit type') |js %>);
                 return;
             } else if (unit_type && seedlot_list_id) {
                 transaction_form(unit_type, seedlot_list_id);
@@ -235,7 +235,7 @@ jQuery(document).ready(function(){
             },
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred storing new transactions.');
+                alert(<% __('An error occurred storing new transactions.') |js %>);
             },
         });
     });
