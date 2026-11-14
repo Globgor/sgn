@@ -5,9 +5,9 @@ $trial_id
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables', 'CXGN.Transformation' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<&| /page/info_section.mas, id=>'delete_transformation_ids_section', title => 'Delete Transformation IDs', subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_transformation_ids_section', title => $m->interp->apply_escapes( __('Delete Transformation IDs'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
-        <center>You cannot delete any transformation ID with associated transformants, but you can mark the transformation ID as terminated.</center>
+        <center><% __('You cannot delete any transformation ID with associated transformants, but you can mark the transformation ID as terminated.') |h %></center>
     </div>
 
     <div class="well well-sm">
@@ -20,14 +20,14 @@ $trial_id
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_transformation_project_section', title => 'Delete Transformation Project', subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_transformation_project_section', title => $m->interp->apply_escapes( __('Delete Transformation Project'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
-        <center>You cannot delete any transformation project with associated transformation IDs. Please delete those associated transformation IDs in the project first.</center>
+        <center><% __('You cannot delete any transformation project with associated transformation IDs. Please delete those associated transformation IDs in the project first.') |h %></center>
     </div>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-primary" id="delete_transformation_project" role="button">Delete transformation project</button><br/><br/>
+                <button class="btn btn-primary" id="delete_transformation_project" role="button"><% __('Delete transformation project') |h %></button><br/><br/>
             </div>
         </div>
     </div>

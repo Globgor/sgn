@@ -9,12 +9,12 @@ $program_name => undef
     <table class="table table-hover table-bordered" id="vector_obsoleted_transformants_table">
         <thead>
             <tr>
-                <th>Accession</th>
-                <th>Note</th>
-                <th>Date</th>
-                <th>Obsoleted by</th>
+                <th><% __('Accession') |h %></th>
+                <th><% __('Note') |h %></th>
+                <th><% __('Date') |h %></th>
+                <th><% __('Obsoleted by') |h %></th>
 % if (!$transformation_id) {
-                <th>Transformation ID</th>
+                <th><% __('Transformation ID') |h %></th>
 %}
             </tr>
         </thead>
@@ -24,7 +24,7 @@ $program_name => undef
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title => 'Copy obsoleted accessions to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the obsoleted accession names to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy obsoleted accessions to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the obsoleted accession names to a new or exisiting list</i>'&>
         <br>
         <div id="obsoleted_transformant_names" style="display:none"></div>
         <div id="obsoleted_transformants_to_list_menu"></div>
