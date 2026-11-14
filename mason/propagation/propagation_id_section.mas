@@ -3,7 +3,7 @@ $propagation_group_stock_id
 </%args>
 
 
-<&| /page/info_section.mas, title => 'Active Propagation IDs', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Active Propagation IDs'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -20,8 +20,8 @@ $propagation_group_stock_id
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updatePropagationStatusDialog">Update Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updatePropagationStatusDialog"><% __('Update Status') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -30,8 +30,8 @@ $propagation_group_stock_id
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="reset" id="close_update_propagation_status_dialog" name="close_update_propagation_status_dialog" class="btn btn-default" >Close</button>
-                <button id="update_propagation_status_button" type="button" class="btn btn-primary" >Update</button>
+                <button type="reset" id="close_update_propagation_status_dialog" name="close_update_propagation_status_dialog" class="btn btn-default" ><% __('Close') |h %></button>
+                <button id="update_propagation_status_button" type="button" class="btn btn-primary" ><% __('Update') |h %></button>
             </div>
         </div>
     </div>
@@ -41,19 +41,19 @@ $propagation_group_stock_id
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="propagationUpdateSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="propagationUpdateSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The propagation status has been updated.
+                        <% __('The propagation status has been updated.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_propagation_update_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="dismiss_propagation_update_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

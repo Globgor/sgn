@@ -12,11 +12,11 @@ $user_id
 </%perl>
 
 <br />
-<& /page/page_title.mas, title => "Manage Propagations" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Manage Propagations"), 'h' ) &>
 
 <div class="container-fluid">
 
-        <&| /page/info_section.mas, title=>"Propagation" , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
+        <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Propagation"), 'h' ) , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
         <& /propagation/propagation_project_tree.mas, user_id=>$user_id, locations=>$locations, programs=>$programs, roles=>$roles,  &>
     </&>
 

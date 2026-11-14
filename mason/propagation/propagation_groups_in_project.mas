@@ -9,18 +9,18 @@ $trial_id
     <table class="table table-hover table-bordered" id="propagation_groups_in_project_table">
         <thead>
             <tr>
-                <th>Propagation Group ID</th>
-                <th>Accession</th>
-                <th>Variety</th>
-                <th>Material Type</th>
-                <th>Source Type</th>
-                <th>Source Name</th>
-                <th>Date</th>
-                <th>Sub-Location</th>
-                <th>Purpose</th>
-                <th>Description</th>
-                <th>Operator</th>
-                <th>Number of Propagation IDs</th>
+                <th><% __('Propagation Group ID') |h %></th>
+                <th><% __('Accession') |h %></th>
+                <th><% __('Variety') |h %></th>
+                <th><% __('Material Type') |h %></th>
+                <th><% __('Source Type') |h %></th>
+                <th><% __('Source Name') |h %></th>
+                <th><% __('Date') |h %></th>
+                <th><% __('Sub-Location') |h %></th>
+                <th><% __('Purpose') |h %></th>
+                <th><% __('Description') |h %></th>
+                <th><% __('Operator') |h %></th>
+                <th><% __('Number of Propagation IDs') |h %></th>
             </tr>
         </thead>
     </table>
