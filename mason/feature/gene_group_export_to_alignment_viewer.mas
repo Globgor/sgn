@@ -7,10 +7,10 @@
   </style>
   <div id="gene_group_export">
        <button onclick="export_gene_group(<% $feature->feature_id %>)">
-            Export sequences to alignment viewer
+            <% __('Export sequences to alignment viewer') |h %>
        </button>
        <img width="16" height="16" id="gene_group_export_spinner" src="/img/spinner.gif" style="display: none" />
-       <span class="message">(may take a long time for large gene groups)</span>
+       <span class="message"><% __('(may take a long time for large gene groups)') |h %></span>
   </div>
 
   <script type="text/javascript">

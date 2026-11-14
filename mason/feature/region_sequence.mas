@@ -127,7 +127,7 @@
            <option value="<% $locstring %>"><% $description %></option>
 %       }
       </select>
-      <input value="Download" type="submit" />
+      <input value="<% __('Download') |h %>" type="submit" />
     </form>
 
 </%def>
