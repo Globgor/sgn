@@ -19,7 +19,7 @@ solGS.heatmap = {
     var axisMode = heatmapArgs.axis_mode || 2;
 
     if (heatmapCanvasDiv == null) {
-      alert("The heatmap canvas div element is missing.");
+      alert(gettext("The heatmap canvas div element is missing."));
     }
 
     if (jQuery(heatmapPlotDivId).length == 0) {
