@@ -25,3 +25,12 @@ msgid_plural "{count} trials"
 msgstr[0] "{count} дослід"
 msgstr[1] "{count} досліди"
 msgstr[2] "{count} дослідів"
+
+msgid "Wizard"
+msgstr "Майстер"
+
+msgid "Bulk Search"
+msgstr "Пакетний пошук"
+
+msgid "Contact"
+msgstr "Контакти"

@@ -1,25 +1,25 @@
-<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown">Search</a>
+<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown"><% __('Search') |h %></a>
   <ul class="dropdown-menu">
-    <li><a href="/breeders/search">Wizard</a></li>
-    <li><a href="/search/bulk">Bulk Search</a></li>
-    <li><a href="/search/stocks">Accessions and Plots</a></li>
-    <li><a href="/search/organisms">Organisms</a></li>
-    <li><a href="/search/cross">Progenies, Parents, Crosses</a></li>
-    <li><a href="/search/trials">Field Trials</a></li>
+    <li><a href="/breeders/search"><% __('Wizard') |h %></a></li>
+    <li><a href="/search/bulk"><% __('Bulk Search') |h %></a></li>
+    <li><a href="/search/stocks"><% __('Accessions and Plots') |h %></a></li>
+    <li><a href="/search/organisms"><% __('Organisms') |h %></a></li>
+    <li><a href="/search/cross"><% __('Progenies, Parents, Crosses') |h %></a></li>
+    <li><a href="/search/trials"><% __('Field Trials') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/search/genotyping_trials">Genotyping Plates</a></li>
-    <li><a href="/search/genotyping_data_projects">Genotyping Projects</a></li>
-    <li><a href="/search/genotyping_protocols">Genotyping Protocols</a></li>
-    <li><a href="/search/stocks_using_genotypes">Accessions Using Genotypes</a></li>    
-    <li><a href="/search/vectors">Vector Constructs</a></li>
+    <li><a href="/search/genotyping_trials"><% __('Genotyping Plates') |h %></a></li>
+    <li><a href="/search/genotyping_data_projects"><% __('Genotyping Projects') |h %></a></li>
+    <li><a href="/search/genotyping_protocols"><% __('Genotyping Protocols') |h %></a></li>
+    <li><a href="/search/stocks_using_genotypes"><% __('Accessions Using Genotypes') |h %></a></li>    
+    <li><a href="/search/vectors"><% __('Vector Constructs') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/search/traits">Traits</a></li>
-    <li><a href="/search/treatments">Treatments</a></li>
+    <li><a href="/search/traits"><% __('Traits') |h %></a></li>
+    <li><a href="/search/treatments"><% __('Treatments') |h %></a></li>
     <!--<li><a href="/search/markers">Markers</a></li>-->
-    <li><a href="/search/images">Images</a></li>
-    <li><a href="/search/people">People</a></li>
-    <li><a href="/help/faq.pl">FAQ</a></li>
+    <li><a href="/search/images"><% __('Images') |h %></a></li>
+    <li><a href="/search/people"><% __('People') |h %></a></li>
+    <li><a href="/help/faq.pl"><% __('FAQ') |h %></a></li>
   </ul>
 </li>
