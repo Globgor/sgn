@@ -32,15 +32,26 @@ sub transform {
     my @missing = ();
 
     if (ref($list) eq "ARRAY" ) {
+        my %ids;
+        my %names = map { $_ => 1 } grep { defined $_ } @$list;
+        my @names = keys %names;
+        while (@names) {
+            my @batch = splice(@names, 0, 1000);
+            my $rs = $schema->resultset("Stock::Stock")->search(
+                { uniquename => { -in => \@batch } },
+                { columns => [qw/stock_id uniquename/] }
+            );
+            while (my $row = $rs->next()) {
+                push @{$ids{$row->uniquename}}, $row->stock_id;
+            }
+        }
         foreach my $l (@$list) {
-            my $rs = $schema->resultset("Stock::Stock")->search( { uniquename => $l });
-
-            if ($rs->count() == 0) {
+            if (!defined($l) || !exists($ids{$l})) {
                 push @missing, $l;
-            } elsif ($rs->count() > 1) {
-                die "Found more than one id ".$rs->first()->stock_id()." for stock $l\n";
+            } elsif (@{$ids{$l}} > 1) {
+                die "Found more than one id ".$ids{$l}[0]." for stock $l\n";
             } else {
-                push @transform, $rs->first()->stock_id();
+                push @transform, $ids{$l}[0];
             }
         }
     }
