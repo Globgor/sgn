@@ -165,10 +165,10 @@ jQuery(document).ready( function() {
             'searching': false,
             'ajax': '/ajax/catalog/image_list/' + <% $item_id %>,
             'columns': [
-                { title: "Name", "data": "image_name" },
-                { title: "Image", "data": "small_image" },
-                { title: "Description", "data": "image_description"},
-                { title: "Add or Remove Image", "data": "null", "render": function ( data, type, row ) {
+                { title: <% __('Name') |js %>, "data": "image_name" },
+                { title: <% __('Image') |js %>, "data": "small_image" },
+                { title: <% __('Description') |js %>, "data": "image_description"},
+                { title: <% __('Add or Remove Image') |js %>, "data": "null", "render": function ( data, type, row ) {
                     if (row.image_id == selected_image_id) {
                         return "<a onclick='removeImage()' >Remove</a>"
                     } else {
@@ -179,7 +179,7 @@ jQuery(document).ready( function() {
     });
 
     jQuery('#delete_catalog_item_button').click( function() {
-        var response = confirm('Really delete this catalog item? This action cannot be undone.');
+        var response = confirm(<% __('Really delete this catalog item? This action cannot be undone.') |js %>);
         if (response) {
             jQuery.ajax({
                 url: '/ajax/catalog/delete',
@@ -239,7 +239,7 @@ function addImage(image_id){
         },
         error: function(response){
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred adding image');
+            alert(<% __('An error occurred adding image') |js %>);
         }
     });
 
@@ -279,7 +279,7 @@ function removeImage(){
         },
         error: function(response){
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred removing image');
+            alert(<% __('An error occurred removing image') |js %>);
         }
     });
 

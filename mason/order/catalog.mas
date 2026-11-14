@@ -176,16 +176,16 @@ jQuery(document).ready( function() {
             'search':'applied',
             'ajax': '/ajax/catalog/items',
             columns: [
-                { title: "Name", "data": null, "render": function ( data, type, row ) { return "<a href='/catalog/item_details/"+row.item_id+"'>"+row.item_name+"</a>"; } },
-                { title: "Type", "data": "item_type" },
-                { title: "Material Type", "data": "material_type" },
-                { title: "Species", "data": "species" },
-                { title: "Variety", "data": "variety" },
-                { title: "Category", "data": "category" },
-                { title: "Additional Info", "data": "additional_info" },
-                { title: "Material Source", "data": "material_source" },
-                { title: "Program", "data": "breeding_program" },
-                { title: "Availability", "data": "availability"},
+                { title: <% __('Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/catalog/item_details/"+row.item_id+"'>"+row.item_name+"</a>"; } },
+                { title: <% __('Type') |js %>, "data": "item_type" },
+                { title: <% __('Material Type') |js %>, "data": "material_type" },
+                { title: <% __('Species') |js %>, "data": "species" },
+                { title: <% __('Variety') |js %>, "data": "variety" },
+                { title: <% __('Category') |js %>, "data": "category" },
+                { title: <% __('Additional Info') |js %>, "data": "additional_info" },
+                { title: <% __('Material Source') |js %>, "data": "material_source" },
+                { title: <% __('Program') |js %>, "data": "breeding_program" },
+                { title: <% __('Availability') |js %>, "data": "availability"},
                 { title: " ", "data": "null", "render": function ( data, type, row ) {
                     if (row.availability == 'available') {
                         return "<a onclick='addToCart(\""+row.item_name+"\", \""+additional_order_info+"\", \""+ordering_service_name+"\", \""+ordering_type+"\", \""+order_properties_dialog+"\")'>Request</a>";
@@ -202,17 +202,17 @@ jQuery(document).ready( function() {
             'search':'applied',
             'ajax': '/ajax/catalog/items',
             columns: [
-                { title: "Name", "data": null, "render": function ( data, type, row ) { return "<a href='/catalog/item_details/"+row.item_id+"'>"+row.item_name+"</a>"; } },
-                { title: "Type", "data": "item_type" },
-                { title: "Material Type", "data": "material_type" },
-                { title: "Species", "data": "species" },
-                { title: "Variety", "data": "variety" },
-                { title: "Category", "data": "category" },
-                { title: "Additional Info", "data": "additional_info" },
-                { title: "Material Source", "data": "material_source" },
-                { title: "Program", "data": "breeding_program" },
-                { title: "Availability", "data": "availability"},
-                { title: "Add to Cart", "data": "null", "render": function ( data, type, row ) {
+                { title: <% __('Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/catalog/item_details/"+row.item_id+"'>"+row.item_name+"</a>"; } },
+                { title: <% __('Type') |js %>, "data": "item_type" },
+                { title: <% __('Material Type') |js %>, "data": "material_type" },
+                { title: <% __('Species') |js %>, "data": "species" },
+                { title: <% __('Variety') |js %>, "data": "variety" },
+                { title: <% __('Category') |js %>, "data": "category" },
+                { title: <% __('Additional Info') |js %>, "data": "additional_info" },
+                { title: <% __('Material Source') |js %>, "data": "material_source" },
+                { title: <% __('Program') |js %>, "data": "breeding_program" },
+                { title: <% __('Availability') |js %>, "data": "availability"},
+                { title: <% __('Add to Cart') |js %>, "data": "null", "render": function ( data, type, row ) {
                     if (row.availability == 'available') {
                         return "<a onclick='addToCart(\""+row.item_name+"\", \""+additional_order_info+"\", \""+ordering_service_name+"\", \""+ordering_type+"\", \""+order_properties_dialog+"\" )'><span class='glyphicon glyphicon-shopping-cart'></span></a>";
                     } else {
@@ -261,7 +261,7 @@ jQuery(document).ready( function() {
             var itemAdded = lo.addToList(list_id, item_string);
             lo.setListType(list_id, 'catalog_items');
         } else {
-            alert ('Error retrieving your cart')
+            alert (<% __('Error retrieving your cart') |js %>)
         }
         if (itemAdded) {
             jQuery('#add_item_detail_dialog').modal('hide');
@@ -304,7 +304,7 @@ jQuery(document).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving your order');
+                alert(<% __('An error occurred saving your order') |js %>);
             }
 
         });
@@ -347,7 +347,7 @@ jQuery(document).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving your request');
+                alert(<% __('An error occurred saving your request') |js %>);
             }
         });
     });
