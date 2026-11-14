@@ -18,11 +18,11 @@ $odk_service => undef
 </%perl>
 
 <br />
-<& /page/page_title.mas, title => "Manage Crosses" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Manage Crosses"), 'h' ) &>
 
 <div class="container-fluid">
 
-<&| /page/info_section.mas, title=>"Crosses" , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Crosses"), 'h' ) , collapsible=>1, collapsed=>0, subtitle=> $subtitle &>
 
 <& /breeders_toolbox/crossing_experiment_tree.mas, user_id=>$user_id, locations=>$locations, programs=>$programs, roles=>$roles, odk_service=>$odk_service &>
 

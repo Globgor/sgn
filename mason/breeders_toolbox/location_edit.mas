@@ -4,27 +4,27 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="storeLocationDialog">Location Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="storeLocationDialog"><% __('Location Details') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" name="store_location_form" id="store_location_form">
                         <div class="form-group" id="location_id" style="display: none"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Name: </label>
+                            <label class="col-sm-2 control-label"><% __('Name:') |h %> </label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="location_name" id="location_name" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Abbreviation: </label>
+                            <label class="col-sm-2 control-label"><% __('Abbreviation:') |h %> </label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="location_abbreviation" id="location_abbreviation" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Country: </label>
+                            <label class="col-sm-2 control-label"><% __('Country:') |h %> </label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="location_country" name="location_country">
                                     <option value=""></option>
@@ -278,39 +278,39 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Program: (One or More)</label>
+                            <label class="col-sm-2 control-label"><% __('Program: (One or More)') |h %></label>
                             <div class="col-sm-10" id="breeding_program" name="breeding_program"></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Type: </label>
+                            <label class="col-sm-2 control-label"><% __('Type:') |h %> </label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="location_type" name="location_type">
                                     <option value=""></option>
-                                    <option value="Town">Town</option>
-                                    <option value="Farm">Farm</option>
-                                    <option value="Field">Field</option>
-                                    <option value="Greenhouse">Greenhouse</option>
-                                    <option value="Screenhouse">Screenhouse</option>
-                                    <option value="Lab">Lab</option>
-                                    <option value="Storage">Storage</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Town"><% __('Town') |h %></option>
+                                    <option value="Farm"><% __('Farm') |h %></option>
+                                    <option value="Field"><% __('Field') |h %></option>
+                                    <option value="Greenhouse"><% __('Greenhouse') |h %></option>
+                                    <option value="Screenhouse"><% __('Screenhouse') |h %></option>
+                                    <option value="Lab"><% __('Lab') |h %></option>
+                                    <option value="Storage"><% __('Storage') |h %></option>
+                                    <option value="Other"><% __('Other') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Latitude: </label>
+                            <label class="col-sm-2 control-label"><% __('Latitude:') |h %> </label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="location_latitude" id="location_latitude" type="text" size="4"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Longitude: </label>
+                            <label class="col-sm-2 control-label"><% __('Longitude:') |h %> </label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="location_longitude" id="location_longitude" type="text" size="4"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Altitude (m): </label>
+                            <label class="col-sm-2 control-label"><% __('Altitude (m):') |h %> </label>
                             <div class="col-sm-10">
                                 <input class="form-control" name="location_altitude" id="location_altitude" type="text" size="4"/>
                             </div>
@@ -325,8 +325,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="store_location_submit" id="store_location_submit">Store Location Details</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="store_location_submit" id="store_location_submit"><% __('Store Location Details') |h %></button>
             </div>
         </div>
     </div>
