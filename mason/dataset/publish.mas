@@ -12,17 +12,17 @@ $is_dataset_public => 0
 </%once>
 
 <div id="dataset-archive-loading" style="margin: 50px auto; text-align: center">
-    <p><em>Loading...</em></p>
+    <p><em><% __('Loading...') |h %></em></p>
 </div>
 
 <div id="dataset-archive-enabled" style="display: none">
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Date Published</th>
-                <th>User</th>
-                <th>Files</th>
-                <th>Published To</th>
+                <th><% __('Date Published') |h %></th>
+                <th><% __('User') |h %></th>
+                <th><% __('Files') |h %></th>
+                <th><% __('Published To') |h %></th>
                 <th></th>
             </tr>
         </thead>
@@ -32,10 +32,10 @@ $is_dataset_public => 0
     <br /><br />
 
 % if ( $is_dataset_owner ) {
-    <button id="dataset-generate-archive" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Generate Archive Files</button>
+    <button id="dataset-generate-archive" class="btn btn-primary"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<% __('Generate Archive Files') |h %></button>
 % } else {
-    <button class="btn btn-primary" disabled><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Generate Archive Files</button>
-    <p><small>Only the dataset owner can generate archive files</small></p>
+    <button class="btn btn-primary" disabled><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<% __('Generate Archive Files') |h %></button>
+    <p><small><% __('Only the dataset owner can generate archive files') |h %></small></p>
 % }
 </div>
 
@@ -45,9 +45,9 @@ $is_dataset_public => 0
 
 <br /><br />
 
-<&| /page/info_section.mas, id=> "publish_dataset_info", title => "Information about Publishing Datasets", collapsible=>1, collapsed=>1, hide_if_empty=>1 &>
-    <p>Dataset publishing allows the owner of a dataset to take a snapshot of the data contained within the dataset and publish it to an external service (such as FigShare), where it can be made publicly available and have a DOI assigned to it.</p>
-    <p>The steps to publish a dataset are:</p>
+<&| /page/info_section.mas, id=> "publish_dataset_info", title => $m->interp->apply_escapes( __("Information about Publishing Datasets"), 'h' ), collapsible=>1, collapsed=>1, hide_if_empty=>1 &>
+    <p><% __('Dataset publishing allows the owner of a dataset to take a snapshot of the data contained within the dataset and publish it to an external service (such as FigShare), where it can be made publicly available and have a DOI assigned to it.') |h %></p>
+    <p><% __('The steps to publish a dataset are:') |h %></p>
     <ol>
         <li><strong>Generate the archived files</strong> - this creates a static snapshot of the data within the dataset at the time when the files are generated</li>
         <li><strong>Upload the files to an external service</strong> - this will upload the archived files to a new or existing dataset on the external service</li>
@@ -55,7 +55,7 @@ $is_dataset_public => 0
         <li><strong>Reserve a DOI</strong> - generate a Digital Object Identifier (DOI) for the external dataset that can be used as a reference in publications.</li>
     </ol>
     <hr />
-    <p>Important Notes:</p>
+    <p><% __('Important Notes:') |h %></p>
     <ul>
         <li>Once the external dataset has been published (made public), the uploaded files and metadata are <em>permanently available</em>.  Any changes you make will need to be republished to a new version of the external dataset.</li>
     </ul> 
@@ -66,14 +66,14 @@ $is_dataset_public => 0
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-          <h4 class="modal-title">Generating Archive Files</h4>
+          <h4 class="modal-title"><% __('Generating Archive Files') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid" id="dataset-archive-generate-dialog-content">
         </div>
       </div>
       <div class="modal-footer">
-        <button id="dataset-archive-generate-dialog-close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="dataset-archive-generate-dialog-close" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
     </div>
     </div>
   </div>
@@ -84,8 +84,8 @@ $is_dataset_public => 0
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content ui-front">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="datasetArchiveUploadDialog">Upload Dataset</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="datasetArchiveUploadDialog"><% __('Upload Dataset') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -98,7 +98,7 @@ $is_dataset_public => 0
 
             <ol id="dataset-archive-publish-instructions">
                 <li>
-                    <p>Select the external service to upload this dataset to:</p>
+                    <p><% __('Select the external service to upload this dataset to:') |h %></p>
                     <select id="dataset-archive-publish-services" class="form-control"></select>
                 </li>
                 <li class="dataset-archive-publish-connect">
@@ -110,15 +110,15 @@ $is_dataset_public => 0
                 <li class="dataset-archive-publish-connect">
                     <p>Grant <% $project_name %> access to your <span class="dataset-archive-publish-service-name"></span> account</p>
                     <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;Connect Accounts
+                        <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                     </button>
                 </li>
                 <li class="dataset-archive-publish-connected">
                     <p>You are connected to this <span class="dataset-archive-publish-service-name"></span> account:</p>
-                    <p><strong>Name:</strong> <span class="dataset-archive-publish-connected-name"></span></p>
-                    <p><strong>Email:</strong> <span class="dataset-archive-publish-connected-email"></span></p>
+                    <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
+                    <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                     <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;Disconnect Accounts
+                        <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;<% __('Disconnect Accounts') |h %>
                     </button>
                 </li>
                 <li class="dataset-archive-publish-connected">
@@ -127,34 +127,34 @@ $is_dataset_public => 0
                         <option value="">Create a new <span class="dataset-archive-publish-service-name"></span> dataset</option>
                     </select>
                     <hr />
-                    <label>Title:</label>
+                    <label><% __('Title:') |h %></label>
                     <div class="input-group">
                         <span id="dataset-archive-publish-article-title-addon" class="input-group-addon"></span>
                         <input id="dataset-archive-publish-article-title" class="form-control dataset-archive-publish-article-details" />
                     </div>
                     <br />
-                    <label>Description:</label>
+                    <label><% __('Description:') |h %></label>
                     <textarea id="dataset-archive-publish-article-description" class="form-control dataset-archive-publish-article-details"></textarea>
                     <br />
-                    <label>Additional Authors (one per line):</label>
-                    <textarea id="dataset-archive-publish-article-authors" class="form-control dataset-archive-publish-article-details" placeholder="You will automatically be added as an Author"></textarea>
+                    <label><% __('Additional Authors (one per line):') |h %></label>
+                    <textarea id="dataset-archive-publish-article-authors" class="form-control dataset-archive-publish-article-details" placeholder="<% __('You will automatically be added as an Author') |h %>"></textarea>
                     <br />
                     <p><em>The dataset metadata can be updated later on <span class="dataset-archive-publish-service-name dataset-archive-publish-article-details"></span> until the dataset on <span class="dataset-archive-publish-service-name"></span> is published and made public.</em></p>
                 </li>
                 <li class="dataset-archive-publish-connected">
                     <p>Send and attach the files to the selected <span class="dataset-archive-publish-service-name"></span> dataset.</p>
                     <button id="dataset-archive-publish-send" class="dataset-archive-publish-connected-btn btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;<span id="dataset-archive-publish-send-label">Send Files</span>
+                        <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;<span id="dataset-archive-publish-send-label"><% __('Send Files') |h %></span>
                     </button>
                     <br /><br />
                     <div class="progress">
                         <div id="dataset-archive-publish-send-pb" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%;">
-                            <span class="sr-only">60% Complete</span>
+                            <span class="sr-only"><% __('60% Complete') |h %></span>
                         </div>
                     </div>
                     <div class="progress">
                         <div id="dataset-archive-publish-send-subpb" class="progress-bar progress-bar-info" role="progressbar" style="width: 0%;">
-                            <span class="sr-only">60% Complete</span>
+                            <span class="sr-only"><% __('60% Complete') |h %></span>
                         </div>
                     </div>
                     <div style="display: flex; justify-content: space-between; gap: 15px">
@@ -166,7 +166,7 @@ $is_dataset_public => 0
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -177,8 +177,8 @@ $is_dataset_public => 0
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content ui-front">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="datasetArchivePublishDialog">Publish Dataset</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="datasetArchivePublishDialog"><% __('Publish Dataset') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -186,7 +186,7 @@ $is_dataset_public => 0
                 <span class="warning-alert-icon glyphicon glyphicon-exclamation-sign"></span>
                 <div>
                     <p><strong>IMPORTANT!</strong> Once you make the external dataset public, all of the uploaded files and metadata become <em>permanently available</em> and cannot be removed or modified from this version of the dataset.  If you need to make updates, changes can be made and new files can be uploaded and a new version of the external dataset will need to be published (the original version will still be accessible).</p>
-                    <p><strong><em>Make sure everything is correct before publishing!</em></strong></p>
+                    <p><strong><em><% __('Make sure everything is correct before publishing!') |h %></em></strong></p>
                 </div>
             </div>
 
@@ -195,25 +195,25 @@ $is_dataset_public => 0
             <div class="dataset-archive-publish-connect">
                 <p>Grant <% $project_name %> access to your <span class="dataset-archive-publish-service-name"></span> account</p>
                 <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
-                    <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;Connect Accounts
+                    <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                 </button>
             </div>
             <div class="dataset-archive-publish-connected">
                 <p>You are connected to this <span class="dataset-archive-publish-service-name"></span> account:</p>
-                <p><strong>Name:</strong> <span class="dataset-archive-publish-connected-name"></span></p>
-                <p><strong>Email:</strong> <span class="dataset-archive-publish-connected-email"></span></p>
+                <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
+                <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                 <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">
-                    <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;Disconnect Accounts
+                    <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;<% __('Disconnect Accounts') |h %>
                 </button>
             </div>
 
             <hr />
 
-            <p><strong>Service:</strong> <span class="dataset-archive-publish-service-name"></span></p>
-            <p><strong>Title:</strong> <span id="dataset-archive-publish-title"></span></p>
-            <p><strong>Authors:</strong> <span id="dataset-archive-publish-authors"></span></p>
-            <p><strong>Description:</strong><br /><span id="dataset-archive-publish-description"></span></p>
-            <p><strong>Files:</strong> <span id="dataset-archive-publish-files"></span></p>
+            <p><strong><% __('Service:') |h %></strong> <span class="dataset-archive-publish-service-name"></span></p>
+            <p><strong><% __('Title:') |h %></strong> <span id="dataset-archive-publish-title"></span></p>
+            <p><strong><% __('Authors:') |h %></strong> <span id="dataset-archive-publish-authors"></span></p>
+            <p><strong><% __('Description:') |h %></strong><br /><span id="dataset-archive-publish-description"></span></p>
+            <p><strong><% __('Files:') |h %></strong> <span id="dataset-archive-publish-files"></span></p>
             <p><a id="dataset-archive-publish-link" href="#" target="_blank">View Details on <span class="dataset-archive-publish-service-name"></span></a></p>
 
             <hr />
@@ -224,7 +224,7 @@ $is_dataset_public => 0
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -235,8 +235,8 @@ $is_dataset_public => 0
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content ui-front">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="datasetArchiveDOIDialog">Reserve a DOI</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="datasetArchiveDOIDialog"><% __('Reserve a DOI') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -252,36 +252,36 @@ $is_dataset_public => 0
             <div class="dataset-archive-publish-connect">
                 <p>Grant <% $project_name %> access to your <span class="dataset-archive-publish-service-name"></span> account</p>
                 <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
-                    <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;Connect Accounts
+                    <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                 </button>
             </div>
             <div class="dataset-archive-publish-connected">
                 <p>You are connected to this <span class="dataset-archive-publish-service-name"></span> account:</p>
-                <p><strong>Name:</strong> <span class="dataset-archive-publish-connected-name"></span></p>
-                <p><strong>Email:</strong> <span class="dataset-archive-publish-connected-email"></span></p>
+                <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
+                <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                 <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">
-                    <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;Disconnect Accounts
+                    <span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;<% __('Disconnect Accounts') |h %>
                 </button>
             </div>
 
             <hr />
 
-            <p><strong>Service:</strong> <span class="dataset-archive-publish-service-name"></span></p>
-            <p><strong>Title:</strong> <span id="dataset-archive-doi-title"></span></p>
-            <p><strong>Authors:</strong> <span id="dataset-archive-doi-authors"></span></p>
-            <p><strong>Description:</strong><br /><span id="dataset-archive-doi-description"></span></p>
-            <p><strong>Files:</strong> <span id="dataset-archive-doi-files"></span></p>
+            <p><strong><% __('Service:') |h %></strong> <span class="dataset-archive-publish-service-name"></span></p>
+            <p><strong><% __('Title:') |h %></strong> <span id="dataset-archive-doi-title"></span></p>
+            <p><strong><% __('Authors:') |h %></strong> <span id="dataset-archive-doi-authors"></span></p>
+            <p><strong><% __('Description:') |h %></strong><br /><span id="dataset-archive-doi-description"></span></p>
+            <p><strong><% __('Files:') |h %></strong> <span id="dataset-archive-doi-files"></span></p>
             <p><a id="dataset-archive-doi-link" href="#" target="_blank">View Details on <span class="dataset-archive-publish-service-name"></span></a></p>
 
             <hr />
 
             <button id="dataset-archive-publish-doi" class="dataset-archive-publish-connected-btn btn btn-primary btn-sm">
-                <span class="glyphicon glyphicon-barcode"></span>&nbsp;&nbsp;<span id="dataset-archive-publish-send-label">Generate a DOI</span>
+                <span class="glyphicon glyphicon-barcode"></span>&nbsp;&nbsp;<span id="dataset-archive-publish-send-label"><% __('Generate a DOI') |h %></span>
             </button>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
