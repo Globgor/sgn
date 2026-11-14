@@ -58,7 +58,7 @@
         error: function(response) {
           jQuery('#working_modal').modal('hide');
           console.log(response);
-          alert("Something went wrong in the available-seedlots AJAX call. See console for more information.")
+          alert(<% __('Something went wrong in the available-seedlots AJAX call. See console for more information.') |js %>)
         }
       });
     };
