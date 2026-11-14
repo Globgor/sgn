@@ -35,8 +35,8 @@ $target_list
 &>
 
 <&| /page/info_section.mas,
-    title => 'Files',
-    subtitle => 'files available for download',
+    title => $m->interp->apply_escapes( __('Files'), 'h' ),
+    subtitle => $m->interp->apply_escapes( __('files available for download'), 'h' ),
     collapsible => 1,
     hide_if_empty => 1,
  &>
@@ -45,7 +45,7 @@ $target_list
 
 </&>
 
-<&| /page/info_section.mas, title => 'Related data sources', collapsible => 1, &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Related data sources'), 'h' ), collapsible => 1, &>
   <&
       '/chado/relations.mas',
       principle         => $sample->get_bssample_row,
