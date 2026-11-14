@@ -1,0 +1,82 @@
+=head1 NAME
+
+t/unit/mason/text/scripts_brapiclient_2.t - scripts in the brapiclient templates, part 2 of 3: the script text is shown in the user's language
+
+=head1 DESCRIPTION
+
+Renders the components with HTML::Mason through SGN::Test::MasonText, without a
+database or a Catalyst context. Each text must be on the page in English and,
+with a test catalog, in its translated form, as a JSON string inside a script. A component that needs real data
+to run is only compiled.
+
+=cut
+
+use strict;
+use warnings;
+use utf8;
+
+use lib 't/lib';
+use Test::More;
+use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
+
+page_script_texts_ok(
+    '/brapiclient/markerprofile_search.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/observation_levels.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/phenotypes_search.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/phenotyping_handhelds.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/programs.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/seasons.mas',
+    'An error occurred getting seasons',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_detail.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_germplasm.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_layout.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_observations.mas',
+    'An error occurred',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_post.mas',
+    'An error occurred.',
+);
+
+page_script_texts_ok(
+    '/brapiclient/studies_search.mas',
+    'An error occurred',
+);
+
+done_testing;
