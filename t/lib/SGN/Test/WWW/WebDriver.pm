@@ -52,7 +52,7 @@ For downloads, a /download dir needs to be mapped in the breedbase_web docker an
 
 =head1 SLEEP OVERRIDE
 
-Plain C<use SGN::Test::WWW::WebDriver;> replaces unqualified C<sleep> in the calling package with a page-settling wait, bounded by the requested duration except for remote-command latency. It observes jQuery and modal transitions for 0.75 seconds of quiet (0.5 seconds for pauses of one second or less). Existing alerts and sleeps longer than 60 seconds retain real sleeps.
+Plain C<use SGN::Test::WWW::WebDriver;> replaces unqualified C<sleep> in the calling package with a page-settling wait, bounded by the requested duration except for remote-command latency. It observes jQuery and modal transitions for 0.75 seconds of quiet (0.5 seconds for pauses of one second or less). Existing alerts and sleeps longer than 60 seconds retain real sleeps. Leaving documents receive only document-token checks while no alert is open; page settling resumes on the new document. A page that fires beforeunload without leaving (for example, a download link) receives full sleeps.
 
 Use C<use SGN::Test::WWW::WebDriver ();> to avoid installing the override, or set C<SGN_TEST_PLAIN_SLEEP=1> to retain real sleeps while bisecting a run. Sleeps without an argument retain Perl's original behavior. Fractional sleeps really sleep, using C<Time::HiRes>. Timers with gaps longer than 0.75 seconds are not observed. Body parsing and application callbacks still require their own result conditions.
 
@@ -135,10 +135,18 @@ sub _settled_sleep {
     # Longer sleeps wait for server-side jobs that the page cannot observe.
     return _real_sleep($seconds) if $seconds > 60;
     my $started = Time::HiRes::time();
-    my ($quiet_since, $document);
+    my ($quiet_since, $document, $leaving);
     $self->_wait($seconds, sub {
-        my $idle = eval { $self->driver->execute_script(q{
+        if ($leaving) {
+            my $token = eval { $self->driver->execute_script(
+                'return performance.timeOrigin || performance.timing.navigationStart;'
+            ) };
+            return 0 if !$token || $token == $leaving;
+            $leaving = undef;
+        }
+        my $idle = eval { $self->_page_script(q{
             var token = performance.timeOrigin || performance.timing.navigationStart;
+            if (window.__sgnTestWait.leaving) { return -token; }
             function rendered(e) {
                 return e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden';
             }
@@ -156,12 +164,17 @@ sub _settled_sleep {
             return document.querySelector('.modal-backdrop:not(.in)') ? 0 :
                 token;
         }) };
+        if ($idle && $idle < 0) {
+            $leaving = -$idle;
+            $quiet_since = undef;
+            return 0;
+        }
         my $now = Time::HiRes::time();
         $quiet_since = undef if !$idle || !defined $document || $document != $idle;
         $quiet_since = $now if $idle && !defined $quiet_since;
         $document = $idle;
         return defined $quiet_since && $now - $quiet_since >= ($seconds <= 1 ? 0.5 : 0.75);
-    });
+    }, \$leaving);
     return int(Time::HiRes::time() - $started);
 }
 
@@ -257,12 +270,33 @@ sub get_ok {
     ok($self->get($url), $test_name);
 }
     
+use constant PAGE_HOOK => <<'JS';
+(function () {
+    var state = window.__sgnTestWait = {leaving: false};
+    window.addEventListener('beforeunload', function () { state.leaving = true; });
+})();
+JS
+
+sub _page_script {
+    my ($self, $script, @args) = @_;
+    unless ($ENV{SGN_TEST_PLAIN_SLEEP}) {
+        $self->driver->execute_script(q{
+            if (window.__sgnTestWait) { return; }
+            // Install callbacks in the page realm, outside Marionette's sandbox.
+            var s = document.createElement('script');
+            s.textContent = arguments[0];
+            (document.head || document.documentElement).appendChild(s); s.remove();
+        }, PAGE_HOOK);
+    }
+    return $self->driver->execute_script($script, @args);
+}
+
 sub _wait {
-    my ($self, $seconds, $condition) = @_;
+    my ($self, $seconds, $condition, $leaving) = @_;
     my $deadline = Time::HiRes::time() + $seconds;
     while (Time::HiRes::time() < $deadline) {
         my $alert = eval { $self->driver->get_alert_text(); 1 };
-        return 1 if $alert;
+        return 1 if $alert && !($leaving && $$leaving);
         return 1 if !$alert && eval { $condition->() } && Time::HiRes::time() < $deadline;
         my $remaining = $deadline - Time::HiRes::time();
         last if $remaining <= 0;

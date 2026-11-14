@@ -273,6 +273,61 @@ cmp_ok($elapsed, '>=', 0.8, 'empty import leaves a real sleep');
 }
 # END STAGE B1
 
+# BEGIN STAGE B2: document navigation.
+open_fixture();
+$t->_page_script('return true;');
+page_script(q{
+    window.webdriverWaitBeforeUnload = false;
+    setTimeout(function () {
+        window.dispatchEvent(new Event('beforeunload'));
+        window.webdriverWaitBeforeUnload = true;
+    }, 200);
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(2);
+$elapsed = Time::HiRes::time() - $started;
+ok($driver->execute_script('return window.webdriverWaitBeforeUnload;'), 'beforeunload event was delivered');
+cmp_ok($elapsed, '>=', 1.8, 'beforeunload keeps the old document busy until the sleep deadline');
+
+page_script(q{setTimeout(function () { alert('webdriver wait test leaving'); }, 1000);});
+$started = Time::HiRes::time();
+my $leaving_page_polls = 0;
+{
+    my $page_script = \&SGN::Test::WWW::WebDriver::_page_script;
+    local *SGN::Test::WWW::WebDriver::_page_script = sub {
+        $leaving_page_polls++;
+        return $page_script->(@_);
+    };
+    SGN::Test::WebDriverWaits::Imported::pause(3);
+}
+$elapsed = Time::HiRes::time() - $started;
+cmp_ok($elapsed, '>=', 2.8, 'a leaving document keeps the timed wait when an alert appears');
+is($leaving_page_polls, 1, 'page polling stops after observing the leaving document');
+is($driver->get_alert_text(), 'webdriver wait test leaving', 'navigation does not cause automatic alert acceptance');
+$driver->accept_alert();
+
+open_fixture();
+$t->_page_script('return true;');
+my $old_document = page_script(q{
+    window.webdriverWaitOldDocument = true;
+    var old = performance.timeOrigin || performance.timing.navigationStart;
+    setTimeout(function () { location.reload(); }, 500);
+    return old;
+});
+$started = Time::HiRes::time();
+SGN::Test::WebDriverWaits::Imported::pause(3);
+$returned_at = Time::HiRes::time();
+$elapsed = $returned_at - $started;
+my $navigation = $driver->execute_script(q{
+    return [window.webdriverWaitOldDocument === undefined,
+        performance.timeOrigin || performance.timing.navigationStart, Date.now()];
+});
+ok($navigation->[0], 'sleep does not return on the old document during reload');
+isnt($navigation->[1], $old_document, 'reload changes the document time origin');
+cmp_ok($navigation->[1], '<=', $navigation->[2], 'the new document existed before sleep returned');
+cmp_ok(($navigation->[2] - $navigation->[1]) / 1000, '>=', 0.6, 'the new document receives its own quiet window');
+cmp_ok($elapsed, '<', 3.5, 'reload wait is bounded by the requested sleep');
+# END STAGE B2
 
 alarm(0);
 done_testing();
