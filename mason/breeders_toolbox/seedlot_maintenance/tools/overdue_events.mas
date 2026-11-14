@@ -9,8 +9,7 @@
     </div>
     <div class="panel-body">
 
-        <p>This search will return any Seedlots from the selected list that have not had the specified 
-        event performed on or after the selected date.</p>
+        <p><& /util/sentence.mas, text => __x('This search will return any Seedlots from the selected list that have not had the specified event performed on or after the selected date.') &></p>
 
         <br />
         

@@ -158,15 +158,15 @@ $program_name
                         <% __('Required columns:') |h %>
                     </b>
                     <ul>
-                        <li><b>Trait Name:</b> The template already contains trait names based on your trait list</li>
-                        <li><b>Target Value or Benchmark Variety:</b> Please indicates <b>either</b> a target value <b>or</b> a benchmark variety for each targeted trait. Benchmark variety must exist in the database.</li>
+                        <li><b>Trait Name:</b> <& /util/sentence.mas, text => __x('The template already contains trait names based on your trait list') &></li>
+                        <li><b>Target Value or Benchmark Variety:</b> <& /util/sentence.mas, text => __x('Please indicates {bold}either{end_bold} a target value {bold}or{end_bold} a benchmark variety for each targeted trait. Benchmark variety must exist in the database.'), bold => '<b>', end_bold => '</b>' &></li>
                         <li><b>Performance:</b> Please specifies the performance of each targeted trait (equal, smaller or larger) compared to the target value or benchmark variety </li>
                     </ul>
                     <b>
                         <% __('Optional columns:') |h %>
                     </b>
                     <ul>
-                        <li><b>Weight:</b> Default is 1</li>
+                        <li><b>Weight:</b> <& /util/sentence.mas, text => __x('Default is 1') &></li>
                         <li><b>Trait Type:</b> e.g. basic trait, value-added trait</li>
                     </ul>
                 </div>

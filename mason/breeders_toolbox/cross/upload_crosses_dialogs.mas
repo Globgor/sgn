@@ -26,17 +26,17 @@ $breeding_program_id => undef
                                     <ul class="a">
                                         <li><% __('cross type descriptions:') |h %></li>
                                         <ul class="b">
-                                            <li><b>biparental:</b> An individual plant pollinated by another individual plant.</li>
-                                            <li><b>self:</b> A self pollinated individual plant.</li>
-                                            <li><b>open:</b> An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).</li>
-                                            <li><b>backcross:</b> An individual plant pollinated by one of its parents. Cross Unique ID can be used as one of the parents.</li>
-                                            <li><b>sib:</b> Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.</li>
-                                            <li><b>polycross:</b> Mating between individual female parent from a population and the corresponding male population.</li>
-                                            <li><b>bulk:</b> A group of plants (usually a related family) pollinated by an individual plant (between a female population and a male accession).</li>
-                                            <li><b>bulk_open:</b> A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (between a female population and a male population or unknown male parent).</li>
-                                            <li><b>bulk_self:</b> A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).</li>
-                                            <li><b>doubled_haploid:</b> Plants derived from doubling the chromosome number of haploid tissue.</li>
-                                            <li><b>dihaploid_induction</b>: Plants derived from reducing the chromosome set from tetraploid to diploid.</li>
+                                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by another individual plant.'), label => '<b>biparental:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} A self pollinated individual plant.'), label => '<b>self:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).'), label => '<b>open:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by one of its parents. Cross Unique ID can be used as one of the parents.'), label => '<b>backcross:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.'), label => '<b>sib:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} Mating between individual female parent from a population and the corresponding male population.'), label => '<b>polycross:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) pollinated by an individual plant (between a female population and a male accession).'), label => '<b>bulk:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (between a female population and a male population or unknown male parent).'), label => '<b>bulk_open:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).'), label => '<b>bulk_self:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label} Plants derived from doubling the chromosome number of haploid tissue.'), label => '<b>doubled_haploid:</b>' &></li>
+                                            <li><& /util/sentence.mas, text => __x('{label}: Plants derived from reducing the chromosome set from tetraploid to diploid.'), label => '<b>dihaploid_induction</b>' &></li>
                                         </ul>
                                     </ul>
                                 </li>
@@ -247,26 +247,26 @@ $breeding_program_id => undef
                     </style>
                     <b><% __('Required columns:') |h %></b>
                     <ul>
-                        <li><b>cross_unique_id</b> (must NOT exist in the database)</li>
+                        <li><& /util/sentence.mas, text => __x('{label} (must NOT exist in the database)'), label => '<b>cross_unique_id</b>' &></li>
                         <li><b>cross_combination</b> (required in the header, but value for cross combination (e.g. female accession/male accession) may be left blank)</li>
-                        <li><b>cross_type</b> (must be one of the following: biparental, self, open, sib, polycross, backcross, bulk, bulk_open, bulk_self, doubled_haploid, dihaploid_induction)</li>
+                        <li><& /util/sentence.mas, text => __x('{label} (must be one of the following: {types})'), label => '<b>cross_type</b>', types => 'biparental, self, open, sib, polycross, backcross, bulk, bulk_open, bulk_self, doubled_haploid, dihaploid_induction' &></li>
                         <ul class="a">
-                            <li><b>biparental:</b> An individual plant pollinated by another individual plant.</li>
-                            <li><b>self:</b> A self pollinated individual plant.</li>
-                            <li><b>open:</b> An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).</li>
-                            <li><b>backcross:</b> An individual plant pollinated by one of its parents.</li>
-                            <li><b>sib:</b> Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.</li>
-                            <li><b>polycross:</b> Mating between individual female parent from a population and the corresponding male population.</li>
-                            <li><b>bulk:</b> A group of plants (usually a related family) pollinated by an individual plant (between a female population and a male accession).</li>
-                            <li><b>bulk_open:</b> A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (between a female population and a male population or unknown male parent).</li>
-                            <li><b>bulk_self:</b> A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).</li>
-                            <li><b>doubled_haploid:</b> Plants derived from doubling the chromosome number of haploid tissue.</li>
-                            <li><b>dihaploid_induction</b>: Plants derived from reducing the chromosome set from 4 to 2.</li>
+                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by another individual plant.'), label => '<b>biparental:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} A self pollinated individual plant.'), label => '<b>self:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).'), label => '<b>open:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} An individual plant pollinated by one of its parents.'), label => '<b>backcross:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.'), label => '<b>sib:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} Mating between individual female parent from a population and the corresponding male population.'), label => '<b>polycross:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) pollinated by an individual plant (between a female population and a male accession).'), label => '<b>bulk:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (between a female population and a male population or unknown male parent).'), label => '<b>bulk_open:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).'), label => '<b>bulk_self:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label} Plants derived from doubling the chromosome number of haploid tissue.'), label => '<b>doubled_haploid:</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{label}: Plants derived from reducing the chromosome set from 4 to 2.'), label => '<b>dihaploid_induction</b>' &></li>
                         </ul>
-                        <li><b>female_parent:</b> Female parent names must exist as <b>uniquenames</b> in the database, can be accession, plot, plant or population stock type.</li>
+                        <li><& /util/sentence.mas, text => __x('{label} Female parent names must exist as {unique_names} in the database, can be accession, plot, plant or population stock type.'), label => '<b>female_parent:</b>', unique_names => '<b>uniquenames</b>' &></li>
                         <li><b>male_parent:</b> Required in the header, but value may be left blank for most cross types. Must be specified for biparental, sib, backcross, polycross and bulk cross types. When specified, male parent names must exist as <b>uniquenames</b> in the database, can be accession, plot, plant or population stock type.</li>
                     </ul>
-                    <b>Optional columns (additional parent info):</b> You can add additional parent info after male_plant column by using one or more of these column headers.
+                    <& /util/sentence.mas, text => __x('{bold}Optional columns (additional parent info):{end_bold} You can add additional parent info after {column} column by using one or more of these column headers.'), bold => '<b>', end_bold => '</b>', column => 'male_plant' &>
                     <ul>
 % foreach $additional_info(@cross_additional_info){
                         <li><%$additional_info%></li>

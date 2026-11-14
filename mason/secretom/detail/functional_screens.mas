@@ -2,10 +2,7 @@
 
 <div class="page_introduction">
   <p>
-  We have been developing and applying functional screens to identify
-  genes encoding secreted proteins. The genes are identified based on
-  the ultimate localization of the encoded protein, utilizing protein
-  markers whose activities confirm targeting to the cell surface.
+  <& /util/sentence.mas, text => __x('We have been developing and applying functional screens to identify genes encoding secreted proteins.') &> <& /util/sentence.mas, text => __x('The genes are identified based on the ultimate localization of the encoded protein, utilizing protein markers whose activities confirm targeting to the cell surface.') &>
   </p>
 </div>
 
@@ -22,14 +19,7 @@
   </div>
 
   <p>
-  The YST screen can be used to test a specific cDNA of interest, or to
-  screen a cDNA library.  The screen uses invertase, an enzyme that
-  hydrolyzes sucrose to generate glucose and fructose, as a reporter
-  gene/protein and yeast (<span class="species_binomial">S. cerevisiae</span>)
-  as a host. If yeast cells are streaked onto plates containing sucrose
-  as the sole carbon source, they must secrete invertase to break down
-  the sucrose in order to grow, and so an invertase-deficient yeast
-  mutant will be unable to grow.
+  <& /util/sentence.mas, text => __x('The YST screen can be used to test a specific cDNA of interest, or to screen a cDNA library.') &>  <& /util/sentence.mas, text => __x('The screen uses invertase, an enzyme that hydrolyzes sucrose to generate glucose and fructose, as a reporter gene/protein and yeast ({species}) as a host.'), species => '<span class="species_binomial">S. cerevisiae</span>' &> <& /util/sentence.mas, text => __x('If yeast cells are streaked onto plates containing sucrose as the sole carbon source, they must secrete invertase to break down the sucrose in order to grow, and so an invertase-deficient yeast mutant will be unable to grow.') &>
   </p>
 
 
@@ -46,15 +36,7 @@
 
   <p>
 
-  This system can also identify plasma membrane (PM)-spanning or
-  PM-anchored proteins if the orientation of the fusion protein is such
-  that the invertase component is external to the cell. The resulting
-  yeast transformants can then be isolated and the plasmids containing
-  the heterologous transgenes sequenced, allowing identification of the
-  secreted protein. We typically also confirm the localization of
-  candidates of interest by transient expression as GFP fusion proteins
-  in onion epidermal cells, coupled with staining using the FM-64 dye to
-  co-stain for the plasma membrane,
+  <& /util/sentence.mas, text => __x('This system can also identify plasma membrane (PM)-spanning or PM-anchored proteins if the orientation of the fusion protein is such that the invertase component is external to the cell.') &> <& /util/sentence.mas, text => __x('The resulting yeast transformants can then be isolated and the plasmids containing the heterologous transgenes sequenced, allowing identification of the secreted protein.') &> <& /util/sentence.mas, text => __x('We typically also confirm the localization of candidates of interest by transient expression as GFP fusion proteins in onion epidermal cells, coupled with staining using the FM-64 dye to co-stain for the plasma membrane,') &>
 
   </p>
 
@@ -67,33 +49,19 @@
     <img src="/documents/img/secretom/N_benth_NIP_x210.jpg" />
 
     <p style="text-align: left">
-    A <span class="species_binomial">Nicotiana benthamiana</span> leaf
-    showing regions of HR indicating the presence of a secreted
-    protein fused to NIP.
+    <& /util/sentence.mas, text => __x('A {species} leaf showing regions of HR indicating the presence of a secreted protein fused to NIP.'), species => '<span class="species_binomial">Nicotiana benthamiana</span>' &>
     </p>
 
   </div>
 
   <p>
-  We have also developed a new technique termed the NIP secretion trap
-  screen. Briefly, this involves ligating cDNAs in frame at the 5&rsquo;
-  end of the DNA sequence encoding a gene termed necrosis-inducing
-  protein (NIP) that has been truncated to remove the native secretory
-  signal peptide. NIP was identified from the oomycete Phytophthora
-  sojae, as a protein that induces a hypersensitive response (HR),
-  resulting in cell death, in leaves of some plants when present in the
-  apoplast. It does not cause HR when expressed in the plant
-  cytosol. Constructs containing individual cDNA::Nip fusions are
-  transformed into <span class="species_binomial">Agrobacterium
-  tumefaciens</span>, which is then infiltrated into the apoplastic
-  compartment of Nicotiana benthamiana leaves. Any proteins encoding SPs
-  will be secreted from infected plant cells as NIP fusion proteins,
-  causing a readily detectable HR.
+  <& /util/sentence.mas, text => __x('We have also developed a new technique termed the NIP secretion trap screen.') &> <& /util/sentence.mas, text => __x('Briefly, this involves ligating cDNAs in frame at the 5’ end of the DNA sequence encoding a gene termed necrosis-inducing protein (NIP) that has been truncated to remove the native secretory signal peptide.') &> <& /util/sentence.mas, text => __x('NIP was identified from the oomycete {species}, as a protein that induces a hypersensitive response (HR), resulting in cell death, in leaves of some plants when present in the apoplast.'), species => 'Phytophthora
+  sojae' &> <& /util/sentence.mas, text => __x('It does not cause HR when expressed in the plant cytosol.') &> <& /util/sentence.mas, text => __x('Constructs containing individual cDNA::Nip fusions are transformed into {species}, which is then infiltrated into the apoplastic compartment of {species2} leaves.'), species => '<span class="species_binomial">Agrobacterium
+  tumefaciens</span>', species2 => 'Nicotiana benthamiana' &> <& /util/sentence.mas, text => __x('Any proteins encoding SPs will be secreted from infected plant cells as NIP fusion proteins, causing a readily detectable HR.') &>
   </p>
 
   <p>
-  The Nip fusion assay is a convenient and rapid means to confirm
-  secretion of proteins in planta and complements the YST screen.
+  <& /util/sentence.mas, text => __x('The Nip fusion assay is a convenient and rapid means to confirm secretion of proteins in planta and complements the YST screen.') &>
   </p>
 
 </&>
@@ -105,42 +73,28 @@
     <img src="/documents/img/secretom/onion_cyto_secreted_200.jpg" />
 
     <p style="text-align: left">
-    A cytoplasmic protein (green) and a secreted protein (red) in
-    plasmolyzed onion cells. Scale bar represents 50 microns.
+    <& /util/sentence.mas, text => __x('A cytoplasmic protein (green) and a secreted protein (red) in plasmolyzed onion cells.') &> <& /util/sentence.mas, text => __x('Scale bar represents 50 microns.') &>
     </p>
 
   </div>
 
   <ul>
     <li>
-    Screen a range of tomato tissues for genes encoding secreted
-    proteins, focusing particularly on fruit development and leaves at
-    various stages of infections with <span class="species_binomial">
-    Phytopthora infestans</span>.
+    <& /util/sentence.mas, text => __x('Screen a range of tomato tissues for genes encoding secreted proteins, focusing particularly on fruit development and leaves at various stages of infections with {species}.'), species => '<span class="species_binomial">
+    Phytopthora infestans</span>' &>
     </li>
     <li>
-    Annotate the corresponding genes and confirm their localization in
-    the cell wall by transient expression as fluorescent fusion proteins
-    in onion epidermal cells.
+    <& /util/sentence.mas, text => __x('Annotate the corresponding genes and confirm their localization in the cell wall by transient expression as fluorescent fusion proteins in onion epidermal cells.') &>
     </li>
     <li>
-    Further examine the localization and trafficking pathways of
-    candidates that show unexpected localization in the apoplast.
+    <& /util/sentence.mas, text => __x('Further examine the localization and trafficking pathways of candidates that show unexpected localization in the apoplast.') &>
     </li>
   </ul>
 
 
 
   <p>
-  To date we have identified both known cell wall localized proteins as
-  well as a number of proteins whose presence in the apoplast is
-  unexpected, based on functional annotation, or the absence of a
-  predicted secretory signal peptide, suggesting alternative
-  non-canonical secretion pathways, as have describe in yeast and
-  mammalian cells. We have also identified several proteins that show
-  dual localization in the wall an intracellular compartments, and we
-  are now characterizing some of the complexity in the secretory
-  pathway.
+  <& /util/sentence.mas, text => __x('To date we have identified both known cell wall localized proteins as well as a number of proteins whose presence in the apoplast is unexpected, based on functional annotation, or the absence of a predicted secretory signal peptide, suggesting alternative non-canonical secretion pathways, as have describe in yeast and mammalian cells.') &> <& /util/sentence.mas, text => __x('We have also identified several proteins that show dual localization in the wall an intracellular compartments, and we are now characterizing some of the complexity in the secretory pathway.') &>
   </p>
 
 </&>

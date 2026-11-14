@@ -2,36 +2,15 @@
 
 <div class="indentedcontent">
   <p>
-  The plant cuticle is a highly specialized hydrophobic cell wall that
-  covers the aerial organs of land plants and provides protection
-  against desiccation, pathogens, UV radiation and herbivory. It is
-  continuous with the outer-periclinal polysaccharide cell wall of the
-  epidermis and consists of organic soluble waxes embedded in, and
-  layered on, a non-soluble polyester matrix of &omega;-substituted
-  fatty acids. The waxes include both aliphatic compounds, derived from
-  very long chain fatty acids, and secondary metabolites, such as
-  triterpenoids and flavonoids.
+  <& /util/sentence.mas, text => __x('The plant cuticle is a highly specialized hydrophobic cell wall that covers the aerial organs of land plants and provides protection against desiccation, pathogens, UV radiation and herbivory.') &> <& /util/sentence.mas, text => __x('It is continuous with the outer-periclinal polysaccharide cell wall of the epidermis and consists of organic soluble waxes embedded in, and layered on, a non-soluble polyester matrix of ω-substituted fatty acids.') &> <& /util/sentence.mas, text => __x('The waxes include both aliphatic compounds, derived from very long chain fatty acids, and secondary metabolites, such as triterpenoids and flavonoids.') &>
   </p>
 
   <p>
-  Little is yet known about many key mechanisms of cuticle biogenesis,
-  and experimental strategies to identify new proteins that associate
-  with cutin and waxes could provide a valuable means to identify new
-  candidates.
+  <& /util/sentence.mas, text => __x('Little is yet known about many key mechanisms of cuticle biogenesis, and experimental strategies to identify new proteins that associate with cutin and waxes could provide a valuable means to identify new candidates.') &>
   </p>
 
   <p>
-  Although Arabidopsis research has greatly accelerated the discovery of
-  new cuticle-related genes, its cuticle poses some experimental
-  limitations since it is relatively thin, fragile and difficult to
-  isolate in substantial quantities. Conversely, tomato fruit cuticles
-  are astomatous and large amounts of intact cuticular material can be
-  isolated for chemical and biomechanical analyses. For example, the
-  fruit accumulate on the order of 1 mg cm<sup>-2</sup> cutin,
-  compared to the stem of Arabidopsis, which has 0.5-10 &mu;g
-  cm<sup>-2</sup>. Thus, the typical 6 week period of early tomato
-  fruit development represents a remarkably rapid and extensive phase of
-  cuticle biosynthesis.
+  <& /util/sentence.mas, text => __x('Although Arabidopsis research has greatly accelerated the discovery of new cuticle-related genes, its cuticle poses some experimental limitations since it is relatively thin, fragile and difficult to isolate in substantial quantities.') &> <& /util/sentence.mas, text => __x('Conversely, tomato fruit cuticles are astomatous and large amounts of intact cuticular material can be isolated for chemical and biomechanical analyses.') &> <& /util/sentence.mas, text => __x('For example, the fruit accumulate on the order of 1 mg cm{sup}-2{end_sup} cutin, compared to the stem of Arabidopsis, which has 0.5-10 μg cm{sup}-2{end_sup}.'), sup => '<sup>', end_sup => '</sup>' &> <& /util/sentence.mas, text => __x('Thus, the typical 6 week period of early tomato fruit development represents a remarkably rapid and extensive phase of cuticle biosynthesis.') &>
   </p>
 
   <div style="width: 420px" class="captioned_image img_float_left caption_right">
@@ -39,32 +18,17 @@
     <img src="/documents/img/secretom/tomato_cuticle_stain_400.jpg" />
 
     <p>
-    Light microscope image of the surface of an expanding tomato fruit
-    with the cuticle stained red.
+    <& /util/sentence.mas, text => __x('Light microscope image of the surface of an expanding tomato fruit with the cuticle stained red.') &>
     </p>
 
   </div>
 
   <p>
-  To identify new candidate proteins with a potential role in cuticle
-  biosynthesis, and particularly those that are secreted to the
-  apoplast, we are generating a more comprehensive inventory of proteins
-  that are associated with the outermost surface tissues of plant
-  organs, we are using a range of complementary protein fractionation
-  strategies (1D gel-based and liquid chromatography) coupled with
-  several sensitive mass spectrometry (MS) platforms.
+  <& /util/sentence.mas, text => __x('To identify new candidate proteins with a potential role in cuticle biosynthesis, and particularly those that are secreted to the apoplast, we are generating a more comprehensive inventory of proteins that are associated with the outermost surface tissues of plant organs, we are using a range of complementary protein fractionation strategies (1D gel-based and liquid chromatography) coupled with several sensitive mass spectrometry (MS) platforms.') &>
   </p>
 
   <p>
-  We are also characterizing a number of tomato fruit cuticle mutants
-  and have developing a new 3D imaging technique using confocal scanning
-  laser microscopy for visualizing the architecture, deposition patterns
-  and micro-structure of plant cuticles. This has allowed 3-D cuticle
-  modeling based on the reconstruction of serial optical sections and
-  its use in the identification of several previously unreported
-  features of the tomato fruit cuticle. This information, together with
-  the proteome study is providing new insights into the molecular
-  processes underlying cuticle formation and restructuring.
+  <& /util/sentence.mas, text => __x('We are also characterizing a number of tomato fruit cuticle mutants and have developing a new 3D imaging technique using confocal scanning laser microscopy for visualizing the architecture, deposition patterns and micro-structure of plant cuticles.') &> <& /util/sentence.mas, text => __x('This has allowed 3-D cuticle modeling based on the reconstruction of serial optical sections and its use in the identification of several previously unreported features of the tomato fruit cuticle.') &> <& /util/sentence.mas, text => __x('This information, together with the proteome study is providing new insights into the molecular processes underlying cuticle formation and restructuring.') &>
   </p>
 </div>
 

@@ -4,13 +4,13 @@
 
 <center><p><strong>April 3rd &amp; 4th, 2012</strong></p></center>
 
-<center><p><em>Supported by NSF Plant Genome Program<br />
+<center><p><em><& /util/sentence.mas, text => __x('Supported by {program}'), program => 'NSF Plant Genome Program' &><br />
 Instruction: Drs. Jocelyn Rose and Ted Thannhauser and Sheng Zhang<br />
-Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></center>
+<& /util/sentence.mas, text => __x('Location: {facility}'), facility => 'Cornell Proteomics &amp; Mass Spectrometry Core Facility' &></em></p></center>
 
 <p><% __('We had another extremely successful Proteomics Workshop this year that was highly oversubscribed. The workshop comprised both lectures and practical lab-based training in proteomic analysis, using advanced mass spectrometry techniques and bioinformatics and was targeted towards undergraduate and graduate students.  Based on the positive and enthusiastic feedback, a similar course will be offered next year.') |h %></p>
 
-<p><a href="/documents/secretom/MSOct09WorkshopHandouts.pdf">Handouts from the workshop</a> [pdf]</p>
+<p><& /util/sentence.mas, text => __x('{link}Handouts from the workshop{end_link} {format}'), link => '<a href="/documents/secretom/MSOct09WorkshopHandouts.pdf">', end_link => '</a>', format => '[pdf]' &></p>
 <p><a href="#schedule"><% __('Schedule') |h %></a></p>
 <p><a href="#photos"><% __('Photos from this year\'s workshop') |h %></a></p>
 
@@ -24,25 +24,25 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 <p><strong>8:00am - 8:30am: Registration (badge, program handouts, breakfast</strong>) in room 130</p>
 <p><strong>8:30am - 8:35am </strong>in room 130:</p>
 <ol type="1">
-<li><strong>Program introduction</strong> by Professor Joss Rose</li>
+<li><& /util/sentence.mas, text => __x('{strong}Program introduction{end_strong} by Professor {person1}'), person1 => 'Joss Rose', strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>8:35am - 10:00am</strong> in room 141:</p>
 <ol type="1" start="2">
-<li><strong>Experimental 1:</strong> Protein denaturing, reduction and alkylation of crude cell extract samples for shotgun proteomics analysis. (Attendees divided into 4 groups)</li>
+<li><& /util/sentence.mas, text => __x('{strong}Experimental 1:{end_strong} Protein denaturing, reduction and alkylation of crude cell extract samples for shotgun proteomics analysis. (Attendees divided into 4 groups)'), strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <ul>Instructors: Huiming Yan (bench 1), Yong Yang (bench 2), Bob Sherwood (bench 3) and Celeste Ptak (bench 4).</ul>
 <p><strong>10:20am - 11:20am</strong> in room 130 </p>
 <ol type="1" start="3">
-<li><strong>Lecture 1 Presentation: </strong> Sample preparation and separation prior to MS analysis by Dr. Ted Thannhauser</li>
+<li><& /util/sentence.mas, text => __x('{strong}Lecture 1 Presentation: {end_strong} Sample preparation and separation prior to MS analysis by Dr. {person1}'), person1 => 'Ted Thannhauser', strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>11:30am - 12:00pm</strong> in room 141:</p>
 <ol type="1" start="4">
-<li><strong>Experimental 2: </strong> in solution trypsin digestion.</li>
+<li><& /util/sentence.mas, text => __x('{strong}Experimental 2: {end_strong} in solution trypsin digestion.'), strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>12:00pm - 1:00pm </strong> in room 130<strong>: </strong>Lunch and Break</p>
 <p><strong>1:00pm - 2:15pm</strong> in room 130:</p>
 <ol type="1" start="5">
-<li><strong>Lecture 2 Presentation: </strong> MS instrument fundamentals and Applications: (proteomics case studies) by Dr. Sheng Zhang</li>
+<li><& /util/sentence.mas, text => __x('{strong}Lecture 2 Presentation: {end_strong} MS instrument fundamentals and Applications: (proteomics case studies) by Dr. {person1}'), person1 => 'Sheng Zhang', strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>2:30pm - 3:30pm</strong> in room 143:</p>
 <ol type="1" start="6">
@@ -67,7 +67,7 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 <p><strong>8:00am - 8:30am: </strong> breakfast and laptop computer setup in room 130</p>
 <p><strong>8:30am - 9:00am:</strong></p>
 <ol type="1" start="8">
-<li><strong>Experimental 5:</strong> Database searching and file conversion for overnight LC-MS/MS files</li>
+<li><& /util/sentence.mas, text => __x('{strong}Experimental 5:{end_strong} Database searching and file conversion for overnight LC-MS/MS files'), strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <ul>
 <ol type="a">
@@ -79,7 +79,7 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 </ul>
 <p><strong>9:30am - 10:30am: </strong></p>
 <ol type="1" start="9">
-<li><strong>Lecture 3 Presentation:</strong> Introduction to Mascot-based MS database search and data interpretation by Professor Joss Rose</li>
+<li><& /util/sentence.mas, text => __x('{strong}Lecture 3 Presentation:{end_strong} Introduction to Mascot-based MS database search and data interpretation by Professor {person1}'), person1 => 'Joss Rose', strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>10:30am - 10:45am:</strong> transfer PKL files and TMP files into individual laptop computers.</p>
 <p><strong>10:45am - 11:15am: </strong>in room 130 and room 143</p>
@@ -89,7 +89,7 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 <p><strong>12:00pm - 1:00pm </strong> in room 130<strong>: </strong>Lunch and Break</p>
 <p><strong> 1:00pm - 3:00pm </strong>in room 130</p>
 <ol type="1" start="11">
-<li><strong>Experimental 7: </strong> database search practice against either Mascot public search engine or in-house licensed search engine. Assistants: Celeste Ptak, Huiming Yan, Kevin Howe and Yong Yang.</li>
+<li><& /util/sentence.mas, text => __x('{strong}Experimental 7: {end_strong} database search practice against either Mascot public search engine or in-house licensed search engine. Assistants: {person1}, {person2}, {person3} and {person4}.'), person1 => 'Celeste Ptak', person2 => 'Huiming Yan', person3 => 'Kevin Howe', person4 => 'Yong Yang', strong => '<strong>', end_strong => '</strong>' &></li>
 </ol>
 <p><strong>3:20pm - 4:00pm: </strong>in room 130</p>
 <ol type="1" start="12">

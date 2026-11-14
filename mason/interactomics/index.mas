@@ -24,18 +24,14 @@
 		<tr><td>
 
 		<div id="footer">
-		<b>Funding for Cytoscape is provided by a federal grant from the U.S.
-		<a href="http://www.nigms.nih.gov">National Institute of General Medical Sciences (NIGMS)</a> of the
-		<a href="http://www.nih.gov">National Institutes of Health (NIH)</a> under award number GM070743-01 and
-		the U.S. <a href="http://www.nsf.gov">National Science Foundation (NSF) </a>.
-		Corporate funding is provided through a contract from
-		<a href="http://www.unilever.com">Unilever PLC</a>.
+		<b><& /util/sentence.mas, text => __x('Funding for Cytoscape is provided by a federal grant from the U.S. {link}National Institute of General Medical Sciences (NIGMS){end_link} of the {link2}National Institutes of Health (NIH){end_link2} under award number {award} and the U.S. {link3}National Science Foundation (NSF) {end_link3}.'), link => '<a href="http://www.nigms.nih.gov">', end_link => '</a>', link2 => '<a href="http://www.nih.gov">', end_link2 => '</a>', award => 'GM070743-01', link3 => '<a href="http://www.nsf.gov">', end_link3 => '</a>' &>
+		<& /util/sentence.mas, text => __x('Corporate funding is provided through a contract from {link}Unilever PLC{end_link}.'), link => '<a href="http://www.unilever.com">', end_link => '</a>' &>
 		</b>
 
 		<p>
 
 		<center>
-		<a href="http://cytoscape.org">Cytoscape home</a>
+		<a href="http://cytoscape.org"><& /util/sentence.mas, text => __x('Cytoscape home') &></a>
 		|
 		<a href="http://www.systemsbiology.org">ISB</a>
 		|

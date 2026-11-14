@@ -24,8 +24,7 @@ $owner_page
   title       => $m->interp->apply_escapes( __("Data access"), 'h' ) 
 &>   
   <p>
-    The QTL data for this population is not public yet. If you are the 
-    data owner or SGN curator, login to access the data. 
+    <& /util/sentence.mas, text => __x('The QTL data for this population is not public yet. If you are the data owner or SGN curator, login to access the data.') &> 
     Others who would like to know more about the data 
     can contact the owner of the data: <b><% $owner_page %></b> or 
     SGN: <a href=mailto:sgn-feedback@sgn.cornell.edu>

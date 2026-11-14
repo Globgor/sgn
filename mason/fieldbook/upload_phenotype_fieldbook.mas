@@ -75,11 +75,11 @@
 
             <ul>
 
-                <li><strong>plot_id</strong> or <strong>plant_id</strong> or <strong>subplot_id</strong> or <strong>tissue_sample_id</strong>: This should be one of these stock IDs that already exist in the database.</li>
-                <li><strong>trait</strong>: A trait that exists in the database.</li>
-                <li><strong>value</strong>: Corresponding value for the observed trait.</li>
-                <li><strong>observationTimeStamp</strong>: Timestamp of the observation.</li>
-                <li><strong>collector</strong>: Observation collector's name.</li>
+                <li><& /util/sentence.mas, text => __x('{column1} or {column2} or {column3} or {column4}: This should be one of these stock IDs that already exist in the database.'), column1 => '<strong>plot_id</strong>', column2 => '<strong>plant_id</strong>', column3 => '<strong>subplot_id</strong>', column4 => '<strong>tissue_sample_id</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: A trait that exists in the database.'), column => '<strong>trait</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Corresponding value for the observed trait.'), column => '<strong>value</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Timestamp of the observation.'), column => '<strong>observationTimeStamp</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Observation collector\'s name.'), column => '<strong>collector</strong>' &></li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
                 <thead></thead>

@@ -25,7 +25,7 @@
    </&>
 %    } 
 %  } else {
-   <h3 style="text-align: center">No results found matching "<% $query |h %>".</h3>
+   <h3 style="text-align: center"><& /util/sentence.mas, text => __x('No results found matching "{query}".'), query => $m->interp->apply_escapes( $query, 'h' ) &></h3>
 %  }
 
 </&>

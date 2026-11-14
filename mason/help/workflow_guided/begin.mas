@@ -28,7 +28,7 @@ $design_types => ()
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="guidedHelpBeginDialog">What are you interested in? <a href="https://solgenomics.github.io/sgn">For General Help</a></h4>
+                <h4 class="modal-title" id="guidedHelpBeginDialog"><& /util/sentence.mas, text => __x('What are you interested in? {link}For General Help{end_link}'), link => '<a href="https://solgenomics.github.io/sgn">', end_link => '</a>' &></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">

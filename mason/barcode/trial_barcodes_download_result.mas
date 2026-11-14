@@ -11,7 +11,7 @@ $filetype => ''
 % if (!$error) {
   <% __('Success! Please click the link below to download the barcode label file.') |h %><br />
   <br /><br />
-  <a target="_blank" href="<% $file %>" >Download <% $filetype %> file</a>
+  <a target="_blank" href="<% $file %>" ><& /util/sentence.mas, text => __x('Download {filetype} file'), filetype => $filetype &></a>
 % }
 % elsif ($error){
     <b><% __('Download Barcode Error:') |h %></b> <%$error%>

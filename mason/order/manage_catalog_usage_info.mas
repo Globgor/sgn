@@ -17,9 +17,9 @@
                         <% __('How to Add Catalog Items:') |h %>
                     </h4>
                     <p><% __('You can choose one of the three methods for adding catalog item(s) based on the number of items and details.') |h %>
-                    <li><b>Add Single Item</b>: If you would like to add only one item to the catalog, you can use "Add Single Item" dialog</li>
-                    <li><b>Add Multiple Items using List</b>: For adding many items with the same stock type and the same catalog info, using "Add Multiple Items Using List" dialog is the most convenient method.</li>
-                    <li><b>Upload Multiple Items</b>: For adding many items with different stock types and each item may have different catalog info, you can use "Upload Multiple Items" dialog.</li>
+                    <li><& /util/sentence.mas, text => __x('{bold}Add Single Item{end_bold}: If you would like to add only one item to the catalog, you can use "Add Single Item" dialog'), bold => '<b>', end_bold => '</b>' &></li>
+                    <li><& /util/sentence.mas, text => __x('{bold}Add Multiple Items using List{end_bold}: For adding many items with the same stock type and the same catalog info, using "Add Multiple Items Using List" dialog is the most convenient method.'), bold => '<b>', end_bold => '</b>' &></li>
+                    <li><& /util/sentence.mas, text => __x('{bold}Upload Multiple Items{end_bold}: For adding many items with different stock types and each item may have different catalog info, you can use "Upload Multiple Items" dialog.'), bold => '<b>', end_bold => '</b>' &></li>
                     <br>
                     <hr class ="solid">
                     <h4>

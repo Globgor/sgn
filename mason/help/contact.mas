@@ -65,7 +65,7 @@ my $infoNeeded = ["name", "email", "subject", ];
      <tbody>
       <tr>
         <td><b><% __('Email') |h %></b></td>
-	<td>Note that the contact email address <% $email_address_to_display %> has been deactivated due to extreme levels of spam. <br/><% __('Use this contact form instead.') |h %></td>
+	<td><& /util/sentence.mas, text => __x('Note that the contact email address {email} has been deactivated due to extreme levels of spam.'), email => $email_address_to_display &> <br/><% __('Use this contact form instead.') |h %></td>
       </tr>
       <tr>
         <td><b><% __('Mailing Address') |h %></b></td>

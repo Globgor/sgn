@@ -22,8 +22,7 @@
 
     <div class="well">
 
-        <p>Add one or more filters to apply to the table of displayed maintenance events.  To add a filter, enter the properties for a filter type 
-        and click the add button to add the filter to the list.  Once you're done adding filters, click the Filter button to display the results.</p>
+        <p><& /util/sentence.mas, text => __x('Add one or more filters to apply to the table of displayed maintenance events. To add a filter, enter the properties for a filter type and click the add button to add the filter to the list. Once you\'re done adding filters, click the Filter button to display the results.') &></p>
         <br />
         
         <!-- Filter Form -->

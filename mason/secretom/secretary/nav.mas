@@ -3,6 +3,6 @@
 </%args>
 <table id="secretary_nav"><tr>
    <td> <a <% $curr_page eq 'background' ? 'class="active"' : '' %> href="/secretom/detail/prediction"><% __('About Prediction') |h %></a> </td>
-   <td> <a <% $curr_page eq 'tool' ? 'class="active"' : '' %> href="/secretom/secretary"><span class="secretary">SecreTary</span> Tool</a> </td>
-   <td> <a <% $curr_page eq 'instructions' ? 'class="active"' : '' %> href="/secretom/secretary/instructions"><span class="secretary">SecreTary</span> Instructions</a> </td>
+   <td> <a <% $curr_page eq 'tool' ? 'class="active"' : '' %> href="/secretom/secretary"><& /util/sentence.mas, text => __x('{span}SecreTary{end_span} Tool'), span => '<span class="secretary">', end_span => '</span>' &></a> </td>
+   <td> <a <% $curr_page eq 'instructions' ? 'class="active"' : '' %> href="/secretom/secretary/instructions"><& /util/sentence.mas, text => __x('{span}SecreTary{end_span} Instructions'), span => '<span class="secretary">', end_span => '</span>' &></a> </td>
 </tr></table>

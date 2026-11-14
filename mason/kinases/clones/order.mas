@@ -58,7 +58,7 @@ my $defaultVal = {
 </td></tr>
 
 
-<tr><td><strong><% __('Are you human?*') |h %></strong><br />What is <% $contact_form_human_question %>?</td>
+<tr><td><strong><% __('Are you human?*') |h %></strong><br /><& /util/sentence.mas, text => __x('What is {question}?'), question => $contact_form_human_question &></td>
 
 <td>
 % if (!$contact_form_human_answer_correct) { 
@@ -66,7 +66,7 @@ my $defaultVal = {
 % if (!$contact_form_human_answer) { 
 <% __('Prove that you are a human being is required') |h %><br /></font>
 % } else { 
-Either you are not human - or you are not very good at math! ;-)</font>
+<& /util/sentence.mas, text => __x('Either you are not human - or you are not very good at math! ;-)') &></font>
 <br />
 %    }
 % }

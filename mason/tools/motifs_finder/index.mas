@@ -45,7 +45,7 @@
  <h3 id="tool_title"><% __('Motifs Finder Tool') |h %></h3>
  <form action="/test" method="POST" id="run_motifs">
    <label>
-   Sequence:<span id="example">(<a class="blue_text" onclick="example()" style="cursor:pointer">example sequence</a>)</span>
+   <& /util/sentence.mas, text => __x('Sequence:{span}({link}example sequence{end_link}){end_span}'), span => '<span id="example">', end_span => '</span>', link => '<a class="blue_text" onclick="example()" style="cursor:pointer">', end_link => '</a>' &>
    </label>
    <textarea class="form-control" id="sequence" name="sequence" ></textarea><br>
 
@@ -66,9 +66,9 @@
     <div class="subsection_bar" >
 		<a class="collapser_link" href="javascript:folding_section('#ad-option','#tmp_img_hide1');">
 		<img id="tmp_img_hide1" class="sub_collapser_img" src="/static/documents/img/collapser_plus.png" width="20" height="20" />
-			Advanced Options
+			<& /util/sentence.mas, text => __x('Advanced Options') &>
 		</a>
-		<span class="pull-center" data-toggle="modal" data-target="#myModal">[<a id="help_dialog">Help</a>]</span>
+		<span class="pull-center" data-toggle="modal" data-target="#myModal"><& /util/sentence.mas, text => __x('[{link}Help{end_link}]'), link => '<a id="help_dialog">', end_link => '</a>' &></span>
 	</div>
 
 	<div id="ad-option" class="collapse center_section"  >
@@ -122,11 +122,11 @@
 
     	<p>
 	<b><% __('Usage:') |h %></b><br />
-	1. Paste a <b>sequence</b> like in the example:<br />
+	<& /util/sentence.mas, text => __x('1. Paste a {bold}sequence{end_bold} like in the example:'), bold => '<b>', end_bold => '</b>' &><br />
 	<span style="background-color:#DCDCDC;">&nbsp;&nbsp;>gene_name<br />&nbsp;&nbsp;ATGGATCAGTCGGTGTTGGCGATCT&nbsp;&nbsp;<br />&nbsp;&nbsp;ACAGCTTGGCCAACTCCAGAAATTG&nbsp;&nbsp;</span><br />
-	&nbsp;&nbsp;Or Upload a <b>sequence file</b>. It must be in <b>FASTA format</b>.<br />
-	2. Enter <b>motif width(s)</b>, a width for each motif must be entered. For multiple motifs, the widths are separated by commas; (16,20,...)<br />
-	3. Enter <b>expected sites</b>, expected number of sites in each motif must be entered. For multiple motifs, the sites are separated by commas; (7,12,...)<br />
+	&nbsp;&nbsp;<& /util/sentence.mas, text => __x('Or Upload a {bold}sequence file{end_bold}. It must be in {bold}FASTA format{end_bold}.'), bold => '<b>', end_bold => '</b>' &><br />
+	<& /util/sentence.mas, text => __x('2. Enter {bold}motif width(s){end_bold}, a width for each motif must be entered. For multiple motifs, the widths are separated by commas; {example}'), bold => '<b>', end_bold => '</b>', example => '(16,20,...)' &><br />
+	<& /util/sentence.mas, text => __x('3. Enter {bold}expected sites{end_bold}, expected number of sites in each motif must be entered. For multiple motifs, the sites are separated by commas; {example}'), bold => '<b>', end_bold => '</b>', example => '(7,12,...)' &><br />
 	</p>
 
 	<!--<hr style="\&quot;color:" #006699;="" margin:="" 10px="" 20px;="" \"="">  -->
@@ -148,9 +148,9 @@
       </div>
       <div class="modal-body">
 	<ul class="list-group">
-    	<li class="list-group-item"><b>Number of seeds:</b> the number of times that the sampler is restarted with separate initial models.</li>
-    	<li class="list-group-item"><b>Fragmentation:</b> normally the sampler allows itself to flexibly change the width of the motif and to introduce spacers. You can turn it on by unchecking the Fragmentation checkbox.</li>
-    	<li class="list-group-item"><b>Reverse complement:</b> the sampler normally samples in both forward and reverse complement. You can turn off reverse complement sampling by checking the Reverse complement checkbox.</li>
+    	<li class="list-group-item"><& /util/sentence.mas, text => __x('{bold}Number of seeds:{end_bold} the number of times that the sampler is restarted with separate initial models.'), bold => '<b>', end_bold => '</b>' &></li>
+    	<li class="list-group-item"><& /util/sentence.mas, text => __x('{bold}Fragmentation:{end_bold} normally the sampler allows itself to flexibly change the width of the motif and to introduce spacers. You can turn it on by unchecking the Fragmentation checkbox.'), bold => '<b>', end_bold => '</b>' &></li>
+    	<li class="list-group-item"><& /util/sentence.mas, text => __x('{bold}Reverse complement:{end_bold} the sampler normally samples in both forward and reverse complement. You can turn off reverse complement sampling by checking the Reverse complement checkbox.'), bold => '<b>', end_bold => '</b>' &></li>
   	</ul>
         <!--<p><b>Number of seeds:</b> </p> -->
       </div>

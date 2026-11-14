@@ -37,7 +37,7 @@
 
 <form id="change_account_form" name="change_account_form"> 
 <div>
-  <label class="textlabel" for="current_password" id="current_password_label">Current password <font color="red">*</font></label>
+  <label class="textlabel" for="current_password" id="current_password_label"><& /util/sentence.mas, text => __x('Current password {font}*{end_font}'), font => '<font color="red">', end_font => '</font>' &></label>
   <input type="password" class="form-control" id="current_password" name="current_password" />
 </div>
 

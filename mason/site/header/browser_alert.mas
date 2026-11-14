@@ -14,7 +14,7 @@
         <% __('This site is optimized for modern web browsers') |h %><br>
         <center>
         <a href="http://browsehappy.com" target="_blank" class="footer">
-          Please upgrade your browser<br>
+          <& /util/sentence.mas, text => __x('Please upgrade your browser') &><br>
           <img src="https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w300" width="25">
           <img src="/documents/img/Firefox_logo_2019.png" width="25">
           <img src="/documents/img/Safari_logo.jpeg" width="25">

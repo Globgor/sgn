@@ -1,9 +1,9 @@
 <div id="pagetitle"><h3><% __('Data Usage Policy') |h %></h3></div>
 
 
-The data on this database is shared according to the Toronto agreement (see below). 
+<& /util/sentence.mas, text => __x('The data on this database is shared according to the Toronto agreement (see below).') &> 
 
-Datasets that are currently released but have not yet been published include:<br /><br />
+<& /util/sentence.mas, text => __x('Datasets that are currently released but have not yet been published include:') &><br /><br />
 <style type="text/css">
 table.myTable { border-collapse:collapse; }
 table.myTable td, table.myTable th { border:1px solid black;padding:5px; }

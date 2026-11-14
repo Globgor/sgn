@@ -23,7 +23,7 @@
 
     <p>
 % if( $e->notify ) {
-    An error report has been sent to the <% $project_name %> development team.
+    <& /util/sentence.mas, text => __x('An error report has been sent to the {project_name} development team.'), project_name => $project_name &>
 % }
 
 % if( $e->is_client_error || $e->is_server_error ) {

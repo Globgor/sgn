@@ -49,7 +49,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     <center>
                         <div class="well">
                             <h4><% __('The samples for which you are uploading high-dimensional phenotypes must exist in the database already. They can be field trial entities such as plot names, plant names, and tissue sample names. They can be genotyping plate well tissue sample names. They can also be sample names from a sampling trial in the database.') |h %></h4>
-                            <p>Go to <a href="/breeders/samples">Manage Tissue Samples</a> for more guidance.</p>
+                            <p><& /util/sentence.mas, text => __x('Go to {link}Manage Tissue Samples{end_link} for more guidance.'), link => '<a href="/breeders/samples">', end_link => '</a>' &></p>
                             <p>You can upload or create a new sampling trial <button class="btn btn-sm btn-primary" style="margin:3px" name="create_sampling_trial_button"><% __('Create new sampling trial') |h %></button></p>
                         </div>
                     </center>
@@ -695,9 +695,9 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
             <h3><% __('Upload NIRS in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
-                <li><strong>sample_name</strong>: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.</li>
-                <li><strong>device_id</strong>: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.</li>
-                <li><strong>comments</strong>: Optional comments for any information to include. Can include specific sample preparation for measurement.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.'), strong => '<strong>', column => 'sample_name', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.'), strong => '<strong>', column => 'device_id', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional comments for any information to include. Can include specific sample preparation for measurement.'), strong => '<strong>', column => 'comments', end_strong => '</strong>' &></li>
                 <li>All other columns are <strong>wavelengths</strong> (e.g. 100, 400, 2000, etc). You can add as many columns as you want to upload, there isn't a limit.</li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
@@ -736,10 +736,10 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
             <ul>
 
-                <li><strong>sample_name</strong>: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.</li>
-                <li><strong>device_id</strong>: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.</li>
-                <li><strong>comments</strong>: Optional comments for any information to include. Can include specific sample preparation for measurement.</li>
-                <li>All other columns are <strong>gene ids</strong>. You can add as many columns as you want to upload, there isn't a limit.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.'), strong => '<strong>', column => 'sample_name', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.'), strong => '<strong>', column => 'device_id', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional comments for any information to include. Can include specific sample preparation for measurement.'), strong => '<strong>', column => 'comments', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('All other columns are {strong}gene ids{end_strong}. You can add as many columns as you want to upload, there isn\'t a limit.'), strong => '<strong>', end_strong => '</strong>' &></li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
                 <thead></thead>
@@ -775,10 +775,10 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
             <h3><% __('Upload Metabolomics in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
-                <li><strong>sample_name</strong>: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.</li>
-                <li><strong>device_id</strong>: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.</li>
-                <li><strong>comments</strong>: Optional comments for any information to include. Can include specific sample preparation for measurement.</li>
-                <li>All other columns are <strong>metabolite names</strong>. You can add as many columns as you want to upload, there isn't a limit.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.'), strong => '<strong>', column => 'sample_name', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional identifier to differentiate device (e.g. serial number). Can be numeric or letter.'), strong => '<strong>', column => 'device_id', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column}{end_strong}: Optional comments for any information to include. Can include specific sample preparation for measurement.'), strong => '<strong>', column => 'comments', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('All other columns are {strong}metabolite names{end_strong}. You can add as many columns as you want to upload, there isn\'t a limit.'), strong => '<strong>', end_strong => '</strong>' &></li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
                 <thead></thead>
@@ -856,18 +856,18 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
             <h3><% __('Upload details about the metabolites in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
-                <li><strong>metabolite_name (required)</strong>: This should be the same name as present in a column in your metabolomics data matrix file.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (required){end_strong}: This should be the same name as present in a column in your metabolomics data matrix file.'), strong => '<strong>', column => 'metabolite_name', end_strong => '</strong>' &></li>
                 <li><strong>chebi_id (optional)</strong>: Standard formula (e.g., CHEBI:16971) identifier for the metabolite.</li>
                 <li><strong>inchi_id (optional)</strong>: The International Chemical Identifier (e.g, InChI=1S/C6H6O3/c7-4-1-2-5(8)6(9)3-4/h1-3,7-9H) for the metabolite.</li>
-                <li><strong>inchi_key (optional)</strong>: The International Chemical Identifier (shortened version of inchi_id) for the metabolite.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (optional){end_strong}: The International Chemical Identifier (shortened version of {referenced_column}) for the metabolite.'), strong => '<strong>', column => 'inchi_key', end_strong => '</strong>', referenced_column => 'inchi_id' &></li>
                 <li><strong>pubchem_id (optional)</strong>: Standard formula (e.g., https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:75854) identifier for the metabolite.</li>
                 <li><strong>smiles_id (optional)</strong>: Standard identifier (eg., Oc1ccc(O)c(O)c1) for the metabolite.</li>
                 <li><strong>chemical_formula (required)</strong>: Chemical formula of the metabolite (e.g., C6H6O3).</li>
                 <li><strong>putative_metabolite_identification (required)</strong>: e.g., Phenylalanine, sucrose, avenanthramide.</li>
-                <li><strong>putative_metabolite_identification_synonyms (optional)</strong>: Metabolite synonyms, alternate names of any of the above.</li>
-                <li><strong>mass_to_charge (required)</strong>: M/Z ratio, standard from output, should be a number.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (optional){end_strong}: Metabolite synonyms, alternate names of any of the above.'), strong => '<strong>', column => 'putative_metabolite_identification_synonyms', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (required){end_strong}: M/Z ratio, standard from output, should be a number.'), strong => '<strong>', column => 'mass_to_charge', end_strong => '</strong>' &></li>
                 <li><strong>retention_time (required)</strong>: Retention time, also standard from machine output; users should confirm that unit is 'seconds'.</li>
-                <li><strong>charge (optional)</strong>: Could be negative or positive.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (optional){end_strong}: Could be negative or positive.'), strong => '<strong>', column => 'charge', end_strong => '</strong>' &></li>
                 <li><strong>fragmentation (optional)</strong>: e.g. (239:3349 240:1454 342:3557 343:1562).</li>
                 <li><strong>modifications (optional)</strong>: This is if the metabolite was modified to make it easier to measure on the instrument, and what it was modified too (e.g. trimethylsilation).</li>
                 <li><strong>metabolite_species (optional)</strong>: e.g., Acid, alcohol.</li>
@@ -875,8 +875,8 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                 <li><strong>met_database_version (required)</strong>: Metabolomics database version (e.g., var5 alk 161212).</li>
                 <li><strong>met_reliability (required)</strong>: A number 1 through 5, related to  dx.doi.org/10.1021/es5002105.</li>
                 <li><strong>met_search_engine (required)</strong>: e.g., TagFinder4.1 manual supervised annotation.</li>
-                <li><strong>met_search_engine_score (required)</strong>: Score given by search engine.</li>
-                <li><strong>compound_name (optional)</strong>: Name for the compound.</li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (required){end_strong}: Score given by search engine.'), strong => '<strong>', column => 'met_search_engine_score', end_strong => '</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{strong}{column} (optional){end_strong}: Name for the compound.'), strong => '<strong>', column => 'compound_name', end_strong => '</strong>' &></li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
                 <thead></thead>

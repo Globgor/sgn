@@ -73,7 +73,7 @@ $user_logged_in => 0
                       rows="2" placeholder="<% __('Description (optional)') |h %>"></textarea>
           </div>
           <button class="btn btn-default btn-sm" id="folder_picker_create_button">
-            Create &amp; Select
+            <& /util/sentence.mas, text => __x('Create & Select') &>
           </button>
         </div>
 % }

@@ -16,14 +16,14 @@ $editable_stock_props => {}
 	<h3><% __('What is Breedbase?') |h %></h3>
 	<% __('Breedbase is a comprehensive breeding management and analysis software. It can be used to design field layouts, collect phenotypic information using tablets, support the collection of genotyping samples in a field, store large amounts of high density genotypic information, and provide Genomic Selection related analyses and predictions. Breedbase supports the BrAPI standard.') |h %>
 	<h3><% __('How can I use Breedbase?') |h %></h3>
-	Breedbase is a web application that only requires a browser. To get your Breedbase instance, contact the <a href="/contact/form">Breedbase development team</a>.
+	<& /util/sentence.mas, text => __x('Breedbase is a web application that only requires a browser. To get your Breedbase instance, contact the {link}Breedbase development team{end_link}.'), link => '<a href="/contact/form">', end_link => '</a>' &>
 	<h3><% __('What crops are using Breedbase?') |h %></h3>
-	There are a number of instances running for diverse crops, including Cassava (<a href="https://cassavabase.org/">https://cassavabase.org</a>), sweet potato (<a href="https://sweetpotatobase.org/">https://sweetpotatobase.org</a>), banana (<a href="https://musabase.org/">https://musabase.org</a>), rice (<a href="https://ricebase.org/">https://ricebase.org</a>), tomato and other Solanaceae (<a href="https://solgenomics.net">https://solgenomics.net/</a>) and many others.
+	<& /util/sentence.mas, text => __x('There are a number of instances running for diverse crops, including Cassava ({cassava}), sweet potato ({sweet_potato}), banana ({banana}), rice ({rice}), tomato and other Solanaceae ({solanaceae}) and many others.'), cassava => '<a href="https://cassavabase.org/">https://cassavabase.org</a>', sweet_potato => '<a href="https://sweetpotatobase.org/">https://sweetpotatobase.org</a>', banana => '<a href="https://musabase.org/">https://musabase.org</a>', rice => '<a href="https://ricebase.org/">https://ricebase.org</a>', solanaceae => '<a href="https://solgenomics.net">https://solgenomics.net/</a>' &>
       </div>
 
       <h3><% __('How can I learn more about Breedbase?') |h %></h3>
 
-      You can watch the Breedbase workshops on <a href="https://www.youtube.com/channel/UC3jrvvzGKKEHzOriDBgnj0A">Youtube</a>, covering topics such as ontologies, trial design, data collection using fieldbook, data analysis, and genomic selection. 
+      <& /util/sentence.mas, text => __x('You can watch the Breedbase workshops on {link}Youtube{end_link}, covering topics such as ontologies, trial design, data collection using fieldbook, data analysis, and genomic selection.'), link => '<a href="https://www.youtube.com/channel/UC3jrvvzGKKEHzOriDBgnj0A">', end_link => '</a>' &> 
       
       
 <div class="container-fluid">

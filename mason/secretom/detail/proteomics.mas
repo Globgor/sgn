@@ -2,16 +2,7 @@
 
 <div class="indented_content">
   <p>
-  Tomato has long served as model system for fleshy fruit development,
-  and is an excellent system to study cell wall proteins as it is
-  associated with dramatic changes in wall biology, including
-  enzyme-mediated cell wall polysaccharide degradation, apoplastic sugar
-  metabolism and extracellular defenses against microbial
-  pathogens. However, there are few published proteomic analyses of
-  ripening tomato fruit and most of those are based on extraction of
-  total proteins followed by 2-DE separation, and the wall proteome was
-  not the major target. Consequently, the protein extraction step was
-  not optimized for secreted proteins.
+  <& /util/sentence.mas, text => __x('Tomato has long served as model system for fleshy fruit development, and is an excellent system to study cell wall proteins as it is associated with dramatic changes in wall biology, including enzyme-mediated cell wall polysaccharide degradation, apoplastic sugar metabolism and extracellular defenses against microbial pathogens.') &> <& /util/sentence.mas, text => __x('However, there are few published proteomic analyses of ripening tomato fruit and most of those are based on extraction of total proteins followed by 2-DE separation, and the wall proteome was not the major target.') &> <& /util/sentence.mas, text => __x('Consequently, the protein extraction step was not optimized for secreted proteins.') &>
   </p>
 
 
@@ -20,48 +11,21 @@
     <img src="/documents/img/secretom/tomato_P_infestans_full.jpg" />
 
     <p>
-    Tomato leaves infected by <span class="species_binomial">P. infestans</span>.
+    <& /util/sentence.mas, text => __x('Tomato leaves infected by {species}.'), species => '<span class="species_binomial">P. infestans</span>' &>
     </p>
 
   </div>
 
   <p>
-  Similarly, defense responses against pathogens are also fundamentally
-  associated with changes in the expression of secreted apoplastic
-  proteins, but there have been few systematic studies at the proteome
-  level.
+  <& /util/sentence.mas, text => __x('Similarly, defense responses against pathogens are also fundamentally associated with changes in the expression of secreted apoplastic proteins, but there have been few systematic studies at the proteome level.') &>
   </p>
 
   <p>
-    We have been developing methods to obtain sample materials highly
-    enriched in apoplast/cell wall proteins, including vacuum
-    dehydration, centrifugal dehydration and several methods that
-    involve the centrifugal isolation of the cell wall followed by
-    sequential extraction with solutions of increasing ionic
-    strength. Taken together, the goal is to create a more comprehensive
-    catalog of the tomato cell wall proteome, focusing on fruit and
-    leaves at various stages of infection by the oomycete Phytophthora
-    infestans. This will include both protein identification and
-    quantitative data, to gain insights into the dynamic properties of
-    the tomato secretome. Additionally we have been profiling "total
-    proteomes"; and screening the resulting protein populations for those
-    known to be localized in the cell wall with a predicted secretory
-    signal peptide, or that are <a href="/secretom/detail/glycoproteome">glycosylated</a>.
+    <& /util/sentence.mas, text => __x('We have been developing methods to obtain sample materials highly enriched in apoplast/cell wall proteins, including vacuum dehydration, centrifugal dehydration and several methods that involve the centrifugal isolation of the cell wall followed by sequential extraction with solutions of increasing ionic strength.') &> <& /util/sentence.mas, text => __x('Taken together, the goal is to create a more comprehensive catalog of the tomato cell wall proteome, focusing on fruit and leaves at various stages of infection by the oomycete {species}.'), species => 'Phytophthora infestans' &> <& /util/sentence.mas, text => __x('This will include both protein identification and quantitative data, to gain insights into the dynamic properties of the tomato secretome.') &> <& /util/sentence.mas, text => __x('Additionally we have been profiling "total proteomes"; and screening the resulting protein populations for those known to be localized in the cell wall with a predicted secretory signal peptide, or that are {link}glycosylated{end_link}.'), link => '<a href="/secretom/detail/glycoproteome">', end_link => '</a>' &>
   </p>
 
   <p>
-    We have been applying several approaches for comparative proteomic
-    analysis, including Difference Gel Electrophoresis (DIGE), isobaric
-    Tag Relative Absolute Protein Quantitation (iTRAQ), exponentially
-    modified protein abundance index (emPAI) and MSE. The latter two
-    approaches were found to provide accurate relative quantitation data
-    on par with that provided by iTRAQ at significantly reduced cost,
-    but without the ability to multiplex. They have been integrated into
-    our work flow and are used where appropriate. We have also developed
-    a high/low pH reverse phase-reverse phase (RP-RP) separation
-    protocol to fractionate peptides prior to MS analysis. This new
-    approach complements the traditional strong cation exchange (SCX) RP
-    strategy and the Offgel peptide IEF fractionation.
+    <& /util/sentence.mas, text => __x('We have been applying several approaches for comparative proteomic analysis, including Difference Gel Electrophoresis (DIGE), isobaric Tag Relative Absolute Protein Quantitation (iTRAQ), exponentially modified protein abundance index (emPAI) and MSE.') &> <& /util/sentence.mas, text => __x('The latter two approaches were found to provide accurate relative quantitation data on par with that provided by iTRAQ at significantly reduced cost, but without the ability to multiplex.') &> <& /util/sentence.mas, text => __x('They have been integrated into our work flow and are used where appropriate.') &> <& /util/sentence.mas, text => __x('We have also developed a high/low pH reverse phase-reverse phase (RP-RP) separation protocol to fractionate peptides prior to MS analysis.') &> <& /util/sentence.mas, text => __x('This new approach complements the traditional strong cation exchange (SCX) RP strategy and the Offgel peptide IEF fractionation.') &>
   </p>
 
 </div>
@@ -78,7 +42,7 @@
     small peptides.
 </&>
 
-<h1>Comparative proteomic analysis of the tomato-<span class="species_binomial">P. infestans</span> pathosystem</h1>
+<h1><& /util/sentence.mas, text => __x('Comparative proteomic analysis of the tomato-{species} pathosystem'), species => '<span class="species_binomial">P. infestans</span>' &></h1>
 
 <div class="indented_content">
   <div style="width: 450px; float: right; margin: 0 0 30px 20px" class="captioned_image caption_left">
@@ -86,16 +50,13 @@
         <img src="/documents/img/secretom/infestans_DIGE_300.jpg" />
 
         <p style="text-align: left">
-        DIGE gel of proteins from <span class="species_binomial">P. infestans</span> infected tomato leaves.
+        <& /util/sentence.mas, text => __x('DIGE gel of proteins from {species} infected tomato leaves.'), species => '<span class="species_binomial">P. infestans</span>' &>
         </p>
 
   </div>
 
   <p>
-  We are characterizing the dynamics of host-pathogen secretomes in
-  leaves during infection by the oomycete P. infestans, during distinct
-  phases of hemibiotrophic infection, using both DIGE and iTRAQ
-  supported with 454-generated transcript profiling.
+  <& /util/sentence.mas, text => __x('We are characterizing the dynamics of host-pathogen secretomes in leaves during infection by the oomycete {species}, during distinct phases of hemibiotrophic infection, using both DIGE and iTRAQ supported with 454-generated transcript profiling.'), species => 'P. infestans' &>
   </p>
 
 
@@ -115,8 +76,7 @@
           </table>
 
           <p>
-          Wild type ripe tomato fruit (left), and equivalent stage fruit
-          from the nor (middle) and rin (right) mutants.
+          <& /util/sentence.mas, text => __x('Wild type ripe tomato fruit (left), and equivalent stage fruit from the nor (middle) and rin (right) mutants.') &>
           </p>
 
   </div>  
@@ -125,12 +85,7 @@
   We are profiling the cell wall proteome of ripening tomato fruit,
   contrasting those of wild type (cv. Ailsa Craig) and several
   ripening impaired mutants: ripening inhibitor (rin), non-ripening
-  (Nor) and never ripe (Nr). While the genes responsible for all these
-  mutations have been cloned, and important progress has been made in
-  elucidating their respective signaling pathways, numerous aspects
-  remain poorly understood and the degree of regulatory complexity and
-  the multiplicity of underlying molecular mechanisms have far
-  exceeded expectations.
+  (Nor) and never ripe (Nr). <& /util/sentence.mas, text => __x('While the genes responsible for all these mutations have been cloned, and important progress has been made in elucidating their respective signaling pathways, numerous aspects remain poorly understood and the degree of regulatory complexity and the multiplicity of underlying molecular mechanisms have far exceeded expectations.') &>
   </p>
 
 </div>

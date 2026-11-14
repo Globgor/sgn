@@ -1,0 +1,28 @@
+<%doc>
+
+=head1 NAME
+
+sentence.mas - display one translated sentence with literal markup and values
+
+=head1 ARGS
+
+=head2 text
+
+The translated message, normally __x('Words {link}here{end_link}').
+The message is HTML-escaped before placeholder substitution. Additional named
+arguments replace placeholders as-is. Pass trusted markup and preserve the
+original escaping of every value. Unknown placeholders remain visible;
+undefined arguments become empty strings. Never use {text} as a placeholder.
+
+=cut
+
+</%doc>
+<%args>
+$text
+</%args>
+<%init>
+my $html = $m->interp->apply_escapes( $text, 'h' );
+$html =~ s/\{(\w+)\}/exists $ARGS{$1} ? $ARGS{$1} \/\/ q{} : "{$1}"/ge;
+$m->print($html);
+return;
+</%init>

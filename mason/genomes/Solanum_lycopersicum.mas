@@ -16,7 +16,7 @@ $organism
 <&| /page/info_section.mas,
     title  => $m->interp->apply_escapes( __('Data release policy'), 'h' ),
 &>
-All data is openly and freely available on <a href="/">SGN</a>, <a href="http://mips.helmholtz-muenchen.de/plant/tomato/index.jsp" target="_new">MIPS</a>, and Genbank.
+<& /util/sentence.mas, text => __x('All data is openly and freely available on {link}SGN{end_link}, {link2}MIPS{end_link2}, and Genbank.'), link => '<a href="/">', end_link => '</a>', link2 => '<a href="http://mips.helmholtz-muenchen.de/plant/tomato/index.jsp" target="_new">', end_link2 => '</a>' &>
 </&>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Download'), 'h' ) &>
@@ -39,12 +39,7 @@ All data is openly and freely available on <a href="/">SGN</a>, <a href="http://
   <table class="indentedcontent" style="margin: 0 10px 10px 10px">
       <tr>
 
-        <td>The official annotation for the tomato genome is provided
-
-            by the <a href="http://www.ab.wur.nl/TomatoWiki">International
-            Tomato Annotation Group (ITAG)</a>, a multinational
-            consortium, funded in part by the
-            <a href="http://www.eu-sol.net">EU-SOL project</a>.
+        <td><& /util/sentence.mas, text => __x('The official annotation for the tomato genome is provided by the {link}International Tomato Annotation Group (ITAG){end_link}, a multinational consortium, funded in part by the {link2}EU-SOL project{end_link2}.'), link => '<a href="http://www.ab.wur.nl/TomatoWiki">', end_link => '</a>', link2 => '<a href="http://www.eu-sol.net">', end_link2 => '</a>' &>
         </td>
         <td><a class="footer" href="http://www.eu-sol.net"><img src="/img/eusol_logo_small.jpg" border="0" /></a></td>
       </tr>
@@ -75,10 +70,10 @@ All data is openly and freely available on <a href="/">SGN</a>, <a href="http://
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Links'), 'h' ), collapsible => 1 &>
   <ul>
   <li><a href="http://tgrc.ucdavis.edu/Data/Acc/AccDetail.aspx?AccessionNum=LA4345">Heinz 1706 order link at TGRC</a> (the variety used in tomato genome sequencing project)</li>
-  <li><a href="http://www.genome.arizona.edu/fpc/tomato/">Tomato FPC pages</a> at University of Arizona, USA.</li>
+  <li><& /util/sentence.mas, text => __x('{link}Tomato FPC pages{end_link} at University of Arizona, USA.'), link => '<a href="http://www.genome.arizona.edu/fpc/tomato/">', end_link => '</a>' &></li>
   <li>Sanger FTP site with <a href="ftp://ftp.sanger.ac.uk/pub/tomato/map/">MboI BAC library FPC build</a></li>
   <li><a href="http://www.sanger.ac.uk/Software/"><% __('Software links at Sanger') |h %></a></li>
-  <li>The <a href="http://biosrv.cab.unina.it">Tomato Genome Annotation pages</a> at the <a href="http://cab.unina.it">computational biology group</a> of the <a href="http://www.unina.it">University of Naples</a>, Italy.</li>
+  <li><& /util/sentence.mas, text => __x('The {link}Tomato Genome Annotation pages{end_link} at the {link2}computational biology group{end_link2} of the {link3}University of Naples{end_link3}, Italy.'), link => '<a href="http://biosrv.cab.unina.it">', end_link => '</a>', link2 => '<a href="http://cab.unina.it">', end_link2 => '</a>', link3 => '<a href="http://www.unina.it">', end_link3 => '</a>' &></li>
   <li><a href="http://www.ncbi.nlm.nih.gov/assembly/GCA_000325825.1/">Tomato mitochondrial genome (Genbank)</a> (the site <a href="http://www.mitochondrialgenome.org">mitochondrialgenome.org</a> seems defunct as of Dec 2013)</li>
   <li><a href="http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nuccore&id=149384932"><% __('Tomato chloroplast sequence (Genbank)') |h %></a></li>
 

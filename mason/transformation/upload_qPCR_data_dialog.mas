@@ -147,12 +147,12 @@ $vector_name
                     <ul>
                         <li>accession_name (must exist in the database)</li>
                         <li>replicate_number (If there is no replicate, please indicate 1. If any sample has replicates, the derived normalized value is an average value.)</li>
-                        <li>gene (gene names in the spreadsheet must be stored in the database as genes in the vector construct or the selected endogenous control. <b>Each vector construct can be associated with more than one gene by using comma-separated values (e.g., geneA,geneB,geneC).</b>)</li>
+                        <li><& /util/sentence.mas, text => __x('{column} (gene names in the spreadsheet must be stored in the database as genes in the vector construct or the selected endogenous control. {bold}Each vector construct can be associated with more than one gene by using comma-separated values (e.g., {example}).{end_bold})'), column => 'gene', bold => '<b>', example => 'geneA,geneB,geneC', end_bold => '</b>' &></li>
                         <li>Cq (must be numeric values. Cq values are used to calculate normalized values, both Cq and the derived normalized values are stored in the database. If there is no Cq value, please use ND)</li>
                     </ul>
                     <br>
-                    <b>For example:</b>
-                    Cq data of an endogenous control (geneA) and two targets (geneB and geneC). Each sample has two replicates. Note: there is no need to group the same replicate together as in the sample spreadsheet.
+                    <b><& /util/sentence.mas, text => __x('For example:') &></b>
+                    <& /util/sentence.mas, text => __x('Cq data of an endogenous control ({gene_a}) and two targets ({gene_b} and {gene_c}). Each sample has two replicates. Note: there is no need to group the same replicate together as in the sample spreadsheet.'), gene_a => 'geneA', gene_b => 'geneB', gene_c => 'geneC' &>
                     <br />
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>

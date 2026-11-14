@@ -19,9 +19,9 @@ $editable_stock_props => {}
 
 <div style="text-align: center">
 
-<h3>Welcome back <% $first_name %>!</h3>
+<h3><& /util/sentence.mas, text => __x('Welcome back {name}!'), name => $first_name &></h3>
 
-Your status is currently "<% $role %>".
+<& /util/sentence.mas, text => __x('Your status is currently "{role}".'), role => $role &>
 
 <!-- table id="manage_user_role_table" class="table table-bordered" width="100%" >
 <thead>

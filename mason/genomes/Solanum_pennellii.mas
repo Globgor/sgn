@@ -8,23 +8,20 @@
 
 <br>
 <p>
-  <a href="/chado/organism.pl?organism_id=19"><i>Solanum
-pennellii</i></a> is a wild tomato that is relatively distant from the domesticated <a href="/chado/organism.pl?organism_id=1"><i>Solanum
-  lycopersicum</i></a>.  It was sequenced by a group of scientists at
-  MPI Golm and the Univeristy of Aachen and collaborators, under the direction of Alistair Fernie and Bj&ouml;rn Usadel.
+  <& /util/sentence.mas, text => __x('{link}{i}{species}{end_i}{end_link} is a wild tomato that is relatively distant from the domesticated {link2}{i}{species2}{end_i}{end_link2}.'), link => '<a href="/chado/organism.pl?organism_id=19">', end_link => '</a>', link2 => '<a href="/chado/organism.pl?organism_id=1">', end_link2 => '</a>', i => '<i>', end_i => '</i>' , species => 'Solanum pennellii' , species2 => 'Solanum lycopersicum' &>  <& /util/sentence.mas, text => __x('It was sequenced by a group of scientists at MPI Golm and the Univeristy of Aachen and collaborators, under the direction of {person} and {person2}.') , person => 'Alistair Fernie' , person2 => 'Bj&ouml;rn Usadel' &>
 <br>
-  It has been widely used for the construction of <a href="/cview/map.pl?map_id=9&show_offsets=1&show_ruler=1">mapping populations</a> and <a href="/cview/map.pl?map_id=il6&show_offsets=1&show_ruler=1">inbred lines</a>.
+  <& /util/sentence.mas, text => __x('It has been widely used for the construction of {link}mapping populations{end_link} and {link2}inbred lines{end_link2}.'), link => '<a href="/cview/map.pl?map_id=9&show_offsets=1&show_ruler=1">', end_link => '</a>', link2 => '<a href="/cview/map.pl?map_id=il6&show_offsets=1&show_ruler=1">', end_link2 => '</a>' &>
 </p>
 
 <br>
 
 <p>
-  <strong>Please, cite <i>Solanum pennellii</i> genome as:</strong><br>
+  <strong><& /util/sentence.mas, text => __x('Please, cite {i}{species}{end_i} genome as:'), i => '<i>', end_i => '</i>' , species => 'Solanum pennellii' &></strong><br>
   Bolger, A., Scossa, F., Bolger, M. E., Lanz, C., Maumus, F., Tohge, T., ... & Fernie A.R. (2014). <a href="http://www.nature.com/ng/journal/v46/n9/full/ng.3046.html">The genome of the stress-tolerant wild tomato species Solanum pennellii.</a> Nature Genetics 46, 1034–1038
 </p>
 
 <br>
-<p><strong><% __('Abstract') |h %></strong><br><i>Solanum pennellii</i> is a wild tomato species endemic to Andean regions in South America, where it has evolved to thrive in arid habitats. Because of its extreme stress tolerance and unusual morphology, it is an important donor of germplasm for the cultivated tomato <i>Solanum lycopersicum</i>. Introgression lines (ILs) in which large genomic regions of <i>S. lycopersicum</i> are replaced with the corresponding segments from <i>S. pennellii</i> can show remarkably superior agronomic performance. Here we describe a high-quality genome assembly of the parents of the IL population. By anchoring the <i>S. pennellii</i> genome to the genetic map, we define candidate genes for stress tolerance and provide evidence that transposable elements had a role in the evolution of these traits. Our work paves a path toward further tomato improvement and for deciphering the mechanisms underlying the myriad other agronomic traits that can be improved with <i>S. pennellii</i> germplasm.</p>
+<p><strong><% __('Abstract') |h %></strong><br><& /util/sentence.mas, text => __x('{i}{species}{end_i} is a wild tomato species endemic to Andean regions in South America, where it has evolved to thrive in arid habitats.'), i => '<i>', end_i => '</i>' , species => 'Solanum pennellii' &> <& /util/sentence.mas, text => __x('Because of its extreme stress tolerance and unusual morphology, it is an important donor of germplasm for the cultivated tomato {i}{species2}{end_i}.'), i => '<i>', end_i => '</i>' , species2 => 'Solanum lycopersicum' &> <& /util/sentence.mas, text => __x('Introgression lines (ILs) in which large genomic regions of {i}{species2}{end_i} are replaced with the corresponding segments from {i}{species}{end_i} can show remarkably superior agronomic performance.'), i => '<i>', end_i => '</i>' , species2 => 'S. lycopersicum' , species => 'S. pennellii' &> Here we describe a high-quality genome assembly of the parents of the IL population. <& /util/sentence.mas, text => __x('By anchoring the {i}{species}{end_i} genome to the genetic map, we define candidate genes for stress tolerance and provide evidence that transposable elements had a role in the evolution of these traits.'), i => '<i>', end_i => '</i>' , species => 'S. pennellii' &> <& /util/sentence.mas, text => __x('Our work paves a path toward further tomato improvement and for deciphering the mechanisms underlying the myriad other agronomic traits that can be improved with {i}{species}{end_i} germplasm.'), i => '<i>', end_i => '</i>' , species => 'S. pennellii' &></p>
 
 <br>
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Available Data'), 'h' ) &>

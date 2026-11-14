@@ -79,8 +79,8 @@ my $markup_styles = {
 % }
 <tr><td colspan="2">
 <div style="width: 20em; margin: -0.2em 0 0 auto; font-size: 90%">
-  <span class="sequence"><span class="orf" style="border: 1px solid black">&nbsp;</span></span> open reading frame<br />
-  <span class="sequence"><span class="longest_orf" style="border: 1px solid black">&nbsp;</span></span> longest open reading frame
+  <& /util/sentence.mas, text => __x('{icon} open reading frame'), icon => '<span class="sequence"><span class="orf" style="border: 1px solid black">&nbsp;</span></span>' &><br />
+  <& /util/sentence.mas, text => __x('{icon} longest open reading frame'), icon => '<span class="sequence"><span class="longest_orf" style="border: 1px solid black">&nbsp;</span></span>' &>
 </div>
 </td></tr>
 </table>

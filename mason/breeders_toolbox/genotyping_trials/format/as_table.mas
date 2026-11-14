@@ -13,8 +13,8 @@ $table_only => undef
 % if (!$table_only){
 
 <h1><% __('GENOTYPING PLATE') |h %></h1>
-<h1>Breeding program: <% $breeding_program_name %></h1>
-<h2>Trial name: <a href='/breeders/trial/<% $trial_id %>'><% $trial_name %></a></h2>
+<h1><& /util/sentence.mas, text => __x('Breeding program: {name}'), name => $breeding_program_name &></h1>
+<h2><& /util/sentence.mas, text => __x('Trial name: {link}{name}{end_link}'), link => '<a href=\'/breeders/trial/' . $trial_id . '\'>', name => $trial_name, end_link => '</a>' &></h2>
 <br/>
 
 % }

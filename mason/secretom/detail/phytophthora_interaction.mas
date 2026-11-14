@@ -7,51 +7,26 @@
     <img src="/documents/img/secretom/infestans_leaves_stages_full.jpg" />
 
     <p>
-      Infection of tomato leaves (upper panels) by P. infestans, showing
-      the early asymptomatic biotrophic phase (left) and the later
-      necrotrophic phase. The <span class="species_binomial">P. infestans
-      </span> developmental stages (trypan blue staining) are shown in
-      the lower panel.
+      <& /util/sentence.mas, text => __x('Infection of tomato leaves (upper panels) by {species}, showing the early asymptomatic biotrophic phase (left) and the later necrotrophic phase.'), species => 'P. infestans' &> <& /util/sentence.mas, text => __x('The {species} developmental stages (trypan blue staining) are shown in the lower panel.'), species => '<span class="species_binomial">P. infestans
+      </span>' &>
     </p>
 
   </div>
 
   <p>
-    Plant pathogens can be classified into three groups, based on their
-    mechanism of infection: biotrophs, necrotrophs or
-    hemibiotrophs. Biotrophic pathogens penetrate the plant wall,
-    parasitize host cells while evading or suppressing defense responses
-    and require viable host tissue for pathogen nutrition and
-    reproduction. In contrast, necrotrophs, overwhelm plants by
-    secreting mixtures of degradative enzymes that allow the pathogens
-    to subsist on necrotized host tissue. Hemibiotrophic pathogens, such
-    as the bacterium <span class="species_binomial">Pseudomonas
-    syringae</span>, the fungus <span class="species_binomial">
-    Colletotrichum lindemuthianum</span> and the oomycete <span
-    class="species_binomial">Phytophthora infestans</span>, employ
-    elements of both these strategies in a biphasic "stealth"
-    infection mechanism.
+    <& /util/sentence.mas, text => __x('Plant pathogens can be classified into three groups, based on their mechanism of infection: biotrophs, necrotrophs or hemibiotrophs.') &> <& /util/sentence.mas, text => __x('Biotrophic pathogens penetrate the plant wall, parasitize host cells while evading or suppressing defense responses and require viable host tissue for pathogen nutrition and reproduction.') &> <& /util/sentence.mas, text => __x('In contrast, necrotrophs, overwhelm plants by secreting mixtures of degradative enzymes that allow the pathogens to subsist on necrotized host tissue.') &> <& /util/sentence.mas, text => __x('Hemibiotrophic pathogens, such as the bacterium {species}, the fungus {species2} and the oomycete {species3}, employ elements of both these strategies in a biphasic "stealth" infection mechanism.'), species => '<span class="species_binomial">Pseudomonas
+    syringae</span>', species2 => '<span class="species_binomial">
+    Colletotrichum lindemuthianum</span>', species3 => '<span
+    class="species_binomial">Phytophthora infestans</span>' &>
   </p>
 
   <p>
-    This involves an initial biotrophic phase, when the pathogen
-    proliferates asymptomatically in the host and efficient mechanisms
-    must be employed to evade and suppress host defenses. Subsequently,
-    in the second stage, hemibiotrophs orchestrate a physiological
-    switch from asymptomatic infection to large-scale necrosis and
-    tissue dissolution, presumably resulting from the coordinated
-    secretion of factors such as lytic enzymes and necrosis elicitors.
+    <& /util/sentence.mas, text => __x('This involves an initial biotrophic phase, when the pathogen proliferates asymptomatically in the host and efficient mechanisms must be employed to evade and suppress host defenses.') &> <& /util/sentence.mas, text => __x('Subsequently, in the second stage, hemibiotrophs orchestrate a physiological switch from asymptomatic infection to large-scale necrosis and tissue dissolution, presumably resulting from the coordinated secretion of factors such as lytic enzymes and necrosis elicitors.') &>
   </p>
 
   <p>
 
-    We are using a range of strategies to characterize the secretomes
-    of the host and pathogen during the various stages of
-    hemibiotrophy, including <a href="/secretom/detail/functional_screens">
-    Yeast Secretion Trap Screen</a>, <a href="/secretom/detail/proteomics">
-    comparative proteomic analysis</a> of extracted protein populations,
-    and deepsequencing of the transcriptomes of the infected tissues using
-    RNAseq.
+    <& /util/sentence.mas, text => __x('We are using a range of strategies to characterize the secretomes of the host and pathogen during the various stages of hemibiotrophy, including {link} Yeast Secretion Trap Screen{end_link}, {link2} comparative proteomic analysis{end_link2} of extracted protein populations, and deepsequencing of the transcriptomes of the infected tissues using RNAseq.'), link => '<a href="/secretom/detail/functional_screens">', end_link => '</a>', link2 => '<a href="/secretom/detail/proteomics">', end_link2 => '</a>' &>
 
   </p>
 </div>
@@ -77,10 +52,7 @@
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data Sets'), 'h' ) &>
 
-<p>These samples correspond to a time course experiment of a compatible
-interaction between Phytophthora infestans (clonal lineage US11) and
-its host tomato (M82). Tissue was collected at three different stages
-of the interaction and a mock inoculated plant served as control.
+<p><& /util/sentence.mas, text => __x('These samples correspond to a time course experiment of a compatible interaction between {species} (clonal lineage US11) and its host tomato (M82).'), species => 'Phytophthora infestans' &> <& /util/sentence.mas, text => __x('Tissue was collected at three different stages of the interaction and a mock inoculated plant served as control.') &>
 </p>
 
   <&| /secretom/section_templates/data_items.mas,

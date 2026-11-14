@@ -19,9 +19,7 @@ $stockref => undef
         <span class="glyphicon glyphicon-refresh"></span> <% __('Loading collections') |h %>&hellip;
     </div>
     <div id="trial_collections_empty" class="text-muted" style="display:none; padding:5px;">
-        No collections contain images from this trial yet. To add images to a
-        collection, select them in <a href="/search/images">image search</a> and use
-        <b>Add selected to collection</b>.
+        <& /util/sentence.mas, text => __x('No collections contain images from this trial yet. To add images to a collection, select them in {link}image search{end_link} and use {bold}Add selected to collection{end_bold}.'), link => '<a href="/search/images">', end_link => '</a>', bold => '<b>', end_bold => '</b>' &>
     </div>
     <table class="table table-hover table-condensed" id="trial_collections_table"
            style="width:100%; display:none;">

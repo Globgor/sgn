@@ -37,7 +37,7 @@ This page gives more information about the materials developed. Please contact u
 <ul>
 <li><% __('Designed for high school biology curricula') |h %></li>
 <li><% __('A laboratory exercise, "Tater Tots or Not?", based on in vitro potato microtuber production was developed for use in the biology curriculum at the high school level.  Joyce Van Eck and an Ithaca High School biology teacher, Linda Knewstub, designed a laboratory class that requires collaboration, critical thinking, and scientific inquiry.  The exercise covers the following aspects of curriculum content: traits of living organisms (life functions), requirements of photosynthesis and respiration (cell energy), scientific method and experimental design, and cell division (mitosis, asexual reproduction, vegetative propagation, stem cells).') |h %></li>
-<li>Resources: <a href="/static_content/outreach/Tater Tots or Not 06.doc">Student worksheet</a> [doc] | <a href="/static_content/outreach/Taters teacher version 06.doc">Teacher worksheet</a> [doc] | <a href="/static_content/outreach/Tissue culture procedures.ppt">Methods</a> [ppt]</li>
+<li><& /util/sentence.mas, text => __x('Resources: {link}Student worksheet{end_link} [doc] | {link2}Teacher worksheet{end_link2} [doc] | {link3}Methods{end_link3} [ppt]'), link => '<a href="/static_content/outreach/Tater Tots or Not 06.doc">', end_link => '</a>', link2 => '<a href="/static_content/outreach/Taters teacher version 06.doc">', end_link2 => '</a>', link3 => '<a href="/static_content/outreach/Tissue culture procedures.ppt">', end_link3 => '</a>' &></li>
 </ul>
 </dd>
 
@@ -46,7 +46,7 @@ This page gives more information about the materials developed. Please contact u
 <ul>
 <li><% __('Designed for K-5') |h %></li>
 <li><% __('This educational outreach activity was designed for grades K-5 and has been done in elementary schools and after school programs.  The purpose of the activity is to teach children about members of the Solanaceae family, the concept of plant families, and diversity.  Various Solanaceae family members (tomatoes, potatoes, eggplants, peppers, and tomatillos) in all shapes, sizes, and colors are purchased at a local grocery store for the activity.  After cutting the vegetables open to look at the seeds or lack of seeds in the case of potatoes, the children taste the tomatoes, peppers, and tomatillos.  In addition to these vegetables, photographs of family members that are not found in local stores and flowers of the various Solanaceae are shown to the students.  After this activity, the children get to dress up the family members for a party.  At the end, a Word Find puzzle is given to the students to reinforce the terms that were discussed.') |h %></li>
-<li>Resources: <a href="/static_content/outreach/sol_family_activity_book.pdf">Activity Book</a> | <a href="/static_content/outreach/sol_family_activity_materials.pdf">List of materials needed</a> | <a href="/static_content/outreach/sol_family_images.pdf">Images of Sol family members</a> [pdf]</li>
+<li><& /util/sentence.mas, text => __x('Resources: {link}Activity Book{end_link} | {link2}List of materials needed{end_link2} | {link3}Images of Sol family members{end_link3} [pdf]'), link => '<a href="/static_content/outreach/sol_family_activity_book.pdf">', end_link => '</a>', link2 => '<a href="/static_content/outreach/sol_family_activity_materials.pdf">', end_link2 => '</a>', link3 => '<a href="/static_content/outreach/sol_family_images.pdf">', end_link3 => '</a>' &></li>
 </ul>
 </dd>
 
@@ -55,7 +55,7 @@ This page gives more information about the materials developed. Please contact u
 <ul>
 <li><% __('Designed for the high school and new user level.') |h %></li>
 <li><% __('Introduction to using SGN for high school students and new users, with hands on exercises.') |h %></li>
-<li>Resources: <a href="/static_content/outreach/SGNHighSchoolTutuorial.doc">SGN tutorial</a></li>
+<li><& /util/sentence.mas, text => __x('Resources: {link}SGN tutorial{end_link}'), link => '<a href="/static_content/outreach/SGNHighSchoolTutuorial.doc">', end_link => '</a>' &></li>
 <li><% __('Kindly provided by Theresa Fulton.') |h %></li>
 </ul>
 </dd>
@@ -86,9 +86,9 @@ This page gives more information about the materials developed. Please contact u
 If you want to apply for the Summer 2011 internships, please use the forms below. The application deadline is March 7, 2010. Please send the filled-in materials or questions to Dr. Joyce van Eck <a href="mailto:jv27@cornell.edu">jv27@cornell.edu</a>.
     <br /><br />
     <ul>
-      <li><a href="/static_content/outreach/internship_2011/internship_poster_2011.pdf">Flyer</a> (pdf)</li>
-      <li><a href="/static_content/outreach/internship_2011/recommendation_form_2011.pdf">Recommendation form</a> (pdf)</li>
-      <li><a href="/static_content/outreach/internship_2011/undergrad_app_internship_2011.pdf">Application form</a> (pdf)</li>
+      <li><& /util/sentence.mas, text => __x('{link}Flyer{end_link} (pdf)'), link => '<a href="/static_content/outreach/internship_2011/internship_poster_2011.pdf">', end_link => '</a>' &></li>
+      <li><& /util/sentence.mas, text => __x('{link}Recommendation form{end_link} (pdf)'), link => '<a href="/static_content/outreach/internship_2011/recommendation_form_2011.pdf">', end_link => '</a>' &></li>
+      <li><& /util/sentence.mas, text => __x('{link}Application form{end_link} (pdf)'), link => '<a href="/static_content/outreach/internship_2011/undergrad_app_internship_2011.pdf">', end_link => '</a>' &></li>
     </ul>
     <br />
     <% __('Note: you can type your information directly into the pdf file.') |h %>

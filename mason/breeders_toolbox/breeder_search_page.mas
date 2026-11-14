@@ -200,7 +200,7 @@ $dataset_id => undef
           <span class="btnn btn-link"><% __('Related Genotype Data') |h %></span>
         </div>
         <div id="wiz-down-1-c" class="panel-collapse collapse" role="tabpanel">
-          <p style="margin: 15px; text-color: #999; font-size: 90%">Download matching genotype records from the database.  Select a <strong>single genotyping protocol</strong> and <strong>one or more accessions</strong> to download the matching genotype data.</p>
+          <p style="margin: 15px; text-color: #999; font-size: 90%"><& /util/sentence.mas, text => __x('Download matching genotype records from the database. Select a {strong}single genotyping protocol{end_strong} and {strong}one or more accessions{end_strong} to download the matching genotype data.'), strong => '<strong>', end_strong => '</strong>' &></p>
           <table class="table">
             <tr>
               <td colspan="4">
@@ -350,7 +350,7 @@ $dataset_id => undef
           <span class="btnn btn-link"><% __('Archived Genotype Data') |h %></span>
         </div>
         <div id="wiz-down-1-c-a" class="panel-collapse collapse" role="tabpanel">
-          <p style="margin: 15px; text-color: #999; font-size: 90%">Download the original archived VCF files of entire genotyping projects.  Select <strong>one or more genotyping projects and/or genotyping protocols</strong> to download a VCF file of any matching project(s).</p>
+          <p style="margin: 15px; text-color: #999; font-size: 90%"><& /util/sentence.mas, text => __x('Download the original archived VCF files of entire genotyping projects. Select {strong}one or more genotyping projects and/or genotyping protocols{end_strong} to download a VCF file of any matching project(s).'), strong => '<strong>', end_strong => '</strong>' &></p>
           <div id="wiz-down-1-c-a-body" style="min-height: 50px"></div>
         </div>
       </div>

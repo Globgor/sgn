@@ -13,8 +13,7 @@
               <td width="20">&nbsp;</td>
 
               <td>
-                <strong>Solanaceae Systematics, Descriptions,
-                Images, Germplasms</strong>
+                <strong><& /util/sentence.mas, text => __x('Solanaceae Systematics, Descriptions, Images, Germplasms') &></strong>
 
 		<dl>
 		  <dt><br /><a href="http://www.ru.nl/bgard/"><% __('Experimental Garden and Genebank of the Radboud University of Nijmegen') |h %></a></dl>
@@ -23,31 +22,22 @@
 		<dl>
 		  <dt><br /><a href="http://www.ecpgr.cgiar.org/"><% __('European Cooperative Programme for Plant Genetic Resources') |h %></a></dl>
 
-		<dd>The European Cooperative Programme for Plant Genetic Resources (ECPGR) is a collaborative programme among most European countries aimed at ensuring the long-term conservation and facilitating the increased utilization of plant genetic resources in Europe (<a href="http://www.ecpgr.cgiar.org/networks/vegetables/solanaceae.html">Solanaceae</a>, <a href="http://www.ecpgr.cgiar.org/networks/sugar_starch_fibre_crops/potato.html">Potato</a>)</dd>
+		<dd><& /util/sentence.mas, text => __x('The European Cooperative Programme for Plant Genetic Resources (ECPGR) is a collaborative programme among most European countries aimed at ensuring the long-term conservation and facilitating the increased utilization of plant genetic resources in Europe ({link}Solanaceae{end_link}, {link2}Potato{end_link2})'), link => '<a href="http://www.ecpgr.cgiar.org/networks/vegetables/solanaceae.html">', end_link => '</a>', link2 => '<a href="http://www.ecpgr.cgiar.org/networks/sugar_starch_fibre_crops/potato.html">', end_link2 => '</a>' &></dd>
 
                 <dl>
 
                   <dt><br /><a href="http://solcap.msu.edu" target="_new" >SolCAP</a></dt>
                   <dd><% __('The official website of the USDA sponsored Solanaceae Coordinated Agricultural Project (SolCAP), which will phenotype and genotype large panels of tomato and potato accessions. Results will also be made available on SGN.') |h %></dd>
                   <dt><a href=
-                  "http://www.nhm.ac.uk/research-curation/projects/solanaceaesource/" target="_new">Solanum
-                  Source</a></dt>
+                  "http://www.nhm.ac.uk/research-curation/projects/solanaceaesource/" target="_new"><& /util/sentence.mas, text => __x('Solanum Source') &></a></dt>
 
-                  <dd>The official website of the Solanum PBI
-                  project, containing species descriptions,
-                  specimen data from herbaria, nomenclatural data
-                  about names and their places of publication, and
-                  a bibliography of scientific articles about
-                  members of the family.</dd>
+                  <dd><& /util/sentence.mas, text => __x('The official website of the Solanum PBI project, containing species descriptions, specimen data from herbaria, nomenclatural data about names and their places of publication, and a bibliography of scientific articles about members of the family.') &></dd>
 
 
-                  <dt><br /><a href=
-                  "http://www.bgard.science.ru.nl/" target="_new">Nijmegen
-                  Experimental Garden and Genebank</a> in the
-                  Netherlands</dt>
+                  <dt><br /><& /util/sentence.mas, text => __x('{link}Nijmegen Experimental Garden and Genebank{end_link} in the Netherlands'), link => '<a href=
+                  "http://www.bgard.science.ru.nl/" target="_new">', end_link => '</a>' &></dt>
 
-                  <dd>A botanical garden with one of the major
-                  collections of Solanaceae plants.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A botanical garden with one of the major collections of Solanaceae plants.') &></dd>
     
 
                 </dl>
@@ -62,8 +52,7 @@
     <dd><% __('A database of EMS and Neutron mutants in the MicroTom background in Japan.') |h %></dd>
 
     <dt><a href="http://www.agrobios.it/tilling" target="_new"> LycoTILL</a></dt>
-<dd>  LycoTILL is an interactive and evolving database which allows search on-line of images and phenotype data of the  tomato (cv /Red Setter/) mutant collection generated with EMS mutagenesis experiments.
-The Red Setter mutant population was developed for TILLING applications but can also be used  for forward  genetic studies.</dd>
+<dd>  <& /util/sentence.mas, text => __x('LycoTILL is an interactive and evolving database which allows search on-line of images and phenotype data of the tomato (cv /Red Setter/) mutant collection generated with EMS mutagenesis experiments. The Red Setter mutant population was developed for TILLING applications but can also be used for forward genetic studies.') &></dd>
 
                   <dt><a href="http://phn.huji.ac.il/RTQ/" target="_new" >Phenom Networks</a></dt>
                   <dd><% __('The Phenom Network engine by Dani Zamir and Yaniv Semel represents knowledge of complex traits and has tomato ILs, barley and rose traits with more organisms being added soon.') |h %></dd>
@@ -71,46 +60,36 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   <dt><a href="http://www-plb.ucdavis.edu/labs/maloof/tomatosnp/" target="_new" ><% __('Tomato SNP database') |h %></a></dt>
                   <dd><% __('A tomato SNP website by Jose Jimenez and Julin Maloof at UC Davis') |h %></dd>
 
-                  <dt><br /><a href=
-                  "http://www.kazusa.or.jp/jsol/microtom/index.html" target="_new">MiBASE</a>, the Kazusa
-                  Microtom Site</dt>
+                  <dt><br /><& /util/sentence.mas, text => __x('{link}MiBASE{end_link}, the Kazusa Microtom Site'), link => '<a href=
+                  "http://www.kazusa.or.jp/jsol/microtom/index.html" target="_new">', end_link => '</a>' &></dt>
 
-                  <dd>EST and unigene dataset from Microtom,
-                  including GO annotations and Pathway Viewer.</dd>
+                  <dd><& /util/sentence.mas, text => __x('EST and unigene dataset from Microtom, including GO annotations and Pathway Viewer.') &></dd>
 
                   <dt><br /><a href="http://www.pgb.kazusa.or.jp/kaftom/" target="_new" >KaFTom</a></dt>
                   <dd><% __('The Kazusa Micro-Tom full-length cDNA Site') |h %></dd>
 
-                  <dt><br /><a href="http://tgc.ifas.ufl.edu" target="_new">The
-                  Tomato Genetics Cooperative</a></dt>
+                  <dt><br /><a href="http://tgc.ifas.ufl.edu" target="_new"><& /util/sentence.mas, text => __x('The Tomato Genetics Cooperative') &></a></dt>
 
-                  <dd>Homepage of the Tomato Genetics Cooperative
-                  with access to publications on-line.</dd>
+                  <dd><& /util/sentence.mas, text => __x('Homepage of the Tomato Genetics Cooperative with access to publications on-line.') &></dd>
 
-                  <dt><br /><a href="http://tgrc.ucdavis.edu" target="_new" >Tomato
-                  Genetic Resource Center (TGRC)</a></dt>
+                  <dt><br /><a href="http://tgrc.ucdavis.edu" target="_new" ><& /util/sentence.mas, text => __x('Tomato Genetic Resource Center (TGRC)') &></a></dt>
 
-                  <dd>Large collection of Solanaceae germplasms,
-                  with a special focus on tomato.</dd>
+                  <dd><& /util/sentence.mas, text => __x('Large collection of Solanaceae germplasms, with a special focus on tomato.') &></dd>
 
                   
-                  <dt><br /><a href="http://ted.bti.cornell.edu/" target="_new" >Tomato
-    Expression Database (TED)</a></dt>
+                  <dt><br /><a href="http://ted.bti.cornell.edu/" target="_new" ><& /util/sentence.mas, text => __x('Tomato Expression Database (TED)') &></a></dt>
 
                   <dd><% __('Site dedicated to tomato microarrays.') |h %></dd>
 
                   <dt><br /><a href=
                   "http://www.tomato.org/" target="_new"><% __('California Tomato Commission') |h %></a></dt>
 
-                  <dd>The website of the California Tomato Grower\'s
-                  Association. Contains nutritional information and
-                  recipes.</dd>
+                  <dd><& /util/sentence.mas, text => __x('The website of the California Tomato Grower\\\'s Association. Contains nutritional information and recipes.') &></dd>
 
 
                   <dt><br /><a href="http://www.ars.usda.gov/Main/site_main.htm?modecode=19-10-05-00" target="_new" ><% __('USDA ARS Bioinformatics Homepage') |h %></a></dt>
 
-                  <dd>The website of the USDA bioinformatics unit
-                  in Geneva, NY</dd>
+                  <dd><& /util/sentence.mas, text => __x('The website of the USDA bioinformatics unit in Geneva, NY') &></dd>
 
                   <dt><br /><a href=
                   "http://solcap.msu.edu/" target="_new" >
@@ -119,7 +98,7 @@ The Red Setter mutant population was developed for TILLING applications but can 
 
                   <dt><br /><a href=
                   "https://www.eu-sol.wur.nl" target="_new" ><% __('EU-SOL Tomato Core Collection Phenotype Database') |h %></a></dt>
-                  <dd>The Tomato Core Collection Phenotype Database by the <a href="http://www.eu-sol.net">EU-SOL</a> Project funded by the 6th framework program of the European Union.</dd>
+                  <dd><& /util/sentence.mas, text => __x('The Tomato Core Collection Phenotype Database by the {link}EU-SOL{end_link} Project funded by the 6th framework program of the European Union.'), link => '<a href="http://www.eu-sol.net">', end_link => '</a>' &></dd>
 
                   <dt><br /><a href=
                   "http://tomato.nbrp.jp/indexEn.html" target="_new" ><% __('Tomato National BioResource Project') |h %></a></dt>
@@ -156,42 +135,26 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   <dt><a href="http://www.cpgp.ca" target="_new" ><% __('Canadian Potato Genome Project') |h %></a></dt>
                   <dd><% __('The Canadian Potato Genome Project (CPGP) was launched in 2002 to develop resources in gene discovery in potatoes, for use by Canadian researchers and their partners.') |h %></dd>
     
-                  <dt><a href="https://gabi.rzpd.de/PoMaMo.html" target="_new" >PoMaMo
-                  Database</a></dt>
+                  <dt><a href="https://gabi.rzpd.de/PoMaMo.html" target="_new" ><& /util/sentence.mas, text => __x('PoMaMo Database') &></a></dt>
 
-                  <dd>Potato genome data from the Max-Planck
-                  Institute for Plant Breeding Research, Cologne,
-                  Germany, which includes SNP data, maps, marker
-                  sequences, references and more.</dd>
+                  <dd><& /util/sentence.mas, text => __x('Potato genome data from the Max-Planck Institute for Plant Breeding Research, Cologne, Germany, which includes SNP data, maps, marker sequences, references and more.') &></dd>
 
-                  <dt><br /><a href="http://www.cipotato.org" target="_new" >Centro
-                  Internacional de la Papa</a> (International
-                  Potato Center, Peru)</dt>
+                  <dt><br /><& /util/sentence.mas, text => __x('{link}Centro Internacional de la Papa{end_link} (International Potato Center, Peru)'), link => '<a href="http://www.cipotato.org" target="_new" >', end_link => '</a>' &></dt>
 
-                  <dd>The International Potato Center in Lima,
-                  Peru, with potato specific databases and
-                  resources, such as the <a href=
-                  "http://grcc.cip.cgiar.org/genebank/" target="_new">CIP Potato
-                  Genebank</a> and the <a href=
-                  "http://wpa.riu.cip.cgiar.org/index.php" target="_new" >World Potato
-                  Atlas</a></dd>
+                  <dd><& /util/sentence.mas, text => __x('The International Potato Center in Lima, Peru, with potato specific databases and resources, such as the {link}CIP Potato Genebank{end_link} and the {link2}World Potato Atlas{end_link2}'), link => '<a href=
+                  "http://grcc.cip.cgiar.org/genebank/" target="_new">', end_link => '</a>', link2 => '<a href=
+                  "http://wpa.riu.cip.cgiar.org/index.php" target="_new" >', end_link2 => '</a>' &></dd>
 
-                  <dd>A site for potato and biotechnology
-                  issues.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A site for potato and biotechnology issues.') &></dd>
 
-                  <dt><br /><a href="http://gilb.cip.cgiar.org/" target="_new" >Global
-                  Initiative for Late Blight (GILB)</a></dt>
+                  <dt><br /><a href="http://gilb.cip.cgiar.org/" target="_new" ><& /util/sentence.mas, text => __x('Global Initiative for Late Blight (GILB)') &></a></dt>
 
-                  <dd>A collaboration for Late Blight
-                  research.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A collaboration for Late Blight research.') &></dd>
 
                   <dt><br /><a href=
-                  "http://www.potgenebank.org/" target="_new" >Intergenebank for
-                  Potato</a></dt>
+                  "http://www.potgenebank.org/" target="_new" ><& /util/sentence.mas, text => __x('Intergenebank for Potato') &></a></dt>
 
-                  <dd>A database containing accession data from
-                  different genebanks around the world, including
-                  an SSR database.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A database containing accession data from different genebanks around the world, including an SSR database.') &></dd>
 
                   <!-- dt><br /><a href=
                   "http://www.potatogenome.org/nsf4/" target="_new" >PotatoGenome.org</a></dt  DEFUNCT?? -->
@@ -201,22 +164,19 @@ The Red Setter mutant population was developed for TILLING applications but can 
 
                    
 
-                  <dd>The official website of the NSF potato genome
-                  project.</dd>
+                  <dd><& /util/sentence.mas, text => __x('The official website of the NSF potato genome project.') &></dd>
                 </dl>
 
                 <strong><% __('Pepper Resources') |h %></strong>
 
                 <dl>
                   <dt><a href=
-                  "http://plant.pdrc.re.kr/ks200201/pepper.html" target="_new" >KRIBB
-                  Pepper Resources</a></dt>
+                  "http://plant.pdrc.re.kr/ks200201/pepper.html" target="_new" ><& /util/sentence.mas, text => __x('KRIBB Pepper Resources') &></a></dt>
 
                   <dd><% __('A pepper EST database at KRIBB') |h %></dd>
 
                   <dt><br /><a href=
-                  "http://www.cnph.embrapa.br/capsicum/" target="_new" >Embrapa
-                  Capsicum site</a></dt>
+                  "http://www.cnph.embrapa.br/capsicum/" target="_new" ><& /util/sentence.mas, text => __x('Embrapa Capsicum site') &></a></dt>
 
                   <dd><% __('A site dedicated to Pepper in Brazil') |h %></dd>
                 </dl>
@@ -227,9 +187,7 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   <dt><a href=
                   "http://www.petuniaplatform.net" target="_new" >Petuniaplatform.net</a></dt>
 
-                  <dd>A website dedicated to Petunia, with
-                  contacts, techniques, bibliography and other
-                  information.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A website dedicated to Petunia, with contacts, techniques, bibliography and other information.') &></dd>
                 </dl>
 
                 <strong><% __('Eggplant Resources') |h %></strong>
@@ -251,27 +209,21 @@ The Red Setter mutant population was developed for TILLING applications but can 
                 <strong><% __('Coffee Resources') |h %></strong>
 
                 <dl>
-                  <dt><a href="http://www.coffeedna.net/" target="_new" >CoffeeDNA
-                  - A site for Coffee Genomics in Italy</a></dt>
+                  <dt><a href="http://www.coffeedna.net/" target="_new" ><& /util/sentence.mas, text => __x('CoffeeDNA - A site for Coffee Genomics in Italy') &></a></dt>
 
-                  <dd>A site about coffee and coffee genomics.
-                  Login required for certain functions.</dd>
+                  <dd><& /util/sentence.mas, text => __x('A site about coffee and coffee genomics. Login required for certain functions.') &></dd>
                 </dl>
 
                 <strong><% __('Germplasm Resources') |h %></strong>
 
                 <dl>
-                  <dt><a href="http://tgrc.ucdavis.edu" target="_new" >Tomato
-                  Genetic Resource Center (TGRC)</a></dt>
+                  <dt><a href="http://tgrc.ucdavis.edu" target="_new" ><& /util/sentence.mas, text => __x('Tomato Genetic Resource Center (TGRC)') &></a></dt>
 
-                  <dd>Large collection of Solanaceae germplasms,
-                  with a special focus on tomato.</dd>
+                  <dd><& /util/sentence.mas, text => __x('Large collection of Solanaceae germplasms, with a special focus on tomato.') &></dd>
 
-                  <dt><br /><a href="http://www.ars-grin.gov/npgs/" target="_new" >GRIN,
-                  The National Germplasm System</a></dt>
+                  <dt><br /><a href="http://www.ars-grin.gov/npgs/" target="_new" ><& /util/sentence.mas, text => __x('GRIN, The National Germplasm System') &></a></dt>
 
-                  <dd>Large database of germplasm, integrating many
-                  germplasm centers in the United States.</dd>
+                  <dd><& /util/sentence.mas, text => __x('Large database of germplasm, integrating many germplasm centers in the United States.') &></dd>
                 </dl>
 
                 <strong><% __('Euasterid Resources') |h %></strong>
@@ -284,18 +236,12 @@ The Red Setter mutant population was developed for TILLING applications but can 
                 <strong><% __('Other Sequence Resources') |h %></strong>
 
                 <dl>
-                  <dt><a href="http://www.genome.arizona.edu/" target="_new" >The
-                  Arizona Genome Initiative (AGI)</a></dt>
+                  <dt><a href="http://www.genome.arizona.edu/" target="_new" ><& /util/sentence.mas, text => __x('The Arizona Genome Initiative (AGI)') &></a></dt>
 
-                  <dd>The AGI is the place to <a href=
-                  "http://www.genome.arizona.edu/orders/" target="_new" >order</a>
-                  many of the ESTs and BAC clones for many
-                  Solanaceae species such as potato. Please note
-                  that BAC and EST <a href=
-                  "http://ted.bti.cornell.edu/order/" target="_new" >orders</a>
-                  for tomato are handled by the <a href=
-                  "http://bti.cornell.edu/" target="_new" >Boyce Thompson
-                  Institute</a>.</dd>
+                  <dd><& /util/sentence.mas, text => __x('The AGI is the place to {link}order{end_link} many of the ESTs and BAC clones for many Solanaceae species such as potato. Please note that BAC and EST {link2}orders{end_link2} for tomato are handled by the {link3}Boyce Thompson Institute{end_link3}.'), link => '<a href=
+                  "http://www.genome.arizona.edu/orders/" target="_new" >', end_link => '</a>', link2 => '<a href=
+                  "http://ted.bti.cornell.edu/order/" target="_new" >', end_link2 => '</a>', link3 => '<a href=
+                  "http://bti.cornell.edu/" target="_new" >', end_link3 => '</a>' &></dd>
 
                   <!-- LINK DEAD 11/2008 dt><br /><a href="http://www.tigr.org/tigr-scripts/tgi/T_index.cgi?species=tomato">The
                   Institute for Genomic Research\'s (TIGR) Tomato
@@ -314,59 +260,45 @@ The Red Setter mutant population was developed for TILLING applications but can 
             </tr>
           </table>
 
-          <h4><a name="related" id="related"></a>Links to related
-          websites</h4>
+          <h4><a name="related" id="related"></a><& /util/sentence.mas, text => __x('Links to related websites') &></h4>
 
           <ul>
-            <li><a href="http://seedplants.org" target="_new" >Seedplants.org</a>, a site about seed plant descriptions and taxonomy.</li>
+            <li><& /util/sentence.mas, text => __x('{link}Seedplants.org{end_link}, a site about seed plant descriptions and taxonomy.'), link => '<a href="http://seedplants.org" target="_new" >', end_link => '</a>' &></li>
             <li><a href=
             "http://internt.nhm.ac.uk/jdsml/nature-online/seeds-of-trade/" target="_new" >Seeds of
             Trade</a> - a virtual book by Henry Hobhouse and Sandra
             Knapp about the history of plant cultivation.</li>
 
-            <li><a href="http://www.arabidopsis.org" target="_new" >TAIR</a> - The
-            Arabidopsis Information Resource</li>
+            <li><& /util/sentence.mas, text => __x('{link}TAIR{end_link} - The Arabidopsis Information Resource'), link => '<a href="http://www.arabidopsis.org" target="_new" >', end_link => '</a>' &></li>
 
             <li><a href="http://www.medicago.org" target="_new" >Medicago truncatula</a>
             - a model for legume research</li>
 
-            <li><a href="http://www.gramene.org" target="_new" >Gramene</a> - a
-            comparative mapping resource for the grasses</li>
+            <li><& /util/sentence.mas, text => __x('{link}Gramene{end_link} - a comparative mapping resource for the grasses'), link => '<a href="http://www.gramene.org" target="_new" >', end_link => '</a>' &></li>
 
             <li><a href="http://cggc.agtec.uga.edu" target="_new" >Comparative
             Grass Genomics Center</a> - a comparative resource for
             grasses, focusing on <em>Sorghum</em>.</li>
 
-            <li><a href=
-            "http://www.shigen.nig.ac.jp/rice/oryzabase/top/top.jsp" target="_new" >OryzaBase</a>
-            - Integrated Rice Science Database</li>
+            <li><& /util/sentence.mas, text => __x('{link}OryzaBase{end_link} - Integrated Rice Science Database'), link => '<a href=
+            "http://www.shigen.nig.ac.jp/rice/oryzabase/top/top.jsp" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.maizeGDB.org" target="_new" >MaizeGDB</a>
-            - Maize Genetics and Genomics Database</li>
+            <li><& /util/sentence.mas, text => __x('{link}MaizeGDB{end_link} - Maize Genetics and Genomics Database'), link => '<a href="http://www.maizeGDB.org" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.plantGDB.org" target="_new" >PlantGDB</a> -
-            Plant Genome DataBase</li>
+            <li><& /util/sentence.mas, text => __x('{link}PlantGDB{end_link} - Plant Genome DataBase'), link => '<a href="http://www.plantGDB.org" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.ncbi.nlm.nih.gov/" target="_new" >NCBI</a> -
-            National Center for Biotechnology Information</li>
+            <li><& /util/sentence.mas, text => __x('{link}NCBI{end_link} - National Center for Biotechnology Information'), link => '<a href="http://www.ncbi.nlm.nih.gov/" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.biocyc.org" target="_new" >BioCyc</a>,
-            <a href="http://www.metacyc.org" target="_new" >MetaCyc</a> and
-            <a href=
-            "http://www.arabidopsis.org/biocyc/index.jsp" target="_new" >AraCyc</a> -
-            Collections of curated biochemical pathways.</li>
+            <li><& /util/sentence.mas, text => __x('{link}BioCyc{end_link}, {link2}MetaCyc{end_link2} and {link3}AraCyc{end_link3} - Collections of curated biochemical pathways.'), link => '<a href="http://www.biocyc.org" target="_new" >', end_link => '</a>', link2 => '<a href="http://www.metacyc.org" target="_new" >', end_link2 => '</a>', link3 => '<a href=
+            "http://www.arabidopsis.org/biocyc/index.jsp" target="_new" >', end_link3 => '</a>' &></li>
 
-            <li><a href="http://www.genome.ad.jp/kegg/" target="_new" >KEGG</a> -
-            Kyoto Encyclopedia of Genes and Genomes.</li>
+            <li><& /util/sentence.mas, text => __x('{link}KEGG{end_link} - Kyoto Encyclopedia of Genes and Genomes.'), link => '<a href="http://www.genome.ad.jp/kegg/" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.biomoby.org" target="_new" >The BioMoby
-            Project</a> - the database interoperability
-            project</li>
+            <li><& /util/sentence.mas, text => __x('{link}The BioMoby Project{end_link} - the database interoperability project'), link => '<a href="http://www.biomoby.org" target="_new" >', end_link => '</a>' &></li>
 
-            <li><a href="http://www.genomics.cornell.edu" target="_new" >Cornell
-            Genomics Initiative</a></li>
+            <li><a href="http://www.genomics.cornell.edu" target="_new" ><& /util/sentence.mas, text => __x('Cornell Genomics Initiative') &></a></li>
 
-            <li><a href="http://biocurator.org" target="_new" >Biocurator.org</a> - the official site for biocuration.</li>
+            <li><& /util/sentence.mas, text => __x('{link}Biocurator.org{end_link} - the official site for biocuration.'), link => '<a href="http://biocurator.org" target="_new" >', end_link => '</a>' &></li>
           </ul><br />
           <br />
           <br />

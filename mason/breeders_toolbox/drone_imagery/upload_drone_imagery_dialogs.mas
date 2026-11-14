@@ -19,9 +19,9 @@
                     <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
                         <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading aerial images to the database"), 'h' ) &>
                         <ul>
-                            <li>Your field trial must already be in the database before you can upload images for it. Please go to <a href="/breeders/trials">Manage->Field Trials</a> if it is not.</li>
-                            <li><b>For Raw Image Captures</b>: If you have raw aerial images (.TIFF, .JPG, .PNG) that have not been stitched into an orthophotomosaic image of the whole field, your raw images should be uploaded using a zipfile (.zip). Include at least 25 images in the zipfile. OpenDroneMap will be used to stitch the orthophotos and digital surface maps (DSM). OpenDroneMap works for color RGB images and for MicaSense 5-channel multi-spectral images.</li>
-                            <li><b>For Orthophotomosaics</b>: If you already have orthophotomosaic image(s) of your entire field from external software, you can upload those images. Upload orthomosaics as .TIFF, .PNG, or .JPG images. Do not upload GeoTIFFs, instead upload reflectance raster images (.TIFF, .PNG, or .JPG). Orthophotomosaic images for multi-spectral cameras are expected to be perfectly super-imposable for all spectra.</li>
+                            <li><& /util/sentence.mas, text => __x('Your field trial must already be in the database before you can upload images for it. Please go to {link}Manage->Field Trials{end_link} if it is not.'), link => '<a href="/breeders/trials">', end_link => '</a>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{bold}For Raw Image Captures{end_bold}: If you have raw aerial images (.TIFF, .JPG, .PNG) that have not been stitched into an orthophotomosaic image of the whole field, your raw images should be uploaded using a zipfile (.zip). Include at least 25 images in the zipfile. OpenDroneMap will be used to stitch the orthophotos and digital surface maps (DSM). OpenDroneMap works for color RGB images and for MicaSense 5-channel multi-spectral images.'), bold => '<b>', end_bold => '</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{bold}For Orthophotomosaics{end_bold}: If you already have orthophotomosaic image(s) of your entire field from external software, you can upload those images. Upload orthomosaics as .TIFF, .PNG, or .JPG images. Do not upload GeoTIFFs, instead upload reflectance raster images (.TIFF, .PNG, or .JPG). Orthophotomosaic images for multi-spectral cameras are expected to be perfectly super-imposable for all spectra.'), bold => '<b>', end_bold => '</b>' &></li>
                         </ul>
                         <hr>
                         <p><b><% __('Example Data:') |h %></b> <a href="https://imagebreed.org/static_content/imagebreed/AlfalfaExample35MeterMicasenseAerialDroneFlightRawCaptures.zip" download><% __('MicaSense 5 Band Raw Captures (Unstitched TIFF image-captures) (Upload zipfile to ImageBreed and let OpenDroneMap stitch orthophotos and DSM.)') |h %></a></p>
@@ -171,7 +171,7 @@
                             <ul>
                                 <li><% __('You can upload raw images (PNG, TIFF, JPEG) from a MicaSense 5-channel camera or a color image camera, for instance collected from an aerial drone, and then orthophotomosaics will be created using OpenDroneMap and saved in ImageBreed.') |h %></li>
                                 <li><% __('Raw images are uploaded using a zipfile (.zip). Place all images relevant to the imaging event into one zipfile. Include atleast 25 images in the zipfile.') |h %></li>
-                                <li>Make sure there is >75% overlap in the images, so that the images can be properly assembled.</li>
+                                <li><& /util/sentence.mas, text => __x('Make sure there is >75% overlap in the images, so that the images can be properly assembled.') &></li>
                                 <li><% __('A digital surface map (DSM) will also be generated and saved as a black and white image. The DSM is a representation of height of objects.') |h %></li>
                             </ul>
                         </div>
@@ -2526,7 +2526,7 @@
                 <&| /util/workflow.mas, id=> "drone_imagery_upload_bulk_previous_workflow" &>
                     <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
                         <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading aerial images to the database for previously processed imaging events"), 'h' ) &>
-                        <p>Your field trial(s) must already be in the database before you can upload images for it. Please go to <a href="/breeders/trials">Manage->Field Trials</a> if it is not. Make sure the planting date is also set!</p>
+                        <p><& /util/sentence.mas, text => __x('Your field trial(s) must already be in the database before you can upload images for it. Please go to {link}Manage->Field Trials{end_link} if it is not. Make sure the planting date is also set!'), link => '<a href="/breeders/trials">', end_link => '</a>' &></p>
                         <p><% __('In this process first upload a spreadsheet detailing the individual imaging events, then upload a zipfile containing the orthophotomosaic images for the imaging events, and finally upload a zipfile containing GeoJSON files detailing the positions of the plot-polygons for the imaging events.') |h %></p>
 
                         <hr>
@@ -2716,7 +2716,7 @@
                 <&| /util/workflow.mas, id=> "drone_imagery_upload_bulk_workflow" &>
                     <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
                         <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading aerial images to the database"), 'h' ) &>
-                        <p>Your field trial(s) must already be in the database before you can upload images for it. Please go to <a href="/breeders/trials">Manage->Field Trials</a> if it is not. Make sure the planting date is also set!</p>
+                        <p><& /util/sentence.mas, text => __x('Your field trial(s) must already be in the database before you can upload images for it. Please go to {link}Manage->Field Trials{end_link} if it is not. Make sure the planting date is also set!'), link => '<a href="/breeders/trials">', end_link => '</a>' &></p>
                         <p><% __('In this process first upload a spreadsheet detailing the individual imaging events, then upload a zipfile containing the orthophotomosaic images for the imaging events.') |h %></p>
                         <p><% __('This workflow is only for uploading orthophotomosaic raster images, not for uploading raw captures to be stitched in orthophotomosaics.') |h %></p>
 

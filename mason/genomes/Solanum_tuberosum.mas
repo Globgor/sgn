@@ -5,15 +5,9 @@
 
 <div class="page_introduction">
 
-   The potato genome has been sequenced by the <a
-   href="http://potatogenome.net">Potato Genome Sequence
-   Consortium</a> (PGSC), an international group of scientists from 14
-   countries. The sequence was published in <a
-   href="http://www.ncbi.nlm.nih.gov/pubmed/21743474">Nature</a> in
-   July 2011. Many potato lines are tetraploid; however, the sequenced
-   accession was a homozygous diploid line (double haploid) <i>Solanum
-   tuberosum phureja</i>. Below is a mirror of the files provided on
-   <a href="http://potatogenome.net">http://potatogenome.net</a>.
+   <& /util/sentence.mas, text => __x('The potato genome has been sequenced by the {link}Potato Genome Sequence Consortium{end_link} (PGSC), an international group of scientists from 14 countries.'), link => '<a
+   href="http://potatogenome.net">', end_link => '</a>' &> <& /util/sentence.mas, text => __x('The sequence was published in {link}{publication}{end_link} in July 2011.'), link => '<a
+   href="http://www.ncbi.nlm.nih.gov/pubmed/21743474">', publication => 'Nature', end_link => '</a>' &> <& /util/sentence.mas, text => __x('Many potato lines are tetraploid; however, the sequenced accession was a homozygous diploid line (double haploid) {i}{species}{end_i}.'), i => '<i>', species => 'Solanum    tuberosum phureja', end_i => '</i>' &> <& /util/sentence.mas, text => __x('Below is a mirror of the files provided on {link}{address}{end_link}.'), link => '<a href="http://potatogenome.net">', address => 'http://potatogenome.net', end_link => '</a>' &>
 
 </div>
 

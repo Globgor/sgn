@@ -46,7 +46,7 @@
 <&| /page/info_section.mas, id=>"expression_usage" , title=>$m->interp->apply_escapes( __("Usage"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1"  &>
   <div id="usage_view">
     <p>
-        1. Select a <b>Gene name</b> an push the 'Get Expression' button to see its expression in the different tissues of the plant<br />
+        <& /util/sentence.mas, text => __x('1. Select a {bold}Gene name{end_bold} an push the \'Get Expression\' button to see its expression in the different tissues of the plant'), bold => '<b>', end_bold => '</b>' &><br />
      </p>
   </div>
 </&>

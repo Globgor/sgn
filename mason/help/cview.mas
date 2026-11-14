@@ -12,9 +12,7 @@
           cellspacing="0" border="0">
             <tr>
               <td>
-                The <a href="/cview/view_chromosome.pl">comparative
-                viewer</a> is a tool for displaying, browsing, and
-                comparing map information on SGN.
+                <& /util/sentence.mas, text => __x('The {link}comparative viewer{end_link} is a tool for displaying, browsing, and comparing map information on SGN.'), link => '<a href="/cview/view_chromosome.pl">', end_link => '</a>' &>
 
     <h3><% __('Map overview page') |h %></h3>
 
@@ -43,98 +41,34 @@
 
 <div class="boxbgcolor5"><center><img src="/documents/img/cview_screenshot.jpg" alt="<% __('comparative viewer') |h %>" /></center></div>
 
-    <p>A typical image from a chromosome view is shown in the figure above (the exact rendering of the buttons will depend on the platform and browser used).
-    The different screen elements are:</p>
+    <p><& /util/sentence.mas, text => __x('A typical image from a chromosome view is shown in the figure above (the exact rendering of the buttons will depend on the platform and browser used).') &>
+    <& /util/sentence.mas, text => __x('The different screen elements are:') &></p>
 
                 <ol>
-                  <li><p>The reference chromosome, always shown in
-                  red. The chromosome number is given on the top
-                  and approximately a dozen selected markers are
-                  drawn according to their map position. The other
-                  markers on the chromosome are only identified by
-                  tickmarks. They can be viewed by clicking anywhere in the
-                  chromosome reference chromosome, which brings up the zoomed-in map
-                  (2), in which all markers are displayed in the
-                  given interval. For certain maps, the reference chromosome can have
-                  additional information displayed, such as IL line
-                  information, a ruler, and physical map.</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('The reference chromosome, always shown in red.') &> <& /util/sentence.mas, text => __x('The chromosome number is given on the top and approximately a dozen selected markers are drawn according to their map position.') &> <& /util/sentence.mas, text => __x('The other markers on the chromosome are only identified by tickmarks.') &> <& /util/sentence.mas, text => __x('They can be viewed by clicking anywhere in the chromosome reference chromosome, which brings up the zoomed-in map (2), in which all markers are displayed in the given interval.') &> <& /util/sentence.mas, text => __x('For certain maps, the reference chromosome can have additional information displayed, such as IL line information, a ruler, and physical map.') &></p></li>
 
-                  <li><p>The zoomed in map displays a section of the
-                  reference chromosome, showing all markers at the
-                  current score cutoff. The marker names can be
-                  clicked to reach the marker detail page. A gray
-                  dot next to the marker names means that an overgo
-                  probe has been developed for this marker. A red
-                  dot means that BACs have been anchored to the
-                  overgo developed from this marker. Clicking on
-                  the red dot shows all the anchored BACs and which
-                  FPC contigs they fall into.</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('The zoomed in map displays a section of the reference chromosome, showing all markers at the current score cutoff.') &> <& /util/sentence.mas, text => __x('The marker names can be clicked to reach the marker detail page.') &> <& /util/sentence.mas, text => __x('A gray dot next to the marker names means that an overgo probe has been developed for this marker.') &> <& /util/sentence.mas, text => __x('A red dot means that BACs have been anchored to the overgo developed from this marker.') &> <& /util/sentence.mas, text => __x('Clicking on the red dot shows all the anchored BACs and which FPC contigs they fall into.') &></p></li>
 
-                  <li><p>The comparison chromosome. It can be selected
-                  using the pulldown menu in the toolbar (7), and
-                  then clicking 'compare'. Only markers that are on
-                  the reference map are displayed with their names, the other
-                  markers are shown by a tick mark only. The marker
-                  names can be clicked to view the corresponding
-                  marker detail page. If all markers are of
-                  interest in the comparison chromosome, the button
-                  'switch chromosomes' can be clicked. The
-                  comparison chromosome takes the place of the
-                  reference chromosome and vice versa.</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('The comparison chromosome.') &> <& /util/sentence.mas, text => __x('It can be selected using the pulldown menu in the toolbar (7), and then clicking \'compare\'.') &> <& /util/sentence.mas, text => __x('Only markers that are on the reference map are displayed with their names, the other markers are shown by a tick mark only.') &> <& /util/sentence.mas, text => __x('The marker names can be clicked to view the corresponding marker detail page.') &> <& /util/sentence.mas, text => __x('If all markers are of interest in the comparison chromosome, the button \'switch chromosomes\' can be clicked.') &> <& /util/sentence.mas, text => __x('The comparison chromosome takes the place of the reference chromosome and vice versa.') &></p></li>
 
-                  <li><p>If the physical button is clicked in the
-                  toolbar (7), the physical map is displayed, which
-                  shows how many BACs have been anchored to the
-                  genetic map using the overgo process. The
-                  physical map can presently only be viewed for the
-                  Tomato EXPEN2000 and Tomato EXPEN 1992
-                  maps.</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('If the physical button is clicked in the toolbar (7), the physical map is displayed, which shows how many BACs have been anchored to the genetic map using the overgo process.') &> <& /util/sentence.mas, text => __x('The physical map can presently only be viewed for the Tomato EXPEN2000 and Tomato EXPEN 1992 maps.') &></p></li>
 
-                  <li><p>If the IL button in the toolbar (7) is
-                  pressed, the chromosome sections of the
-                  corresponding IL lines are displayed. The IL
-                  lines can currently only be viewed for the Tomato
-                  EXPEN 1992 map.</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('If the IL button in the toolbar (7) is pressed, the chromosome sections of the corresponding IL lines are displayed.') &> <& /util/sentence.mas, text => __x('The IL lines can currently only be viewed for the Tomato EXPEN 1992 map.') &></p></li>
 
-                  <li><p>Rulers can be activated by pressing the ruler
-                  button in the toolbar (7).</p></li>
+                  <li><p><& /util/sentence.mas, text => __x('Rulers can be activated by pressing the ruler button in the toolbar (7).') &></p></li>
 
-                  <li><p>The Toolbar. It is divided into five
-                  sections.</p>
+                  <li><p><& /util/sentence.mas, text => __x('The Toolbar.') &> <& /util/sentence.mas, text => __x('It is divided into five sections.') &></p>
 
                     <ul>
-                      <li><p>The marker coloring options. This line
-                      contains a button for changing the coloring
-                      either according to score of the marker or by
-                      marker type. The different LOD scores can be
-                      clicked and markers of lower LOD scores will
-                      be hidden.</p></li>
+                      <li><p><& /util/sentence.mas, text => __x('The marker coloring options.') &> <& /util/sentence.mas, text => __x('This line contains a button for changing the coloring either according to score of the marker or by marker type.') &> <& /util/sentence.mas, text => __x('The different LOD scores can be clicked and markers of lower LOD scores will be hidden.') &></p></li>
 
-                      <li><p>Scrolling and Zooming. This line contains
-                      buttons for scrolling up and down, zooming in
-                      and out, and toggling between hide and show
-                      zoomed. It also contains a link that will
-                      perform a database search for all markers on
-                      the zoomed-in chromsome section.</p></li>
+                      <li><p><& /util/sentence.mas, text => __x('Scrolling and Zooming.') &> <& /util/sentence.mas, text => __x('This line contains buttons for scrolling up and down, zooming in and out, and toggling between hide and show zoomed.') &> <& /util/sentence.mas, text => __x('It also contains a link that will perform a database search for all markers on the zoomed-in chromsome section.') &></p></li>
 
-                      <li><p>Compare map to: A pulldown menu allows
-                      the selection of a map that shares markers
-                      with the current reference map. The pulldown
-                      menu is sorted such that the topmost entry
-                      has to most shared markers. Clicking the
-                      'compare' button will display the selected
-                      comparison map.</p></li>
+                      <li><p><& /util/sentence.mas, text => __x('Compare map to: A pulldown menu allows the selection of a map that shares markers with the current reference map.') &> <& /util/sentence.mas, text => __x('The pulldown menu is sorted such that the topmost entry has to most shared markers.') &> <& /util/sentence.mas, text => __x('Clicking the \'compare\' button will display the selected comparison map.') &></p></li>
 
-                      <li><p>Jump to different map or chromosome. Also
-                      contains a input box to hilite markers on the
-                      chromosome. This only hilites markers on the
-                      currently shown chromosome.</p></li>
+                      <li><p><& /util/sentence.mas, text => __x('Jump to different map or chromosome.') &> <& /util/sentence.mas, text => __x('Also contains a input box to hilite markers on the chromosome.') &> <& /util/sentence.mas, text => __x('This only hilites markers on the currently shown chromosome.') &></p></li>
 
-                      <li><p>show/hide functions: Allows the toggling
-                      of the rulers, ILs, and physical map, and to
-                      select the image size. The smaller image size
-                      is ideal for smaller screen, such as
-                      laptop screens.</p></li>
+                      <li><p><& /util/sentence.mas, text => __x('show/hide functions: Allows the toggling of the rulers, ILs, and physical map, and to select the image size.') &> <& /util/sentence.mas, text => __x('The smaller image size is ideal for smaller screen, such as laptop screens.') &></p></li>
                     </ul>
                   </li>
                 </ol>

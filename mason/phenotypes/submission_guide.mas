@@ -12,12 +12,7 @@ Naama Menda (nm249@cornell.edu)
 
 </%doc>
 <h2><% __('SGN phenotype submission guide') |h %></h2>
-<p>For submitting phenotyping experiments to SGN you will be asked to fill in a few steps.
-Phenotypes are linked with plant accessions.
-If the accession is already in the database, you will have to make sure the accession in your file has exactly the same name.
-Search the <a href="/search/stocks/">phenotype database</a> for existing accessions.
-Since phenotypes are scored on single plants in the field or a greenhouse, or on plots of several plants,
-you will need to assign in each experiment unique identifiers for each one of your experimental units (a single plant or a plot).
+<p><& /util/sentence.mas, text => __x('For submitting phenotyping experiments to SGN you will be asked to fill in a few steps. Phenotypes are linked with plant accessions. If the accession is already in the database, you will have to make sure the accession in your file has exactly the same name. Search the {link}phenotype database{end_link} for existing accessions. Since phenotypes are scored on single plants in the field or a greenhouse, or on plots of several plants, you will need to assign in each experiment unique identifiers for each one of your experimental units (a single plant or a plot).'), link => '<a href="/search/stocks/">', end_link => '</a>' &>
 </p>
 
 <&| /page/info_section.mas,
@@ -28,7 +23,7 @@ you will need to assign in each experiment unique identifiers for each one of yo
 
 <ul>
   <li>
-    <strong>Organism name:</strong> Start typing the species scientific name. An autocomplete list should pop up. If your organism is not in the list, please <a href="mailto:sgn-feedback@solgenomics.net">contact us</a>.
+    <& /util/sentence.mas, text => __x('{strong}Organism name:{end_strong} Start typing the species scientific name. An autocomplete list should pop up. If your organism is not in the list, please {link}contact us{end_link}.'), strong => '<strong>', end_strong => '</strong>', link => '<a href="mailto:sgn-feedback@solgenomics.net">', end_link => '</a>' &>
   </li>
   <li>
     <strong><% __('Population name') |h %></strong><br />
@@ -48,7 +43,7 @@ you will need to assign in each experiment unique identifiers for each one of yo
   </li>
   <li>
     <strong> <% __('Location') |h %></strong><br />
-    Where the experiment was performed. We also support <a href="http://en.wikipedia.org/wiki/WGS84">WGS84 geodetic datum</a>. For a full geolocation fill in the longitude, latitide, and altitude fields.
+    <& /util/sentence.mas, text => __x('Where the experiment was performed. We also support {link}WGS84 geodetic datum{end_link}. For a full geolocation fill in the longitude, latitide, and altitude fields.'), link => '<a href="http://en.wikipedia.org/wiki/WGS84">', end_link => '</a>' &>
   </li>
   </ul>
 </&>
@@ -71,11 +66,11 @@ you will need to assign in each experiment unique identifiers for each one of yo
   </li>
   <li><strong><% __('Plot names or numbers') |h %></strong><br />
     Usually phenotping data is assayed on plants in plots. We load each plot as subject of the plant accession, meaning any number of plots from any number of different experiments can be loaded, allowing to keep track of when and where the data came from. If you have multiple phenotyping repeats for each plots, write each in a new row. If only some of the traits were score in each phenotyping repeat, keep those cells empty (do not write 0, since it will be loaded as a measurement with a value of zero).
-  <li><strong>Repeat number</strong> (optional)<br />
+  <li><& /util/sentence.mas, text => __x('{strong}Repeat number{end_strong} (optional)'), strong => '<strong>', end_strong => '</strong>' &><br />
     <% __('If you have multiple repeats, the loading software will automatically increment the repeat number each time it sees a row of data for a plot or accession. If you provide repeat number (or fruit/plant/leaf number etc.) it will be used instead.') |h %>
   </li>
   <li><strong><% __('Traits') |h %></strong><br />
-    following columns should have trait scored values. Headers should be ontology IDs. These terms <b>must</b> be pre-loaded in the database (e.g. the  <a href="http://solgenomics.net/search/phenotypes/traits">Solanaceae Phenotype Ontology</a> ). If your ontology does not exist in the database, or if you have terms that need to be added to an existing ontology,<a href="mailto:sgn-feedback@solgenomics.net"> contact us</a> first.<br />
+    <& /util/sentence.mas, text => __x('following columns should have trait scored values. Headers should be ontology IDs. These terms {bold}must{end_bold} be pre-loaded in the database (e.g. the {link}Solanaceae Phenotype Ontology{end_link} ). If your ontology does not exist in the database, or if you have terms that need to be added to an existing ontology,{link2} contact us{end_link2} first.'), bold => '<b>', end_bold => '</b>', link => '<a href="http://solgenomics.net/search/phenotypes/traits">', end_link => '</a>', link2 => '<a href="mailto:sgn-feedback@solgenomics.net">', end_link2 => '</a>' &><br />
     Units may also be attached to ontology IDs using a pipe ("|") followed by "unit:unit_name" (e.g. SP:0000123|unit:cm). Number of data columns is unlimited.
 
     <pre>

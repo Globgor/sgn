@@ -1,15 +1,14 @@
 
 
 <p>
-The <a href="/search/markers/markersearch.pl">marker search</a> is a
-tool for locating markers in SGN's database. 
+<& /util/sentence.mas, text => __x('The {link}marker search{end_link} is a tool for locating markers in SGN\'s database.'), link => '<a href="/search/markers/markersearch.pl">', end_link => '</a>' &> 
 </p>
 
 <img src="/documents/help/screenshots/marker_search_form.png" alt="<% __('screenshot of marker search form') |h %>" style="margin: auto; border: 1px solid black;" />
 
 <h4><% __('1. Marker name') |h %></h4>
 <p>
-If you know the name of your marker, type it in. By default, the database will be searched for all markers with a name that <i>starts with</i> what you type in.For example, if you type in "TG1", your results might include TG1, TG10, TG11, TG150, etc.
+<& /util/sentence.mas, text => __x('If you know the name of your marker, type it in. By default, the database will be searched for all markers with a name that {i}starts with{end_i} what you type in.'), i => '<i>', end_i => '</i>' &>For example, if you type in "TG1", your results might include TG1, TG10, TG11, TG150, etc.
 </p><p>
  To search for an exact name, choose "exactly" from the menu. Or choose "contains" if you don't know the beginning of the marker's name. For example, a "contains" search on "T16" will include CT16, T1600, T1601, etc.
 </p>
@@ -19,7 +18,7 @@ The search is not case-sensitive; "Tm2" and "TM2" are equivalent searches, thoug
 
 <h4><% __('2. BAC associations') |h %></h4>
 <p>
-Some markers have been associated with BACS from the <a href="/about/tomato_sequencing.pl">tomato sequencing project</a>. Most of these associations come from the <a href="http://siren/maps/physical/overgo_process_explained.pl">overgo plating process</a> in which markers were hybridized to BAC DNA. Other associations are computational, meaning they were made by BLAST comparisons. Still others are "manual" associations, meaning they were associated in some other way and then entered into our database. 
+<& /util/sentence.mas, text => __x('Some markers have been associated with BACS from the {link}tomato sequencing project{end_link}. Most of these associations come from the {link2}overgo plating process{end_link2} in which markers were hybridized to BAC DNA. Other associations are computational, meaning they were made by BLAST comparisons. Still others are "manual" associations, meaning they were associated in some other way and then entered into our database.'), link => '<a href="/about/tomato_sequencing.pl">', end_link => '</a>', link2 => '<a href="http://siren/maps/physical/overgo_process_explained.pl">', end_link2 => '</a>' &> 
 </p>
 
 
@@ -68,7 +67,7 @@ Some of our markers have a confidence assigned by the mapping program MapMaker. 
 
 <h4><% __('9. Maps') |h %></h4>
 <p>
-This multiple-select box shows a list of our available maps. For more information on these maps, see the <a href="/cview/">map overview page</a>.
+<& /util/sentence.mas, text => __x('This multiple-select box shows a list of our available maps. For more information on these maps, see the {link}map overview page{end_link}.'), link => '<a href="/cview/">', end_link => '</a>' &>
 </p>
 
 

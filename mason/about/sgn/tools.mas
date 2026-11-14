@@ -5,39 +5,24 @@
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data'), 'h' ) &>
 <dl>
 <dt><% __('Solanaceae and other Genomes') |h %></dt>
-<dd>SGN is a home for Solanaceae and closely related genomes, such as selected Rubiaceae genomes (e.g., <i>Coffea</i>). The <a href="/organism/Solanum_lycopersicum/genome">tomato</a>, <a href="/organism/Solanum_tuberosum/genome">potato</a>, <a href="/organism/Capsicum_annuum/genome">pepper</a>, and <a href="/organism/Solanum_melongena">eggplant</a> genome are examples of genomes that are currently available. If you would like to include a Solanaceae genome that you sequenced in SGN, please <a href="/contact/form">contact us</a>.</dd>
+<dd><& /util/sentence.mas, text => __x('SGN is a home for Solanaceae and closely related genomes, such as selected Rubiaceae genomes (e.g., {i}Coffea{end_i}). The {link}tomato{end_link}, {link2}potato{end_link2}, {link3}pepper{end_link3}, and {link4}eggplant{end_link4} genome are examples of genomes that are currently available. If you would like to include a Solanaceae genome that you sequenced in SGN, please {link5}contact us{end_link5}.'), i => '<i>', end_i => '</i>', link => '<a href="/organism/Solanum_lycopersicum/genome">', end_link => '</a>', link2 => '<a href="/organism/Solanum_tuberosum/genome">', end_link2 => '</a>', link3 => '<a href="/organism/Capsicum_annuum/genome">', end_link3 => '</a>', link4 => '<a href="/organism/Solanum_melongena">', end_link4 => '</a>', link5 => '<a href="/contact/form">', end_link5 => '</a>' &></dd>
 <dt>ESTs</dt>
-<dd>SGN houses EST collections for tomato, potato, pepper, eggplant and
-petunia and corresponding unigene builds. EST sequence data and cDNA
-clone resources greatly facilitate cloning strategies based on
-sequence similarity, the study of syntenic relationships between
-species in comparative mapping projects, and are essential for
-microarray technology.
+<dd><& /util/sentence.mas, text => __x('SGN houses EST collections for tomato, potato, pepper, eggplant and petunia and corresponding unigene builds. EST sequence data and cDNA clone resources greatly facilitate cloning strategies based on sequence similarity, the study of syntenic relationships between species in comparative mapping projects, and are essential for microarray technology.') &>
 </dd>
 <dt><% __('Unigenes') |h %></dt>
-<dd>SGN assembles and publishes unigene builds from these EST sequences.  For more information, see <a href="/methods/unigene/index.pl">Unigene Methods</a>.</dd>
+<dd><& /util/sentence.mas, text => __x('SGN assembles and publishes unigene builds from these EST sequences. For more information, see {link}Unigene Methods{end_link}.'), link => '<a href="/methods/unigene/index.pl">', end_link => '</a>' &></dd>
 <dt><% __('Maps and Markers') |h %></dt>
-<dd>SGN has genetic maps and a searchable catalog of markers for
-tomato, potato, pepper, and eggplant.</dd>
+<dd><& /util/sentence.mas, text => __x('SGN has genetic maps and a searchable catalog of markers for tomato, potato, pepper, and eggplant.') &></dd>
   </ul>
 </dd>
 <dt><% __('Tools') |h %></dt>
-<dd>SGN makes available a wide range of web-based bioinformatics tools
-for use by anyone, listed <a href="/tools/">here</a>.  Some of our
-most popular tools include <a href="/tools/blast/">BLAST</a> searches,
-the <a href="/tools/solcyc/">SolCyc biochemical pathways database</a>,
-a <a href="/tools/caps_designer/caps_input.pl">CAPS experiment
-designer</a>,  an <a href="/tools/align_viewer/">Alignment Analyzer</a> and <a href="/tools/tree_browser/">browser for phylogenetic trees</a>. The <a href="http://vigs.solgenomics.net">VIGS tool</a> can help predict the properties of VIGS (Viral Induced Gene Silencing) constructs.</dd>
+<dd><& /util/sentence.mas, text => __x('SGN makes available a wide range of web-based bioinformatics tools for use by anyone, listed {link}here{end_link}. Some of our most popular tools include {link2}BLAST{end_link2} searches, the {link3}SolCyc biochemical pathways database{end_link3}, a {link4}CAPS experiment designer{end_link4}, an {link5}Alignment Analyzer{end_link5} and {link6}browser for phylogenetic trees{end_link6}. The {link7}VIGS tool{end_link7} can help predict the properties of VIGS (Viral Induced Gene Silencing) constructs.'), link => '<a href="/tools/">', end_link => '</a>', link2 => '<a href="/tools/blast/">', end_link2 => '</a>', link3 => '<a href="/tools/solcyc/">', end_link3 => '</a>', link4 => '<a href="/tools/caps_designer/caps_input.pl">', end_link4 => '</a>', link5 => '<a href="/tools/align_viewer/">', end_link5 => '</a>', link6 => '<a href="/tools/tree_browser/">', end_link6 => '</a>', link7 => '<a href="http://vigs.solgenomics.net">', end_link7 => '</a>' &></dd>
 
 </dl>
 
-<p>The data in SGN have been submitted by many different research
-groups around the world which are acknowledged on the corresponding
-pages on SGN.  If you have data you would like to submit for display
-on SGN, please use the <a href="/contact/form">contact us</a> web form.</p>
+<p><& /util/sentence.mas, text => __x('The data in SGN have been submitted by many different research groups around the world which are acknowledged on the corresponding pages on SGN. If you have data you would like to submit for display on SGN, please use the {link}contact us{end_link} web form.'), link => '<a href="/contact/form">', end_link => '</a>' &></p>
 
-<p>For more information about SGN datasets, see the <a href= "/content/sgn_data.pl">SGN Data
-Overview</a>. Entire datasets can also be downloaded from our <a href="ftp://ftp.solgenomics.net">FTP site</a>.</p>
+<p><& /util/sentence.mas, text => __x('For more information about SGN datasets, see the {link}SGN Data Overview{end_link}. Entire datasets can also be downloaded from our {link2}FTP site{end_link2}.'), link => '<a href= "/content/sgn_data.pl">', end_link => '</a>', link2 => '<a href="ftp://ftp.solgenomics.net">', end_link2 => '</a>' &></p>
 
 </&>
 
@@ -45,11 +30,9 @@ Overview</a>. Entire datasets can also be downloaded from our <a href="ftp://ftp
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('SGN community-driven gene and phenotype database'), 'h' ) &>
 <ul style="margin: 0; padding-left: 1em">
 
-   <li>We have developed simple web interfaces for the SGN user-community to submit, annotate, and curate the Solanaceae locus and phenotype databases. Our goal is to share biological information, and have the experts in their field
-   review existing data and submit information about their favorite genes and phenotypes.</li>
+   <li><& /util/sentence.mas, text => __x('We have developed simple web interfaces for the SGN user-community to submit, annotate, and curate the Solanaceae locus and phenotype databases. Our goal is to share biological information, and have the experts in their field review existing data and submit information about their favorite genes and phenotypes.') &></li>
 
-   <li>Please read more about the <a href="/phenome/index.pl">phenome database</a>
-    and how to submit information to SGN.</li>
+   <li><& /util/sentence.mas, text => __x('Please read more about the {link}phenome database{end_link} and how to submit information to SGN.'), link => '<a href="/phenome/index.pl">', end_link => '</a>' &></li>
 
 </ul>
 </&>
