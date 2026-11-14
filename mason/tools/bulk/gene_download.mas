@@ -6,14 +6,14 @@
     $bulk_download_success
 </%args>
 
-<& /page/page_title.mas, title=>"Gene Download Summary" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Gene Download Summary"), 'h' ) &>
 
 % if($bulk_download_success) {
-    Your query was successful.<br>
+    <% __('Your query was successful.') |h %><br>
 <div id="bulk_download_stats">
 <% $bulk_download_stats %>
 </div>
 Download as <a href="/bulk/gene/download/<% $sha1 %>.fasta">Fasta</a>
 % } else {
-    Your query did not contain any valid identifiers. Please try again.
+    <% __('Your query did not contain any valid identifiers. Please try again.') |h %>
 % }

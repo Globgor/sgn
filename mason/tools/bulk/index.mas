@@ -12,7 +12,7 @@ if (!exists($modes{$mode})) { $mode = "clone_search"; }
 
 <& /util/import_javascript.mas, classes => [ 'jqueryui' ] &>
 
-<& /page/page_title.mas, title=>"Bulk Download" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Bulk Download"), 'h' ) &>
 
 <script>
   jQuery(function() {
@@ -35,14 +35,14 @@ if (!exists($modes{$mode})) { $mode = "clone_search"; }
 
 <div id="tabs">
   <ul>
-    <li><a href="/tools/bulk/tabs/clone_tab">Clones</a></li>
-    <li><a href="/tools/bulk/tabs/array_tab">Arrays</a></li>
-    <li><a href="/tools/bulk/tabs/unigene_tab">Unigenes</a></li>
+    <li><a href="/tools/bulk/tabs/clone_tab"><% __('Clones') |h %></a></li>
+    <li><a href="/tools/bulk/tabs/array_tab"><% __('Arrays') |h %></a></li>
+    <li><a href="/tools/bulk/tabs/unigene_tab"><% __('Unigenes') |h %></a></li>
     <li><a href="/tools/bulk/tabs/bac_tab">BACs</a></li>
-    <li><a href="/tools/bulk/tabs/bac_end_tab">BAC ends</a></li>
-    <li><a href="/tools/bulk/tabs/gene_tab">Genes</a></li>
-    <li><a href="/tools/bulk/tabs/feature_tab">Features</a></li>
-    <li><a href="/tools/bulk/tabs/converter_tab">Converter</a></li>
+    <li><a href="/tools/bulk/tabs/bac_end_tab"><% __('BAC ends') |h %></a></li>
+    <li><a href="/tools/bulk/tabs/gene_tab"><% __('Genes') |h %></a></li>
+    <li><a href="/tools/bulk/tabs/feature_tab"><% __('Features') |h %></a></li>
+    <li><a href="/tools/bulk/tabs/converter_tab"><% __('Converter') |h %></a></li>
     <li><a href="/tools/bulk/tabs/ftp_tab">FTP</a></li>
   </ul>
 </div>
