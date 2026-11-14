@@ -102,42 +102,42 @@
 <div style="border-style:dotted;border-width:1px;margin-bottom:20px;"><div style="margin-top:10px;margin-right:10px;margin-bottom:10px;margin-left:10px;" ><b>Note</b>: To match shorter sequences:
 <div>
 <ul>
-<li>Consider setting the word_size to a lower value.</li>
-<li>You may have to set the evalue to a higher value.</li>
+<li><% __('Consider setting the word_size to a lower value.') |h %></li>
+<li><% __('You may have to set the evalue to a higher value.') |h %></li>
 </ul>
 </div>
-The default word_size for blastn is 11 and for protein-based blast programs it is 3. The correct default will be set automatically when changing the program.</div></div>
+<% __('The default word_size for blastn is 11 and for protein-based blast programs it is 3. The correct default will be set automatically when changing the program.') |h %></div></div>
 
-<&| /page/info_section.mas, id=>"input_parameter_section", title=>"Input parameters", collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/tools/blast" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
+<&| /page/info_section.mas, id=>"input_parameter_section", title=>$m->interp->apply_escapes( __("Input parameters"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/tools/blast" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
   <input type="hidden" name="outformat" value="0" />
 
   <div class="form-group form-inline">
-        <label class="blast_select_label" for="dataset_select">Categories &nbsp; </label>
+        <label class="blast_select_label" for="dataset_select"><% __('Categories') |h %> &nbsp; </label>
 
     <& /page/html_select.mas, name=>'Datasets', choices=> $dataset_groups, id=>"dataset_select", name=>"dataset_select", params=>"class\=\"form-control input-sm blast_select_box\"", selected=>"$preselected_category" &>
 
 % if ($blast_db_icons) {
 <!-- images to get direct access to the model plant dbs. db_id is the blast_db_id on the SGN database -->
-<img class="fruit_icon" height="25" src="/documents/img/blast_icons/tomato.png" db_id="34" title="Tomato current DB">
-<img class="fruit_icon" height="18" src="/documents/img/blast_icons/potato.png" db_id="10" title="Potato current DB">
-<img class="fruit_icon" height="25" src="/documents/img/blast_icons/pepper.png" db_id="21" title="Pepper current DB">
-<img class="fruit_icon" height="25" src="/documents/img/blast_icons/eggplant.png" db_id="29" title="Eggplant current DB">
-<img class="fruit_icon" height="25" src="/documents/img/blast_icons/benth.png" db_id="9" title="N.benthamiana current DB">
+<img class="fruit_icon" height="25" src="/documents/img/blast_icons/tomato.png" db_id="34" title="<% __('Tomato current DB') |h %>">
+<img class="fruit_icon" height="18" src="/documents/img/blast_icons/potato.png" db_id="10" title="<% __('Potato current DB') |h %>">
+<img class="fruit_icon" height="25" src="/documents/img/blast_icons/pepper.png" db_id="21" title="<% __('Pepper current DB') |h %>">
+<img class="fruit_icon" height="25" src="/documents/img/blast_icons/eggplant.png" db_id="29" title="<% __('Eggplant current DB') |h %>">
+<img class="fruit_icon" height="25" src="/documents/img/blast_icons/benth.png" db_id="9" title="<% __('N.benthamiana current DB') |h %>">
 % }
 
 <br>
 
-    <label class="blast_select_label" for="database_select">Database &nbsp; </label>
+    <label class="blast_select_label" for="database_select"><% __('Database') |h %> &nbsp; </label>
 
-    <span id='database_select' ></span><a style="font-size: 80%" title="View details of each database" href="/tools/blast/dbinfo">db details</a>
+    <span id='database_select' ></span><a style="font-size: 80%" title="<% __('View details of each database') |h %>" href="/tools/blast/dbinfo"><% __('db details') |h %></a>
     <br>
 
-    <label class="blast_select_label" for="program_select">Program &nbsp; </label>
+    <label class="blast_select_label" for="program_select"><% __('Program') |h %> &nbsp; </label>
     <& /page/html_select.mas, name=>'program_select', id=>'program_select', params=>"class\=\"form-control input-sm blast_select_box\"", choices=>$programs &>
     <br>
 
-    <label class="blast_select_label" for="input_example">Query &nbsp; </label>
-    <% $input_options_select %><a id="input_example" style="font-size: 80%;cursor:pointer;">Show example</a>
+    <label class="blast_select_label" for="input_example"><% __('Query') |h %> &nbsp; </label>
+    <% $input_options_select %><a id="input_example" style="font-size: 80%;cursor:pointer;"><% __('Show example') |h %></a>
   </div>
 
     <textarea name="sequence" id="sequence" class="form-control" rows="8" cols="80"><% $preload %></textarea></td></tr>
@@ -148,7 +148,7 @@ The default word_size for blastn is 11 and for protein-based blast programs it i
         </div>
         <br />
 
-<&| /page/info_section.mas, title=>"Advanced Options", collapsible=>1, collapsed =>1, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Advanced Options"), 'h' ), collapsible=>1, collapsed =>1, is_subsection=>"1" &>
 
 	<& /page/info_table.mas, title=>'', data => [
 	  'Expect (e-value) Threshold' => '<input id="evalue" class="blast_select_box form-control" type="text" size="6" value="1e-10" name="expect" />',
@@ -167,23 +167,23 @@ The default word_size for blastn is 11 and for protein-based blast programs it i
 
 </&>
 
-<&| /page/info_section.mas, title=>"Extract sequences from BLAST databases", collapsible=>1, collapsed =>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Extract sequences from BLAST databases"), 'h' ), collapsible=>1, collapsed =>1 &>
 <br>
 <div class="form-inline form-group" style="width:100%">
   <input class="form-control" value="putrescine" id="blast_desc"/>
-  <button id="search_by_desc" class="btn btn-primary">Search</button>
+  <button id="search_by_desc" class="btn btn-primary"><% __('Search') |h %></button>
   </div>
   <div class="well well-sm">Select a BLAST database and paste a gene name or description. Eg: Solyc07g063040 or ribulose</div>
 </&>
 
-<&| /page/info_section.mas, title=>"Results", collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Results"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
 
   <div id="prereqs"></div>
 
   <center>
     <div id="sgn_blast_graph" style="display:none">
         <div id="myCanvas">
-          Your browser does not support the HTML5 canvas
+          <% __('Your browser does not support the HTML5 canvas') |h %>
         </div>
     </div>
   </center>
@@ -208,7 +208,7 @@ The default word_size for blastn is 11 and for protein-based blast programs it i
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">BLAST status</h4>
+        <h4 class="modal-title"><% __('BLAST status') |h %></h4>
       </div>
       <div class="modal-body">
         <center>
@@ -229,7 +229,7 @@ The default word_size for blastn is 11 and for protein-based blast programs it i
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Search Result</h4>
+      <h4 class="modal-title"><% __('Search Result') |h %></h4>
     </div>
 
     <div class="modal-body">
@@ -237,7 +237,7 @@ The default word_size for blastn is 11 and for protein-based blast programs it i
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
     </div>
   </div>
 
