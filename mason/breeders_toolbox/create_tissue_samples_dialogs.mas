@@ -7,29 +7,29 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addFieldTrialTissueSampleDialog">Create Tissue Samples for a Field Trial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addFieldTrialTissueSampleDialog"><% __('Create Tissue Samples for a Field Trial') |h %></h4>
             </div>
             <div class="modal-body">
 
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "field_tissue_samples_create_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"This workflow will guide you through creating tissue samples for your field trial" &>
-                            <p>Tissue samples are linked to a single plant, which is in turn linked to a single plot.</p>
-                            <p>Many tissue samples can be created for each plant.</p>
-                            <p>Each tissue sample needs a globally unique name.</p>
-                            <p>Tissue samples can then be transferred into genotyping plates (96 or 384 well plates).</p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through creating tissue samples for your field trial"), 'h' ) &>
+                            <p><% __('Tissue samples are linked to a single plant, which is in turn linked to a single plot.') |h %></p>
+                            <p><% __('Many tissue samples can be created for each plant.') |h %></p>
+                            <p><% __('Each tissue sample needs a globally unique name.') |h %></p>
+                            <p><% __('Tissue samples can then be transferred into genotyping plates (96 or 384 well plates).') |h %></p>
 
                             <br/><br/>
                             <center>
-                            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                            <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Select a field trial" &>
-                            <& /page/page_title.mas, title=>"Select a field trial" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select a field trial"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a field trial"), 'h' ) &>
 
                             <div class="well well-sm">
                                 <div class="panel panel-default">
@@ -37,18 +37,18 @@
                                         <table id="manage_tissue_samples_field_search_results" class="table table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Select</th>
-                                                    <th>Trial name</th>
-                                                    <th>Description</th>
-                                                    <th>Breeding program</th>
-                                                    <th>Folder</th>
-                                                    <th>Year</th>
-                                                    <th>Location</th>
-                                                    <th>Trial type</th>
-                                                    <th>Design</th>
-                                                    <th>Planting Date</th>
-                                                    <th>Harvest Date</th>
-                                                    <th>Download</th>
+                                                    <th><% __('Select') |h %></th>
+                                                    <th><% __('Trial name') |h %></th>
+                                                    <th><% __('Description') |h %></th>
+                                                    <th><% __('Breeding program') |h %></th>
+                                                    <th><% __('Folder') |h %></th>
+                                                    <th><% __('Year') |h %></th>
+                                                    <th><% __('Location') |h %></th>
+                                                    <th><% __('Trial type') |h %></th>
+                                                    <th><% __('Design') |h %></th>
+                                                    <th><% __('Planting Date') |h %></th>
+                                                    <th><% __('Harvest Date') |h %></th>
+                                                    <th><% __('Download') |h %></th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -58,47 +58,47 @@
 
                             <br/><br/>
                             <center>
-                                <button class="btn btn-primary" id="create_tissue_samples_select_trial">Go to Next Step</button>
+                                <button class="btn btn-primary" id="create_tissue_samples_select_trial"><% __('Go to Next Step') |h %></button>
                             </center>
 
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Plant Entries" &>
-                            <& /page/page_title.mas, title=>"Plant entries in your field trial" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Plant Entries"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Plant entries in your field trial"), 'h' ) &>
 
                             <div id="create_tissue_samples_plant_entries_exist_section" style="display:none">
-                                <h4>Plant entries exist for this trial. Go to next step.</h4>
+                                <h4><% __('Plant entries exist for this trial. Go to next step.') |h %></h4>
                                 <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </div>
                             <div id="create_tissue_samples_plant_entries_dont_exist_section" style="display:none">
-                                <h4>Please create plant entries for this trial.</h4>
+                                <h4><% __('Please create plant entries for this trial.') |h %></h4>
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Number of plants per plot: </label>
+                                        <label class="col-sm-3 control-label"><% __('Number of plants per plot:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <input name="create_tissue_samples_plants_per_plot_num" id="create_tissue_samples_plants_per_plot_num" class="form-control" type="number" autofocus/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Inherits Treatment(s) From Plots: </label>
+                                        <label class="col-sm-3 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <input name="create_tissue_samples_plants_per_plot_inherit_treatments" id="create_tissue_samples_plants_per_plot_inherit_treatments" type="checkbox" checked disabled/>
                                         </div>
                                     </div>
                                 </form><br/>
                                 <center>
-                                    <button type="button" class="btn btn-primary" id="create_tissue_samples_plants_per_plot_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" id="create_tissue_samples_plants_per_plot_submit"><% __('Submit') |h %></button>
                                 </center>
                             </div>
 
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Create Tissue Sample Entries" &>
-                            <& /page/page_title.mas, title=>"Create tissue sample entries for this trial" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Create Tissue Sample Entries"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Create tissue sample entries for this trial"), 'h' ) &>
 
                             <form class="form-horizontal" >
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><span title="You can use the same tissue name, e.g. root and root, more than once below. The tissue name will still be unique because of a tissue index e.g. 1 and 2 added to the end." </span><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Number of tissue samples per plant: </span></label>
+                                    <label class="col-sm-3 control-label"><span title="<% __('You can use the same tissue name, e.g. root and root, more than once below. The tissue name will still be unique because of a tissue index e.g. 1 and 2 added to the end.') |h %>" </span><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;<% __('Number of tissue samples per plant:') |h %> </span></label>
                                     <div class="col-sm-9" >
                                         <input name="create_tissue_samples_per_plant_num" id="create_tissue_samples_per_plant_num" class="form-control" type="text" autofocus/>
                                     </div>
@@ -109,34 +109,34 @@
 
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Inherits Treatment(s) From Plots: </label>
+                                    <label class="col-sm-3 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input name="create_tissue_samples_per_plant_inherit_treatments" id="create_tissue_samples_per_plant_inherit_treatments" type="checkbox"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Use Tissue Numbers: </label>
+                                    <label class="col-sm-3 control-label"><% __('Use Tissue Numbers:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input name="create_tissue_samples_per_plant_use_tissue_numbers" id="create_tissue_samples_per_plant_use_tissue_numbers" type="checkbox"/>
                                     </div>
                                 </div>
                             </form><br/>
                             <center>
-                            <button type="button" class="btn btn-primary" name="create_tissue_samples_plants_per_plant_submit" id="create_tissue_samples_plants_per_plant_submit">Submit</button>
+                            <button type="button" class="btn btn-primary" name="create_tissue_samples_plants_per_plant_submit" id="create_tissue_samples_plants_per_plant_submit"><% __('Submit') |h %></button>
                             </center>
                         </&>
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Complete! Your field trial's tissue samples were saved." &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Complete! Your field trial's tissue samples were saved."), 'h' ) &>
 
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                Tissue samples saved successfully
+                                <% __('Tissue samples saved successfully') |h %>
                             </p>
 
                             <ul>
-                                <li>You may want to go to the trial detail page for the trial now that it has plants.</li>
-                                <li>You can print barcodes for the new tissue samples.</li>
-                                <li>You can use these tissue samples as source material for a genotyping plates (96 or 384 well plate)</li>
+                                <li><% __('You may want to go to the trial detail page for the trial now that it has plants.') |h %></li>
+                                <li><% __('You can print barcodes for the new tissue samples.') |h %></li>
+                                <li><% __('You can use these tissue samples as source material for a genotyping plates (96 or 384 well plate)') |h %></li>
                             </ul>
                             <br/>
                         </&>
@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

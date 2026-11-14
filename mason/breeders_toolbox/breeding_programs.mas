@@ -11,7 +11,7 @@ if ($user && $user->check_roles("curator")) {
 }
 </%perl>
 
-<& /page/page_title.mas, title=>"Manage Breeding Programs" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage Breeding Programs"), 'h' ) &>
 
 <div class="container-fluid">
 <hr>
@@ -47,7 +47,7 @@ if ($user && $user->check_roles("curator")) {
 </table>
 
 <br/>
-<button type="button" class="btn btn-primary" name="new_breeding_program_link" id="new_breeding_program_link">Add New Program</button>
+<button type="button" class="btn btn-primary" name="new_breeding_program_link" id="new_breeding_program_link"><% __('Add New Program') |h %></button>
 
 </div>
 
@@ -57,21 +57,21 @@ if ($user && $user->check_roles("curator")) {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addBreedingProgramDialog">Store Breeding Program Details</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addBreedingProgramDialog"><% __('Store Breeding Program Details') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 	  <form class="form-horizontal" role="form" name="store_breeding_program_form" id="store_breeding_program_form">
         <div class="form-group" id="store_breeding_program_id" style="display: none"></div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Name: </label>
+      	      <label class="col-sm-2 control-label"><% __('Name:') |h %> </label>
       	      <div class="col-sm-10">
 		<input class="form-control" name="store_breeding_program_name" id="store_breeding_program_name" type="text" />
               </div>
 	    </div>
 	    <div class="form-group">
-      	      <label class="col-sm-2 control-label">Description: </label>
+      	      <label class="col-sm-2 control-label"><% __('Description:') |h %> </label>
       	      <div class="col-sm-10">
 		<input class="form-control" name="store_breeding_program_desc" id="store_breeding_program_desc" type="text" />
               </div>
@@ -80,8 +80,8 @@ if ($user && $user->check_roles("curator")) {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="store_breeding_program_submit" id="store_breeding_program_submit">Store Breeding Program Details</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="store_breeding_program_submit" id="store_breeding_program_submit"><% __('Store Breeding Program Details') |h %></button>
       </div>
     </div>
   </div>

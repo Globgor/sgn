@@ -19,12 +19,12 @@ $dataset_id => undef
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<& /page/page_title.mas, title=>"Search Wizard" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Search Wizard"), 'h' ) &>
 
 <div class="row">
   <div class="col-md-12" style="margin-bottom:1em; text-align:right;">
-    Don't see your data? <button id="update_wizard_lists" class="btn btn-default">Refresh Lists</button>
-    <button id="update_wizard_show" class="btn btn-default">Update Wizard</button>
+    <% __('Don\'t see your data?') |h %> <button id="update_wizard_lists" class="btn btn-default"><% __('Refresh Lists') |h %></button>
+    <button id="update_wizard_show" class="btn btn-default"><% __('Update Wizard') |h %></button>
   </div>
 </div>
 
@@ -164,21 +164,21 @@ $dataset_id => undef
         <div class="panel-body">
           <div class="input-group">
             <select class="form-control input-sm wizard-dataset-select">
-              <option selected value="" disabled>Load Dataset</option>
+              <option selected value="" disabled><% __('Load Dataset') |h %></option>
               <optgroup class="wizard-dataset-group" label="--------------------"></optgroup>
             </select>
             <span class="input-group-btn">
-              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-load">Load</button></span>
-              <span><button style="width:9em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-public">Make Public</button></span>
-              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-danger wizard-dataset-delete">Delete</button></span>
+              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-load"><% __('Load') |h %></button></span>
+              <span><button style="width:9em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-public"><% __('Make Public') |h %></button></span>
+              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-danger wizard-dataset-delete"><% __('Delete') |h %></button></span>
             </span>
           </div>
         </div>
         <div class="panel-body" style="margin-top:-1px;">
           <div class="input-group">
-            <input type="text" placeholder="Create New Dataset" class="form-control input-sm wizard-dataset-name" />
+            <input type="text" placeholder="<% __('Create New Dataset') |h %>" class="form-control input-sm wizard-dataset-name" />
             <span class="input-group-btn">
-              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-create">Create</button></span>
+              <span><button style="width:5em;margin-left:4px;" class="btn btn-sm btn-primary wizard-dataset-create"><% __('Create') |h %></button></span>
             </span>
           </div>
         </div>
@@ -197,23 +197,23 @@ $dataset_id => undef
     <&| /util/user.mas:logged_in &>
       <div class="panel panel-default">
         <div class="panel-heading" role="button" data-toggle="collapse" data-parent="#wiz-down-group" href="#wiz-down-1-c" aria-controls="wiz-down-1-c">
-          <span class="btnn btn-link">Related Genotype Data</span>
+          <span class="btnn btn-link"><% __('Related Genotype Data') |h %></span>
         </div>
         <div id="wiz-down-1-c" class="panel-collapse collapse" role="tabpanel">
           <p style="margin: 15px; text-color: #999; font-size: 90%">Download matching genotype records from the database.  Select a <strong>single genotyping protocol</strong> and <strong>one or more accessions</strong> to download the matching genotype data.</p>
           <table class="table">
             <tr>
               <td colspan="4">
-                <span class="glyphicon glyphicon-info-sign" title="To download related genotype data, select 1 or more Accessions and optionally no more than 1 Genotyping Protocol in the wizard. If no genotyping protocol is selected, the database default protocol will be used. Click the checkbox here to compute genotypes for the selected accessions from genotypes of parents; this works for downloading genotypes, downloading the GRM, and performing GWAS."></span>
-                <span>Download Genotype Data</span>
+                <span class="glyphicon glyphicon-info-sign" title="<% __('To download related genotype data, select 1 or more Accessions and optionally no more than 1 Genotyping Protocol in the wizard. If no genotyping protocol is selected, the database default protocol will be used. Click the checkbox here to compute genotypes for the selected accessions from genotypes of parents; this works for downloading genotypes, downloading the GRM, and performing GWAS.') |h %>"></span>
+                <span><% __('Download Genotype Data') |h %></span>
                 <input class="wizard-download-genotypes-info form-control input-sm" type="text" disabled></input>
               </td>
               <td colspan="4">
-                  <span>Compute From Parents</span><br/>
+                  <span><% __('Compute From Parents') |h %></span><br/>
                   <input type="checkbox" class="wizard-download-genotypes-parents-compute">
               </td>
               <td colspan="4">
-                  <span>Include Duplicate Genotypes</span><br/>
+                  <span><% __('Include Duplicate Genotypes') |h %></span><br/>
                   <input type="checkbox" class="wizard-download-genotypes-duplicates-include">
               </td>
             </tr>
@@ -222,40 +222,40 @@ $dataset_id => undef
             <table class="table">
                 <tr>
                     <td colspan="12">
-                        <span class="glyphicon glyphicon-info-sign" title="You can use either chromosome or marker alleles to filter genotyping data. You cannot use both criteria at the same time."></span>
-                        <span>Filter by Chromosome or Marker Alleles</span>
+                        <span class="glyphicon glyphicon-info-sign" title="<% __('You can use either chromosome or marker alleles to filter genotyping data. You cannot use both criteria at the same time.') |h %>"></span>
+                        <span><% __('Filter by Chromosome or Marker Alleles') |h %></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <span>Chromosome</span>
+                        <span><% __('Chromosome') |h %></span>
                         <select class="wizard-download-genotypes-chromosome-number form-control input-sm"></select>
                     </td>
                     <td colspan="4">
-                        <span>Start Position</span>
+                        <span><% __('Start Position') |h %></span>
                         <input placeholder="" type="number" class="wizard-download-genotypes-start-position form-control input-sm">
                     </td>
                     <td colspan="4">
-                        <span>End Position</span>
+                        <span><% __('End Position') |h %></span>
                         <input placeholder="" type="number" class="wizard-download-genotypes-end-position form-control input-sm">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <span>Marker Allele Filter</span>
+                        <span><% __('Marker Allele Filter') |h %></span>
                         <select class="wizard-download-genotypes-marker-set-list-id form-control input-sm" id="wizard-download-genotypes-marker-set-list-id"></select>
                     </td>
                     <td colspan="6">
                         <br/>
-                        <button class="btn btn-sm btn-default" onClick="window.open('/breeders/markers', '_blank');">Manage Marker Alleles</button>
+                        <button class="btn btn-sm btn-default" onClick="window.open('/breeders/markers', '_blank');"><% __('Manage Marker Alleles') |h %></button>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <span>Genotypes Download Format</span>
+                        <span><% __('Genotypes Download Format') |h %></span>
                         <select class="wizard-download-genotypes-format form-control input-sm" >
-                            <option value="VCF">VCF File Format</option>
-                            <option value="DosageMatrix">Dosage Matrix File Format (.tsv)</option>
+                            <option value="VCF"><% __('VCF File Format') |h %></option>
+                            <option value="DosageMatrix"><% __('Dosage Matrix File Format (.tsv)') |h %></option>
                         </select>
                     </td>
                     <td colspan="6">
@@ -263,11 +263,11 @@ $dataset_id => undef
                 </tr>
                 <tr>
                     <td colspan="8">
-                        <span class="glyphicon glyphicon-info-sign" title="Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. If you want to filter genotypes, use the chromosome, start position, end position, or marker alleles. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. Genotypes can be downloaded in VCF and Dosage Matrix Formats."></span>
-                        <span>Download Genotypes</span><br/>
+                        <span class="glyphicon glyphicon-info-sign" title="<% __('Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. If you want to filter genotypes, use the chromosome, start position, end position, or marker alleles. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. Genotypes can be downloaded in VCF and Dosage Matrix Formats.') |h %>"></span>
+                        <span><% __('Download Genotypes') |h %></span><br/>
                         <button class="wizard-download-genotypes btn btn-sm btn-primary">
                             <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                            Download Genotypes
+                            <% __('Download Genotypes') |h %>
                         </button>
                         <input class="wizard-download-genotypes-info2 form-control btn-warning" type="text"></input>  <!-- warn too many genotype protocols-->
                         <input class="wizard-download-genotypes-info3 form-control btn-warning" type="text"></input>  <!-- show default protocol -->
@@ -282,60 +282,60 @@ $dataset_id => undef
             <table class="table">
                 <tr>
                     <td colspan="6">
-                      <span>Minor Allele Frequency</span>
+                      <span><% __('Minor Allele Frequency') |h %></span>
                       <input placeholder="0.05" value="0.05" type="number" class="wizard-download-genotypes-grm-maf form-control input-sm">
                     </td>
                     <td colspan="3">
-                      <span>Marker Filter</span>
+                      <span><% __('Marker Filter') |h %></span>
                       <input placeholder="0.60" value="0.60" type="number" class="wizard-download-genotypes-grm-marker-filter form-control input-sm">
                     </td>
                     <td colspan="3">
-                      <span>Individuals Filter</span>
+                      <span><% __('Individuals Filter') |h %></span>
                       <input placeholder="0.80" value="0.80" type="number" class="wizard-download-genotypes-grm-individuals-filter form-control input-sm">
                     </td>
                 </tr>
               <tr>
                 <td colspan="12">
-                  <span>Genomic Relationship Matrix (GRM) Download Format</span>
+                  <span><% __('Genomic Relationship Matrix (GRM) Download Format') |h %></span>
                   <select class="wizard-download-genotypes-grm-format form-control input-sm" >
-                      <option value="matrix_uniquenames">Matrix Stock Names (.tsv)</option>
-                      <option value="three_column_uniquenames">3-Column Stock Names (.tsv)</option>
-                      <option value="three_column_reciprocal_uniquenames">3-Column Reciprocal Stock Names (.tsv)</option>
-                      <option value="heatmap">Heatmap (.pdf)</option>
-                      <option value="matrix">Matrix Stock IDs (.tsv)</option>
-                      <option value="three_column">3-Column Stock IDs(.tsv)</option>
-                      <option value="three_column_stock_id_integer">3-Column Stock IDs Integer (.tsv)</option>
-                      <option value="three_column_reciprocal">3-Column Reciprocal Stock IDs (.tsv)</option>
-                      <option value="three_column_reciprocal_stock_id_integer">3-Column Reciprocal Stock IDs Integer (.tsv)</option>
+                      <option value="matrix_uniquenames"><% __('Matrix Stock Names (.tsv)') |h %></option>
+                      <option value="three_column_uniquenames"><% __('3-Column Stock Names (.tsv)') |h %></option>
+                      <option value="three_column_reciprocal_uniquenames"><% __('3-Column Reciprocal Stock Names (.tsv)') |h %></option>
+                      <option value="heatmap"><% __('Heatmap (.pdf)') |h %></option>
+                      <option value="matrix"><% __('Matrix Stock IDs (.tsv)') |h %></option>
+                      <option value="three_column"><% __('3-Column Stock IDs(.tsv)') |h %></option>
+                      <option value="three_column_stock_id_integer"><% __('3-Column Stock IDs Integer (.tsv)') |h %></option>
+                      <option value="three_column_reciprocal"><% __('3-Column Reciprocal Stock IDs (.tsv)') |h %></option>
+                      <option value="three_column_reciprocal_stock_id_integer"><% __('3-Column Reciprocal Stock IDs Integer (.tsv)') |h %></option>
                   </select>
                   <br/>
-                    <span class="glyphicon glyphicon-info-sign" title="Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GRM can be downloaded in a matrix format (.tsv) and a three column format."></span>
-                    <span>Download GRM</span><br/>
+                    <span class="glyphicon glyphicon-info-sign" title="<% __('Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GRM can be downloaded in a matrix format (.tsv) and a three column format.') |h %>"></span>
+                    <span><% __('Download GRM') |h %></span><br/>
                     <button class="wizard-download-genetic-relationship-matrix btn btn-sm btn-primary">
                         <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                        Download GRM
+                        <% __('Download GRM') |h %>
                     </button>
                 </td>
               </tr>
               <tr>
                   <td colspan="12">
-                    <span>Genome Wide Association Study (GWAS) Download Format</span>
+                    <span><% __('Genome Wide Association Study (GWAS) Download Format') |h %></span>
                     <select class="wizard-download-genotypes-gwas-format form-control input-sm" >
-                        <option value="manhattan_qq_plots">Manhattan + QQ Plots (.pdf)</option>
-                        <option value="results_tsv">GWAS Results (.tsv)</option>
+                        <option value="manhattan_qq_plots"><% __('Manhattan + QQ Plots (.pdf)') |h %></option>
+                        <option value="results_tsv"><% __('GWAS Results (.tsv)') |h %></option>
                     </select>
                     <br/>
-                    <span>Selected Traits Are All Repeated Measurements</span>
+                    <span><% __('Selected Traits Are All Repeated Measurements') |h %></span>
                     <select class="wizard-download-genotypes-gwas-repeated-measurements form-control input-sm" >
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        <option value="no"><% __('No') |h %></option>
+                        <option value="yes"><% __('Yes') |h %></option>
                     </select>
                     <br/>
-                        <span class="glyphicon glyphicon-info-sign" title="Select accessions, traits, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. When many traits are selected and these traits are not treated as repeated measurements, the traits are treated separately and distinct results are returned e.g. several Manhattan plots are returned. If the selected traits are in fact repeated measurements, then select 'yes'; a single GWAS will be run against all of the phenotypes e.g. a single Manhattan plot is returned. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GWAS uses a fixed effect for different field trials and a fixed effect for replicate. GWAS uses Kinship matrix calculated from the genotype data. MAF and missing data used to filter prior to GWAS and Kinship matrix calculation. Can select whether to return results in Manhattan and QQ Plot (.pdf) form or as the tabular results (.tsv)."></span>
-                        <span>Run GWAS</span><br/>
+                        <span class="glyphicon glyphicon-info-sign" title="<% __('Select accessions, traits, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. When many traits are selected and these traits are not treated as repeated measurements, the traits are treated separately and distinct results are returned e.g. several Manhattan plots are returned. If the selected traits are in fact repeated measurements, then select \'yes\'; a single GWAS will be run against all of the phenotypes e.g. a single Manhattan plot is returned. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GWAS uses a fixed effect for different field trials and a fixed effect for replicate. GWAS uses Kinship matrix calculated from the genotype data. MAF and missing data used to filter prior to GWAS and Kinship matrix calculation. Can select whether to return results in Manhattan and QQ Plot (.pdf) form or as the tabular results (.tsv).') |h %>"></span>
+                        <span><% __('Run GWAS') |h %></span><br/>
                       <button class="wizard-download-gwas btn btn-sm btn-primary">
                           <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                          Download GWAS
+                          <% __('Download GWAS') |h %>
                       </button>
                   </td>
               </tr>
@@ -347,7 +347,7 @@ $dataset_id => undef
 
       <div class="panel panel-default">
         <div class="panel-heading" role="button" data-toggle="collapse" data-parent="#wiz-down-group" href="#wiz-down-1-c-a" aria-controls="wiz-down-1-c-a">
-          <span class="btnn btn-link">Archived Genotype Data</span>
+          <span class="btnn btn-link"><% __('Archived Genotype Data') |h %></span>
         </div>
         <div id="wiz-down-1-c-a" class="panel-collapse collapse" role="tabpanel">
           <p style="margin: 15px; text-color: #999; font-size: 90%">Download the original archived VCF files of entire genotyping projects.  Select <strong>one or more genotyping projects and/or genotyping protocols</strong> to download a VCF file of any matching project(s).</p>
@@ -357,7 +357,7 @@ $dataset_id => undef
 
       <div class="panel panel-default">
         <div class="panel-heading" role="button" data-toggle="collapse" data-parent="#wiz-down-group" href="#wiz-down-2-c" aria-controls="wiz-down-2-c">
-          <span class="btnn btn-link">Related Trial Metadata</span>
+          <span class="btnn btn-link"><% __('Related Trial Metadata') |h %></span>
         </div>
         <div id="wiz-down-2-c" class="panel-collapse collapse" role="tabpanel">
           <table class="table">
@@ -367,7 +367,7 @@ $dataset_id => undef
               </td>
               <td>
                 <select class="wizard-download-tmetadata-format form-control input-sm">
-                  <option value="" disabled>Format</option>
+                  <option value="" disabled><% __('Format') |h %></option>
                   <option selected value="csv">CSV</option>
                   <option value="xlsx">XLSX</option>
                 </select>
@@ -377,7 +377,7 @@ $dataset_id => undef
           <div class="panel-footer" style="border-top: 1px solid #ddd;">
             <button class="wizard-download-tmetadata btn btn-sm btn-primary">
                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                Metadata
+                <% __('Metadata') |h %>
             </button>
           </div>
         </div>
@@ -385,7 +385,7 @@ $dataset_id => undef
 
       <div class="panel panel-default">
         <div class="panel-heading" role="button" data-toggle="collapse" data-parent="#wiz-down-group" href="#wiz-down-3-c" aria-controls="wiz-down-3-c">
-          <span class="btnn btn-link">Related Trial Phenotypes</span>
+          <span class="btnn btn-link"><% __('Related Trial Phenotypes') |h %></span>
         </div>
         <div id="wiz-down-3-c" class="panel-collapse collapse" role="tabpanel">
           <table class="table">
@@ -397,24 +397,24 @@ $dataset_id => undef
             <tr>
             <td colspan="1">
               <select class="wizard-download-phenotypes-speed form-control input-sm">
-                <option value="" disabled>Download Type</option>
-                <option selected value="Native">Default</option>
-                <option value="MaterializedViewTable">Fast (Improves speed but may miss recent changes)</option>
+                <option value="" disabled><% __('Download Type') |h %></option>
+                <option selected value="Native"><% __('Default') |h %></option>
+                <option value="MaterializedViewTable"><% __('Fast (Improves speed but may miss recent changes)') |h %></option>
               </select>
             </td>
               <td colspan="1">
                 <select class="wizard-download-phenotypes-format form-control input-sm">
-                  <option value="" disabled>Download Format</option>
+                  <option value="" disabled><% __('Download Format') |h %></option>
                   <option selected value="csv">CSV</option>
                   <option value="xlsx">XLSX</option>
                 </select>
               </td>
               <td colspan="1">
                 <select class="wizard-download-phenotypes-level form-control input-sm">
-                  <option value="" disabled>Data Level</option>
-                  <option selected value="all">All</option>
-                  <option value="plot">Plots</option>
-                  <option value="plant">Plants</option>
+                  <option value="" disabled><% __('Data Level') |h %></option>
+                  <option selected value="all"><% __('All') |h %></option>
+                  <option value="plot"><% __('Plots') |h %></option>
+                  <option value="plant"><% __('Plants') |h %></option>
                 </select>
               </td>
             </tr>
@@ -423,7 +423,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-timestamp" type="checkbox" />
-                    Include timestamps
+                    <% __('Include timestamps') |h %>
                   </label>
                 </div>
               </td>
@@ -431,7 +431,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-entry-numbers" type="checkbox" />
-                    Include accession entry numbers
+                    <% __('Include accession entry numbers') |h %>
                   </label>
                 </div>
               </td>
@@ -441,7 +441,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-trait-synonyms" type="checkbox" />
-                    Include trait synonyms
+                    <% __('Include trait synonyms') |h %>
                   </label>
                 </div>
               </td>
@@ -449,7 +449,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-intercrop" type="checkbox" />
-                    Include intercrop accessions
+                    <% __('Include intercrop accessions') |h %>
                   </label>
                 </div>
               </td>
@@ -459,49 +459,49 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-pedigree_parents" type="checkbox" />
-                    Include parents
+                    <% __('Include parents') |h %>
                   </label>
                 </div>
               </td>
             </tr>
             <tr>
               <td colspan="3">
-                Repetitive measurements: <br />
+                <% __('Repetitive measurements:') |h %> <br />
                 <select class="wizard-download-repetitive-measurements-type form-control" >
-                  <option value="first">First value</option>
-                  <option value="last">Last value</option>
-                  <option value="average">Averaged value</option>
-                  <option value="sum">Sum values</option>
-                  <option value="all_values_single_line">All Values Single Line</option>
-                  <option value="all_values_multiple_line">All Values Multiple Line</option>
+                  <option value="first"><% __('First value') |h %></option>
+                  <option value="last"><% __('Last value') |h %></option>
+                  <option value="average"><% __('Averaged value') |h %></option>
+                  <option value="sum"><% __('Sum values') |h %></option>
+                  <option value="all_values_single_line"><% __('All Values Single Line') |h %></option>
+                  <option value="all_values_multiple_line"><% __('All Values Multiple Line') |h %></option>
                 </select>
               </td>
             </tr>
             <tr>
               <td style="border-top: none; padding-top: 0">
-                From:<br /><input type="text" class="wizard-download-start-date form-control" id="phenotype_start_date" title="phenotype_start_date"  />
+                <% __('From:') |h %><br /><input type="text" class="wizard-download-start-date form-control" id="phenotype_start_date" title="phenotype_start_date"  />
               </td>
               <td style="border-top: none; padding-top: 0" colspan="2">
-                To:<br /><input type="text" class="wizard-download-end-date form-control" id="phenotype_end_date" title="phenotype_end_date" />
+                <% __('To:') |h %><br /><input type="text" class="wizard-download-end-date form-control" id="phenotype_end_date" title="phenotype_end_date" />
               </td>
             </tr>
             <tr>
               <td style="border-top: none; padding-top: 0">
                 <input type="checkbox" id="include_dateless_items" checked="1" />
-                Include items without a date
+                <% __('Include items without a date') |h %>
               </td>
             </tr>
             <tr>
               <td>
-                <span>Trait Name Contains</span>
+                <span><% __('Trait Name Contains') |h %></span>
                 <input placeholder="e.g. plant height" type="text" class="wizard-download-phenotypes-name form-control">
               </td>
               <td>
-                <span>Min Value</span>
+                <span><% __('Min Value') |h %></span>
                 <input placeholder="-&#8734;" type="text" class="wizard-download-phenotypes-min form-control">
               </td>
               <td>
-                <span>Max Value</span>
+                <span><% __('Max Value') |h %></span>
                 <input placeholder="&#8734;" type="text" class="wizard-download-phenotypes-max form-control">
               </td>
             </tr>
@@ -510,7 +510,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-phenotypes-outliers" type="checkbox" />
-                    Supress user defined phenotype outliers
+                    <% __('Supress user defined phenotype outliers') |h %>
                   </label>
                 </div>
               </td>
@@ -519,7 +519,7 @@ $dataset_id => undef
           <div class="panel-footer" style="border-top: 1px solid #ddd;">
             <button class="wizard-download-phenotypes btn btn-sm btn-primary">
                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                Download Phenotypes
+                <% __('Download Phenotypes') |h %>
             </button>
           </div>
         </div>
@@ -527,7 +527,7 @@ $dataset_id => undef
 
       <div class="panel panel-default">
         <div class="panel-heading" role="button" data-toggle="collapse" data-parent="#wiz-down-group" href="#wiz-down-4-c" aria-controls="wiz-down-4-c">
-          <span class="btnn btn-link">Related Trial High Dimensional Phenotypes</span>
+          <span class="btnn btn-link"><% __('Related Trial High Dimensional Phenotypes') |h %></span>
         </div>
         <div id="wiz-down-4-c" class="panel-collapse collapse" role="tabpanel">
           <table class="table">
@@ -540,14 +540,14 @@ $dataset_id => undef
             <tr>
             <td colspan="1">
               <select class="wizard-download-high-dim-phenotypes-speed form-control input-sm">
-                <option value="" disabled>Download Type</option>
-                <option selected value="Native">Default</option>
-                <option value="MaterializedViewTable">Fast (Improves speed but may miss recent changes)</option>
+                <option value="" disabled><% __('Download Type') |h %></option>
+                <option selected value="Native"><% __('Default') |h %></option>
+                <option value="MaterializedViewTable"><% __('Fast (Improves speed but may miss recent changes)') |h %></option>
               </select>
             </td>
               <td colspan="1">
                 <select class="wizard-download-high-dim-phenotypes-format form-control input-sm">
-                  <option value="" disabled>Download Format</option>
+                  <option value="" disabled><% __('Download Format') |h %></option>
                   <option selected value="csv">CSV</option>
                   <option value="xlsx">XLSX</option>
                 </select>
@@ -558,7 +558,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-high-dim-phenotypes-timestamp" type="checkbox" />
-                    Include timestamps
+                    <% __('Include timestamps') |h %>
                   </label>
                 </div>
               </td>
@@ -566,7 +566,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-high-dim-phenotypes-entry-numbers" type="checkbox" checked />
-                    Include accession entry numbers
+                    <% __('Include accession entry numbers') |h %>
                   </label>
                 </div>
               </td>
@@ -586,7 +586,7 @@ $dataset_id => undef
                 <div class="checkbox">
                   <label>
                     <input class="wizard-download-high-dim-phenotypes-intercrop" type="checkbox" checked />
-                    Include intercrop accessions
+                    <% __('Include intercrop accessions') |h %>
                   </label>
                 </div>
               </td>
@@ -608,29 +608,29 @@ $dataset_id => undef
             !-->
             <tr>
               <td style="border-top: none; padding-top: 0">
-                From:<br /><input type="text" class="wizard-download-start-date form-control" id="phenotype_start_date" title="phenotype_start_date"  />
+                <% __('From:') |h %><br /><input type="text" class="wizard-download-start-date form-control" id="phenotype_start_date" title="phenotype_start_date"  />
               </td>
               <td style="border-top: none; padding-top: 0">
-                To:<br /><input type="text" class="wizard-download-end-date form-control" id="phenotype_end_date" title="phenotype_end_date" />
+                <% __('To:') |h %><br /><input type="text" class="wizard-download-end-date form-control" id="phenotype_end_date" title="phenotype_end_date" />
               </td>
               <td style="border-top: none; padding-top: 0">
                 <input type="checkbox" id="include_dateless_items" checked="1" />
-                Include items without a date
+                <% __('Include items without a date') |h %>
               </td>
             </tr>
             <tr>
               <td>
-                <span>High Dimensional Phenotype</span>
+                <span><% __('High Dimensional Phenotype') |h %></span>
               <select class="wizard-download-high-dim-phenotypes-type form-control input-sm">
                 <option selected value="NIRS">NIRS</option>
               </select>
               </td>
               <td>
-                <span>Min Wavelength</span>
+                <span><% __('Min Wavelength') |h %></span>
                 <input placeholder="-&#8734;" type="text" class="wizard-download-high-dim-phenotypes-min form-control">
               </td>
               <td>
-                <span>Max Wavelength</span>
+                <span><% __('Max Wavelength') |h %></span>
                 <input placeholder="&#8734;" type="text" class="wizard-download-high-dim-phenotypes-max form-control">
               </td>
             </tr>
@@ -638,7 +638,7 @@ $dataset_id => undef
           <div class="panel-footer" style="border-top: 1px solid #ddd;">
             <button class="wizard-download-high-dim-phenotypes btn btn-sm btn-primary">
                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                Download Phenotypes
+                <% __('Download Phenotypes') |h %>
             </button>
           </div>
         </div>
@@ -656,20 +656,20 @@ $dataset_id => undef
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="updateWizardDialog">Update Search Wizard</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="updateWizardDialog"><% __('Update Search Wizard') |h %></h3>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-	     <h4>How the wizard works</h4>
-	     	     <p>For the search wizard to be fast and flexible, it avoids querying the database directly. Instead, it stores a copy of the data from the database in a temporary format that is optimized for the types of queries the wizard makes.</p><p>For this to be practical, the copy must be updated regularly. Updates usually start every time new data is uploaded, however users with submitter status or higher can also initiate them manually.</p><p>If an update isn't already in progress, you can initiate one below. It will run independently on the server without any additional input required from the user. Depending on the size of the database, it will take from a few minutes to a few hours to complete.</p>
-	<div><h4>Current status:</h4><p id="wizard_status"></p></div>
+	     <h4><% __('How the wizard works') |h %></h4>
+	     	     <p><% __('For the search wizard to be fast and flexible, it avoids querying the database directly. Instead, it stores a copy of the data from the database in a temporary format that is optimized for the types of queries the wizard makes.') |h %></p><p><% __('For this to be practical, the copy must be updated regularly. Updates usually start every time new data is uploaded, however users with submitter status or higher can also initiate them manually.') |h %></p><p><% __('If an update isn\'t already in progress, you can initiate one below. It will run independently on the server without any additional input required from the user. Depending on the size of the database, it will take from a few minutes to a few hours to complete.') |h %></p>
+	<div><h4><% __('Current status:') |h %></h4><p id="wizard_status"></p></div>
         </div>
       </div>
       <div class="modal-footer">
         <div class="well well-sm" id="update_wizard_error" style="display:none;"></div>
-        <button type="button" class="btn btn-primary wiz-update" name="update_wizard" data-loading-text="Working..." id="update_wizard">Update search wizard</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary wiz-update" name="update_wizard" data-loading-text="Working..." id="update_wizard"><% __('Update search wizard') |h %></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

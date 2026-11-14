@@ -9,8 +9,8 @@ $user_role => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="deleteSeedlotsDialog">Delete Seedlots </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteSeedlotsDialog"><% __('Delete Seedlots') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -18,24 +18,24 @@ $user_role => undef
                         <form class="form-horizontal" id="delete_seedlot_info" name="delete_seedlot_info">
                             <div class="form-group form-group-sm">
                                 <ul>
-                                    <strong>Note:</strong>
-                                    <li>Only seedlots that are not associated with crosses or trials can be deleted.</li>
-                                    <li>Deleting seedlots cannot be undone.</li>
+                                    <strong><% __('Note:') |h %></strong>
+                                    <li><% __('Only seedlots that are not associated with crosses or trials can be deleted.') |h %></li>
+                                    <li><% __('Deleting seedlots cannot be undone.') |h %></li>
                                 </ul>
                             </div>
                         </form>
                     </div>
                     <form class="form-horizontal" role="form" method="post" id="delete_seedlots_form" name="delete_seedlots_form">
                         <div class="form-group" id="delete_seedlot_list_section" >
-                            <label class="col-sm-4 control-label">Select a List of Seedlots:</label>
+                            <label class="col-sm-4 control-label"><% __('Select a List of Seedlots:') |h %></label>
                             <div class="col-sm-8" id="seedlots_to_delete_html" name="seedlots_to_delete_html"></div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="delete_seedlots_submit" id="delete_seedlots_submit">Delete Seedlots</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="delete_seedlots_submit" id="delete_seedlots_submit"><% __('Delete Seedlots') |h %></button>
             </div>
         </div>
     </div>
@@ -45,8 +45,8 @@ $user_role => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Seedlot Deletion Verify</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><% __('Seedlot Deletion Verify') |h %></h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
@@ -55,8 +55,8 @@ $user_role => undef
 	      </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="delete_seedlots_confirm" id="delete_seedlots_confirm">Delete green elements</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="delete_seedlots_confirm" id="delete_seedlots_confirm"><% __('Delete green elements') |h %></button>
             </div>
         </div>
     </div>
