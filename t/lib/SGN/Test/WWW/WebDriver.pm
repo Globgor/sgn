@@ -63,6 +63,7 @@ package SGN::Test::WWW::WebDriver;
 use Moose;
 
 use Try::Tiny;
+use Time::HiRes ();
 use Test::More;
 use File::Spec::Functions;
 use Selenium::Firefox;
@@ -104,6 +105,65 @@ has 'download_dir' => (is => 'ro',
     );
 
 our $webdriver_instance;
+
+sub import {
+    return if @_ > 1;
+    my $caller = caller;
+    no strict 'refs';
+    # Replace only unqualified sleeps in the importing test package.
+    *{"${caller}::sleep"} = \&_settled_sleep;
+}
+
+sub _settled_sleep (;$) {
+    return CORE::sleep() unless @_;
+    my ($seconds) = @_;
+    my $self = $webdriver_instance;
+    return CORE::sleep($seconds) unless $self && $seconds > 0;
+    my (undef, $file, $line) = caller;
+    my $started = Time::HiRes::time();
+    my $deadline = $started + $seconds;
+    my ($quiet_since, $polled);
+    while (Time::HiRes::time() < $deadline) {
+        if (eval { $self->driver->get_alert_text(); 1 }) {
+            return CORE::sleep($seconds) unless $polled;
+            return int(Time::HiRes::time() - $started);
+        }
+        last if Time::HiRes::time() >= $deadline;
+        $polled = 1;
+        my $settled = eval { $self->driver->execute_script(q{
+            function rendered(e) {
+                return e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden';
+            }
+            if (document.readyState !== 'complete' || (window.jQuery && jQuery.active)) { return false; }
+            var working = document.getElementById('working_modal');
+            if (working && rendered(working)) { return false; }
+            if (document.querySelector('.modal-backdrop:not(.in)')) { return false; }
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                var modal = modals[i];
+                if (!rendered(modal)) { continue; }
+                if (!modal.classList.contains('in')) { return false; }
+                var dialog = modal.querySelector('.modal-dialog');
+                var transform = dialog && getComputedStyle(dialog).transform;
+                if (transform && transform !== 'none' && transform !== 'matrix(1, 0, 0, 1, 0, 0)') { return false; }
+            }
+            return true;
+        }) };
+        my $now = Time::HiRes::time();
+        if ($settled) {
+            $quiet_since = $now unless defined $quiet_since;
+            return int($now - $started) if $now - $quiet_since >= 0.5 && $now < $deadline;
+        }
+        else {
+            $quiet_since = undef;
+        }
+        my $remaining = $deadline - $now;
+        last if $remaining <= 0;
+        Time::HiRes::sleep($remaining < 0.2 ? $remaining : 0.2);
+    }
+    note("sleep $seconds not shortened at $file:$line");
+    return int(Time::HiRes::time() - $started);
+}
 
 sub BUILD {
     my $self = shift;
