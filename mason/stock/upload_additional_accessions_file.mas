@@ -5,30 +5,30 @@ $stock_id
 <& /util/import_javascript.mas, classes => [ 'jquery.iframe-post-form' ] &>
 
 <div id="stock_additional_uploaded_files_div">
-[Loading...]
+<% __('[Loading...]') |h %>
 </div>
 
 <div class="modal fade" id="accession_upload_additional_file_dialog" name="stock_upload_additional_file_dialog" tabindex="-1" role="dialog" aria-labelledby="stockUploadAdditionalFileDialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="stockUploadAdditionalFileDialog">Upload Additional File to Accession</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="stockUploadAdditionalFileDialog"><% __('Upload Additional File to Accession') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File upload information</b>
+                            <b><% __('File upload information') |h %></b>
                             <br>
-                            <a id="accession_upload_additional_file_format">Upload Information</a>
+                            <a id="accession_upload_additional_file_format"><% __('Upload Information') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="accession_upload_additional_file_form" name="accession_upload_additional_file_form">
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File: </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="accession_upload_additional_file" id="accession_upload_additional_file" encoding="multipart/form-data" />
                             </div>
@@ -38,8 +38,8 @@ $stock_id
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="accession_upload_additional_file_cancel_button" id="accession_upload_additional_file_cancel_button"     data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="accession_upload_additional_file_submit_button" id="accession_upload_additional_file_submit_button" title="Submit">Submit</button>
+                <button type="button" class="btn btn-default" name="accession_upload_additional_file_cancel_button" id="accession_upload_additional_file_cancel_button"     data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="accession_upload_additional_file_submit_button" id="accession_upload_additional_file_submit_button" title="<% __('Submit') |h %>"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -49,24 +49,24 @@ $stock_id
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="stockUploadAdditionalFileInfoDialog">Upload Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="stockUploadAdditionalFileInfoDialog"><% __('Upload Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading any additional files you may have for the accession.</b>
+                    <b><% __('This is for uploading any additional files you may have for the accession.') |h %></b>
                     <br/><br/>
-                    <p>Possible additional files inlude, but are not limited to:</p>
+                    <p><% __('Possible additional files inlude, but are not limited to:') |h %></p>
                     <ul>
-                        <li>Accession Related Images, such as a physical field image or an aerial picture of the field.</li>
-                        <li>Accession Related Documentation, such as protocols or permits for the accession.</li>
-                        <li>Accession Related Reports, such as supplementary information or publications.</li>
-                        <li>Accession Related Recordings, whether audio or video.</li>
+                        <li><% __('Accession Related Images, such as a physical field image or an aerial picture of the field.') |h %></li>
+                        <li><% __('Accession Related Documentation, such as protocols or permits for the accession.') |h %></li>
+                        <li><% __('Accession Related Reports, such as supplementary information or publications.') |h %></li>
+                        <li><% __('Accession Related Recordings, whether audio or video.') |h %></li>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_accession_upload_additional_file_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_accession_upload_additional_file_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

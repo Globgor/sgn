@@ -8,11 +8,11 @@ $stock_id
 <table class="table table-hover table-bordered" id="traitlist_summary_data" >
 <thead>
   <tr>
-    <th>Trait ID</th>
-    <th>Trait name</th>
-    <th>Average Value</th>
-    <th>Standard deviation</th>
-    <th>Count</th>
+    <th><% __('Trait ID') |h %></th>
+    <th><% __('Trait name') |h %></th>
+    <th><% __('Average Value') |h %></th>
+    <th><% __('Standard deviation') |h %></th>
+    <th><% __('Count') |h %></th>
   </tr>
 </thead>
 
