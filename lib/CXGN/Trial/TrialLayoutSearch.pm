@@ -150,16 +150,28 @@ sub search {
 
     #For performance reasons the number of joins to stock can be reduced if a trial is given.
 
-    my $from_clause = " FROM stock as observationunit
+    my $from_start = " FROM stock as observationunit";
+    my $experiment_joins = "
+        JOIN nd_experiment_stock ON(nd_experiment_stock.stock_id=observationunit.stock_id)
+        JOIN nd_experiment_project ON (nd_experiment_project.nd_experiment_id=nd_experiment_stock.nd_experiment_id)
+        JOIN project USING(project_id)";
+    if ($self->trial_list && @{$self->trial_list}) {
+        # Keep the study in the first join group; default join_collapse_limit is 8.
+        $from_start = " FROM project
+        JOIN nd_experiment_project USING(project_id)
+        JOIN nd_experiment_stock ON (nd_experiment_stock.nd_experiment_id=nd_experiment_project.nd_experiment_id)
+        JOIN stock as observationunit ON (observationunit.stock_id=nd_experiment_stock.stock_id)";
+        $experiment_joins = "";
+    }
+
+    my $from_clause = "$from_start
         JOIN stock_relationship ON (observationunit.stock_id=stock_relationship.subject_id) AND stock_relationship.type_id <> $intercrop_rel_type_id
         JOIN cvterm as observationunit_type ON (observationunit_type.cvterm_id = observationunit.type_id)
         JOIN stock as germplasm ON (stock_relationship.object_id=germplasm.stock_id) AND germplasm.type_id IN ($accession_type_id, $cross_type_id, $family_name_type_id)
         JOIN cvterm as germplasm_type ON (germplasm_type.cvterm_id = germplasm.type_id)
         LEFT JOIN stock_relationship AS isr ON (observationunit.stock_id=isr.subject_id) AND isr.type_id = $intercrop_rel_type_id
         LEFT JOIN stock AS istock ON (isr.object_id = istock.stock_id)
-        JOIN nd_experiment_stock ON(nd_experiment_stock.stock_id=observationunit.stock_id)
-        JOIN nd_experiment_project ON (nd_experiment_project.nd_experiment_id=nd_experiment_stock.nd_experiment_id)
-        JOIN project USING(project_id)
+        $experiment_joins
         LEFT JOIN project_relationship ON (project.project_id=project_relationship.subject_project_id AND project_relationship.type_id = $breeding_program_rel_type_id)
         LEFT JOIN project as breeding_program ON (breeding_program.project_id=project_relationship.object_project_id)
         LEFT JOIN project_relationship folder_rel ON (project.project_id = folder_rel.subject_project_id AND folder_rel.type_id = $folder_rel_type_id)
