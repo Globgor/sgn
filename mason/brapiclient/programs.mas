@@ -3,9 +3,9 @@
 
 <div id="brapi_home_programs_div">
 
-    <h4>Programs</h4>
-    <input name="brapi_home_program_name" id="brapi_home_program_name" class="form-control" type="text" placeholder="ProgramName e.g. test" value="test"/>
-    <button class="btn btn-primary" name="brapi_home_program_submit" id="brapi_home_program_submit">Get Programs</button>
+    <h4><% __('Programs') |h %></h4>
+    <input name="brapi_home_program_name" id="brapi_home_program_name" class="form-control" type="text" placeholder="<% __('ProgramName e.g. test') |h %>" value="test"/>
+    <button class="btn btn-primary" name="brapi_home_program_submit" id="brapi_home_program_submit"><% __('Get Programs') |h %></button>
     <br/><br/>
     <div id="brapi_programs_result_div">
     </div>

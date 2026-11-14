@@ -3,9 +3,9 @@
 
 <div id="brapi_home_study_detail_div">
 
-    <h4>Study Details</h4>
-    <input name="brapi_home_studydbid" id="brapi_home_studydbid" class="form-control" type="text" placeholder="StudyDbId e.g. 137" value="137"/>
-    <button class="btn btn-primary" name="brapi_home_studydbid_submit" id="brapi_home_studydbid_submit">Get Details</button>
+    <h4><% __('Study Details') |h %></h4>
+    <input name="brapi_home_studydbid" id="brapi_home_studydbid" class="form-control" type="text" placeholder="<% __('StudyDbId e.g. 137') |h %>" value="137"/>
+    <button class="btn btn-primary" name="brapi_home_studydbid_submit" id="brapi_home_studydbid_submit"><% __('Get Details') |h %></button>
     <br/><br/>
     <div id="brapi_studies_detail_result_div">
     </div>

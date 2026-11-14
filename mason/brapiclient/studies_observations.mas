@@ -3,16 +3,16 @@
 
 <div id="brapi_home_study_observations_div">
 
-    <h4>Study Observations</h4>
-    <input name="brapi_home_studyobservationsdbid" id="brapi_home_studyobservationsdbid" class="form-control" type="text" placeholder="StudyDbId e.g. 139" value="139"/>
-    <input name="brapi_home_studyobservationdbid1" id="brapi_home_studyobservationdbid1" class="form-control" type="text" placeholder="ObservationDbId e.g. 70741" value="70741"/>
-    <input name="brapi_home_studyobservationdbid2" id="brapi_home_studyobservationdbid2" class="form-control" type="text" placeholder="ObservationDbId e.g. 70666" value="70666"/>
+    <h4><% __('Study Observations') |h %></h4>
+    <input name="brapi_home_studyobservationsdbid" id="brapi_home_studyobservationsdbid" class="form-control" type="text" placeholder="<% __('StudyDbId e.g. 139') |h %>" value="139"/>
+    <input name="brapi_home_studyobservationdbid1" id="brapi_home_studyobservationdbid1" class="form-control" type="text" placeholder="<% __('ObservationDbId e.g. 70741') |h %>" value="70741"/>
+    <input name="brapi_home_studyobservationdbid2" id="brapi_home_studyobservationdbid2" class="form-control" type="text" placeholder="<% __('ObservationDbId e.g. 70666') |h %>" value="70666"/>
     <select name="brapi_home_studyobservations_level" id="brapi_home_studyobservations_level" class="form-control" />
-        <option value="all">All</option>
-        <option value="plot">Plot</option>
-        <option value="plant">Plant</option>
+        <option value="all"><% __('All') |h %></option>
+        <option value="plot"><% __('Plot') |h %></option>
+        <option value="plant"><% __('Plant') |h %></option>
     </select>
-    <button class="btn btn-primary" name="brapi_home_studyobservations_submit" id="brapi_home_studyobservations_submit">Get Observations</button>
+    <button class="btn btn-primary" name="brapi_home_studyobservations_submit" id="brapi_home_studyobservations_submit"><% __('Get Observations') |h %></button>
     <br/><br/>
     <div id="brapi_studyobservations_data_result_div">
     </div>

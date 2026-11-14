@@ -3,9 +3,9 @@
 
 <div id="brapi_home_study_layout_detail_div">
 
-    <h4>Study Layout</h4>
-    <input name="brapi_home_studylayoutdbid" id="brapi_home_studylayoutdbid" class="form-control" type="text" placeholder="StudyDbId e.g. 139" value="139"/>
-    <button class="btn btn-primary" name="brapi_home_studylayoutdbid_submit" id="brapi_home_studylayoutdbid_submit">Get Layout</button>
+    <h4><% __('Study Layout') |h %></h4>
+    <input name="brapi_home_studylayoutdbid" id="brapi_home_studylayoutdbid" class="form-control" type="text" placeholder="<% __('StudyDbId e.g. 139') |h %>" value="139"/>
+    <button class="btn btn-primary" name="brapi_home_studylayoutdbid_submit" id="brapi_home_studylayoutdbid_submit"><% __('Get Layout') |h %></button>
     <br/><br/>
     <div id="brapi_studylayout_data_result_div">
     </div>

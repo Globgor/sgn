@@ -3,9 +3,9 @@
 
 <div id="brapi_home_markerprofile_detail_div">
 
-    <h4>MarkerProfile Details</h4>
-    <input name="brapi_home_markerprofiledbid" id="brapi_home_markerprofiledbid" class="form-control" type="text" placeholder="MarkerProfileDbId e.g. 1622" value="1622"/>
-    <button class="btn btn-primary" name="brapi_home_markerprofiledbid_submit" id="brapi_home_markerprofiledbid_submit">Get Details</button>
+    <h4><% __('MarkerProfile Details') |h %></h4>
+    <input name="brapi_home_markerprofiledbid" id="brapi_home_markerprofiledbid" class="form-control" type="text" placeholder="<% __('MarkerProfileDbId e.g. 1622') |h %>" value="1622"/>
+    <button class="btn btn-primary" name="brapi_home_markerprofiledbid_submit" id="brapi_home_markerprofiledbid_submit"><% __('Get Details') |h %></button>
     <br/><br/>
     <div id="brapi_markerprofile_detail_div">
     </div>

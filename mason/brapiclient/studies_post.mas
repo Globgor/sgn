@@ -1,5 +1,5 @@
 
-<h3>BrAPI Study POST</h3>
+<h3><% __('BrAPI Study POST') |h %></h3>
 
 <script>
 
