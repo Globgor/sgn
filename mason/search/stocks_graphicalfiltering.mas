@@ -5,14 +5,14 @@
 
 <& /util/import_javascript.mas, classes => [ 'CXGN.List', 'd3.d3v4Min', 'brapi.BrAPI', 'brapi.GraphicalFilter' ] &>
 
-<&| /page/info_section.mas, id=>"stock_search_graphical_filter", title => 'Graphical Filter Accessions By Traits (Includes all Search Criteria From Above Search Form)', collapsible=>1, collapsed=>1&>
+<&| /page/info_section.mas, id=>"stock_search_graphical_filter", title => $m->interp->apply_escapes( __('Graphical Filter Accessions By Traits (Includes all Search Criteria From Above Search Form)'), 'h' ), collapsible=>1, collapsed=>1&>
 
 <div class="well well-sm">
 
 <div class="panel panel-default">
     <div class="panel-body">
         <div id="stock_search_graphical_filter_div" style="margin:1em">
-        [LOADING...]
+        <% __('[LOADING...]') |h %>
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@
 
 <br/>
 
-<&| /page/info_section.mas, title => 'Copy Filtered Accessions to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names in table to a new or exisiting list</i>'&>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Filtered Accessions to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names in table to a new or exisiting list</i>'&>
 <div style="text-align:right" id="graphical_filter_results_to_list_menu"></div>
 <div id="graphical_filter_result_names" style="display: none;"></div>
 </&>

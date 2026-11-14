@@ -120,3 +120,18 @@ msgstr "Інтервал:"
 
 msgid "Trial Type"
 msgstr "Тип досліду"
+
+msgid "Search Accessions and Plots"
+msgstr "Пошук зразків і ділянок"
+
+msgid "Advanced Search"
+msgstr "Розширений пошук"
+
+msgid "Type to Autocomplete"
+msgstr "Почніть вводити для підказки"
+
+msgid "Stock Name"
+msgstr "Назва зразка"
+
+msgid "Copy Filtered Accessions to a List"
+msgstr "Копіювати відібрані зразки до списку"

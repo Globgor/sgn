@@ -23,7 +23,7 @@
 
 <div class="container-fluid">
 
-<& /page/page_title.mas, title=>'Search Accessions and Plots' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Search Accessions and Plots'), 'h' ) &>
 
 
 <%perl>
@@ -57,34 +57,34 @@ my $breeding_programs_select = simple_selectbox_html(
 
 </%perl>
 
-<&| /page/info_section.mas, title => 'Search', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search'), 'h' ), collapsible=>1, collapsed=>0 &>
 
   <div id="stock_search_form" class="well well-sm">
 
-    <&| /page/info_section.mas, title => 'Name Search', collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Name Search'), 'h' ), collapsible=>1, collapsed=>0 &>
 
     <div class="row">
       <div class="col-sm-11">
         <div class="form-group form-group-sm">
-      	  <label class="col-sm-3 control-label">Stock Name or Description: </label>
+      	  <label class="col-sm-3 control-label"><% __('Stock Name or Description:') |h %> </label>
           <div class="col-sm-9" >
             <div class="form-group form-group-sm">
               <div class="input-group">
                 <span class="input-group-btn" width="20%">
                   <select class="form-control" id="any_name_matchtype" name="any_name_matchtype">
-                    <option title="starts_with" value="starts_with" selected="selected">starts with</option>
-                    <option title="contains" value="contains">contains</option>
-                    <option title="ends with" value="ends_with">ends with</option>
-                    <option title="exactly" value="exactly">exactly</option>
+                    <option title="starts_with" value="starts_with" selected="selected"><% __('starts with') |h %></option>
+                    <option title="contains" value="contains"><% __('contains') |h %></option>
+                    <option title="ends with" value="ends_with"><% __('ends with') |h %></option>
+                    <option title="exactly" value="exactly"><% __('exactly') |h %></option>
                   </select>
                 </span>
                   <span class="input-group-btn">
-                  <input class="form-control" name="any_name" id="any_name" value="" size="30" type="text" placeholder="Type search here..."/>
+                  <input class="form-control" name="any_name" id="any_name" value="" size="30" type="text" placeholder="<% __('Type search here...') |h %>"/>
                 </span>
               </div>
             </div>
             <div class="form-group form-group-sm">
-              <label class="col-sm-3 control-label">Stock Type: </label>
+              <label class="col-sm-3 control-label"><% __('Stock Type:') |h %> </label>
               <div class="col-sm-9" >
                 <% $stock_type_select %>
               </div>
@@ -95,13 +95,13 @@ my $breeding_programs_select = simple_selectbox_html(
     </div>
     </&>
 
-    <&| /page/info_section.mas, title => 'Advanced Search', collapsible=>1, collapsed=>1, id=>'advanced_search_panel' &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Advanced Search'), 'h' ), collapsible=>1, collapsed=>1, id=>'advanced_search_panel' &>
 
-    <&| /page/info_section.mas, title => 'Properties', collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Properties'), 'h' ), collapsible=>1, collapsed=>1 &>
 
     <div class="row">
       <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Organism:</label>
+        <label class="col-sm-4 control-label"><% __('Organism:') |h %></label>
         <div class="col-sm-8" >
           <% $organism_select %>
         </div>
@@ -112,9 +112,9 @@ my $breeding_programs_select = simple_selectbox_html(
 
     <div class="row">
       <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Organization:</label>
+        <label class="col-sm-4 control-label"><% __('Organization:') |h %></label>
         <div class="col-sm-8" >
-          <input type="text" class="form-control" id="organization" placeholder="Type to Autocomplete"/>
+          <input type="text" class="form-control" id="organization" placeholder="<% __('Type to Autocomplete') |h %>"/>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ my $breeding_programs_select = simple_selectbox_html(
 
     <div class="row">
       <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Search By Another Property:</label>
+        <label class="col-sm-4 control-label"><% __('Search By Another Property:') |h %></label>
         <div class="col-sm-8" >
           <div class="form-group">
             <div class="input-group">
@@ -135,7 +135,7 @@ my $breeding_programs_select = simple_selectbox_html(
                 </select>
               </span>
               <span class="input-group-btn">
-                <button class="btn btn-primary btn-sm" id="editable_stockprop_search_add">Add</button>
+                <button class="btn btn-primary btn-sm" id="editable_stockprop_search_add"><% __('Add') |h %></button>
               </span>
             </div>
           </div>
@@ -148,13 +148,13 @@ my $breeding_programs_select = simple_selectbox_html(
     <br /><hr /><br />
     <div class="row">
       <div class="form-group form-group-sm">
-        <label class="col-sm-4 control-label">Is Obsolete?:</label>
+        <label class="col-sm-4 control-label"><% __('Is Obsolete?:') |h %></label>
         <div class="col-sm-8" >
           <div class="form-group">
             <select class="form-control" id="obsolete_stock_search_term" name="obsolete_stock_search_term">
-              <option value="false" selected>Not Obsolete</option>
-              <option value="true">Is Obsolete</option>
-              <option value="include_obsolete">Include Obsolete</option>
+              <option value="false" selected><% __('Not Obsolete') |h %></option>
+              <option value="true"><% __('Is Obsolete') |h %></option>
+              <option value="include_obsolete"><% __('Include Obsolete') |h %></option>
             </select>
           </div>
         </div>
@@ -163,22 +163,22 @@ my $breeding_programs_select = simple_selectbox_html(
 % }
 
     </&>
-    <&| /page/info_section.mas, title => 'Usage', collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Usage'), 'h' ), collapsible=>1, collapsed=>1 &>
 
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Project Name: </label>
+          <label class="col-sm-3 control-label"><% __('Project Name:') |h %> </label>
           <div class="col-sm-9" >
-            <input type="text" class="form-control" id="project" placeholder="Type to Autocomplete"/>
+            <input type="text" class="form-control" id="project" placeholder="<% __('Type to Autocomplete') |h %>"/>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Project Location: </label>
+          <label class="col-sm-3 control-label"><% __('Project Location:') |h %> </label>
           <div class="col-sm-9" >
-            <input type="text" class="form-control" id="location" placeholder="Type to Autocomplete"/>
+            <input type="text" class="form-control" id="location" placeholder="<% __('Type to Autocomplete') |h %>"/>
           </div>
         </div>
       </div>
@@ -186,15 +186,15 @@ my $breeding_programs_select = simple_selectbox_html(
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Project Year: </label>
+          <label class="col-sm-3 control-label"><% __('Project Year:') |h %> </label>
           <div class="col-sm-9" >
-            <input type="text" class="form-control" id="year" placeholder="Type to Autocomplete"/>
+            <input type="text" class="form-control" id="year" placeholder="<% __('Type to Autocomplete') |h %>"/>
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Breeding Program: </label>
+          <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
           <div class="col-sm-9" >
             <% $breeding_programs_select %>
           </div>
@@ -203,20 +203,20 @@ my $breeding_programs_select = simple_selectbox_html(
     </div>
 
     </&>
-    <&| /page/info_section.mas, title => 'Phenotypes', collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Phenotypes'), 'h' ), collapsible=>1, collapsed=>1 &>
 
     <div class="row">
         <div class="col-sm-6">
           <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">Trait: </label>
+            <label class="col-sm-3 control-label"><% __('Trait:') |h %> </label>
             <div class="col-sm-9" >
-              <input type="text" class="form-control" id="trait" placeholder="Type to Autocomplete"/>
+              <input type="text" class="form-control" id="trait" placeholder="<% __('Type to Autocomplete') |h %>"/>
             </div>
           </div>
         </div>
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Minimum Trait Value: </label>
+          <label class="col-sm-3 control-label"><% __('Minimum Trait Value:') |h %> </label>
           <div class="col-sm-9" >
             <input type="text" class="form-control" id="minimum_trait_value" />
           </div>
@@ -226,7 +226,7 @@ my $breeding_programs_select = simple_selectbox_html(
       <div class="row">
       <div class="col-sm-6">
         <div class="form-group form-group-sm">
-          <label class="col-sm-3 control-label">Maximum Trait Value: </label>
+          <label class="col-sm-3 control-label"><% __('Maximum Trait Value:') |h %> </label>
           <div class="col-sm-9" >
             <input type="text" class="form-control" id="maximum_trait_value" />
           </div>
@@ -235,16 +235,16 @@ my $breeding_programs_select = simple_selectbox_html(
     </div>
     </&>
 
-    <&| /page/info_section.mas, title => 'Search Accessions Using Genotypes', collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search Accessions Using Genotypes'), 'h' ), collapsible=>1, collapsed=>1 &>
         <div class="row">
-            <a href="/search/stocks_using_genotypes"><p>Go to Search Accessions Using Genotypes Page.</p></a>
+            <a href="/search/stocks_using_genotypes"><p><% __('Go to Search Accessions Using Genotypes Page.') |h %></p></a>
         </div>
     </&>
 
     </&> <!-- closes advanced search -->
 
     <center>
-    <button class="btn btn-primary" id="submit_stock_search" />Search</button>
+    <button class="btn btn-primary" id="submit_stock_search" /><% __('Search') |h %></button>
     </center>
     <br/><br/>
   </div>
@@ -252,14 +252,14 @@ my $breeding_programs_select = simple_selectbox_html(
 
 <br />
 
-<&| /page/info_section.mas, title => 'Search Results', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search Results'), 'h' ), collapsible=>1, collapsed=>0 &>
 
 <div class="well well-sm">
 
     <div class="row">
       <div class="col-sm-11">
         <div class="form-group form-group-sm">
-          <label class="col-sm-4 control-label">View Another Property: </label>
+          <label class="col-sm-4 control-label"><% __('View Another Property:') |h %> </label>
           <div class="col-sm-8" >
             <div class="form-group">
               <div class="input-group">
@@ -271,7 +271,7 @@ my $breeding_programs_select = simple_selectbox_html(
                   </select>
                 </span>
                   <span class="input-group-btn">
-                    <button class="btn btn-primary btn-sm" id="editable_stockprop_view_column_add">Add</button>
+                    <button class="btn btn-primary btn-sm" id="editable_stockprop_view_column_add"><% __('Add') |h %></button>
                 </span>
               </div>
             </div>
@@ -286,12 +286,12 @@ my $breeding_programs_select = simple_selectbox_html(
                 <table id="stock_search_results" width="100%" class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <th>Stock Id</th>
-                    <th>Stock Name</th>
-                    <th>Stock Type</th>
-                    <th>Organism</th>
-                    <th>Synonyms</th>
-                    <th>Organization</th>
+                    <th><% __('Stock Id') |h %></th>
+                    <th><% __('Stock Name') |h %></th>
+                    <th><% __('Stock Type') |h %></th>
+                    <th><% __('Organism') |h %></th>
+                    <th><% __('Synonyms') |h %></th>
+                    <th><% __('Organization') |h %></th>
                 </tr>
                 </thead>
 
@@ -302,7 +302,7 @@ my $breeding_programs_select = simple_selectbox_html(
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title => 'Copy Results to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the stock names currently showing in the search results table to a new or exisiting list. Use "Show All entries" to capture all results.</i>'&>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the stock names currently showing in the search results table to a new or exisiting list. Use "Show All entries" to capture all results.</i>'&>
             <br>
             <div style="text-align:right" id="results_to_list_menu"></div>
             <div id="search_result_names" style="display: none;"></div>
@@ -314,7 +314,7 @@ my $breeding_programs_select = simple_selectbox_html(
 
 </&>
 
-<& /page/detail_page_2_col_section.mas, info_section_title => "<h4 style='display:inline'>Graphical Filtering on Phenotype Performance</h4>", info_section_subtitle => 'Graphically filter an accessions average performance for combinations of traits', icon_class => "glyphicon glyphicon-equalizer", info_section_id => "stocks_search_graphical_filtering" &>
+<& /page/detail_page_2_col_section.mas, info_section_title => "<h4 style='display:inline'>Graphical Filtering on Phenotype Performance</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Graphically filter an accessions average performance for combinations of traits'), 'h' ), icon_class => "glyphicon glyphicon-equalizer", info_section_id => "stocks_search_graphical_filtering" &>
 
 
 </div>
