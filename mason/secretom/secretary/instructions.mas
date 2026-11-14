@@ -5,8 +5,7 @@
 <div class="indented_content">
 
   <p>
-   <span class="secretary">SecreTary</span> is for prediction of signal peptides from the amino acid
-   sequence of a protein. Signal peptides generally possess a common
+   <& /util/sentence.mas, text => __x('{span}SecreTary{end_span} is for prediction of signal peptides from the amino acid sequence of a protein.'), span => '<span class="secretary">', end_span => '</span>' &> Signal peptides generally possess a common
    structural design, which is characterized by a short, positively
    charged n-region followed by a hydrophobic region (h-region) and a
    somewhat polar and uncharged cleavage site (c-region). It should be
@@ -14,9 +13,7 @@
    translocation of the signal peptides to the ER. To improve the
    performance of the signal peptide prediction, we have developed new
    parameters such as the overall hydrophobicity and amino acid
-   composition in the h-region as input. <span class="secretary">SecreTary</span> is mainly trained
-   and tested on the plant secretome that has been identified through
-   functional screens including a yeast secretion trap.
+   composition in the h-region as input. <& /util/sentence.mas, text => __x('{span}SecreTary{end_span} is mainly trained and tested on the plant secretome that has been identified through functional screens including a yeast secretion trap.'), span => '<span class="secretary">', end_span => '</span>' &>
   </p>
 
   <p>
@@ -30,10 +27,7 @@
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('1. Input Sequences'), 'h' ) &>
 
   <p>
-  The amino acid sequences can be input by pasting one or more
-  protein sequences, in <b>FASTA format</b> into the <span class="secretary">SecreTary</span> input
-  page. <span class="secretary">SecreTary</span> analyses proteins at a rate of approximate
-  80/second. At present there is a limit of 10000 sequences. All the
+  <& /util/sentence.mas, text => __x('The amino acid sequences can be input by pasting one or more protein sequences, in {bold}FASTA format{end_bold} into the {span}SecreTary{end_span} input page.'), bold => '<b>', end_bold => '</b>', span => '<span class="secretary">', end_span => '</span>' &> <& /util/sentence.mas, text => __x('{span}SecreTary{end_span} analyses proteins at a rate of approximate 80/second.'), span => '<span class="secretary">', end_span => '</span>' &> At present there is a limit of 10000 sequences. All the
   input sequences must be in one-letter amino acid code, not case-sensitive.
   All letters of the alphabet are accepted, but <b>B J O U </b> and <b>Z</b>
   are replaced by <b>X</b> before analysis.
@@ -53,10 +47,7 @@
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('2. Submission'), 'h' ) &>
 
-  Paste the sequence(s) into the window, or click browse to select a 
-  fasta file on your disk for analysis. Then, click on the "Submit" 
-  button. Expect to wait about 10-15 seconds to see the results of
-  analyzing 1000 sequences.
+  <& /util/sentence.mas, text => __x('Paste the sequence(s) into the window, or click browse to select a fasta file on your disk for analysis. Then, click on the "Submit" button. Expect to wait about 10-15 seconds to see the results of analyzing 1000 sequences.') &>
 
 </&>
 
@@ -68,8 +59,7 @@
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('3. Output'), 'h' ) &>
 
   <p>
-  For each sequence <span class="secretary">SecreTary</span> gives a score; sequences with scores
-  greater than or equal to 0.75 are predicted to have a signal peptide. 
+  <& /util/sentence.mas, text => __x('For each sequence {span}SecreTary{end_span} gives a score; sequences with scores greater than or equal to 0.75 are predicted to have a signal peptide.'), span => '<span class="secretary">', end_span => '</span>' &> 
   For each predicted signal peptide the 
   predicted length is shown, and the location of the hydrophobic
   region (in 
@@ -108,4 +98,4 @@ AT1G44090.1      NO     0         -       MCIYASRQTVCPYLTPFKVKRPKSREMNSSDVNFSLLQ
   Please contact: <a href="mailto:sgn-feedback@sgn.cornell.edu">sgn-feedback@sgn.cornell.edu</a>.
 </&>
 
-<a href="/secretom/secretary">Return to <span class="secretary">SecreTary</span> input</a>
+<a href="/secretom/secretary"><& /util/sentence.mas, text => __x('Return to {span}SecreTary{end_span} input'), span => '<span class="secretary">', end_span => '</span>' &></a>
