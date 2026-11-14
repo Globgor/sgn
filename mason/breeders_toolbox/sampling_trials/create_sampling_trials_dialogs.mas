@@ -158,19 +158,19 @@ $sample_tissue_types => ();
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Sample Concentration (ng/ul): <small>(If you used the same conc for all samples)</small></label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Sample Concentration (ng/ul): {small}(If you used the same conc for all samples){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &></label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_concentration" name="sampling_trial_concentration" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Sampling Volume (ul): <small>(If you used the same vol for all samples)</small></label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Sampling Volume (ul): {small}(If you used the same vol for all samples){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &></label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_volume" name="sampling_well_volume" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Tissue: <small>(If used the same tissue for all samples)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Tissue: {small}(If used the same tissue for all samples){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <select class="form-control" id="sampling_trial_tissue">
 % foreach my $tissue_type(@$sample_tissue_types){
@@ -180,19 +180,19 @@ $sample_tissue_types => ();
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> NCBI Taxonomy ID: <small>(Official NCBI ID.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} NCBI Taxonomy ID: {small}(Official NCBI ID.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_ncbi_taxonomy_id" name="sampling_trial_ncbi_taxonomy_id" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Extraction: <small>(If used the same extraction for all samples)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Extraction: {small}(If used the same extraction for all samples){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_extraction" name="sampling_trial_extraction" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Person: <small>(If same person prepared all samples.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Person: {small}(If same person prepared all samples.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_person" name="sampling_trial_person" type="text" />
                                         </div>
@@ -204,7 +204,7 @@ $sample_tissue_types => ();
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-7 control-label"><i>Optional</i> Notes: <small>(Additional notes for these samples.)</small> </label>
+                                        <label class="col-sm-7 control-label"><& /util/sentence.mas, text => __x('{i}Optional{end_i} Notes: {small}(Additional notes for these samples.){end_small}'), i => '<i>', end_i => '</i>', small => '<small>', end_small => '</small>' &> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_notes" name="sampling_trial_notes" type="text" />
                                         </div>
