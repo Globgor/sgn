@@ -10,17 +10,17 @@ $id_extension => ''
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Number of Rows: </label>
+                                <label class="col-sm-6 control-label"><% __('Number of Rows:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_plot_polygons_num_rows<% $id_extension %>" name="drone_imagery_plot_polygons_num_rows<% $id_extension %>" type="number" placeholder="Number of rows in image section" />
+                                    <input class="form-control" id="drone_imagery_plot_polygons_num_rows<% $id_extension %>" name="drone_imagery_plot_polygons_num_rows<% $id_extension %>" type="number" placeholder="<% __('Number of rows in image section') |h %>" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-6 control-label">Number of Columns: </label>
+                                <label class="col-sm-6 control-label"><% __('Number of Columns:') |h %> </label>
                                 <div class="col-sm-6">
-                                    <input class="form-control" id="drone_imagery_plot_polygons_num_cols<% $id_extension %>" name="drone_imagery_plot_polygons_num_cols<% $id_extension %>" type="number" placeholder="Number of columns in image section"/>
+                                    <input class="form-control" id="drone_imagery_plot_polygons_num_cols<% $id_extension %>" name="drone_imagery_plot_polygons_num_cols<% $id_extension %>" type="number" placeholder="<% __('Number of columns in image section') |h %>"/>
                                 </div>
                             </div>
                         </div>
@@ -35,23 +35,23 @@ $id_extension => ''
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4> Either click the four corners of the area of interest: </h4>
+                    <h4> <% __('Either click the four corners of the area of interest:') |h %> </h4>
 
-                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_top_left_click<% $id_extension %>">Click Top Left Corner</button>
-                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_top_right_click<% $id_extension %>">Click Top Right Corner</button>
-                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_bottom_left_click<% $id_extension %>">Click Bottom Left Corner</button>
-                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_bottom_right_click<% $id_extension %>">Click Bottom Right Corner</button>
+                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_top_left_click<% $id_extension %>"><% __('Click Top Left Corner') |h %></button>
+                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_top_right_click<% $id_extension %>"><% __('Click Top Right Corner') |h %></button>
+                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_bottom_left_click<% $id_extension %>"><% __('Click Bottom Left Corner') |h %></button>
+                    <button class="btn btn-sm btn-info" id="drone_imagery_plot_polygons_bottom_right_click<% $id_extension %>"><% __('Click Bottom Right Corner') |h %></button>
                 </div>
             </div>
             <hr>
         
-            <&| /page/info_section.mas, title => 'Template Parameters', collapsible=>1, collapsed => 1, subtitle=> 'View and edit template parameters. These parameters can be filled using the above button clicks' &>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Template Parameters'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('View and edit template parameters. These parameters can be filled using the above button clicks'), 'h' ) &>
                 <div class="well well-sm">
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Left-most Column Top Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Left-most Column Top Margin:') |h %> </label>
                                     <div class="col-sm-6">
                                         <input class="form-control" id="drone_imagery_plot_polygons_left_column_top_offset<% $id_extension %>" name="drone_imagery_plot_polygons_left_column_top_offset<% $id_extension %>" type="number" value="0"/>
                                     </div>
@@ -59,7 +59,7 @@ $id_extension => ''
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Left-most Column Bottom Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Left-most Column Bottom Margin:') |h %> </label>
                                     <div class="col-sm-6">
                                         <input class="form-control" id="drone_imagery_plot_polygons_left_column_bottom_offset<% $id_extension %>" name="drone_imagery_plot_polygons_left_column_bottom_offset<% $id_extension %>" type="number" value="0"/>
                                     </div>
@@ -69,17 +69,17 @@ $id_extension => ''
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Top-most Row Left Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Top-most Row Left Margin:') |h %> </label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" id="drone_imagery_plot_polygons_top_row_left_offset<% $id_extension %>" name="drone_imagery_plot_polygons_top_row_left_offset<% $id_extension %>" type="number" placeholder="Left offset of image section" value="0" />
+                                        <input class="form-control" id="drone_imagery_plot_polygons_top_row_left_offset<% $id_extension %>" name="drone_imagery_plot_polygons_top_row_left_offset<% $id_extension %>" type="number" placeholder="<% __('Left offset of image section') |h %>" value="0" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Top-most Row Right Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Top-most Row Right Margin:') |h %> </label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" id="drone_imagery_plot_polygons_top_row_right_offset<% $id_extension %>" name="drone_imagery_plot_polygons_top_row_right_offset<% $id_extension %>" type="number" placeholder="Left offset of image section" value="0" />
+                                        <input class="form-control" id="drone_imagery_plot_polygons_top_row_right_offset<% $id_extension %>" name="drone_imagery_plot_polygons_top_row_right_offset<% $id_extension %>" type="number" placeholder="<% __('Left offset of image section') |h %>" value="0" />
                                     </div>
                                 </div>
                             </div>
@@ -87,17 +87,17 @@ $id_extension => ''
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Bottom-most Row Left Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Bottom-most Row Left Margin:') |h %> </label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" id="drone_imagery_plot_polygons_bottom_row_left_offset<% $id_extension %>" name="drone_imagery_plot_polygons_bottom_row_left_offset<% $id_extension %>" type="number" placeholder="Left offset of image section" value="0" />
+                                        <input class="form-control" id="drone_imagery_plot_polygons_bottom_row_left_offset<% $id_extension %>" name="drone_imagery_plot_polygons_bottom_row_left_offset<% $id_extension %>" type="number" placeholder="<% __('Left offset of image section') |h %>" value="0" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Right-most Column Bottom Margin: </label>
+                                    <label class="col-sm-6 control-label"><% __('Right-most Column Bottom Margin:') |h %> </label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" id="drone_imagery_plot_polygons_right_col_bottom_offset<% $id_extension %>" name="drone_imagery_plot_polygons_right_col_bottom_offset<% $id_extension %>" type="number" placeholder="Right-most column bottom offset" value="0" />
+                                        <input class="form-control" id="drone_imagery_plot_polygons_right_col_bottom_offset<% $id_extension %>" name="drone_imagery_plot_polygons_right_col_bottom_offset<% $id_extension %>" type="number" placeholder="<% __('Right-most column bottom offset') |h %>" value="0" />
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@ $id_extension => ''
             </&>
 
             <br/>
-            <button class="btn btn-sm btn-primary" id="drone_imagery_plot_polygons_rectangles_apply<% $id_extension %>">Draw Plot Polygon Template (Does not save. Apply multiple templates if needed.)</button>
+            <button class="btn btn-sm btn-primary" id="drone_imagery_plot_polygons_rectangles_apply<% $id_extension %>"><% __('Draw Plot Polygon Template (Does not save. Apply multiple templates if needed.)') |h %></button>
 
         </div>
     </div>
@@ -117,17 +117,17 @@ $id_extension => ''
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4> Or paste a previously used template: </h4>
+                    <h4> <% __('Or paste a previously used template:') |h %> </h4>
                 </div>
             </div>
 
-            <&| /page/info_section.mas, title => 'Previously Used Plot Polygon Templates', collapsible=>1, collapsed => 1, subtitle=> 'View and use previous plot polygon templates used on this field trial' &>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Previously Used Plot Polygon Templates'), 'h' ), collapsible=>1, collapsed => 1, subtitle=> $m->interp->apply_escapes( __('View and use previous plot polygon templates used on this field trial'), 'h' ) &>
                 <div class="well well-sm">
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-6 control-label">Previously Used Plot Polygon Templates For This Field Trial: </label>
+                                    <label class="col-sm-6 control-label"><% __('Previously Used Plot Polygon Templates For This Field Trial:') |h %> </label>
                                     <div class="col-sm-6">
                                         <div id="plot_polygons_previously_saved_plot_polygon_templates<% $id_extension %>">
                                         </div>
@@ -136,7 +136,7 @@ $id_extension => ''
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-primary" id="plot_polygons_use_previously_saved_template<% $id_extension %>">Draw Plot Polygon Template (Does not save)</button>
+                    <button class="btn btn-primary" id="plot_polygons_use_previously_saved_template<% $id_extension %>"><% __('Draw Plot Polygon Template (Does not save)') |h %></button>
                 </div>
             </&>
         </div>
