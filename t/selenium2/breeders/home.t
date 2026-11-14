@@ -10,10 +10,8 @@ use SGN::Test::WWW::WebDriver;
 my $t = SGN::Test::WWW::WebDriver->new();
 
 $t->while_logged_in_as("submitter", sub { 
-    sleep(1);
     
     $t->get_ok("/breeders/home");
-    sleep(3);
 
     $t->find_element_ok('//a[contains(@href, "/breeders/manage_programs")]', 'xpath', 'find on breeder home page link to breeding programs');
     $t->find_element_ok('//a[contains(@href, "/breeders/accessions")]', 'xpath', 'find on breeder home page link to breeding programs');
