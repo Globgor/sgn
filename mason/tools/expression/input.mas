@@ -22,20 +22,20 @@
 
 <& /util/import_javascript.mas, classes => ['Text.Markup', 'sprintf', 'jquery', 'jqueryui', 'CXGN.List'] &>
 
-<& /page/page_title.mas, title=>"Expression Tool" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Expression Tool"), 'h' ) &>
 
 
 
-<&| /page/info_section.mas, id=>"expr_input" , title=>"Run Expression Tool", collapsible => 1, collapsed => 0  &>
+<&| /page/info_section.mas, id=>"expr_input" , title=>$m->interp->apply_escapes( __("Run Expression Tool"), 'h' ), collapsible => 1, collapsed => 0  &>
 <center>
 
 <div id="status_wheel" style="display:none"><img src="/static/documents/img/wheel.gif" /></div>
 <br />
 
-<span title="query gene">Select a gene:</span> 
+<span title="<% __('query gene') |h %>"><% __('Select a gene:') |h %></span> 
 <input class="input" id="gene" type="input" value="Solyc04g014530.1" name="input_gene" size="15" />&nbsp; &nbsp; &nbsp;
 
-<button class="input" id="run_tool" value="Run Expression Tool">Get Expression</button>
+<button class="input" id="run_tool" value="Run Expression Tool"><% __('Get Expression') |h %></button>
 
 <br />
 <br />
@@ -43,7 +43,7 @@
 </center>
 
 
-<&| /page/info_section.mas, id=>"expression_usage" , title=>"Usage", collapsible => 1, collapsed => 0, is_subsection=>"1"  &>
+<&| /page/info_section.mas, id=>"expression_usage" , title=>$m->interp->apply_escapes( __("Usage"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1"  &>
   <div id="usage_view">
     <p>
         1. Select a <b>Gene name</b> an push the 'Get Expression' button to see its expression in the different tissues of the plant<br />
@@ -59,23 +59,23 @@
 <!-- ##################################################################################### -->
 
 
-<&| /page/info_section.mas, title=>"Results", collapsible => 1, collapsed => 0  &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Results"), 'h' ), collapsible => 1, collapsed => 0  &>
 
 <div id="hide_results" style="display:none;">
 
-<&| /page/info_section.mas, title=>"Experiment Info", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Experiment Info"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
     <p id="exp_title"></p>
     <p id="exp_dbxref"></p>
     <p id="exp_pub"></p>
 </&>
 
 
-<&| /page/info_section.mas, title=>"Experiment Map", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Experiment Map"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
 <div id="my_stage"></div>
 </&>
 
-<&| /page/info_section.mas, title=>"Interactive Control Panel", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
-    Choose a experiment:&nbsp; &nbsp; 
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Interactive Control Panel"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+    <% __('Choose a experiment:') |h %>&nbsp; &nbsp; 
 	<select id="exp_list">
 		<option>BTI Slyc RNA-Seq</option>
 		<option>Other experiment</option>
@@ -84,7 +84,7 @@
 </&>
 
 
-<&| /page/info_section.mas, title=>"Bar Graph", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Bar Graph"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
 	<!-- <div id="chart_margins" style="width: 700px; height: 400px;">
 		<center> -->
 			<div id="bar_graph" style="width: 700px; height: 400px;"></div>
@@ -93,11 +93,11 @@
 </&>
 
 
-<&| /page/info_section.mas, title=>"Experiment Expression Data", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Experiment Expression Data"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
     <table id="exp_table" cellpadding="2" cellspacing="2" width="100%"></table>
 </&>
 
-<&| /page/info_section.mas, title=>"Experiment Sample Info", collapsible => 1, collapsed => 0, is_subsection=>"1" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Experiment Sample Info"), 'h' ), collapsible => 1, collapsed => 0, is_subsection=>"1" &>
 	<table id="exp_info_table" cellpadding="2" cellspacing="2" width="100%"></table>
 	<br/>
 </&>
