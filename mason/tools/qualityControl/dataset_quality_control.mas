@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
 
-<& /page/page_title.mas, title=>"Quality Control" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Quality Control"), 'h' ) &>
 
 
 <div id="qualitycontrol_tool">
@@ -78,13 +78,13 @@
     <div class="col-md-12">
       <div class="container-fluid">
         <&| /util/workflow.mas, id=> "quality_control_analysis_workflow" &>
-          <&| /util/workflow.mas:step, title=> "Choose Dataset" &>
-            <& /page/page_title.mas, title=>"Choose the dataset for QC" &>
+          <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Choose Dataset"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Choose the dataset for QC"), 'h' ) &>
         <span style="width:240px" id="qc_dataset_select">
         </span>
         <div>
           <div style="float:right">
-            <button class="btn btn-main" id="qc_analysis_prepare_button"   onclick="Workflow.complete(this);">Choose Dataset and continue</button>
+            <button class="btn btn-main" id="qc_analysis_prepare_button"   onclick="Workflow.complete(this);"><% __('Choose Dataset and continue') |h %></button>
           </div>
         </div>
         <br />
@@ -93,12 +93,12 @@
         </&>
 
 
-        <&| /util/workflow.mas:step, title=> "Select Trait" &>
-        <& /page/page_title.mas, title=>"Select a Trait for QC" &>
+        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select Trait"), 'h' ) &>
+        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a Trait for QC"), 'h' ) &>
 
         <!-- Existing checkboxes (dynamic options) -->
         <div id="selected_variable" style="margin-bottom:50px">
-          <label for="trait_select">Select Trait:</label>
+          <label for="trait_select"><% __('Select Trait:') |h %></label>
           <select id="trait_select" name="trait_select" class="form-control">
               <option disabled selected value>Select a trait</option>
           </select>
@@ -110,7 +110,7 @@
         </div>
 
         <div class="col-md-12 well" style="margin-top: 10px;">  
-            <h3>Outliers Range</h3>   
+            <h3><% __('Outliers Range') |h %></h3>   
             <div class="col-md-8">
                 <div id="outliers_range">
                     <div id="custom-handle" class="ui-slider-handle"></div>
@@ -121,20 +121,20 @@
         <hr style="border: 1px solid gray; margin: 20px 0;">
         <div class="col-md-12 collapsible">
             <div class="content">
-                <h4><b>Selecting this box, it will set fixed minimum and maximum for all locations.</b></h4>
+                <h4><b><% __('Selecting this box, it will set fixed minimum and maximum for all locations.') |h %></b></h4>
                 <br>
                 <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                    <label for="min-limit">Minimum limit:</label>
-                    <input type="number" id="min-limit" name="min-limit" placeholder="Enter minimum" class="form-control" style="width: auto;">
+                    <label for="min-limit"><% __('Minimum limit:') |h %></label>
+                    <input type="number" id="min-limit" name="min-limit" placeholder="<% __('Enter minimum') |h %>" class="form-control" style="width: auto;">
 
-                    <label for="max-limit">Maximum limit:</label>
-                    <input type="number" id="max-limit" name="max-limit" placeholder="Enter maximum" class="form-control" style="width: auto;">
+                    <label for="max-limit"><% __('Maximum limit:') |h %></label>
+                    <input type="number" id="max-limit" name="max-limit" placeholder="<% __('Enter maximum') |h %>" class="form-control" style="width: auto;">
                 </div>
                 <br>
                 <br>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <button id="fixed-min-max" style="margin-right: 5px;">
-                        Select Fixed Min and Max
+                        <% __('Select Fixed Min and Max') |h %>
                     </button>
                 </div>
             </div>
@@ -144,18 +144,18 @@
         <hr style="border: 1px solid gray; margin: 20px 0;">
 
         <div id="outlier_table_container">
-            <h3>Raw Data Available</h3>
+            <h3><% __('Raw Data Available') |h %></h3>
             <table id="outlier_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Location ID</th>
-                        <th>Location Name</th>
-                        <th>Trial Name</th>
-                        <th>Min</th>
-                        <th>Max</th>
-                        <th>Mean</th>
-                        <th>SD</th>
-                        <th>CV</th>
+                        <th><% __('Location ID') |h %></th>
+                        <th><% __('Location Name') |h %></th>
+                        <th><% __('Trial Name') |h %></th>
+                        <th><% __('Min') |h %></th>
+                        <th><% __('Max') |h %></th>
+                        <th><% __('Mean') |h %></th>
+                        <th><% __('SD') |h %></th>
+                        <th><% __('CV') |h %></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -163,18 +163,18 @@
         </div>
 
         <div id="cleaned_table_container">
-        <h3>Data After Filtering</h3>
+        <h3><% __('Data After Filtering') |h %></h3>
         <table id="clean_table" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Location ID</th>
-                    <th>Location Name</th>
-                    <th>Trial Name</th>
-                    <th>Min</th>
-                    <th>Max</th>
-                    <th>Mean</th>
-                    <th>SD</th>
-                    <th>CV</th>
+                    <th><% __('Location ID') |h %></th>
+                    <th><% __('Location Name') |h %></th>
+                    <th><% __('Trial Name') |h %></th>
+                    <th><% __('Min') |h %></th>
+                    <th><% __('Max') |h %></th>
+                    <th><% __('Mean') |h %></th>
+                    <th><% __('SD') |h %></th>
+                    <th><% __('CV') |h %></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -182,38 +182,38 @@
         <br>
         </div>
         <div style="float:right">
-            <button class="btn btn-main" id="qc_choose_variable"  onclick="Workflow.complete(this);">Next step</button>
+            <button class="btn btn-main" id="qc_choose_variable"  onclick="Workflow.complete(this);"><% __('Next step') |h %></button>
         </div>
       </&>
 
-      <&| /util/workflow.mas:step, title=> "Other Traits as Outlier" &>
-        <& /page/page_title.mas, title=>"Set Plot as Outlier for Other Traits" &>
+      <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Other Traits as Outlier"), 'h' ) &>
+        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Set Plot as Outlier for Other Traits"), 'h' ) &>
 
       <div style="text-align: center;">
-          <p>This is an option to set selected plots as outliers for other traits as well.</p>
+          <p><% __('This is an option to set selected plots as outliers for other traits as well.') |h %></p>
           <p>Clicking on <b>'Select Other Traits'</b> you will see available traits in your dataset.</p>
           <p>If you want to ignore this step, please click on <b>'Next step'</b> button.</p>
-          <button id="select_traits_button">Select Other Traits</button>
+          <button id="select_traits_button"><% __('Select Other Traits') |h %></button>
           <div id="other_traits" style="margin-top: 20px; margin-bottom: 50px;">
               <!-- Dynamically populated checkboxes will appear here -->
           </div>
           <br>
       </div>
       <div style="float:right">
-          <button class="btn btn-main" id="qc_other_traits"  onclick="Workflow.complete(this);">Next step</button>
+          <button class="btn btn-main" id="qc_other_traits"  onclick="Workflow.complete(this);"><% __('Next step') |h %></button>
       </div>
 
       </&>
 
-      <&| /util/workflow.mas:step, title=> "Save Outliers" &>
-        <& /page/page_title.mas, title=>"Save Outliers" &>
+      <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Save Outliers"), 'h' ) &>
+        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Save Outliers"), 'h' ) &>
       <div>
         <div style="text-align: center;">
-          <p>This is the validation process. Trials cleaned of outliers can be used in downstream analysis.</p>
+          <p><% __('This is the validation process. Trials cleaned of outliers can be used in downstream analysis.') |h %></p>
           <p>To validate a dataset you will need privilieges as <b>CURATOR</b> or <b>BREEDER</b>.</p>
           <p>Only <b>CURATORS</b> are allowed to restore the dataset to original values.</p>
-          <button class="btn btn-main" id="restore_outliers_button"   onclick="Workflow.complete(this);">Restore</button>
-          <button class="btn btn-main" id="store_outliers_button"   onclick="Workflow.complete(this);">Validate</button>
+          <button class="btn btn-main" id="restore_outliers_button"   onclick="Workflow.complete(this);"><% __('Restore') |h %></button>
+          <button class="btn btn-main" id="store_outliers_button"   onclick="Workflow.complete(this);"><% __('Validate') |h %></button>
         </div>
       </&>
         <div id="tempfile" style="display:none"></div>
