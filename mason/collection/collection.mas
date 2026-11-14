@@ -27,56 +27,56 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
 <&| /page/info_section.mas, title => "About $type_label Collections", collapsible => 1, collapsed => 0 &>
     <div class="well well-sm">
 % if ($collection_type eq 'image') {
-        Image collections are a way to group images in a folder-like structure. You can create collections with multiple images from the same or different trials. Collections can be created with custom names, and can be associated with breeding programs.
+        <% __('Image collections are a way to group images in a folder-like structure. You can create collections with multiple images from the same or different trials. Collections can be created with custom names, and can be associated with breeding programs.') |h %>
 % } elsif ($collection_type eq 'file') {
-        File collections are a way to group images in a folder-like structure. You can create collections with multiple files from the same or different trials. Collections can be created with custom names, and can be associated with breeding programs.
+        <% __('File collections are a way to group images in a folder-like structure. You can create collections with multiple files from the same or different trials. Collections can be created with custom names, and can be associated with breeding programs.') |h %>
 % }
     </div>
 </&>
 
-<&| /page/info_section.mas, title=>"Browse $type_label Collections by Breeding Program",  collapsible => 1, collapsed=>0, subtitle => "Collections grouped by breeding program, then project. Double click a collection to open it."&>
+<&| /page/info_section.mas, title=>"Browse $type_label Collections by Breeding Program",  collapsible => 1, collapsed=>0, subtitle => $m->interp->apply_escapes( __("Collections grouped by breeding program, then project. Double click a collection to open it."), 'h' )&>
     <& /collection/collections_tree.mas, collection_type => $collection_type, instance_id => 'collections_tree_main' &>
 </&>
 
-<&| /page/info_section.mas, title=>"$type_label Collection Search Criteria",  collapsible => 1, collapsed=>0, subtitle => "Search collections by name, description, creator, or associated project."&>
+<&| /page/info_section.mas, title=>"$type_label Collection Search Criteria",  collapsible => 1, collapsed=>0, subtitle => $m->interp->apply_escapes( __("Search collections by name, description, creator, or associated project."), 'h' )&>
 
     <div id="collection_search_form" class="well well-sm">
         <div class="form-horizontal" >
             <div class="form-group">
-                <label class="col-sm-6 control-label">Collection name: </label>
+                <label class="col-sm-6 control-label"><% __('Collection name:') |h %> </label>
                 <div class="col-sm-6" >
-                    <input class="form-control" type="text" id="collection_name" name="collection_name" placeholder="e.g. Field Photos 2026" />
+                    <input class="form-control" type="text" id="collection_name" name="collection_name" placeholder="<% __('e.g. Field Photos 2026') |h %>" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Collection description: </label>
+                <label class="col-sm-6 control-label"><% __('Collection description:') |h %> </label>
                 <div class="col-sm-6" >
-                    <input class="form-control" type="text" id="collection_description" name="collection_description" placeholder="e.g. Gels from June extraction" />
+                    <input class="form-control" type="text" id="collection_description" name="collection_description" placeholder="<% __('e.g. Gels from June extraction') |h %>" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-6 control-label">Creator: </label>
+                <label class="col-sm-6 control-label"><% __('Creator:') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="collection_creator" name="collection_creator" placeholder="e.g. JaneDoe" />
                 </div>
             </div>
 % if ($collection_type eq 'image') {
             <div class="form-group">
-                <label class="col-sm-6 control-label">Contains image (name or filename): </label>
+                <label class="col-sm-6 control-label"><% __('Contains image (name or filename):') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="collection_image_name" name="collection_image_name" placeholder="e.g. gel_03.jpg" />
                 </div>
             </div>
 % } else {
             <div class="form-group">
-                <label class="col-sm-6 control-label">Contains file (name or comment): </label>
+                <label class="col-sm-6 control-label"><% __('Contains file (name or comment):') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="collection_file_name" name="collection_file_name" placeholder="e.g. phenotype_2026.xls" />
                 </div>
             </div>
 % }
             <div class="form-group">
-                <label class="col-sm-6 control-label">Associated project: </label>
+                <label class="col-sm-6 control-label"><% __('Associated project:') |h %> </label>
                 <div class="col-sm-6" >
                     <input class="form-control" type="text" id="collection_project_name" name="collection_project_name" placeholder="e.g. DroneProject 01/01/2019" />
                 </div>
@@ -85,14 +85,14 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                 <label class="col-sm-6 control-label">&nbsp;</label>
                 <div class="col-sm-6" >
                     <label style="font-weight:normal;">
-                        <input type="checkbox" id="collection_mine_only" /> Show only my collections
+                        <input type="checkbox" id="collection_mine_only" /> <% __('Show only my collections') |h %>
                     </label>
                 </div>
             </div>
         </div>
 
         <center>
-        <button class="btn btn-primary" id="collection_search_submit" >Search</button>
+        <button class="btn btn-primary" id="collection_search_submit" ><% __('Search') |h %></button>
         </center>
     </div>
 </&>
@@ -105,12 +105,12 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                 <table id="collections_search_results" class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Owner</th>
-                    <th>Associated Project</th>
+                    <th><% __('Name') |h %></th>
+                    <th><% __('Description') |h %></th>
+                    <th><% __('Owner') |h %></th>
+                    <th><% __('Associated Project') |h %></th>
                     <th><% $type_label %>s</th>
-                    <th>Created</th>
+                    <th><% __('Created') |h %></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -121,7 +121,7 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
 </&>
 
 % if ($collection_type eq 'file') {
-<&| /page/info_section.mas, title=>"Files",  collapsible => 1, collapsed=>0, subtitle => "Search files and add them to a file collection."&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Files"), 'h' ),  collapsible => 1, collapsed=>0, subtitle => $m->interp->apply_escapes( __("Search files and add them to a file collection."), 'h' )&>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -130,19 +130,19 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                     <div class="col-sm-8">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">File name or comment: </label>
+                                <label class="col-sm-4 control-label"><% __('File name or comment:') |h %> </label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="file_search_term" placeholder="e.g. phenotype_2026.xls" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">File type: </label>
+                                <label class="col-sm-4 control-label"><% __('File type:') |h %> </label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="file_search_type" placeholder="e.g. trial_additional_file_upload" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Uploader: </label>
+                                <label class="col-sm-4 control-label"><% __('Uploader:') |h %> </label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="file_search_uploader" placeholder="e.g. JaneDoe" />
                                 </div>
@@ -151,7 +151,7 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                     </div>
                     <div class="col-sm-4">
                         <center>
-                            <button class="btn btn-primary" id="file_search_submit">Search Files</button>
+                            <button class="btn btn-primary" id="file_search_submit"><% __('Search Files') |h %></button>
                         </center>
                     </div>
                 </div>
@@ -162,7 +162,7 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                         Add Selected Files to Collection (<span id="file_selected_count">0</span>)
                     </button>
                     <button class="btn btn-default btn-sm" id="file_clear_selection_button" style="margin-left:6px;">
-                        Clear Selection
+                        <% __('Clear Selection') |h %>
                     </button>
                 </div>
 
@@ -170,11 +170,11 @@ my $type_label = $collection_type eq 'file' ? 'File' : 'Image';
                     <thead>
                       <tr>
                         <th><input type="checkbox" id="file_select_all" /></th>
-                        <th>File Name</th>
-                        <th>Type</th>
-                        <th>Comment</th>
-                        <th>Uploader</th>
-                        <th>Added</th>
+                        <th><% __('File Name') |h %></th>
+                        <th><% __('Type') |h %></th>
+                        <th><% __('Comment') |h %></th>
+                        <th><% __('Uploader') |h %></th>
+                        <th><% __('Added') |h %></th>
                       </tr>
                     </thead>
                 </table>

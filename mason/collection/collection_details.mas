@@ -17,22 +17,22 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
 
 <& /page/page_title.mas, title => "Collection: " . $collection_name &>
 
-<&| /page/info_section.mas, title => "Collection Details", collapsible => 1, collapsed => 0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Collection Details"), 'h' ), collapsible => 1, collapsed => 0 &>
   <table class="table table-bordered table-condensed">
     <tr>
-      <td style="width:25%;"><b>Name</b></td>
+      <td style="width:25%;"><b><% __('Name') |h %></b></td>
       <td><span id="collection_name_display"><% $collection_name | h %></span></td>
     </tr>
     <tr>
-      <td><b>Description</b></td>
+      <td><b><% __('Description') |h %></b></td>
       <td><span id="collection_description_display"><% ($description || '') | h %></span></td>
     </tr>
     <tr>
-      <td><b>Created by</b></td>
+      <td><b><% __('Created by') |h %></b></td>
       <td><% ($owner_username || '—') | h %></td>
     </tr>
     <tr>
-      <td><b>Breeding program</b></td>
+      <td><b><% __('Breeding program') |h %></b></td>
       <td>
         <span id="collection_breeding_program_display">
 % if ($breeding_program) {
@@ -42,21 +42,21 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
 % }
         </span>
 % if ($user_can_modify) {
-        <button class="btn btn-link btn-xs" id="change_breeding_program_button">Change</button>
+        <button class="btn btn-link btn-xs" id="change_breeding_program_button"><% __('Change') |h %></button>
 % }
       </td>
     </tr>
 % if ($collection_type) {
     <tr>
-      <td><b>Type</b></td>
+      <td><b><% __('Type') |h %></b></td>
       <td><% $collection_type | h %></td>
     </tr>
 % }
   </table>
 
 % if ($user_can_modify) {
-  <button class="btn btn-default btn-sm" id="rename_collection_button">Rename collection</button>
-  <button class="btn btn-danger btn-sm" id="delete_collection_button">Delete collection</button>
+  <button class="btn btn-default btn-sm" id="rename_collection_button"><% __('Rename collection') |h %></button>
+  <button class="btn btn-danger btn-sm" id="delete_collection_button"><% __('Delete collection') |h %></button>
 % }
 </&>
 
@@ -73,11 +73,11 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
 % if ($user_can_modify) {
 % if ($is_file_type) {
     <button class="btn btn-primary btn-sm" id="open_add_files_modal_button">
-      <span class="glyphicon glyphicon-plus"></span> Add Files
+      <span class="glyphicon glyphicon-plus"></span> <% __('Add Files') |h %>
     </button>
 % } else {
     <button class="btn btn-primary btn-sm" id="open_add_images_modal_button">
-      <span class="glyphicon glyphicon-plus"></span> Add Images
+      <span class="glyphicon glyphicon-plus"></span> <% __('Add Images') |h %>
     </button>
 % }
     <button class="btn btn-danger btn-sm" id="remove_selected_button">
@@ -91,7 +91,7 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <thead>
       <tr>
         <th></th>
-        <th>File Name</th><th>Type</th><th>Comment</th><th>Uploader</th><th>Added</th>
+        <th><% __('File Name') |h %></th><th><% __('Type') |h %></th><th><% __('Comment') |h %></th><th><% __('Uploader') |h %></th><th><% __('Added') |h %></th>
       </tr>
     </thead>
   </table>
@@ -100,9 +100,9 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <thead>
       <tr>
         <th></th>
-        <th>Image</th><th>Filename</th><th>Description</th>
-        <th>Submitter</th><th>Associations</th><th>Accession</th>
-        <th>Observations</th><th>Tags</th>
+        <th><% __('Image') |h %></th><th><% __('Filename') |h %></th><th><% __('Description') |h %></th>
+        <th><% __('Submitter') |h %></th><th><% __('Associations') |h %></th><th><% __('Accession') |h %></th>
+        <th><% __('Observations') |h %></th><th><% __('Tags') |h %></th>
       </tr>
     </thead>
   </table>
@@ -114,15 +114,15 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Images to collection</h4>
+        <h4 class="modal-title"><% __('Add Images to collection') |h %></h4>
       </div>
       <div class="modal-body">
 
         <div class="form-inline" style="margin-bottom:10px;">
           <input type="text" class="form-control" id="add_images_search_box"
-                 placeholder="Search by filename or description..."
+                 placeholder="<% __('Search by filename or description...') |h %>"
                  style="width:320px;">
-          <button class="btn btn-default" id="add_images_search_button">Search</button>
+          <button class="btn btn-default" id="add_images_search_button"><% __('Search') |h %></button>
         </div>
 
         <div style="margin-bottom:8px;">
@@ -130,7 +130,7 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
             <span id="add_images_selected_count">0</span> image(s) selected
           </span>
           <button class="btn btn-link btn-xs" id="add_images_clear_selection_button">
-            clear selection
+            <% __('clear selection') |h %>
           </button>
         </div>
 
@@ -139,19 +139,19 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
           <thead>
             <tr>
               <th></th>
-              <th>Image</th>
-              <th>Filename</th>
-              <th>Description</th>
-              <th>Submitter</th>
+              <th><% __('Image') |h %></th>
+              <th><% __('Filename') |h %></th>
+              <th><% __('Description') |h %></th>
+              <th><% __('Submitter') |h %></th>
             </tr>
           </thead>
         </table>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
         <button type="button" class="btn btn-primary" id="add_images_submit_button">
-          Add Selected
+          <% __('Add Selected') |h %>
         </button>
       </div>
     </div>
@@ -164,15 +164,15 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Files to collection</h4>
+        <h4 class="modal-title"><% __('Add Files to collection') |h %></h4>
       </div>
       <div class="modal-body">
 
         <div class="form-inline" style="margin-bottom:10px;">
           <input type="text" class="form-control" id="add_files_search_box"
-                 placeholder="Search by filename or comment..."
+                 placeholder="<% __('Search by filename or comment...') |h %>"
                  style="width:320px;">
-          <button class="btn btn-default" id="add_files_search_button">Search</button>
+          <button class="btn btn-default" id="add_files_search_button"><% __('Search') |h %></button>
         </div>
 
         <div style="margin-bottom:8px;">
@@ -180,7 +180,7 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
             <span id="add_files_selected_count">0</span> file(s) selected
           </span>
           <button class="btn btn-link btn-xs" id="add_files_clear_selection_button">
-            clear selection
+            <% __('clear selection') |h %>
           </button>
         </div>
 
@@ -189,20 +189,20 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
           <thead>
             <tr>
               <th></th>
-              <th>File Name</th>
-              <th>Type</th>
-              <th>Comment</th>
-              <th>Uploader</th>
-              <th>Added</th>
+              <th><% __('File Name') |h %></th>
+              <th><% __('Type') |h %></th>
+              <th><% __('Comment') |h %></th>
+              <th><% __('Uploader') |h %></th>
+              <th><% __('Added') |h %></th>
             </tr>
           </thead>
         </table>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
         <button type="button" class="btn btn-primary" id="add_files_submit_button">
-          Add Selected
+          <% __('Add Selected') |h %>
         </button>
       </div>
     </div>
@@ -216,19 +216,19 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Rename Collection</h4>
+        <h4 class="modal-title"><% __('Rename Collection') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="rename_collection_name_input">New collection name</label>
+          <label for="rename_collection_name_input"><% __('New collection name') |h %></label>
           <input type="text" class="form-control" id="rename_collection_name_input">
           <div id="rename_collection_error" class="text-danger"
                style="display:none; margin-top:6px;"></div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="rename_collection_submit">Rename</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+        <button type="button" class="btn btn-primary" id="rename_collection_submit"><% __('Rename') |h %></button>
       </div>
     </div>
   </div>
@@ -239,22 +239,22 @@ my $items_title  = $is_file_type ? 'Files in this collection' : 'Images in this 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Change Breeding Program</h4>
+        <h4 class="modal-title"><% __('Change Breeding Program') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="change_breeding_program_select">Breeding program</label>
+          <label for="change_breeding_program_select"><% __('Breeding program') |h %></label>
           <select class="form-control" id="change_breeding_program_select">
-            <option value="">Loading programs&hellip;</option>
+            <option value=""><% __('Loading programs') |h %>&hellip;</option>
           </select>
-          <p class="help-block">Links to trials are not changed.</p>
+          <p class="help-block"><% __('Links to trials are not changed.') |h %></p>
           <div id="change_breeding_program_error" class="text-danger"
                style="display:none; margin-top:6px;"></div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" id="change_breeding_program_submit">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Cancel') |h %></button>
+        <button type="button" class="btn btn-primary" id="change_breeding_program_submit"><% __('Save') |h %></button>
       </div>
     </div>
   </div>
