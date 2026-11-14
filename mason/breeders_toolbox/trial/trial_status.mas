@@ -57,9 +57,9 @@ $user_can_modify => undef
             </div>
 
 %  if ($has_plant_entries) {
-            <p class="text-success" title="<% __('This trial has plot and plant entries saved. This means that phenotypes can be recorded on the plot and plant level.') |h %>"><small>Has Plots<br/>And Plants&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
+            <p class="text-success" title="<% __('This trial has plot and plant entries saved. This means that phenotypes can be recorded on the plot and plant level.') |h %>"><small><& /util/sentence.mas, text => __x('Has Plots{break}And Plants'), break => '<br/>' &>&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
 %  } else {
-            <p class="text-info" title="This trial has plot entries saved, but no plant entries. Plant entries are needed for plant level phenotyping. You can create plant entries in Design->Plant Entries section on this page."><small>Has Plots<br/>No Plants&nbsp;&nbsp;</small><span class="glyphicon glyphicon-info-sign"></span></p>
+            <p class="text-info" title="This trial has plot entries saved, but no plant entries. Plant entries are needed for plant level phenotyping. You can create plant entries in Design->Plant Entries section on this page."><small><& /util/sentence.mas, text => __x('Has Plots{break}No Plants'), break => '<br/>' &>&nbsp;&nbsp;</small><span class="glyphicon glyphicon-info-sign"></span></p>
 %  }
 </&>
 
