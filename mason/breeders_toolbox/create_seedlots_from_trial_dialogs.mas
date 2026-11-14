@@ -57,7 +57,7 @@ $default_seedlot_material_type => undef
                             <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select Seedlots"), 'h' ) &>
 
                             <p>
-                                <& /util/sentence.mas, text => __x('Seedlots can be generated from either each {strong}accession{end_strong} or {strong}plot{end_strong} {span} or {strong}subplot{end_strong}{end_span} {span2} or {strong}plant{end_strong}{end_span} in this trial.'), strong => '<strong>', end_strong => '</strong>', span => '<span class=\'create_seedlots_trial_subplots_available\'>', span2 => '<span class=\'create_seedlots_trial_plants_available\'>', end_span => '</span>' &>
+                                <& /util/sentence.mas, text => __x('Seedlots can be generated from either each {strong}accession{end_strong} or {strong}plot{end_strong} {span} or {strong}subplot{end_strong}{end_span} {span2} or {strong}plant{end_strong}{end_span2} in this trial.'), strong => '<strong>', end_strong => '</strong>', span => '<span class=\'create_seedlots_trial_subplots_available\'>', span2 => '<span class=\'create_seedlots_trial_plants_available\'>', end_span => '</span>', end_span2 => '</span>' &>
                             </p>
                             <ul>
                                 <li><& /util/sentence.mas, text => __x('If you select {strong}accessions{end_strong}: {count} seedlots will be created'), strong => '<strong>', end_strong => '</strong>', count => '<span id="create_seedlots_trial_accession_count"></span>' &></li>

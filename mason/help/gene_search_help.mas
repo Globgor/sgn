@@ -35,7 +35,9 @@
 
 <h4><% __('4. Locus editor') |h %></h4>
 <p>
-<& /util/sentence.mas, text => __x('Each locus in the genes database has an owner (either an SGN curator or a submitter). the owner also has certain edit privileges. You can search for loci owned by a specific {link}SGN user{end_link} by typing a first or a last name. Anyone interested in obtaining an SGN user account may do so by {link2}signing up for a new account{end_link2}. After obtaining an SGN user account you may upload new loci to SGN\\\'s database. If you are interested in obtaining editor privileges to a specific locus, please follow the link in the locus details page.'), link => '<a href= "../search/direct_search.pl?search=directory">', end_link => '</a>', link2 => '<a href="../solpeople/new-account.pl">', end_link2 => '</a>' &>  
+Each locus in the genes database has an owner (either an SGN curator or a submitter). the owner also has certain edit privileges. You can search for loci owned by a specific <a href= "../search/direct_search.pl?search=directory">SGN user</a> by typing a first or a last name.
+Anyone interested in obtaining an SGN user account may do so by <a href="../solpeople/new-account.pl">signing up for a new account</a>. After obtaining an SGN user account you may upload new loci to SGN\'s database.
+If you are interested in obtaining editor privileges to a specific locus, please follow the link in the locus details page.  
 
 
 </p>
@@ -45,8 +47,8 @@
 <% __('Use these checkboxes for narrowing your search to only genes with one or more of the following features:') |h %>
 <ul>
 <li><% __('Sequence: genes that have sequence annotation (GenBank ID and/or SGN unigene ID)') |h %></li>
-<li><& /util/sentence.mas, text => __x('Marker: genes that correspond to a specific marker from SGN\\\'s {link}marker database{end_link}'), link => '<a href="../search/direct_search.pl?search=markers">', end_link => '</a>' &></li>
-<li><& /util/sentence.mas, text => __x('GO/PO annotation: genes that are annotated to at least one {link}Gene Ontology{end_link} or {link2}Plant Ontology{end_link2} term'), link => '<a href="http://geneontology.org">', end_link => '</a>', link2 => '<a href="http://plantontology.org">', end_link2 => '</a>' &></li>
+<li>Marker: genes that correspond to a specific marker from SGN\'s <a href="../search/direct_search.pl?search=markers">marker database</a></li>
+<li>GO/PO annotation: genes that are annotated to at least one  <a href="http://geneontology.org">Gene Ontology</a> or <a href="http://plantontology.org">Plant Ontology</a> term</li>
 
 </ul>
 
@@ -54,7 +56,8 @@
 
 <h4><% __('6. Phenotype') |h %></h4>
 <p>
-<& /util/sentence.mas, text => __x('Some genes may have a phenotype description, either as an associated allele, or an associated phenotyped accession. This option will narrow the search results for only genes with a phenotype description containing the word or string you typed in. For searching phenotypes of accessions not necessarily associated with a gene, you should use SGN\\\'s {link}phenotype search{end_link} page.'), link => '<a href="../search/direct_search.pl?search=phenotypes">', end_link => '</a>' &> 
+Some genes may have a phenotype description, either as an associated allele, or an associated phenotyped accession. This option  will narrow the search results for  only genes with a phenotype description containing the word or string you typed in. 
+For searching phenotypes of accessions not necessarily associated with a gene, you should use SGN\'s <a href="../search/direct_search.pl?search=phenotypes">phenotype search</a> page. 
 
 </p>
 

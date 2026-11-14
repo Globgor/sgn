@@ -84,7 +84,9 @@
                   <dt><br /><a href=
                   "http://www.tomato.org/" target="_new"><% __('California Tomato Commission') |h %></a></dt>
 
-                  <dd><& /util/sentence.mas, text => __x('The website of the California Tomato Grower\\\'s Association. Contains nutritional information and recipes.') &></dd>
+                  <dd>The website of the California Tomato Grower\'s
+                  Association. Contains nutritional information and
+                  recipes.</dd>
 
 
                   <dt><br /><a href="http://www.ars.usda.gov/Main/site_main.htm?modecode=19-10-05-00" target="_new" ><% __('USDA ARS Bioinformatics Homepage') |h %></a></dt>

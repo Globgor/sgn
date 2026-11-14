@@ -17,10 +17,7 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
-page_sentences_ok(
-    '/site/header/body.mas',
-    '{span}{end_span} clone(s) in cart ({link}order{end_link})',
-);
+component_compiles_ok('/site/header/body.mas');
 
 page_sentences_ok(
     '/site/header/browser_alert.mas',

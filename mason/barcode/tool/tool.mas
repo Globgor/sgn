@@ -44,7 +44,7 @@ my $hash = $urlencode{'#'};
 % else { 
 <table border="0">
 %   foreach my $v (@values) { 
-<tr><td style="vertical-align:middle"><font size="6"><& /util/sentence.mas, text => __x('value = {value}'), value => $v &></font></td><td><img src="/barcode/code128png/<% $cvterm %><% $hash %><% $v %>/<% $cvterm_name %>" /></td></tr>
+<tr><td style="vertical-align:middle"><font size="6">value = <% $v %></font></td><td><img src="/barcode/code128png/<% $cvterm %><% $hash %><% $v %>/<% $cvterm_name %>" /></td></tr>
 
 %   }
 % }

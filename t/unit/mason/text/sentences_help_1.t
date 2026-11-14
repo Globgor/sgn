@@ -26,9 +26,6 @@ page_sentences_ok(
     '/help/clone_policy.mas',
     'We realize the need for access by the research community to EST clones prior to completion of this project and thus have instituted a policy whereby up to 150 clones per laboratory per year can be requested on a subsidized re-charge basis through the Clemson University Genomics Institute (CUGI) which handles maintenance and distribution of the tomato ESTs and receives funding through this project to offset some of the associated costs.',
     'This collection is currently estimated to range from 25,000 - 40,000 cDNA clones which will be condensed, quality confirmed, and re-arrayed into a collection that can be distributed in whole - or can much more efficiently be searched for individual clones than is currently the case with over 25 libraries each containing 4000 - 15,000 ordered clones.',
-    'These funds have been used for a) purchase of 3 -80 freezers and service contracts to insure their operation b) support a half-time tech position, c) annual replication of all EST libraries to insure against loss of clone viability, and d) software upgrades used in clone request tracking and eventual public dissemination of all clone requests.',
-    'It is important to realize that with 22 ordered EST libraries (each containing 4,000 - 15,000 ordered clones) tracking, localizing, and picking each clone represents a significant effort.',
-    'This later price is in line with other clone distribution centers, such as the American Type Culture Collection (ATCC), which recover total costs through re-charge fees.',
     'For example, when clones are found through additional sequencing to be chimeric, or when a new EST sequence "links" two clones previously thought to be unique.',
 );
 

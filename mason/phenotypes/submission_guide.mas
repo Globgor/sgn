@@ -70,7 +70,7 @@ Naama Menda (nm249@cornell.edu)
     <% __('If you have multiple repeats, the loading software will automatically increment the repeat number each time it sees a row of data for a plot or accession. If you provide repeat number (or fruit/plant/leaf number etc.) it will be used instead.') |h %>
   </li>
   <li><strong><% __('Traits') |h %></strong><br />
-    <& /util/sentence.mas, text => __x('following columns should have trait scored values. Headers should be ontology IDs. These terms {bold}must{end_bold} be pre-loaded in the database (e.g. the {link}Solanaceae Phenotype Ontology{end_link} ). If your ontology does not exist in the database, or if you have terms that need to be added to an existing ontology,{link2} contact us{end_link2} first.'), bold => '<b>', end_bold => '</b>', link => '<a href="http://solgenomics.net/search/phenotypes/traits">', end_link => '</a>', link2 => '<a href="mailto:sgn-feedback@solgenomics.net">', end_link2 => '</a>' &><br />
+    following columns should have trait scored values. Headers should be ontology IDs. These terms <b>must</b> be pre-loaded in the database (e.g. the  <a href="http://solgenomics.net/search/phenotypes/traits">Solanaceae Phenotype Ontology</a> ). If your ontology does not exist in the database, or if you have terms that need to be added to an existing ontology,<a href="mailto:sgn-feedback@solgenomics.net"> contact us</a> first.<br />
     Units may also be attached to ontology IDs using a pipe ("|") followed by "unit:unit_name" (e.g. SP:0000123|unit:cm). Number of data columns is unlimited.
 
     <pre>

@@ -183,10 +183,15 @@ priority.</dd>
 <br />
 <& /util/sentence.mas, text => __x('The purpose of the meeting was to determine the feasibility, utility, strategy and level of international interest/commitment for sequencing the tomato genome as a reference for the family Solanaceae and other closely related plant families. The workshop brought together and international group of scientists to discuss:') &>
 <ol>
-<li><& /util/sentence.mas, text => __x('the current status of Solanaceae research - including aspects of plant biology for which Solanaceous species are a preferred model,') &></li>
-<li><& /util/sentence.mas, text => __x('the impact of sequencing the tomato genome on research in the Solanaceae and plant biology in general,') &></li>
+<li>the current status of Solanaceae research - including aspects of
+plant biology for which Solanaceous species are a preferred model,</li>
+<li>the impact of sequencing the tomato genome on research in the
+Solanaceae and plant biology in general,</li>
 <li><% __('sequencing strategy,') |h %></li>
-<li><& /util/sentence.mas, text => __x('mechanisms by which such a sequencing project can be conducted as part of a multinational consortium, and 5) strategies for sequence information management, curation and public dissemination.') &></li>
+<li>mechanisms by which such a sequencing project can be conducted
+as part of a multinational consortium, and 5) strategies for
+sequence information management, curation and public
+dissemination.</li>
 </ol>
 Complete meeting summary:
 <a  href="summary.pl">[html]</a>

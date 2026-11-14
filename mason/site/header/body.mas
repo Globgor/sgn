@@ -2,7 +2,7 @@
   <a name="top"></a>
 
   <div id="clone_shoppingcart" style="display: none">
-    <& /util/sentence.mas, text => __x('{span}{end_span} clone(s) in cart ({link}order{end_link})'), span => '<span id="clone_cart_count">', end_span => '</span>', link => '<a class="toplink" style="text-decoration: underline" href="/search/clone-order.pl">', end_link => '</a>' &>
+    <& /util/sentence.mas, text => __x('{count} clone(s) in cart ({link}order{end_link})'), count => '<span id="clone_cart_count"></span>', link => '<a class="toplink" style="text-decoration: underline" href="/search/clone-order.pl">', end_link => '</a>' &>
   </div>
 
   <& /site/header/browser_alert.mas &>

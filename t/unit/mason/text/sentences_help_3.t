@@ -19,12 +19,9 @@ use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
     '/help/gene_search_help.mas',
-    'Each locus in the genes database has an owner (either an SGN curator or a submitter). the owner also has certain edit privileges. You can search for loci owned by a specific {link}SGN user{end_link} by typing a first or a last name. Anyone interested in obtaining an SGN user account may do so by {link2}signing up for a new account{end_link2}. After obtaining an SGN user account you may upload new loci to SGN\\\'s database. If you are interested in obtaining editor privileges to a specific locus, please follow the link in the locus details page.',
-    'Some genes may have a phenotype description, either as an associated allele, or an associated phenotyped accession. This option will narrow the search results for only genes with a phenotype description containing the word or string you typed in. For searching phenotypes of accessions not necessarily associated with a gene, you should use SGN\\\'s {link}phenotype search{end_link} page.',
     'Use this option for searching the database for genes with a locus or allele name/symbol/synonym/description containing what you typed in. You can search these fields for an exact match, begin with or end with your input, by selecting the desired option from the drop-down menu. The search is case-insensitive.',
     'Use this box for searching for genes that are annotated to specific {link}Gene Ontology{end_link} or {link2}Plant Ontology{end_link2} terms. You may search for ontology annotations by typing any part of the ontology term ID, term name, term synonym, or term definition.',
     'The {link}gene search{end_link} is a tool for searching genes in SGN\'s database. These genes originate from various sources, including GenBank, PubMed literature mining, historic collections of gene names, and SGN user-contributed data.',
-    'GO/PO annotation: genes that are annotated to at least one {link}Gene Ontology{end_link} or {link2}Plant Ontology{end_link2} term',
 );
 
 page_sentences_ok(

@@ -104,17 +104,17 @@ $is_dataset_public => 0
                 <li class="dataset-archive-publish-connect">
                     <p>Make sure you have an account and are logged in to <span class="dataset-archive-publish-service-name"></span></p>
                     <a id="dataset-archive-publish-account" class="btn btn-info btn-sm" href="#" target="_blank">
-                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<& /util/sentence.mas, text => __x('View your {span}{end_span} account'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &>
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<& /util/sentence.mas, text => __x('View your {service} account'), service => '<span class="dataset-archive-publish-service-name"></span>' &>
                     </a>
                 </li>
                 <li class="dataset-archive-publish-connect">
-                    <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {span}{end_span} account'), project_name => $project_name, span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                    <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {service} account'), project_name => $project_name, service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                     <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                     </button>
                 </li>
                 <li class="dataset-archive-publish-connected">
-                    <p><& /util/sentence.mas, text => __x('You are connected to this {span}{end_span} account:'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                    <p><& /util/sentence.mas, text => __x('You are connected to this {service} account:'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                     <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
                     <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                     <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">
@@ -122,7 +122,7 @@ $is_dataset_public => 0
                     </button>
                 </li>
                 <li class="dataset-archive-publish-connected">
-                    <p><& /util/sentence.mas, text => __x('Select a {span}{end_span} dataset to associate this data with:'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                    <p><& /util/sentence.mas, text => __x('Select a {service} dataset to associate this data with:'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                     <select id="dataset-archive-publish-articles" class="form-control">
                         <option value="">Create a new <span class="dataset-archive-publish-service-name"></span> dataset</option>
                     </select>
@@ -139,10 +139,10 @@ $is_dataset_public => 0
                     <label><% __('Additional Authors (one per line):') |h %></label>
                     <textarea id="dataset-archive-publish-article-authors" class="form-control dataset-archive-publish-article-details" placeholder="<% __('You will automatically be added as an Author') |h %>"></textarea>
                     <br />
-                    <p><em><& /util/sentence.mas, text => __x('The dataset metadata can be updated later on {span}{end_span} until the dataset on {span2}{end_span} is published and made public.'), span => '<span class="dataset-archive-publish-service-name dataset-archive-publish-article-details">', end_span => '</span>', span2 => '<span class="dataset-archive-publish-service-name">' &></em></p>
+                    <p><em><& /util/sentence.mas, text => __x('The dataset metadata can be updated later on {service} until the dataset on {service2} is published and made public.'), service => '<span class="dataset-archive-publish-service-name dataset-archive-publish-article-details"></span>', service2 => '<span class="dataset-archive-publish-service-name"></span>' &></em></p>
                 </li>
                 <li class="dataset-archive-publish-connected">
-                    <p><& /util/sentence.mas, text => __x('Send and attach the files to the selected {span}{end_span} dataset.'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                    <p><& /util/sentence.mas, text => __x('Send and attach the files to the selected {service} dataset.'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                     <button id="dataset-archive-publish-send" class="dataset-archive-publish-connected-btn btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;<span id="dataset-archive-publish-send-label"><% __('Send Files') |h %></span>
                     </button>
@@ -193,13 +193,13 @@ $is_dataset_public => 0
             <hr />
 
             <div class="dataset-archive-publish-connect">
-                <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {span}{end_span} account'), project_name => $project_name, span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {service} account'), project_name => $project_name, service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                 <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                 </button>
             </div>
             <div class="dataset-archive-publish-connected">
-                <p><& /util/sentence.mas, text => __x('You are connected to this {span}{end_span} account:'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                <p><& /util/sentence.mas, text => __x('You are connected to this {service} account:'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                 <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
                 <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                 <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">
@@ -243,20 +243,20 @@ $is_dataset_public => 0
             <div id="dataset-archive-doi-private-warning" class="warning-alert">
                 <span class="warning-alert-icon glyphicon glyphicon-exclamation-sign"></span>
                 <div>
-                    <p><& /util/sentence.mas, text => __x('This dataset on {span}{end_span} is still private. The generated DOI will become active once the dataset is published and made public.'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                    <p><& /util/sentence.mas, text => __x('This dataset on {service} is still private. The generated DOI will become active once the dataset is published and made public.'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                 </div>
             </div>
 
             <hr />
 
             <div class="dataset-archive-publish-connect">
-                <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {span}{end_span} account'), project_name => $project_name, span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                <p><& /util/sentence.mas, text => __x('Grant {project_name} access to your {service} account'), project_name => $project_name, service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                 <button class="dataset-archive-publish-connect-btn btn btn-primary btn-sm">
                     <span class="glyphicon glyphicon-resize-small"></span>&nbsp;&nbsp;<% __('Connect Accounts') |h %>
                 </button>
             </div>
             <div class="dataset-archive-publish-connected">
-                <p><& /util/sentence.mas, text => __x('You are connected to this {span}{end_span} account:'), span => '<span class="dataset-archive-publish-service-name">', end_span => '</span>' &></p>
+                <p><& /util/sentence.mas, text => __x('You are connected to this {service} account:'), service => '<span class="dataset-archive-publish-service-name"></span>' &></p>
                 <p><strong><% __('Name:') |h %></strong> <span class="dataset-archive-publish-connected-name"></span></p>
                 <p><strong><% __('Email:') |h %></strong> <span class="dataset-archive-publish-connected-email"></span></p>
                 <button class="dataset-archive-publish-disconnect-btn btn btn-danger btn-sm">

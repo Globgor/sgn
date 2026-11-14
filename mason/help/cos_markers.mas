@@ -24,11 +24,15 @@
             <li><& /util/sentence.mas, text => __x('Identify single best matches (< e -15) between a single tomato EST (or associated contig) and a single BAC in Arabidopsis.') &> <& /util/sentence.mas, text => __x('Each tomato EST must pass the following criteria:') &>
 
               <ul>
-                <li><& /util/sentence.mas, text => __x('it hits an arabidopsis sequence at a significance level of < e -15') &></li>
+                <li>it hits an arabidopsis sequence at a
+                significance level of &lt; e -15</li>
 
-                <li><& /util/sentence.mas, text => __x('it is determined to be NOT part of a domain (where several solanaceous sequences hit the same arabidopsis region)') &></li>
+                <li>it is determined to be NOT part of a domain
+                (where several solanaceous sequences hit the same
+                arabidopsis region)</li>
 
-                <li><& /util/sentence.mas, text => __x('the next best Arabidopsis hit must be of lower significance (delta e > 10)') &></li>
+                <li>the next best Arabidopsis hit must be of lower
+                significance (delta e &gt; 10)</li>
               </ul>
             </li>
 

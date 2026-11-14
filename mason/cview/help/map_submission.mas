@@ -9,8 +9,8 @@
 <li> <& /util/sentence.mas, text => __x('{bold}Accession information{end_bold} is needed for accessions that are not already in the SGN database.'), bold => '<b>', end_bold => '</b>' &> </li>
 </ol> 
 
-<p><& /util/sentence.mas, text => __x('These files should be tab-delimited text files (In Excel, choose type {format} in the Save As dialog). To submit the files send them as email attachments to {address}.'), format => '"Text (tab delimited)"', address => '<a href="mailto:sgn-feedback\\@sgn.cornell.edu">sgn-feedback\\@sgn.cornell.edu</a>' &>
-<& /util/sentence.mas, text => __x('{i}Please make sure to include the column headings{end_i}.'), i => '<i>', end_i => '</i>' &></p>
+<p>These files should be tab-delimited text files (In Excel, choose type "Text (tab delimited)" in the Save As dialog). To submit the files send them as email attachments to <a href="mailto:sgn-feedback\@sgn.cornell.edu">sgn-feedback\@sgn.cornell.edu</a>.
+<i>Please make sure to include the column headings</i>.</p>
 
 
 <h3><% __('The mapping file') |h %></h3>
