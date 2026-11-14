@@ -170,12 +170,12 @@ jQuery(document).ready(function(){
         jQuery('#upload_intercross_form').attr("action", "/ajax/cross/upload_intercross_file");
 
         if (crossIDformat === ''){
-            alert("Please select your cross ID format");
+            alert(<% __('Please select your cross ID format') |js %>);
             return;
         }
 
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery("#upload_intercross_form").submit();
