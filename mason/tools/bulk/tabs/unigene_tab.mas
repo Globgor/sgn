@@ -66,7 +66,7 @@ SGN-U196026
 
 </td><td valign="top" bgcolor="#EEEEEE" width="320">
 
- <input type="checkbox" name="convert_to_current" checked="checked" /><label for="convert_to_current"><a class="stealth" title="<% __('Check this box to convert each unigene in the list to its equivalent in the most current corresponding unigene build(s), if available') |h %>"><img src="/documents/img/new.gif" />convert unigene list to current build</a></label>
+ <input type="checkbox" name="convert_to_current" checked="checked" /><label for="convert_to_current"><a class="stealth" title="<% __('Check this box to convert each unigene in the list to its equivalent in the most current corresponding unigene build(s), if available') |h %>"><& /util/sentence.mas, text => __x('{image}convert unigene list to current build'), image => '<img src="/documents/img/new.gif" />' &></a></label>
 
  <hr />
 

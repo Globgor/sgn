@@ -13,7 +13,7 @@
 <div id="bulk_download_stats">
 <% $bulk_download_stats %>
 </div>
-Download as <a href="/bulk/gene/download/<% $sha1 %>.fasta">Fasta</a>
+<& /util/sentence.mas, text => __x('Download as {link}Fasta{end_link}'), link => '<a href="/bulk/gene/download/' . $sha1 . '.fasta">', end_link => '</a>' &>
 % } else {
     <% __('Your query did not contain any valid identifiers. Please try again.') |h %>
 % }
