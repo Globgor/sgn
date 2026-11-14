@@ -2,7 +2,7 @@
 $location
 </%args>
 
-<p id="trial_weather_check">[loading...]</p>
+<p id="trial_weather_check"><% __('[loading...]') |h %></p>
 
 <script type="text/javascript" defer="defer">
 jQuery(document).ready(function () {

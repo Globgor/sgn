@@ -5,30 +5,30 @@ $trial_id => undef
 <& /util/import_javascript.mas, classes => [ ] &>
 
 <div id="trial_additional_uploaded_files_div" class="table-responsive">
-[LOADING...]
+<% __('[LOADING...]') |h %>
 </div>
 
 <div class="modal fade" id="trial_upload_additional_file_dialog" name="trial_upload_additional_file_dialog" tabindex="-1" role="dialog" aria-labelledby="trialUploadAdditionalFileDialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="trialUploadAdditionalFileDialog">Upload Additional Files to Trial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="trialUploadAdditionalFileDialog"><% __('Upload Additional Files to Trial') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File upload information</b>
+                            <b><% __('File upload information') |h %></b>
                             <br>
-                            <a id="trial_upload_additional_file_format">Upload Information</a>
+                            <a id="trial_upload_additional_file_format"><% __('Upload Information') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="trial_upload_additional_file_form" name="trial_upload_additional_file_form">
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload Files: </label>
+                            <label class="col-sm-4 control-label"><% __('Upload Files:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="trial_upload_additional_file" id="trial_upload_additional_file" multiple="multiple" />
                                 <ul class="list-unstyled small" id="trial_upload_additional_file_selected" style="word-break:break-all;"></ul>
@@ -36,30 +36,30 @@ $trial_id => undef
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Add to Collection: </label>
+                            <label class="col-sm-4 control-label"><% __('Add to Collection:') |h %> </label>
                             <div class="col-sm-8" >
                                 <select class="form-control" id="trial_upload_additional_file_collection_mode">
-                                    <option value="none">Do not add to a collection</option>
-                                    <option value="existing">Add to an existing collection</option>
-                                    <option value="new">Create a new collection</option>
+                                    <option value="none"><% __('Do not add to a collection') |h %></option>
+                                    <option value="existing"><% __('Add to an existing collection') |h %></option>
+                                    <option value="new"><% __('Create a new collection') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group" id="trial_upload_additional_file_collection_existing_div" style="display:none">
-                            <label class="col-sm-4 control-label">Collection: </label>
+                            <label class="col-sm-4 control-label"><% __('Collection:') |h %> </label>
                             <div class="col-sm-8" >
                                 <select class="form-control" id="trial_upload_additional_file_collection_id"></select>
                             </div>
                         </div>
                         <div id="trial_upload_additional_file_collection_new_div" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Collection Name: </label>
+                                <label class="col-sm-4 control-label"><% __('Collection Name:') |h %> </label>
                                 <div class="col-sm-8" >
-                                    <input class="form-control" style="width:100%;" type="text" id="trial_upload_additional_file_collection_name" placeholder="e.g. Trial Protocols 2026" />
+                                    <input class="form-control" style="width:100%;" type="text" id="trial_upload_additional_file_collection_name" placeholder="<% __('e.g. Trial Protocols 2026') |h %>" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Description: </label>
+                                <label class="col-sm-4 control-label"><% __('Description:') |h %> </label>
                                 <div class="col-sm-8" >
                                     <input class="form-control" style="width:100%;" type="text" id="trial_upload_additional_file_collection_description" />
                                 </div>
@@ -74,8 +74,8 @@ $trial_id => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="trial_upload_additional_file_cancel_button" id="trial_upload_additional_file_cancel_button"     data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="trial_upload_additional_file_submit_button" id="trial_upload_additional_file_submit_button" title="Submit">Submit</button>
+                <button type="button" class="btn btn-default" name="trial_upload_additional_file_cancel_button" id="trial_upload_additional_file_cancel_button"     data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="trial_upload_additional_file_submit_button" id="trial_upload_additional_file_submit_button" title="<% __('Submit') |h %>"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -85,37 +85,37 @@ $trial_id => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="trialUploadAdditionalFileInfoDialog">Upload Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="trialUploadAdditionalFileInfoDialog"><% __('Upload Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading any additional files you may have for a trial.</b>
+                    <b><% __('This is for uploading any additional files you may have for a trial.') |h %></b>
                     <br/><br/>
-                    <p>Possible additional files include, but are not limited to:</p>
+                    <p><% __('Possible additional files include, but are not limited to:') |h %></p>
                     <ul>
-                        <li>Trial Related Images, such as a physical field image or an aerial picture of the field.</li>
-                        <li>Trial Related Documentation, such as protocols or permits for the trial.</li>
-                        <li>Trial Related Reports, such as supplementary information or publications.</li>
-                        <li>Trial Related Recordings, whether audio or video.</li>
+                        <li><% __('Trial Related Images, such as a physical field image or an aerial picture of the field.') |h %></li>
+                        <li><% __('Trial Related Documentation, such as protocols or permits for the trial.') |h %></li>
+                        <li><% __('Trial Related Reports, such as supplementary information or publications.') |h %></li>
+                        <li><% __('Trial Related Recordings, whether audio or video.') |h %></li>
                     </ul>
                     <br/>
-                    <p><b>Uploading multiple files</b></p>
+                    <p><b><% __('Uploading multiple files') |h %></b></p>
                     <ul>
-                        <li>You can select several files at once to upload.</li>
-                        <li>The result for each file is shown in the upload dialog. If one file fails, the others are still uploaded.</li>
+                        <li><% __('You can select several files at once to upload.') |h %></li>
+                        <li><% __('The result for each file is shown in the upload dialog. If one file fails, the others are still uploaded.') |h %></li>
                     </ul>
                     <br/>
-                    <p><b>Adding files to a collection</b></p>
+                    <p><b><% __('Adding files to a collection') |h %></b></p>
                     <ul>
                         <li>Use <b>Add to Collection</b> to put the uploaded files into a file collection, either one you can edit or a new one created with the name and description you enter.</li>
-                        <li>The collection is checked (or created) before any file is uploaded, so a problem with it stops the upload instead of leaving files outside the collection.</li>
-                        <li>Only files that upload successfully are added. A file can belong to several collections, and removing it from a collection does not delete the file.</li>
+                        <li><% __('The collection is checked (or created) before any file is uploaded, so a problem with it stops the upload instead of leaving files outside the collection.') |h %></li>
+                        <li><% __('Only files that upload successfully are added. A file can belong to several collections, and removing it from a collection does not delete the file.') |h %></li>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_trial_upload_additional_file_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_trial_upload_additional_file_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
