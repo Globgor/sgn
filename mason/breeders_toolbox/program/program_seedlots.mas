@@ -9,9 +9,9 @@ $program_id
 <table id="program_seedlot_table" class="display">
     <thead>
         <tr>
-            <th>Seedlot Name</th>
-            <th>Content</th>
-            <th>Content Type</th>
+            <th><% __('Seedlot Name') |h %></th>
+            <th><% __('Content') |h %></th>
+            <th><% __('Content Type') |h %></th>
         </tr>
     </thead>
 </table>
