@@ -51,11 +51,11 @@ function get_types(callback) {
                 if ( callback ) return callback();
             }
             else {
-                alert("ERROR: Could not load types!");
+                alert(<% __('ERROR: Could not load types!') |js %>);
             }
         },
         error: function() {
-            alert("ERROR: Could not load types");
+            alert(<% __('ERROR: Could not load types') |js %>);
         }
     });
 }
