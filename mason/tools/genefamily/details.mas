@@ -14,13 +14,13 @@ $align_link_disabled => undef
 </%args>
 
 
-<h1>Family detail for family <% $genefamily_id %></h1>
-<table><tr><td>Family: <b><% $genefamily_id %></b></td><td><% $annot_data %></td></tr>
-  <tr><td colspan="2">Note: <% $errors %></td></tr>
+<h1><& /util/sentence.mas, text => __x('Family detail for family {family}'), family => $genefamily_id &></h1>
+<table><tr><td><& /util/sentence.mas, text => __x('Family: {bold}{family}{end_bold}'), bold => '<b>', family => $genefamily_id, end_bold => '</b>' &></td><td><% $annot_data %></td></tr>
+  <tr><td colspan="2"><& /util/sentence.mas, text => __x('Note: {errors}'), errors => $errors &></td></tr>
 </table>
 
 <h2><% __('Gene family members') |h %></h2>
-Member count: <% $member_count %><br />
+<& /util/sentence.mas, text => __x('Member count: {count}'), count => $member_count &><br />
 <div id="family_members">
   <% $members %>
 </div>	
