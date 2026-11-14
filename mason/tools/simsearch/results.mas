@@ -4,9 +4,9 @@ $results
 $histogram
 </%args>
 
-<& /page/page_title.mas, title => "Simsearch Results" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Simsearch Results"), 'h' ) &>
 
-The following genotypes are exceedingly similar and are suspected duplicates:<br />
+<% __('The following genotypes are exceedingly similar and are suspected duplicates:') |h %><br />
 
 <% $results %>
 
