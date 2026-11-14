@@ -619,4 +619,48 @@ subtest 'BrAPI bulk PUT keeps the replicates and check marks that the change set
     restore();
 };
 
+subtest 'BrAPI bulk PUT plans the changes of germplasm of a request together' => sub {
+    # every plot of a check accession gets an accession that is new to the trial, in one request:
+    # it takes the place of the check everywhere, so its plots are check plots. Planned plot by
+    # plot, the first plot gets an accession next to the check and loses its mark.
+    my $new_id = $schema->resultset('Stock::Stock')->find({ uniquename => 'UG120001' })->stock_id;
+    my @check_plots = grep { $original->{$_}->{accession_id} == $acc{1} } sort { $a <=> $b } keys %plot;
+    my ($other_plot) = grep { $original->{$_}->{accession_id} != $acc{1} } sort { $a <=> $b } keys %plot;
+    my $is_check = sub { my $prop = $schema->resultset('Stock::Stockprop')->find({ stock_id => $plot{ $_[0] }, type_id => $t{is_a_control} }); return $prop ? $prop->value : undef; };
+    my %check_before = map { $_ => $is_check->($_) } @check_plots;
+    set_prop($plot{$_}, 'is_a_control', 1) for @check_plots;
+    my $plant_name = "review_bulk_plan_plant_$$";
+    my $plant = $schema->resultset('Stock::Stock')->create({ uniquename => $plant_name, name => $plant_name, organism_id => $organism_id, type_id => $t{plant} });
+    $schema->resultset('Stock::StockRelationship')->create({ subject_id => $plot{ $check_plots[0] }, object_id => $plant->stock_id, type_id => $t{plant_of} });
+    $schema->resultset('Stock::StockRelationship')->create({ subject_id => $plant->stock_id, object_id => $acc{1}, type_id => $t{plant_of} });
+    set_prop($plant->stock_id, 'plant_index_number', 1);
+    my $layout = $schema->resultset('NaturalDiversity::NdExperimentStock')->search({ 'me.stock_id' => $plot{ $check_plots[0] }, 'nd_experiment.type_id' => $t{field_layout} }, { join => 'nd_experiment' })->first;
+    $schema->resultset('NaturalDiversity::NdExperimentStock')->create({ nd_experiment_id => $layout->nd_experiment_id, stock_id => $plant->stock_id, type_id => $layout->type_id });
+
+    my $unit = sub { return { germplasmDbId => "$_[0]", studyDbId => "$trial_id", observationUnitPosition => { observationLevel => { levelName => $_[1] || 'plot' } } }; };
+    my $ua = LWP::UserAgent->new;
+    $ua->default_header('Content-Type' => 'application/json');
+    $ua->default_header('Authorization' => 'Bearer '.$access_token);
+    # the plant comes with the new germplasm of its plot
+    my $resp = $ua->put("$base/brapi/v2/observationunits", Content => encode_json({ $plant->stock_id => $unit->($new_id, 'plant'), map { $plot{$_} => $unit->($new_id) } @check_plots }));
+    ok($resp->is_success, 'bulk PUT succeeds') or diag($resp->decoded_content);
+    is_deeply([ map { plot_state($plot{$_})->{accession} } @check_plots ], [ ('UG120001') x @check_plots ], 'germplasm changed');
+    is_deeply([ map { $is_check->($_) } @check_plots ], [ (1) x @check_plots ], 'the accession that replaces a check on all its plots takes over the check marks');
+    is($schema->resultset('Stock::StockRelationship')->find({ subject_id => $plant->stock_id, type_id => $t{plant_of} })->object_id, $new_id, 'the plant has the new germplasm of its plot');
+
+    # one change of the request cannot be made (a plot is not germplasm): none is made
+    $resp = $ua->put("$base/brapi/v2/observationunits", Content => encode_json({ $plot{$other_plot} => $unit->($plot{ $check_plots[0] }), map { $plot{$_} => $unit->($acc{1}) } @check_plots }));
+    is($resp->code, 400, 'a request with a change that cannot be made is refused') or diag($resp->decoded_content);
+    is_deeply([ map { plot_state($plot{$_})->{accession} } @check_plots, $other_plot ], [ ('UG120001') x @check_plots, $original->{$other_plot}->{accession} ], 'and no plot of the request is changed');
+
+    # a unit that is refused for its observation level keeps its germplasm
+    $resp = $ua->put("$base/brapi/v2/observationunits/$plot{$other_plot}", Content => encode_json($unit->($acc{1}, 'field')));
+    is($resp->code, 400, 'a unit with an unknown observation level is refused') or diag($resp->decoded_content);
+    is(plot_state($plot{$other_plot})->{accession}, $original->{$other_plot}->{accession}, 'and keeps its germplasm');
+
+    set_prop($plot{$_}, 'is_a_control', $check_before{$_}) for @check_plots;
+    $plant->delete;
+    restore();
+};
+
 done_testing();
