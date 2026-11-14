@@ -23,6 +23,7 @@ is( render( '/util/sentence.mas', text => '{link}Help{end_link}', link => '<a hr
 is( render( '/util/sentence.mas', text => 'Value: {value}.', value => undef ), 'Value: .', 'undefined value becomes empty' );
 is( render( '/util/sentence.mas', text => 'Unknown {missing}.' ), 'Unknown {missing}.', 'missing argument remains visible' );
 is( render( '/util/sentence.mas', text => '{value}', value => '{missing}' ), '{missing}', 'substitution is not recursive' );
+is( SGN::Test::MasonText::_render_raw( '/util/sentence.mas', text => '<b> {text}' ), '&lt;b&gt; {text}', 'the message is not put into itself' );
 
 # Use a real test catalog, as MasonText::_use_catalog does, with a reordered translation.
 my $interp = SGN::Test::MasonText::_interp();

@@ -21,8 +21,11 @@ undefined arguments become empty strings. Never use {text} as a placeholder.
 $text
 </%args>
 <%init>
+# The message itself is no part of the sentence: {text} in a translation stays as it is.
+my %parts = %ARGS;
+delete $parts{text};
 my $html = $m->interp->apply_escapes( $text, 'h' );
-$html =~ s/\{(\w+)\}/exists $ARGS{$1} ? $ARGS{$1} \/\/ q{} : "{$1}"/ge;
+$html =~ s<\{(\w+)\}>< exists $parts{$1} ? $parts{$1} // q{} : "{$1}" >ge;
 $m->print($html);
 return;
 </%init>
