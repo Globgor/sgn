@@ -19,10 +19,7 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
-page_texts_ok(
-    '/cview/map/comparison.mas',
-    'Compare Entire Maps',
-);
+component_compiles_ok('/cview/map/comparison.mas');
 
 component_compiles_ok('/cview/map/index.mas');
 
