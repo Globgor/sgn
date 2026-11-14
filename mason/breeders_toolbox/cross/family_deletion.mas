@@ -5,7 +5,7 @@ $family_id
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<&| /page/info_section.mas, id=>'remove_crosses_from_family_section', title => 'Remove crosses from this family', subtitle => ' ', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'remove_crosses_from_family_section', title => $m->interp->apply_escapes( __('Remove crosses from this family'), 'h' ), subtitle => ' ', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -16,11 +16,11 @@ $family_id
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_family_section', title => 'Delete family', subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_family_section', title => $m->interp->apply_escapes( __('Delete family'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-default" id="delete_family" role="button">Delete this family</button><br/><br/>
+                <button class="btn btn-default" id="delete_family" role="button"><% __('Delete this family') |h %></button><br/><br/>
             </div>
         </div>
     </div>

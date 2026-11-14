@@ -11,7 +11,7 @@ $family_id
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title => 'Add progenies to a List', collapsible=>1, collapsed=>1, subtitle=>'<i>Adding progenies of this family to a new or exisiting list</i>'&>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add progenies to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding progenies of this family to a new or exisiting list</i>'&>
                 <br>
                 <div id="progenies_to_new_list" style="display:none"></div>
                 <div id="progenies_add_to_list"></div>
