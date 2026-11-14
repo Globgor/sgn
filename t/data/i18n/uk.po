@@ -135,3 +135,15 @@ msgstr "Назва зразка"
 
 msgid "Copy Filtered Accessions to a List"
 msgstr "Копіювати відібрані зразки до списку"
+
+msgid "Trial Search"
+msgstr "Пошук дослідів"
+
+msgid "Breeding program"
+msgstr "Селекційна програма"
+
+msgid "Planting Date"
+msgstr "Дата посіву"
+
+msgid "Copy Results to a List"
+msgstr "Копіювати результати до списку"
