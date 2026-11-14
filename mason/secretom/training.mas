@@ -1,5 +1,5 @@
 <span style="white-space:nowrap; display:block; padding:3px; background-color: #fff; text-align:center; color: #444; font-size:1.3em">
-Mass Spectrometry-based Proteomics Workshop
+<% __('Mass Spectrometry-based Proteomics Workshop') |h %>
 </span>
 
 <center><p><strong>April 3rd &amp; 4th, 2012</strong></p></center>
@@ -8,17 +8,17 @@ Mass Spectrometry-based Proteomics Workshop
 Instruction: Drs. Jocelyn Rose and Ted Thannhauser and Sheng Zhang<br />
 Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></center>
 
-<p>We had another extremely successful Proteomics Workshop this year that was highly oversubscribed. The workshop comprised both lectures and practical lab-based training in proteomic analysis, using advanced mass spectrometry techniques and bioinformatics and was targeted towards undergraduate and graduate students.  Based on the positive and enthusiastic feedback, a similar course will be offered next year.</p>
+<p><% __('We had another extremely successful Proteomics Workshop this year that was highly oversubscribed. The workshop comprised both lectures and practical lab-based training in proteomic analysis, using advanced mass spectrometry techniques and bioinformatics and was targeted towards undergraduate and graduate students.  Based on the positive and enthusiastic feedback, a similar course will be offered next year.') |h %></p>
 
 <p><a href="/documents/secretom/MSOct09WorkshopHandouts.pdf">Handouts from the workshop</a> [pdf]</p>
-<p><a href="#schedule">Schedule</a></p>
-<p><a href="#photos">Photos from this year's workshop</a></p>
+<p><a href="#schedule"><% __('Schedule') |h %></a></p>
+<p><a href="#photos"><% __('Photos from this year\'s workshop') |h %></a></p>
 
 <center><img src="/documents/img/secretom/spectrometer1.png" /><img src="/documents/img/secretom/spectrometer2.png" /></center>
 
 <br /><br /><br />
 
-<p><center><strong><a name="schedule">SCHEDULE</a></strong></center></p>
+<p><center><strong><a name="schedule"><% __('SCHEDULE') |h %></a></strong></center></p>
 
 <p><strong>April 3rd:</strong></p>
 <p><strong>8:00am - 8:30am: Registration (badge, program handouts, breakfast</strong>) in room 130</p>
@@ -50,17 +50,17 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 </ol>
 <ul>
 <ul type="DISC">
-<li>nanoLC-MS/MS for iTRAQ samples in 4000 Q Trap: by Dr. Celeste Ptak</li>
-<li>MALDI-TOF/TOF analysis for 2D gel-based protein IDs: by Bob Sherwood</li>
-<li>NanoLC-MS/MS analysis for 1D gel bands: by Kevin Howe</li>
+<li><% __('nanoLC-MS/MS for iTRAQ samples in 4000 Q Trap: by Dr. Celeste Ptak') |h %></li>
+<li><% __('MALDI-TOF/TOF analysis for 2D gel-based protein IDs: by Bob Sherwood') |h %></li>
+<li><% __('NanoLC-MS/MS analysis for 1D gel bands: by Kevin Howe') |h %></li>
 </ul>
 </ul>
 <p><strong>4:00pm - 5:00pm: </strong></p>
 <ol type="1" start="7">
 <li><strong> Experimental 4:</strong> set up nanoLC-MS/MS overnight running for in-solution digested samples with 60-min gradient for each run.</li>
 <ol type="a">
-<li>10 samples on 4000 Q Trap by Dr. Celeste Ptak</li>
-<li>10 samples on Synapt HDMS by Kevin Howe and Yong Yang</li>
+<li><% __('10 samples on 4000 Q Trap by Dr. Celeste Ptak') |h %></li>
+<li><% __('10 samples on Synapt HDMS by Kevin Howe and Yong Yang') |h %></li>
 </ol>
 </ol>
 <p><strong>April 4th:</strong></p>
@@ -71,10 +71,10 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 </ol>
 <ul>
 <ol type="a">
-<li>Mascot Maemon search and wiff file conversion to TMP file by Dr. Celeste Ptak in room 130</li>
+<li><% __('Mascot Maemon search and wiff file conversion to TMP file by Dr. Celeste Ptak in room 130') |h %></li>
 </ol>
 <ol type="a" start="2">
-<li>PLGS 2.4-Mascot database search and generating PKL file by Yong Yang and Kevin Howe in room 143</li>
+<li><% __('PLGS 2.4-Mascot database search and generating PKL file by Yong Yang and Kevin Howe in room 143') |h %></li>
 </ol>
 </ul>
 <p><strong>9:30am - 10:30am: </strong></p>
@@ -93,28 +93,28 @@ Location: Cornell Proteomics &amp; Mass Spectrometry Core Facility</em></p></cen
 </ol>
 <p><strong>3:20pm - 4:00pm: </strong>in room 130</p>
 <ol type="1" start="12">
-<li>Summary of the group results for shotgun analysis in 4000 Q Trap and Synapt HDMS. Summary of the iTRAQ demo results for quantitative proteomics by Sheng Zhang.</li>
+<li><% __('Summary of the group results for shotgun analysis in 4000 Q Trap and Synapt HDMS. Summary of the iTRAQ demo results for quantitative proteomics by Sheng Zhang.') |h %></li>
 </ol>
 <p><strong>4:00pm - 5:00pm:</strong> in room 130</p>
 <ol type="1" start="13">
-<li>Wrap-up comments, questions and suggestions</li>
+<li><% __('Wrap-up comments, questions and suggestions') |h %></li>
 </ol>
 
 <br /><br /><br />
 
 
 <center><img src="/documents/img/secretom/mass_spec_workshop_2012.jpg" /></center>
-<center><p>Participants in the 2012 workshop</p></center>
+<center><p><% __('Participants in the 2012 workshop') |h %></p></center>
 <p><a name="photos">Here are some pictures from previous workshops.</a> Thank you all for a great time!!!</p>
 
-<center>Participants</center><br />
+<center><% __('Participants') |h %></center><br />
 <center><img src="/documents/img/secretom/workshop1.png" /></center>
-<center><p>The Class of 2009... our brave band</p></center>
+<center><p><% __('The Class of 2009... our brave band') |h %></p></center>
 <center><img src="/documents/img/secretom/workshop2.png" /></center>
-<center><p>Bob explaining the mysteries of the MALDI TOF-TOF</p></center>
+<center><p><% __('Bob explaining the mysteries of the MALDI TOF-TOF') |h %></p></center>
 <center><img src="/documents/img/secretom/workshop3.png" /></center>
-<center><p>Celeste and the art of protein fractionation</p></center>
+<center><p><% __('Celeste and the art of protein fractionation') |h %></p></center>
 <center><img src="/documents/img/secretom/workshop4.png" /></center>
-<center><p>Kevin revealing some of the principles and wizardry of mass spectrometry</p></center>
+<center><p><% __('Kevin revealing some of the principles and wizardry of mass spectrometry') |h %></p></center>
 <center><img src="/documents/img/secretom/workshop5.png" /></center>
-<center><p>Rapt attention as Bob demonstrates 2D gel analysis software</p></center>
+<center><p><% __('Rapt attention as Bob demonstrates 2D gel analysis software') |h %></p></center>
