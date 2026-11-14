@@ -96,7 +96,7 @@ $collapsed => 0
          &>
 %            my $wseq = $w->start == 1 && $w->end == $seq->length ? $seq : $seq->trunc( $w->start, $w->end );
 %            if( $wseq->length > 200_000 ) {
-                 <span class="ghosted">Region too large to display.</span>
+                 <span class="ghosted"><% __('Region too large to display.') |h %></span>
 %            } else {
                  <& /sequence/with_markup.mas,
                      width   => $width,
