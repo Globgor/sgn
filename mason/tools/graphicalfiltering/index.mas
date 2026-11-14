@@ -11,7 +11,7 @@
 
 <& /util/import_css.mas, paths => ['tools/GraphicalFiltering.css'] &>
 
-<& '/page/page_title.mas', title => "Graphical Filtering" &>
+<& '/page/page_title.mas', title => $m->interp->apply_escapes( __("Graphical Filtering"), 'h' ) &>
 
 <& '/util/import_javascript.mas', classes => [ 'jquery', 'jqueryui', 'jquery.dataTables-buttons-min', 'jquery.dataTables-buttons-html5-min', 'jszip-min', 'CXGN.List', 'd3.d3v4Min', 'brapi.BrAPI', 'brapi.GraphicalFilter' ] &>
 
@@ -28,18 +28,18 @@
             </div>
             <div id="type_list_select_container" class="select_container col-md-2">
                 <select disabled class="form-control input-sm" id="type_list_select">
-                    <option selected disabled value="">Select Type</option>
-                    <option value="plot">Plots</option>
-                    <option value="plant">Plants</option>
+                    <option selected disabled value=""><% __('Select Type') |h %></option>
+                    <option value="plot"><% __('Plots') |h %></option>
+                    <option value="plant"><% __('Plants') |h %></option>
                 </select>
             </div>
             <div class="checkbox col-md-2">
                 <label>
-                    <input type="checkbox" id="accession_group"> Group By Accession
+                    <input type="checkbox" id="accession_group"> <% __('Group By Accession') |h %>
                 </label>
             </div>
             <div class="select_container col-md-2">
-                <button id="confirm_list_select" type="button" class="btn btn-primary">Confirm</button>
+                <button id="confirm_list_select" type="button" class="btn btn-primary"><% __('Confirm') |h %></button>
             </div>
         </div>
     </form>
@@ -47,7 +47,7 @@
 <!-- spinner to show during ajax call -->
 <div class="row">
     <center>
-        <img hidden="true" id="results-loading-spinner" src="/img/wheel.gif" alt="loading">
+        <img hidden="true" id="results-loading-spinner" src="/img/wheel.gif" alt="<% __('loading') |h %>">
     </center>
 </div>
 <br>
@@ -55,10 +55,10 @@
 <div id="filter_div" class="row"></div>
 <!-- div with table of filtered results and an option to save the output as a list -->
 <div id="filtered_results_wrap" hidden="true" class="row dataTables_wrapper">
-<&| /page/info_section.mas, title => 'Filtered Results', collapsible=>0, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Filtered Results'), 'h' ), collapsible=>0, collapsed=>0 &>
     <table id="filtered_results" width="100%" class="table table-hover table-striped dataTable no-footer" role="grid" style="width: 100%;"></table>
 </&>
-<&| /page/info_section.mas, title => 'Save Accessions results as List', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Save Accessions results as List'), 'h' ), collapsible=>1, collapsed=>1 &>
     <div style="text-align:right" id="graphical_filter_results_to_list_menu"></div>
     <div id="graphical_filter_result_names" style="display: none;"></div>
 
