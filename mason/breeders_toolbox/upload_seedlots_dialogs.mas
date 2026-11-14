@@ -8,41 +8,41 @@ $default_seedlot_material_type => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" name="close_seedlots_upload" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="seedlot_upload_dialog">Upload Seedlots</h4>
+                <button type="button" class="close" name="close_seedlots_upload" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="seedlot_upload_dialog"><% __('Upload Seedlots') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "upload_seedlot_main_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"What are seedlots?" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("What are seedlots?"), 'h' ) &>
                             <ul>
-                            <li>Seedlots represent physical plant materials in packets/containers.</li>
-                            <li>Plant material in a seedlot can be seed, root, clone, plant, tissue culture or gametophype.</li>
-                            <li>If you would like to set a default material type for seedlots, please contact us.</li>
-                            <li>These plant materials can be from crosses or for named accessions.</li>
+                            <li><% __('Seedlots represent physical plant materials in packets/containers.') |h %></li>
+                            <li><% __('Plant material in a seedlot can be seed, root, clone, plant, tissue culture or gametophype.') |h %></li>
+                            <li><% __('If you would like to set a default material type for seedlots, please contact us.') |h %></li>
+                            <li><% __('These plant materials can be from crosses or for named accessions.') |h %></li>
                             <li>Seedlots can have a specific location, box, weight_gram, and count.</li>
-                            <li>Seedlots can belong to breeding programs and organizations.</li>
-                            <li>Seedlots can be used in trials (e.g. they were planted in a plot) and they can be harvested from a plot or plant (e.g. a cross was performed and seeds were collected.)</li>
+                            <li><% __('Seedlots can belong to breeding programs and organizations.') |h %></li>
+                            <li><% __('Seedlots can be used in trials (e.g. they were planted in a plot) and they can be harvested from a plot or plant (e.g. a cross was performed and seeds were collected.)') |h %></li>
                             </ul>
 
                             <br/><br/>
                             <div style="text-align: center">
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "What seedlots do you have?" &>
-                            <& /page/page_title.mas, title=>"Seedlots fall into two categories" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("What seedlots do you have?"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Seedlots fall into two categories"), 'h' ) &>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Select One: </label>
+                                <label class="col-sm-3 control-label"><% __('Select One:') |h %> </label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="upload_seedlots_type_select" name="upload_seedlots_type_select">
                                         <option value=""></option>
-                                        <option data-desc="If you have seedlots for named accessions, such as seed that was ordered from a vendor, use this option. Use this option if the plant material was not harvested from a cross that is in the database." value="from_accession">I have seedlots for named accessions</option>
-                                        <option data-desc="If you have seedlots that were harvested from crosses that are in the database, use this option." value="from_cross">I have seedlots harvested from crosses</option>
+                                        <option data-desc="If you have seedlots for named accessions, such as seed that was ordered from a vendor, use this option. Use this option if the plant material was not harvested from a cross that is in the database." value="from_accession"><% __('I have seedlots for named accessions') |h %></option>
+                                        <option data-desc="If you have seedlots that were harvested from crosses that are in the database, use this option." value="from_cross"><% __('I have seedlots harvested from crosses') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -51,52 +51,52 @@ $default_seedlot_material_type => undef
                             </div>
                             <br/>
                             <div style="text-align: center">
-                                <button disabled id="seedlot_upload_type_select_button" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button disabled id="seedlot_upload_type_select_button" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "File format" &>
-                            <& /page/page_title.mas, title=>"Make sure your file matches the correct file format" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("File format"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Make sure your file matches the correct file format"), 'h' ) &>
                             <br/><br/>
                             <div style="text-align: center">
                                 <div id="upload_seedlots_accessions_template_section" style="display:none">
-                                    <button class="btn btn-info" name="guided_help_seedlot_upload_format_button">Information about file format for uploading seedlots of named accessions</button><br/><br/>
+                                    <button class="btn btn-info" name="guided_help_seedlot_upload_format_button"><% __('Information about file format for uploading seedlots of named accessions') |h %></button><br/><br/>
                                 </div>
                                 <div id="upload_seedlots_crosses_template_section" style="display:none">
-                                    <button class="btn btn-info" name="guided_help_seedlot_crosses_upload_format_button">Information about file format for uploading seedlots harvested</button><br/><br/>
+                                    <button class="btn btn-info" name="guided_help_seedlot_crosses_upload_format_button"><% __('Information about file format for uploading seedlots harvested') |h %></button><br/><br/>
                                 </div>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Once you think your file matches, go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once you think your file matches, go to Next Step') |h %></button>
                             </div>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Upload seedlots" &>
-                            <& /page/page_title.mas, title=>"Provide basic information about the seedlots and upload your file" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload seedlots"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide basic information about the seedlots and upload your file"), 'h' ) &>
                             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_seedlot_form" name="upload_seedlot_form">
 %if ($default_seedlot_material_type) {
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" >Material Type: </label>
+                                    <label class="col-sm-3 control-label" ><% __('Material Type:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" name="upload_seedlots_default_material_type" id="upload_seedlots_default_material_type" disabled value="<% $default_seedlot_material_type %>">
                                     </div>
                                 </div>
 % } else {
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Material Type: </label>
+                                    <label class="col-sm-3 control-label"><% __('Material Type:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="upload_seedlot_material_type_div"></div>
                                     </div>
                                 </div>
 % }
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Breeding Program: </label>
+                                    <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="upload_seedlot_breeding_program_div"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Location of seedlot storage: </label>
+                                    <label class="col-sm-3 control-label"><% __('Location of seedlot storage:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" name="upload_seedlot_location" id="upload_seedlot_location" placeholder="Required">
+                                        <input class="form-control" name="upload_seedlot_location" id="upload_seedlot_location" placeholder="<% __('Required') |h %>">
                                     </div>
                                 </div>
                                 <!--
@@ -108,15 +108,15 @@ $default_seedlot_material_type => undef
                                 </div>
                                 -->
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Organization Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Organization Name:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" name="upload_seedlot_organization_name" id="upload_seedlot_organization_name" placeholder="Optional">
+                                        <input class="form-control" name="upload_seedlot_organization_name" id="upload_seedlot_organization_name" placeholder="<% __('Optional') |h %>">
                                     </div>
                                 </div>
 
                                 <div id="upload_seedlots_accessions_section" style="display:none">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Upload File: </label>
+                                        <label class="col-sm-3 control-label"><% __('Upload File:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <input type="file" name="seedlot_uploaded_file" id="seedlot_uploaded_file" encoding="multipart/form-data" />
                                         </div>
@@ -125,7 +125,7 @@ $default_seedlot_material_type => undef
 
                                 <div id="upload_seedlots_harvested_section" style="display:none">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Upload File: </label>
+                                        <label class="col-sm-3 control-label"><% __('Upload File:') |h %> </label>
                                         <div class="col-sm-9" >
                                             <input type="file" name="seedlot_harvested_uploaded_file" id="seedlot_harvested_uploaded_file" encoding="multipart/form-data" />
                                         </div>
@@ -134,50 +134,50 @@ $default_seedlot_material_type => undef
 
                             </form>
                             <div style="text-align: center">
-                                <button type="button" class="btn btn-lg btn-primary" onclick="Workflow.complete(this, false);" name="upload_seedlot_button" >Upload Seedlots</button><br/><br/>
+                                <button type="button" class="btn btn-lg btn-primary" onclick="Workflow.complete(this, false);" name="upload_seedlot_button" ><% __('Upload Seedlots') |h %></button><br/><br/>
                             </div>
 
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Fix errors in file" &>
-                            <& /page/page_title.mas, title=>"Fix all errors in your file" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Fix errors in file"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Fix all errors in your file"), 'h' ) &>
 
                             <div id="upload_seedlots_missing_accessions_or_crosses_div" style="display:none">
                                 <div id="upload_seedlots_missing_accessions_div" style="display:none">
                                     <div class="well">
                                         <ul>
-                                            <li>Accessions must exist in the database prior to adding seedlots of them. The reason for this is that an accession can be exist in many seedlots and therefore exists as a separate entity in the database. We also want to be careful about adding new accessions into the database because we do not want incorrectly duplicated data.</li>
-                                            <li>When adding accessions into the database, you can use either a list of accessions or an Excel file.</li>
+                                            <li><% __('Accessions must exist in the database prior to adding seedlots of them. The reason for this is that an accession can be exist in many seedlots and therefore exists as a separate entity in the database. We also want to be careful about adding new accessions into the database because we do not want incorrectly duplicated data.') |h %></li>
+                                            <li><% __('When adding accessions into the database, you can use either a list of accessions or an Excel file.') |h %></li>
                                         </ul>
                                     </div>
 
                                     <div id="upload_seedlots_add_missing_accessions_html">
                                     </div>
 
-                                    <button class="btn btn-info" name="add_accessions_link">Add your accessions to the database</button><br/><br/>
-                                    <button class="btn btn-primary" onclick="Workflow.complete(this);">Once all your accessions are in the database Click Here</button><br/><br/>
+                                    <button class="btn btn-info" name="add_accessions_link"><% __('Add your accessions to the database') |h %></button><br/><br/>
+                                    <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once all your accessions are in the database Click Here') |h %></button><br/><br/>
                                 </div>
                                 <div id="upload_seedlots_missing_crosses_div" style="display:none">
                                     <div class="well">
                                         <ul>
-                                            <li>Crosses must exist in the database before adding your seed lots. The reason for this is that a cross can produce many seed lots and so the cross must exists as a separate entity in the database. We also want to be careful about adding new crosses into the database because we do not want data to be incorrectly linked to duplicates.</li>
+                                            <li><% __('Crosses must exist in the database before adding your seed lots. The reason for this is that a cross can produce many seed lots and so the cross must exists as a separate entity in the database. We also want to be careful about adding new crosses into the database because we do not want data to be incorrectly linked to duplicates.') |h %></li>
                                         </ul>
                                     </div>
                                     <ul>
-                                    <li>When adding crosses into the database, you can upload an Excel file or you can add seedlots one at a time.<br/><br/>
+                                    <li><% __('When adding crosses into the database, you can upload an Excel file or you can add seedlots one at a time.') |h %><br/><br/>
                                         <ul>
-                                        <li><button class="btn btn-info" name="upload_crosses_link">Upload Excel file</button><br/><br/></li>
-                                        <li><button class="btn btn-info" name="create_cross_link">Add One Cross</button></li>
+                                        <li><button class="btn btn-info" name="upload_crosses_link"><% __('Upload Excel file') |h %></button><br/><br/></li>
+                                        <li><button class="btn btn-info" name="create_cross_link"><% __('Add One Cross') |h %></button></li>
                                         </ul>
                                     </li>
                                     </ul><br/>
                                     <div style="text-align: center">
-                                        <button class="btn btn-primary" onclick="Workflow.complete(this);">Once all your crosses are in the database Click Here</button><br/><br/>
+                                        <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once all your crosses are in the database Click Here') |h %></button><br/><br/>
                                     </div>
                                 </div>
                             </div>
                             <div id="upload_seedlots_error_display" style="display:none">
 
-                                <h3>Seedlot Upload Error Messages</h3>
+                                <h3><% __('Seedlot Upload Error Messages') |h %></h3>
                                 <div class="panel panel-danger">
                                     <div class="panel-body">
                                         <table>
@@ -193,17 +193,17 @@ $default_seedlot_material_type => undef
                                 </div>
                             </div>
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Try submitting seedlots again" &>
-                            <& /page/page_title.mas, title=>"Submit your seedlots again. You should have corrected all errors by now, but if not please take a look at the errors in the red box below. You can continue to modify your file and then click Upload until it works." &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Try submitting seedlots again"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Submit your seedlots again. You should have corrected all errors by now, but if not please take a look at the errors in the red box below. You can continue to modify your file and then click Upload until it works."), 'h' ) &>
                             <div style="text-align: center" id="seedlot_upload_show_repeat_upload_button">
-                                <button type="button" class="btn btn-lg btn-primary" name="upload_seedlot_button" >Upload Seedlots</button><br/><br/>
+                                <button type="button" class="btn btn-lg btn-primary" name="upload_seedlot_button" ><% __('Upload Seedlots') |h %></button><br/><br/>
                             </div>
                             <div style="text-align: center" name="upload_seedlots_completed_message">
                             </div>
 
                             <div id="upload_seedlots_error_display_second_try" style="display:none">
 
-                                <h3>There exist these problems in your file:</h3>
+                                <h3><% __('There exist these problems in your file:') |h %></h3>
                                 <div class="panel panel-danger">
                                     <div class="panel-body">
                                         <table>
@@ -214,19 +214,19 @@ $default_seedlot_material_type => undef
                             </div>
                         </&>
                         <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your seedlots are now in the database" &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your seedlots are now in the database"), 'h' ) &>
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                The seedlot file was uploaded successfully
+                                <% __('The seedlot file was uploaded successfully') |h %>
                             </p>
 
                             <ul>
-                                <li>You may want to proceed to the seedlot detail page(s) for the seedlot(s) you just created.</li>
-                                <li>You can print barcodes for the seedlots.</li>
+                                <li><% __('You may want to proceed to the seedlot detail page(s) for the seedlot(s) you just created.') |h %></li>
+                                <li><% __('You can print barcodes for the seedlots.') |h %></li>
                             </ul>
                             <br/>
                             <div style="text-align: center">
-                                <button class="btn btn-primary" name="upload_seedlot_success_complete_button">The seedlots were saved to the database with no errors! Congrats Click Here</button><br/><br/>
+                                <button class="btn btn-primary" name="upload_seedlot_success_complete_button"><% __('The seedlots were saved to the database with no errors! Congrats Click Here') |h %></button><br/><br/>
                             </div>
                         </&>
                     </&>
@@ -234,7 +234,7 @@ $default_seedlot_material_type => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_seedlot_upload_dialog" name="close_seedlots_upload" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_seedlot_upload_dialog" name="close_seedlots_upload" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -244,14 +244,14 @@ $default_seedlot_material_type => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSeedlotInfoDialog">Upload Template Information For Named Accessions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSeedlotInfoDialog"><% __('Upload Template Information For Named Accessions') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -271,20 +271,20 @@ $default_seedlot_material_type => undef
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>seedlot_name (must be unique)</li>
                     <li>accession_name (must exist in the database. the accession_name is the unique identifier for the named genotype)</li>
                     <li>operator_name (the name of the person who oversaw the inventory process. can be any name.)</li>
                     <li>
                     amount (number of materials in seedlot. can be provided in conjunction with weight_gram. must provide a value for amount or weight_gram or both.)
-                    <br/><b>AND/OR</b><br/>
+                    <br/><b><% __('AND/OR') |h %></b><br/>
                     weight_gram (weight in grams of seedlot. can be provided in conjunction with amount. must provide a value for amount or weight_gram or both.)
                     </li>
                     <li>box_name (the box name that the plant material is located in. can be any name.)</li>
                     </ul>
 
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                       <li>description (information about why this seedlot is being added)</li>
                       <li>quality (status of the seedlot, for example "ok", "moldy", "insect damage" etc.</li>
@@ -294,7 +294,7 @@ $default_seedlot_material_type => undef
                 <& /help/file_upload_type.mas, type => "Seedlots", optional_column => 1 &>
             </div>
             <div class="modal-footer">
-                <button id="close_seedlot_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_seedlot_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -304,14 +304,14 @@ $default_seedlot_material_type => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSeedlotHarvestedInfoDialog">Upload Template Information For Harvested Seedlots</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSeedlotHarvestedInfoDialog"><% __('Upload Template Information For Harvested Seedlots') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -330,20 +330,20 @@ $default_seedlot_material_type => undef
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>seedlot_name (must be unique)</li>
                     <li>cross_unique_id (must exist in the database. a cross_unique_id can represent a cross between accessions e.g. AxB, but a cross can also represent a cross between specific plots in the field if you have this information)</li>
                     <li>operator_name (the name of the person who oversaw the inventory process. can be any name.)</li>
                     <li>
                     amount (number of materials in seedlot. can be provided in conjunction with weight_gram. must provide a value for amount or weight_gram or both.)
-                    <br/><b>AND/OR</b><br/>
+                    <br/><b><% __('AND/OR') |h %></b><br/>
                     weight_gram (weight in grams of seedlot. can be provided in conjunction with amount. must provide a value for amount or weight_gram or both.)
                     </li>
                     <li>box_name (the box name that the plant material is located in. can be any name.)</li>
                     </ul>
 
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                       <li>description (information about why this seedlot is being added)</li>
                       <li>quality (brief description of quality, e.g.,  "ok", "moldy", "insect damage", etc)</li>
@@ -352,7 +352,7 @@ $default_seedlot_material_type => undef
                 <& /help/file_upload_type.mas, type => "Seedlots", optional_column => 1 &>
             </div>
             <div class="modal-footer">
-                <button id="close_seedlot_harvested_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_seedlot_harvested_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
