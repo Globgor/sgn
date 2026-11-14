@@ -23,7 +23,7 @@
 
       <ul>
         <li>
-          <a href="mailto:<% $c->get_conf('feedback_email') %>?subject=<% $organism->species    %> genome assembly issue">email us</a>
+          <a href="mailto:<% $c->get_conf('feedback_email') %>?subject=<% $organism->species    %> genome assembly issue"><% __('email us') |h %></a>
         </li>
 %       if( $bug_tracker_url ) {
         <li>
