@@ -2,7 +2,7 @@
 <div class="text-center">
     <p><b><% __('Welcome to the Label Designer') |h %></b></p>
     <br/>
-    <p>This workflow will guide you through each step of the design process. For detailed explanations of each step please refer to the <a href="https://solgenomics.github.io/sgn/using-the-label-designer.html">label designer section of the manual</a>.<p>
+    <p><& /util/sentence.mas, text => __x('This workflow will guide you through each step of the design process. For detailed explanations of each step please refer to the {link}label designer section of the manual{end_link}.'), link => '<a href="https://solgenomics.github.io/sgn/using-the-label-designer.html">', end_link => '</a>' &><p>
     <p><% __('To start, select a data source and a data level. The data source can be a list, crossing experiment, trial, or genotyping plate. When you are finished, click \'Next\'.') |h %><p>
 </div>
 <br/><br/>
