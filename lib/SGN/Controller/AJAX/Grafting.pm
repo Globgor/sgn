@@ -11,6 +11,7 @@ use CXGN::Pedigree::AddGrafts;
 use CXGN::List::Validate;
 use SGN::Model::Cvterm;
 use utf8;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; }
 
@@ -46,7 +47,7 @@ sub upload_grafts_verify : Path('/ajax/grafts/upload_verify') Args(0)  {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -56,7 +57,7 @@ sub upload_grafts_verify : Path('/ajax/grafts/upload_verify') Args(0)  {
     } else{
 	print STDERR "We do not have a session id...\n";
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -65,7 +66,7 @@ sub upload_grafts_verify : Path('/ajax/grafts/upload_verify') Args(0)  {
     }
     
     if (!any { $_ eq "curator" || $_ eq "submitter" }  ($user_role)  ) {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to add grafts." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to add grafts.") };
 	return;
     }
     
@@ -83,7 +84,7 @@ sub upload_grafts_verify : Path('/ajax/grafts/upload_verify') Args(0)  {
     # check file type by file name extension
     #
     if ($upload_original_name =~ /\.xls$|\.xlsx/) {
-	$c->stash->{rest} = { error => "Grafting upload requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again." };
+	$c->stash->{rest} = { error => __("Grafting upload requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again.") };
 	return;
     }
     
@@ -146,7 +147,7 @@ sub upload_grafts_store : Path('/ajax/grafts/upload_store') Args(0)  {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -156,7 +157,7 @@ sub upload_grafts_store : Path('/ajax/grafts/upload_store') Args(0)  {
     } else{
 	print STDERR "We do not have a session id...\n";
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -165,7 +166,7 @@ sub upload_grafts_store : Path('/ajax/grafts/upload_store') Args(0)  {
     }
     
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($user_role)  ) {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to add grafts." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to add grafts.") };
 	return;
     }
 

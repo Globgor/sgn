@@ -38,6 +38,7 @@ use Encode;
 use Cwd;
 
 use namespace::autoclean;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -142,17 +143,17 @@ sub make_cvtermpath : Path('/ajax/onto/make_cvtermpath') Args(1) {
     my $namespace = shift;
 
     if (!$c->user()) {
-        $c->stash->{rest} = { error => "You must be logged in to recompute an ontology's cvtermpath." };
+        $c->stash->{rest} = { error => __("You must be logged in to recompute an ontology's cvtermpath.") };
         return;
     }
 
     if ($c->user->get_object->get_user_type() ne 'curator') {
-        $c->stash->{rest} = { error => "You have insufficient privileges to recompute an ontology's cvtermpath." };
+        $c->stash->{rest} = { error => __("You have insufficient privileges to recompute an ontology's cvtermpath.") };
         return;
     }
 
     if (!defined($namespace)) {
-        $c->stash->{rest} = { error => "An ontology namespace is required." };
+        $c->stash->{rest} = { error => __("An ontology namespace is required.") };
         return;
     }
 
@@ -162,7 +163,7 @@ sub make_cvtermpath : Path('/ajax/onto/make_cvtermpath') Args(1) {
     $namespace =~ s/:.*$//;
 
     if (!$namespace) {
-        $c->stash->{rest} = { error => "An ontology namespace is required." };
+        $c->stash->{rest} = { error => __("An ontology namespace is required.") };
         return;
     }
 
@@ -319,7 +320,7 @@ sub store_ontology_identifier: Path('/ajax/onto/store_ontology_identifier') Args
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to create ontology!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create ontology!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -328,7 +329,7 @@ sub store_ontology_identifier: Path('/ajax/onto/store_ontology_identifier') Args
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to create ontology!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create ontology!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -337,7 +338,7 @@ sub store_ontology_identifier: Path('/ajax/onto/store_ontology_identifier') Args
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to add ontology." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to add ontology.") };
         $c->detach();
     }
 
@@ -388,7 +389,7 @@ sub store_trait_method_scale_observation_variable: Path('/ajax/onto/store_trait_
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to create observation variables!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create observation variables!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -397,7 +398,7 @@ sub store_trait_method_scale_observation_variable: Path('/ajax/onto/store_trait_
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to create observation variables!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to create observation variables!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -406,7 +407,7 @@ sub store_trait_method_scale_observation_variable: Path('/ajax/onto/store_trait_
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to add observation variables." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to add observation variables.") };
         $c->detach();
     }
 
@@ -484,7 +485,7 @@ sub get_trait_from_exact_components: Path('/ajax/onto/get_trait_from_exact_compo
 
   my $trait_id = SGN::Model::Cvterm->get_trait_from_exact_components($schema, \@component_ids);
   if (!$trait_id) {
-    $c->stash->{rest} = { error => "No exact matches found."};
+    $c->stash->{rest} = { error => __("No exact matches found.")};
   }
   else {
     $c->stash->{rest} = { trait_id => $trait_id };
@@ -534,7 +535,7 @@ sub get_traits_from_component_categories: Path('/ajax/onto/get_traits_from_compo
   });
 
   if (!$traits) {
-    $c->stash->{rest} = { error => "No matches found."};
+    $c->stash->{rest} = { error => __("No matches found.")};
   }
   else {
     $c->stash->{rest} = {
