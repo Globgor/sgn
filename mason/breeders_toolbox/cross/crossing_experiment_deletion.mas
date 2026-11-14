@@ -5,7 +5,7 @@ $trial_id
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<&| /page/info_section.mas, id=>'delete_cross_section', title => 'Delete crosses', subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_cross_section', title => $m->interp->apply_escapes( __('Delete crosses'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -13,15 +13,15 @@ $trial_id
                 </table>
             </div>
         </div>
-        <button class="btn btn-default" id="delete_all_crosses" role="button">Delete all crosses in this experiment</button><br/><br/>
+        <button class="btn btn-default" id="delete_all_crosses" role="button"><% __('Delete all crosses in this experiment') |h %></button><br/><br/>
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_crossing_experiment_section', title => 'Delete crossing experiment', subtitle => '<font color="red">Deletion cannot be undone. Please delete crosses in this experiment first</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_crossing_experiment_section', title => $m->interp->apply_escapes( __('Delete crossing experiment'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone. Please delete crosses in this experiment first</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-default" id="delete_crossing_experiment" role="button">Delete crossing experiment</button><br/><br/>
+                <button class="btn btn-default" id="delete_crossing_experiment" role="button"><% __('Delete crossing experiment') |h %></button><br/><br/>
             </div>
         </div>
     </div>

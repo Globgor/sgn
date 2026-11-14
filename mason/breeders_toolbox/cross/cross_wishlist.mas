@@ -12,8 +12,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createCrossWishlistDialog">Create Cross Wishlist</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="createCrossWishlistDialog"><% __('Create Cross Wishlist') |h %></h4>
             </div>
 
             <div class="modal-body">
@@ -21,18 +21,18 @@
                     <div class="well">
                         <form class="form-horizontal" id="cross_wishlist_create_select_form_id" name="cross_wishlist_create_select_form_id">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Select An ODK Form on ONA: </label>
+                                <label class="col-sm-4 control-label"><% __('Select An ODK Form on ONA:') |h %> </label>
                                 <div class="col-sm-8" >
-                                    <div id="cross_wishlist_create_select_form_id_div">LOADING...</div>
+                                    <div id="cross_wishlist_create_select_form_id_div"><% __('LOADING...') |h %></div>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                     <ul class="nav nav-pills nav-justified" id="cross_wishlist_tab_select">
-                        <li id="cross_wishlist_list_tab"><a data-toggle="tab" href="#with_lists">Using Accession Lists</a></li>
-                        <li class="active" id="cross_wishlist_no_list_tab"><a data-toggle="tab" href="#not_with_lists">Using Crossing Blocks</a></li>
-                        <li id="cross_wishlist_upload_tab"><a data-toggle="tab" href="#upload_wishlist">Uploading Cross Combinations</a></li>
+                        <li id="cross_wishlist_list_tab"><a data-toggle="tab" href="#with_lists"><% __('Using Accession Lists') |h %></a></li>
+                        <li class="active" id="cross_wishlist_no_list_tab"><a data-toggle="tab" href="#not_with_lists"><% __('Using Crossing Blocks') |h %></a></li>
+                        <li id="cross_wishlist_upload_tab"><a data-toggle="tab" href="#upload_wishlist"><% __('Uploading Cross Combinations') |h %></a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -41,21 +41,21 @@
                             <hr>
                             <form class="form-horizontal" >
                                 <div class="form-group" style="display:none" <!-- location name is coming from the trial they select --> >
-                                    <label class="col-sm-3 control-label">Location Name (Optional): </label>
+                                    <label class="col-sm-3 control-label"><% __('Location Name (Optional):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_location_select_list_div">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Female's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Female\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_female_trial_select_list_div">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Male's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Male\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_male_trial_select_list_div">
                                         </div>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="well well-sm">
                                     <div class="form-group">
-                                        <label class="col-sm-6 control-label">Cross plan will be added to the cross wishlist named: </label>
+                                        <label class="col-sm-6 control-label"><% __('Cross plan will be added to the cross wishlist named:') |h %> </label>
                                         <div class="col-sm-6" >
                                             <div id="cross_wishlist_trial_select_list_cross_wishlist_name_div">
                                                 <input class="form-control" type="text" disabled value="Please Select a Trial First" />
@@ -72,12 +72,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Female Accession List: </label>
+                                    <label class="col-sm-3 control-label"><% __('Female Accession List:') |h %> </label>
                                     <div class="col-sm-9" id="female_accession_list_div" name="female_accession_list_div">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Male Accession List: </label>
+                                    <label class="col-sm-3 control-label"><% __('Male Accession List:') |h %> </label>
                                     <div class="col-sm-9" id="male_accession_list_div" name="male_accession_list_div">
                                     </div>
                                 </div>
@@ -91,14 +91,14 @@
 
                             <form class="form-horizontal" >
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Female's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Female\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_female_trial_select_no_list_div">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Male's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Male\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_male_trial_select_no_list_div">
                                         </div>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="well well-sm">
                                     <div class="form-group">
-                                        <label class="col-sm-6 control-label">Cross plan will be added to the cross wishlist named: </label>
+                                        <label class="col-sm-6 control-label"><% __('Cross plan will be added to the cross wishlist named:') |h %> </label>
                                         <div class="col-sm-6" >
                                             <div id="cross_wishlist_trial_select_no_list_cross_wishlist_name_div">
                                                 <input class="form-control" type="text" disabled value="Please Select a Trial First" />
@@ -115,10 +115,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Female Accession Name(s):</label>
+                                    <label class="col-sm-3 control-label"><% __('Female Accession Name(s):') |h %></label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_female_accession_select_div">
-                                            <p>First Select A Trial</p>
+                                            <p><% __('First Select A Trial') |h %></p>
                                         </div>
                                     </div>
                                 </div>
@@ -132,14 +132,14 @@
                             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_wishlist_form" name="upload_wishlist_form">
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Female's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Female\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_female_trial_select_upload_div">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Male's Trial Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Male\'s Trial Name:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="cross_wishlist_male_trial_select_upload_div">
                                         </div>
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="well well-sm">
                                     <div class="form-group">
-                                        <label class="col-sm-6 control-label">Cross plan will be added to the cross wishlist named: </label>
+                                        <label class="col-sm-6 control-label"><% __('Cross plan will be added to the cross wishlist named:') |h %> </label>
                                         <div class="col-sm-6" >
                                             <div id="cross_wishlist_trial_select_upload_cross_wishlist_name_div">
                                                 <input class="form-control" type="text" disabled value="Please Select a Trial First" />
@@ -158,11 +158,11 @@
                                 <div class="well well-sm">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="wishlist_format">Spreadsheet format</a>
+                                                    <a id="wishlist_format"><% __('Spreadsheet format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -171,7 +171,7 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select an XLS File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select an XLS File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="wishlist_file" id="wishlist_file" encoding="multipart/form-data" />
                                                         </div>
@@ -189,16 +189,16 @@
 
             <div id="wishlist_lists_footer">
                 <div class="modal-footer">
-                    <button class="btn btn-info" id="show_cross_wishlists_select_submits" name="show_cross_wishlists_select_submits">Available Cross Wishlist(s) for ODK Use</button>
-                    <button class="btn btn-primary" id="cross_wishlist_submit" name="cross_wishlist_submits">Next</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-info" id="show_cross_wishlists_select_submits" name="show_cross_wishlists_select_submits"><% __('Available Cross Wishlist(s) for ODK Use') |h %></button>
+                    <button class="btn btn-primary" id="cross_wishlist_submit" name="cross_wishlist_submits"><% __('Next') |h %></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
                 </div>
             </div>
             <div id="wishlist_upload_footer" style="display:none">
                 <div class="modal-footer">
-                    <button class="btn btn-info" id="upload_show_cross_wishlists_select_submits" name="upload_show_cross_wishlists_select_submits">Available Cross Wishlist(s) for ODK Use</button>
-                    <button class="btn btn-primary" id="wishlist_upload_submit" name="wishlist_upload_submit">Upload File</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-info" id="upload_show_cross_wishlists_select_submits" name="upload_show_cross_wishlists_select_submits"><% __('Available Cross Wishlist(s) for ODK Use') |h %></button>
+                    <button class="btn btn-primary" id="wishlist_upload_submit" name="wishlist_upload_submit"><% __('Upload File') |h %></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
                 </div>
             </div>
         </div>
@@ -209,8 +209,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createCrossWishlistSelectDialog">Select Plots for Cross Wishlist</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="createCrossWishlistSelectDialog"><% __('Select Plots for Cross Wishlist') |h %></h4>
                 <h4>Female Plots are in <span class="bg-primary">Blue</span><!-- and Male Plots are in <span class="bg-success">Green</span>.--></h4>
             </div>
 
@@ -221,8 +221,8 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary" id="cross_wishlist_select_submits" name="cross_wishlist_select_submits">Create Wishlist</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="cross_wishlist_select_submits" name="cross_wishlist_select_submits"><% __('Create Wishlist') |h %></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -232,8 +232,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createCrossWishlistResponseDialog">Cross Wishlist</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="createCrossWishlistResponseDialog"><% __('Cross Wishlist') |h %></h4>
             </div>
 
             <div class="modal-body">
@@ -243,7 +243,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="dismiss_wishlist_response_dialog" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" id="dismiss_wishlist_response_dialog" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -253,8 +253,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="showCrossWishlistsResponseDialog">Cross Wishlists Previously Created</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="showCrossWishlistsResponseDialog"><% __('Cross Wishlists Previously Created') |h %></h4>
             </div>
 
             <div class="modal-body">
@@ -264,7 +264,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -274,8 +274,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadWishlistErrorDialog">Upload Wishlist File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadWishlistErrorDialog"><% __('Upload Wishlist File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -285,7 +285,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -295,20 +295,20 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadWishlistInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadWishlistInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Cross wishlist may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Cross wishlist may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
 
                     <table class="table table-bordered table-hover">
@@ -321,7 +321,7 @@
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>female_accession</b> (accession names must exist as <b>uniquenames</b> in the database and are in the selected female trial. Wishlist will include all of the female plots in the trial.)</li>
@@ -331,7 +331,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

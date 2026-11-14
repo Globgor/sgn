@@ -3,22 +3,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProgeniesNewDialog">Upload Progeny Names that are NOT in Database </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProgeniesNewDialog"><% __('Upload Progeny Names that are NOT in Database') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="upload_progenies_new_spreadsheet_format_info">Spreadsheet Format</a>
+                            <a id="upload_progenies_new_spreadsheet_format_info"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_progenies_new_form" name="upload_progenies_new_form">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Upload File: </label>
+                            <label class="col-sm-2 control-label"><% __('Upload File:') |h %> </label>
                                 <div class="col-sm-10">
                                     <input type="file" name="progenies_new_upload_file" id="progenies_new_upload_file" encoding="multipart/form-data" />
                                 </div>
@@ -27,8 +27,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_progenies_new_submit" id="upload_progenies_new_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_progenies_new_submit" id="upload_progenies_new_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -38,20 +38,20 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProgeniesNewInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProgeniesNewInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Progenies of existing crosses may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Progenies of existing crosses may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br><br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -62,7 +62,7 @@
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <br>
                         <b>-cross_unique_id</b> (must exist in the database)
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -82,8 +82,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProgeniesErrorDialog">Upload Progenies File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProgeniesErrorDialog"><% __('Upload Progenies File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -103,19 +103,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="progeniesSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="progeniesSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The progenies were saved successfully.
+                        <% __('The progenies were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_progenies_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_progenies_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -125,22 +125,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProgeniesExistDialog">Upload Progeny Names that Exist in Database </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProgeniesExistDialog"><% __('Upload Progeny Names that Exist in Database') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="upload_progenies_exist_spreadsheet_format_info">Spreadsheet Format</a>
+                            <a id="upload_progenies_exist_spreadsheet_format_info"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_progenies_exist_form" name="upload_progenies_exist_form">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Upload File: </label>
+                            <label class="col-sm-2 control-label"><% __('Upload File:') |h %> </label>
                                 <div class="col-sm-10">
                                     <input type="file" name="progenies_exist_upload_file" id="progenies_exist_upload_file" encoding="multipart/form-data" />
                                 </div>
@@ -149,8 +149,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_progenies_exist_submit" id="upload_progenies_exist_submit">Validate</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_progenies_exist_submit" id="upload_progenies_exist_submit"><% __('Validate') |h %></button>
             </div>
         </div>
     </div>
@@ -160,20 +160,20 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCrossProgeniesValidateDialog">Results From Validation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCrossProgeniesValidateDialog"><% __('Results From Validation') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div class="well">To Overwrite Parents In the Case That An Accession Already Has Male or Female Parents <input type="checkbox" checked id="cross_upload_overwrite_pedigrees" /></div>
+                    <div class="well"><% __('To Overwrite Parents In the Case That An Accession Already Has Male or Female Parents') |h %> <input type="checkbox" checked id="cross_upload_overwrite_pedigrees" /></div>
                         <table class="table table-hover">
                             <tbody></tbody>
                         </table>
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_cross_progenies_store" id="upload_cross_progenies_store" data-dismiss="modal">Store</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_cross_progenies_store" id="upload_cross_progenies_store" data-dismiss="modal"><% __('Store') |h %></button>
             </div>
         </div>
      </div>
@@ -183,20 +183,20 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProgeniesExistInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProgeniesExistInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Progenies of existing crosses may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Progenies of existing crosses may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br><br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -207,7 +207,7 @@
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <br>
                         <b>-cross_unique_id</b> (must exist in the database)
@@ -217,7 +217,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -227,33 +227,33 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadFamilyNameDialog">Upload Family Name of Existing Crosses </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadFamilyNameDialog"><% __('Upload Family Name of Existing Crosses') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="upload_family_name_spreadsheet_format_info">Spreadsheet Format</a>
+                            <a id="upload_family_name_spreadsheet_format_info"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_family_name_form" name="upload_family_name_form">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Family Type: </label>
+                            <label class="col-sm-3 control-label"><% __('Family Type:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="family_type_option">
-                                    <option value="">Select a family type</option>
-                                    <option value="same_parents">Include only crosses with the same female parent and the same male parent</option>
-                                    <option value="reciprocal_parents">Include reciprocal crosses</option>
+                                    <option value=""><% __('Select a family type') |h %></option>
+                                    <option value="same_parents"><% __('Include only crosses with the same female parent and the same male parent') |h %></option>
+                                    <option value="reciprocal_parents"><% __('Include reciprocal crosses') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div id="upload_family_with_the_same_parents" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Upload File (.xls or .xlsx): </label>
+                                <label class="col-sm-3 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                                 <div class="col-sm-8" >
                                     <input type="file" name="same_parents_file" id="same_parents_file" encoding="multipart/form-data" />
                                 </div>
@@ -261,7 +261,7 @@
                         </div>
                         <div id="upload_family_with_reciprocal_parents" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Upload File (.xls or .xlsx): </label>
+                                <label class="col-sm-3 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                                 <div class="col-sm-8" >
                                     <input type="file" name="reciprocal_parents_file" id="reciprocal_parents_file" encoding="multipart/form-data" />
                                 </div>
@@ -271,8 +271,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_family_name_submit" id="upload_family_name_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_family_name_submit" id="upload_family_name_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -282,8 +282,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadFamilyNameErrorDialog">Upload Family Name File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadFamilyNameErrorDialog"><% __('Upload Family Name File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -293,7 +293,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -304,26 +304,26 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadFamilyNameInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadFamilyNameInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Family Name of existing crosses may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Family Name of existing crosses may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br>
-                    <b>Family Types:</b>
+                    <b><% __('Family Types:') |h %></b>
                         <ul>
-                            <li>same parents (the family includes only crosses with the same female parent and the same male parent)</li>
-                            <li>reciprocal parents (the family includes reciprocal crosses)</li>
-                            (All families in the same file must have the same family type.)
+                            <li><% __('same parents (the family includes only crosses with the same female parent and the same male parent)') |h %></li>
+                            <li><% __('reciprocal parents (the family includes reciprocal crosses)') |h %></li>
+                            <% __('(All families in the same file must have the same family type.)') |h %>
                         </ul>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -333,7 +333,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <b>Required columns:</b>
+                    <b><% __('Required columns:') |h %></b>
                     <ul>
                         <li>cross_unique_id (must exist in the database)</li>
                         <li>family_name (may be new family name or family name already stored in the database. If you would like to use family name previously stored in the database, please check the name carefully)</li>
@@ -341,7 +341,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -351,19 +351,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="familyNameSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="familyNameSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The family names were saved successfully.
+                        <% __('The family names were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_family_name_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_family_name_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>

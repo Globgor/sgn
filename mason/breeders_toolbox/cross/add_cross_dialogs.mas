@@ -22,215 +22,215 @@ $locations
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header">
-                <button type="reset" class="close" id="new_cross_close_modal_1" name="new_cross_close_modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createNewCrosses">Add New Cross</h4>
+                <button type="reset" class="close" id="new_cross_close_modal_1" name="new_cross_close_modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="createNewCrosses"><% __('Add New Cross') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "add_cross_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"What is a cross?" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("What is a cross?"), 'h' ) &>
 
                             <ul>
-                                <li>The Cross Tool can track any pollinations in a breeding program.</li>
-                                <li>Each cross has a globally unique cross id.</li>
+                                <li><% __('The Cross Tool can track any pollinations in a breeding program.') |h %></li>
+                                <li><% __('Each cross has a globally unique cross id.') |h %></li>
                                 <li>Supported cross types are: biparental, self, open, backcross, sib, polycross, bulk, bulk_self, bulk_open, doubled_haploid, or dihaploid_induction</li>
-                                <li>For an open pollinated cross, the cross can be defined as between female accession A and male population P1 (populations in the database are defined strictly as groups of accessions). If the male parent is not known, it can be left blank.</li>
-                                <li>For backcross cross type, cross unique id can be used as one of the parents.</li>
-                                <li>An individual cross can be linked to the specific female plot or plant, as well as to the specific male plot or plant.</li>
-                                <li>A cross can have other data associated to it, such as number of flowers, pollination date, etc.</li>
-                                <li>Seed produced by a cross can be managed using a seedlot.</li>
-                                <li>Progenies from a cross can become named accessions in the database.</li>
+                                <li><% __('For an open pollinated cross, the cross can be defined as between female accession A and male population P1 (populations in the database are defined strictly as groups of accessions). If the male parent is not known, it can be left blank.') |h %></li>
+                                <li><% __('For backcross cross type, cross unique id can be used as one of the parents.') |h %></li>
+                                <li><% __('An individual cross can be linked to the specific female plot or plant, as well as to the specific male plot or plant.') |h %></li>
+                                <li><% __('A cross can have other data associated to it, such as number of flowers, pollination date, etc.') |h %></li>
+                                <li><% __('Seed produced by a cross can be managed using a seedlot.') |h %></li>
+                                <li><% __('Progenies from a cross can become named accessions in the database.') |h %></li>
                             </ul>
 
                             <br/>
                             <center>
-                                <button id="next_step_cross_intro" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_cross_intro" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Crossing Experiment" &>
-                            <& /page/page_title.mas, title=>"Select a crossing experiment" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Crossing Experiment"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a crossing experiment"), 'h' ) &>
 
-                            <p>Crossing experiments are for grouping crosses together. The grouping is most often done for crosses derived from the same field trial, the same year, or for crosses that have the same breeding objective.</p>
+                            <p><% __('Crossing experiments are for grouping crosses together. The grouping is most often done for crosses derived from the same field trial, the same year, or for crosses that have the same breeding objective.') |h %></p>
                             <center>
-                                <button class="btn btn-info" name="create_crossingtrial_link">If you need to create a crossing experiment, click here</button><br/><br/>
-                                <button id="next_step_cross_experiment" class="btn btn-primary" onclick="Workflow.complete(this);">Once you have a crossing experiment, go to Next Step</button>
+                                <button class="btn btn-info" name="create_crossingtrial_link"><% __('If you need to create a crossing experiment, click here') |h %></button><br/><br/>
+                                <button id="next_step_cross_experiment" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once you have a crossing experiment, go to Next Step') |h %></button>
                             </center>
 
                         </&>
 
                         <form class="form-horizontal" role="form" name="create_cross_form" id="create_cross_form">
 
-                            <&| /util/workflow.mas:step, title=> "Enter cross information" &>
-                                <& /page/page_title.mas, title=>"Enter basic information about the cross" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Enter cross information"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the cross"), 'h' ) &>
 
-                                <&| /page/explanation.mas, title=>'Cross Type information' &>
+                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Cross Type information'), 'h' ) &>
                                     <p>
-                                        <b>Cross type information</b>
+                                        <b><% __('Cross type information') |h %></b>
                                         <br>
-                                        <a id="cross_type_info">Descriptions of cross types</a>
+                                        <a id="cross_type_info"><% __('Descriptions of cross types') |h %></a>
                                     </p>
                                 </&>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Breeding Program: </label>
+                                    <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="add_cross_breeding_program_select_div" name="add_cross_breeding_program_select_div">
                                         </div>
                                     </div>
                                 </div><br/><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Crossing Experiment: </label>
+                                    <label class="col-sm-3 control-label"><% __('Crossing Experiment:') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="add_cross_crossing_experiment_select_div" name="add_cross_crossing_experiment_select_div" >
                                         </div>
                                     </div>
                                 </div><br/><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Cross Unique ID: </label>
+                                    <label class="col-sm-3 control-label"><% __('Cross Unique ID:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" id="cross_name" name="cross_name" />
                                     </div>
                                 </div><br/><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Cross Combination (optional): </label>
+                                    <label class="col-sm-3 control-label"><% __('Cross Combination (optional):') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" type="text" id="dialog_cross_combination" name="dialog_cross_combination" placeholder="e.g. female_name/male_name"/>
                                     </div>
                                 </div><br/><br/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Cross Type: </label>
+                                    <label class="col-sm-3 control-label"><% __('Cross Type:') |h %> </label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="cross_type">
-                                            <option value="">Select a cross type</option>
-                                            <option value="biparental">biparental</option>
-                                            <option value="self">self</option>
-                                            <option value="open">open pollinated</option>
-                                            <option value="backcross">backcross</option>
-                                            <option value="sib">sib</option>
-                                            <option value="bulk">bulk</option>
-                                            <option value="bulk_self">bulk selfed</option>
-                                            <option value="bulk_open">bulk and open pollinated</option>
-                                            <option value="doubled_haploid">doubled haploid</option>
-                                            <option value="dihaploid_induction">dihaploid induction</option>
-                                            <option value="polycross">polycross</option>
-                                            <option value="reciprocal">reciprocal</option>
-                                            <option value="multicross">multicross</option>
+                                            <option value=""><% __('Select a cross type') |h %></option>
+                                            <option value="biparental"><% __('biparental') |h %></option>
+                                            <option value="self"><% __('self') |h %></option>
+                                            <option value="open"><% __('open pollinated') |h %></option>
+                                            <option value="backcross"><% __('backcross') |h %></option>
+                                            <option value="sib"><% __('sib') |h %></option>
+                                            <option value="bulk"><% __('bulk') |h %></option>
+                                            <option value="bulk_self"><% __('bulk selfed') |h %></option>
+                                            <option value="bulk_open"><% __('bulk and open pollinated') |h %></option>
+                                            <option value="doubled_haploid"><% __('doubled haploid') |h %></option>
+                                            <option value="dihaploid_induction"><% __('dihaploid induction') |h %></option>
+                                            <option value="polycross"><% __('polycross') |h %></option>
+                                            <option value="reciprocal"><% __('reciprocal') |h %></option>
+                                            <option value="multicross"><% __('multicross') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <br/><br/>
                                 <center>
-                                    <button id="next_step_cross_information" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                    <button id="next_step_cross_information" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Enter parentage information" &>
-                                <& /page/page_title.mas, title=>"Enter basic information about the cross" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Enter parentage information"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the cross"), 'h' ) &>
 
                                 <div class="form-group" id="get_maternal_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Female Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Female Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="maternal_parent" type="text" name="maternal" placeholder="Enter female parent name" />
+                                        <input class="form-control" id="maternal_parent" type="text" name="maternal" placeholder="<% __('Enter female parent name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_paternal_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Male Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Male Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="paternal_parent" type="text" name="paternal" placeholder="Enter male parent name"  />
+                                        <input class="form-control" id="paternal_parent" type="text" name="paternal" placeholder="<% __('Enter male parent name') |h %>"  />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_selfed_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Selfed Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Selfed Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="selfed_parent" type="text" name="selfed" placeholder="Enter parent name" />
+                                        <input class="form-control" id="selfed_parent" type="text" name="selfed" placeholder="<% __('Enter parent name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_open_maternal_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Female Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Female Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="open_maternal_parent" type="text" name="open maternal" placeholder="Enter female parent name" />
+                                        <input class="form-control" id="open_maternal_parent" type="text" name="open maternal" placeholder="<% __('Enter female parent name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_open_paternal_population" style="display: none">
-                                    <div class="col-sm-2"><center><label class="control-label">Male Population: </label><i>(optional)</i></center></div>
+                                    <div class="col-sm-2"><center><label class="control-label"><% __('Male Population:') |h %> </label><i><% __('(optional)') |h %></i></center></div>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="open_paternal_population" type="text" name="open paternal" placeholder="Enter male population name" />
+                                        <input class="form-control" id="open_paternal_population" type="text" name="open paternal" placeholder="<% __('Enter male population name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_bulk_maternal_population" style="display: none">
-                                    <label class="col-sm-2 control-label">Female Population: </label>
+                                    <label class="col-sm-2 control-label"><% __('Female Population:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="bulk_maternal_population" type="text" name="bulk maternal" placeholder="Enter female population name" />
+                                        <input class="form-control" id="bulk_maternal_population" type="text" name="bulk maternal" placeholder="<% __('Enter female population name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_bulk_paternal_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Male Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Male Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="bulk_paternal_parent" type="text" name="bulk paternal" placeholder="Enter male parent name" />
+                                        <input class="form-control" id="bulk_paternal_parent" type="text" name="bulk paternal" placeholder="<% __('Enter male parent name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_bulk_selfed_population" style="display: none">
-                                    <label class="col-sm-2 control-label">Selfed Population: </label>
+                                    <label class="col-sm-2 control-label"><% __('Selfed Population:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="bulk_selfed_population" type="text" name="bulk selfed" placeholder="Enter parent population name" />
+                                        <input class="form-control" id="bulk_selfed_population" type="text" name="bulk selfed" placeholder="<% __('Enter parent population name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_bulk_open_maternal_population" style="display: none">
-                                    <label class="col-sm-2 control-label">Female Population: </label>
+                                    <label class="col-sm-2 control-label"><% __('Female Population:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="bulk_open_maternal_population" type="text" name="bulk open maternal" placeholder="Enter female population name" />
+                                        <input class="form-control" id="bulk_open_maternal_population" type="text" name="bulk open maternal" placeholder="<% __('Enter female population name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_bulk_open_paternal_population" style="display: none">
-                                    <div class="col-sm-2"><center><label class="control-label">Male Population: </label><i>(optional)</i></center></div>
+                                    <div class="col-sm-2"><center><label class="control-label"><% __('Male Population:') |h %> </label><i><% __('(optional)') |h %></i></center></div>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="bulk_open_paternal_population" type="text" name="bulk open paternal" placeholder="Enter male population name" />
+                                        <input class="form-control" id="bulk_open_paternal_population" type="text" name="bulk open paternal" placeholder="<% __('Enter male population name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_doubled_haploid_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Doubled Haploid Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Doubled Haploid Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="doubled_haploid_parent" type="text" name="doubled haploid" placeholder="Enter parent name" />
+                                        <input class="form-control" id="doubled_haploid_parent" type="text" name="doubled haploid" placeholder="<% __('Enter parent name') |h %>" />
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="get_dihaploid_induction_parent" style="display: none">
-                                    <label class="col-sm-2 control-label">Dihaploid induction Parent: </label>
+                                    <label class="col-sm-2 control-label"><% __('Dihaploid induction Parent:') |h %> </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" id="dihaploid_induction_parent" type="text" name="dihaploid_induction" placeholder="Enter parent name" />
+                                        <input class="form-control" id="dihaploid_induction_parent" type="text" name="dihaploid_induction" placeholder="<% __('Enter parent name') |h %>" />
                                      </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="polycross_accessions" style="display: none">
-                                    <label class="col-sm-2 control-label">Accessions to use in Polycross: </label>
+                                    <label class="col-sm-2 control-label"><% __('Accessions to use in Polycross:') |h %> </label>
                                     <div class="col-sm-10">
                                         <div id="polycross_accession_list"></div>
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="reciprocal_accessions" style="display: none">
-                                    <label class="col-sm-2 control-label">Accessions to use in Reciprocal cross: </label>
+                                    <label class="col-sm-2 control-label"><% __('Accessions to use in Reciprocal cross:') |h %> </label>
                                     <div class="col-sm-10">
                                         <div id="reciprocal_accession_list"></div>
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="maternal_accessions" style="display: none">
-                                    <label class="col-sm-2 control-label">Multicross Female Parents: </label>
+                                    <label class="col-sm-2 control-label"><% __('Multicross Female Parents:') |h %> </label>
                                     <div class="col-sm-10">
                                         <div id="maternal_accession_list"></div>
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="paternal_accessions" style="display: none">
-                                    <label class="col-sm-2 control-label">Multicross Male Parents: </label>
+                                    <label class="col-sm-2 control-label"><% __('Multicross Male Parents:') |h %> </label>
                                     <div class="col-sm-10">
                                         <div id="paternal_accession_list"></div>
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="exact_parents" style="display: none">
-                                    <& /page/page_title.mas, title=>"Optional: If you choose to record exact cross parents, you can do so." &>
+                                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Optional: If you choose to record exact cross parents, you can do so."), 'h' ) &>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Field Trial: </label>
+                                        <label class="col-sm-2 control-label"><% __('Field Trial:') |h %> </label>
                                         <div class="col-sm-10">
                                             <div class="input-group">
-                                                <input type ="text" class ="form-control" id="parents_field_trial" name="parents_field_trial" placeholder="Enter trial name">
+                                                <input type ="text" class ="form-control" id="parents_field_trial" name="parents_field_trial" placeholder="<% __('Enter trial name') |h %>">
                                                 <div class ="input-group-btn">
                                                     <button class = "btn btn-info" id="search_parents_plots_plants" name="search_plots_plants"></i>Search Plots/Plants</button>
                                                 </div>
@@ -238,30 +238,30 @@ $locations
                                         </div>
                                     </div><br/><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Female Plot/Plant: </label>
+                                        <label class="col-sm-2 control-label"><% __('Female Plot/Plant:') |h %> </label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="female_plot_plant" name="female_plot_plant">
-                                                <option value="">Enter trial name first</option>
+                                                <option value=""><% __('Enter trial name first') |h %></option>
                                             </select>
                                         </div>
                                     </div><br/><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Male Plot/Plant: </label>
+                                        <label class="col-sm-2 control-label"><% __('Male Plot/Plant:') |h %> </label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="male_plot_plant" name="male_plot_plant">
-                                                <option value="">Enter trial name first</option>
+                                                <option value=""><% __('Enter trial name first') |h %></option>
                                             </select>
                                         </div>
                                     </div><br/><br/>
                                 </div>
                                 <div class="form-group" id="exact_female" style="display: none">
-                                    <& /page/page_title.mas, title=>"Optional: If you choose to record exact cross female parent, you can do so." &>
+                                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Optional: If you choose to record exact cross female parent, you can do so."), 'h' ) &>
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Field Trial: </label>
+                                        <label class="col-sm-2 control-label"><% __('Field Trial:') |h %> </label>
                                         <div class="col-sm-10">
                                             <div class="input-group">
-                                                <input type ="text" class ="form-control" id="female_field_trial" name ="female_field_trial" placeholder="Enter trial name">
+                                                <input type ="text" class ="form-control" id="female_field_trial" name ="female_field_trial" placeholder="<% __('Enter trial name') |h %>">
                                                 <div class ="input-group-btn">
                                                     <button class = "btn btn-info" id="search_female_plots_plants" name="search_plots_plants"></i>Search Plots/Plants</button>
                                                 </div>
@@ -269,22 +269,22 @@ $locations
                                         </div>
                                     </div><br/><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Female Plot/Plant: </label>
+                                        <label class="col-sm-2 control-label"><% __('Female Plot/Plant:') |h %> </label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="open_female_plot_plant" name="open_female_plot_plant">
-                                                <option value="">Enter trial name first</option>
+                                                <option value=""><% __('Enter trial name first') |h %></option>
                                             </select>
                                         </div>
                                     </div><br/><br/>
                                 </div>
                                 <br>
                                 <center>
-                                    <button id="next_step_basic_information" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                    <button id="next_step_basic_information" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Additional cross info" &>
-                                <& /page/page_title.mas, title=>"If you would like to add auto-generated progeny names for this cross, you can add it here" &>
-                                <h3>Optional:</h3>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Additional cross info"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("If you would like to add auto-generated progeny names for this cross, you can add it here"), 'h' ) &>
+                                <h3><% __('Optional:') |h %></h3>
                                 <table>
                                 <!--
                                     <tr>
@@ -357,7 +357,7 @@ $locations
                                     <tr>
                                         <td>
                                             <div class="form-group">
-                                                <label title="You may choose to create accessions for the progeny of the cross at this time." class="col-sm-9 control-label">Add New Accessions for Progeny: </label>
+                                                <label title="<% __('You may choose to create accessions for the progeny of the cross at this time.') |h %>" class="col-sm-9 control-label"><% __('Add New Accessions for Progeny:') |h %> </label>
                                                 <div class="col-sm-3">
                                                     <input id="create_progeny_checkbox" type="checkbox"/>
                                                 </div>
@@ -365,7 +365,7 @@ $locations
                                         </td>
                                         <td>
                                             <div class="form-group" id="create_progeny_number" style="display: none">
-                                                <label class="col-sm-6 control-label">Number of progeny: </label>
+                                                <label class="col-sm-6 control-label"><% __('Number of progeny:') |h %> </label>
                                                 <div class="col-sm-6">
                                                     <input class="form-control" type="text" id="progeny_number" />
                                                 </div>
@@ -375,7 +375,7 @@ $locations
                                     <tr id="use_prefix_suffix" style = "display: none">
                                         <td>
                                             <div class="form-group">
-                                                <label class="col-sm-9 control-label">Use Prefix and/or Suffix: </label>
+                                                <label class="col-sm-9 control-label"><% __('Use Prefix and/or Suffix:') |h %> </label>
                                                 <div class="col-sm-3">
                                                     <input id="use_prefix_suffix_checkbox" type="checkbox" checked/>
                                                 </div>
@@ -383,13 +383,13 @@ $locations
                                         </td>
                                         <td id="get_prefix_suffix" style="display: none">
                                             <div class="form-group" >
-                                                <label class="col-sm-6 control-label">Prefix: </label>
+                                                <label class="col-sm-6 control-label"><% __('Prefix:') |h %> </label>
                                                 <div class="col-sm-6">
                                                     <input class="form-control" id="prefix" name="prefix" value="P" size="5" />
                                                 </div>
                                             </div>
                                             <div class="form-group" >
-                                                <label class="col-sm-6 control-label">Suffix: </label>
+                                                <label class="col-sm-6 control-label"><% __('Suffix:') |h %> </label>
                                                 <div class="col-sm-6">
                                                     <input class="form-control" id="suffix" name="suffix" size="5" />
                                                 </div>
@@ -399,22 +399,22 @@ $locations
                                 </table>
                                 <br/>
                                 <center>
-                                    <button class="btn btn-primary" name="create_cross_submit" id="create_cross_submit" onclick="Workflow.complete(this, false);">Submit Cross</button>
+                                    <button class="btn btn-primary" name="create_cross_submit" id="create_cross_submit" onclick="Workflow.complete(this, false);"><% __('Submit Cross') |h %></button>
                                 </center>
                             </&>
                         </form>
 
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your cross is now in the database" &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your cross is now in the database"), 'h' ) &>
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                The cross was added successfully
+                                <% __('The cross was added successfully') |h %>
                             </p>
 
                             <ul>
-                                <li>You may want to proceed to the cross detail page for the cross you just created.</li>
-                                <li>You can print barcodes for the cross.</li>
-                                <li>You can add crossing information as it becomes available (e.g. number of seeds, progeny, etc).</li>
+                                <li><% __('You may want to proceed to the cross detail page for the cross you just created.') |h %></li>
+                                <li><% __('You can print barcodes for the cross.') |h %></li>
+                                <li><% __('You can add crossing information as it becomes available (e.g. number of seeds, progeny, etc).') |h %></li>
                             </ul>
                             <br/>
                         </&>
@@ -422,7 +422,7 @@ $locations
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="new_cross_close_modal" name="new_cross_close_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="new_cross_close_modal" name="new_cross_close_modal" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -432,13 +432,13 @@ $locations
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="crossTypeDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="crossTypeDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <h2>
-                        Individual Crosses:
+                        <% __('Individual Crosses:') |h %>
                     </h2>
 
                     <p><b>biparental:</b> An individual plant pollinated by another individual plant.</p>
@@ -454,7 +454,7 @@ $locations
                     <br>
 
                     <h2>
-                      Group of Crosses:
+                      <% __('Group of Crosses:') |h %>
                     </h2>
 
                     <p><b>polycross:</b> Creates a group of open pollinated crosses. Each accession in the selected list becomes the female parent in an open cross, and all the members of the list grouped together form the male parent.<p>
@@ -463,7 +463,7 @@ $locations
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -473,19 +473,19 @@ $locations
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="crossSavedDialog">Success</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="crossSavedDialog"><% __('Success') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 	    <p>
     	  <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-    	  The cross or crosses were saved successfully.
+    	  <% __('The cross or crosses were saved successfully.') |h %>
   	  </p>
         </div>
       </div>
       <div class="modal-footer">
-        <button id="dismiss_cross_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="dismiss_cross_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
