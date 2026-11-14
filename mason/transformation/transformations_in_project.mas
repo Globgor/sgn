@@ -9,12 +9,12 @@ $trial_id
     <table class="table table-hover table-bordered" id="transformations_in_project_table">
         <thead>
             <tr>
-                <th>Transformation ID</th>
-                <th>Plant Material</th>
-                <th>Vector Construct</th>
-                <th>Notes</th>
-                <th>Control</th>
-                <th>No of Transformants (Accessions)</th>
+                <th><% __('Transformation ID') |h %></th>
+                <th><% __('Plant Material') |h %></th>
+                <th><% __('Vector Construct') |h %></th>
+                <th><% __('Notes') |h %></th>
+                <th><% __('Control') |h %></th>
+                <th><% __('No of Transformants (Accessions)') |h %></th>
             </tr>
         </thead>
     </table>
