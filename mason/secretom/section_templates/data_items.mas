@@ -14,7 +14,7 @@
         <a href="<% $r %>"><% $item->{text} %></a>
 %    } else {
         <span class="ghosted"><% $item->{text} %></span>
-          <div style="margin-left: 2em; font-size: 90%">(file temporarily unavailable, contact <a href="mailto:jr286@cornell.edu">Joss Rose</a> for details)</div>
+          <div style="margin-left: 2em; font-size: 90%"><& /util/sentence.mas, text => __x('(file temporarily unavailable, contact {link}{name}{end_link} for details)'), link => '<a href="mailto:jr286@cornell.edu">', name => 'Joss Rose', end_link => '</a>' &></div>
 
 %    }
   </li>
