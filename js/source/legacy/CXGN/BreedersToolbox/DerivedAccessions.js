@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
     function upload_derived_accessions_file() {
         var uploadFile = jQuery("#derived_accessions_file").val();
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(gettext("Please select a file"));
             return;
         }
 
