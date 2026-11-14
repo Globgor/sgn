@@ -371,15 +371,10 @@ sub germplasm_pedigree {
             $h = $self->bcs_schema()->storage->dbh()->prepare($q);
             $h->execute($cvterm_female_parent, $accession_cvterm, $cvterm_male_parent, $male_parent_stock_id);
         }
-        else {
-            $h = $self->bcs_schema()->storage->dbh()->prepare($q);
-            $h->execute($cvterm_female_parent, $accession_cvterm, $cvterm_male_parent);
-        }
-
         my @siblings = ();
         my $cross_plan;
 
-        while (my($female_parent_id, $female_parent_name, $male_parent_id, $male_parent_name, $progeny_id, $progeny_name, $cross_type) = $h->fetchrow_array()){
+        while ($h && (my($female_parent_id, $female_parent_name, $male_parent_id, $male_parent_name, $progeny_id, $progeny_name, $cross_type) = $h->fetchrow_array())){
              if ($progeny_id ne $stock_id){
                 push @siblings, {
                     germplasmDbId => qq|$progeny_id|,
@@ -924,7 +919,7 @@ sub update {
 
     my $type_id = SGN::Model::Cvterm->get_cvterm_row($schema, 'accession', 'stock_type')->cvterm_id();
 
-    #sub rutine to save data
+    #sub routine to save data
     my @added_stocks;
     my $coderef_bcs = sub {
         foreach my $params (@$data){

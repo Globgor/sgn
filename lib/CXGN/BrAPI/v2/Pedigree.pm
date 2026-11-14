@@ -217,15 +217,11 @@ sub _germplasm_pedigree {
                 $h = $self->bcs_schema()->storage->dbh()->prepare($q);
                 $h->execute($cvterm_female_parent, $accession_cvterm, $vector_construct_cvterm, $cvterm_male_parent, $male_parent_stock_id);
             }
-            else {
-                $h = $self->bcs_schema()->storage->dbh()->prepare($q);
-                $h->execute($cvterm_female_parent, $accession_cvterm, $vector_construct_cvterm, $cvterm_male_parent);
-            }
 
             
             my $cross_plan;
 
-            while (my($female_parent_id, $female_parent_name, $male_parent_id, $male_parent_name, $progeny_id, $progeny_name, $cross_type) = $h->fetchrow_array()){
+            while ($h && (my($female_parent_id, $female_parent_name, $male_parent_id, $male_parent_name, $progeny_id, $progeny_name, $cross_type) = $h->fetchrow_array())){
                 if ($progeny_id ne $stock_id){
                     push @siblings, {
                         germplasmDbId => qq|$progeny_id|,
