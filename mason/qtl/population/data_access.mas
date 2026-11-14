@@ -21,7 +21,7 @@ $owner_page
 <&| /page/info_section.mas, 
   collapsible => 1, 
   collapsed   => 0, 
-  title       => "Data access" 
+  title       => $m->interp->apply_escapes( __("Data access"), 'h' ) 
 &>   
   <p>
     The QTL data for this population is not public yet. If you are the 
