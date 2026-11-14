@@ -43,12 +43,12 @@ jQuery(document).ready(function(){
     jQuery('#download_obsoleted_stock_list_submit').click(function() {
         var obsoleted_stock_list_id = jQuery('#obsoleted_stock_list_list_select').val();
         if (!obsoleted_stock_list_id) {
-            alert("Please select an obsoleted stock list!");
+            alert(<% __('Please select an obsoleted stock list!') |js %>);
             return;
         } else {
             lo.validate(obsoleted_stock_list_id, 'obsoleted_stocks', true).then((r) => {
                 if (r.missing.length > 0) {
-                   alert("The obsoleted stock list did not pass validation. Please correct the list and try again");
+                   alert(<% __('The obsoleted stock list did not pass validation. Please correct the list and try again') |js %>);
                 } else {
                     var token = new Date().getTime(); //use the current timestamp as the token name and value
                     jQuery('#download_obsolete_metadata_token').val(token);
