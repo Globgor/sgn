@@ -90,10 +90,10 @@ Naama Menda <nm249@cornell.edu>
 
 % if ($show_form) {
 
- <&| /page/optional_show.mas, title => "Assign owner" &>
+ <&| /page/optional_show.mas, title => $m->interp->apply_escapes( __("Assign owner"), 'h' ) &>
 
 <div id="associate_owner_form">
-  Notice: 'user' account will be updated to 'submitter'
+  <% __('Notice: \'user\' account will be updated to \'submitter\'') |h %>
   <div id="person_search" >
     <form name="owner_form" >
       <input type="text" style="width: 70%" id="sp_person" name="sp_person" value = "type first or last name"/>
@@ -102,7 +102,7 @@ Naama Menda <nm249@cornell.edu>
          type="button"
          name = "assign_owner"
          onclick="javascript:submit_owner_form()"
-         value = "Assign owner" />
+         value = "<% __('Assign owner') |h %>" />
     </form>
   </div>
 </div>
