@@ -21,7 +21,7 @@ my $contact         = qq | <a href="mailto:sgn-feedback\@solgenomics.net">sgn-fe
 &>
 
 <br>The <% $qtl_search_page %> returns phenotypic traits that may have qtl data. 
-QTL analysis is performed on the fly.<br /> 
+<& /util/sentence.mas, text => __x('QTL analysis is performed on the fly.') &><br /> 
 
 
 <br><b>1. Search the database using a trait name. For example, 'fruit shape'.</b><br/>
@@ -51,7 +51,7 @@ QTL analysis is performed on the fly.<br />
 
 <% $chr_location %>
 
-<br><b>To learn on how to perform comparative analysis with genetic maps and physical maps of the same or different Solanaceae species, please read this <% $cview_help %> help document.</a></b><br />  
+<br><b><& /util/sentence.mas, text => __x('To learn on how to perform comparative analysis with genetic maps and physical maps of the same or different Solanaceae species, please read this {link} help document.{end_link}'), link => $cview_help, end_link => '</a>' &></b><br />  
 
 
-<br><b>If you have questions, please contact us at: <% $contact %> </b><br/>
+<br><b><& /util/sentence.mas, text => __x('If you have questions, please contact us at: {contact}'), contact => $contact &> </b><br/>
