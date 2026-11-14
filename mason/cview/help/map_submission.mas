@@ -1,7 +1,7 @@
 
-<& /page/page_title.mas, title=>"Submitting maps to SGN" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Submitting maps to SGN"), 'h' ) &>
 
-Maps can be submitted to SGN for inclusion in the comparative viewer and related tools. File formats are defined for these types of data: 
+<% __('Maps can be submitted to SGN for inclusion in the comparative viewer and related tools. File formats are defined for these types of data:') |h %> 
 <ol>
 <li> A <b>mapping file</b> which contains the information about the markers positions each linkage group.</li>
 <li> One or more <b>marker data files</b> describing the markers used. The file format describing each type of marker is different, so that for one map, many marker description files may be required.</li>
@@ -13,9 +13,9 @@ Maps can be submitted to SGN for inclusion in the comparative viewer and related
 <i>Please make sure to include the column headings</i>.</p>
 
 
-<h3>The mapping file</h3>
+<h3><% __('The mapping file') |h %></h3>
 <p>
-This file gives the location of the markers on the map. When submitting a map, be sure to also provide a marker data file and accession information. These are the columns defined for the mapping file:
+<% __('This file gives the location of the markers on the map. When submitting a map, be sure to also provide a marker data file and accession information. These are the columns defined for the mapping file:') |h %>
 </p>
 
 <ul>
@@ -27,8 +27,8 @@ This file gives the location of the markers on the map. When submitting a map, b
 <li><b>protocol</b>: The type of experiment used to map the marker. Currently we support CAPS, SSR, RFLP, SNP, and AFLP. We can accept most PCR-based markers; <a href="/contact/">contact SGN</a> if you would like to submit marker types that are not listed here.</li>
 </ul>
 
-<h3>The marker data file</h3>
-<p>This file has a different format for each marker type. Please provide these columns:</p>
+<h3><% __('The marker data file') |h %></h3>
+<p><% __('This file has a different format for each marker type. Please provide these columns:') |h %></p>
 
 
 <p>
@@ -46,7 +46,7 @@ CAPS markers (<b>Note: revised 10/2008</b>):
   other enzymes. A list of other enzymes predicted to be useful for this marker
 </pre>
 <p>
-SSR markers:
+<% __('SSR markers:') |h %>
 </p>
 <pre>
   marker_name. The marker name.
@@ -59,7 +59,7 @@ SSR markers:
   repeat motif. The repeat motif (for example AAT).
 </pre>
 <p>
-RFLP markers:
+<% __('RFLP markers:') |h %>
 </p>
 <pre>
   marker_name. The marker name.
@@ -74,9 +74,9 @@ RFLP markers:
 For other types of markers, <a href="/contact/form">contact SGN</a>.
 </p>
 
-<h3>Polymorphism data</h3>
+<h3><% __('Polymorphism data') |h %></h3>
 <p>
-The polymorphism data file should have the following columns:
+<% __('The polymorphism data file should have the following columns:') |h %>
 </p>
 <pre>
   marker name.
@@ -88,7 +88,7 @@ The polymorphism data file should have the following columns:
   band sizes accession n.
 </pre>
 
-<h3>Accession information</h3>
+<h3><% __('Accession information') |h %></h3>
 <p>
 We need the following information for each accession used in the mapping or polymorphism data files. (Some accessions are already in our database; <a href="/contact/form">Contact us</a> if you're not sure). This information can be sent in an email or text file.
 </p>
@@ -100,10 +100,10 @@ We need the following information for each accession used in the mapping or poly
 
 <p>If you have identified the accessions in the files as "parent 1", "parent 2", etc, remember to state which accession is which.</p>
 
-<h4>Notes and examples</h4>
+<h4><% __('Notes and examples') |h %></h4>
 
 <ol>
-<li>Marker names should either correspond to SGN marker names, if the markers are identical, or have a new name that is not yet in the SGN database, as the marker correspondences will be established on a name matching basis.</li>
+<li><% __('Marker names should either correspond to SGN marker names, if the markers are identical, or have a new name that is not yet in the SGN database, as the marker correspondences will be established on a name matching basis.') |h %></li>
 <li>The band sizes should be given separated by + symbols, if more than one band is detected, such as: 420+230. The original band size, prior to digestion, can be given in a separate column.</li>
 <li>For RFLP markers, if possible, provide sequence data for the clone, as chromatogram files (.ab1 or .scf). Usually, a forward and reverse read is taken. The file names can be indicated in the RFLP marker file.</li>
 </ol>
