@@ -122,15 +122,15 @@ jQuery(document).ready(function(){
             jQuery('#audit_results').DataTable({
                 data: json_object,
                 columns: [
-                    { title: 'Timestamp' },
-                    { title: 'Operation' },
-                    { title: 'Username' },
-                    { title: 'Logged in User' },
-                    { title: 'Before' },
-                    { title: 'After' },
-                    { title: 'Transaction Code'},
-                    { title: 'Primary Key'},
-                    { title: 'Is Undo'},
+                    { title: <% __('Timestamp') |js %> },
+                    { title: <% __('Operation') |js %> },
+                    { title: <% __('Username') |js %> },
+                    { title: <% __('Logged in User') |js %> },
+                    { title: <% __('Before') |js %> },
+                    { title: <% __('After') |js %> },
+                    { title: <% __('Transaction Code') |js %>},
+                    { title: <% __('Primary Key') |js %>},
+                    { title: <% __('Is Undo') |js %>},
                 ],
                 "rowCallback" : function (row, data, index){
                     if(data[1] == "INSERT"){
