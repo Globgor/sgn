@@ -4,7 +4,7 @@
 
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 
-<h4>Field Trials With Tissue Samples</h4>
+<h4><% __('Field Trials With Tissue Samples') |h %></h4>
 
 <div class="well well-sm">
     <div class="panel panel-default">
@@ -12,17 +12,17 @@
             <table id="tissue_sample_trial_search_results" class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th>Trial name</th>
-                        <th>Description</th>
-                        <th>Breeding program</th>
-                        <th>Folder</th>
-                        <th>Year</th>
-                        <th>Location</th>
-                        <th>Trial type</th>
-                        <th>Design</th>
-                        <th>Planting Date</th>
-                        <th>Harvest Date</th>
-                        <th>Download</th>
+                        <th><% __('Trial name') |h %></th>
+                        <th><% __('Description') |h %></th>
+                        <th><% __('Breeding program') |h %></th>
+                        <th><% __('Folder') |h %></th>
+                        <th><% __('Year') |h %></th>
+                        <th><% __('Location') |h %></th>
+                        <th><% __('Trial type') |h %></th>
+                        <th><% __('Design') |h %></th>
+                        <th><% __('Planting Date') |h %></th>
+                        <th><% __('Harvest Date') |h %></th>
+                        <th><% __('Download') |h %></th>
                     </tr>
                 </thead>
             </table>
