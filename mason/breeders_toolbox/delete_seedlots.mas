@@ -78,13 +78,13 @@ jQuery(window).ready( function() {
 jQuery('#delete_seedlots_submit').click( function() {
    var list_id = jQuery('#seedlots_to_delete_html_select_list_select').val();
    if (list_id === "") { alert("Please select a list "+list_id); return; }
-   verify_seedlot_deletion(list_id).then(function(r) { display_seedlot_deletion_info(r) }, function(r) { alert("ERROR!")});
+   verify_seedlot_deletion(list_id).then(function(r) { display_seedlot_deletion_info(r) }, function(r) { alert(<% __('ERROR!') |js %>)});
 });
 
 jQuery('#delete_seedlots_confirm').click( function() {
     var list_id = jQuery('#seedlots_to_delete_html_select_list_select').val();
     if (list_id) {
-        delete_seedlots(list_id).then( function(r) { alert(r.delete_count+" elements have been deleted"); }, function(r) { alert('An error occurred'); });
+        delete_seedlots(list_id).then( function(r) { alert(r.delete_count+" elements have been deleted"); }, function(r) { alert(<% __('An error occurred') |js %>); });
     }
 });
 

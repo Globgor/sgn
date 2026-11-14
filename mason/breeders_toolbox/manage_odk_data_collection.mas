@@ -344,7 +344,7 @@ jQuery(document).ready(function () {
                                     });
                                 },
                                 error: function(response){
-                                    alert("Error retrieving available ODK cross summary");
+                                    alert(<% __('Error retrieving available ODK cross summary') |js %>);
                                 }
                             });
 
@@ -372,7 +372,7 @@ jQuery(document).ready(function () {
                         }
                     },
                     error: function(response_forms){
-                        alert("Error retrieving saved ODK ONA forms");
+                        alert(<% __('Error retrieving saved ODK ONA forms') |js %>);
                     }
                 });
 
@@ -380,7 +380,7 @@ jQuery(document).ready(function () {
         },
         error: function(response){
             jQuery("#working_modal").modal("hide");
-            alert("Error retrieving available ODK crossing forms");
+            alert(<% __('Error retrieving available ODK crossing forms') |js %>);
         }
     });
 
@@ -431,11 +431,11 @@ jQuery(document).ready(function () {
                 if (response.error){
                     alert(response.error);
                 }
-                alert('Not currently working.');
+                alert(<% __('Not currently working.') |js %>);
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving ODK phenotyping data.");
+                alert(<% __('Error retrieving ODK phenotyping data.') |js %>);
             }
         });
     });
@@ -457,7 +457,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving ODK crossing data.");
+                alert(<% __('Error retrieving ODK crossing data.') |js %>);
             }
         });
     });
@@ -478,7 +478,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error scheduling import of ODK crossing data.");
+                alert(<% __('Error scheduling import of ODK crossing data.') |js %>);
             }
         });
     });

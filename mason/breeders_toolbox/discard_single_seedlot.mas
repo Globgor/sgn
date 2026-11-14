@@ -95,12 +95,12 @@ jQuery(document).ready(function(){
         var discard_reason = jQuery('#reason_for_discarding_details_page').val();
 
         if (seedlot_name === '') {
-            alert("Error retrieving seedlot info");
+            alert(<% __('Error retrieving seedlot info') |js %>);
             return;
         }
 
         if (discard_reason === '') {
-            alert("Please provide reason for discarding this seedlot");
+            alert(<% __('Please provide reason for discarding this seedlot') |js %>);
             return;
         }
 
@@ -126,7 +126,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred discarding seedlot');
+                alert(<% __('An error occurred discarding seedlot') |js %>);
             }
         });
     });
@@ -138,7 +138,7 @@ jQuery(document).ready(function(){
 
     jQuery('#undo_discarding_seedlot_link').click(function() {
         var seedlot_id = "<% $seedlot_id %>";
-        var confirmation = confirm("Are you sure you want to UNDO marking this seedlot as DISCARDED ?");
+        var confirmation = confirm(<% __('Are you sure you want to UNDO marking this seedlot as DISCARDED ?') |js %>);
         if (confirmation) {
             jQuery.ajax({
                 url: '/ajax/breeders/seedlot/undo_discard',
@@ -160,7 +160,7 @@ jQuery(document).ready(function(){
                 },
                 error: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert('An error occurred processing your request');
+                    alert(<% __('An error occurred processing your request') |js %>);
                 }
             });
         }
