@@ -206,7 +206,7 @@ var trial_info_object = [];
 
               },
               error: function() {
-                alert('An error occurred retrieving trial information');
+                alert(<% __('An error occurred retrieving trial information') |js %>);
               }
 
       });
@@ -295,7 +295,7 @@ var trial_info_object = [];
           }
         },
           error: function() {
-            alert('An error occurred saving trait value');
+            alert(<% __('An error occurred saving trait value') |js %>);
             jQuery("#loading-trial-phenotype").hide();
             jQuery("#error-trial-phenotype").show();
           },
@@ -344,7 +344,7 @@ var trial_info_object = [];
                 }
             },
             error: function() {
-                alert('An error occurred retrieving trait value');
+                alert(<% __('An error occurred retrieving trait value') |js %>);
             }
         });
     }
