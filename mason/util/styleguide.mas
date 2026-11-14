@@ -1,11 +1,7 @@
 <h3><% __('Importing CSS') |h %></h3>
 
 <p>
-  To import CSS one should use the <code>/util/import_css.mas</code> 
-  mason component instead of a <code>&lt;link&gt;</code> element. This will 
-  ensure that a link is added to the <code>&lt;head&gt;</code> 
-  instead of being part of the <code>&lt;body&gt;</code>. One provides this 
-  mason componant with a list of strings which are one of the following:
+  <& /util/sentence.mas, text => __x('To import CSS one should use the {component} mason component instead of a {link_tag} element. This will ensure that a link is added to the {head_tag} instead of being part of the {body_tag}. One provides this mason componant with a list of strings which are one of the following:'), component => '<code>/util/import_css.mas</code>', link_tag => '<code>&lt;link&gt;</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>' &>
   <ul>
     <li><% __('The relative path to the CSS file from the /static/css folder.') |h %></li>
     <li><% __('The absolute site path to the CSS file.') |h %></li>
@@ -23,12 +19,7 @@
 <h3><% __('Importing JavaScript') |h %></h3>
 
 <p>
-  To import JavaScript one should use the <code>/util/import_javascript.mas</code> 
-  mason component. This will ensure that the script is loaded in the 
-  <code>&lt;head&gt;</code> instead of being part of the 
-  <code>&lt;body&gt;</code>. One provides this mason componant with a list of 
-  strings which are the path to the JavaScript file with slashes replaced by 
-  periods (e.g. <code>s/\/\./g</code>) and the file extension removed.
+  <& /util/sentence.mas, text => __x('To import JavaScript one should use the {component} mason component. This will ensure that the script is loaded in the {head_tag} instead of being part of the {body_tag}. One provides this mason componant with a list of strings which are the path to the JavaScript file with slashes replaced by periods (e.g. {expression}) and the file extension removed.'), component => '<code>/util/import_javascript.mas</code>', head_tag => '<code>&lt;head&gt;</code>', body_tag => '<code>&lt;body&gt;</code>', expression => '<code>s/\\/\\./g</code>' &>
   <pre><%text><& /util/import_javascript.mas, classes => [qw[ CXGN.Effects CXGN.Phenome.Locus MochiKit.DOM ]] &></%text></pre>
 </p>
 
@@ -202,13 +193,13 @@ button_id =&gt; "example_button_link"
 <&| /util/workflow.mas , id=> "my_workflow"&>
 
   <&| /util/workflow.mas:step, title=>"workflow.mas" &>
-    <p>Add a workflow using the <code>/util/workflow.mas</code> mason component</p>
+    <p><& /util/sentence.mas, text => __x('Add a workflow using the {component} mason component'), component => '<code>/util/workflow.mas</code>' &></p>
     <p><pre><%text>&lt;&amp;| /util/workflow.mas, id=> "my_workflow" &amp;&gt;...&lt;/&amp;&gt;</%text></pre></p>
     <button type="button" class="btn btn-default" onclick="Workflow.complete(this);"><% __('Next') |h %></button>
   </&>
   
   <&| /util/workflow.mas:step, title=>$m->interp->apply_escapes( __("Adding Steps"), 'h' ) &>
-    <p>Add steps to the workflow using the <code>/util/workflow.mas:step</code> mason method.</p>
+    <p><& /util/sentence.mas, text => __x('Add steps to the workflow using the {method} mason method.'), method => '<code>/util/workflow.mas:step</code>' &></p>
     <p>
 <pre><%text>&lt;&amp;| /util/workflow.mas, id=&gt; "my_workflow" &amp;&gt;
     &lt;&amp;| /util/workflow.mas:step, title=&gt; "Step A" &amp;&gt;...&lt;/&amp;&gt;
@@ -221,9 +212,7 @@ button_id =&gt; "example_button_link"
   
   <&| /util/workflow.mas:step, title=>$m->interp->apply_escapes( __("Completing Steps"), 'h' ) &>
   <p>
-    Use the <code>Workflow.complete(Element)</code> JavaScript function to 
-    complete a step. <code>Element</code> should be any DOM element within the 
-    step you would like to complete.
+    <& /util/sentence.mas, text => __x('Use the {function} JavaScript function to complete a step. {element} should be any DOM element within the step you would like to complete.'), function => '<code>Workflow.complete(Element)</code>', element => '<code>Element</code>' &>
   </p>
   <p>
 <pre><%text>&lt;&amp;| /util/workflow.mas, id=&gt; "my_workflow"&amp;&gt;
@@ -239,9 +228,7 @@ button_id =&gt; "example_button_link"
   
   <&| /util/workflow.mas:step, title=>$m->interp->apply_escapes( __("Skipping Steps"), 'h' ) &>
   <p>
-    Skipping works like completing but marks the step as incomplete. Use
-    <code>Workflow.skip(Element)</code> just like you would 
-    <code>Workflow.complete(Element)</code>.
+    <& /util/sentence.mas, text => __x('Skipping works like completing but marks the step as incomplete. Use {skip_function} just like you would {complete_function}.'), skip_function => '<code>Workflow.skip(Element)</code>', complete_function => '<code>Workflow.complete(Element)</code>' &>
   </p>
   <p>
 <pre><%text>&lt;&amp;| /util/workflow.mas, id=&gt; "my_workflow"&amp;&gt;
@@ -257,9 +244,7 @@ button_id =&gt; "example_button_link"
   
   <&| /util/workflow.mas:step, title=>$m->interp->apply_escapes( __("Pending Steps"), 'h' ) &>
   <p>
-    Sometimes a step needs time to complete, such as uploads. You can mark a
-    step as pending using <code>Workflow.pending(Element)</code>. You can later
-    fully complete the step using <code>Workflow.complete(Element)</code>.
+    <& /util/sentence.mas, text => __x('Sometimes a step needs time to complete, such as uploads. You can mark a step as pending using {pending_function}. You can later fully complete the step using {complete_function}.'), pending_function => '<code>Workflow.pending(Element)</code>', complete_function => '<code>Workflow.complete(Element)</code>' &>
   </p>
   <p>
 <pre><%text>&lt;&amp;| /util/workflow.mas, id=&gt; "my_workflow"&amp;&gt;
@@ -276,11 +261,7 @@ button_id =&gt; "example_button_link"
   
   <&| /util/workflow.mas:step, title=>$m->interp->apply_escapes( __("Endscreens"), 'h' ) &>
   <p>
-    After the final step is completed, an endscreen will be shown. To set the 
-    content of the endscreen, use the <code>/util/workflow.mas:complete</code> 
-    mason method. You can also optionally set a special endscreen which is shown
-    instead while there are pending steps using 
-    <code>/util/workflow.mas:pending</code>.
+    <& /util/sentence.mas, text => __x('After the final step is completed, an endscreen will be shown. To set the content of the endscreen, use the {complete_method} mason method. You can also optionally set a special endscreen which is shown instead while there are pending steps using {pending_method}.'), complete_method => '<code>/util/workflow.mas:complete</code>', pending_method => '<code>/util/workflow.mas:pending</code>' &>
   </p>
   <p>
 <pre><%text>&lt;&amp;| /util/workflow.mas, id=&gt; "my_workflow"&amp;&gt;
@@ -303,11 +284,7 @@ button_id =&gt; "example_button_link"
     <pre>var wf = document.querySelector("#my_workflow");
 Workflow.focus(wf,step_index);</pre>
     <p>
-      By default, <code>Workflow.complete(...)</code>, 
-      <code>Workflow.skip(...)</code>, and <code>Workflow.pending(...)</code> 
-      also change the focus to the next step. Sometimes, you need to set a step 
-      to complete without changing the focus. To do this, pass 
-      <code>false</code> as the second argument.
+      <& /util/sentence.mas, text => __x('By default, {complete_function}, {skip_function}, and {pending_function} also change the focus to the next step. Sometimes, you need to set a step to complete without changing the focus. To do this, pass {argument} as the second argument.'), complete_function => '<code>Workflow.complete(...)</code>', skip_function => '<code>Workflow.skip(...)</code>', pending_function => '<code>Workflow.pending(...)</code>', argument => '<code>false</code>' &>
     </p>
     <pre>Workflow.complete(Element,false);
 Workflow.skip(Element,false);
@@ -320,11 +297,11 @@ Workflow.pending(Element,false);</pre>
 <h3><% __('Vega(-lite) Graphs') |h %></h3>
 
 <p>
-    Using <a href="https://vega.github.io/vega-lite/">vega-lite</a> is an easy and quick way to make graphs in the db. Simply include vega-lite:
+    <& /util/sentence.mas, text => __x('Using {link}vega-lite{end_link} is an easy and quick way to make graphs in the db. Simply include vega-lite:'), link => '<a href="https://vega.github.io/vega-lite/">', end_link => '</a>' &>
     <pre><%text><& /util/import_javascript.mas, classes => [qw[ vega.vega3 vega.vega-lite2 vega.vega-embed3 vega.vega-defaults ]] &></%text></pre>
     <% __('set up a div:') |h %>
 <pre><%text>&lt;div id="vis"&gt;&lt;/div&gt;</%text></pre>
-    and then run vega-lite (you can also use a <a href="https://vega.github.io/vega/">vega</a> graph spec): 
+    <& /util/sentence.mas, text => __x('and then run vega-lite (you can also use a {link}vega{end_link} graph spec):'), link => '<a href="https://vega.github.io/vega/">', end_link => '</a>' &> 
 <pre><%text>&lt;script type="text/javascript"&gt;
     var yourVlSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
@@ -443,8 +420,7 @@ var styleguide_trial_table = jQuery('#styleguide_trial_search_results').DataTabl
 <h3><% __('Use of Symbols') |h %></h3>
 
 <p>
-  Below is a table with current usages of symbols in the database. 
-  Please add to this tale when you choose to use a new symbol.
+  <& /util/sentence.mas, text => __x('Below is a table with current usages of symbols in the database. Please add to this tale when you choose to use a new symbol.') &>
 </p>
 <style media="screen">
   .symbol-table>tbody>tr>td{
