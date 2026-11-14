@@ -24,7 +24,7 @@ CXGN.Dataset.prototype = {
 
 	    },
             'error': function(response) {
-		alert('An error occurred. Please try again.');
+		alert(gettext('An error occurred. Please try again.'));
 	    }
 	});
 	return datasets;
@@ -44,7 +44,7 @@ CXGN.Dataset.prototype = {
 
             },
             'error': function(response) {
-                alert('An error occurred. Please try again.');
+                alert(gettext('An error occurred. Please try again.'));
             }
         });
         return datasets;
@@ -85,7 +85,7 @@ CXGN.Dataset.prototype = {
                         return callback();
                     }
                     else {
-                        alert('The dataset has been deleted.');
+                        alert(gettext('The dataset has been deleted.'));
                     }
                 }
             },
@@ -108,7 +108,7 @@ CXGN.Dataset.prototype = {
                         return callback();
                     }
                     else {
-                        alert('The dataset is now public.');
+                        alert(gettext('The dataset is now public.'));
                     }
                 }
             },
@@ -132,7 +132,7 @@ CXGN.Dataset.prototype = {
                         return callback();
                     }
                     else {
-                        alert('The dataset is now private.');
+                        alert(gettext('The dataset is now private.'));
                     }
                 }
             },
@@ -162,7 +162,7 @@ CXGN.Dataset.prototype = {
                         callback(description)
                     }
                     else {
-                        alert('The dataset description has been updated.');
+                        alert(gettext('The dataset description has been updated.'));
                     }
                 }
             },
@@ -236,7 +236,7 @@ CXGN.Dataset.prototype = {
 	}
 
 	if (zero_count === Object.keys(dataset.categories).length) { 
-	    jQuery('#'+div).html("This dataset does not contain any selections.");
+	    jQuery('#'+div).html(gettext("This dataset does not contain any selections."));
 	}
 	else { 
 	    jQuery('#'+div).html(html);
@@ -284,7 +284,7 @@ function deleteDataset(dataset_id) {
 		}
 	    },
 	    'error': function(response) {
-		alert('A processing error occurred.');
+		alert(gettext('A processing error occurred.'));
 	    }
 	})
     }
