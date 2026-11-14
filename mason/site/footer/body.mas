@@ -31,7 +31,7 @@
           <div class="col-12 col-md-3">
             <div class="git-version">
               <p>
-                <strong>Version</strong>
+                <strong><% __('Version') |h %></strong>
                 <br />
 % if($isGit == 0) {
                 <span class="git-version-commit"><a href="https://github.com/solgenomics/sgn/commits/<% $commit %>"><% $commit %></a></span>&nbsp;

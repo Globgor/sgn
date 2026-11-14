@@ -71,3 +71,12 @@ msgstr "Забули ім'я користувача"
 #, perl-brace-format
 msgid "What is {question}?"
 msgstr "Скільки буде {question}?"
+
+msgid "Version"
+msgstr "Версія"
+
+msgid "Working"
+msgstr "Обробка"
+
+msgid "Progress"
+msgstr "Хід виконання"
