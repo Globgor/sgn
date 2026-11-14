@@ -140,14 +140,14 @@ jQuery(document).ready(function (){
         var stock_list_id = jQuery('#stock_list_select').val();
 
         if (!stock_list_id) {
-            alert("Please choose a list of accessions");
+            alert(<% __('Please choose a list of accessions') |js %>);
             return;
         }
 
         var markerset_id = jQuery('#markerset_select').val();
 
         if (!markerset_id) {
-            alert("Please choose a list of marker alleles");
+            alert(<% __('Please choose a list of marker alleles') |js %>);
             return;
         }
 
@@ -161,21 +161,21 @@ jQuery(document).ready(function (){
             },
             columns: [
                 {
-                    title: "Accession Name",
+                    title: <% __('Accession Name') |js %>,
                     data: null,
                     render: function(data, type, row){return "<a href='/stock/"+row.stock_id+"/view'>"+row.stock_name+"</a>";}
                 },
                 {
-                    title: "Sample Name",
+                    title: <% __('Sample Name') |js %>,
                     data: null,
                     render: function(data, type, row){return "<a href='/stock/"+row.sample_id+"/view'>"+row.sample_name+"</a>";}
                 },
                 {
-                    title: "Sample Type",
+                    title: <% __('Sample Type') |js %>,
                     data: "sample_type",
                 },
                 {
-                    title: "Genotypes",
+                    title: <% __('Genotypes') |js %>,
                     data: "genotypes",
                     render: function(data, type,row){
                         var parsed = JSON.parse(data);
