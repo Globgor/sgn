@@ -87,8 +87,7 @@ $color_model=>undef
    <div style="width: 40em; margin: 0 auto">
       <&| /page/explanation.mas &>
 
-      Select maps to compare using the control below, then
-      press the 'set' button to update the display.
+      <& /util/sentence.mas, text => __x('Select maps to compare using the control below, then press the \'set\' button to update the display.') &>
 
       </&>
   </div>
