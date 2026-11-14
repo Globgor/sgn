@@ -18,7 +18,7 @@ $markers
 my $src_feature = 'SL2.50';
 </%perl>
 
-<&| /page/info_section.mas, collapsible=>1, collapsed=>1, title => "QTL markers' genomic matches" &>
+<&| /page/info_section.mas, collapsible=>1, collapsed=>1, title => $m->interp->apply_escapes( __("QTL markers' genomic matches"), 'h' ) &>
 
 % if (ref($markers)) {
 %    foreach my $marker (@$markers) {

@@ -59,7 +59,7 @@ $qtl_image = qq |<img src="$qtl_image" width=320 height=320 alt="QTL for $trait_
 <&| /page/info_section.mas,
     collapsible => 1, 
     collapsed   => 1, 
-    title       => "QTL 95% Confidence Interval" 
+    title       => $m->interp->apply_escapes( __("QTL 95% Confidence Interval"), 'h' ) 
 &>  
 
 <& /page/columnar_table.mas,
@@ -75,7 +75,7 @@ $qtl_image = qq |<img src="$qtl_image" width=320 height=320 alt="QTL for $trait_
 <&| /page/info_section.mas, 
     collapsible => 1, 
     collapsed   => 1, 
-    title       => "QTL markers' genetic positions and Comparative Map Viewer" 
+    title       => $m->interp->apply_escapes( __("QTL markers' genetic positions and Comparative Map Viewer"), 'h' ) 
  &>
 
 <% $cmv_link %>
@@ -87,7 +87,7 @@ $qtl_image = qq |<img src="$qtl_image" width=320 height=320 alt="QTL for $trait_
 <&| /page/info_section.mas, 
     collapsible => 1, 
     collapsed   => 1, 
-    title       => "Browse QTL region" 
+    title       => $m->interp->apply_escapes( __("Browse QTL region"), 'h' ) 
 &>
 
 <% $download %>
