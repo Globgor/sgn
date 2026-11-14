@@ -69,19 +69,19 @@ jQuery(document).ready(function(){
         'ajax': '/ajax/propagation/active_propagation_ids_in_group/'+propagation_group_stock_id,
         'autoWidth': false,
         'columns': [
-            { title: "Propagation ID", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.propagation_stock_id+"/view'>"+row.propagation_name+"</a>"; } },
-            { title: "Accession", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.accession_stock_id+"/view'>"+row.accession_name+"</a>"; } },
-            { title: "Rootstock", "data": null, "render": function ( data, type, row ) {
+            { title: <% __('Propagation ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.propagation_stock_id+"/view'>"+row.propagation_name+"</a>"; } },
+            { title: <% __('Accession') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.accession_stock_id+"/view'>"+row.accession_name+"</a>"; } },
+            { title: <% __('Rootstock') |js %>, "data": null, "render": function ( data, type, row ) {
                 if (row.rootstock_stock_id === null){
                     return ' '
                 } else {
                     return "<a href='/stock/"+row.rootstock_stock_id+"'>"+row.rootstock_name+"</a>"
                 }
             }},
-            { title: "Status", "data": "propagation_status" },
-            { title: "Updated Date", "data": "updated_date" },
-            { title: "Updated by", "data": "updated_by" },
-            { title: "Update Status", "data": "null", "render": function ( data, type, row ) { return "<a onclick='updatePropagationStatus("+row.propagation_stock_id+",\""+row.propagation_name+"\")'>Update</a>"; } },
+            { title: <% __('Status') |js %>, "data": "propagation_status" },
+            { title: <% __('Updated Date') |js %>, "data": "updated_date" },
+            { title: <% __('Updated by') |js %>, "data": "updated_by" },
+            { title: <% __('Update Status') |js %>, "data": "null", "render": function ( data, type, row ) { return "<a onclick='updatePropagationStatus("+row.propagation_stock_id+",\""+row.propagation_name+"\")'>Update</a>"; } },
 
         ],
 
@@ -98,7 +98,7 @@ jQuery(document).ready(function(){
         }
 
         if ((propagation_status === 'Inventoried') && !inventory_identifier) {
-            alert ("Please provide Inventory Identifier");
+            alert (<% __('Please provide Inventory Identifier') |js %>);
             return;
         }
 
@@ -129,7 +129,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred updating the propagation status');
+                alert(<% __('An error occurred updating the propagation status') |js %>);
             }
         });
     });
