@@ -14,10 +14,7 @@
 <& /page/page_title.mas, title => 'Quick search for '.encode_entities( '"'.$quick_search_term.'"' ) &>
 
 <div class="page_introduction">
-  Note: The quick search does not perform exactly the same queries as
-  full searches for the various data types.  If your desired result
-  does not appear, you may want to try again with one of the advanced
-  search tools in the "search" menu.
+  <& /util/sentence.mas, text => __x('Note: The quick search does not perform exactly the same queries as full searches for the various data types. If your desired result does not appear, you may want to try again with one of the advanced search tools in the "search" menu.') &>
 </div>
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Exact matches'), 'h' ) &>
