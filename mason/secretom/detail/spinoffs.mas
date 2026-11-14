@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'Spin-off Projects and Collaborations' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Spin-off Projects and Collaborations'), 'h' ) &>
 <style>
   div.indented_content > div.indented_content {
     width: 580px;
@@ -36,7 +36,7 @@
   </div>
 
   <h1>
-    The Evolutionary Origins of the Plant Cell Wall and Associated Secretome
+    <% __('The Evolutionary Origins of the Plant Cell Wall and Associated Secretome') |h %>
   </h1>
 
   <div class="indented_content">

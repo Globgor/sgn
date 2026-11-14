@@ -30,7 +30,7 @@ span.filesize:after {
 
 </style>
 
-<& /page/page_title.mas, title => 'Computational prediction of secreted proteins' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Computational prediction of secreted proteins'), 'h' ) &>
 
 <& /secretom/secretary/nav.mas, curr_page => 'background' &>
 
@@ -56,7 +56,7 @@ span.filesize:after {
 
 </div>
 
-<&| /page/info_section.mas, title => 'New predictor: Secretary' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('New predictor: Secretary'), 'h' ) &>
 
   <p>
   We have developed a new predictor, <a href="/secretom/secretary">SecreTary</a>,
@@ -66,7 +66,7 @@ span.filesize:after {
 
 </&>
 
-<&| /page/info_section.mas, title => 'SecreTary, SignalP, TargetP results' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('SecreTary, SignalP, TargetP results'), 'h' ) &>
 
   <table class="species_predictions">
   <tr>
@@ -101,14 +101,14 @@ span.filesize:after {
 </tr>
   </table>
 
-  <&| /page/info_section.mas, title => 'Search SecreTary, SignalP, TargetP results for secreted proteins', is_subsection => 1 &>
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search SecreTary, SignalP, TargetP results for secreted proteins'), 'h' ), is_subsection => 1 &>
 
 
     <form method="GET" style="text-align: center; margin: 2em auto" action="<% $signalp_search_action %>">
-      <label for="query_input">Search</label>
+      <label for="query_input"><% __('Search') |h %></label>
       <input type="text" size="30" name="q" id="query_input" value="" />
       <input type="hidden" name="file" value="" />
-      <input type="submit" value="Search" size="20" />
+      <input type="submit" value="<% __('Search') |h %>" size="20" />
     </form>
 
     <p>
@@ -128,7 +128,7 @@ span.filesize:after {
   jQuery(".tools_popup").colorbox({width:"60%", inline:true, href:"#tools_popup"});
 </script>
 <div id="tools_popup">
-<&| /page/info_section.mas, title => 'Other computational tools for prediction of ER-targeting signal peptides' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Other computational tools for prediction of ER-targeting signal peptides'), 'h' ) &>
   <ul>
   <li><a href="http://www.cbs.dtu.dk/services/SignalP">SignalP</a></li>
   <li><a href="http://www.predisi.de">PrediSi</a></li>
@@ -154,11 +154,11 @@ $dir
     <span class="filename"><% $abs->basename %></span>
 
     <div>
-      <a href="/download/<% file($file)->as_foreign('Unix') %>">[Download]</a>
+      <a href="/download/<% file($file)->as_foreign('Unix') %>"><% __('[Download]') |h %></a>
       <span class="filesize"><%  Number::Bytes::Human::format_bytes( $size ) %></span>
     </div>
 % } else {
-    <span class="ghosted">temporarily unavailable</span>
+    <span class="ghosted"><% __('temporarily unavailable') |h %></span>
 % }
 </%def>
 

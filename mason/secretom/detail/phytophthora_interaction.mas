@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'The Secretome of Phytophthora / Tomato Interactions' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('The Secretome of Phytophthora / Tomato Interactions'), 'h' ) &>
 
 <div class="indented_content">
 
@@ -75,7 +75,7 @@
 
 </&>
 
-<&| /page/info_section.mas, title => 'Data Sets' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data Sets'), 'h' ) &>
 
 <p>These samples correspond to a time course experiment of a compatible
 interaction between Phytophthora infestans (clonal lineage US11) and
@@ -86,7 +86,7 @@ of the interaction and a mock inoculated plant served as control.
   <&| /secretom/section_templates/data_items.mas,
       default_ref_base => '/download/data/secretom/Secretome_Phytophthora_tomato_interactions',
       is_subsection => 1,
-      title => 'Files',
+      title => $m->interp->apply_escapes( __('Files'), 'h' ),
    &>
   - text: Time 0, F95S1KP01.sff
     ref: F95S1KP01.sff

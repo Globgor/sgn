@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'Functional Screens to Identify Secreted Proteins' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Functional Screens to Identify Secreted Proteins'), 'h' ) &>
 
 <div class="page_introduction">
   <p>
@@ -9,14 +9,14 @@
   </p>
 </div>
 
-<&| /page/info_section.mas, title => 'Yeast Secretion Trap (YST) Screen' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Yeast Secretion Trap (YST) Screen'), 'h' ) &>
 
   <div style="width: 330px; margin: 0; margin-right: 2em; float: left" class="captioned_image caption_right">
 
     <img src="/documents/img/secretom/YST_control_170.jpg" />
 
     <p>
-    Sucrose plate with no yeast colonies growing (negative control).
+    <% __('Sucrose plate with no yeast colonies growing (negative control).') |h %>
     </p>
 
   </div>
@@ -38,7 +38,7 @@
     <img src="/documents/img/secretom/YST_transformed_170.jpg" />
 
     <p>
-    Sucrose plate showing yeast colonies transformed with the YST vector library.
+    <% __('Sucrose plate showing yeast colonies transformed with the YST vector library.') |h %>
     </p>
 
   </div>
@@ -60,7 +60,7 @@
 
 </&>
 
-<&| /page/info_section.mas, title => 'Necrosis Inducing Protein (NIP) Secretion Trap Screen' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Necrosis Inducing Protein (NIP) Secretion Trap Screen'), 'h' ) &>
 
   <div style="width: 350px; float: right; margin: 0 0 10px 20px;" class="captioned_image caption_left">
 
@@ -98,7 +98,7 @@
 
 </&>
 
-<&| /page/info_section.mas, title => 'Objectives', is_subsection => 0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Objectives'), 'h' ), is_subsection => 0 &>
 
   <div style="width: 230px; margin: 0 0 10px 20px; float: right" class="captioned_image">
 

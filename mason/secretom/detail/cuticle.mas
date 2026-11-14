@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'The Tomato Fruit Cuticular Cell Wall Proteome' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('The Tomato Fruit Cuticular Cell Wall Proteome'), 'h' ) &>
 
 <div class="indentedcontent">
   <p>
@@ -73,7 +73,7 @@
     <img src="/documents/img/secretom/tomato_cuticle_3d_350.jpg" />
 
     <p>
-    A 3-D rendering of the tomato fruit (cv. M8) cuticle.
+    <% __('A 3-D rendering of the tomato fruit (cv. M8) cuticle.') |h %>
     </p>
 
   </div>

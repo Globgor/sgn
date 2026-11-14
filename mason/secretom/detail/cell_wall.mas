@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'About Plant Cell Walls' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('About Plant Cell Walls'), 'h' ) &>
 
 <div class="indented_content" style="margin: 20px auto 30px auto; width: 480px">
 
