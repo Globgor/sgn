@@ -13,15 +13,15 @@
 <noscript>
     <div id="sgn-captcha-nojs" style="max-width: 400px; margin: 15px auto; text-align: center;">
         <p>
-            <strong>Verification Failed</strong>
+            <strong><% __('Verification Failed') |h %></strong>
             <br />
-            Javascript is required for bot detection...
+            <% __('Javascript is required for bot detection...') |h %>
         </p>
     </div>
 </noscript>
 
 <div id="sgn-captcha" style="display: none; max-width: 400px; min-height: 250px; margin: 15px auto; text-align: center;">
-    <p id="sgn-captcha-status">Verifying your request...</p>
+    <p id="sgn-captcha-status"><% __('Verifying your request...') |h %></p>
     <progress id="sgn-captcha-loader" max="100" value="0"></progress>
 </div>
 
