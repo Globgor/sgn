@@ -4,9 +4,9 @@
 
 <& /util/import_javascript.mas, classes => [ 'bootstrap_min.js', 'jquery' ] &>
 
-<& /page/page_title.mas, title => 'Seedlot Maintenance' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Seedlot Maintenance'), 'h' ) &>
 
-<&| /page/info_section.mas, title=>"About Seedlot Maintenance",  collapsible => 1, collapsed => 1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("About Seedlot Maintenance"), 'h' ),  collapsible => 1, collapsed => 1 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -28,7 +28,7 @@
 </&>
 
 <!-- Additional crop-specific seedlot maintenance tools -->
-<&| /page/info_section.mas, title=>"Seedlot Maintenance Tools",  collapsible => 1, collapsed => !$tool &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Seedlot Maintenance Tools"), 'h' ),  collapsible => 1, collapsed => !$tool &>
     <& /breeders_toolbox/seedlot_maintenance/tools.mas, collapsed => !$tool &>
 </&>
 
@@ -41,7 +41,7 @@
         $seedlot_subtitle = '<button class="btn btn-sm btn-primary" style="margin:3px" id="record_events">Record Maintenace</button> <button class="btn btn-sm btn-primary" style="margin:3px" id="upload_events">Upload Maintenance</button>'
     }
 </%perl>
-<&| /page/info_section.mas, title=>"Seedlot Maintenance Events",  collapsible => 1, collapsed => !!$tool, subtitle => $seedlot_subtitle &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Seedlot Maintenance Events"), 'h' ),  collapsible => 1, collapsed => !!$tool, subtitle => $seedlot_subtitle &>
     
     <& /breeders_toolbox/seedlot_maintenance/table.mas &>
 

@@ -4,24 +4,24 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h5 class="panel-title">Split Seedlot</h5>
+        <h5 class="panel-title"><% __('Split Seedlot') |h %></h5>
     </div>
     <div class="panel-body">
-        <p>This tool will split an existing Seedlot - keeping the existing Seedlot and creating a new one with the same Accession as the contents.</p>
+        <p><% __('This tool will split an existing Seedlot - keeping the existing Seedlot and creating a new one with the same Accession as the contents.') |h %></p>
 
         <br />
 
         <!-- Seedlot to Split -->
         <div class="form-group">
-            <label class="col-sm-3 control-label" style="text-align: right">Original Seedlot to Split</label>
+            <label class="col-sm-3 control-label" style="text-align: right"><% __('Original Seedlot to Split') |h %></label>
             <div class="col-sm-5">
                 <input class="form-control" id="seedlot_split_name" type="text" value="">
             </div>
             <div class="col-sm-2">
-                <button id="seedlot_split_name_update" class="btn btn-block btn-info"><span class="glyphicon glyphicon-refresh"></span> Update</button>
+                <button id="seedlot_split_name_update" class="btn btn-block btn-info"><span class="glyphicon glyphicon-refresh"></span> <% __('Update') |h %></button>
             </div>
             <div class="col-sm-2">
-                <button id="seedlot_split_name_barcode" class="btn btn-block btn-default"><span class="glyphicon glyphicon-qrcode"></span> Barcode</button>
+                <button id="seedlot_split_name_barcode" class="btn btn-block btn-default"><span class="glyphicon glyphicon-qrcode"></span> <% __('Barcode') |h %></button>
             </div>
         </div>
 
@@ -35,15 +35,15 @@
             <!-- New Seedlot Attributes -->
             <div id="seedlot_split_new_attributes_panel" class="panel panel-info" style="max-width: 600px; margin: 0 auto">
                 <div class="panel-heading">
-                    <h5 class="panel-title">New Seedlot Attributes</h5>
+                    <h5 class="panel-title"><% __('New Seedlot Attributes') |h %></h5>
                 </div>
                 <div class="panel-body">
 
                     <!-- New Seedlot Name -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Seedlot Name</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Seedlot Name') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_name" type="text" value="" placeholder="Required, must be a unique Seedlot name">
+                            <input class="form-control" id="seedlot_split_new_name" type="text" value="" placeholder="<% __('Required, must be a unique Seedlot name') |h %>">
                         </div>
                     </div>
 
@@ -51,9 +51,9 @@
 
                     <!-- New Seedlot Contents -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Contents</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Contents') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_contents" type="text" value="" placeholder="Required, must be an existing Accession name">
+                            <input class="form-control" id="seedlot_split_new_contents" type="text" value="" placeholder="<% __('Required, must be an existing Accession name') |h %>">
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@
 
                     <!-- New Seedlot Material Type -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Material Type</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Material Type') |h %></label>
                         <div class="col-sm-9">
                             <div id="seedlot_split_new_material_type_div"></div>
                         </div>
@@ -71,7 +71,7 @@
 
                     <!-- New Seedlot Breeding Program -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Breeding Program</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Breeding Program') |h %></label>
                         <div class="col-sm-9">
                             <div id="seedlot_split_new_breeding_program_div"></div>
                         </div>
@@ -81,9 +81,9 @@
 
                     <!-- New Seedlot Location -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Location</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Location') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_location" type="text" value="" placeholder="Required">
+                            <input class="form-control" id="seedlot_split_new_location" type="text" value="" placeholder="<% __('Required') |h %>">
                         </div>
                     </div>
 
@@ -91,9 +91,9 @@
 
                     <!-- New Seedlot Box -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Box</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Box') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_box" type="text" value="" placeholder="Required">
+                            <input class="form-control" id="seedlot_split_new_box" type="text" value="" placeholder="<% __('Required') |h %>">
                         </div>
                     </div>
 
@@ -101,7 +101,7 @@
 
                     <!-- New Seedlot Quality Issues -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Quality Issues</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Quality Issues') |h %></label>
                         <div class="col-sm-9">
                             <input class="form-control" id="seedlot_split_new_quality_issues" type="text" value="" placeholder="Optional, list quality issues here, or 'ok' for good quality seed">
                         </div>
@@ -111,9 +111,9 @@
 
                     <!-- New Seedlot Organization -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Organization</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Organization') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_organization" type="text" value="" placeholder="Optional">
+                            <input class="form-control" id="seedlot_split_new_organization" type="text" value="" placeholder="<% __('Optional') |h %>">
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
 
                     <!-- New Seedlot Timestamp -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Timestamp</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Timestamp') |h %></label>
                         <div class="col-sm-9">
                             <input class="form-control" id="seedlot_split_new_timestamp" type="text" value="<% $timestamp %>" placeholder="<% $timestamp %>">
                         </div>
@@ -131,9 +131,9 @@
 
                     <!-- New Seedlot Description -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Description</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Description') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_description" type="text" value="" placeholder="Optional">
+                            <input class="form-control" id="seedlot_split_new_description" type="text" value="" placeholder="<% __('Optional') |h %>">
                         </div>
                     </div>
 
@@ -145,13 +145,13 @@
             <!-- New Seedlot Contents -->
             <div id="seedlot_split_new_contents_panel" class="panel panel-info" style="max-width: 600px; margin: 0 auto">
                 <div class="panel-heading">
-                    <h5 class="panel-title">New Seedlot Contents</h5>
+                    <h5 class="panel-title"><% __('New Seedlot Contents') |h %></h5>
                 </div>
                 <div class="panel-body">
 
                     <!-- Original Seedlot Count -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Original Seedlot Count</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Original Seedlot Count') |h %></label>
                         <div class="col-sm-9">
                             <p id="seedlot_split_original_contents_count">&nbsp;</p>
                         </div>
@@ -161,7 +161,7 @@
 
                     <!-- Original Seedlot Weight -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">Original Seedlot Weight (g)</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('Original Seedlot Weight (g)') |h %></label>
                         <div class="col-sm-9">
                             <p id="seedlot_split_original_contents_weight">&nbsp;</p>
                         </div>
@@ -171,11 +171,11 @@
 
                     <!-- New Seedlot Contents Type -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">New Seedlot Contents Type</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('New Seedlot Contents Type') |h %></label>
                         <div class="col-sm-9">
                             <select class="form-control" id="seedlot_split_new_contents_type">
-                                <option value="amount">Amount / Count</option>
-                                <option value="weight">Weight (g)</option>
+                                <option value="amount"><% __('Amount / Count') |h %></option>
+                                <option value="weight"><% __('Weight (g)') |h %></option>
                             </select>
                         </div>
                     </div>
@@ -184,9 +184,9 @@
 
                     <!-- New Seedlot Contents Value -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" style="text-align: right">New Seedlot Contents Value</label>
+                        <label class="col-sm-3 control-label" style="text-align: right"><% __('New Seedlot Contents Value') |h %></label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="seedlot_split_new_contents_value" value="" placeholder="Required">
+                            <input class="form-control" id="seedlot_split_new_contents_value" value="" placeholder="<% __('Required') |h %>">
                         </div>
                     </div>
 
@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" style="text-align: right"></label>
                         <div class="col-sm-9">
-                            <p><strong>Subtract initial contents of new seedlot from original seedlot:</strong></p>
+                            <p><strong><% __('Subtract initial contents of new seedlot from original seedlot:') |h %></strong></p>
                             <input id="seedlot_split_new_contents_transaction" name="seedlot_split_new_contents_transaction" type="checkbox" data-toggle="toggle">
                         </div>
                     </div>
@@ -208,7 +208,7 @@
 
             <!-- Create New Seedlot -->
             <div style="max-width: 400px; margin: 0 auto">
-                <button id="seedlot_split_new_create" class="btn btn-primary btn-block">Create Seedlot</button>
+                <button id="seedlot_split_new_create" class="btn btn-primary btn-block"><% __('Create Seedlot') |h %></button>
             </div>
 
         </div>
@@ -221,7 +221,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div id="seedlot_split_modal_body" class="modal-body"></div>
-            <div class="modal-footer"><button id="seedlot_split_modal_close" type="button" class="btn btn-default">Close</button></div>
+            <div class="modal-footer"><button id="seedlot_split_modal_close" type="button" class="btn btn-default"><% __('Close') |h %></button></div>
         </div>
     </div>
 </div>

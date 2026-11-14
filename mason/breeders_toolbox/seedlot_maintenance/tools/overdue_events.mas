@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h5 class="panel-title">Overdue Events</h5>
+        <h5 class="panel-title"><% __('Overdue Events') |h %></h5>
     </div>
     <div class="panel-body">
 
@@ -16,7 +16,7 @@
         
         <!-- Seedlots -->
         <div class="form-group">
-            <label class="col-sm-3 control-label" style="text-align: right">Seedlots</label>
+            <label class="col-sm-3 control-label" style="text-align: right"><% __('Seedlots') |h %></label>
             <div class="col-sm-9">
                 <div id="overdue_events_seedlot_list"></div>
             </div>
@@ -26,10 +26,10 @@
 
         <!-- Event -->
         <div class="form-group">
-            <label class="col-sm-3 control-label" style="text-align: right">Event</label>
+            <label class="col-sm-3 control-label" style="text-align: right"><% __('Event') |h %></label>
             <div class="col-sm-9">
                 <select class="form-control input-sm" id="overdue_events_event_select" disabled>
-                    <option value="">Loading...</option>
+                    <option value=""><% __('Loading...') |h %></option>
                 </select>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
         <!-- Date -->
         <div class="form-group">
-            <label class="col-sm-3 control-label" style="text-align: right">Date</label>
+            <label class="col-sm-3 control-label" style="text-align: right"><% __('Date') |h %></label>
             <div class="col-sm-9">
                 <input class="form-control input-sm" type="date" id="overdue_events_date" name="overdue_events_date" value="<% $datestr %>" max="<% $datestr %>">
             </div>
@@ -47,7 +47,7 @@
         <br /><br />
 
         <div style="margin: 0 auto; max-width: 400px">
-            <button id="overdue_events_find_seedlots" class="btn btn-primary btn-block">Find Seedlots</button>
+            <button id="overdue_events_find_seedlots" class="btn btn-primary btn-block"><% __('Find Seedlots') |h %></button>
         </div>
 
 
@@ -57,12 +57,12 @@
 
             <br /><br />
             
-            <h4>Overdue Seedlots</h4>
+            <h4><% __('Overdue Seedlots') |h %></h4>
             <table class="table table-striped" style="width: 100%">
                 <thead>
                     <tr>
-                        <th style="width: 50%">Seedlot</th>
-                        <th style="width: 50%">Record</th>
+                        <th style="width: 50%"><% __('Seedlot') |h %></th>
+                        <th style="width: 50%"><% __('Record') |h %></th>
                     </tr>
                 </thead>
                 <tbody id="overdue_events_results_overdue"></tbody>
@@ -70,12 +70,12 @@
 
             <br /><br />
 
-            <h4>Not Overdue Seedlots</h4>
+            <h4><% __('Not Overdue Seedlots') |h %></h4>
             <table class="table table-striped" style="width: 100%">
                 <thead>
                     <tr>
-                        <th style="width: 50%">Seedlot</th>
-                        <th style="width: 50%">Last Recorded Event</th>
+                        <th style="width: 50%"><% __('Seedlot') |h %></th>
+                        <th style="width: 50%"><% __('Last Recorded Event') |h %></th>
                     </tr>
                 </thead>
                 <tbody id="overdue_events_results_not_overdue"></tbody>
