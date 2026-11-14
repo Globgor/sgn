@@ -22,7 +22,7 @@
     providing browsable sequence annotations.
   </p>
 
-  <p>See the <a href="http://gmod.org/wiki/GBrowse#On-line_documentation">GBrowse online documentation</a> for instructions on how to use GBrowse.</p>
+  <p><& /util/sentence.mas, text => __x('See the {link}GBrowse online documentation{end_link} for instructions on how to use GBrowse.'), link => '<a href="http://gmod.org/wiki/GBrowse#On-line_documentation">', end_link => '</a>' &></p>
 </&>
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Available GBrowse Datasets'), 'h' ) &>
