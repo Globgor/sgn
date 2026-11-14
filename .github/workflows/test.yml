@@ -14,7 +14,7 @@ env:
   BREEDERS_SPLIT_2: t/selenium2/breeders/upload_phenotype/upload_datacollector_spreadsheet.t
 
 jobs:
-  # The tests run in parallel parts. Every part starts the same containers
+  # The tests run in parallel parts. Every part starts its needed containers
   # and loads the fixture; every /entrypoint.sh call then runs its tests on
   # a fresh copy of the fixture database, as the former single job did.
   test_part:
@@ -86,7 +86,7 @@ jobs:
           --health-retries 5
 
       selenium:
-        image: selenium/standalone-firefox:3.141.59
+        image: ${{ contains(matrix.tests, 't/selenium2/') && 'selenium/standalone-firefox:3.141.59' || '' }}
         volumes:
           - ${{ github.workspace }}:/home/production/cxgn/sgn
           - ${{ github.workspace }}:/home/vagrant/cxgn/sgn
@@ -97,7 +97,7 @@ jobs:
           --health-interval 5s
 
       keycloak_db:
-        image: postgres:13.0
+        image: ${{ contains(matrix.tests, 't/selenium2/authenticate') && 'postgres:13.0' || '' }}
         env:
           POSTGRES_DB: keycloak
           POSTGRES_PASSWORD: postgres
@@ -108,7 +108,7 @@ jobs:
           --health-retries 5
 
       keycloak:
-        image: bffafirms/keycloak:26.5.1-0-breedbase-testing
+        image: ${{ contains(matrix.tests, 't/selenium2/authenticate') && 'bffafirms/keycloak:26.5.1-0-breedbase-testing' || '' }}
         env:
           KC_DB_USERNAME:              postgres
           KC_DB_PASSWORD:              postgres
