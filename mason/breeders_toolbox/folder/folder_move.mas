@@ -217,7 +217,7 @@ function move_folder() {
   //console.log(parent_folder_id);
   //console.log(folder_id);
   if (parent_folder_id == folder_id) {
-    alert("Cannot make a folder its own parent.");
+    alert(<% __('Cannot make a folder its own parent.') |js %>);
     return;
   }
   jQuery.ajax( {
@@ -234,7 +234,7 @@ function move_folder() {
       }
     },
     error: function(response) {
-      alert('An error occurred trying to move folder.');
+      alert(<% __('An error occurred trying to move folder.') |js %>);
       jQuery('#move_folder_dialog').modal("hide");
     }
   });
