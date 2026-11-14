@@ -22,13 +22,13 @@
       
 
 <!-- temporarily comment out <& /page/page_title.mas, title=>"Genomic Prediction of Cross Performance (GPCP)" &> -->
-  <h2 style="text-align: center;font-size:20px;"> Genomic Prediction of Cross Performance (GPCP)</h2>
+  <h2 style="text-align: center;font-size:20px;"> <% __('Genomic Prediction of Cross Performance (GPCP)') |h %></h2>
  <br>
 
- <b style="font-size:15px; color: #254117">Select a Genotyped Dataset</b>
+ <b style="font-size:15px; color: #254117"><% __('Select a Genotyped Dataset') |h %></b>
 <br>
 
-    <&| /page/info_section.mas, id=>"input_dataset_section", title=>"Available Datasets", collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, id=>"input_dataset_section", title=>$m->interp->apply_escapes( __("Available Datasets"), 'h' ), collapsible=>1, collapsed=>0 &>
       <input type="hidden" name="outformat" value="0" />
 
 
@@ -37,13 +37,13 @@
 	  <br>
 
       <div style="border-top: 1px solid #DEDEDE;">
-          <h4>Choose Selection Index values</h4>
-          <i style="font-size:13px">This is a drop-down menu showing your pre-constructed selection indices.</i>
+          <h4><% __('Choose Selection Index values') |h %></h4>
+          <i style="font-size:13px"><% __('This is a drop-down menu showing your pre-constructed selection indices.') |h %></i>
           <div style= "display: flex;flex-direction: row;">
             <div id="sin_list"></div>
-              <p style="margin-left: 30px;margin-right: 30px;">OR</p>
+              <p style="margin-left: 30px;margin-right: 30px;"><% __('OR') |h %></p>
               <button class="btn btn-success" >
-              <a href="/selection/index" target="_blank" rel="noopener noreferrer" style="color: white">Create a new one here</a>
+              <a href="/selection/index" target="_blank" rel="noopener noreferrer" style="color: white"><% __('Create a new one here') |h %></a>
               </button>
           </div>
           
@@ -53,14 +53,14 @@
       <br>
   <div style="border-top: 1px solid #DEDEDE;">
   <br>
-	<button class="btn btn-success" id="select_dataset" type="submit" name="select_dataset" value="select_dataset">Proceed to Factor Selection</button>
+	<button class="btn btn-success" id="select_dataset" type="submit" name="select_dataset" value="select_dataset"><% __('Proceed to Factor Selection') |h %></button>
 	<br>
 	<br>
 
       </div>
 
       <div class="col" style="background-color:MintCream; padding: 10px 20px 25px" id="fixed_and_random_factors">
-        <div class="text-center">Factors will appear here..</div>
+        <div class="text-center"><% __('Factors will appear here..') |h %></div>
 
       </div>
       <br>
@@ -73,7 +73,7 @@
 
       
       <div style="text-align: center">
-	<button class="btn btn-success" id="runGCPC" type="submit" name="runGCPC" value="runGCPC">Run GPCP</button>
+	<button class="btn btn-success" id="runGCPC" type="submit" name="runGCPC" value="runGCPC"><% __('Run GPCP') |h %></button>
       </div>
       <br />
 
