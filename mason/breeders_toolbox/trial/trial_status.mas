@@ -20,21 +20,21 @@ $user_can_modify => undef
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
 %  if ($user_can_modify) {
-<button class="btn btn-sm btn-primary" style="margin:3px" id="update_trial_status_link">Update Trial Status</button>
+<button class="btn btn-sm btn-primary" style="margin:3px" id="update_trial_status_link"><% __('Update Trial Status') |h %></button>
 <br/><br/>
 % }
 
 
-<&| /page/info_section.mas, title => "Trial Activities", collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Trial Activities"), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
                 <table id = "trial_activities_table" class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>Status Type</th>
-                            <th>Date</th>
-                            <th>Updated by</th>
+                            <th><% __('Status Type') |h %></th>
+                            <th><% __('Date') |h %></th>
+                            <th><% __('Updated by') |h %></th>
                         </tr>
                     </thead>
                 </table>
@@ -45,28 +45,28 @@ $user_can_modify => undef
 
 <div class="panel-body">
 
-<&| /page/info_section.mas, id=>"trial_completion_layout_section", title=>"Field Design", collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>"trial_completion_layout_section", title=>$m->interp->apply_escapes( __("Field Design"), 'h' ), collapsible=>1, collapsed=>1 &>
 %  if ($design_name) {
-            <p class="text-success" title="This trial has a design type saved. You can view and download this information in the Design section on this page."><small>Has Field Design&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
+            <p class="text-success" title="<% __('This trial has a design type saved. You can view and download this information in the Design section on this page.') |h %>"><small><% __('Has Field Design') |h %>&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
 %  } else {
-            <p class="text-danger" title="This trial does not have a design type saved! If this happens please contact us because this should not happen!"><small>No Field Design&nbsp;&nbsp;</small><span class="glyphicon glyphicon-remove-sign"></span></p>
+            <p class="text-danger" title="<% __('This trial does not have a design type saved! If this happens please contact us because this should not happen!') |h %>"><small><% __('No Field Design') |h %>&nbsp;&nbsp;</small><span class="glyphicon glyphicon-remove-sign"></span></p>
 %  }
 
             <div id="trial_completion_layout_section_div">
-                <div class="well well-sm">LOADING...</div>
+                <div class="well well-sm"><% __('LOADING...') |h %></div>
             </div>
 
 %  if ($has_plant_entries) {
-            <p class="text-success" title="This trial has plot and plant entries saved. This means that phenotypes can be recorded on the plot and plant level."><small>Has Plots<br/>And Plants&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
+            <p class="text-success" title="<% __('This trial has plot and plant entries saved. This means that phenotypes can be recorded on the plot and plant level.') |h %>"><small>Has Plots<br/>And Plants&nbsp;&nbsp;</small><span class="glyphicon glyphicon-ok-sign"></span></p>
 %  } else {
             <p class="text-info" title="This trial has plot entries saved, but no plant entries. Plant entries are needed for plant level phenotyping. You can create plant entries in Design->Plant Entries section on this page."><small>Has Plots<br/>No Plants&nbsp;&nbsp;</small><span class="glyphicon glyphicon-info-sign"></span></p>
 %  }
 </&>
 
-<&| /page/info_section.mas, id=>"trial_completion_phenotype_section", title=>"Phenotyping", collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>"trial_completion_phenotype_section", title=>$m->interp->apply_escapes( __("Phenotyping"), 'h' ), collapsible=>1, collapsed=>1 &>
 
             <div id="trial_completion_phenotype_section_div">
-                <div class="well well-sm">LOADING...</div>
+                <div class="well well-sm"><% __('LOADING...') |h %></div>
             </div>
 <!--
 %  if ($phenotypes_fully_uploaded) {

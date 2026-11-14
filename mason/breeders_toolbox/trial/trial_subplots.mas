@@ -13,30 +13,30 @@ $curator => undef
 
 <br>
 
-<button id="select_all_subplots_btn" class="btn btn-primary">Select/Deselect All</button>
+<button id="select_all_subplots_btn" class="btn btn-primary"><% __('Select/Deselect All') |h %></button>
 
 <br>
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title => 'Add subplots to a list', collapsible=>1, collapsed=>0, subtitle=>'<i>Add subplots in this trial to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add subplots to a list'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Add subplots in this trial to a new or exisiting list</i>'&>
         <br>
             <table style="width:100%">
                 <tr>
                     <td>
-                        <input style="width:85%" class="form-control input-sm" type="text" id="subplot_select_new_list_name" placeholder="New list name..."/>
-                        <input style="width:85%" class="form-control input-sm" type="text" id="subplot_select_new_list_description" placeholder="New list description..."/>
-                        <button class="btn btn-primary btn-sm" id="subplot_select_add_to_new_list_btn" type="button">Add selection to new list</button>
+                        <input style="width:85%" class="form-control input-sm" type="text" id="subplot_select_new_list_name" placeholder="<% __('New list name...') |h %>"/>
+                        <input style="width:85%" class="form-control input-sm" type="text" id="subplot_select_new_list_description" placeholder="<% __('New list description...') |h %>"/>
+                        <button class="btn btn-primary btn-sm" id="subplot_select_add_to_new_list_btn" type="button"><% __('Add selection to new list') |h %></button>
                     </td>
                     <td>
                         <div id="subplot_select_existing_list_name" style="width:85%"></div>
-                        <button class="btn btn-primary btn-sm" id="subplot_select_add_to_existing_list_btn" type="button">Add selection to existing list</button>
+                        <button class="btn btn-primary btn-sm" id="subplot_select_add_to_existing_list_btn" type="button"><% __('Add selection to existing list') |h %></button>
                     </td>
                 </tr>
             </table>
 % if ($curator) {
             <br>
-            <button id="subplot_select_delete_subplots" class="btn btn-danger">Delete selected subplots</button>
+            <button id="subplot_select_delete_subplots" class="btn btn-danger"><% __('Delete selected subplots') |h %></button>
 % } 
         </&>
     </div>
