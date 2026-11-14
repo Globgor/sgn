@@ -182,7 +182,7 @@ function create_phenotype_spreadsheet() {
         trait_list = JSON.stringify(list.getList(trait_list_id));
     }
     else {
-        alert("You must select a Trait List first");
+        alert(<% __('You must select a Trait List first') |js %>);
         return;
     }
 %  if ($trial_id){
@@ -219,7 +219,7 @@ function create_phenotype_spreadsheet() {
         },
         error: function () {
             jQuery('#working_modal').modal("hide");
-            alert('An error occurred creating a phenotype file.');
+            alert(<% __('An error occurred creating a phenotype file.') |js %>);
             jQuery('#create_spreadsheet_dialog').modal("hide");
         }
     });

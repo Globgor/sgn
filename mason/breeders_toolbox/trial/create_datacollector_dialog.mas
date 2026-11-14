@@ -70,7 +70,7 @@ function create_DataCollector() {
         trait_list = JSON.stringify(list.getList(trait_list_id));
     }
     else {
-        alert("You must select a Trait List first");
+        alert(<% __('You must select a Trait List first') |js %>);
         return;
     }
     var trial_stock_type = "<% $trial_stock_type %>";
@@ -103,7 +103,7 @@ function create_DataCollector() {
         },
         error: function () {
             jQuery('#working_modal').modal("hide");
-            alert('An error occurred creating a DataCollector file.');
+            alert(<% __('An error occurred creating a DataCollector file.') |js %>);
             jQuery('#download_datacollector_dialog').modal("hide");
         }
     });
