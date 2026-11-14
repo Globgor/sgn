@@ -70,12 +70,12 @@ jQuery(document).ready(function () {
         trait_list_json = JSON.stringify(trait_list);
 
         if (template_file_name === '') {
-            alert("Please supply a template file name");
+            alert(<% __('Please supply a template file name') |js %>);
             return;
         }
 
         if (trait_list_id === '') {
-            alert("Please select a trait list");
+            alert(<% __('Please select a trait list') |js %>);
             return;
         }
 
@@ -102,7 +102,7 @@ jQuery(document).ready(function () {
             },
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred creating the profile template.');
+                alert(<% __('An error occurred creating the profile template.') |js %>);
                 jQuery('#create_profile_template_dialog').modal("hide");
             },
 

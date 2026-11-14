@@ -87,17 +87,17 @@ jQuery(document).ready(function () {
         trait_list_json = JSON.stringify(trait_list);
 
         if (product_profile_name === '') {
-            alert("Please supply a product profile name");
+            alert(<% __('Please supply a product profile name') |js %>);
             return;
         }
 
         if (product_profile_scope === '') {
-            alert("Please supply a product profile scope");
+            alert(<% __('Please supply a product profile scope') |js %>);
             return;
         }
 
         if (trait_list_id === '') {
-            alert("Please select a trait list");
+            alert(<% __('Please select a trait list') |js %>);
             return;
         }
 
@@ -135,7 +135,7 @@ jQuery(document).ready(function () {
                 if (response.error) {
                     alert(response.error);
                 } else {
-                    alert('The product profile was saved successfully.');
+                    alert(<% __('The product profile was saved successfully.') |js %>);
                 }
             },
 
