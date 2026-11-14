@@ -10,33 +10,33 @@ $facilities
             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_genotypes_form" name="upload_genotypes_form" action="/ajax/genotype/upload">
 
                 <div class="modal-header">
-                    <button type="reset" class="close" id="upload_genotype_data_close_modal_1" name="upload_genotype_data_close_modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="uploadGenotypesDialog">Upload Genotypes</h4>
+                    <button type="reset" class="close" id="upload_genotype_data_close_modal_1" name="upload_genotype_data_close_modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="uploadGenotypesDialog"><% __('Upload Genotypes') |h %></h4>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
 
                         <&| /util/workflow.mas, id=> "upload_genotypes_workflow" &>
-                            <&| /util/workflow.mas:step, title=> "Intro" &>
-                                <& /page/page_title.mas, title=>"This workflow will guide you through uploading genotypes into the database" &>
-                                <p>Select a genotyping project on the next screen. This project can represent a series of genotyping plates sent to a genotyping facilty.</p>
-                                <p>Ideally the sample names in your VCF file will match sample names in genotyping plates in the database; however, the sample names in your file can also match accession names in the database.</p>
-                                <p>Curently we support the VCF format, the Tassel HDF5 format, the Intertek CSV format, KASP data and SSR data for upload.</p>
-                                <p>If you are uploading many files that used the same genotyping protocol, you can do so, and the database will ensure that the marker information is consistent across the genotyping data (e.g. the same reference, alternate, position, etc.).</p>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading genotypes into the database"), 'h' ) &>
+                                <p><% __('Select a genotyping project on the next screen. This project can represent a series of genotyping plates sent to a genotyping facilty.') |h %></p>
+                                <p><% __('Ideally the sample names in your VCF file will match sample names in genotyping plates in the database; however, the sample names in your file can also match accession names in the database.') |h %></p>
+                                <p><% __('Curently we support the VCF format, the Tassel HDF5 format, the Intertek CSV format, KASP data and SSR data for upload.') |h %></p>
+                                <p><% __('If you are uploading many files that used the same genotyping protocol, you can do so, and the database will ensure that the marker information is consistent across the genotyping data (e.g. the same reference, alternate, position, etc.).') |h %></p>
 
                                 <br/><br/>
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
 
-                            <&| /util/workflow.mas:step, title=> "Data Type" &>
-                                <& /page/page_title.mas, title=>"Select the type of genotyping data being uploaded" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Data Type"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the type of genotyping data being uploaded"), 'h' ) &>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Type of genotyping data: </label>
+                                    <label class="col-sm-3 control-label"><% __('Type of genotyping data:') |h %> </label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="genotype_data_type_select" name="genotype_data_type_select">
-                                            <option value="">Select data type</option>
+                                            <option value=""><% __('Select data type') |h %></option>
                                             <option value="vcf">VCF</option>
                                             <option value="tassel_hdf5">Tassel HDF5</option>
                                             <option value="intertek">Intertek</option>
@@ -47,29 +47,29 @@ $facilities
                                 </div>
                                 <br/><br/>
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" id="upload_genotyping_data_type_check_button">Go to Next Step</button>
+                                    <button class="btn btn-primary" id="upload_genotyping_data_type_check_button"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
 
-                            <&| /util/workflow.mas:step, title=> "Genotyping Project" &>
-                                <& /page/page_title.mas, title=>"Select the genotyping project or create a new one. A genotyping project is a specific genotyping event. You can have many genotyping projects under the same genotyping protocol to indicate that those genotyping events used the same markers." &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Genotyping Project"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the genotyping project or create a new one. A genotyping project is a specific genotyping event. You can have many genotyping projects under the same genotyping protocol to indicate that those genotyping events used the same markers."), 'h' ) &>
 
                                 <table id="upload_genotyping_data_project_search_results" width="100%" class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Select</th>
-                                            <th>Genotyping Project Name</th>
-                                            <th>Description</th>
-                                            <th>Breeding program</th>
-                                            <th>Year</th>
-                                            <th>Location</th>
-                                            <th>Genotyping Facility</th>
+                                            <th><% __('Select') |h %></th>
+                                            <th><% __('Genotyping Project Name') |h %></th>
+                                            <th><% __('Description') |h %></th>
+                                            <th><% __('Breeding program') |h %></th>
+                                            <th><% __('Year') |h %></th>
+                                            <th><% __('Location') |h %></th>
+                                            <th><% __('Genotyping Facility') |h %></th>
                                         </tr>
                                     </thead>
                                 </table>
 
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" id="upload_genotyping_data_project_missing_button">My project is not here. Create a new one.</button>
+                                    <button class="btn btn-primary" id="upload_genotyping_data_project_missing_button"><% __('My project is not here. Create a new one.') |h %></button>
                                 </div>
                                 <br/>
 
@@ -79,13 +79,13 @@ $facilities
                                 <div id="upload_genotyping_data_project_details" style="display:none">
                                     <div class="well">
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Genotyping Project Name: <br/><small>Should match Vendor Project if you have one</small></label>
+                                            <label class="col-sm-5 control-label"><% __('Genotyping Project Name:') |h %> <br/><small><% __('Should match Vendor Project if you have one') |h %></small></label>
                                             <div class="col-sm-7">
-                                                <input class="form-control" id="upload_genotype_vcf_project_name" name="upload_genotype_vcf_project_name" type="text" placeholder="e.g. NextGenCassava"/>
+                                                <input class="form-control" id="upload_genotype_vcf_project_name" name="upload_genotype_vcf_project_name" type="text" placeholder="<% __('e.g. NextGenCassava') |h %>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Genotyping Facility: </label>
+                                            <label class="col-sm-5 control-label"><% __('Genotyping Facility:') |h %> </label>
                                             <div class="col-sm-7">
                                                 <select class="form-control" id="upload_genotype_vcf_facility_select" name="upload_genotype_vcf_facility_select">
 %  foreach my $facility (@$facilities) {
@@ -95,19 +95,19 @@ $facilities
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Breeding Program: </label>
+                                            <label class="col-sm-5 control-label"><% __('Breeding Program:') |h %> </label>
                                             <div class="col-sm-7">
                                                 <span id="upload_genotype_breeding_program_select_div"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Year: </label>
+                                            <label class="col-sm-5 control-label"><% __('Year:') |h %> </label>
                                             <div class="col-sm-7">
                                                 <span id="upload_genotype_year_select_div"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Description: </label>
+                                            <label class="col-sm-5 control-label"><% __('Description:') |h %> </label>
                                             <div class="col-sm-7">
                                                 <textarea class="form-control" id="upload_genotype_vcf_project_description" name="upload_genotype_vcf_project_description" maxlength="250"></textarea>
                                             </div>
@@ -117,30 +117,30 @@ $facilities
 
                                 <br/>
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" id="upload_genotyping_data_project_check_button">Go to Next Step</button>
+                                    <button class="btn btn-primary" id="upload_genotyping_data_project_check_button"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Genotyping Protocol" &>
-                                <& /page/page_title.mas, title=>"Provide info about the genotyping protocol used. The genotyping protocol represents a specific instance of how genotypes were called for a set of markers in a genotyping platform. Many genotyping projects can use the same genotyping protocol." &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Genotyping Protocol"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide info about the genotyping protocol used. The genotyping protocol represents a specific instance of how genotypes were called for a set of markers in a genotyping platform. Many genotyping projects can use the same genotyping protocol."), 'h' ) &>
 
                                 <table id="upload_genotyping_data_protocol_search_results" width="100%" class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Select</th>
-                                            <th>Protocol Name</th>
-                                            <th>Header Description</th>
-                                            <th>Number of Markers</th>
-                                            <th>Protocol Description</th>
-                                            <th>Reference Genome</th>
-                                            <th>Species</th>
-                                            <th>Sample Unit</th>
-                                            <th>Create Date</th>
+                                            <th><% __('Select') |h %></th>
+                                            <th><% __('Protocol Name') |h %></th>
+                                            <th><% __('Header Description') |h %></th>
+                                            <th><% __('Number of Markers') |h %></th>
+                                            <th><% __('Protocol Description') |h %></th>
+                                            <th><% __('Reference Genome') |h %></th>
+                                            <th><% __('Species') |h %></th>
+                                            <th><% __('Sample Unit') |h %></th>
+                                            <th><% __('Create Date') |h %></th>
                                         </tr>
                                     </thead>
                                 </table>
 
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" id="upload_genotyping_data_protocol_missing_button">My protocol is not here. Create a new one.</button>
+                                    <button class="btn btn-primary" id="upload_genotyping_data_protocol_missing_button"><% __('My protocol is not here. Create a new one.') |h %></button>
                                 </div>
                                 <br/>
 
@@ -150,28 +150,28 @@ $facilities
                                 <div id="upload_genotype_data_protocol_details" style="display:none">
                                     <div class="well">
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Genotyping Protocol Name:</label>
+                                            <label class="col-sm-5 control-label"><% __('Genotyping Protocol Name:') |h %></label>
                                             <div class="col-sm-7">
                                                 <input class="form-control" id="upload_genotype_vcf_protocol_name" name="upload_genotype_vcf_protocol_name" type="text" placeholder=" e.g. GBS ApeKI Cassava genome v6 Jan2015"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Genotyping Protocol Reference Genome:</label>
+                                            <label class="col-sm-5 control-label"><% __('Genotyping Protocol Reference Genome:') |h %></label>
                                             <div class="col-sm-7">
                                                 <input class="form-control" id="upload_genotype_vcf_reference_genome_name" name="upload_genotype_vcf_reference_genome_name" type="text" placeholder="Mesculenta_511_v7.0"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Species:</label>
+                                            <label class="col-sm-5 control-label"><% __('Species:') |h %></label>
                                             <div class="col-sm-7">
                                                 <input class="form-control" id="upload_genotypes_species_name_input" name="upload_genotypes_species_name_input" type="text" placeholder=" e.g. Manihot esculenta"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Assay Type </label>
+                                            <label class="col-sm-5 control-label"><% __('Assay Type') |h %> </label>
                                             <div class="col-sm-7">
                                                 <select class="form-control" id="assay_type_select" name="assay_type_select">
-                                                    <option value="">Select assay type</option>
+                                                    <option value=""><% __('Select assay type') |h %></option>
                                                     <option value="GBS">GBS</option>
                                                     <option value="KASP">KASP</option>
                                                     <option value="SSR">SSR</option>
@@ -179,21 +179,21 @@ $facilities
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Description:</label>
+                                            <label class="col-sm-5 control-label"><% __('Description:') |h %></label>
                                             <div class="col-sm-7">
                                                 <input class="form-control" id="upload_genotypes_protocol_description_input" name="upload_genotypes_protocol_description_input" type="text" />
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-5 control-label">Choose Sample Unit: </label>
+                                            <label class="col-sm-5 control-label"><% __('Choose Sample Unit:') |h %> </label>
                                             <div class="col-sm-7">
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
                                                         <input type="radio" name="upload_genotype_vcf_observation_type" value="tissue_sample" checked>&nbsp;&nbsp;&nbsp;Exported Tissue Sample Name: The sample names in your VCF are tissue_sample_names that already exist in genotyping plates (e.g. 96 well plates) or sampling trials in the database. The sample names in your VCF file can be the tissue_sample_name triple pipe joined to the accession_name (e.g. tissue_sample_name|||accession_name) or just simply the tissue_sample_name corresponding to the genotyping plate well or sampling trial sample. This is the <strong>recommended format</strong>.
                                                         <br/><br/>
-                                                        <input type="radio" name="upload_genotype_vcf_observation_type" value="accession">&nbsp;&nbsp;&nbsp;Accession: The sample names are of accession names
+                                                        <input type="radio" name="upload_genotype_vcf_observation_type" value="accession">&nbsp;&nbsp;&nbsp;<% __('Accession: The sample names are of accession names') |h %>
                                                         <br/><br/>
-                                                        <input type="radio" name="upload_genotype_vcf_observation_type" value="stocks">&nbsp;&nbsp;&nbsp;Mixed Stocks: The sample names are a mix of accession names, plot names, subplot names, plant names, and/or tissue sample names.
+                                                        <input type="radio" name="upload_genotype_vcf_observation_type" value="stocks">&nbsp;&nbsp;&nbsp;<% __('Mixed Stocks: The sample names are a mix of accession names, plot names, subplot names, plant names, and/or tissue sample names.') |h %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -204,13 +204,13 @@ $facilities
 
                                 <div class="well">
                                     <div class="form-group">
-                                        <label class="col-sm-5 control-label">Location of Data Generation: </label>
+                                        <label class="col-sm-5 control-label"><% __('Location of Data Generation:') |h %> </label>
                                         <div class="col-sm-7">
                                             <span id="upload_genotype_location_select_div"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-5 control-label">Exported Tissue Sample Names Include Numbers Generated by Genotyping Facility (e.g. sample_name:IGD1001:09):<br/><small>The generated number is separated from the tissue sample name in the database by a ':' separating character.</small> </label>
+                                        <label class="col-sm-5 control-label"><% __('Exported Tissue Sample Names Include Numbers Generated by Genotyping Facility (e.g. sample_name:IGD1001:09):') |h %><br/><small><% __('The generated number is separated from the tissue sample name in the database by a \':\' separating character.') |h %></small> </label>
                                         <div class="col-sm-7">
                                             <input type="checkbox" id="upload_genotype_vcf_include_igd_numbers" name="upload_genotype_vcf_include_igd_numbers" >
                                         </div>
@@ -219,26 +219,26 @@ $facilities
 
                                 <br/>
                                 <div style="text-align: center">
-                                    <button class="btn btn-primary" id="upload_genotyping_data_protocol_check_button">Go to Next Step</button>
+                                    <button class="btn btn-primary" id="upload_genotyping_data_protocol_check_button"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Genotype Info" &>
-                                <& /page/page_title.mas, title=>"Provide genotype information" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Genotype Info"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide genotype information"), 'h' ) &>
                                 <br/><br/>
 
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Type of Genotype Data:</label>
+                                    <label class="col-sm-5 control-label"><% __('Type of Genotype Data:') |h %></label>
                                     <div class="col-sm-7">
                                         <input class="form-control" id="upload_genotype_data_type" name="upload_genotype_data_type" type="text" value = "" disabled />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Ignore any possible warnings and upload genotypes?: </label>
+                                    <label class="col-sm-5 control-label"><% __('Ignore any possible warnings and upload genotypes?:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="upload_genotype_accept_warnings" name="upload_genotype_accept_warnings">
-                                            <option value="">No</option>
-                                            <option value="1">Yes</option>
+                                            <option value=""><% __('No') |h %></option>
+                                            <option value="1"><% __('Yes') |h %></option>
                                         </select>
                                     </div>
                                 </div>
@@ -246,11 +246,11 @@ $facilities
                                 <div class="well well-sm" id="upload_genotype_data_format_vcf">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_genotype_vcf_spreadsheet_info_format">VCF format</a>
+                                                    <a id="upload_genotype_vcf_spreadsheet_info_format"><% __('VCF format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -259,7 +259,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select VCF File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select VCF File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_vcf_file_input" id="upload_genotype_vcf_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -273,11 +273,11 @@ $facilities
                                 <div class="well well-sm" id="upload_genotype_data_format_tassel_hdf5" style="display:none">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_genotype_tassel_hdf5_info_format">VCF format</a>
+                                                    <a id="upload_genotype_tassel_hdf5_info_format"><% __('VCF format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -286,7 +286,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select Tassel HDF5 (.h5) File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select Tassel HDF5 (.h5) File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_tassel_hdf5_file_input" id="upload_genotype_tassel_hdf5_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -300,11 +300,11 @@ $facilities
                                 <div class="well well-sm" id="upload_genotype_data_format_intertek" style="display:none">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_genotype_intertek_spreadsheet_info_format">Intertek format</a>
+                                                    <a id="upload_genotype_intertek_spreadsheet_info_format"><% __('Intertek format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -313,7 +313,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select Intertek SNP Result Grid File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select Intertek SNP Result Grid File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_intertek_file_input" id="upload_genotype_intertek_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -323,7 +323,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select Intertek SNP Information File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select Intertek SNP Information File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_intertek_snp_file_input" id="upload_genotype_intertek_snp_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -337,11 +337,11 @@ $facilities
                                 <div class="well well-sm" id="upload_genotype_data_format_kasp" style="display:none">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_genotype_kasp_spreadsheet_info_format">KASP data format</a>
+                                                    <a id="upload_genotype_kasp_spreadsheet_info_format"><% __('KASP data format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -350,7 +350,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select KASP Marker Information File (csv): </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select KASP Marker Information File (csv):') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_kasp_marker_info_file_input" id="upload_genotype_kasp_marker_info_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -360,7 +360,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select KASP Result File (csv): </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select KASP Result File (csv):') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_data_kasp_file_input" id="upload_genotype_data_kasp_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -374,11 +374,11 @@ $facilities
                                 <div class="well well-sm" id="upload_genotype_data_format_ssr" style="display:none">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <&| /page/explanation.mas, title=>'Template information' &>
+                                            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                 <p>
-                                                    <b>File format information</b>
+                                                    <b><% __('File format information') |h %></b>
                                                     <br>
-                                                    <a id="upload_ssr_data_spreadsheet_info">SSR format</a>
+                                                    <a id="upload_ssr_data_spreadsheet_info"><% __('SSR format') |h %></a>
                                                 </p>
                                             </&>
                                         </div>
@@ -387,7 +387,7 @@ $facilities
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Select SSR File: </label>
+                                                        <label class="col-sm-6 control-label"><% __('Select SSR File:') |h %> </label>
                                                         <div class="col-sm-6">
                                                             <input type="file" name="upload_genotype_ssr_file_input" id="upload_genotype_ssr_file_input" encoding="multipart/form-data" />
                                                         </div>
@@ -400,22 +400,22 @@ $facilities
 
                                 <br/><br/>
                                 <div style="text-align: center">
-                                    <button type="button" class="btn btn-default" name="file_check_button" id="file_check_button">Check File Type</button>
-                                    <button type="button" style="display:none" class="btn btn-primary" disabled onclick="Workflow.complete(this); return false;" id="genotyping_data_upload_next">Go to Next Step</button>
+                                    <button type="button" class="btn btn-default" name="file_check_button" id="file_check_button"><% __('Check File Type') |h %></button>
+                                    <button type="button" style="display:none" class="btn btn-primary" disabled onclick="Workflow.complete(this); return false;" id="genotyping_data_upload_next"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Confirm" &>
-                                <& /page/page_title.mas, title=>"Finalize and submit your genotyping data" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finalize and submit your genotyping data"), 'h' ) &>
 
                                 <div id="upload_genotypes_missing_stocks_div" style="display:none">
                                     <div id="upload_genotypes_add_missing_stocks_html">
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-5 control-label">Add missing stocks as new accessions?: </label>
+                                        <label class="col-sm-5 control-label"><% __('Add missing stocks as new accessions?:') |h %> </label>
                                         <div class="col-sm-7">
                                             <select class="form-control" id="upload_genotype_add_new_accessions" name="upload_genotype_add_new_accessions">
-                                                <option value="">No (currently disabled for safety)</option>
+                                                <option value=""><% __('No (currently disabled for safety)') |h %></option>
                                                 <!--option value="1">Yes</option-->
                                             </select>
                                         </div>
@@ -426,14 +426,14 @@ $facilities
                                     </div>
                          
                                     <div class="form-group">
-                                        <label class="col-sm-5 control-label">Add missing markers?: </label>
+                                        <label class="col-sm-5 control-label"><% __('Add missing markers?:') |h %> </label>
                                         <div class="col-sm-7">
                                             <select class="form-control" id="upload_genotype_add_new_markers" name="upload_genotype_add_new_markers">
 %                                               if ($c->user() && $c->user()->has_role("curator")) {
-                                                 <option value="0">No</option>
-                                                 <option value="1">Yes</option>
+                                                 <option value="0"><% __('No') |h %></option>
+                                                 <option value="1"><% __('Yes') |h %></option>
 %                                               } else {
-                                                 <option value="">No (currently disabled for safety)</option>
+                                                 <option value=""><% __('No (currently disabled for safety)') |h %></option>
 %                                               } 
                                             </select>
                                         </div>
@@ -449,8 +449,8 @@ $facilities
                                         </label>
                                         <div class="col-sm-7">
                                             <select class="form-control" id="upload_genotype_update_markers" name="upload_genotype_update_markers">
-                                                <option value="0">No</option>
-                                                <option value="1">Yes</option>
+                                                <option value="0"><% __('No') |h %></option>
+                                                <option value="1"><% __('Yes') |h %></option>
                                             </select>
                                         </div>
                                     </div>
@@ -466,15 +466,15 @@ $facilities
                                 </div>
 
                                 <div style="text-align: center">
-                                    <button type="button" class="btn btn-primary" name="upload_genotype_submit" id="upload_genotype_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" name="upload_genotype_submit" id="upload_genotype_submit"><% __('Submit') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Complete" &>
-                                <& /page/page_title.mas, title=>"Complete! Your genotyping data was saved in the database." &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Complete! Your genotyping data was saved in the database."), 'h' ) &>
 
                                 <p>
                                     <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                    The genotyping data was saved successfully
+                                    <% __('The genotyping data was saved successfully') |h %>
                                 </p>
 
                                 <div id="upload_genotype_submit_complete"></div>
@@ -484,7 +484,7 @@ $facilities
                         </&>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" id="upload_genotype_data_close_modal_2" name="upload_genotype_data_close_modal" class="btn btn-default" >Close</button>
+                        <button type="reset" id="upload_genotype_data_close_modal_2" name="upload_genotype_data_close_modal" class="btn btn-default" ><% __('Close') |h %></button>
                     </div>
                 </div>
             </form>
@@ -496,18 +496,18 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypeVCFDialog">Upload VCF Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypeVCFDialog"><% __('Upload VCF Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading VCF genotype data.</b>
+                    <b><% __('This is for uploading VCF genotype data.') |h %></b>
                     <br/>
-                    <b>VCF is a tab separated format. If your VCF is very large (greater than 10GB), please consider converting it to an HDF5 (.h5) file using Tassel, and uploading the HDF5 formatted file instead.</b>
+                    <b><% __('VCF is a tab separated format. If your VCF is very large (greater than 10GB), please consider converting it to an HDF5 (.h5) file using Tassel, and uploading the HDF5 formatted file instead.') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following fields, followed by all genotyped sample names:
+                    <% __('The first row (header) must contain the following fields, followed by all genotyped sample names:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -527,7 +527,7 @@ $facilities
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>#CHROM (chromosome: An identifier from the reference genome pointing to a contig in the assembly file (cf. the ##assembly line in the header). All entries for a specific CHROM should form a contiguous block within the VCF file. The colon symbol (:) must be absent from all chromosome names to avoid parsing errors when dealing with breakends. (String, no white-space permitted, Required))</li>
                     <li>POS (position: The reference position, with the 1st base having position 1. Positions are sorted numerically, in increasing order, within each reference sequence CHROM. It is permitted to have multiple records with the same POS. Telomeres are indicated by using positions 0 or N+1, where N is the length of the corresponding chromosome or contig. (Integer, Required) )</li>
@@ -584,7 +584,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -594,19 +594,19 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypeIntertekDialog">Upload Intertek Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypeIntertekDialog"><% __('Upload Intertek Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading Intertek genotype data.</b>
+                    <b><% __('This is for uploading Intertek genotype data.') |h %></b>
                     <br/>
-                    <b>Please use csv formatted files</b>
+                    <b><% __('Please use csv formatted files') |h %></b>
                     <br/>
                     <br/>
-                    <b>For Intertek SNP Result Grid File:</b>
+                    <b><% __('For Intertek SNP Result Grid File:') |h %></b>
                     <br>
-                    <p>The header must be:</p>
+                    <p><% __('The header must be:') |h %></p>
                     <br/>
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -620,11 +620,11 @@ $facilities
                     </table>
 
                     <br/>
-                    <p>The SampleName.LabID column should contain the sample name (exported_tissue_sample_name or accession_name) and it must exist in the database already</p>
+                    <p><% __('The SampleName.LabID column should contain the sample name (exported_tissue_sample_name or accession_name) and it must exist in the database already') |h %></p>
 
-                    <b>For Intertek SNP Information File:</b>
+                    <b><% __('For Intertek SNP Information File:') |h %></b>
                     <br>
-                    <p>The header must be:</p>
+                    <p><% __('The header must be:') |h %></p>
                     <br/>
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -655,7 +655,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_intertek_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_intertek_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -665,21 +665,21 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypeTasselHDF5Dialog">Upload Tassel HDF5 Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypeTasselHDF5Dialog"><% __('Upload Tassel HDF5 Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading Tassel HDF5 genotype data.</b>
+                    <b><% __('This is for uploading Tassel HDF5 genotype data.') |h %></b>
                     <br/>
-                    <b>Please use HDF5 (.h5) formatted files that work with Tassel</b>
+                    <b><% __('Please use HDF5 (.h5) formatted files that work with Tassel') |h %></b>
                     <br/>
-                    <b>Uploading an HDF5 file is important when the size of the VCF grows greater than 10GB</b>
+                    <b><% __('Uploading an HDF5 file is important when the size of the VCF grows greater than 10GB') |h %></b>
                     <br/>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -689,16 +689,16 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSSRProtocolFormatDialog">Upload SSR Marker Info Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSSRProtocolFormatDialog"><% __('Upload SSR Marker Info Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>SSR marker info may be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('SSR marker info may be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following fields:
+                    <% __('The first row (header) must contain the following fields:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -715,7 +715,7 @@ $facilities
                             </tr>
                         </tbody>
                     </table>
-                    <b>Required columns:</b>
+                    <b><% __('Required columns:') |h %></b>
                     <ul>
                         <li>marker_name</li>
                         <li>forward_primer</li>
@@ -723,7 +723,7 @@ $facilities
                         <li>annealing_temperature</li>
                         <li>product_sizes</li>
                     </ul>
-                    <b>Optional columns (required in the header, but value may be left blank)</b>
+                    <b><% __('Optional columns (required in the header, but value may be left blank)') |h %></b>
                     <ul>
                         <li>sequence_motif</li>
                         <li>sequence_source</li>
@@ -732,7 +732,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -742,8 +742,8 @@ $facilities
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSSRProtocolErrorDialog">Upload SSR Marker Info Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSSRProtocolErrorDialog"><% __('Upload SSR Marker Info Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -753,7 +753,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -763,19 +763,19 @@ $facilities
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="SSRProtocolSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="SSRProtocolSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        SSR marker info was saved successfully. You can now proceed with SSR genotyping data upload.
+                        <% __('SSR marker info was saved successfully. You can now proceed with SSR genotyping data upload.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_ssr_protocol_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="dismiss_ssr_protocol_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -785,26 +785,26 @@ $facilities
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSSRProtocolDialog">Upload SSR Protocol (Marker Info) </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSSRProtocolDialog"><% __('Upload SSR Protocol (Marker Info)') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_ssr_protocol_form" name="upload_ssr_protocol_form">
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">SSR Protocol Name:</label>
+                            <label class="col-sm-5 control-label"><% __('SSR Protocol Name:') |h %></label>
                             <div class="col-sm-7">
                                 <input class="form-control" id="upload_ssr_protocol_name" name="upload_ssr_protocol_name" type="text" placeholder=" e.g. SSR Cassava set 1"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Species:</label>
+                            <label class="col-sm-5 control-label"><% __('Species:') |h %></label>
                             <div class="col-sm-7">
                                 <input class="form-control" id="upload_ssr_species_name_input" name="upload_ssr_species_name_input" type="text" placeholder=" e.g. Manihot esculenta"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-5 control-label">Description:</label>
+                            <label class="col-sm-5 control-label"><% __('Description:') |h %></label>
                             <div class="col-sm-7">
                                 <input class="form-control" id="upload_ssr_protocol_description_input" name="upload_ssr_protocol_description_input" type="text" />
                             </div>
@@ -823,11 +823,11 @@ $facilities
 -->
                         <div class="row">
                             <div class="col-sm-5">
-                                <&| /page/explanation.mas, title=>'Template information' &>
+                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                     <p>
-                                        <b>File format information</b>
+                                        <b><% __('File format information') |h %></b>
                                         <br>
-                                        <a id="upload_ssr_protocol_format">Spreadsheet format</a>
+                                        <a id="upload_ssr_protocol_format"><% __('Spreadsheet format') |h %></a>
                                     </p>
                                 </&>
                             </div>
@@ -836,7 +836,7 @@ $facilities
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Select an XLSX (or XLS) File: </label>
+                                            <label class="col-sm-4 control-label"><% __('Select an XLSX (or XLS) File:') |h %> </label>
                                             <div class="col-sm-4">
                                                 <input type="file" name="xls_ssr_protocol_file" id="xls_ssr_protocol_file" encoding="multipart/form-data" />
                                             </div>
@@ -849,8 +849,8 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" name="upload_ssr_protocol_submit" id="upload_ssr_protocol_submit">Upload File</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="upload_ssr_protocol_submit" id="upload_ssr_protocol_submit"><% __('Upload File') |h %></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -860,14 +860,14 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSSRSpreadsheetInfoDialog">Upload SSR Data Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSSRSpreadsheetInfoDialog"><% __('Upload SSR Data Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>SSR data may be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('SSR data may be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Example of SSR Data Spreadsheet:</b>
+                    <b><% __('Example of SSR Data Spreadsheet:') |h %></b>
                     <br>
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -932,20 +932,20 @@ $facilities
                         </tbody>
                     </table>
                     <b>
-                        Column Info:
+                        <% __('Column Info:') |h %>
                     </b>
                     <ul>
-                        <li>s01 and s02 are marker names.</li>
-                        <li>139, 170, 194 are product sizes generated by marker s01 and 203,229,290 are product sizes generated by marker s02.</li>
-                        <li>sample_A, sample_B, sample_C are accession names.</li>
-                        <li>"1" indicates the presence of PCR product.</li>
-                        <li>"0" indicates the absence of PCR product.</li>
+                        <li><% __('s01 and s02 are marker names.') |h %></li>
+                        <li><% __('139, 170, 194 are product sizes generated by marker s01 and 203,229,290 are product sizes generated by marker s02.') |h %></li>
+                        <li><% __('sample_A, sample_B, sample_C are accession names.') |h %></li>
+                        <li><% __('"1" indicates the presence of PCR product.') |h %></li>
+                        <li><% __('"0" indicates the absence of PCR product.') |h %></li>
                         <br>
                     </ul>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -955,19 +955,19 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypeKASPDialog">Upload KASP data Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypeKASPDialog"><% __('Upload KASP data Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading KASP genotype data.</b>
+                    <b><% __('This is for uploading KASP genotype data.') |h %></b>
                     <br/>
-                    <b>Please use csv formatted files</b>
+                    <b><% __('Please use csv formatted files') |h %></b>
                     <br/>
                     <br/>
-                    <u><b>For KASP Marker Information File:</b></u>
+                    <u><b><% __('For KASP Marker Information File:') |h %></b></u>
                     <br>
-                    <p>The header must be:</p>
+                    <p><% __('The header must be:') |h %></p>
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
                         <tbody>
@@ -994,12 +994,12 @@ $facilities
                         <li><b>FacilityMarkerName:</b> if you are uploading genotyping data by using facility marker names, please include these names in the KASP marker information file using "FacilityMarkerName" header</li>
                     </ul>
                     <hr class ="solid">
-                    <u><b>For KASP Result File:</b></u>
+                    <u><b><% __('For KASP Result File:') |h %></b></u>
                     <br>
                     <b>Note:</b> If your genotyping facility assigned facility marker names and facility sample names for the genotyping data generated, you have an option to directly use these facility names for uploading. After uploaded into database, the genotyping data will be automatically linked to the original marker names and sample names.
                     <br>
                     <br>
-                    <p>If you are uploading genotyping data using your marker names and sample names, the header must be:</p>
+                    <p><% __('If you are uploading genotyping data using your marker names and sample names, the header must be:') |h %></p>
                     <table class="table table-hover table-bordered table-condensed" >
                         <tbody>
                             <tr>
@@ -1012,7 +1012,7 @@ $facilities
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>MarkerName:</b> Must exist in the marker information file. If you are uploading genotyping data using previously stored protocol, marker names must exist in the selected protocol.
@@ -1022,7 +1022,7 @@ $facilities
                         <li><b>Yvalue:</b> raw data of Y.
                     </ul>
                     <br>
-                    <p>If you are uploading genotyping data using facility marker names and facility sample names, the header must be:</p>
+                    <p><% __('If you are uploading genotyping data using facility marker names and facility sample names, the header must be:') |h %></p>
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
                         <tbody>
@@ -1036,7 +1036,7 @@ $facilities
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>FacilityMarkerName:</b> Must exist in the marker information file.
@@ -1048,7 +1048,7 @@ $facilities
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_kasp_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_kasp_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -1059,21 +1059,21 @@ $facilities
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="reset" class="close" id="upload_mla_close_modal_header" name="upload_mla_close_modal_header" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadMLADialog">Upload Marker Metadata</h4>
+                <button type="reset" class="close" id="upload_mla_close_modal_header" name="upload_mla_close_modal_header" aria-label="<% __('Close') |h %>" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadMLADialog"><% __('Upload Marker Metadata') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <&| /util/workflow.mas, id=> "upload_mla_workflow" &>
 
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Marker Metadata Information" &>
-                            <p>This upload is used to add marker metadata and allele values to markers in an existing Genotyping Protocol.</p>
-                            <p>Supported metadata include:</p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Marker Metadata Information"), 'h' ) &>
+                            <p><% __('This upload is used to add marker metadata and allele values to markers in an existing Genotyping Protocol.') |h %></p>
+                            <p><% __('Supported metadata include:') |h %></p>
                             <ul>
-                                <li>A description of the marker (such as the phenotype derived from different allele values)</li>
-                                <li>Trait categories of phenotypes associated with the marker</li>
-                                <li>References to external databases with more information about the marker</li>
+                                <li><% __('A description of the marker (such as the phenotype derived from different allele values)') |h %></li>
+                                <li><% __('Trait categories of phenotypes associated with the marker') |h %></li>
+                                <li><% __('References to external databases with more information about the marker') |h %></li>
                                 <li>Allele values for individual alleles for each marker. For example, the <strong>1RS</strong> marker can have the following allele values:
                                     <ul>
                                         <li>Non-1RS</li>
@@ -1092,39 +1092,39 @@ $facilities
                                 The names of the markers in the file <strong>must match the marker names</strong> in the selected Genotyping Protocol.
                             <hr>
                             <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Genotyping Protocol" &>
-                        <& /page/page_title.mas, title=>"Select Genotyping Protocol" &>
-                            <p>Select the Genotyping Protocol that contains the markers.</p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Genotyping Protocol"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select Genotyping Protocol"), 'h' ) &>
+                            <p><% __('Select the Genotyping Protocol that contains the markers.') |h %></p>
 
                             <table id="upload_mla_protocol_search_results" width="100%" class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Select</th>
-                                        <th>Protocol Name</th>
-                                        <th>Header Description</th>
-                                        <th>Number of Markers</th>
-                                        <th>Protocol Description</th>
-                                        <th>Reference Genome</th>
-                                        <th>Species</th>
-                                        <th>Sample Unit</th>
-                                        <th>Create Date</th>
+                                        <th><% __('Select') |h %></th>
+                                        <th><% __('Protocol Name') |h %></th>
+                                        <th><% __('Header Description') |h %></th>
+                                        <th><% __('Number of Markers') |h %></th>
+                                        <th><% __('Protocol Description') |h %></th>
+                                        <th><% __('Reference Genome') |h %></th>
+                                        <th><% __('Species') |h %></th>
+                                        <th><% __('Sample Unit') |h %></th>
+                                        <th><% __('Create Date') |h %></th>
                                     </tr>
                                 </thead>
                             </table>
                             <hr>
                             <center>
-                                <button class="btn btn-primary" id="upload_mla_protocol_check_button">Go to Next Step</button>
+                                <button class="btn btn-primary" id="upload_mla_protocol_check_button"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Upload" &>
-                        <& /page/page_title.mas, title=>"Upload Marker Metadata" &>
-                            <b>Header:</b><br>
-                            The first row (header) must contain the following:
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload Marker Metadata"), 'h' ) &>
+                            <b><% __('Header:') |h %></b><br>
+                            <% __('The first row (header) must contain the following:') |h %>
                             <br>
                             <table class="table table-bordered table-hover">
                             <tbody>
@@ -1141,10 +1141,10 @@ $facilities
                             </tr>
                             </tbody>
                             </table>
-                            <b>Required values:</b><br>
+                            <b><% __('Required values:') |h %></b><br>
                             <b>Marker:</b> the name of the marker (this must match the marker name in the selected Genotyping Protocol)<br>
                             <b>Allele:</b> the name of a possible allele value for this marker (add as many Allele columns as necessary - or separate values in one column with a comma)<br>
-                            <br /><b>Optional values:</b><br>
+                            <br /><b><% __('Optional values:') |h %></b><br>
                             <b>Alias:</b> an alternate name for the marker (use this to provide a more human-friendly name for the marker)<br>
                             <b>Description:</b> a description of the marker (its associated phenotype, etc)<br>
                             <b>Category:</b> the name of the trait category that the marker belongs to (add as many Category columns as necessary - or separate values in one column with a comma) <br>
@@ -1157,12 +1157,12 @@ $facilities
                             <form method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_mla_form" name="upload_mla_form">
                                 <div style="display: flex; flex-wrap: wrap; gap: 25px; align-items: flex-end">
                                     <div>
-                                        <label for="upload_mla_file" style="display: inline-block;">Marker Metadata Alleles File:</label>
+                                        <label for="upload_mla_file" style="display: inline-block;"><% __('Marker Metadata Alleles File:') |h %></label>
                                         <input type="file" name="upload_mla_file" id="upload_mla_file" encoding="multipart/form-data" />
                                     </div>
                                     <div>
                                         <input id="upload_entry_numbers_ignore_warnings_cb" name="ignore_warnings" type="checkbox" value="checked">
-                                        <label for="upload_entry_numbers_ignore_warnings_cb">Ignore Warnings</label><br>
+                                        <label for="upload_entry_numbers_ignore_warnings_cb"><% __('Ignore Warnings') |h %></label><br>
                                     </div>
                                 </div>
                             </form>
@@ -1174,7 +1174,7 @@ $facilities
 
                             <hr />
                             <center>
-                                <button type="button" class="btn btn-primary" name="upload_mla_submit" id="upload_mla_submit">Upload</button>
+                                <button type="button" class="btn btn-primary" name="upload_mla_submit" id="upload_mla_submit"><% __('Upload') |h %></button>
                             </center>
                         </&>
 
@@ -1182,7 +1182,7 @@ $facilities
                 </div>
 
                 <div class="modal-footer">
-                    <button type="reset" id="upload_mla_close_modal" name="upload_mla_close_modal" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="reset" id="upload_mla_close_modal" name="upload_mla_close_modal" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
                 </div>
             </div>
         </div>
