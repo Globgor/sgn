@@ -137,7 +137,6 @@ is($model_string, "germplasmName + (1|replicate)", "model string test for BLUEs"
 
 $mm->run_model($f->config->{backend}, $f->config->{cluster_host}, dirname($pheno_tempfile), $job_config);
 
-sleep(2);
 
  SKIP: { 
      skip "Skip if run under git", 2 unless $SYSTEM_MODE ne "GITACTION"; 
