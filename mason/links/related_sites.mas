@@ -6,7 +6,7 @@
     border="0">
       <tr>
         <td>
-          <h4>Solanaceae Resources on the Web</h4>
+          <h4><% __('Solanaceae Resources on the Web') |h %></h4>
 
           <table summary="">
             <tr>
@@ -17,18 +17,18 @@
                 Images, Germplasms</strong>
 
 		<dl>
-		  <dt><br /><a href="http://www.ru.nl/bgard/">Experimental Garden and Genebank of the Radboud University of Nijmegen</a></dl>
-		<dd>The Experimental Garden and Genebank of the Radboud University of Nijmegen pays special attention to the family of Solanaceae and maintains the most extensive ex situ plant collection of non-tuberous Solanaceae species in the world.  </dd>
+		  <dt><br /><a href="http://www.ru.nl/bgard/"><% __('Experimental Garden and Genebank of the Radboud University of Nijmegen') |h %></a></dl>
+		<dd><% __('The Experimental Garden and Genebank of the Radboud University of Nijmegen pays special attention to the family of Solanaceae and maintains the most extensive ex situ plant collection of non-tuberous Solanaceae species in the world.') |h %>  </dd>
 
 		<dl>
-		  <dt><br /><a href="http://www.ecpgr.cgiar.org/">European Cooperative Programme for Plant Genetic Resources</a></dl>
+		  <dt><br /><a href="http://www.ecpgr.cgiar.org/"><% __('European Cooperative Programme for Plant Genetic Resources') |h %></a></dl>
 
 		<dd>The European Cooperative Programme for Plant Genetic Resources (ECPGR) is a collaborative programme among most European countries aimed at ensuring the long-term conservation and facilitating the increased utilization of plant genetic resources in Europe (<a href="http://www.ecpgr.cgiar.org/networks/vegetables/solanaceae.html">Solanaceae</a>, <a href="http://www.ecpgr.cgiar.org/networks/sugar_starch_fibre_crops/potato.html">Potato</a>)</dd>
 
                 <dl>
 
                   <dt><br /><a href="http://solcap.msu.edu" target="_new" >SolCAP</a></dt>
-                  <dd>The official website of the USDA sponsored Solanaceae Coordinated Agricultural Project (SolCAP), which will phenotype and genotype large panels of tomato and potato accessions. Results will also be made available on SGN.</dd>
+                  <dd><% __('The official website of the USDA sponsored Solanaceae Coordinated Agricultural Project (SolCAP), which will phenotype and genotype large panels of tomato and potato accessions. Results will also be made available on SGN.') |h %></dd>
                   <dt><a href=
                   "http://www.nhm.ac.uk/research-curation/projects/solanaceaesource/" target="_new">Solanum
                   Source</a></dt>
@@ -52,24 +52,24 @@
 
                 </dl>
 
-                <strong>Tomato Resources</strong>
+                <strong><% __('Tomato Resources') |h %></strong>
 
     
 
                 <dl>
-                  <dt><a href="http://tomatoma.nbrp.jp/index.jsp" target="_new"> TOMATOMA Database</a> 
+                  <dt><a href="http://tomatoma.nbrp.jp/index.jsp" target="_new"> <% __('TOMATOMA Database') |h %></a> 
     </dt>
-    <dd>A database of EMS and Neutron mutants in the MicroTom background in Japan.</dd>
+    <dd><% __('A database of EMS and Neutron mutants in the MicroTom background in Japan.') |h %></dd>
 
     <dt><a href="http://www.agrobios.it/tilling" target="_new"> LycoTILL</a></dt>
 <dd>  LycoTILL is an interactive and evolving database which allows search on-line of images and phenotype data of the  tomato (cv /Red Setter/) mutant collection generated with EMS mutagenesis experiments.
 The Red Setter mutant population was developed for TILLING applications but can also be used  for forward  genetic studies.</dd>
 
                   <dt><a href="http://phn.huji.ac.il/RTQ/" target="_new" >Phenom Networks</a></dt>
-                  <dd>The Phenom Network engine by Dani Zamir and Yaniv Semel represents knowledge of complex traits and has tomato ILs, barley and rose traits with more organisms being added soon.</dd>
+                  <dd><% __('The Phenom Network engine by Dani Zamir and Yaniv Semel represents knowledge of complex traits and has tomato ILs, barley and rose traits with more organisms being added soon.') |h %></dd>
 
-                  <dt><a href="http://www-plb.ucdavis.edu/labs/maloof/tomatosnp/" target="_new" >Tomato SNP database</a></dt>
-                  <dd>A tomato SNP website by Jose Jimenez and Julin Maloof at UC Davis</dd>
+                  <dt><a href="http://www-plb.ucdavis.edu/labs/maloof/tomatosnp/" target="_new" ><% __('Tomato SNP database') |h %></a></dt>
+                  <dd><% __('A tomato SNP website by Jose Jimenez and Julin Maloof at UC Davis') |h %></dd>
 
                   <dt><br /><a href=
                   "http://www.kazusa.or.jp/jsol/microtom/index.html" target="_new">MiBASE</a>, the Kazusa
@@ -79,7 +79,7 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   including GO annotations and Pathway Viewer.</dd>
 
                   <dt><br /><a href="http://www.pgb.kazusa.or.jp/kaftom/" target="_new" >KaFTom</a></dt>
-                  <dd>The Kazusa Micro-Tom full-length cDNA Site</dd>
+                  <dd><% __('The Kazusa Micro-Tom full-length cDNA Site') |h %></dd>
 
                   <dt><br /><a href="http://tgc.ifas.ufl.edu" target="_new">The
                   Tomato Genetics Cooperative</a></dt>
@@ -97,64 +97,64 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   <dt><br /><a href="http://ted.bti.cornell.edu/" target="_new" >Tomato
     Expression Database (TED)</a></dt>
 
-                  <dd>Site dedicated to tomato microarrays.</dd>
+                  <dd><% __('Site dedicated to tomato microarrays.') |h %></dd>
 
                   <dt><br /><a href=
-                  "http://www.tomato.org/" target="_new">California Tomato Commission</a></dt>
+                  "http://www.tomato.org/" target="_new"><% __('California Tomato Commission') |h %></a></dt>
 
                   <dd>The website of the California Tomato Grower\'s
                   Association. Contains nutritional information and
                   recipes.</dd>
 
 
-                  <dt><br /><a href="http://www.ars.usda.gov/Main/site_main.htm?modecode=19-10-05-00" target="_new" >USDA ARS Bioinformatics Homepage</a></dt>
+                  <dt><br /><a href="http://www.ars.usda.gov/Main/site_main.htm?modecode=19-10-05-00" target="_new" ><% __('USDA ARS Bioinformatics Homepage') |h %></a></dt>
 
                   <dd>The website of the USDA bioinformatics unit
                   in Geneva, NY</dd>
 
                   <dt><br /><a href=
                   "http://solcap.msu.edu/" target="_new" >
-                  SolCAP project</a></dt>
-                  <dd>The Solanaceae Coordinated Agriculture Project</dd>
+                  <% __('SolCAP project') |h %></a></dt>
+                  <dd><% __('The Solanaceae Coordinated Agriculture Project') |h %></dd>
 
                   <dt><br /><a href=
-                  "https://www.eu-sol.wur.nl" target="_new" >EU-SOL Tomato Core Collection Phenotype Database</a></dt>
+                  "https://www.eu-sol.wur.nl" target="_new" ><% __('EU-SOL Tomato Core Collection Phenotype Database') |h %></a></dt>
                   <dd>The Tomato Core Collection Phenotype Database by the <a href="http://www.eu-sol.net">EU-SOL</a> Project funded by the 6th framework program of the European Union.</dd>
 
                   <dt><br /><a href=
-                  "http://tomato.nbrp.jp/indexEn.html" target="_new" >Tomato National BioResource Project</a></dt>
-                  <dd>The National BioResource Project (NBRP) is a national project that aims to collect, preserve, and provide bioresources for life sciences research.</dd>
+                  "http://tomato.nbrp.jp/indexEn.html" target="_new" ><% __('Tomato National BioResource Project') |h %></a></dt>
+                  <dd><% __('The National BioResource Project (NBRP) is a national project that aims to collect, preserve, and provide bioresources for life sciences research.') |h %></dd>
 
                 </dl>
-                <strong>Tomatoes - gardening and heirloom varieties</strong>
+                <strong><% __('Tomatoes - gardening and heirloom varieties') |h %></strong>
                 <dl>
                 <dt><a href="http://www.tomatogardeningguru.com/" target="_new" >www.tomatogardeningguru.com</a></dt>
-                <dd>A website about growing tomatoes organically</dd>
+                <dd><% __('A website about growing tomatoes organically') |h %></dd>
                 <dt><a href="http://www.tomatofest.com" target="_new" >TomatoFest.com</a></dt>
-                <dd>Heirloom tomato fest</dd>
+                <dd><% __('Heirloom tomato fest') |h %></dd>
                 </dl>
-                <strong>Tomatoes - the lighter side</strong>
+                <strong><% __('Tomatoes - the lighter side') |h %></strong>
                 <dl>
                 <dt><a href="http://tomatoesareevil.com" target="_new">TomatoesAreEvil.com</a></dt>
-                <dd>A website by tomato haters (that\'s definitely not us!)</dd>
+                <dd><% __('A website by tomato haters (that\\\'s definitely not us!)') |h %></dd>
                 <dt><br /><a href="http://killertomatoes.com" target="_new" >Killertomatoes.com</a></dt>
                 
-                <strong>Potato Resources</strong>
+                <strong><% __('Potato Resources') |h %></strong>
 
 		<dl>
-		  <dt><a href="http://www.public.iastate.edu/~djh/">Potato Phloem Biology Project</a>
+		  <dt><a href="http://www.public.iastate.edu/~djh/"><% __('Potato Phloem Biology Project') |h %></a>
 		 </dt>
-		  <dd>An NSF funded project to study signaling networks that are involved in the induction of tuber formation.</dd>
+		  <dd><% __('An NSF funded project to study signaling networks that are involved in the induction of tuber formation.') |h %></dd>
 </dl>
 
 
                 <dl>
 
                   <dt><a href="http://www.potatodiseases.org/" target="_new" >PotatoDiseases.org</a></dt>
-                  <dd>A site describing diseases of potato from the University of Michigan.</dd>
+                  <dd><% __('A site describing diseases of potato from the University of Michigan.') |h %></dd>
 
-                  <dt><a href="http://www.cpgp.ca" target="_new" >Canadian Potato Genome Project</a></dt>
-                  <dd>The Canadian Potato Genome Project (CPGP) was launched in 2002 to develop resources in gene discovery in potatoes, for use by Canadian researchers and their partners.</dd>
+                  <dt><a href="http://www.cpgp.ca" target="_new" ><% __('Canadian Potato Genome Project') |h %></a></dt>
+                  <dd><% __('The Canadian Potato Genome Project (CPGP) was launched in 2002 to develop resources in gene discovery in potatoes, for use by Canadian researchers and their partners.') |h %></dd>
     
                   <dt><a href="https://gabi.rzpd.de/PoMaMo.html" target="_new" >PoMaMo
                   Database</a></dt>
@@ -197,7 +197,7 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   "http://www.potatogenome.org/nsf4/" target="_new" >PotatoGenome.org</a></dt  DEFUNCT?? -->
 
                   <dt><br /><a href=
-                  "http://www.europotato.org/" target="_new" >European Cultivated Potato Database</a></dt>
+                  "http://www.europotato.org/" target="_new" ><% __('European Cultivated Potato Database') |h %></a></dt>
 
                    
 
@@ -205,23 +205,23 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   project.</dd>
                 </dl>
 
-                <strong>Pepper Resources</strong>
+                <strong><% __('Pepper Resources') |h %></strong>
 
                 <dl>
                   <dt><a href=
                   "http://plant.pdrc.re.kr/ks200201/pepper.html" target="_new" >KRIBB
                   Pepper Resources</a></dt>
 
-                  <dd>A pepper EST database at KRIBB</dd>
+                  <dd><% __('A pepper EST database at KRIBB') |h %></dd>
 
                   <dt><br /><a href=
                   "http://www.cnph.embrapa.br/capsicum/" target="_new" >Embrapa
                   Capsicum site</a></dt>
 
-                  <dd>A site dedicated to Pepper in Brazil</dd>
+                  <dd><% __('A site dedicated to Pepper in Brazil') |h %></dd>
                 </dl>
 
-                <strong>Petunia Resources</strong>
+                <strong><% __('Petunia Resources') |h %></strong>
 
                 <dl>
                   <dt><a href=
@@ -232,23 +232,23 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   information.</dd>
                 </dl>
 
-                <strong>Eggplant Resources</strong>
+                <strong><% __('Eggplant Resources') |h %></strong>
 
                 <dl>
                   <dt><a href=
-                  "http://www.bgard.science.ru.nl/WWW-IPGRI/eggplant.htm" target="_new" >Eggplant Database</a>
+                  "http://www.bgard.science.ru.nl/WWW-IPGRI/eggplant.htm" target="_new" ><% __('Eggplant Database') |h %></a>
                    </dt>
 </dl>
 
 <br />
 		<strong><i>Solanum dulcamara</i> Resources</strong>
 
-		<dl><dt><a href="http://www.ru.nl/bsweet/">The B'sweet website</a></dt>
+		<dl><dt><a href="http://www.ru.nl/bsweet/"><% __('The B\'sweet website') |h %></a></dt>
 		  <dd><i>Solanum dulcamara</i> is a new research model for adaptation and ecology. See also <a href="http://www.ru.nl/ecogen/">Nicole van Ham's website</a></dd> 
 
 		  </dl>
 
-                <strong>Coffee Resources</strong>
+                <strong><% __('Coffee Resources') |h %></strong>
 
                 <dl>
                   <dt><a href="http://www.coffeedna.net/" target="_new" >CoffeeDNA
@@ -258,7 +258,7 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   Login required for certain functions.</dd>
                 </dl>
 
-                <strong>Germplasm Resources</strong>
+                <strong><% __('Germplasm Resources') |h %></strong>
 
                 <dl>
                   <dt><a href="http://tgrc.ucdavis.edu" target="_new" >Tomato
@@ -274,14 +274,14 @@ The Red Setter mutant population was developed for TILLING applications but can 
                   germplasm centers in the United States.</dd>
                 </dl>
 
-                <strong>Euasterid Resources</strong>
+                <strong><% __('Euasterid Resources') |h %></strong>
 
                 <dl>
                   <dt><a href="http://www.antirrhinum.net" target="_new" >Antirrhinum.net</a></dt>
-                  <dd>The DragonDB database for Antirrhinum</dd>
+                  <dd><% __('The DragonDB database for Antirrhinum') |h %></dd>
                 </dl>
 
-                <strong>Other Sequence Resources</strong>
+                <strong><% __('Other Sequence Resources') |h %></strong>
 
                 <dl>
                   <dt><a href="http://www.genome.arizona.edu/" target="_new" >The

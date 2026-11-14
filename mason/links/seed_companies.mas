@@ -20,15 +20,15 @@ a list of seed companies that deal with Solanaceae species.
         <td>
           <br />
 
-          <h2>List of Solanaceae Seed companies</h2>
+          <h2><% __('List of Solanaceae Seed companies') |h %></h2>
 
           <table summary="">
             <tr>
-              <td width="300"><strong>Company Name</strong></td>
+              <td width="300"><strong><% __('Company Name') |h %></strong></td>
 
-              <td width="250"><strong>Website</strong></td>
+              <td width="250"><strong><% __('Website') |h %></strong></td>
 
-              <td><strong>Species</strong></td>
+              <td><strong><% __('Species') |h %></strong></td>
             </tr>
 
             <tr>
