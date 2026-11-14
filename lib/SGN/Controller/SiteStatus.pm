@@ -2,6 +2,7 @@
 package SGN::Controller::SiteStatus;
 
 use Moose;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -16,7 +17,7 @@ sub login_status :Path('/about/status/logins') Args(0) {
     }
     if (!$c->user()->check_roles("curator")) { 
 	$c->stash->{template} = '/generic_message.mas';
-	$c->stash->{message} = 'You do not have the required privileges to view this page';
+	$c->stash->{message} = __('You do not have the required privileges to view this page');
 	return;
     }
 	

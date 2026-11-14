@@ -11,6 +11,7 @@ use Data::Dumper;
 use JSON::XS;
 use CXGN::Stock::Seedlot::Discard;
 use CXGN::People::Person;
+use Locale::TextDomain ( 'sgn', undef );
 
 sub seedlots :Path('/breeders/seedlots') :Args(0) {
     my $self = shift;
@@ -162,7 +163,7 @@ sub seedlot_maintenance : Path('/breeders/seedlot/maintenance') {
     # Make sure the seedlot maintenance event ontology is set
     if ( !defined $c->config->{seedlot_maintenance_event_ontology_root} || $c->config->{seedlot_maintenance_event_ontology_root} eq '' ) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'Seedlot Maintenance Events are not enabled on this server!';
+        $c->stash->{message} = __('Seedlot Maintenance Events are not enabled on this server!');
         return;
     }
 
@@ -188,14 +189,14 @@ sub seedlot_maintenance_record : Path('/breeders/seedlot/maintenance/record') {
     # Make sure the user has submitter or curator privileges
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'Your account must have either submitter or curator privileges to add seedlot maintenance events.';
+        $c->stash->{message} = __('Your account must have either submitter or curator privileges to add seedlot maintenance events.');
         return;
     }
 
     # Make sure the seedlot maintenance event ontology is set
     if ( !defined $c->config->{seedlot_maintenance_event_ontology_root} || $c->config->{seedlot_maintenance_event_ontology_root} eq '' ) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'Seedlot Maintenance Events are not enabled on this server!';
+        $c->stash->{message} = __('Seedlot Maintenance Events are not enabled on this server!');
         return;
     }
 
