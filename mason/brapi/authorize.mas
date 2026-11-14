@@ -18,8 +18,8 @@
 </div> -->
 
 <div class="row center">
-    <p>Hello <b><% $user_name |h %></b>!</p>
-    <p><b><% $client_id |h %></b> would like to access <b><% $database_name |h %></b> through your account. Use the buttons below to authorize or deny this request.</p><br>
+    <p><& /util/sentence.mas, text => __x('Hello {bold}{user_name}{end_bold}!'), bold => '<b>', end_bold => '</b>', user_name => $m->interp->apply_escapes( $user_name, 'h' ) &></p>
+    <p><& /util/sentence.mas, text => __x('{bold}{client_id}{end_bold} would like to access {bold}{database_name}{end_bold} through your account. Use the buttons below to authorize or deny this request.'), bold => '<b>', end_bold => '</b>', client_id => $m->interp->apply_escapes( $client_id, 'h' ), database_name => $m->interp->apply_escapes( $database_name, 'h' ) &></p><br>
     <a class="btn btn-success" href="<% $authorize_url |h %>"><% __('Authorize Access') |h %></a>
     <a class="btn btn-danger" href="<% $deny_url |h %>"><% __('Deny Access') |h %></a>
 </div>
