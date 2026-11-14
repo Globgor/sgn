@@ -13,30 +13,30 @@ $sample_tissue_types => ()
 <& /breeders_toolbox/sampling_trials/create_sampling_trials_dialogs.mas, sampling_facilities=>$sampling_facilities, sample_tissue_types=>$sample_tissue_types &>
 
 <div class="well">
-<&| /page/info_section.mas, title=>'Uploaded Transcriptomic Data', is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>'View and manage uploaded transcriptomic data files' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Uploaded Transcriptomic Data'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>$m->interp->apply_escapes( __('View and manage uploaded transcriptomic data files'), 'h' ) &>
 
-    <&| /page/info_section.mas, title=>'Your Uploaded Transcriptomic Data', is_subsection=>1, collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Your Uploaded Transcriptomic Data'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1 &>
         <div class="panel panel-default">
             <div class="panel-body">
                 <& /breeders_toolbox/file_list.mas, files=>$transcriptomics_files, allow_delete=>0 &>
             </div>
         </div>
     </&>
-    <&| /page/info_section.mas, title=>'Your Obsoleted Transcriptomic Data', is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>'These are deleted transcriptomic files' &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Your Obsoleted Transcriptomic Data'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>$m->interp->apply_escapes( __('These are deleted transcriptomic files'), 'h' ) &>
         <div class="panel panel-default">
             <div class="panel-body">
                 <& /breeders_toolbox/file_list.mas, files=>$deleted_transcriptomics_files, allow_delete=>0 &>
             </div>
         </div>
     </&>
-    <&| /page/info_section.mas, title=>'All Uploaded Transcriptomic Data', is_subsection=>1, collapsible=>1, collapsed=>1 &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('All Uploaded Transcriptomic Data'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1 &>
         <div class="panel panel-default">
             <div class="panel-body">
                 <& /breeders_toolbox/file_list.mas, files=>$all_transcriptomics_files, allow_delete=>0 &>
             </div>
         </div>
     </&>
-    <&| /page/info_section.mas, title=>'All Obsoleted Transcriptomic Data', is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>'These are deleted transcriptomic files' &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('All Obsoleted Transcriptomic Data'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>$m->interp->apply_escapes( __('These are deleted transcriptomic files'), 'h' ) &>
         <div class="panel panel-default">
             <div class="panel-body">
                 <& /breeders_toolbox/file_list.mas, files=>$all_deleted_transcriptomics_files, allow_delete=>0 &>
@@ -47,29 +47,29 @@ $sample_tissue_types => ()
 </div>
 
 <div class="well">
-<&| /page/info_section.mas, title=>'Transcriptomic Analyses', is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>'View and manage your transcriptomic analyses' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Transcriptomic Analyses'), 'h' ), is_subsection=>1, collapsible=>1, collapsed=>1, subtitle=>$m->interp->apply_escapes( __('View and manage your transcriptomic analyses'), 'h' ) &>
     <div class="panel panel-default">
         <div class="panel-body">
             <table class="table table-bordered table-hover" id="analyses_by_user_table">
               <thead>
               <tr>
                 <th>
-                  Analysis Name
+                  <% __('Analysis Name') |h %>
                 </th>
                 <th>
-                  Description
+                  <% __('Description') |h %>
                 </th>
                 <th>
-                  Model Type
+                  <% __('Model Type') |h %>
                 </th>
                 <th>
-                  Protocol
+                  <% __('Protocol') |h %>
                 </th>
                 <th>
-                  Application
+                  <% __('Application') |h %>
                 </th>
                 <th>
-                  Language
+                  <% __('Language') |h %>
                 </th>
               </tr>
               </thead>
