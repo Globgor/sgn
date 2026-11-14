@@ -6,45 +6,45 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header">
-                <button type="reset" class="close" id="add_derived_accessions_using_list_dismiss_button_1" name="add_derived_accessions_using_list_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h4 class="modal-title" id="addDerivedAccessions">Add New Accessions Derived from Accessions/Plants/Tissue Samples Using a List</h4></center>
+                <button type="reset" class="close" id="add_derived_accessions_using_list_dismiss_button_1" name="add_derived_accessions_using_list_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="addDerivedAccessions"><% __('Add New Accessions Derived from Accessions/Plants/Tissue Samples Using a List') |h %></h4></center>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <&| /util/workflow.mas, id=> "add_derived_accessions_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Add Derived Accessions" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Add Derived Accessions"), 'h' ) &>
                             <ul>
-                                <li>List must be accessions, plants or tissue samples list type</li>
-                                <li>Names in the list must exist in the database</li>
-                                <li>Derived accession names must not exist in the database</li>
-                                <li>Description provided will be stored as description for the specify derived accession</li>
+                                <li><% __('List must be accessions, plants or tissue samples list type') |h %></li>
+                                <li><% __('Names in the list must exist in the database') |h %></li>
+                                <li><% __('Derived accession names must not exist in the database') |h %></li>
+                                <li><% __('Description provided will be stored as description for the specify derived accession') |h %></li>
                             </ul>
                             <hr>
                             <center>
-                                <button id="next_step_add_new_intro" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_add_new_intro" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
                         <form class="form-horizontal" role="form" name="add_derived_accessions_form" id="add_derived_accessions_form">
-                            <&| /util/workflow.mas:step, title=> "Add New Derived Accessions" &>
-                                <& /page/page_title.mas, title=>"Enter information about derived accessions" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Add New Derived Accessions"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter information about derived accessions"), 'h' ) &>
                                 <br/>
                                 <br/>
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Derived From: </label>
+                                        <label class="col-sm-4 control-label"><% __('Derived From:') |h %> </label>
                                         <div class="col-sm-8">
                                             <select class="form-control" id="derived_from_type">
-                                                <option value="">Select a type</option>
-                                                <option value="accessions">accessions</option>
-                                                <option value="plants">plants</option>
-                                                <option value="tissue_samples">tissue samples</option>
+                                                <option value=""><% __('Select a type') |h %></option>
+                                                <option value="accessions"><% __('accessions') |h %></option>
+                                                <option value="plants"><% __('plants') |h %></option>
+                                                <option value="tissue_samples"><% __('tissue samples') |h %></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div id="derived_accession_section" style="display:none">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-4">Select a List of source materials:</label>
+                                            <label class="control-label col-sm-4"><% __('Select a List of source materials:') |h %></label>
                                             <div class="col-sm-8" >
                                                 <div class="input-group">
                                                     <select class="form-control" id="derived_from_list_select"></select>
@@ -58,17 +58,17 @@
                                 <br/>
                                 <div id="form_footer" style="display:none" >
                                     <center>
-                                        <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="derived_accessions_list_submit" id="derived_accessions_list_submit">Submit</button>
+                                        <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="derived_accessions_list_submit" id="derived_accessions_list_submit"><% __('Submit') |h %></button>
                                     </center>
                                 </div>
                             </&>
                         </form>
 
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your new accessions were stored" &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your new accessions were stored"), 'h' ) &>
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                New derived accessions were added successfully
+                                <% __('New derived accessions were added successfully') |h %>
                             </p>
                             <br/>
                         </&>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="add_derived_accessions_using_list_dismiss_button_2" name="add_derived_accessions_using_list_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="add_derived_accessions_using_list_dismiss_button_2" name="add_derived_accessions_using_list_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

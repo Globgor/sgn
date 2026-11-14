@@ -10,61 +10,61 @@ $default_seedlot_material_type => undef
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="seedlot_dialog">Create New Seedlot</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="seedlot_dialog"><% __('Create New Seedlot') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
             <form class="form-horizontal" role="form" method="post" id="create_new_seedlot_form" name="create_new_seedlot_form">
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Name: </label>
+                    <label class="col-sm-3 control-label"><% __('Name:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_name" placeholder="Required">
+                        <input class="form-control" id="seedlot_name" placeholder="<% __('Required') |h %>">
                     </div>
                 </div>
 %if ($default_seedlot_material_type) {
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" >Material Type: </label>
+                    <label class="col-sm-3 control-label" ><% __('Material Type:') |h %> </label>
                     <div class="col-sm-9">
                         <input class="form-control" name="add_seedlot_default_material_type" id="add_seedlot_default_material_type" disabled value="<% $default_seedlot_material_type %>">
                     </div>
                 </div>
 % } else {
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Material Type: </label>
+                    <label class="col-sm-3 control-label"><% __('Material Type:') |h %> </label>
                     <div class="col-sm-9" >
                         <div id="seedlot_material_type_div"></div>
                     </div>
                 </div>
 % }
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Seedlot Description: </label>
+                    <label class="col-sm-3 control-label"><% __('Seedlot Description:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_description" placeholder="Optional">
+                        <input class="form-control" id="seedlot_description" placeholder="<% __('Optional') |h %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Breeding Program: </label>
+                    <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                     <div class="col-sm-9" >
                         <div id="seedlot_breeding_program_div"></div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Location: </label>
+                    <label class="col-sm-3 control-label"><% __('Location:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_location" placeholder="Required">
+                        <input class="form-control" id="seedlot_location" placeholder="<% __('Required') |h %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Box Name: </label>
+                    <label class="col-sm-3 control-label"><% __('Box Name:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_box_name" placeholder="Required">
+                        <input class="form-control" id="seedlot_box_name" placeholder="<% __('Required') |h %>">
                     </div>
                 </div>
 
 		<div class="form-group">
-                    <label class="col-sm-3 control-label">Quality issues:</label>
+                    <label class="col-sm-3 control-label"><% __('Quality issues:') |h %></label>
                     <div class="col-sm-9" >
                         <input class="form-control" id="seedlot_quality" placeholder="list quality issues here, or 'ok' for good quality seed" >
                     </div>
@@ -74,7 +74,7 @@ $default_seedlot_material_type => undef
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="col-sm-12 control-label">Contents: </label>
+                                <label class="col-sm-12 control-label"><% __('Contents:') |h %> </label>
                             </div>
                         </div>
                         <div class="col-sm-9">
@@ -82,22 +82,22 @@ $default_seedlot_material_type => undef
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Accession name: </label>
+                                        <label class="col-sm-3 control-label"><% __('Accession name:') |h %> </label>
                                         <div class="col-sm-9" >
-                                            <input class="form-control" id="seedlot_accession_uniquename" placeholder="One Content Required" disabled value="<% $accession_uniquename %>">
+                                            <input class="form-control" id="seedlot_accession_uniquename" placeholder="<% __('One Content Required') |h %>" disabled value="<% $accession_uniquename %>">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div style="text-align: center">
-                                <h4>OR</h4>
+                                <h4><% __('OR') |h %></h4>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Cross Unique ID: </label>
+                                        <label class="col-sm-3 control-label"><% __('Cross Unique ID:') |h %> </label>
                                         <div class="col-sm-9" >
-                                            <input class="form-control" id="seedlot_cross_uniquename" placeholder="One Content Required" disabled value="<% $cross_uniquename %>">
+                                            <input class="form-control" id="seedlot_cross_uniquename" placeholder="<% __('One Content Required') |h %>" disabled value="<% $cross_uniquename %>">
                                         </div>
                                     </div>
                                 </div>
@@ -106,22 +106,22 @@ $default_seedlot_material_type => undef
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Accession name: </label>
+                                        <label class="col-sm-3 control-label"><% __('Accession name:') |h %> </label>
                                         <div class="col-sm-9" >
-                                            <input class="form-control" id="seedlot_accession_uniquename" placeholder="One Content Required">
+                                            <input class="form-control" id="seedlot_accession_uniquename" placeholder="<% __('One Content Required') |h %>">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div style="text-align: center">
-                                <h4>OR</h4>
+                                <h4><% __('OR') |h %></h4>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Cross Unique ID: </label>
+                                        <label class="col-sm-3 control-label"><% __('Cross Unique ID:') |h %> </label>
                                         <div class="col-sm-9" >
-                                            <input class="form-control" id="seedlot_cross_uniquename" placeholder="One Content Required">
+                                            <input class="form-control" id="seedlot_cross_uniquename" placeholder="<% __('One Content Required') |h %>">
                                         </div>
                                     </div>
                                 </div>
@@ -132,23 +132,23 @@ $default_seedlot_material_type => undef
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Source: </label>
+                    <label class="col-sm-3 control-label"><% __('Source:') |h %> </label>
                     <div class="col-sm-9">
-                        <input class="form-control" id="seedlot_source" placeholder="Optional">
-                        <span style="font-size: 80; color: #666">Seedlot/Plot/Subplot/Plant name to be used as the source for the first transaction</span>
+                        <input class="form-control" id="seedlot_source" placeholder="<% __('Optional') |h %>">
+                        <span style="font-size: 80; color: #666"><% __('Seedlot/Plot/Subplot/Plant name to be used as the source for the first transaction') |h %></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Amount (number of materials): </label>
+                    <label class="col-sm-3 control-label"><% __('Amount (number of materials):') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_amount" placeholder="Amount OR Weight(g) Required">
+                        <input class="form-control" id="seedlot_amount" placeholder="<% __('Amount OR Weight(g) Required') |h %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Weight (g): </label>
+                    <label class="col-sm-3 control-label"><% __('Weight (g):') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_weight" placeholder="Amount OR Weight(g) Required">
+                        <input class="form-control" id="seedlot_weight" placeholder="<% __('Amount OR Weight(g) Required') |h %>">
                     </div>
                 </div>
                 <!--
@@ -160,29 +160,29 @@ $default_seedlot_material_type => undef
                 </div>
                 -->
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Organization: </label>
+                    <label class="col-sm-3 control-label"><% __('Organization:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_organization" placeholder="Optional">
+                        <input class="form-control" id="seedlot_organization" placeholder="<% __('Optional') |h %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Timestamp: </label>
+                    <label class="col-sm-3 control-label"><% __('Timestamp:') |h %> </label>
                     <div class="col-sm-9" >
                         <input class="form-control" id="seedlot_timestamp" value="<% $timestamp %>" placeholder="<% $timestamp %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Transaction Description: </label>
+                    <label class="col-sm-3 control-label"><% __('Transaction Description:') |h %> </label>
                     <div class="col-sm-9" >
-                        <input class="form-control" id="seedlot_transaction_description" placeholder="Optional">
+                        <input class="form-control" id="seedlot_transaction_description" placeholder="<% __('Optional') |h %>">
                     </div>
                 </div>
             </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="create_new_seedlot_button" type="button" class="btn btn-primary" >OK</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button id="create_new_seedlot_button" type="button" class="btn btn-primary" ><% __('OK') |h %></button>
       </div>
     </div>
   </div>
