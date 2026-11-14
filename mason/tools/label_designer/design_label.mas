@@ -1,6 +1,6 @@
 <div class="text-center">
-    <p>Time to design! Start by selecting a type and field. Then click 'Add' to generate your new label element in the draw area.</p>
-    <p>Add, drag, customize, resize, and delete as many elements as you like. A barcode containing your unique identifier (plot_name, plant_name, etc) is strongly recommended.</p>
+    <p><% __('Time to design! Start by selecting a type and field. Then click \'Add\' to generate your new label element in the draw area.') |h %></p>
+    <p><% __('Add, drag, customize, resize, and delete as many elements as you like. A barcode containing your unique identifier (plot_name, plant_name, etc) is strongly recommended.') |h %></p>
     <p><em><strong>NOTE:</strong> The property values displayed here in the design tool may not be from the same plot, list item, etc.  The longest value is displayed here to aid in the positioning and sizing of the element.  The values will be correctly associated when all of the labels are printed in the next step.</em></p>
 </div>
 </br>
@@ -9,46 +9,46 @@
 </div>
 <div class="col-md-12">
     <center>
-        <h4>Add Elements:</h4>
+        <h4><% __('Add Elements:') |h %></h4>
     </center>
 </div>
 <div class="col-md-12" style="margin-bottom:20px;">
     <div class="col-md-3" id="d3-add-type-div">
         <center>
-            <label>Type:</label><br>
+            <label><% __('Type:') |h %></label><br>
             <select id="d3-add-type-input" class="form-control"></select>&nbsp&nbsp
             <br>
             <div style="text-align:left;">
-                <label class='radio'><input type="radio" name="alignmentradio" id="align_left" value="left">Left-align text elements</label>
-                <label class='radio'><input type="radio" name="alignmentradio" id="align_middle" value="middle" checked>Center-align text elements</label>
+                <label class='radio'><input type="radio" name="alignmentradio" id="align_left" value="left"><% __('Left-align text elements') |h %></label>
+                <label class='radio'><input type="radio" name="alignmentradio" id="align_middle" value="middle" checked><% __('Center-align text elements') |h %></label>
             </div>
         </center>
     </div>
     <div class="col-md-3" id="d3-add-field-div">
         <center>
-            <label>Field:</label><br>
+            <label><% __('Field:') |h %></label><br>
             <select id="d3-add-field-input" class="form-control"></select><br>
-            <button class="btn btn-primary" id="d3-custom-field">Create Custom Field</button>
+            <button class="btn btn-primary" id="d3-custom-field"><% __('Create Custom Field') |h %></button>
         </center>
         &nbsp&nbsp
     </div>
     <div class="col-md-2" id="d3-add-size-div">
         <center>
-            <label>Size:</label><br>
+            <label><% __('Size:') |h %></label><br>
             <input class="form-control" id="d3-add-size-input" type="number"></input>
             <input class="form-control" id="d3-add-size-slider" type="range"></input>
         </center>
     </div>
     <div class="col-md-3" id="d3-add-font-div">
         <center>
-            <label>Font:</label><br>
+            <label><% __('Font:') |h %></label><br>
             <select id="d3-add-font-input" class="form-control"></select>&nbsp
         </center>
     </div>
     <div class="col-md-1">
         <center>
             <br>
-            <button class="btn btn-primary d3-add" id="d3-add">Add</button>
+            <button class="btn btn-primary d3-add" id="d3-add"><% __('Add') |h %></button>
         </center>
     </div>
 </div>
