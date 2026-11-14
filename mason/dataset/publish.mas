@@ -326,7 +326,7 @@ function updateServices() {
                 }
             },
             error: () => {
-                alert("Could not get external services");
+                alert(<% __('Could not get external services') |js %>);
             }
         });
     })
@@ -389,7 +389,7 @@ function updateConnection() {
                 }
             },
             error: () => {
-                alert("Could not update connection info");
+                alert(<% __('Could not update connection info') |js %>);
                 displayConnection();
             }
         });
@@ -459,7 +459,7 @@ function connectService() {
 
         if ( !popup ) {
             jQuery(".dataset-archive-publish-connect-btn").attr("disabled", false);
-            alert("You must allow popup windows in your browser to continue");
+            alert(<% __('You must allow popup windows in your browser to continue') |js %>);
         }
 
         const interval = setInterval(() => {
@@ -504,7 +504,7 @@ function updateArticles() {
             }
         },
         error: () => {
-            alert("Could not get account articles");
+            alert(<% __('Could not get account articles') |js %>);
         }
     });
 }
@@ -538,7 +538,7 @@ async function onArticleChanged() {
             jQuery("#dataset-archive-publish-article-title-addon").html(details.status.toUpperCase());
             jQuery("#dataset-archive-publish-article-description").val(details.description);
             jQuery("#dataset-archive-publish-article-authors").val(details.authors.map((e) => e.full_name).join('\n'));
-            jQuery("#dataset-archive-publish-send-label").html("Add files to selected dataset");
+            jQuery("#dataset-archive-publish-send-label").html(<% __('Add files to selected dataset') |js %>);
             jQuery(".dataset-archive-publish-connected-btn").attr("disabled", false);
         }
         catch (err) {
@@ -549,10 +549,10 @@ async function onArticleChanged() {
         jQuery(".dataset-archive-publish-connected-btn").attr("disabled", false);
         jQuery(".dataset-archive-publish-article-details").attr("disabled", false);
         jQuery("#dataset-archive-publish-article-title").val("");
-        jQuery("#dataset-archive-publish-article-title-addon").html("NEW");
+        jQuery("#dataset-archive-publish-article-title-addon").html(<% __('NEW') |js %>);
         jQuery("#dataset-archive-publish-article-description").val("");
         jQuery("#dataset-archive-publish-article-authors").val("");
-        jQuery("#dataset-archive-publish-send-label").html("Create new dataset and add files");
+        jQuery("#dataset-archive-publish-send-label").html(<% __('Create new dataset and add files') |js %>);
     }
 }
 
@@ -596,7 +596,7 @@ function updateIssues() {
             }
         },
         error: () => {
-            alert("Could not get dataset published issues");
+            alert(<% __('Could not get dataset published issues') |js %>);
         }
     });
 }
@@ -829,7 +829,7 @@ function publishIssue(key, service) {
     SELECTED_ISSUE = ISSUES[key];
     onServiceChanged(service);
     if ( !SELECTED_ISSUE.article || !SELECTED_ISSUE.article.id ) {
-        alert("The selected dataset archive is not associated with an external article!");
+        alert(<% __('The selected dataset archive is not associated with an external article!') |js %>);
         return;
     }
 
@@ -850,7 +850,7 @@ function reserveDOI(key, service) {
     SELECTED_ISSUE = ISSUES[key];
     onServiceChanged(service);
     if ( !SELECTED_ISSUE.article || !SELECTED_ISSUE.article.id ) {
-        alert("The selected dataset archive is not associated with an external article!");
+        alert(<% __('The selected dataset archive is not associated with an external article!') |js %>);
         return;
     }
 
@@ -871,7 +871,7 @@ function reserveDOI(key, service) {
  * - Call updateIssues() when complete to reflect changes
  */
 function removeIssue(key) {
-    if (confirm("Are you sure you want to unlink this published metadata from the dataset?  This will remove the archived data on this server and the connection between the dataset and the external service.  This will NOT remove anything from the external service.") ) {
+    if (confirm(<% __('Are you sure you want to unlink this published metadata from the dataset?  This will remove the archived data on this server and the connection between the dataset and the external service.  This will NOT remove anything from the external service.') |js %>) ) {
         jQuery.ajax({
             url: `/ajax/dataset/publish/issues/remove/<% $dataset_id %>/${key}`,
             success: (resp) => {
@@ -883,7 +883,7 @@ function removeIssue(key) {
                 }
             },
             error: () => {
-                alert("Could not remove dataset published issues");
+                alert(<% __('Could not remove dataset published issues') |js %>);
             }
         });
     }
@@ -1109,11 +1109,11 @@ function finalizeFile(data_type, file_id, article_id) {
  */
 function makePublic() {
     if ( !SELECTED_ISSUE.article || !SELECTED_ISSUE.article.id ) {
-        alert("The selected dataset archive is not associated with an external article!");
+        alert(<% __('The selected dataset archive is not associated with an external article!') |js %>);
         return;
     }
 
-    if ( confirm("Are you sure you want to publish this dataset now? This cannot be undone.") ) {
+    if ( confirm(<% __('Are you sure you want to publish this dataset now? This cannot be undone.') |js %>) ) {
         jQuery("#working_modal").modal("show");
         jQuery.ajax({
             url: `/ajax/dataset/publish/issues/publish/<% $dataset_id %>/${SELECTED_ISSUE.key}`,
@@ -1131,7 +1131,7 @@ function makePublic() {
             },
             error: () => {
                 jQuery("#working_modal").modal("hide");
-                alert("Could not publish dataset");
+                alert(<% __('Could not publish dataset') |js %>);
             }
         });
     }
@@ -1142,11 +1142,11 @@ function makePublic() {
  */
 function getDOI(key, service) {
     if ( !SELECTED_ISSUE.article || !SELECTED_ISSUE.article.id ) {
-        alert("The selected dataset archive is not associated with an external article!");
+        alert(<% __('The selected dataset archive is not associated with an external article!') |js %>);
         return;
     }
 
-    if ( confirm("Are you sure you want to reserve a DOI now?  If the external dataset is still private, the DOI will become active once it is published.  Once a DOI is active, it cannot be disabled.") ) {
+    if ( confirm(<% __('Are you sure you want to reserve a DOI now?  If the external dataset is still private, the DOI will become active once it is published.  Once a DOI is active, it cannot be disabled.') |js %>) ) {
         jQuery("#working_modal").modal("show");
         jQuery.ajax({
             url: `/ajax/dataset/publish/issues/reserveDOI/<% $dataset_id %>/${SELECTED_ISSUE.key}`,
@@ -1164,7 +1164,7 @@ function getDOI(key, service) {
             },
             error: () => {
                 jQuery("#working_modal").modal("hide");
-                alert("Could not reserve a DOI for this dataset");
+                alert(<% __('Could not reserve a DOI for this dataset') |js %>);
             }
         });
     }

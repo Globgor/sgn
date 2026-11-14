@@ -28,12 +28,12 @@ function storeConnection(code) {
                     alert("Could not store connection info [" + resp.error + "]");
                 }
                 else {
-                    jQuery("#authorize-status").html("Accounts connected - you may close this window");
+                    jQuery("#authorize-status").html(<% __('Accounts connected - you may close this window') |js %>);
                     window.close();
                 }
             },
             error: () => {
-                alert("Could not store connection info");
+                alert(<% __('Could not store connection info') |js %>);
             }
         });
     }
