@@ -165,7 +165,7 @@ function _load_<% $instance %>(refresh) {
         error: function () {
             jQuery('#<% $instance %>_loading').hide();
             jQuery('#<% $instance %>').show();
-            jQuery('#<% $instance %>').text('Could not load the collections tree.');
+            jQuery('#<% $instance %>').text(<% __('Could not load the collections tree.') |js %>);
         }
     });
 }
