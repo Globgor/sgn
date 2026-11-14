@@ -182,14 +182,14 @@ function formatGenCorInputData (popId, type, indexFile) {
             } else {
                 jQuery(divPlace +" #qualityControl_message")
                     .css({"padding-left": '0px'})
-                    .html("This population has no valid traits to qclate.");
+                    .html(gettext("This population has no valid traits to qclate."));
         
             }
         },
         error: function(response) {
             jQuery(divPlace +"#qualityControl_message")
                 .css({"padding-left": '0px'})
-                .html("Error 3 occured preparing the additive genetic data for qualityControl analysis.");
+                .html(gettext("Error 3 occured preparing the additive genetic data for qualityControl analysis."));
              
             jQuery.unblockUI();
         }         
@@ -217,7 +217,7 @@ function phenotypicqualityControl () {
  
     var population = getPopulationDetails();
     
-    jQuery("#qualityControl_message").html("Running qualityControl... please wait...");
+    jQuery("#qualityControl_message").html(gettext("Running qualityControl... please wait..."));
          
     jQuery.ajax({
             type: 'POST',
@@ -232,7 +232,7 @@ function phenotypicqualityControl () {
                 } else {
                     jQuery("#qualityControl_message")
                         .css({"padding-left": '0px'})
-                        .html("This population has no phenotype data.");
+                        .html(gettext("This population has no phenotype data."));
 
 		    jQuery("#run_pheno_qualityControl").show();
                 }
@@ -240,7 +240,7 @@ function phenotypicqualityControl () {
             error: function(response) {
                 jQuery("#qualityControl_message")
                     .css({"padding-left": '0px'})
-                    .html("Error 1 occured preparing the phenotype data for qualityControl analysis.");
+                    .html(gettext("Error 1 occured preparing the phenotype data for qualityControl analysis."));
 
 		jQuery("#run_pheno_qualityControl").show();
             }
@@ -270,7 +270,7 @@ function runPhenoqualityControlAnalysis () {
             } else {
                 jQuery("#qualityControl_message")
                     .css({"padding-left": '0px'})
-                    .html("There is no qualityControl output for this dataset."); 
+                    .html(gettext("There is no qualityControl output for this dataset.")); 
         
 		jQuery("#run_pheno_qualityControl").show();
             }
@@ -278,7 +278,7 @@ function runPhenoqualityControlAnalysis () {
         error: function(response) {                          
             jQuery("#qualityControl_message")
                 .css({"padding-left": '0px'})
-                .html("Error 2 occured running the qualityControl analysis.");
+                .html(gettext("Error 2 occured running the qualityControl analysis."));
             
         jQuery("#run_pheno_qualityControl").show();
         }                
