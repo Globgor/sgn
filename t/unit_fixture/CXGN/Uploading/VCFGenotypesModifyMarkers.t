@@ -72,7 +72,6 @@ my $upload_response = $ua->post(
         "upload_genotype_accept_warnings"=>1,
     ]
 );
-sleep(20);
 ok($upload_response->is_success, 'initial VCF upload request succeeded at the HTTP level');
 my $message_hash = decode_json $upload_response->decoded_content;
 print STDERR "post response message_hash\n";
@@ -131,7 +130,6 @@ $upload_response = $ua->post(
         "upload_genotype_add_new_accessions"=>0,
     ]
 );
-sleep(20);
 ok($upload_response->is_success, 'mismatched-marker upload request succeeded at the HTTP level');
 $message_hash = decode_json $upload_response->decoded_content;
 ok(!$message_hash->{success}, 'upload with a mismatched marker and no accept_warnings is not stored') or diag(Dumper($message_hash));
@@ -172,7 +170,6 @@ $upload_response = $ua->post(
         "upload_genotype_accept_warnings"=>1,
     ]
 );
-sleep(20);
 print STDERR "finished upload for protocol $protocol_id\n";
 ok($upload_response->is_success, 'accepted-warnings upload request succeeded at the HTTP level');
 $message_hash = decode_json $upload_response->decoded_content;
@@ -216,7 +213,6 @@ $upload_response = $ua->post(
         "upload_genotype_update_markers"=>1,
     ]
 );
-sleep(20);
 ok($upload_response->is_success, 'update-markers upload request succeeded at the HTTP level');
 $message_hash = decode_json $upload_response->decoded_content;
 is($message_hash->{success}, 1, 'upload succeeds when requesting the mismatched marker be updated') or diag(Dumper($message_hash));

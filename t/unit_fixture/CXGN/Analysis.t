@@ -205,7 +205,6 @@ for my $extension ("xls", "xlsx") {
         'arbitrary_property'  => '0.001'
     });
 
-    sleep(5);
     my $a = CXGN::Analysis->new({
         bcs_schema      => $schema,
         people_schema   => $people_schema,
@@ -261,7 +260,6 @@ for my $extension ("xls", "xlsx") {
 
     print STDERR "ANALYSIS IDS: $message_hash_uploaded_analysis->{analysis_id} $saved_analysis_object->{analysis_id}\n";
 
-    sleep(5);
     my $a = CXGN::Analysis->new({
         bcs_schema      => $schema,
         people_schema   => $people_schema,

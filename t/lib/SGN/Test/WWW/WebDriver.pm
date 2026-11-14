@@ -63,6 +63,7 @@ package SGN::Test::WWW::WebDriver;
 use Moose;
 
 use Try::Tiny;
+use Time::HiRes ();
 use Test::More;
 use File::Spec::Functions;
 use Selenium::Firefox;
@@ -105,6 +106,48 @@ has 'download_dir' => (is => 'ro',
 
 our $webdriver_instance;
 
+sub import {
+    return if @_ > 1;
+    my $caller = caller;
+    no strict 'refs';
+    # Replace only unqualified sleeps in the importing test package.
+    *{"${caller}::sleep"} = \&_settled_sleep;
+}
+
+sub _settled_sleep (;$) {
+    return CORE::sleep() unless @_;
+    my ($seconds) = @_;
+    my $self = $webdriver_instance;
+    return CORE::sleep($seconds) unless $self && $seconds > 0;
+    return CORE::sleep($seconds) if eval { $self->driver->get_alert_text(); 1 };
+    my $started = Time::HiRes::time();
+    my $quiet_since;
+    my $ready = $self->_wait($seconds, sub {
+        my $idle = eval { $self->driver->execute_script(q{
+            function rendered(e) {
+                return e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden';
+            }
+            if (document.readyState !== 'complete' || (window.jQuery && jQuery.active)) { return false; }
+            var working = document.getElementById('working_modal');
+            if (working && rendered(working)) { return false; }
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                var m = modals[i], dialog = m.querySelector('.modal-dialog');
+                if (!rendered(m)) { continue; }
+                var transform = dialog && getComputedStyle(dialog).transform;
+                if (!m.classList.contains('in') || (transform && transform !== 'none' &&
+                    transform !== 'matrix(1, 0, 0, 1, 0, 0)')) { return false; }
+            }
+            return !document.querySelector('.modal-backdrop:not(.in)');
+        }) };
+        my $now = Time::HiRes::time();
+        $quiet_since = $idle ? ($quiet_since // $now) : undef;
+        return defined $quiet_since && $now - $quiet_since >= 0.5;
+    });
+    _sleep_not_shortened($seconds, (caller)[1, 2]) if !$ready && defined &_sleep_not_shortened;
+    return int(Time::HiRes::time() - $started);
+}
+
 sub BUILD {
     my $self = shift;
 
@@ -121,7 +164,8 @@ sub BUILD {
     $profile->set_preference( 'browser.download.manager.showWhenStarting', 0 );
     $profile->set_preference( 'browser.helperApps.neverAsk.saveToDisk', 'application/octet-stream,text/csv,application/zip,text/plain' );
     
-    my $driver = Selenium::Remote::Driver->new(firefox_profile => $profile, base_url => $ENV{SGN_TEST_SERVER}, remote_server_addr => $ENV{SGN_REMOTE_SERVER_ADDR} || 'localhost');
+    my $driver = Selenium::Remote::Driver->new(firefox_profile => $profile, base_url => $ENV{SGN_TEST_SERVER}, remote_server_addr => $ENV{SGN_REMOTE_SERVER_ADDR} || 'localhost',
+        extra_capabilities => { unhandledPromptBehavior => 'ignore' });
     
 
     $self->driver($driver);
@@ -196,9 +240,42 @@ sub get_ok {
     ok($self->get($url), $test_name);
 }
     
+sub _wait {
+    my ($self, $seconds, $condition) = @_;
+    my $deadline = Time::HiRes::time() + $seconds;
+    while (Time::HiRes::time() < $deadline) {
+        return 1 if eval { $self->driver->get_alert_text(); 1 };
+        return 1 if eval { $condition->() } && Time::HiRes::time() < $deadline;
+        my $remaining = $deadline - Time::HiRes::time();
+        last if $remaining <= 0;
+        Time::HiRes::sleep($remaining < 0.2 ? $remaining : 0.2);
+    }
+    return 0;
+}
+
 sub find_element { 
     my $self = shift;
-    return $self->driver->find_element(@_);
+    my $element = $self->driver->find_element(@_);
+    my $ready = $self->_wait(60, sub {
+        return !eval { $self->driver->execute_script(q{
+            var e = arguments[0];
+            if (e && e.tagName.toLowerCase() === 'option') { e = e.closest('select'); }
+            if (!e || !e.isConnected || !e.getClientRects().length ||
+                getComputedStyle(e).visibility !== 'visible') { return false; }
+            var r = e.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+            if (x < 0 || y < 0 || x >= window.innerWidth || y >= window.innerHeight) {
+                e.scrollIntoView({block: 'center', inline: 'center'});
+                r = e.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2;
+            }
+            var top = document.elementFromPoint(x, y);
+            if (!top) { return false; }
+            if (top.closest('#working_modal, .modal-backdrop')) { return true; }
+            var modal = top.closest('.modal');
+            return !!modal && !modal.contains(e);
+        }, $element) };
+    });
+    note("Timed out waiting for uncovered element $_[0]") unless $ready;
+    return $element;
 }
 
 sub find_element_ok { 
@@ -276,6 +353,12 @@ sub wait_for_working_dialog {
         sleep(1);
     }
     print STDERR "... working dialog dismissed ...\n";
+}
+
+# Trial only: drop this hunk to disable sleep timeout notes.
+sub _sleep_not_shortened {
+    my ($seconds, $file, $line) = @_;
+    note("sleep $seconds not shortened at $file:$line");
 }
 
 1;
