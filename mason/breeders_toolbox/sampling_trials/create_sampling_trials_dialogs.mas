@@ -10,8 +10,8 @@ $sample_tissue_types => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addSamplingTrialDialog">Add Sampling Trial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addSamplingTrialDialog"><% __('Add Sampling Trial') |h %></h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_sampling_trials_form" name="upload_sampling_trials_form" >
@@ -19,23 +19,23 @@ $sample_tissue_types => ();
                     <div class="container-fluid">
 
                         <&| /util/workflow.mas, id=> "sampling_trial_create_workflow" &>
-                            <&| /util/workflow.mas:step, title=> "Intro" &>
-                                <& /page/page_title.mas, title=>"This workflow will guide you through adding a sampling trial in the database" &>
-                                <p>Sampling trials can represent 96 or 384 well plates, or more generically any sampling scheme.</p>
-                                <p>Each sample has a globally unique tissue sample ID.</p>
-                                <p>The "contents" of each sample can be either a tissue sample, plant name, plot name, or accession name. This "source" name must be in the database already. This is useful if you provide a field trial entity (such as a plot or plant or tissue sample name), so that phenotypes and genotypes can be directly compared.</p>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through adding a sampling trial in the database"), 'h' ) &>
+                                <p><% __('Sampling trials can represent 96 or 384 well plates, or more generically any sampling scheme.') |h %></p>
+                                <p><% __('Each sample has a globally unique tissue sample ID.') |h %></p>
+                                <p><% __('The "contents" of each sample can be either a tissue sample, plant name, plot name, or accession name. This "source" name must be in the database already. This is useful if you provide a field trial entity (such as a plot or plant or tissue sample name), so that phenotypes and genotypes can be directly compared.') |h %></p>
 
                                 <br/><br/>
                                 <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
 
-                            <&| /util/workflow.mas:step, title=> "Basic Info" &>
-                                <& /page/page_title.mas, title=>"Provide info about your sampling trial" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Basic Info"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide info about your sampling trial"), 'h' ) &>
 
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Facility: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Facility:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="sampling_trial_facility_select">
 % foreach my $facility(@$sampling_facilities){
@@ -45,41 +45,41 @@ $sample_tissue_types => ();
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Trial Name: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Trial Name:') |h %> </label>
                                     <div class="col-sm-7">
                                         <input class="form-control" id="sampling_trial_name" name="sampling_trial_name" type="text" placeholder=" e.g. 18DNA00001"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sample Type: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sample Type:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="sampling_trial_plate_sample_type">
-                                            <option value="Tissue">Tissue</option>
+                                            <option value="Tissue"><% __('Tissue') |h %></option>
                                             <option value="DNA">DNA</option>
                                             <option value="RNA">RNA</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Trial's Breeding Program: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Trial\'s Breeding Program:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="sampling_trial_breeding_program_select_div"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Trial's Location: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Trial\'s Location:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="sampling_trial_location_select_div"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Trial's Year: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Trial\'s Year:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="sampling_trial_year_select_div"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sampling Trials's Description: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sampling Trials\'s Description:') |h %> </label>
                                     <div class="col-sm-7">
                                         <textarea class="form-control" id="sampling_trial_description" name="sampling_trial_description" maxlength="250"></textarea>
                                     </div>
@@ -87,34 +87,34 @@ $sample_tissue_types => ();
 
                                 <br/>
                                 <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Samples Info" &>
-                                <& /page/page_title.mas, title=>"Provide information about the samples" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Samples Info"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide information about the samples"), 'h' ) &>
                                 <br/><br/>
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Select One: </label>
+                                    <label class="col-sm-3 control-label"><% __('Select One:') |h %> </label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="sampling_trial_well_input_option">
-                                            <option value="xls">I am uploading a sampling design I made in Excel</option>
-                                            <option value="design">I need to design a completely new sampling trial</option>
+                                            <option value="xls"><% __('I am uploading a sampling design I made in Excel') |h %></option>
+                                            <option value="design"><% __('I need to design a completely new sampling trial') |h %></option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div id="sampling_trial_well_upload_section">
-                                    <h3>You want to upload an existing samples layout</h3>
+                                    <h3><% __('You want to upload an existing samples layout') |h %></h3>
 
                                     <div class="well well-sm">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <&| /page/explanation.mas, title=>'Template information' &>
+                                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                     <p>
-                                                        <b>File format information</b>
+                                                        <b><% __('File format information') |h %></b>
                                                         <br>
-                                                        <a id="sampling_trial_layout_upload_spreadsheet_info_format">Spreadsheet format</a>
+                                                        <a id="sampling_trial_layout_upload_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                                                     </p>
                                                 </&>
                                             </div>
@@ -123,7 +123,7 @@ $sample_tissue_types => ();
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            <label class="col-sm-6 control-label">Select Samples Layout XLSX (or XLS) File: </label>
+                                                            <label class="col-sm-6 control-label"><% __('Select Samples Layout XLSX (or XLS) File:') |h %> </label>
                                                             <div class="col-sm-6">
                                                                 <input type="file" name="sampling_trial_layout_upload" id="sampling_trial_layout_upload" encoding="multipart/form-data" />
                                                             </div>
@@ -137,22 +137,22 @@ $sample_tissue_types => ();
                                 </div>
 
                                 <div id="sampling_trial_well_design_section" style="display:none">
-                                    <h3>You want to design a completely new sampling trial.</h3>
+                                    <h3><% __('You want to design a completely new sampling trial.') |h %></h3>
 
                                     <div class="well well-sm">
                                         <ul>
-                                            <li>Select a list for the source material of each tissue sample. Then indicate how many replicates are required.</li>
-                                            <li>Note: From the most desirable to least desirable source observation unit you can choose: tissue samples, plants, plots, or accessions</li>
+                                            <li><% __('Select a list for the source material of each tissue sample. Then indicate how many replicates are required.') |h %></li>
+                                            <li><% __('Note: From the most desirable to least desirable source observation unit you can choose: tissue samples, plants, plots, or accessions') |h %></li>
                                         </ul>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-7 control-label">Source Observation Unit List: </label>
+                                        <label class="col-sm-7 control-label"><% __('Source Observation Unit List:') |h %> </label>
                                         <div class="col-sm-5">
-                                            <span id="sampling_trial_accession_select_box_span">[loading...]</span>
+                                            <span id="sampling_trial_accession_select_box_span"><% __('[loading...]') |h %></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-7 control-label">Replicates: </label>
+                                        <label class="col-sm-7 control-label"><% __('Replicates:') |h %> </label>
                                         <div class="col-sm-5">
                                             <input class="form-control" id="sampling_trial_replicates" name="sampling_trial_replicates" type="number" placeholder="1"/>
                                         </div>
@@ -213,33 +213,33 @@ $sample_tissue_types => ();
 
                                 <br/><br/>
                                 <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Linkage" &>
-                                <& /page/page_title.mas, title=>"Is your sampling trial linked with field trials in the database? This information can also be added from the sampling trial detail page once the trial is saved in the database." &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Linkage"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Is your sampling trial linked with field trials in the database? This information can also be added from the sampling trial detail page once the trial is saved in the database."), 'h' ) &>
 
-                                <p>If you provided us with information about where the sample originated (e.g. it came from a plot name or plant name or tissue sample name in a field trial), we will automatically create linkage between the field trial(s) and this sampling trial.</p>
+                                <p><% __('If you provided us with information about where the sample originated (e.g. it came from a plot name or plant name or tissue sample name in a field trial), we will automatically create linkage between the field trial(s) and this sampling trial.') |h %></p>
 
                                 <br/>
                                 <center>
-                                <button class="btn btn-lg btn-primary" onclick="Workflow.complete(this); return false;" >Continue to Next Step</button>
+                                <button class="btn btn-lg btn-primary" onclick="Workflow.complete(this); return false;" ><% __('Continue to Next Step') |h %></button>
                                 <center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Confirm" &>
-                                <& /page/page_title.mas, title=>"Finalize and submit your sampling trial" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finalize and submit your sampling trial"), 'h' ) &>
 
                                 <hr>
                                 <center>
-                                <button type="button" class="btn btn-primary" name="add_sampling_trial_submit" id="add_sampling_trial_submit">Submit</button>
+                                <button type="button" class="btn btn-primary" name="add_sampling_trial_submit" id="add_sampling_trial_submit"><% __('Submit') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:complete, title=> "Complete" &>
-                                <& /page/page_title.mas, title=>"Complete! Your sampling trial was saved in the database." &>
+                            <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Complete! Your sampling trial was saved in the database."), 'h' ) &>
 
                                 <p>
                                     <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                    The sampling trial was saved successfully
+                                    <% __('The sampling trial was saved successfully') |h %>
                                 </p>
 
                             </&>
@@ -249,7 +249,7 @@ $sample_tissue_types => ();
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -259,18 +259,18 @@ $sample_tissue_types => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSamplingTrialInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadSamplingTrialInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading a pre-existing sampling trial layout.</b>
+                    <b><% __('This is for uploading a pre-existing sampling trial layout.') |h %></b>
                     <br/>
-                    <b>File must be Excel file (.xls or .xlsx)</b>
+                    <b><% __('File must be Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following:
+                    <% __('The first row (header) must contain the following:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -292,7 +292,7 @@ $sample_tissue_types => ();
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>date (should be YYYY-MM-DD)</li>
                     <li>sample_name (the globally unique identifier for the sample)</li>
@@ -303,7 +303,7 @@ $sample_tissue_types => ();
                     <li>tissue_type (must be one of: <% $tissue_string %>)</li>
                     </ul>
 
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                     <li>ncbi_taxonomy_id (NCBI taxonomy identifier)</li>
                     <li>person (the name of the person who prepared the sample)</li>
@@ -316,7 +316,7 @@ $sample_tissue_types => ();
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_sampling_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_sampling_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
