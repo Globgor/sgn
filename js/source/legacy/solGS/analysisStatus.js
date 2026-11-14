@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 * functions for displaying solgs related
 * analyses jobs in the user profile page

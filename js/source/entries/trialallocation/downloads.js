@@ -1,3 +1,4 @@
+import '../../legacy/CXGN/I18N.js';
 export function createDownloadTools({ qs, key, sanitizeTrialName, collectLayoutJson, createFullGridExportElement }) {
   function xmlEscape(value) {
     return String(value ?? '')

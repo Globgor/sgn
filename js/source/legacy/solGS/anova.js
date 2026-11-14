@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * single trial ANOVA analysis
  * Isaak Y Tecle <iyt2@cornell.edu>

@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 
 /**

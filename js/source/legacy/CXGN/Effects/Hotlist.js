@@ -4,6 +4,7 @@
 * @author Chris Carpita <csc32@cornell.edu>
 *
 */
+JSAN.use("CXGN.I18N");
 JSAN.use("CXGN.Base");
 JSAN.use("CXGN.Effects");
 

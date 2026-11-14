@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 * trait acronyms loader
 * Isaak Y Tecle <iyt2@cornell.edu>

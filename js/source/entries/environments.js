@@ -1,5 +1,6 @@
 import '../legacy/jquery.js';
 import '../legacy/leaflet.js';
+import '../legacy/CXGN/I18N.js';
 
 var environmentStratificationMap = null;
 var environmentStratificationMapMarkers = null;

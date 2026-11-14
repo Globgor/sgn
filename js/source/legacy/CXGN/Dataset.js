@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 var CXGN;
 if (!CXGN) CXGN = function () { };

@@ -1,5 +1,6 @@
 import '../legacy/jquery.js';
 import '../legacy/d3/d3v4Min.js';
+import '../legacy/CXGN/I18N.js';
 
 var version = '0.01';
 

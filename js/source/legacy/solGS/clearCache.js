@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function() {
     var clearCacheArgs = {
         analysis_types: jQuery('#analysis_type').val(),

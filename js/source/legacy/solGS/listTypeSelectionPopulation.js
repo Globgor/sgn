@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 A search interface for list and dataset type selection populations
 

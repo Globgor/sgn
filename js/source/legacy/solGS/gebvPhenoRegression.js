@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 /** 
 * breeding values vs phenotypic deviation 

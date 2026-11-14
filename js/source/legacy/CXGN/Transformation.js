@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 function deleteTransformationID(transformation_stock_id){
 
     const confirmation = confirm('Are you sure you want to delete this transformation ID? The deletion cannot be undone.');

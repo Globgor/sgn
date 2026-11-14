@@ -1,5 +1,6 @@
 import "../legacy/d3/d3v4Min.js"; // provides global `d3` (select/append/event); datum-first event handlers
 import "../legacy/jquery.js";
+import "../legacy/CXGN/I18N.js";
 import { sankey as d3sankey, sankeyCenter, sankeyLinkHorizontal } from "d3-sankey";
 
 // BrAPI v2 on this instance requires login (brapi_require_login), so browser

@@ -2,6 +2,7 @@
 import '../legacy/jquery.js';
 import '../legacy/jquery/dataTables.js';
 import '../legacy/CXGN/Login.js';
+import '../legacy/CXGN/I18N.js';
 
 export function init(main_div, stock_id, stockprop_id) {
 

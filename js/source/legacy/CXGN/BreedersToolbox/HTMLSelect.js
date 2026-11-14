@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 function get_select_box(type, div_id, options = {}) {
 

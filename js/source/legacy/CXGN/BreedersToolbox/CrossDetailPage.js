@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function() {
 
     display_parents(get_cross_id());

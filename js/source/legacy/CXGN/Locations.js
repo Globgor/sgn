@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  *  Common JS functions used by the table and map in the Manage Locations page
  */

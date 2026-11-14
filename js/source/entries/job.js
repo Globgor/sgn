@@ -1,3 +1,4 @@
+import '../legacy/CXGN/I18N.js';
 /**
 * functions for displaying submitted job
 * information on the user details page

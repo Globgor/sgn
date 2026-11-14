@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 function stock_detail_page_init_dialogs() {
         jQuery('#stock_trials_info_popup').dialog({
