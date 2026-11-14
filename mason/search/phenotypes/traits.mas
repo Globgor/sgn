@@ -7,7 +7,7 @@
 
 
 <&| /page/info_section.mas,
-    title       => 'Search and browse tree of traits',
+    title       => $m->interp->apply_escapes( __('Search and browse tree of traits'), 'h' ),
     collapsible=>1, collapsed=>0
 &>
   <&| /page/explanation.mas &>

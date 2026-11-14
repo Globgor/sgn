@@ -11,7 +11,7 @@
   $trait_db_name              => 'SP'
 </%args>
 
-<& /page/page_title.mas, title => "Search Accessions and Plots" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Search Accessions and Plots"), 'h' ) &>
 
 <%once>
   use Number::Format;
@@ -36,7 +36,7 @@ my $new_stock_link = qq| <a href="/stock/0/new">Submit new stock</a> \| <a href=
 % if( $results ) {
 %   my $pager = $results->pager;
 
-  <&| /page/info_section.mas, title    => 'Search results',
+  <&| /page/info_section.mas, title    => $m->interp->apply_escapes( __('Search results'), 'h' ),
                               subtitle => 'results '
                                           .$pager->first
                                           .'-'.$pager->last
@@ -59,11 +59,11 @@ my $new_stock_link = qq| <a href="/stock/0/new">Submit new stock</a> \| <a href=
         )
       %>
 %   } else {
-     <h3 style="text-align: center">no matching results found</h3>
+     <h3 style="text-align: center"><% __('no matching results found') |h %></h3>
 %   }
 
 <div style="text-align:right">
-Copy items on this page to list: 
+<% __('Copy items on this page to list:') |h %> 
 <span id="item_list_menu">
 </span>
 
@@ -96,7 +96,7 @@ Copy items on this page to list:
 
   <& /page/pagination_control.mas, pager => $pager, link_maker => $pagination_link_maker &>
 % }
-<&| /page/info_section.mas, title => 'Search' , subtitle => $new_stock_link &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search'), 'h' ) , subtitle => $new_stock_link &>
   <& /stock/stock_search_form.mas,
     form                       => $form,
     opts                       => $form_opts,
