@@ -5,7 +5,7 @@
 
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 
-<& /page/page_title.mas, title=>'Search Accessions Containing Specific Genotypes' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Search Accessions Containing Specific Genotypes'), 'h' ) &>
 
 <!--
 <&| /page/info_section.mas, title=>'Step 1: Select a set of accessiions (dataset)'&>
@@ -19,7 +19,7 @@
 </&>
 -->
 
-<&| /page/info_section.mas, title=>'Step 1:'&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Step 1:'), 'h' )&>
     <div class="row" id="search_form_1" >
         <div class="col-sm-1">
         </div>
@@ -28,11 +28,11 @@
                 <div class="col-sm-11">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Select a list of accessions:</label>
+                            <label class="control-label col-sm-4"><% __('Select a list of accessions:') |h %></label>
                             <div class="col-sm-8" >
                                 <div class="input-group">
                                     <select class="form-control" id="stock_list_select">
-                                        <option value="">Select a list of accessions</option>
+                                        <option value=""><% __('Select a list of accessions') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
 </&>
 
 <br>
-<&| /page/info_section.mas, title=>'Step 2:'&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Step 2:'), 'h' )&>
     <div class="row" id="search_form_2" >
         <div class="col-sm-1">
         </div>
@@ -54,11 +54,11 @@
                 <div class="col-sm-11">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Select a list of marker alleles:</label>
+                            <label class="control-label col-sm-4"><% __('Select a list of marker alleles:') |h %></label>
                             <div class="col-sm-8" >
                                 <div class="input-group">
                                     <select class="form-control" id="markerset_select">
-                                        <option value="">Select a list of marker alleles</option>
+                                        <option value=""><% __('Select a list of marker alleles') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4"></label>
                             <div class="col-sm-8" >
-                                <a href="/breeders/markers"><p>Need to create a list of marker alleles.</p></a>
+                                <a href="/breeders/markers"><p><% __('Need to create a list of marker alleles.') |h %></p></a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
     </div>
 </&>
 <br>
-<&| /page/info_section.mas, title=>'Step 3:'&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Step 3:'), 'h' )&>
     <div class="row" id="search_form_3" >
         <div class="col-sm-1">
         </div>
@@ -87,7 +87,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4"></label>
                             <div class="col-sm-8" >
-                                <button class="btn btn-primary" id="search_accessions_using_markerset"><i class="glyphicon glyphicon-search"></i> Search Accessions</button>
+                                <button class="btn btn-primary" id="search_accessions_using_markerset"><i class="glyphicon glyphicon-search"></i> <% __('Search Accessions') |h %></button>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
  </&>
 
 
-<&| /page/info_section.mas, title => 'Search Results' , collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search Results'), 'h' ) , collapsible=>1, collapsed=>0 &>
 
     <link rel="stylesheet" type="text/css" href="/documents/inc/datatables/jquery.dataTables.css">
 

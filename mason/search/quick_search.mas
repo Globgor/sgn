@@ -20,7 +20,7 @@
   search tools in the "search" menu.
 </div>
 
-<&| /page/info_section.mas, title => 'Exact matches' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Exact matches'), 'h' ) &>
 
 <div class="well">
 
@@ -34,7 +34,7 @@
 
   <div>
     <dl>
-      <dt>Identifiers - Breeding Data</dt>
+      <dt><% __('Identifiers - Breeding Data') |h %></dt>
       <dd>
 	<div style="float: left; width: 50%">
 	  <% $search{accessions} %>
@@ -49,7 +49,7 @@
 	</div>
 	<div style="clear: both;">&nbsp;</div>
       </dd>
-      <dt>Identifiers - Genomic Data</dt>
+      <dt><% __('Identifiers - Genomic Data') |h %></dt>
       <dd >
 	<div style="float: left; width: 50%">
           <% $search{marker} %>
@@ -69,8 +69,8 @@
 </&>
 
 <&| /page/info_section.mas,
-    title => 'Fuzzy searches',
-    subtitle => 'click to view search results',
+    title => $m->interp->apply_escapes( __('Fuzzy searches'), 'h' ),
+    subtitle => $m->interp->apply_escapes( __('click to view search results'), 'h' ),
  &>
 
 <div class="well">
@@ -78,8 +78,8 @@
   <div>
     <dl>
     <dt>
-      <div style="float: left; width: 50%">Identifiers</div>
-      <div style="float: right; width: 50%">cDNA Libraries</div>
+      <div style="float: left; width: 50%"><% __('Identifiers') |h %></div>
+      <div style="float: right; width: 50%"><% __('cDNA Libraries') |h %></div>
     </dt>
     <dd>
       <div style="float: left; width: 50%">
@@ -100,8 +100,8 @@
   <div>
     <dl>
     <dt>
-      <div style="float: left; width: 50%">People (searching by name)</div>
-      <div style="float: right; width: 50%">Annotations</div>
+      <div style="float: left; width: 50%"><% __('People (searching by name)') |h %></div>
+      <div style="float: right; width: 50%"><% __('Annotations') |h %></div>
     </dt>
     <dd>
       <div style="float: left; width: 50%">
@@ -121,8 +121,8 @@
   <div>
     <dl>
     <dt>
-      <div style="float: left; width: 50%">Images</div>
-      <div style="float: right; width: 50%">Web Pages</div>
+      <div style="float: left; width: 50%"><% __('Images') |h %></div>
+      <div style="float: right; width: 50%"><% __('Web Pages') |h %></div>
     </dt>
     <dd>
       <div style="float: left; width: 50%">

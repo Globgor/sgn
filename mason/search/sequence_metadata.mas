@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <& /page/page_title.mas, title=>'Search Sequence Metadata' &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Search Sequence Metadata'), 'h' ) &>
 
     <& /tools/sequence_metadata/query_sequence_metadata.mas &>
 

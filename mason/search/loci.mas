@@ -8,7 +8,7 @@ $lg_names_ref       => undef
 
 <div class="container-fluid">
 
-<& /page/page_title.mas, title=>'Search Genes and Loci' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Search Genes and Loci'), 'h' ) &>
 
 <%perl>
 
@@ -53,13 +53,13 @@ my $advanced_search=  info_table_html(
 </%perl>
 
 
-<&| /page/info_section.mas, title => 'Search', collapsible=>1, collapsed=>0, subtitle=>'[<a href="../help/gene_search_help.pl">Gene Search Help</a>]' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'[<a href="../help/gene_search_help.pl">Gene Search Help</a>]' &>
 
 <div class="well" id="locus_search_form">
 
   <div class="form-horizontal" >
     <div class="form-group">
-      <label class="col-sm-3 control-label">Search for any gene, locus, or allele:</label>
+      <label class="col-sm-3 control-label"><% __('Search for any gene, locus, or allele:') |h %></label>
       <div class="col-sm-9" >
         <% $any_name_select %>
       </div>
@@ -67,9 +67,9 @@ my $advanced_search=  info_table_html(
     <div class="container-fluid" align="center">
       <br/>
       <ul class="list-inline" >
-        <li style="padding-bottom:5px"><button class="btn btn-primary" id="submit_locus_search" />Search</button></li>
-	<li style="padding-bottom:5px"><a class="btn btn-info" href="/locus/0/new/" style="color:#fff" >Submit New Locus</a></li>
-	<li style="padding-bottom:5px"><input class="btn btn-default" type="button" value="Advanced Search Options" id="show_advanced_search" /></li>
+        <li style="padding-bottom:5px"><button class="btn btn-primary" id="submit_locus_search" /><% __('Search') |h %></button></li>
+	<li style="padding-bottom:5px"><a class="btn btn-info" href="/locus/0/new/" style="color:#fff" ><% __('Submit New Locus') |h %></a></li>
+	<li style="padding-bottom:5px"><input class="btn btn-default" type="button" value="<% __('Advanced Search Options') |h %>" id="show_advanced_search" /></li>
       </ul>
     </div>
   </div>
@@ -86,7 +86,7 @@ my $advanced_search=  info_table_html(
 -->
 
 <div id="advanced_search_div" style="display:none;">
-   <&| /page/info_section.mas, title    => 'Advanced Options' &>
+   <&| /page/info_section.mas, title    => $m->interp->apply_escapes( __('Advanced Options'), 'h' ) &>
      <% $advanced_search %>
    </&>
 </div>
@@ -98,17 +98,17 @@ my $advanced_search=  info_table_html(
 </div>
 
 
-<&| /page/info_section.mas, title => 'Search Results', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search Results'), 'h' ), collapsible=>1, collapsed=>0 &>
 
 
 <div class="well">
 <table id="locus_search_results" class="display">
 <thead>
   <tr>
-    <th>Organism</th>
-    <th>Locus Name</th>
-    <th>Locus Symbol</th>
-    <th>Alleles</th>
+    <th><% __('Organism') |h %></th>
+    <th><% __('Locus Name') |h %></th>
+    <th><% __('Locus Symbol') |h %></th>
+    <th><% __('Alleles') |h %></th>
   </tr>
 </thead>
 </table>
