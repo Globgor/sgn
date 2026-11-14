@@ -50,5 +50,5 @@ $name =~ s/cxgn::gem:://;
 
 <h2><% __('ERROR PAGE REQUEST:') |h %></h2>
 
-<big>Wrong arguments are been used to request the <% $name %> page.</big>
+<big><& /util/sentence.mas, text => __x('Wrong arguments are been used to request the {name} page.'), name => $name &></big>
 
