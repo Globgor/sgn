@@ -273,7 +273,7 @@ jQuery(document).ready( function() {
         jQuery.ajax( {
             url: '/ajax/user/forgot_username',
             data: form_data,
-            error: function(r) { alert('An error occurred! Sorry!');  },
+            error: function(r) { alert(<% __('An error occurred! Sorry!') |js %>);  },
             success: function(r) {
                 if (r.error) { alert(r.error); }
                 else { 
@@ -295,7 +295,7 @@ jQuery(document).ready( function() {
         jQuery.ajax( {
             url: '/ajax/user/reset_password',
             data: form_data,
-            error: function(r) { alert('An error occurred! Sorry!');  },
+            error: function(r) { alert(<% __('An error occurred! Sorry!') |js %>);  },
             success: function(r) {
                 if (r.error) { alert(r.error); }
                 else { 
@@ -332,7 +332,7 @@ jQuery(document).ready( function() {
         // Check bot challenge response and answer
         var response = jQuery("input[name='challenge_response']").val();
         if ( response !== "<% $challenge_answer %>" ) {
-            alert("Are you a bot?  The response to the 'Are you Human?' question did not match the answer.  Try again!");
+            alert(<% __('Are you a bot?  The response to the \'Are you Human?\' question did not match the answer.  Try again!') |js %>);
             return;
         }
 
@@ -372,14 +372,14 @@ jQuery(document).ready( function() {
         event.preventDefault();
         var form_data = jQuery('#login_form').serialize();
         if (!jQuery('#username').val() || !jQuery('#password').val()) { 
-            alert('Please enter a username and password');
+            alert(<% __('Please enter a username and password') |js %>);
             return;
         }
         jQuery.ajax( { 
             url: '/ajax/user/login',
             method: 'POST',
             data: form_data,
-            error: function(r) { alert('An error occurred! Sorry!');  },
+            error: function(r) { alert(<% __('An error occurred! Sorry!') |js %>);  },
             success: function(r) {
                 if (r.error) { 
                     alert(r.error);
