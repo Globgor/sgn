@@ -80,6 +80,7 @@ my $build = SGN::Build->new(
         'Data::Page'                               => 0,
         'Data::Visitor::Callback'                  => 0,
         'DateTime'                                 => 0,
+        'DateTime::Locale'                         => 0,
         # Remove the following dep when XML::Atom is fixed to depend on it and released
         'DateTime::TimeZone'                       => '1.31',
 	'DateTime::Format::Duration'               => 0,

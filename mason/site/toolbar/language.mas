@@ -4,14 +4,22 @@ SGN::Role::Site::I18N reads ?lang= and remembers the choice in a cookie.
 </%doc>
 % if ( my @languages = $c->i18n_languages ) {
 <li class="dropdown">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="<% __('Language') |h %>"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <% I18N::LangTags::List::name( $c->stash->{language} ) |h %> <span class="caret"></span></a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="<% __('Language') |h %>"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <% $own_name->( $c->stash->{language} ) |h %> <span class="caret"></span></a>
   <ul class="dropdown-menu">
 %   for my $language ( 'en', @languages ) {
-    <li><a href="<% $c->req->uri_with( { lang => $language } ) |h %>" lang="<% $language |h %>"><% I18N::LangTags::List::name($language) |h %></a></li>
+    <li><a href="<% $c->req->uri_with( { lang => $language } ) |h %>" lang="<% $language |h %>"><% $own_name->($language) |h %></a></li>
 %   }
   </ul>
 </li>
 % }
 <%once>
+use DateTime::Locale;
 use I18N::LangTags::List;
+
+# The language's own name from CLDR (DateTime::Locale), else its English name.
+my $own_name = sub {
+    my $language = shift;
+    my $locale   = eval { DateTime::Locale->load($language) };
+    return ( $locale && $locale->native_name ) || I18N::LangTags::List::name($language);
+};
 </%once>

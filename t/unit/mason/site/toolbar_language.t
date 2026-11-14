@@ -60,8 +60,13 @@ sub render {
 my $bar = render( languages => [ 'uk', 'es' ], language => 'uk' );
 like( $bar, qr{\[search\].*lang=uk.*\[login\]}s, 'the menu is between the search box and Login' );
 like( $bar, qr{href="/breeders/trials\?lang=$_"}, "link to $_ keeps the current page" ) for qw( en uk es );
-like( $bar, qr{>Ukrainian</a>}, 'language name' );
-like( $bar, qr{</span> Ukrainian <span}, 'current language is shown' );
+like( $bar, qr{lang="$_->[0]">\Q$_->[1]\E</a>}, "$_->[0]: the language's own name" ) for [ en => 'English' ], [ uk => 'українська' ], [ es => 'español' ];
+like( $bar, qr{</span> українська <span}, 'current language is shown' );
+
+$bar = render( languages => [ 'ar', 'tl' ], language => 'ar' );
+like( $bar, qr{lang="ar">العربية</a>}, 'a right-to-left name' );
+like( $bar, qr{</span> العربية <span}, 'current right-to-left language is shown' );
+like( $bar, qr{lang="tl">Tagalog</a>}, 'English name of a language CLDR does not name' );
 
 unlike( render( languages => [], language => undef ), qr{lang=|glyphicon-globe}, 'no menu when no language is enabled' );
 
