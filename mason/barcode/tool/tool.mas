@@ -21,7 +21,7 @@ my $hash = $urlencode{'#'};
 <center>
 <h1><% __('CASSAVABASE BARCODE TOOL') |h %></h1>
 
-Tool version: <% $tool_version %>
+<& /util/sentence.mas, text => __x('Tool version: {version}'), version => $tool_version &>
 <br />
 <br />
 
@@ -35,7 +35,7 @@ Tool version: <% $tool_version %>
 % if ($cvterm_values eq "numeric") { 
 <center>
 <br />
-<div class="boxbgcolor7"><font size="3"><b>Note</b> Scan the main barcode below, then use the "keypad" to scan the digits to create the numeric value.<br /></font></div>
+<div class="boxbgcolor7"><font size="3"><& /util/sentence.mas, text => __x('{bold}Note{end_bold} Scan the main barcode below, then use the "keypad" to scan the digits to create the numeric value.'), bold => '<b>', end_bold => '</b>' &><br /></font></div>
 <img src="/barcode/code128png/<% $cvterm %><% $hash %>/<% $cvterm_name %>" />
 <br />
 <br />
@@ -44,7 +44,7 @@ Tool version: <% $tool_version %>
 % else { 
 <table border="0">
 %   foreach my $v (@values) { 
-<tr><td style="vertical-align:middle"><font size="6">value = <% $v %></font></td><td><img src="/barcode/code128png/<% $cvterm %><% $hash %><% $v %>/<% $cvterm_name %>" /></td></tr>
+<tr><td style="vertical-align:middle"><font size="6"><& /util/sentence.mas, text => __x('value = {value}'), value => $v &></font></td><td><img src="/barcode/code128png/<% $cvterm %><% $hash %><% $v %>/<% $cvterm_name %>" /></td></tr>
 
 %   }
 % }
