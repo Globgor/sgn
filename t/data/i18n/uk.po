@@ -34,3 +34,12 @@ msgstr "Пакетний пошук"
 
 msgid "Contact"
 msgstr "Контакти"
+
+msgid "Manage"
+msgstr "Керування"
+
+msgid "Breeding Programs"
+msgstr "Селекційні програми"
+
+msgid "Seed Lots"
+msgstr "Партії насіння"

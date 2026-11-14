@@ -1,48 +1,48 @@
-<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown" href="/breeders/home">Manage</a>
+<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown" href="/breeders/home"><% __('Manage') |h %></a>
 <!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a> -->
   <ul class="dropdown-menu">
-    <li><a href="/breeders/manage_roles/">User Roles</a></li>
-    <li><a href="/breeders/manage_programs/">Breeding Programs</a></li>
-    <li><a href="/breeders/locations">Locations</a></li>
-    <li><a href="/tools/report/">Report Factory</a></li>
-    <li><a href="/breeders/meeting/">Decision Meetings</a></li>
+    <li><a href="/breeders/manage_roles/"><% __('User Roles') |h %></a></li>
+    <li><a href="/breeders/manage_programs/"><% __('Breeding Programs') |h %></a></li>
+    <li><a href="/breeders/locations"><% __('Locations') |h %></a></li>
+    <li><a href="/tools/report/"><% __('Report Factory') |h %></a></li>
+    <li><a href="/breeders/meeting/"><% __('Decision Meetings') |h %></a></li>
 
 
     <li role="separator" class="divider"></li>
-    <li><a href="/breeders/accessions/">Accessions</a></li>
-    <li><a href="/breeders/seedlots/">Seed Lots</a></li>
-    <li><a href="/breeders/crosses/">Crosses</a></li>
-    <li><a href="/breeders/propagations/">Propagations</a></li>
+    <li><a href="/breeders/accessions/"><% __('Accessions') |h %></a></li>
+    <li><a href="/breeders/seedlots/"><% __('Seed Lots') |h %></a></li>
+    <li><a href="/breeders/crosses/"><% __('Crosses') |h %></a></li>
+    <li><a href="/breeders/propagations/"><% __('Propagations') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/order/stocks/view">Order Stocks</a></li>
-    <li><a href="/breeders/activities">Tracking Activities</a></li>
-    <li><a href="/breeders/transformations/">Transformations</a></li>
+    <li><a href="/order/stocks/view"><% __('Order Stocks') |h %></a></li>
+    <li><a href="/breeders/activities"><% __('Tracking Activities') |h %></a></li>
+    <li><a href="/breeders/transformations/"><% __('Transformations') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/breeders/trials/">Field Trials</a></li>
-    <li><a href="/tools/trialallocation">Trial Allocation</a></li>
-    <li><a href="/fieldbook">Field Book App</a></li>
-    <li><a href="/breeders/phenotyping/">Phenotyping</a></li>
-    <li><a href="/breeders/images/">Images</a></li>
-    <li><a href="/collections/files">Files</a></li>
-    <li><a href="/barcode">Barcodes</a></li>
-    <li><a href="/tools/label_designer">Label Designer</a></li>
+    <li><a href="/breeders/trials/"><% __('Field Trials') |h %></a></li>
+    <li><a href="/tools/trialallocation"><% __('Trial Allocation') |h %></a></li>
+    <li><a href="/fieldbook"><% __('Field Book App') |h %></a></li>
+    <li><a href="/breeders/phenotyping/"><% __('Phenotyping') |h %></a></li>
+    <li><a href="/breeders/images/"><% __('Images') |h %></a></li>
+    <li><a href="/collections/files"><% __('Files') |h %></a></li>
+    <li><a href="/barcode"><% __('Barcodes') |h %></a></li>
+    <li><a href="/tools/label_designer"><% __('Label Designer') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/breeders/genotyping_projects/">Genotyping Projects</a></li>
-    <li><a href="/breeders/genotyping/">Genotyping Plates</a></li>
-    <li><a href="/breeders/markers/">Marker Allele Lists</a></li>
+    <li><a href="/breeders/genotyping_projects/"><% __('Genotyping Projects') |h %></a></li>
+    <li><a href="/breeders/genotyping/"><% __('Genotyping Plates') |h %></a></li>
+    <li><a href="/breeders/markers/"><% __('Marker Allele Lists') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/breeders/download">Download</a></li>
-    <li><a href="/breeders/upload">Upload</a></li>
-    <li><a href="/breeders/identifier_generation">Identifier Generation</a></li>
+    <li><a href="/breeders/download"><% __('Download') |h %></a></li>
+    <li><a href="/breeders/upload"><% __('Upload') |h %></a></li>
+    <li><a href="/breeders/identifier_generation"><% __('Identifier Generation') |h %></a></li>
 <!--    <li><a href="/breeders/odk">ODK Data Collection</a></li>  -->
-    <li><a href="/breeders/file_share_dump">File Share</a></li>
+    <li><a href="/breeders/file_share_dump"><% __('File Share') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li><a href="/breeders/nirs">NIRS</a></li>
-    <li><a href="/breeders/transcriptomics">Transcriptomics</a></li>
+    <li><a href="/breeders/nirs"><% __('NIRS') |h %></a></li>
+    <li><a href="/breeders/transcriptomics"><% __('Transcriptomics') |h %></a></li>
   </ul>
 </li>
