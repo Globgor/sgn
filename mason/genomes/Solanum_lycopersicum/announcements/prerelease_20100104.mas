@@ -4,14 +4,14 @@
     <tr><td>
       <img src="/documents/img/sliced_tomato_60x57.png" width="60" border="0" />
     </td><td>
-      <div style="text-align: center; font-size: 120%; font-weight: bold">Prerelease of Tomato Genome Shotgun Sequence</div>
+      <div style="text-align: center; font-size: 120%; font-weight: bold"><% __('Prerelease of Tomato Genome Shotgun Sequence') |h %></div>
 
       <div class="boxcontent">
          The <span style="font-weight: bold">International Tomato Genome Sequencing Project</span> is happy to make available a prerelease version of the <span style="font-weight: bold">Tomato Genome Shotgun Sequence</span> to the community. <a href="/tomato/">More...</a></div>
 
 </td></tr>
 <tr><td colspan="2">
-<b>News</b>
+<b><% __('News') |h %></b>
 <ul>
 % my ($gbrowse_link) = map $_->view_url, grep $_->description =~ /ITAG1.+genomic/, map $_->data_sources, $c->enabled_feature('gbrowse2');
 <li>CABOG assembly <a href="ftp://ftp.solgenomics.net/tomato_genome/wgs/assembly/cabog_1.00/">released</a>. [March 26, 2010]</li>
@@ -20,11 +20,11 @@
 </ul>
 
 
-        <div style="text-align: center; margin: 1.5em 0 0 1em"><a href="/tomato/#disclaimer">Data Agreement and Disclaimer</a> | 
-	  <a href="/tomato/">Tomato Whole Genome Shotgun data</a> 
-	  <br /> <a href="/about/tomato_sequencing.pl">BAC by BAC progress overview</a> |
-      <a href="/tools/blast/?db_id=93">BLAST WGS scaffolds</a><br />
-      <a href="/tools/blast/?db_id=56">BLAST tomato BAC contigs</a> | <a href="ftp://ftp.solgenomics.net/tomato_genome/wgs/assembly">FTP</a></div>
+        <div style="text-align: center; margin: 1.5em 0 0 1em"><a href="/tomato/#disclaimer"><% __('Data Agreement and Disclaimer') |h %></a> | 
+	  <a href="/tomato/"><% __('Tomato Whole Genome Shotgun data') |h %></a> 
+	  <br /> <a href="/about/tomato_sequencing.pl"><% __('BAC by BAC progress overview') |h %></a> |
+      <a href="/tools/blast/?db_id=93"><% __('BLAST WGS scaffolds') |h %></a><br />
+      <a href="/tools/blast/?db_id=56"><% __('BLAST tomato BAC contigs') |h %></a> | <a href="ftp://ftp.solgenomics.net/tomato_genome/wgs/assembly">FTP</a></div>
       
 
     

@@ -23,7 +23,7 @@
 %   }
 % } else {
 
-  <span class="ghosted">annotation data temporarily unavailable</span>
+  <span class="ghosted"><% __('annotation data temporarily unavailable') |h %></span>
 
 % }
 

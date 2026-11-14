@@ -43,7 +43,7 @@ function authors_off( id_base ) {
 
 </script>
 
-<& /page/page_title.mas, title => "Tomato Genome Publications" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Tomato Genome Publications"), 'h' ) &>
 
 <%args>
   $schema
@@ -74,7 +74,7 @@ for my $pub (@pubs) {
 }
 </%init>
 
-<&| /page/info_section.mas, title=>'Publications', collapsible => 0, empty_message => 'temporarily unavailable' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Publications'), 'h' ), collapsible => 0, empty_message => 'temporarily unavailable' &>
 
 %  # for each year, print out the pubs associated with it
 %   my @sorted_years =  sort {$b <=> $a} keys %pubs_by_year; 
@@ -138,32 +138,32 @@ for my $pub (@pubs) {
   <td>
     <table>
       <tr>
-	<td class="width">Author(s):</td>
+	<td class="width"><% __('Author(s):') |h %></td>
 	<td><% $names | h %>
 % if( $extra_names ){
 %   my $id = $pub->pub_id;
           <span style="display: none" id="extra_<% $id %>"><% $extra_names |h %></span>
-          <a style="display: none" id="fewer_<% $id %>" href="javascript:authors_off(<% $id %>)">show fewer</a>
-          <a id="all_<% $id %>" href="javascript:authors_on(<% $id %>)">show all</a>
+          <a style="display: none" id="fewer_<% $id %>" href="javascript:authors_off(<% $id %>)"><% __('show fewer') |h %></a>
+          <a id="all_<% $id %>" href="javascript:authors_on(<% $id %>)"><% __('show all') |h %></a>
 %  }
 	</td>
       </tr>
       <tr>
-	<td class="width">Journal:</td>
+	<td class="width"><% __('Journal:') |h %></td>
 	<td><% $pub->series_name | h %></td>
       </tr>
       <tr>
-	<td class="width">Volume:</td>
+	<td class="width"><% __('Volume:') |h %></td>
 	<td><% $pub->volume | h %></td>
       </tr>
 % if( $pub->issue ) {
       <tr>
-	<td class="width">Issue:</td>
+	<td class="width"><% __('Issue:') |h %></td>
 	<td><% $pub->issue | h %></td>
       </tr>
 % }
       <tr>
-	<td class="width">Pages:</td>
+	<td class="width"><% __('Pages:') |h %></td>
 	<td><% $pub->pages | h %></td>
       </tr>
 % if( $pubmed
