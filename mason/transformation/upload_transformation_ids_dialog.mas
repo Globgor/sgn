@@ -118,7 +118,7 @@ $trial_name
                     <b><% __('Optional fields:') |h %></b>
                     <ul>
                         <li>notes (additional information about transformation identifier)</li>
-                        <li>is_a_control (if you would like to set any transformation identifier <b>as a control</b>, please indicate "1" for the "is_a_control" column. To <b>set a control</b> for any transformation ID, please use the link "Set Transformation Control" on the transformation ID detail page.)</li>
+                        <li><& /util/sentence.mas, text => __x('{column} (if you would like to set any transformation identifier {bold}as a control{end_bold}, please indicate "{one}" for the "{column}" column. To {bold}set a control{end_bold} for any transformation ID, please use the link "Set Transformation Control" on the transformation ID detail page.)'), column => 'is_a_control', one => '1', bold => '<b>', end_bold => '</b>' &></li>
                     </ul>
                 </div>
                 <& /help/file_upload_type.mas, type => "Transformation Identifiers", optional_column => 1 &>
