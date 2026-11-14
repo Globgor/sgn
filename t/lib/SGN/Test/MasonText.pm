@@ -43,7 +43,7 @@ use Test::More;
 
 use SGN::Test::Anything;
 
-our @EXPORT_OK = qw( page_texts_ok component_compiles_ok render );
+our @EXPORT_OK = qw( page_texts_ok page_sentences_ok component_compiles_ok render );
 
 my $LANGUAGE = 'uk';    # any language with a system locale; the test catalog is made here
 my $TIMEOUT  = 20;      # seconds; a component that loops on an Anything must not hang the test
@@ -87,23 +87,27 @@ sub _arguments {
     return %arguments;
 }
 
-=head2 render( $component )
+=head2 render( $component, %arguments )
 
 The page of the component as text, with HTML entities decoded. Dies if the
 component dies or does not finish in time.
 
 =cut
 
-sub render {
+sub _render_raw {
     my $component = shift;
-    my %arguments = _arguments($component);
+    my %arguments = ( _arguments($component), @_ );
     $html = q{};
     local $SIG{ALRM} = sub { die "$component did not finish in $TIMEOUT seconds\n" };
     alarm $TIMEOUT;
     my $finished = eval { _interp()->exec( $component, %arguments ); 1 };
     alarm 0;
     die $@ if !$finished;
-    return scalar decode_entities($html);
+    return $html;
+}
+
+sub render {
+    return scalar decode_entities( _render_raw(@_) );
 }
 
 # A catalog in which the translation of Text is «Text», compiled with msgfmt. Each call
@@ -146,6 +150,58 @@ sub page_texts_ok {
         setlocale( LC_MESSAGES, 'C' );
     }
     return ok( !@problems, "$component shows its text in the user's language" ) || diag( join "\n", @problems );
+}
+
+# Remove actual tags before decoding entities, so escaped text such as &lt;x&gt;
+# remains visible text rather than being mistaken for a tag.
+sub _sentence_page {
+    my ($page) = @_;
+    $page =~ s/<[^>]*>//g;
+    $page = decode_entities($page);
+    $page =~ s/\s+/ /g;
+    return $page;
+}
+
+sub _sentence_shown {
+    my ( $page, $message, $translated ) = @_;
+    my @pieces = split /\{\w+\}/, $message, -1;
+    for my $piece (@pieces) {
+        $piece =~ s/\s+/ /g;
+    }
+    my $pattern = join '.*?', map { quotemeta($_) } @pieces;
+    $pattern = quotemeta('«') . $pattern . quotemeta('»') if $translated;
+    return $page =~ /$pattern/s;
+}
+
+=head2 page_sentences_ok( $component, @messages )
+
+One test: the page contains each message's literal pieces in order in English
+and between the markers of the test translation.
+
+=cut
+
+sub page_sentences_ok {
+    my ( $component, @messages ) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    _use_catalog(@messages);
+    setlocale( LC_MESSAGES, 'C' );
+    my $english = eval { _sentence_page( _render_raw($component) ) };
+    my @problems = defined $english
+        ? map { "English sentence is missing: $_" } grep { !_sentence_shown( $english, $_, 0 ) } @messages
+        : ("does not render: $@");
+    if ( !@problems ) {
+        set_locale( LC_MESSAGES, $LANGUAGE, undef, 'utf-8' ) or push @problems, "no system locale for $LANGUAGE";
+        my $translated = eval { _sentence_page( _render_raw($component) ) };
+        if ( defined $translated ) {
+            push @problems, map { "translated sentence is missing: $_" }
+                grep { !_sentence_shown( $translated, $_, 1 ) } @messages;
+        }
+        else {
+            push @problems, "translated page does not render: $@";
+        }
+        setlocale( LC_MESSAGES, 'C' );
+    }
+    return ok( !@problems, "$component shows its sentences in the user's language" ) || diag( join "\n", @problems );
 }
 
 =head2 component_compiles_ok( $component )
