@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
 	    },
 	    error: function(response){
 	        jQuery("#working_modal").modal("hide");
-		alert("Error retrieving controls.");
+		alert(<% __('Error retrieving controls.') |js %>);
 	    }
 	});
     });
