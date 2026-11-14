@@ -20,7 +20,7 @@ $accuracy_report
 <&| /page/info_section.mas, 
   collapsible => 1, 
   collapsed   => 0, 
-  title       => "Model accuracy statistics -- K-fold cross-validation method" 
+  title       => $m->interp->apply_escapes( __("Model accuracy statistics -- K-fold cross-validation method"), 'h' ) 
 &> 
 
 <& /page/columnar_table.mas,

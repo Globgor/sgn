@@ -44,7 +44,7 @@ $analysis_type => ''
 <&| /page/info_section.mas,
   collapsible => 1,
   collapsed   => 0,
-  title       => "Training population summary",
+  title       => $m->interp->apply_escapes( __("Training population summary"), 'h' ),
   &>
 
  <& /solgs/population/summary.mas,
@@ -75,7 +75,7 @@ $analysis_type => ''
 <&| /page/info_section.mas,
     collapsible => 1,
     collapsed   => 0,
-  title       => "Trait phenotype data"
+  title       => $m->interp->apply_escapes( __("Trait phenotype data"), 'h' )
 &>
 
 <& phenotype/trait_phenotype_data.mas,
@@ -136,8 +136,8 @@ $analysis_type => ''
 <&| /page/info_section.mas,
   collapsible => 1,
   collapsed   => 0,
-  title       => "Data Accessibility",
+  title       => $m->interp->apply_escapes( __("Data Accessibility"), 'h' ),
   &>
-<p>This is private data.</p>
+<p><% __('This is private data.') |h %></p>
 </&>
 %}

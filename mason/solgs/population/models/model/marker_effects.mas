@@ -22,10 +22,10 @@ $top_marker_effects
 <&| /page/info_section.mas, 
   collapsible => 1, 
   collapsed   => 1, 
-  title       => "Marker effects" 
+  title       => $m->interp->apply_escapes( __("Marker effects"), 'h' ) 
 &>
  
-<i>Top 10 markers</i>:
+<i><% __('Top 10 markers') |h %></i>:
 
 <& /page/columnar_table.mas,
   headings     => ["Marker", "Effects"], 
