@@ -14,15 +14,15 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Information</th>
-            <th>Breeding Programs -- Folders -- Genotyping Plates&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-default" id="refresh_genotyping_trial_jstree_html_trialtree_button" name="refresh_genotyping_trial_jstree_html">Refresh</button></th>
+            <th><% __('Information') |h %></th>
+            <th><% __('Breeding Programs -- Folders -- Genotyping Plates') |h %>&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-default" id="refresh_genotyping_trial_jstree_html_trialtree_button" name="refresh_genotyping_trial_jstree_html"><% __('Refresh') |h %></button></th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>
-                <h4>Search</h4>
-                <input type="text" class="form-control input-sm" id="genotyping_trial_tree_search" placeholder="Search" />
+                <h4><% __('Search') |h %></h4>
+                <input type="text" class="form-control input-sm" id="genotyping_trial_tree_search" placeholder="<% __('Search') |h %>" />
                 <hr>
 
                 <h5><i>Double click<br />genotyping plate (&nbsp;<span class="glyphicon glyphicon-th text-success"></span>&nbsp;) or folder (&nbsp;<span class="glyphicon glyphicon-folder-open text-danger"></span>&nbsp;)<br/>to view detail page.</i></h5>
@@ -47,7 +47,7 @@
                 <br />
             </td>
             <td>
-                <div id="genotyping_trial_list" >[loading...]</div>
+                <div id="genotyping_trial_list" ><% __('[loading...]') |h %></div>
             </td>
         </tr>
     </tbody>
