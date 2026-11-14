@@ -109,3 +109,14 @@ msgstr "{breedbase} розташована в {link}Інституті Бойс�
 #, perl-brace-format
 msgid "{bold}Before{end_bold} creating a new account, please check if you {bold}already have an account{end_bold} using the {link}directory search{end_link}."
 msgstr "{bold}Перш ніж{end_bold} створити новий обліковий запис, перевірте через {link}пошук у каталозі{end_link}, чи {bold}немає у вас уже облікового запису{end_bold}."
+msgid "What is Breedbase?"
+msgstr "Що таке Breedbase?"
+
+msgid "Phenotype Files Uploaded"
+msgstr "Завантажені файли фенотипів"
+
+msgid "Interval:"
+msgstr "Інтервал:"
+
+msgid "Trial Type"
+msgstr "Тип досліду"

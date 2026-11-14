@@ -36,8 +36,8 @@ Your status is currently "<% $role %>".
 
 <&|  /page/info_section.mas, title => "<b><font size=\"3\">Continue where you left off</font></b>", collapsible => 1, collapsed => 1 &>
 
-<h4>Continue where you left off:</h4>
-Interval:&nbsp;
+<h4><% __('Continue where you left off:') |h %></h4>
+<% __('Interval:') |h %>&nbsp;
 
 <select id="interval">
     <option>day</option>
@@ -47,29 +47,29 @@ Interval:&nbsp;
 </select>
 
 <br /><br />
-<h4>10 most recently created trials:</h4>
+<h4><% __('10 most recently created trials:') |h %></h4>
 
 <table id="recently_created_trial_table" style="width:100%" >
 <thead>
-<tr><th>Trial</th><th>Trial Type</th><th>Breeding Program</th><th>Create date</th></tr>
+<tr><th><% __('Trial') |h %></th><th><% __('Trial Type') |h %></th><th><% __('Breeding Program') |h %></th><th><% __('Create date') |h %></th></tr>
 </thead>
 </table>
 
 <br /><br />
-<h4>10 most recently modified trials:</h4>
+<h4><% __('10 most recently modified trials:') |h %></h4>
 
 <table id="recently_modified_trial_table" style="width:100%">
 <thead>
-<tr><th>Trial</th><th>Trial Type</th><th>Breeding Program</th><th>Last phenotype added</th></tr>
+<tr><th><% __('Trial') |h %></th><th><% __('Trial Type') |h %></th><th><% __('Breeding Program') |h %></th><th><% __('Last phenotype added') |h %></th></tr>
 </thead>
 </table>
 
 <br /><br />
-<h4>10 most recently added accessions:</h4>
+<h4><% __('10 most recently added accessions:') |h %></h4>
 
 <table id="recently_added_accessions_table" style="width:100%">
 <thead>
-<tr><th>Accession</th><th>Create date</th></tr>
+<tr><th><% __('Accession') |h %></th><th><% __('Create date') |h %></th></tr>
 </thead>
 </table>
 
