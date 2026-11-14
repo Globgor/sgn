@@ -13,6 +13,15 @@
         $tag = $ENV{VERSION};
         $updated = $ENV{BUILD_DATE};
     }
+
+    # Translate the sentence, escape it, then put the markup into its placeholders.
+    my %markup = (
+        breedbase => '<span style="font-face:arial;font-size:10pt;color:darkgreen;font-weight:light;">BREE<b>DB</b>ASE</span>',
+        link      => '<a href="https://btiscience.org">',
+        end_link  => '</a>',
+    );
+    my $location = $m->interp->apply_escapes( __x('{breedbase} is located at the {link}Boyce Thompson Institute{end_link}.'), 'h' );
+    $location =~ s/\{(\w+)\}/$markup{$1}/g;
 </%init>
 
 <!-- BEGIN SITE SPECIFIC FOOTER. -->
@@ -23,7 +32,7 @@
     <div class="container-fluid">
       <div class="row">
           <div class="col-12 col-md-9">
-            <span style="font-face:arial;font-size:10pt;color:darkgreen;font-weight:light;">BREE<b>DB</b>ASE</span> is located at the <a href="https://btiscience.org">Boyce Thompson Institute</a>.<br />
+            <% $location %><br />
             <a href="https://btiscience.org"><img src="/static/img/bti_logo_2024.png" width="200"></a>
           </div>
 

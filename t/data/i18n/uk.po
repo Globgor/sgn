@@ -98,3 +98,14 @@ msgstr "Ваш календар"
 
 msgid "Logout"
 msgstr "Вийти"
+
+msgid "Search Database"
+msgstr "Пошук у базі даних"
+
+#, perl-brace-format
+msgid "{breedbase} is located at the {link}Boyce Thompson Institute{end_link}."
+msgstr "{breedbase} розташована в {link}Інституті Бойса Томпсона{end_link}."
+
+#, perl-brace-format
+msgid "{bold}Before{end_bold} creating a new account, please check if you {bold}already have an account{end_bold} using the {link}directory search{end_link}."
+msgstr "{bold}Перш ніж{end_bold} створити новий обліковий запис, перевірте через {link}пошук у каталозі{end_link}, чи {bold}немає у вас уже облікового запису{end_bold}."

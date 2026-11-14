@@ -12,6 +12,11 @@ $goto_url => '/'
     my $val_2 = int rand(20);
     my $challenge_question = "$minimum + $val_2";
     my $challenge_answer = $minimum + $val_2;
+
+    # Translate the sentence, escape it, then put the markup into its placeholders.
+    my %markup = ( bold => '<b>', end_bold => '</b>', link => '<a href="/search/direct_search.pl?search=directory">', end_link => '</a>' );
+    my $check_account = $m->interp->apply_escapes( __x('{bold}Before{end_bold} creating a new account, please check if you {bold}already have an account{end_bold} using the {link}directory search{end_link}.'), 'h' );
+    $check_account =~ s/\{(\w+)\}/$markup{$1}/g;
 </%init>
 
 <div class="modal fade" id="site_login_dialog" name="site_login_dialog" tabindex="-1" role="dialog" aria-labelledby="site_login_dialog_title">
@@ -160,7 +165,7 @@ $goto_url => '/'
                                     <div class="panel-heading"><% __('Notice') |h %></div>
                                     <div class="panel-body">
                                         <ul>
-                                            <li><b>Before</b> creating a new account, please check if you <b>already have an account</b> using the <a href="/search/direct_search.pl?search=directory">directory search</a>. </li>
+                                            <li><% $check_account %> </li>
                                             <li><% __('A link will be emailed to you. Please click on it to activate the account.') |h %></li>
                                             <li><b><% __('All fields are required.') |h %></b></li>
                                         </ul>

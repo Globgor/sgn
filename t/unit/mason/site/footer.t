@@ -76,12 +76,16 @@ like( $english, qr{<strong>Version</strong>},         'English Version label' );
 like( $english, qr{id="workingModalDialog">Working</h4>},   'English Working title' );
 like( $english, qr{id="progressModalDialog">Progress</h4>}, 'English Progress title' );
 like( $english, qr{\[site/login_dialog\]},             'the included components are the stubs' );
+like( $html, qr{>BREE<b>DB</b>ASE</span> is located at the <a href="https://btiscience.org">Boyce Thompson Institute</a>\.<br />}, 'English location sentence' );
 
 ok( set_locale( LC_MESSAGES, 'uk', undef, 'utf-8' ), 'Ukrainian locale' );
 my $ukrainian = render(@components);
 like( $ukrainian, qr{<strong>Версія</strong>},         'Ukrainian Version label' );
 like( $ukrainian, qr{id="workingModalDialog">Обробка</h4>},      'Ukrainian Working title' );
 like( $ukrainian, qr{id="progressModalDialog">Хід виконання</h4>}, 'Ukrainian Progress title' );
+like( $ukrainian, qr{>BREE<b>DB</b>ASE</span> розташована в <a href="https://btiscience.org">Інституті Бойса Томпсона</a>\.<br />}, 'Ukrainian location sentence' );
+like( $html, qr{ASE</span> [^<>]+ <a href="https://btiscience.org">[^<>]+</a>\.<br />}, 'the markup of the sentence is not escaped' );
+unlike( $html, qr{[^\x00-\x7f]}, 'the translated text is HTML-escaped' );
 setlocale( LC_MESSAGES, 'C' );
 
 done_testing;

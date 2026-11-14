@@ -69,6 +69,7 @@ like( $english, qr{placeholder="Username"},                                     
 like( $english, qr{id="show_password"> Show Password},                              'English Show Password' );
 like( $english, qr{>Forgot Username</h3>},                                          'English dialog title' );
 like( $english, qr{<p style="padding-top: 7px">What is \d+ \+ \d+\?</p>},           'English question with a number' );
+like( $html, qr{<li><b>Before</b> creating a new account, please check if you <b>already have an account</b> using the <a href="/search/direct_search.pl\?search=directory">directory search</a>\. </li>}, 'English account notice' );
 
 ok( set_locale( LC_MESSAGES, 'uk', undef, 'utf-8' ), 'Ukrainian locale' );
 my $ukrainian = render(@components);
@@ -78,6 +79,9 @@ like( $ukrainian, qr{id="show_password"> Показати пароль},        
 like( $ukrainian, qr{>Забули ім'я користувача</h3>},                                 'Ukrainian dialog title' );
 like( $ukrainian, qr{aria-label="Закрити"},                                          'Ukrainian close label' );
 like( $ukrainian, qr{<p style="padding-top: 7px">Скільки буде \d+ \+ \d+\?</p>},     'Ukrainian question with a number' );
+like( $ukrainian, qr{<li><b>Перш ніж</b> створити новий обліковий запис, перевірте через <a href="/search/direct_search.pl\?search=directory">пошук у каталозі</a>, чи <b>немає у вас уже облікового запису</b>\. </li>}, 'Ukrainian account notice, placeholders reordered' );
+like( $html, qr{<li><b>[^<>]+</b>[^<>]+<a href="/search/direct_search.pl\?search=directory">[^<>]+</a>[^<>]+<b>[^<>]+</b>\. </li>}, 'the markup of the notice is not escaped' );
+unlike( $html, qr{[^\x00-\x7f]}, 'the translated text is HTML-escaped' );
 setlocale( LC_MESSAGES, 'C' );
 
 done_testing;
