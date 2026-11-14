@@ -144,6 +144,14 @@ In the Analyze menu, the options are:
 | **Other** |  |
 | Ontology Browser | Browse all recorded ontologies |
 
+### Changing the Interface Language
+
+Some Breedbase instances can show the website in more than one language. On these instances, the toolbar has a language menu with a globe icon, to the left of the "Login" button. The menu shows the name of the current language. To change the language, click on the menu and select a language. Your browser remembers the choice for one year. If you have not selected a language, the website uses the language set in your browser when the instance offers it, and English otherwise.
+
+Only the interface is translated, for example menu names and dialog labels. Data in the database, such as names of trials, accessions, and traits, is shown as it was entered. Parts of some pages can still be in English.
+
+Note for site administrators: the language menu is shown only when languages are enabled. To enable them, add the key i18n_languages with a comma-separated list of language codes to the sgn_local.conf file, for example `i18n_languages uk,es`, and restart the website. The translations come from the [sgn-translations](https://github.com/Globgor/sgn-translations) repository, which also explains how to build them. If the translation or the system locale of an enabled language is missing, the website does not start, and the error message names the missing file or locale.
+
 ## Working with Lists {#working-with-lists}
 
 Lists are collections of identifiers that are stored in the database. Lists can be composed of accessions, plots, traits, locations, and trials. A given list can only contain one type of items, for example, all items have to be of type location in a list of locations. Lists are attached to the individual user's account, and can only be created and seen by the user while logged in, however, lists can be made public for all other users to see. SGN databases make heavy use of lists in a number of tools on the website. For example, trials are created using lists of accessions.
