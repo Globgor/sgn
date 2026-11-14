@@ -36,7 +36,7 @@ $trait_name = ucfirst($trait_name);
 &>
  
   <div id="histogram_message"  style="font-weight:bold;text-align:center;color:#A7C942">
-    <p>Loading frequency distribution graph...</p>
+    <p><% __('Loading frequency distribution graph...') |h %></p>
   </div>
 
  

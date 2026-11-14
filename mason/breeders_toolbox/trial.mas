@@ -77,9 +77,9 @@ $project_id => undef
   <& /page/page_title.mas, title=>"Trial detail for ".$trial_name &>
 </div>
 
-<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Trial Details</h4>", info_section_subtitle => 'View and edit basic information about the experiment.', buttons_html => '<button class="btn btn-primary btn-sm" id="edit_trial_details" style="margin:3px">Edit Trial Details</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "trial_details", trial_name => $trial_name, breeding_program_name => $breeding_program_name, breeding_program_id => $breeding_program_id, location_name => $location_name, country_name => $country_name, year => $year, trial_type => $trial_type, planting_date => $planting_date,show_transplanting_date => $show_transplanting_date, transplanting_date => $transplanting_date, harvest_date => $harvest_date, trial_description => $trial_description, plot_width => $plot_width, plot_length => $plot_length, field_size => $field_size, field_trial_is_planned_to_be_genotyped => $field_trial_is_planned_to_be_genotyped, field_trial_is_planned_to_cross => $field_trial_is_planned_to_cross, folder_name => $folder_name, folder_id => $folder_id, identifier_prefix => $identifier_prefix, trial_stock_type => $trial_stock_type, trial_stock_count => $trial_stock_count, trial_owner => $trial_owner, latest_trial_activity => $latest_trial_activity, plot_name_template => $plot_name_template &>
+<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Trial Details</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and edit basic information about the experiment.'), 'h' ), buttons_html => '<button class="btn btn-primary btn-sm" id="edit_trial_details" style="margin:3px">Edit Trial Details</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "trial_details", trial_name => $trial_name, breeding_program_name => $breeding_program_name, breeding_program_id => $breeding_program_id, location_name => $location_name, country_name => $country_name, year => $year, trial_type => $trial_type, planting_date => $planting_date,show_transplanting_date => $show_transplanting_date, transplanting_date => $transplanting_date, harvest_date => $harvest_date, trial_description => $trial_description, plot_width => $plot_width, plot_length => $plot_length, field_size => $field_size, field_trial_is_planned_to_be_genotyped => $field_trial_is_planned_to_be_genotyped, field_trial_is_planned_to_cross => $field_trial_is_planned_to_cross, folder_name => $folder_name, folder_id => $folder_id, identifier_prefix => $identifier_prefix, trial_stock_type => $trial_stock_type, trial_stock_count => $trial_stock_count, trial_owner => $trial_owner, latest_trial_activity => $latest_trial_activity, plot_name_template => $plot_name_template &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, breeding_program_name => $breeding_program_name, location_name => $location_name, year => $year, trial_type => $trial_type, planting_date => $planting_date, show_transplanting_date => $show_transplanting_date, transplanting_date => $transplanting_date, harvest_date => $harvest_date, trial_description => $trial_description, folder_id => $folder_id, design_name => $design_name, has_plant_entries => $has_plant_entries, phenotypes_fully_uploaded => $phenotypes_fully_uploaded, user_can_modify => $user_can_modify, user_name => $user_name, info_section_title => "<h4 style='display:inline'>Trial Status</h4>", info_section_subtitle => 'View progress of this trial.', icon_class => "glyphicon glyphicon-forward", info_section_id => "trial_status_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, breeding_program_name => $breeding_program_name, location_name => $location_name, year => $year, trial_type => $trial_type, planting_date => $planting_date, show_transplanting_date => $show_transplanting_date, transplanting_date => $transplanting_date, harvest_date => $harvest_date, trial_description => $trial_description, folder_id => $folder_id, design_name => $design_name, has_plant_entries => $has_plant_entries, phenotypes_fully_uploaded => $phenotypes_fully_uploaded, user_can_modify => $user_can_modify, user_name => $user_name, info_section_title => "<h4 style='display:inline'>Trial Status</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View progress of this trial.'), 'h' ), icon_class => "glyphicon glyphicon-forward", info_section_id => "trial_status_section" &>
 
 % my $barcode_section_title = '';
 % if ($trial_stock_type eq 'family_name') {
@@ -115,7 +115,7 @@ $project_id => undef
         <& /page/detail_page_3_col_section.mas, icon_class => "glyphicon glyphicon-qrcode", title => $barcode_section_title, label_design_btn_id => "label_designer_link", legacy_barcode_btn_id => "generate_trial_barcode_link" &>
     </div>
     <div class="col-sm-6">
-        <& /page/detail_page_3_col_section.mas, icon_class => "glyphicon glyphicon-pencil", title => "Directly record phenotypes to database for this trial.", go_btn_id => "direct_phenotyping_link" &>
+        <& /page/detail_page_3_col_section.mas, icon_class => "glyphicon glyphicon-pencil", title => $m->interp->apply_escapes( __("Directly record phenotypes to database for this trial."), 'h' ), go_btn_id => "direct_phenotyping_link" &>
     </div>
 </div>
 
@@ -123,45 +123,45 @@ $project_id => undef
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="calculate_spatial_correction_title">Calculate Spatial Correction</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="calculate_spatial_correction_title"><% __('Calculate Spatial Correction') |h %></h4>
       </div>
       <div class="modal-body">
       <div class="container-fluid">
         <&| /util/workflow.mas, id=> "spatial_model_analysis_workflow" &>
-          <&| /util/workflow.mas:step, title=> "Check Data Quality" &>
-            <& /page/page_title.mas, title=>"Check data quality before running spatial analysis" &>
+          <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Check Data Quality"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Check data quality before running spatial analysis"), 'h' ) &>
               <div class="container-fluid">
-                <p>To proceed, check presence of spatial autocorrelation. Click Confirm.</p>
-                <button type="button" class="btn btn-primary" name="confirm_calculating_spatial_correction" id="confirm_calculating_spatial_correction">Confirm</button>
+                <p><% __('To proceed, check presence of spatial autocorrelation. Click Confirm.') |h %></p>
+                <button type="button" class="btn btn-primary" name="confirm_calculating_spatial_correction" id="confirm_calculating_spatial_correction"><% __('Confirm') |h %></button>
                 <br />
                 <br />
                 <div id="calculate_spatial_correction_status_message"></div>
                 <br />
-                <button class="btn btn-main" id="check_quality_prepare_button"         onclick="Workflow.complete(this);">Accept and continue</button>
+                <button class="btn btn-main" id="check_quality_prepare_button"         onclick="Workflow.complete(this);"><% __('Accept and continue') |h %></button>
                 <hr>
                 <table id= "spatial_correction_needed_results_table" ></table>
               </div>
             </&>
-          <&| /util/workflow.mas:step, title=> "Run Spatial Analysis" &>
-            <& /page/page_title.mas, title=>"Run corrections for spatially autocorrelated traits" &>
+          <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Run Spatial Analysis"), 'h' ) &>
+            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Run corrections for spatially autocorrelated traits"), 'h' ) &>
               <div id="spatial_correction_results_buttons">
-                <input name="include_rc_random_effects" id="include_rc_random_effects" type="checkbox" checked/> <label for="include_rc_random_effects">Include rows and columns as random effects?</label><br> <p><i>The spatial corrections model will smooth with 2D splines, but can also include rows and columns as random effects to capture more variability due to spatial autocorrelation. Be sure that subsequent analyses based on these corrections do not attempt to model spatial effects a second time.</i></p>
+                <input name="include_rc_random_effects" id="include_rc_random_effects" type="checkbox" checked/> <label for="include_rc_random_effects"><% __('Include rows and columns as random effects?') |h %></label><br> <p><i><% __('The spatial corrections model will smooth with 2D splines, but can also include rows and columns as random effects to capture more variability due to spatial autocorrelation. Be sure that subsequent analyses based on these corrections do not attempt to model spatial effects a second time.') |h %></i></p>
                 <br>
-                <input name="genotype_as_random" id="genotype_as_random" type="checkbox"/> <label for="genotype_as_random">Use genotype (accession) as a random effect instead of fixed?</label><br> <p><i>In general, accessions should be a fixed effect. But if the accessions of this trial are representative of genetic diversity in the crop as a whole, and are drawn randomly from a larger population of genotypes, you can model them as a random effect.</i></p>
+                <input name="genotype_as_random" id="genotype_as_random" type="checkbox"/> <label for="genotype_as_random"><% __('Use genotype (accession) as a random effect instead of fixed?') |h %></label><br> <p><i><% __('In general, accessions should be a fixed effect. But if the accessions of this trial are representative of genetic diversity in the crop as a whole, and are drawn randomly from a larger population of genotypes, you can model them as a random effect.') |h %></i></p>
                 <br>
-                <input name="nseg_ratio_select" id="nseg_ratio_select" type="range" min="1" max="100" value="33"><label for="nseg_ratio_select">Degree of smoothing:</label> &nbsp; <span id='nseg_ratio_readout'>0.33</span><br> <p><i>Degree of smoothing refers to the ratio of number of spline segments to the number of rows/columns. A high degree of smoothing may oversmooth plot-level variation, but a low degree of smoothing may overfit the data and fail to smooth out field-level spatial variation. The value given is a good starting point.</i></p>
+                <input name="nseg_ratio_select" id="nseg_ratio_select" type="range" min="1" max="100" value="33"><label for="nseg_ratio_select"><% __('Degree of smoothing:') |h %></label> &nbsp; <span id='nseg_ratio_readout'>0.33</span><br> <p><i><% __('Degree of smoothing refers to the ratio of number of spline segments to the number of rows/columns. A high degree of smoothing may oversmooth plot-level variation, but a low degree of smoothing may overfit the data and fail to smooth out field-level spatial variation. The value given is a good starting point.') |h %></i></p>
                 <br>
                 <table style="width:100%">
                   <tr>
-                <td><button id="correct_spatial" type="button" class="btn btn-default"> Run Spatial Correction </button></td>
-                <td style="float:right"><button type="button" class="btn btn-primary" name="confirm_store_spatial_correction" id="confirm_store_spatial_correction" data-toggle="modal" data-analysis_type="fitted" data-target="#generic_save_analysis_dialog" disabled>Store Spatial Correction</button></td>
+                <td><button id="correct_spatial" type="button" class="btn btn-default"> <% __('Run Spatial Correction') |h %> </button></td>
+                <td style="float:right"><button type="button" class="btn btn-primary" name="confirm_store_spatial_correction" id="confirm_store_spatial_correction" data-toggle="modal" data-analysis_type="fitted" data-target="#generic_save_analysis_dialog" disabled><% __('Store Spatial Correction') |h %></button></td>
                   </tr>
                 </table>
               </div>
               <br />
               <hr>
-              <div id="trait_spatial_selector"><select id="dropdown" style="">  <option value="">All</option></select></div>
+              <div id="trait_spatial_selector"><select id="dropdown" style="">  <option value=""><% __('All') |h %></option></select></div>
               <br>
               <table id= "spatial_correction_new_moran_table" ></table>
               <br>
@@ -174,7 +174,7 @@ $project_id => undef
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -205,40 +205,40 @@ $project_id => undef
 %        $experimental_design_buttons .= '<button class="btn btn-sm btn-default" style="margin:3px" id="trial_detail_page_add_additional_stocks"></button>';
 %    }
 % }
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, info_section_title => "<h4 style='display:inline'>Experimental Design</h4>", info_section_subtitle => 'View and add experimental design information. Add plant entries and tissue sample entries.',
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, info_section_title => "<h4 style='display:inline'>Experimental Design</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and add experimental design information. Add plant entries and tissue sample entries.'), 'h' ),
 buttons_html => $experimental_design_buttons,
 icon_class => "glyphicon glyphicon-list-alt", info_section_id => "trial_design_section", has_plant_entries => $has_plant_entries, has_subplot_entries => $has_subplot_entries, has_tissue_sample_entries => $has_tissue_sample_entries, trial_stock_type => $trial_stock_type, management_factor_types => $management_factor_types, user_can_modify => $user_can_modify, curator => $curator &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Compute New Phenotypes</h4>", info_section_subtitle => 'Compute derived traits or compute plot phenotypes from plant phenotypes.', icon_class => "glyphicon glyphicon-scale", info_section_id => "compute_derived_traits" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Compute New Phenotypes</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Compute derived traits or compute plot phenotypes from plant phenotypes.'), 'h' ), icon_class => "glyphicon glyphicon-scale", info_section_id => "compute_derived_traits" &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Phenotype Raw Data</h4>", info_section_subtitle => 'View phenotyping raw data.', info_section_id => "trial_raw_data", trial_name => $trial_name, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, user_name => $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type, user_can_modify => $user_can_modify &>
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, username=> $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type, info_section_title => "<h4 style='display:inline'>Repetitive Measurements</h4>", info_section_subtitle => 'View a plot by repetitive measurements level', info_section_id => "repetitive_measurements_data", icon_class => "glyphicon glyphicon-repeat" &>
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Phenotype Summary Statistics</h4>", info_section_subtitle => 'View and download uploaded phenotype data.', buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='trial_download_phenotypes_button'>Download Trial Data</button>", icon_class => "glyphicon glyphicon-equalizer", info_section_id => "trial_detail_traits_assayed", has_expression_atlas => $has_expression_atlas, trial_name => $trial_name, expression_atlas_url => $expression_atlas_url, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, user_name => $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Phenotype Raw Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View phenotyping raw data.'), 'h' ), info_section_id => "trial_raw_data", trial_name => $trial_name, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, user_name => $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type, user_can_modify => $user_can_modify &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_name => $trial_name, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, username=> $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type, info_section_title => "<h4 style='display:inline'>Repetitive Measurements</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View a plot by repetitive measurements level'), 'h' ), info_section_id => "repetitive_measurements_data", icon_class => "glyphicon glyphicon-repeat" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Phenotype Summary Statistics</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and download uploaded phenotype data.'), 'h' ), buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='trial_download_phenotypes_button'>Download Trial Data</button>", icon_class => "glyphicon glyphicon-equalizer", info_section_id => "trial_detail_traits_assayed", has_expression_atlas => $has_expression_atlas, trial_name => $trial_name, expression_atlas_url => $expression_atlas_url, site_project_name => $site_project_name, sgn_session_id => $sgn_session_id, user_name => $user_name, main_production_site_url => $main_production_site_url, trial_stock_type => $trial_stock_type &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Analysis Tools</h4>", info_section_subtitle => 'Run correlation, anova, population structure (PCA), or clustering. Also access HIDAP, if enabled on this site.', icon_class => "glyphicon glyphicon-signal", info_section_id => "trial_analysis_tools", hidap_enabled => $hidap_enabled, main_production_site_url => $main_production_site_url, breeding_program_name => $breeding_program_name, folder_name => $folder_name, trial_name => $trial_name &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Analysis Tools</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Run correlation, anova, population structure (PCA), or clustering. Also access HIDAP, if enabled on this site.'), 'h' ), icon_class => "glyphicon glyphicon-signal", info_section_id => "trial_analysis_tools", hidap_enabled => $hidap_enabled, main_production_site_url => $main_production_site_url, breeding_program_name => $breeding_program_name, folder_name => $folder_name, trial_name => $trial_name &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>NIRS Data</h4>", info_section_subtitle => 'View and plot NIRS data for this trial.', buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' name='upload_high_dim_phenotypes_spreadsheet_link'>Upload NIRS</button>", icon_class => "glyphicon glyphicon-stats", info_section_id => "trial_nirs_section" &>
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Upload Data Files</h4>", info_section_subtitle => 'Phenotypic data collection using Excel or Android Fieldbook. Also upload any additional files for this trial.', icon_class => "glyphicon glyphicon-cloud-upload", info_section_id => "trial_upload_files", trial_stock_type => $trial_stock_type &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>NIRS Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and plot NIRS data for this trial.'), 'h' ), buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' name='upload_high_dim_phenotypes_spreadsheet_link'>Upload NIRS</button>", icon_class => "glyphicon glyphicon-stats", info_section_id => "trial_nirs_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Upload Data Files</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Phenotypic data collection using Excel or Android Fieldbook. Also upload any additional files for this trial.'), 'h' ), icon_class => "glyphicon glyphicon-cloud-upload", info_section_id => "trial_upload_files", trial_stock_type => $trial_stock_type &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Weather Data</h4>", info_section_subtitle => 'View rainfall, temperature, light intensity and other weather data for this location.', icon_class => "glyphicon glyphicon-cloud", info_section_id => "trial_weather_data", location_name => $location_name &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Weather Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View rainfall, temperature, light intensity and other weather data for this location.'), 'h' ), icon_class => "glyphicon glyphicon-cloud", info_section_id => "trial_weather_data", location_name => $location_name &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Soil Data</h4>", info_section_subtitle => 'View and upload soil data for this trial.', icon_class => "glyphicon glyphicon-info-sign", buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='trial_upload_soil_data_button' >Upload Soil Data</button>", info_section_id => "trial_soil_data_section"&>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Soil Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and upload soil data for this trial.'), 'h' ), icon_class => "glyphicon glyphicon-info-sign", buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='trial_upload_soil_data_button' >Upload Soil Data</button>", info_section_id => "trial_soil_data_section"&>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Images</h4>", info_section_subtitle => 'View images of this trial.', buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='upload_images_link'>Add New Image</button> <button class='btn btn-sm btn-primary' style='margin:3px' id='image_download_button'>Download Images</button>", icon_class => "glyphicon glyphicon-camera", info_section_id => "trial_images_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Images</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View images of this trial.'), 'h' ), buttons_html => "<button class='btn btn-sm btn-primary' style='margin:3px' id='upload_images_link'>Add New Image</button> <button class='btn btn-sm btn-primary' style='margin:3px' id='image_download_button'>Download Images</button>", icon_class => "glyphicon glyphicon-camera", info_section_id => "trial_images_section" &>
 
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>JBrowse Genome Alignments For this Experiment</h4>", info_section_subtitle => 'View JBrowse alignments for accessions in this trial.', icon_class => "glyphicon glyphicon-align-left", info_section_id => "trial_jbrowse_data" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>JBrowse Genome Alignments For this Experiment</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View JBrowse alignments for accessions in this trial.'), 'h' ), icon_class => "glyphicon glyphicon-align-left", info_section_id => "trial_jbrowse_data" &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_type => $trial_type, info_section_title => "<h4 style='display:inline'>Experiment Linkage</h4>", info_section_subtitle => 'View other experiments, crosses, and genotyping plates linked to this experiment.', icon_class => "glyphicon glyphicon-link", info_section_id => "trial_linkage_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_type => $trial_type, info_section_title => "<h4 style='display:inline'>Experiment Linkage</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View other experiments, crosses, and genotyping plates linked to this experiment.'), 'h' ), icon_class => "glyphicon glyphicon-link", info_section_id => "trial_linkage_section" &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_type => $trial_type, project_id => $project_id, info_section_title => "<h4 style='display:inline'>Audit Table</h4>", info_section_subtitle => 'Track audit information linked to this experiment.', icon_class => "glyphicon glyphicon-time", info_section_id => "trial_audit_table_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, trial_type => $trial_type, project_id => $project_id, info_section_title => "<h4 style='display:inline'>Audit Table</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Track audit information linked to this experiment.'), 'h' ), icon_class => "glyphicon glyphicon-time", info_section_id => "trial_audit_table_section" &>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Delete Experiment Data</h4>", info_section_subtitle => 'Delete phenotypes, field layout, and/or the entire experiment from the database.', icon_class => "glyphicon glyphicon-trash", info_section_id => "trial_deletion_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Delete Experiment Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Delete phenotypes, field layout, and/or the entire experiment from the database.'), 'h' ), icon_class => "glyphicon glyphicon-trash", info_section_id => "trial_deletion_section" &>
 
 % my $data_agreement_link = '<button class="btn btn-sm btn-primary" disabled style="margin:3px">Add/edit data agreement</button>';
 % if ($user_can_modify) { $data_agreement_link = '<button class="btn btn-sm btn-primary" style="margin:3px" id="add_data_agreement">Add/edit data agreement</button>'; }
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Data Agreement License</h4>", info_section_subtitle => 'View and edit the public data agreement on this experiment.', icon_class => "glyphicon glyphicon-inbox", info_section_id => "trial_data_agreement_section", buttons_html => $data_agreement_link &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Data Agreement License</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and edit the public data agreement on this experiment.'), 'h' ), icon_class => "glyphicon glyphicon-inbox", info_section_id => "trial_data_agreement_section", buttons_html => $data_agreement_link &>
 
 <& /breeders_toolbox/folder/folder_set.mas, project_type => 'field_trial', breeding_program_id => $breeding_program_id, breeding_program_name =>$breeding_program_name, trial_id => $trial_id, trial_name =>$trial_name &>
 <& /breeders_toolbox/folder/folder_new.mas, breeding_program_id => $breeding_program_id, breeding_program_name =>$breeding_program_name, project_type => 'field_trial' &>

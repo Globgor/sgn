@@ -7,13 +7,13 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadLocationsDialog">Upload Locations</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadLocationsDialog"><% __('Upload Locations') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-                <b>Header:</b><br>
-                The first row (header) must contain the following:
+                <b><% __('Header:') |h %></b><br>
+                <% __('The first row (header) must contain the following:') |h %>
                 <br>
                 <table class="table table-bordered table-hover">
                   <tbody>
@@ -31,7 +31,7 @@
                   </tr>
                   </tbody>
                 </table>
-                <b>Required values:</b><br>
+                <b><% __('Required values:') |h %></b><br>
                 <b>Name:</b> must not conflict with an existing location name<br>
                 <b>Abbreviation:</b> used in the map and in uploads, must not conflict with an existing abbreviation<br>
                 <b>Country Code:</b> must be an <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO Alpha-3 country code</a><br>
@@ -41,19 +41,19 @@
                 <b>Latitude:</b> (in degrees) must be a number between 90 and -90.<br>
                 <b>Longitude:</b> (in degrees) must be a number between 180 and -180.<br>
                 <b>Elevation:</b> (in meters) must be a number between -418 (Dead Sea) and 8,848 (Mt. Everest).<br>
-                <br><b>Optional values:</b><br>
+                <br><b><% __('Optional values:') |h %></b><br>
                 <b>NOAA Station ID:</b> The NOAA Station ID that is nearest and most relevant to the location. <a href="https://www.ncdc.noaa.gov/cdo-web/search" target="_blank">Search Here</a><br>
 
           <& /help/file_upload_type.mas, type => "Locations" , optional_column => 1 &>
           <form method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_locations_form" name="upload_locations_form">
-    <label for="locations_upload_file" style="display: inline-block;">Location File:</label>
+    <label for="locations_upload_file" style="display: inline-block;"><% __('Location File:') |h %></label>
     <input type="file" name="locations_upload_file" id="locations_upload_file" encoding="multipart/form-data" />
   </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	<button type="button" class="btn btn-primary" name="upload_locations_dialog_submit" id="upload_locations_dialog_submit">Upload</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+	<button type="button" class="btn btn-primary" name="upload_locations_dialog_submit" id="upload_locations_dialog_submit"><% __('Upload') |h %></button>
       </div>
     </div>
   </div>
@@ -63,13 +63,13 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="locationsResultDialog">Results</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="locationsResultDialog"><% __('Results') |h %></h4>
             </div>
             <div id="locations_result_body" class="container-fluid">
             </div>
             <div class="modal-footer">
-                <button id="locations_result_close_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="locations_result_close_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
