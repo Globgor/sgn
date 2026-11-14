@@ -35,6 +35,7 @@ use File::Path qw( make_path );
 use File::Temp qw( tempdir );
 use HTML::Entities qw( decode_entities );
 use HTML::Mason::Interp;
+use SGN::I18N::Browser ();
 use Locale::Messages qw( bindtextdomain bind_textdomain_codeset bind_textdomain_filter );
 use Locale::Util qw( set_locale );
 use POSIX qw( setlocale LC_MESSAGES );
@@ -51,7 +52,8 @@ my ( $interp, $html );
 sub _interp {
     return $interp if $interp;
     open( my $view, '<', 'lib/SGN/View/Mason.pm' ) or die "Can't read the Mason view: $!";
-    my ($preamble) = join( q{}, <$view> ) =~ /preamble\s*=>\s*"([^"]*)"/;
+    my $source = join q{}, <$view>;
+    my ($preamble) = $source =~ /preamble\s*=>\s*"([^"]*)"/;
     close $view;
     Locale::Messages->select_package('gettext_pp');
     delete $ENV{LANGUAGE};
@@ -64,6 +66,7 @@ sub _interp {
         autohandler_name => q{},
         allow_globals    => ['$c'],
         preamble         => $preamble,
+        escape_flags     => { js => \&SGN::I18N::Browser::escape_js },
     );
     $interp->set_global( '$c' => SGN::Test::Anything->new );
     return $interp;

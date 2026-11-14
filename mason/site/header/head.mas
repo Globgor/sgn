@@ -31,7 +31,11 @@
    MochiKit = {__export__: false};
 </script>
 
-<& /util/import_javascript.mas, classes => [ "jquery", "jqueryui", "sgn", "jquery.simpletooltip", "jquery.cookie", "CXGN.Effects", "CXGN.Dataset", "CXGN.Page.FormattingHelpers", "CXGN.UserPrefs", "CXGN.Page.Toolbar", "CXGN.List", "CXGN.Login", "bootstrap_min", "CXGN.BreedersToolbox.HTMLSelect", "bootstrap-toggle_min"] &>
+% my $language = $c->stash->{language} // 'en';
+% if ( $language ne 'en' && defined $c->config->{i18n_js_version}{$language} ) {
+<script type="text/javascript" src="/<% $language |u %>/sgn.js?v=<% $c->config->{i18n_js_version}{$language} |u %>"></script>
+% }
+<& /util/import_javascript.mas, classes => [ "CXGN.I18N", "jquery", "jqueryui", "sgn", "jquery.simpletooltip", "jquery.cookie", "CXGN.Effects", "CXGN.Dataset", "CXGN.Page.FormattingHelpers", "CXGN.UserPrefs", "CXGN.Page.Toolbar", "CXGN.List", "CXGN.Login", "bootstrap_min", "CXGN.BreedersToolbox.HTMLSelect", "bootstrap-toggle_min"] &>
 % if ($c->config->{production_server}) {
     <& /util/import_javascript.mas, classes => [ "jquerymigrate-min", "jquery.dataTables" ] &>
 % } else {

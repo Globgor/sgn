@@ -14,6 +14,8 @@ This is the main class for the Sol Genomics Network main website.
 =cut
 
 package SGN;
+use strict;
+use warnings;
 use Moose;
 use namespace::autoclean;
 
@@ -22,6 +24,7 @@ BEGIN {
 }
 
 use SGN::Exception;
+use SGN::I18N::Browser ();
 
 use Catalyst::Runtime 5.80;
 
@@ -74,6 +77,7 @@ __PACKAGE__->config(
     # Static::Simple configuration
     'Plugin::Static::Simple' => {
         dirs => [qw[ css s static img documents static_content data ]],
+        include_path => [ \&SGN::I18N::Browser::static_include_path ],
     },
 
     'Plugin::ConfigLoader' => {

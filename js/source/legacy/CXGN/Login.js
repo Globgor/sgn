@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 //JSAN.use('jqueryui');
 
@@ -18,7 +19,7 @@ function isLoggedIn() {
 	    }
 	},
 	error: function(response) {
-	    alert("An error occurred. "+response);
+	    alert(gettext("An error occurred.") + " " + response);
 	}
     }
 
@@ -44,7 +45,7 @@ function getUserRoles() {
 	    }
 	},
 	error: function(response) {
-	    alert("An error occurred. "+response);
+	    alert(gettext("An error occurred.") + " " + response);
 	}
     }
 
@@ -70,7 +71,7 @@ function setUpLogin() {
     height: 80,
     width: 100,
     modal: true,
-    title: "Working...",
+    title: gettext("Working..."),
     closeOnEscape: false,
     autoOpen: false
   });
@@ -79,18 +80,18 @@ jQuery('#login_window').dialog( {
     height: 180,
     width: 300,
     modal: true,
-    title: 'Login',
+    title: gettext('Login'),
     autoOpen: false,
-    buttons: {
-      "Login" :
-        function() {
+    buttons: [
+      { text: gettext("Login"),
+        click: function() {
           login();
-        },
-      "Cancel":
-        function() {
+        } },
+      { text: gettext("Cancel"),
+        click: function() {
           jQuery('#login_window').dialog("close");
-        }
-    }
+        } }
+    ]
 
 
   });

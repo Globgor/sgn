@@ -19,6 +19,7 @@ use File::Path qw( make_path );
 use File::Temp qw( tempdir );
 use HTML::Entities qw( decode_entities );
 use HTML::Mason::Interp;
+use SGN::I18N::Browser ();
 use Locale::Messages qw( bindtextdomain bind_textdomain_codeset bind_textdomain_filter );
 use Locale::Util qw( set_locale );
 use POSIX qw( setlocale LC_MESSAGES );
@@ -28,7 +29,8 @@ sub Local::Context::config { return { require_login => 0 } }
 
 # The preamble that SGN::View::Mason gives to every component.
 open( my $view, '<', 'lib/SGN/View/Mason.pm' ) or die "Can't read the Mason view: $!";
-my ($preamble) = join( '', <$view> ) =~ /preamble\s*=>\s*"([^"]*)"/;
+my $source = join q{}, <$view>;
+my ($preamble) = $source =~ /preamble\s*=>\s*"([^"]*)"/;
 close $view;
 
 my $locale_dir = tempdir( CLEANUP => 1 );
@@ -49,6 +51,7 @@ my $interp = HTML::Mason::Interp->new(
     autohandler_name => '',
     allow_globals    => ['$c'],
     preamble         => $preamble,
+    escape_flags     => { js => \&SGN::I18N::Browser::escape_js },
 );
 $interp->set_global( '$c' => bless( {}, 'Local::Context' ) );
 
