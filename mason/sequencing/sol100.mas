@@ -17,7 +17,7 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
     $organism_autocomplete_uri => ''
 </%args>
 
-<div style="margin: 20px auto"><& /page/page_title.mas, title=>"The SOL-100 sequencing project" &></div>
+<div style="margin: 20px auto"><& /page/page_title.mas, title=>$m->interp->apply_escapes( __("The SOL-100 sequencing project"), 'h' ) &></div>
 
 <& /util/import_javascript.mas, classes=>[qw[ CXGN.Page.FormattingHelpers  jquery jqueryui popup]] &>
 
@@ -52,30 +52,30 @@ sol100.mas - SGN page for sol100 project organism data overview in a tree format
 
 
 <&| /page/info_section.mas,
-  title         =>  'The questions',
+  title         =>  $m->interp->apply_escapes( __('The questions'), 'h' ),
   collapsible   => 1,
   collapsed     => 1,
   &>
 
 <p>
-The Solanaceae include more than 3000 species with wide adaptation, shape, chemistry, and distribution. Species of the family are of great agricultural, nutritional, horticultural and medicinal importance (e.g., potato, tomato, pepper, petunia and tobacco). This enormous diversity is contrasted by high conservation of gene order and content at the macro and micro syntenic levels. Solanaceae genomes can be genetically tied to a common framework linkage map, thus facilitating the identification of genes with homologous phenotypes in the different species. These features make Solanaceae an excellent taxon with which to address a central question in biology:
+<% __('The Solanaceae include more than 3000 species with wide adaptation, shape, chemistry, and distribution. Species of the family are of great agricultural, nutritional, horticultural and medicinal importance (e.g., potato, tomato, pepper, petunia and tobacco). This enormous diversity is contrasted by high conservation of gene order and content at the macro and micro syntenic levels. Solanaceae genomes can be genetically tied to a common framework linkage map, thus facilitating the identification of genes with homologous phenotypes in the different species. These features make Solanaceae an excellent taxon with which to address a central question in biology:') |h %>
 </p>
 
- <blockquote>How can a common set of genes/proteins give rise to such a wide range of morphologically and ecologically distinct species?</blockquote>
+ <blockquote><% __('How can a common set of genes/proteins give rise to such a wide range of morphologically and ecologically distinct species?') |h %></blockquote>
 
 
 <p>
-But also, studying the Solanaceae can generate answers to the currently highly relevant and urgent question:  
+<% __('But also, studying the Solanaceae can generate answers to the currently highly relevant and urgent question:') |h %>  
 </p>
 
 <blockquote>
-How can a deeper understanding of the genetic basis of plant biodiversity be harnessed to better meet the needs of society in an environmentally friendly and sustainable manner?
+<% __('How can a deeper understanding of the genetic basis of plant biodiversity be harnessed to better meet the needs of society in an environmentally friendly and sustainable manner?') |h %>
 </blockquote>
 
 </&>
 
 <&| /page/info_section.mas,
-  title         =>  'The aim',
+  title         =>  $m->interp->apply_escapes( __('The aim'), 'h' ),
   collapsible   => 1,
   collapsed     => 0,
   &>
@@ -126,7 +126,7 @@ How can a deeper understanding of the genetic basis of plant biodiversity be har
 </&>
 
 <&| /page/info_section.mas,
-  title         =>  'SOL-100 Organisms',
+  title         =>  $m->interp->apply_escapes( __('SOL-100 Organisms'), 'h' ),
   subtitle      => 'click on an organism name to see more details ',
   empty_message => 'Tree not available',
   collapsible   => 1,
@@ -153,12 +153,12 @@ How can a deeper understanding of the genetic basis of plant biodiversity be har
 
  </style>
  <div id="sol100_add_organism">
-    <div class="boxtitle">Authorized user</div>
-    <h3>Add a SOL-100 organism</h3>
+    <div class="boxtitle"><% __('Authorized user') |h %></div>
+    <h3><% __('Add a SOL-100 organism') |h %></h3>
     <div>
       <form method="POST" name="sol100_add_form" action="<% $organism_add_uri %>">
         <input name="species" type="text" size="30" id="sol100_species" /><input type="submit" name="add_to_tree" onclick="add_to_tree()" value="Add to Tree" />
-        <div style="font-size: 80%; margin-left: 1em; color: #333">type an organism name</div>
+        <div style="font-size: 80%; margin-left: 1em; color: #333"><% __('type an organism name') |h %></div>
       </form>
     </div>
  </div>
@@ -175,7 +175,7 @@ How can a deeper understanding of the genetic basis of plant biodiversity be har
 </&>
 
 <&| /page/info_section.mas,
-  title         =>  'Who are we?',
+  title         =>  $m->interp->apply_escapes( __('Who are we?'), 'h' ),
   collapsible   => 1,
   collapsed     => 0,
   &>
@@ -200,8 +200,8 @@ How can a deeper understanding of the genetic basis of plant biodiversity be har
 
 </&>
 
-<&| /page/info_section.mas, title=>"Submit genome to SGN" &>
-If you are sequencing a SOL-100 genome, please submit the genome to SGN. <br /><br /><b>Submission to SGN requires prior submission to <a href="http://ncbi.nlm.nih.gov">Genbank</a></b> and a <b><a href="http://www.ncbi.nlm.nih.gov/genomes/static/gprj_help.html#what_projectID">Genbank Project ID</a></b>. Please contact <a href="mailto:smtwhite@ncbi.nlm.nih.gov">Brian Smith-White</a> at Genbank or <a href="mailto:sgn-feedback@solgenomics.net">SGN</a> for more information.
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Submit genome to SGN"), 'h' ) &>
+<% __('If you are sequencing a SOL-100 genome, please submit the genome to SGN.') |h %> <br /><br /><b>Submission to SGN requires prior submission to <a href="http://ncbi.nlm.nih.gov">Genbank</a></b> and a <b><a href="http://www.ncbi.nlm.nih.gov/genomes/static/gprj_help.html#what_projectID">Genbank Project ID</a></b>. Please contact <a href="mailto:smtwhite@ncbi.nlm.nih.gov">Brian Smith-White</a> at Genbank or <a href="mailto:sgn-feedback@solgenomics.net">SGN</a> for more information.
 </&>
 
 
