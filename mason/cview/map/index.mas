@@ -184,7 +184,7 @@ $parent2_stock_name => '(unknown)'
 
 % if ($abstract) { 
 
-<&| /page/info_section.mas, title=>"Abstract", collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Abstract"), 'h' ), collapsible=>1, collapsed=>0 &>
 <% $abstract %>
 </&>
 
@@ -193,7 +193,7 @@ $parent2_stock_name => '(unknown)'
 % my ($stock1_link, $stock2_link) = ("", "");
 % $parent1_stock_id ?  $stock1_link='' : $stock1_link = "/stock/$parent1_stock_id/view";
 % $parent2_stock_id ?  $stock2_link='' : $stock2_link = "/stock/$parent2_stock_id/view";
-<&| /page/info_section.mas, collapsible => 1, title=>"Parents of Mapping Population" &>
+<&| /page/info_section.mas, collapsible => 1, title=>$m->interp->apply_escapes( __("Parents of Mapping Population"), 'h' ) &>
 <p>Parent 1 <a href="<% $stock1_link %>"><% $parent1_stock_name %></a></p>
 <p>Parent 2 <a href="<% $stock2_link %>"><% $parent2_stock_name %></a></p>
 </&>
@@ -205,7 +205,7 @@ $parent2_stock_name => '(unknown)'
 % $html .= '<tr><td><b>Total:</b></td><td>'.$total.'</td></tr></tbody>';
 % $html .= '</table>';
 <&| /page/info_section.mas, 
-  title => 'Map Statistics',
+  title => $m->interp->apply_escapes( __('Map Statistics'), 'h' ),
   collapsible => 1,
   collapsed => 0,
  &>
@@ -216,7 +216,7 @@ $parent2_stock_name => '(unknown)'
   </div>
   <div class="col-sm-6 col-md-6 col-lg-6">
     <div class="panel panel-info">
-      <div class="panel-heading">Overview</div>
+      <div class="panel-heading"><% __('Overview') |h %></div>
       <div class="panel-body">
         <% $marker_stats %>
       </div>

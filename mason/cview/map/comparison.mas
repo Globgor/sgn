@@ -81,7 +81,7 @@ $right_map_version_id=>undef
 $color_model=>undef
 </%args>
 
-<& /page/page_title.mas, title => 'Compare Entire Maps' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Compare Entire Maps'), 'h' ) &>
 
 <div style="text-align: center">
    <div style="width: 40em; margin: 0 auto">
