@@ -616,11 +616,12 @@ sub search {
     my $rs = $schema->resultset("Stock::Stock")->search(
         $search_query,
         {
-            join => ['type', 'organism', 'stockprops', $stock_join, $acq_date_join],
+            # Keep the first stockprops alias for acquisition-date's stockprops_2.
+            join => ['type', 'organism', ($any_name || $acq_date_join ? 'stockprops' : ()), $stock_join, $acq_date_join],
             '+select' => [ 'type.name' , 'organism.species' , 'organism.common_name', 'organism.genus'],
             '+as'     => [ 'cvterm_name' , 'species', 'common_name', 'genus'],
             order_by  => 'me.name',
-            distinct=>1
+            distinct => ($any_name || $stock_join || $acq_date_join) ? 1 : 0
         }
     );
 
