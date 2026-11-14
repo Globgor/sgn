@@ -944,7 +944,7 @@ jQuery(document).ready(function() {
         high_dim_data_upload_type = jQuery('#high_dim_data_upload_type_select').val();
 
         if (high_dim_data_upload_type == '') {
-            alert('Please select a data type first!');
+            alert(<% __('Please select a data type first!') |js %>);
             return false;
         }
 
@@ -1056,7 +1056,7 @@ jQuery(document).ready(function() {
             selected.push(jQuery(this).val());
         });
         if(selected.length > 1) {
-            alert('Please select only one protocol!');
+            alert(<% __('Please select only one protocol!') |js %>);
             return false;
         }
 
@@ -1064,15 +1064,15 @@ jQuery(document).ready(function() {
         var high_dim_protocol_desc = jQuery('#high_dim_data_upload_protocol_desc').val();
 
         if (selected.length>0 && high_dim_protocol_name != '') {
-            alert('Please select a protocol or give a name for a new one! Not both!');
+            alert(<% __('Please select a protocol or give a name for a new one! Not both!') |js %>);
             return false;
         }
         if (selected.length==0 && high_dim_protocol_name == '') {
-            alert('Please select a protocol or create a new one!');
+            alert(<% __('Please select a protocol or create a new one!') |js %>);
             return false;
         }
         if (selected.length==0 && high_dim_protocol_desc == '') {
-            alert('Please select a protocol or create a new one with a description!');
+            alert(<% __('Please select a protocol or create a new one with a description!') |js %>);
             return false;
         }
 
@@ -1142,11 +1142,11 @@ jQuery(document).ready(function() {
     jQuery('#upload_nirs_spreadsheet_submit_verify').click(function(){
         var file_input = jQuery("#upload_nirs_spreadsheet_file_input").val();
         if (file_input === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return false;
         }
         else {
-            jQuery('#working_msg').html("Verifying NIRS File and Data");
+            jQuery('#working_msg').html(<% __('Verifying NIRS File and Data') |js %>);
             jQuery('#working_modal').modal("show");
             jQuery('#upload_nirs_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/nirs_upload_verify');
             jQuery('#upload_nirs_spreadsheet_file_form').submit();
@@ -1210,11 +1210,11 @@ jQuery(document).ready(function() {
             jQuery("#upload_nirs_spreadsheet_submit_store").click( function() {
                 var file_input = jQuery("#upload_nirs_spreadsheet_file_input").val();
                 if (file_input === '') {
-                    alert("Please select a file");
+                    alert(<% __('Please select a file') |js %>);
                     return false;
                 }
                 else {
-                    jQuery('#working_msg').html("Storing NIRS File and Data");
+                    jQuery('#working_msg').html(<% __('Storing NIRS File and Data') |js %>);
                     jQuery('#working_modal').modal("show");
                     jQuery('#upload_nirs_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/nirs_upload_store');
                     jQuery('#upload_nirs_spreadsheet_file_form').submit();
@@ -1272,11 +1272,11 @@ jQuery(document).ready(function() {
     jQuery('#upload_transcriptomics_spreadsheet_submit_verify').click(function(){
         var file_input = jQuery("#upload_transcriptomics_spreadsheet_file_input").val();
         if (file_input === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return false;
         }
         else {
-            jQuery('#working_msg').html("Verifying Transcriptomics File and Data");
+            jQuery('#working_msg').html(<% __('Verifying Transcriptomics File and Data') |js %>);
             jQuery('#working_modal').modal("show");
             jQuery('#upload_transcriptomics_spreadsheet_file_form').data("flag", "verify");
             jQuery('#upload_transcriptomics_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/transcriptomics_upload_verify');
@@ -1287,11 +1287,11 @@ jQuery(document).ready(function() {
     jQuery("#upload_transcriptomics_spreadsheet_submit_store").click( function() {
         var file_input = jQuery("#upload_transcriptomics_spreadsheet_file_input").val();
         if (file_input === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return false;
         }
         else {
-            jQuery('#working_msg').html("Storing Transcriptomics File and Data");
+            jQuery('#working_msg').html(<% __('Storing Transcriptomics File and Data') |js %>);
             jQuery('#working_modal').modal("show");
             jQuery('#upload_transcriptomics_spreadsheet_file_form').data("flag", "store");
             jQuery('#upload_transcriptomics_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/transcriptomics_upload_store');
@@ -1395,11 +1395,11 @@ jQuery(document).ready(function() {
     jQuery('#upload_metabolomics_spreadsheet_submit_verify').click(function(){
         var file_input = jQuery("#upload_metabolomics_spreadsheet_file_input").val();
         if (file_input === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return false;
         }
         else {
-            jQuery('#working_msg').html("Verifying Metabolomics File and Data");
+            jQuery('#working_msg').html(<% __('Verifying Metabolomics File and Data') |js %>);
             jQuery('#working_modal').modal("show");
             jQuery('#upload_metabolomics_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/metabolomics_upload_verify');
             jQuery('#upload_metabolomics_spreadsheet_file_form').submit();
@@ -1464,11 +1464,11 @@ jQuery(document).ready(function() {
             jQuery("#upload_metabolomics_spreadsheet_submit_store").click( function() {
                 var file_input = jQuery("#upload_metabolomics_spreadsheet_file_input").val();
                 if (file_input === '') {
-                    alert("Please select a file");
+                    alert(<% __('Please select a file') |js %>);
                     return false;
                 }
                 else {
-                    jQuery('#working_msg').html("Storing Metabolomics File and Data");
+                    jQuery('#working_msg').html(<% __('Storing Metabolomics File and Data') |js %>);
                     jQuery('#working_modal').modal("show");
                     jQuery('#upload_metabolomics_spreadsheet_file_form').attr("action", '/ajax/highdimensionalphenotypes/metabolomics_upload_store');
                     jQuery('#upload_metabolomics_spreadsheet_file_form').submit();
