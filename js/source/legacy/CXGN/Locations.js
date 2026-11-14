@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  *  Common JS functions used by the table and map in the Manage Locations page
  */
@@ -55,7 +56,7 @@ function updateLocations(callback) {
             if ( callback ) callback(locations);
         },
         error: function(response) {
-            alert("An error occurred");
+            alert(gettext("An error occurred"));
         }
     });
 }
@@ -482,7 +483,7 @@ function add_from_map(coordinate_string) {
 function edit_location(id) {
     updateLocations((locations) => {
         var matches = locations.filter((e) => e.properties.Id === id);
-        if ( matches.length !== 1) return alert("Could not find matching location");
+        if ( matches.length !== 1) return alert(gettext("Could not find matching location"));
         var loc_data = matches[0];
 
         //console.log("Data for location to edit: "+JSON.stringify(loc_data));
@@ -520,7 +521,7 @@ function edit_location(id) {
 function delete_location(id) {
     updateLocations((locations) => {
         var matches = locations.filter((e) => e.properties.Id === id);
-        if ( matches.length !== 1) return alert("Could not find matching location");
+        if ( matches.length !== 1) return alert(gettext("Could not find matching location"));
         var loc_data = matches[0];
 
         var name = loc_data.properties.Name;
@@ -539,7 +540,7 @@ function delete_location(id) {
                 }
             },
             error: function(response) {
-                alert("An error occurred");
+                alert(gettext("An error occurred"));
             }
         });
     });

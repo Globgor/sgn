@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 * trait acronyms loader
 * Isaak Y Tecle <iyt2@cornell.edu>
@@ -45,7 +46,7 @@ solGS.acronyms = {
     showError: function() {
         jQuery('#trait_acronyms_table').hide();
         jQuery('#acronyms_message')
-            .html('Error occurred loading acronyms')
+            .html(gettext('Error occurred loading acronyms'))
             .show()
             .fadeOut(5000);
     },

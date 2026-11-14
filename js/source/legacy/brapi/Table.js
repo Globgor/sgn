@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 //  This is for displaying brapi non-paginated responses in a table format.
 //
@@ -234,7 +235,7 @@ function brapi_recreate_paginated_table(search_query_data, display_columns, sele
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred constructing table after moving to the previous page.');
+                alert(gettext('An error occurred constructing table after moving to the previous page.'));
             }
         });
     }, 200);

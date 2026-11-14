@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 
 /**
@@ -28,31 +29,31 @@ jQuery(document).ready(function($) {
     $('#create_crossingtrial_submit').click(function() {
         var crossingtrial_name = $("#crossingtrial_name").val();
         if (!crossingtrial_name) {
-            alert("Crossing Experiment name is required");
+            alert(gettext("Crossing Experiment name is required"));
             return;
         }
 
         var selectedProgram = $("#crossingtrial_program").val();
         if (!selectedProgram) {
-            alert("Breeding program is required");
+            alert(gettext("Breeding program is required"));
             return;
         }
 
         var crossingtrial_location = $("#crossingtrial_location").val();
         if (!crossingtrial_location) {
-            alert ("Location is required");
+            alert (gettext("Location is required"));
             return;
         }
 
         var year = $("#crosses_add_project_year_select").val();
         if (!year) {
-            alert ("Year is required");
+            alert (gettext("Year is required"));
             return;
         }
 
         var project_description = $('textarea#crosses_add_project_description').val();
         if (!project_description) {
-            alert ("Description is required");
+            alert (gettext("Description is required"));
             return;
         }
 
@@ -155,13 +156,13 @@ jQuery(document).ready(function($) {
         var crossName = $("#cross_name").val();
         crossName = crossName.trim();
         if (!crossName) {
-            alert("A cross unique id is required");
+            alert(gettext("A cross unique id is required"));
             return;
         }
 
         var crossing_trial_id = $("#add_cross_crossing_experiment_id").val();
         if (!crossing_trial_id) {
-            alert("A crossing experiment is required");
+            alert(gettext("A crossing experiment is required"));
             return;
         }
 
@@ -212,7 +213,7 @@ jQuery(document).ready(function($) {
         post: function() {
             var uploadFile = $("#crosses_upload_file").val();
             if (uploadFile === '') {
-                alert("No file selected");
+                alert(gettext("No file selected"));
             }
             jQuery("#working_modal").modal("show");
         },
@@ -376,20 +377,20 @@ jQuery(document).ready(function($) {
         const breeding_program = jQuery("#upload_crosses_breeding_program_id").val();
         const experiment_breeding_program = jQuery("#experiment_breeding_program_id").val();
         if (!breeding_program && !experiment_breeding_program) {
-            alert("Please select your breeding program");
+            alert(gettext("Please select your breeding program"));
             return;
         }
 
         const crossing_trial_id = jQuery("#upload_crosses_crossing_experiment_id").val();
         const experiment_id = jQuery("#experiment_id").val();
         if (!crossing_trial_id && !experiment_id) {
-            alert("A crossing experiment is required");
+            alert(gettext("A crossing experiment is required"));
             return;
         }
 
         const uploadFile = jQuery("#upload_crosses_file").val();
         if (!uploadFile) {
-            alert("Please select a file");
+            alert(gettext("Please select a file"));
             return;
         }
 

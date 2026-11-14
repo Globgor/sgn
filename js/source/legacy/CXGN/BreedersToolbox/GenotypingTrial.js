@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 
 /**
@@ -71,7 +72,7 @@ jQuery(document).ready(function ($) {
         plate_data.include_facility_identifiers = jQuery('#upload_genotype_plate_include_facility_identifiers').val();
 
         if (plate_data.name == '') {
-            alert("A name is required and it should be unique in the database. Please try again.");
+            alert(gettext("A name is required and it should be unique in the database. Please try again."));
             return;
         }
 
@@ -112,18 +113,18 @@ jQuery(document).ready(function ($) {
 
         var l = new CXGN.List();
         if (! l.legacy_validate(plate_data.list_id, 'accessions', true) && ! l.legacy_validate(plate_data.list_id, 'plots', true) && ! l.legacy_validate(plate_data.list_id, 'subplots', true)&& ! l.legacy_validate(plate_data.list_id, 'plants', true) && ! l.legacy_validate(plate_data.list_id, 'tissue_samples', true)) {
-            alert('The list contains elements that are not accessions or plots or subplots or plants or tissue_samples.');
+            alert(gettext('The list contains elements that are not accessions or plots or subplots or plants or tissue_samples.'));
             return;
         }
 
         var elements = l.getList(plate_data.list_id);
         if (typeof elements == 'undefined' ) {
-            alert("There are no elements in the list provided.");
+            alert(gettext("There are no elements in the list provided."));
             return;
         }
 
         if (elements.length > plate_data.plate_format) {
-            alert("The list needs to have less than 96 or 384 elements depending on the plate format you selected");
+            alert(gettext("The list needs to have less than 96 or 384 elements depending on the plate format you selected"));
             return;
         }
 
@@ -151,7 +152,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function(response) {
-                alert("An error occurred trying to log into the sequencing facility server. Please try again later.");
+                alert(gettext("An error occurred trying to log into the sequencing facility server. Please try again later."));
             }
         });
         return access_token;
@@ -163,7 +164,7 @@ jQuery(document).ready(function ($) {
         auth_data = get_genotyping_server_credentials();
 
         if (auth_data.error) {
-            alert("Genotyping server credentials are not available. Stop.");
+            alert(gettext("Genotyping server credentials are not available. Stop."));
             return;
         }
 
@@ -177,7 +178,7 @@ jQuery(document).ready(function ($) {
         if (access_token) {
             auth_data.token = access_token;
 
-            alert("Sending genotyping experiment entry to genotyping facility...");
+            alert(gettext("Sending genotyping experiment entry to genotyping facility..."));
 
             $.ajax( {
                 url: auth_data.host+'/brapi/v2/plate-register',
@@ -194,7 +195,7 @@ jQuery(document).ready(function ($) {
                         alert(response.metadata.status);
                     }
                     else {
-                        alert("Successfully submitted the plate to GDF.");
+                        alert(gettext("Successfully submitted the plate to GDF."));
                     }
                 }
             });
@@ -250,7 +251,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function(response) {
-                alert('An error occurred trying the create the layout.');
+                alert(gettext('An error occurred trying the create the layout.'));
                 jQuery("working_modal").modal('hide');
             }
         });
@@ -314,7 +315,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function(response) {
-                alert('An error occurred trying the create the layout.');
+                alert(gettext('An error occurred trying the create the layout.'));
                 jQuery("#working_modal").modal('hide');
             }
         });
@@ -352,7 +353,7 @@ jQuery(document).ready(function ($) {
                     console.log(response);
                 },
                 error: function(response) {
-                    alert("BrAPI vendor specifications call to IGD did not work.");
+                    alert(gettext("BrAPI vendor specifications call to IGD did not work."));
                 }
             });
         }
@@ -375,14 +376,14 @@ jQuery(document).ready(function ($) {
                     else {
                         jQuery('#working_modal').modal("hide");
                         jQuery('#working_msg').html('');
-                        alert('The genotyping plate has been deleted.'); // to do: give some idea how many items were deleted.
+                        alert(gettext('The genotyping plate has been deleted.')); // to do: give some idea how many items were deleted.
                         window.location.href="/breeders/trial/"+trial_id;
                     }
                 },
                 error: function(response) {
                     jQuery('#working_modal').modal("hide");
                     jQuery('#working_msg').html('');
-                    alert("An error occurred.");
+                    alert(gettext("An error occurred."));
                 }
             });
         }
@@ -656,7 +657,7 @@ function save_replace_well_accession () {
             },
             error: function () {
               jQuery('#working_modal').modal("hide");
-              alert('An error occurred replacing plot accession');
+              alert(gettext('An error occurred replacing plot accession'));
             }
         });
     }

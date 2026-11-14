@@ -1,4 +1,5 @@
 import "../legacy/CXGN/List.js";
+import "../legacy/CXGN/I18N.js";
 import { Wizard } from "../modules/wizard-search.js";
 import { WizardDatasets } from "../modules/wizard-datasets.js";
 import { WizardDownloads } from "../modules/wizard-downloads.js";
@@ -155,7 +156,7 @@ export function WizardSetup(main_id) {
         const loadType     = toLoadType(validateType);
 
         if (!fetchTypes.includes(validateType)) {
-          setTimeout(() => alert("List is not of an appropriate type."), 1);
+          setTimeout(() => alert(gettext("List is not of an appropriate type.")), 1);
         }
 
 

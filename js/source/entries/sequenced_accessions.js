@@ -2,6 +2,7 @@
 import '../legacy/jquery.js';
 import '../legacy/jquery/dataTables.js';
 import '../legacy/CXGN/Login.js';
+import '../legacy/CXGN/I18N.js';
 
 export function init(main_div, stock_id, stockprop_id) {
 
@@ -37,7 +38,7 @@ export function init(main_div, stock_id, stockprop_id) {
             success: function (r) {
                 if (r.error) { alert(r.error + r); }
                 else {
-                    alert("The entry has been saved. Thank you!");
+                    alert(gettext("The entry has been saved. Thank you!"));
                     jQuery('#edit_sequencing_info_dialog').modal('toggle');
                     clear_dialog_entries();
                     jQuery('#sequenced_stocks_table').DataTable().ajax.reload();
@@ -82,12 +83,12 @@ export function delete_sequencing_info(stockprop_id) {
             success: function (r) {
                 if (r.error) { alert(r.error); }
                 else {
-                    alert("The entry has been deleted.");
+                    alert(gettext("The entry has been deleted."));
                     jQuery('#sequenced_stocks_table').DataTable().ajax.reload();
                 }
             },
             error: function (r) {
-                alert("An error occurred. The entry was not deleted.");
+                alert(gettext("An error occurred. The entry was not deleted."));
             }
         });
     }
@@ -119,7 +120,7 @@ export function edit_sequencing_info(stockprop_id) {
                 jQuery('#edit_sequencing_info_dialog').modal("show");
             }
         },
-        error: function (r) { alert("an error occurred"); }
+        error: function (r) { alert(gettext("an error occurred")); }
     });
 
 

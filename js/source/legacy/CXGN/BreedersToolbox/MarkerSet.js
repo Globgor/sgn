@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 // Cached allele values by marker name
 // This is updated each time the selected markerset is changed
 var ALLELES = {}
@@ -18,19 +19,19 @@ jQuery(document).ready(function (){
     jQuery("#save_marker_set").click(function(){
         var name = $('#new_marker_set').val();
         if (!name) {
-            alert("List name is required");
+            alert(gettext("List name is required"));
             return;
         }
 
         var protocol_id = $('#selected_protocol').val();
         if (!protocol_id) {
-            alert("Genotyping protocol is required");
+            alert(gettext("Genotyping protocol is required"));
             return;
         }
 
         var data_type = $('#genotyping_data_type').val();
         if (!data_type) {
-            alert("Genotyping data type is required");
+            alert(gettext("Genotyping data type is required"));
             return;
         }
 
@@ -89,7 +90,7 @@ jQuery(document).ready(function (){
 
         var markerSetID = $('#selected_marker_set1').val();
         if (markerSetID == '') {
-            alert("List name is required");
+            alert(gettext("List name is required"));
             return;
         }
 
@@ -98,11 +99,11 @@ jQuery(document).ready(function (){
             var dosage = $('#allele_dosage').val();
 
             if (markerNameDosage == '') {
-                alert("Marker name is required");
+                alert(gettext("Marker name is required"));
                 return;
             }
             if (dosage == '') {
-                alert("Please indicate a dosage");
+                alert(gettext("Please indicate a dosage"));
                 return;
             }
 
@@ -154,11 +155,11 @@ jQuery(document).ready(function (){
                 var allele2 = $('#allele_2').val();
 
                 if (markerNameSNP == '') {
-                    alert("Marker name is required");
+                    alert(gettext("Marker name is required"));
                     return;
                 }
                 if ((allele1 == '') || ( allele2 == '')) {
-                    alert("Please indicate SNP alleles");
+                    alert(gettext("Please indicate SNP alleles"));
                     return;
                 }
 
@@ -175,7 +176,7 @@ jQuery(document).ready(function (){
             var markerNameDownload = $('#marker_name_download').val();
 
             if (markerNameDownload == '') {
-                alert("Marker name is required");
+                alert(gettext("Marker name is required"));
                 return;
             }
 
@@ -209,7 +210,7 @@ jQuery(document).ready(function (){
     jQuery("#add_parameters").click(function(){
         var markerSetName = $('#selected_marker_set2').val();
         if (!markerSetName) {
-            alert("List name is required");
+            alert(gettext("List name is required"));
             return;
         }
 
@@ -274,9 +275,9 @@ function show_table() {
         'destroy': true,
         'ajax':{'url': '/marker_sets/available'},
         'columns': [
-            {title: "List Name", "data": "markerset_name"},
-            {title: "Number of Markers", "data": "number_of_markers"},
-            {title: "Description", "data": "description"},
+            {title: gettext("List Name"), "data": "markerset_name"},
+            {title: gettext("Number of Markers"), "data": "number_of_markers"},
+            {title: gettext("Description"), "data": "description"},
             {title: "", "data": "null", "render": function (data, type, row) {return "<a onclick = 'showMarkersetDetail("+row.markerset_id+")'>Detail</a>" ;}},
             {title: "", "data": "null", "render": function (data, type, row) {return "<a onclick = 'removeMarkerSet("+row.markerset_id+")'>Delete</a>" ;}},
         ],
@@ -284,7 +285,7 @@ function show_table() {
 }
 
 function removeMarkerSet (markerset_id){
-    if (confirm("Are you sure you want to delete this markerset? This cannot be undone")){
+    if (confirm(gettext("Are you sure you want to delete this markerset? This cannot be undone"))){
         jQuery.ajax({
             url: '/markerset/delete',
             data: {'markerset_id': markerset_id},
@@ -302,7 +303,7 @@ function removeMarkerSet (markerset_id){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred deleting markerset');
+                alert(gettext('An error occurred deleting markerset'));
             }
         });
     }
@@ -326,7 +327,7 @@ function showMarkersetDetail (markerset_id){
                     'data': response.data,
                     'columns': [
                         {
-                            title: "Item",
+                            title: gettext("Item"),
                             data: "item_name",
                             render: function(data) {
                                 let parsed = JSON.parse(data);
@@ -338,7 +339,7 @@ function showMarkersetDetail (markerset_id){
                             }
                         },
                         {
-                            title: "Remove",
+                            title: gettext("Remove"),
                             data: "item_id",
                             render: function(data, type, row, meta) {
                                 let index = meta.row;
@@ -357,7 +358,7 @@ function showMarkersetDetail (markerset_id){
         },
         error: function(response){
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred getting markerset detail');
+            alert(gettext('An error occurred getting markerset detail'));
         }
     });
 }
@@ -446,7 +447,7 @@ function onAlleleNamesChange() {
 // Remove the specified list item from the list
 // - Display the list details dialog again after removing
 function removeMarkerSetListItem(list_id, list_item_id) {
-    var confirmation = confirm("Are you sure you want remove this item from the marker set?");
+    var confirmation = confirm(gettext("Are you sure you want remove this item from the marker set?"));
     if ( confirmation ) {
         var lo = new CXGN.List();
         lo.removeItem(list_id, list_item_id);

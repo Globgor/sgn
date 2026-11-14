@@ -4,6 +4,7 @@
 *
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("Prototype");
 JSAN.use('jquery.blockUI');
 
@@ -201,7 +202,7 @@ solGS.combinedTrials = {
 
 		},
 		error: function(res) {
-    		    alert('Error occured getting combined trials unique id');
+    		    alert(gettext('Error occured getting combined trials unique id'));
 		}
 
 	    });
@@ -341,7 +342,7 @@ solGS.combinedTrials = {
     	if (comboPopsId) {
             window.location = page;
     	} else {
-	    alert('combined Trials id missing.')
+	    alert(gettext('combined Trials id missing.'))
 	}
     },
 

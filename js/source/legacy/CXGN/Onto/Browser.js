@@ -17,6 +17,7 @@
 //JSAN.use('MochiKit.Visual');
 //JSAN.use('MochiKit.Logging');
 //JSAN.use('MochiKit.Async');
+JSAN.use("CXGN.I18N");
 JSAN.use('CXGN.Effects');
 JSAN.use('CXGN.Onto.Browser');
 JSAN.use('jquery');
@@ -103,7 +104,7 @@ CXGN.Onto.Browser.prototype = {
 	    async: false,
 	    method: 'get',
 	    error: function() {
-		alert('An error occurred! The database may currently be unavailable. Please check back later.');
+		alert(gettext('An error occurred! The database may currently be unavailable. Please check back later.'));
 	    },
 	    success: function(response) {
 		if (response.error ) { alert(response.error) ; }
@@ -135,7 +136,7 @@ CXGN.Onto.Browser.prototype = {
 	    async: false,
 	    method: 'get',
 	    error: function() {
-		alert('An error occurred! The database may currently be unavailable. Please check back later.');
+		alert(gettext('An error occurred! The database may currently be unavailable. Please check back later.'));
 	    },
 	    success: function(response) {
 		var o = this.o;
@@ -228,7 +229,7 @@ CXGN.Onto.Browser.prototype = {
 	var db_name = document.getElementById('cvtermpath_rebuild_select').value;
 
 	if (!db_name) {
-	    alert('Please select a CV before rebuilding its cvterm paths.');
+	    alert(gettext('Please select a CV before rebuilding its cvterm paths.'));
 	    return;
 	}
 
@@ -376,7 +377,7 @@ CXGN.Onto.Browser.prototype = {
     showParentage: function(accession) {
 	this.setSearchTerm(accession);
 	if (accession.length < 3) { 
-	    alert('The search text must be longer than 2 characters');
+	    alert(gettext('The search text must be longer than 2 characters'));
 	    return;
 	}
 	this.workingMessage(true);
@@ -479,7 +480,7 @@ CXGN.Onto.Browser.prototype = {
 	    async: false,
 	    method: 'get',
 	    error: function() { 
-		    alert('An error occurred! The database may currently be unavailable. Please check back later.');
+		    alert(gettext('An error occurred! The database may currently be unavailable. Please check back later.'));
 		},
 		    
 	    success: function(response) {
@@ -518,7 +519,7 @@ CXGN.Onto.Browser.prototype = {
 	this.workingMessage(true);
         this.setSelected(db_name);
 	if(search_string.length<3){
-	    alert('The search text must be longer than 2 characters');
+	    alert(gettext('The search text must be longer than 2 characters'));
 	}
         else{
 	    jQuery.ajax({
@@ -527,7 +528,7 @@ CXGN.Onto.Browser.prototype = {
 		async: false,
 		method: 'get',
 		error: function() {
-		    alert('An error occurred! The database may currently be unavailable. Please check back later.');
+		    alert(gettext('An error occurred! The database may currently be unavailable. Please check back later.'));
 		},
 		success: function(response) {
 		    var matchNodes = new Array();
@@ -910,7 +911,7 @@ Node.prototype = {
 	    async: false,
 	    method: 'get',
 	    error: function() { 
-		alert('An error occurred! The database may currently be unavailable. Please check back later.');
+		alert(gettext('An error occurred! The database may currently be unavailable. Please check back later.'));
 	    },
 	    success: function(response) {
 		if ( response.error ) { alert(response.error) ; }

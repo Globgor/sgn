@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 function run_blast(database_types, input_option_types) { 
   clear_status();
@@ -32,12 +33,12 @@ function run_blast(database_types, input_option_types) {
     var word_size = jQuery('#word_size').val();
     
   if (sequence === '') { 
-    alert("Please enter a sequence :-)"); 
+    alert(gettext("Please enter a sequence :-)")); 
     return;
   }
   
   if (!blast_program_ok(program,  input_option_types[input_option], database_types[database])) { 
-    alert("The BLAST program does not match the selected database and query.");
+    alert(gettext("The BLAST program does not match the selected database and query."));
     return;
   }
   
@@ -68,7 +69,7 @@ function run_blast(database_types, input_option_types) {
       }
     },
     error: function(response) {
-      alert("An error occurred. The service may not be available right now.");
+      alert(gettext("An error occurred. The service may not be available right now."));
       enable_ui();
       return;
     }
@@ -96,7 +97,7 @@ function wait_result(jobid, job_dbid, seq_count) {
         }
       },
       error: function(response) { 
-        alert("An  error occurred. "); 
+        alert(gettext("An  error occurred. ")); 
         enable_ui(); 
         done=true; 
         error=true; 
@@ -120,7 +121,7 @@ function finish_blast(jobid, seq_count) {
   
   if (seq_count > 1) { 
     format = [ "Table", "Basic" ];
-    alert("Multiple sequences were detected. The output will be shown in the tabular and basic format");
+    alert(gettext("Multiple sequences were detected. The output will be shown in the tabular and basic format"));
   } else {
     
     // get BLAST Graph

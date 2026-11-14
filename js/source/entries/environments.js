@@ -1,5 +1,6 @@
 import '../legacy/jquery.js';
 import '../legacy/leaflet.js';
+import '../legacy/CXGN/I18N.js';
 
 var environmentStratificationMap = null;
 var environmentStratificationMapMarkers = null;
@@ -24,7 +25,7 @@ export function init(main_div) {
     }
 
     if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
-        alert('You must be logged in to use Environment Stratification');
+        alert(gettext('You must be logged in to use Environment Stratification'));
         return;
     }
 
@@ -80,7 +81,7 @@ export function init(main_div) {
                 $('#environment_stratification_tempfile').html(response.tempfile);
             },
             error: function() {
-                alert("An error occurred while preparing the dataset.");
+                alert(gettext("An error occurred while preparing the dataset."));
             }
         });
     });
@@ -105,7 +106,7 @@ export function init(main_div) {
                 renderTraitSummary(response.data || [], trait);
             })
             .fail(function() {
-                alert("An error occurred while reading the phenotype file.");
+                alert(gettext("An error occurred while reading the phenotype file."));
             });
     });
 
@@ -118,11 +119,11 @@ export function init(main_div) {
             return;
         }
         if (!trait) {
-            alert("Please select a trait.");
+            alert(gettext("Please select a trait."));
             return;
         }
         if (isNaN(alpha) || alpha <= 0 || alpha >= 1) {
-            alert("Alpha must be a number between 0 and 1.");
+            alert(gettext("Alpha must be a number between 0 and 1."));
             return;
         }
 
@@ -176,11 +177,11 @@ function getDatasetId() {
     });
 
     if (selected_datasets.length < 1) {
-        alert('Please select one dataset.');
+        alert(gettext('Please select one dataset.'));
         return false;
     }
     if (selected_datasets.length > 1) {
-        alert('Please select only one dataset.');
+        alert(gettext('Please select only one dataset.'));
         return false;
     }
     return selected_datasets[0];
@@ -478,13 +479,13 @@ function htmlEscape(value) {
 function downloadTableXlsx(tableId, filename) {
     var table = document.getElementById(tableId);
     if (!table) {
-        alert('No results are available to download.');
+        alert(gettext('No results are available to download.'));
         return;
     }
 
     var JSZipConstructor = getJSZipConstructor();
     if (!JSZipConstructor) {
-        alert('XLSX export library is not available.');
+        alert(gettext('XLSX export library is not available.'));
         return;
     }
 
@@ -498,7 +499,7 @@ function downloadTableXlsx(tableId, filename) {
     });
 
     if (rows.length === 0) {
-        alert('No results are available to download.');
+        alert(gettext('No results are available to download.'));
         return;
     }
 
@@ -531,7 +532,7 @@ function generateXlsxBlob(workbook, callback) {
     };
 
     if (typeof workbook.generate !== 'function') {
-        alert('XLSX export library is not compatible with this page.');
+        alert(gettext('XLSX export library is not compatible with this page.'));
         return;
     }
 

@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 window.onload = function initialize() {
 
     jQuery('#select1').change( // reset start from list if select1 changes
@@ -131,7 +132,7 @@ window.onload = function initialize() {
         if (selected_trials.length !== 0 || selected_locations.length !== 0 || selected_accessions.length !== 0 || selected_traits.length !== 0 || selected_trait_components.length !== 0 || selected_plots.length !== 0 || selected_plants.length !== 0 || selected_years.length !== 0) {
             window.open("/breeders/trials/phenotype/download?trial_list="+JSON.stringify(selected_trials)+"&format="+format+"&trait_list="+JSON.stringify(selected_traits)+"&trait_component_list="+JSON.stringify(selected_trait_components)+"&accession_list="+JSON.stringify(selected_accessions)+"&plot_list="+JSON.stringify(selected_plots)+"&plant_list="+JSON.stringify(selected_plants)+"&location_list="+JSON.stringify(selected_locations)+"&year_list="+JSON.stringify(selected_years)+"&dataLevel="+data_level+"&phenotype_min_value="+phenotype_min_value+"&phenotype_max_value="+phenotype_max_value+"&timestamp="+timestamp+"&trait_contains="+JSON.stringify(trait_contains_array)+"&include_row_and_column_numbers=1&exclude_phenotype_outlier="+exclude_phenotype_outlier);
         } else {
-            alert("No filters selected for download.");
+            alert(gettext("No filters selected for download."));
         }
     });
 
@@ -143,7 +144,7 @@ window.onload = function initialize() {
         if (selected_trials.length !== 0 ) {
             window.open("/breeders/trials/phenotype/download?trial_list="+JSON.stringify(selected_trials)+"&format="+format+"&dataLevel="+data_level);
         } else {
-            alert("No filters selected for download.");
+            alert(gettext("No filters selected for download."));
         }
     });
 
@@ -182,7 +183,7 @@ window.onload = function initialize() {
 	var params =  "accessions="+JSON.stringify(accessions)+"&trials="+JSON.stringify(trials)+"&plots="+JSON.stringify(plots)+"&years="+JSON.stringify(years)+"&locations="+JSON.stringify(locations)+"&traits="+JSON.stringify(traits)+"&breeding_programs="+JSON.stringify(breeding_programs)+"&genotyping_protocols="+JSON.stringify(genotyping_protocols)+"&trial_types="+JSON.stringify(trial_types)+"&trial_designs="+JSON.stringify(trial_designs)+"&plants="+JSON.stringify(plants)+"&name="+name+"&description="+description+"&category_order="+JSON.stringify(category_order);
 
 	if (name === '' || name === undefined) {
-	    alert('Please enter a name for the selection.');
+	    alert(gettext('Please enter a name for the selection.'));
 	    return;
 	}
 
@@ -194,7 +195,7 @@ window.onload = function initialize() {
 		    alert(response.error);
 		}
 		else {
-	            alert("Successfully stored the dataset!");
+	            alert(gettext("Successfully stored the dataset!"));
 		    jQuery('#save_wizard_dataset_dialog').modal("hide");
 		    get_select_box('datasets', 'dataset_manage_select');
         
@@ -202,7 +203,7 @@ window.onload = function initialize() {
 
 	    },
             'error': function(response) {
-	        alert("An error occurred.");
+	        alert(gettext("An error occurred."));
 		jQuery('#save_wizard_dataset_dialog').modal("hide");
 	    }
 	});
@@ -422,14 +423,14 @@ function update_download_options(this_section, categories) {
     //console.log("trials-selected="+trials_selected);
     //console.log("accessions-selected="+accessions_selected);
     if (selected_trials !== 1) {
-      jQuery('#selected_trials').html('No trials selected');
-      jQuery('#selected_trials_metadata').html('No trials selected');
+      jQuery('#selected_trials').html(gettext('No trials selected'));
+      jQuery('#selected_trials_metadata').html(gettext('No trials selected'));
     }
     if (selected_accessions !== 1) {
-      jQuery('#selected_accessions').html('No accessions selected');
+      jQuery('#selected_accessions').html(gettext('No accessions selected'));
     }
     if (selected_genotyping_protocols !== 1) {
-      jQuery('#selected_genotyping_protocols').html('No genotyping protocols selected. Default will be used.');
+      jQuery('#selected_genotyping_protocols').html(gettext('No genotyping protocols selected. Default will be used.'));
     }
 }
 
@@ -444,7 +445,7 @@ function reset_downstream_sections(this_section) {  // clear downstream selects,
   var replacement = '<div id="'+list_menu_id+'"></div>';
 	jQuery('#'+select_id).html('');
 	jQuery('#'+data_id).html('');
-	jQuery('#'+count_id).html('No Selection');
+	jQuery('#'+count_id).html(gettext('No Selection'));
 	jQuery('#'+querytype_id).bootstrapToggle('off');
   jQuery('#'+list_menu_id).replaceWith(replacement);
     }

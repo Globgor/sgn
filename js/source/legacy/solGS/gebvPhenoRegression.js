@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 /** 
 * breeding values vs phenotypic deviation 
@@ -78,12 +79,12 @@ jQuery(document).ready( function() {
             jQuery("#gebv_pheno_regression_message").empty();
             solGS.scatterPlot.plotRegression(regressionData);
         } else {
-            jQuery("#gebvs_pheno_regression_message").html('There is no GEBVs vs observed phenotypes regression data.');
+            jQuery("#gebvs_pheno_regression_message").html(gettext('There is no GEBVs vs observed phenotypes regression data.'));
         }
     }); 
 
     solGS.gebvPhenoRegression.getRegressionData(args).fail(function(res){ 
-        jQuery("#gebvs_pheno_regression_message").html('Error occured requesting for theGEBVs vs observed phenotypes regression data.');
+        jQuery("#gebvs_pheno_regression_message").html(gettext('Error occured requesting for theGEBVs vs observed phenotypes regression data.'));
     });
 
     jQuery("#gebv_pheno_regression_canvas").on('click' , 'a', function(e) {

@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * Principal component analysis and scores plotting
  * using d3js
@@ -1126,7 +1127,7 @@ jQuery(document).ready(function () {
         if (pcaHtmlElem.match(/pca_data_type_select/)) {
             var pcaPopId = pcaHtmlElem.replace(/pca_data_type_select_/, "");
             var runPcaBtnId = solGS.pca.getRunPcaId(pcaPopId);
-            jQuery(`#${runPcaBtnId}`).html("Run PCA").show();
+            jQuery(`#${runPcaBtnId}`).html(gettext("Run PCA")).show();
         }
     });
 });
@@ -1165,7 +1166,7 @@ jQuery(document).ready(function () {
                             solGS.pca.plotPca(plotData, downloadLinks);
                         }
 
-                        jQuery(`#${runPcaBtnId}`).html("Done").show();
+                        jQuery(`#${runPcaBtnId}`).html(gettext("Done")).show();
 
                         solGS.pca.cleanUpOnSuccess(pcaPopId);
                     } else {
@@ -1188,10 +1189,10 @@ jQuery(document).ready(function () {
                             height: "auto",
                             width: "auto",
                             modal: true,
-                            title: "pca job submission",
+                            title: gettext("pca job submission"),
                             buttons: {
                                 OK: {
-                                    text: "Yes",
+                                    text: gettext("Yes"),
                                     class: "btn btn-success",
                                     id: "queue_job",
                                     click: function () {
@@ -1204,7 +1205,7 @@ jQuery(document).ready(function () {
                                 },
 
                                 No: {
-                                    text: "No, I will wait till it completes.",
+                                    text: gettext("No, I will wait till it completes."),
                                     class: "btn btn-warning",
                                     id: "no_queue",
                                     click: function () {
@@ -1219,7 +1220,7 @@ jQuery(document).ready(function () {
                                         ).show();
                                         jQuery(pcaMsgDiv)
                                             .html(
-                                                "Running pca... please wait..."
+                                                gettext("Running pca... please wait...")
                                             )
                                             .show();
 
@@ -1240,7 +1241,7 @@ jQuery(document).ready(function () {
                                                         downloadLinks
                                                     );
                                                     jQuery(runPcaBtnId)
-                                                        .html("Done")
+                                                        .html(gettext("Done"))
                                                         .show();
                                                     solGS.pca.cleanUpOnSuccess(
                                                         pcaPopId
@@ -1268,7 +1269,7 @@ jQuery(document).ready(function () {
                                 },
 
                                 Cancel: {
-                                    text: "Cancel",
+                                    text: gettext("Cancel"),
                                     class: "btn btn-info",
                                     id: "cancel_queue_info",
                                     click: function () {
@@ -1296,7 +1297,7 @@ jQuery(document).ready(function () {
                                             plotData,
                                             downloadLinks
                                         );
-                                        jQuery(runPcaBtnId).html("Done").show();
+                                        jQuery(runPcaBtnId).html(gettext("Done")).show();
                                         solGS.pca.cleanUpOnSuccess(pcaPopId);
                                     } else {
                                         var msg =

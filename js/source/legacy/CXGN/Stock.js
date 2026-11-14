@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 function stock_detail_page_init_dialogs() {
         jQuery('#stock_trials_info_popup').dialog({
@@ -16,7 +17,7 @@ function stock_detail_page_init_dialogs() {
     jQuery('#remove_parent_dialog').dialog({
 	'autoOpen' : false,
 	'modal' : true,
-	'title' : 'Remove a parent',
+	'title' : gettext('Remove a parent'),
 	'height' : 300,
 	'width' : 400,
 	'buttons' : {
@@ -54,14 +55,14 @@ function get_remove_parents_list(stock_id) {
 	    jQuery('#remove_parent_list').html(html);
 	},
 	error: function(response) {
-	    alert("an error occurred.");
+	    alert(gettext("an error occurred."));
 	}
     });
 
 }
 
 function remove_parents(stock_id, parent_id) {
-    var yes = confirm("Are you sure you want to remove this parent?");
+    var yes = confirm(gettext("Are you sure you want to remove this parent?"));
     if (yes) {
 	jQuery.ajax( {
 	    url: '/ajax/stock/parent/remove',
@@ -71,7 +72,7 @@ function remove_parents(stock_id, parent_id) {
 		    alert(response.error);
 		}
 		else {
-		    alert("The parent has been removed.");
+		    alert(gettext("The parent has been removed."));
 		    jQuery('#remove_parent_dialog').dialog("close");
 		    window.location.href = '/stock/'+stock_id+'/view';
 
@@ -111,13 +112,13 @@ jQuery(document).ready(function($) {
         const note = jQuery('#obsolete_note').val();
         const stock_id = jQuery('#obsolete_stock_id').val();
         if (!stock_id) {
-            alert ("Error retrieving stock id");
+            alert (gettext("Error retrieving stock id"));
             return;
         }
 
         const stock_name = jQuery('#obsolete_stock_name').val();
         if (!stock_name) {
-            alert ("Error retrieving stock name");
+            alert (gettext("Error retrieving stock name"));
             return;
         }
 
@@ -147,7 +148,7 @@ jQuery(document).ready(function($) {
                 },                
                 error: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert("Error obsoleting stock.");
+                    alert(gettext("Error obsoleting stock."));
                 }
             });
         }

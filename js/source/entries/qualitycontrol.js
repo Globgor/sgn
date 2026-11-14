@@ -1,5 +1,6 @@
 import '../legacy/jquery.js';
 import '../legacy/d3/d3v4Min.js';
+import '../legacy/CXGN/I18N.js';
 
 var version = '0.01';
 
@@ -77,7 +78,7 @@ export function init(main_div) {
         trait_selected = $('#trait_select').val();  // Get the selected trait from the dropdown
 
         if (!trait_selected) {
-            $('#trait_boxplot').html('Please select a trait to see the boxplot!');
+            $('#trait_boxplot').html(gettext('Please select a trait to see the boxplot!'));
             return;
         }
 
@@ -112,7 +113,7 @@ export function init(main_div) {
                 
             },
             error: function (e) {
-                alert('Error during AJAX request!');
+                alert(gettext('Error during AJAX request!'));
             }
         });
 
@@ -168,7 +169,7 @@ export function init(main_div) {
             success: function(response) {
                 if(response.is_curator === 1) {
                     $('#store_outliers_button').prop("disabled", false);
-                    alert('Outliers successfully stored!');
+                    alert(gettext('Outliers successfully stored!'));
                 } else {
                     $('#store_outliers_button').prop("disabled", true);
                     alert("Only curators or breeders are allowed to validated trials. Please contact a curator.", response.is_curator);
@@ -202,20 +203,20 @@ export function init(main_div) {
                         success: function (r) {
                             if (r.is_curator === 1) {
                                 $('#restore_outliers_button').prop("disabled", false);
-                                alert("Data successfully restored!");
+                                alert(gettext("Data successfully restored!"));
                             } else {
                                 $('#restore_outliers_button').prop("disabled", true);
-                                alert("Only curators are allowed undo validated trial. Please contact a curator.");
+                                alert(gettext("Only curators are allowed undo validated trial. Please contact a curator."));
                             }
                         },
                         error: function () {
-                            alert('Error during restore!');
+                            alert(gettext('Error during restore!'));
                         }
                     });
                 }
             },
             error: function () {
-                alert('Error during AJAX request!');
+                alert(gettext('Error during AJAX request!'));
             }
         });
     });
@@ -640,10 +641,10 @@ function get_dataset_id() {
         selected_datasets.push(jQuery(this).val());
     });
     if (selected_datasets.length < 1) {
-        alert('Please select at least one dataset!');
+        alert(gettext('Please select at least one dataset!'));
         return false;
     } else if (selected_datasets.length > 1) {
-        alert('Please select only one dataset!');
+        alert(gettext('Please select only one dataset!'));
         return false;
     } else {
         var dataset_id = selected_datasets[0];

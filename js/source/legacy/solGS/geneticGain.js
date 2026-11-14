@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /** 
 * visualize and compare gebvs of a training population
 * and a selection population (genetic gain).
@@ -79,7 +80,7 @@ solGS.geneticGain = {
 	ggArgs = JSON.stringify(ggArgs)
     jQuery(` ${canvas} .multi-spinner-container`).show();
     jQuery("#check_genetic_gain").hide();
-    jQuery(ggMsgDiv).html("Please wait... plotting genetic gain").show();
+    jQuery(ggMsgDiv).html(gettext("Please wait... plotting genetic gain")).show();
 
     jQuery.ajax({
       type: "POST",
@@ -166,12 +167,12 @@ solGS.geneticGain = {
             solGS.geneticGain.getSelectionPopulationGEBVs(gebvParams);
           }
         } else {
-          jQuery(ggMsgDiv).html("There is no GEBV data for the training population.").show();
+          jQuery(ggMsgDiv).html(gettext("There is no GEBV data for the training population.")).show();
         }
       },
       error: function () {
         jQuery(ggMsgDiv)
-          .html("Error occured checking for GEBV data for the training population.")
+          .html(gettext("Error occured checking for GEBV data for the training population."))
           .show();
       },
     });
@@ -193,7 +194,7 @@ solGS.geneticGain = {
           selectionGEBVs = res.gebv_arrayref;
 
           if (selectionGEBVs && trainingGEBVs) {
-            jQuery(ggMsgDiv).html("Please wait... plotting gebvs").show();
+            jQuery(ggMsgDiv).html(gettext("Please wait... plotting gebvs")).show();
 
             solGS.geneticGain.plotGEBVs(trainingGEBVs, selectionGEBVs);
 
@@ -201,12 +202,12 @@ solGS.geneticGain = {
             jQuery("#check_genetic_gain").hide();
           }
         } else {
-          jQuery(ggMsgDiv).html("There is no GEBV data for the selection population.").show();
+          jQuery(ggMsgDiv).html(gettext("There is no GEBV data for the selection population.")).show();
         }
       },
       error: function () {
         jQuery(ggMsgDiv)
-          .html("Error occured checking for GEBV data for the selection population.")
+          .html(gettext("Error occured checking for GEBV data for the selection population."))
           .show();
       },
     });
@@ -255,7 +256,7 @@ solGS.geneticGain = {
           jQuery(`${canvas} #selection_traits_ids`).val(res.selection_traits);
           solGS.geneticGain.plotGeneticGainBoxplot(ggArgs);
         } else {
-          jQuery(ggMsgDiv).html("This selection population has no predicted traits.").show();
+          jQuery(ggMsgDiv).html(gettext("This selection population has no predicted traits.")).show();
         }
       },
       error: function () {

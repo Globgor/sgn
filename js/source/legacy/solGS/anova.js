@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * single trial ANOVA analysis
  * Isaak Y Tecle <iyt2@cornell.edu>
@@ -36,7 +37,7 @@ solGS.anova = {
 
     jQuery("#anova_msg").dialog({
       modal: true,
-      title: "Alert",
+      title: gettext("Alert"),
       buttons: {
         OK: {
           click: function () {

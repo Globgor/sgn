@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 //////////////////////////////////////////////////////////////////////
 // ajax for comments
@@ -20,7 +21,7 @@ function addComments() {
 	commentdiv.innerHTML = "Please wait, checking for comments about " + thingtype + " " + thingid;
 	
  	if(!MochiKit.Async.doSimpleXMLHttpRequest) {
- 	    alert("cannot do simple request");
+ 	    alert(gettext("cannot do simple request"));
  	    return true;
  	}
 	

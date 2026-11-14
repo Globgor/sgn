@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function() {
     var clearCacheArgs = {
         analysis_types: jQuery('#analysis_type').val(),
@@ -20,7 +21,7 @@ jQuery(document).ready(function() {
                 }            
             },
             error: function() {
-                alert('Error occurred while clearing cache');
+                alert(gettext('Error occurred while clearing cache'));
             }
         });
     });

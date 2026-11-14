@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function() {
 
     jQuery(document)
@@ -154,7 +155,7 @@ jQuery(document).ready(function() {
             var control_html = jQuery('#control_list').html();
             var trait_html = "<tr id='" + trait_id + "_row'><td><a href='/cvterm/" + trait_id + "/view' data-list_name='" + list_name + "' data-value='" + trait_id + "'>" + trait_name + "</a></td><td><p id='" + trait_id + "_synonym'>" + trait_synonym + "<p></td><td><input type='text' id='" + coefficient_id + "' class='form-control' placeholder='Default is 1'></input></td><td><select class='form-control' id='" + control_id + "'>" + control_html + "</select></td><td align='center'><a title='Remove' id='" + trait_id + "_remove' href='javascript:remove_trait(" + trait_id + ")'><span class='glyphicon glyphicon-remove'></span></a></td></tr>";
             jQuery('#trait_table').append(trait_html);
-            jQuery('#select_message').text('Add another trait');
+            jQuery('#select_message').text(gettext('Add another trait'));
             jQuery('#select_message').attr('selected', true);
             update_formula();
             jQuery('#' + coefficient_id).focus();
@@ -308,7 +309,7 @@ jQuery(document).ready(function() {
                 build_table(weighted_values, weighted_column_names, trial_name, 'weighted_values_div');
             },
             error: function(response) {
-                alert("An error occurred while retrieving average phenotypes");
+                alert(gettext("An error occurred while retrieving average phenotypes"));
             }
         });
 
@@ -498,7 +499,7 @@ function load_sin() { // update traits and selection index when a saved sin form
             omitted_controls.push("<a href='/stock/" + control_id + "/view' data-value='" + control_id + "'>" + controls[i] + "</a>");
         }
     }
-    jQuery('#select_message').text('Add another trait');
+    jQuery('#select_message').text(gettext('Add another trait'));
     jQuery('#select_message').attr('selected', true);
     update_formula();
 

@@ -1,6 +1,7 @@
 
 import '../legacy/jquery.js';
 import '../legacy/d3/d3Min.js';
+import '../legacy/CXGN/I18N.js';
 
 var version = '0.01';
 
@@ -138,7 +139,7 @@ export function init(main_div) {
                             $(this)
                                 //.addClass( "ui-state-highlight" )
                                 .find("p")
-                                .html("Dropped!");
+                                .html(gettext("Dropped!"));
                             var droppable = $(this);
                             var draggable = ui.draggable;
                             // Move draggable into droppable
@@ -159,7 +160,7 @@ export function init(main_div) {
                             $(this)
                                 //.addClass( "ui-state-highlight" )
                                 .find("p")
-                                .html("Dropped!");
+                                .html(gettext("Dropped!"));
                             var droppable = $(this);
                             var draggable = ui.draggable;
                             // Move draggable into droppable
@@ -177,7 +178,7 @@ export function init(main_div) {
 
                 },
                 error: function (r) {
-                    alert("ERROR!!!!!");
+                    alert(gettext("ERROR!!!!!"));
                 }
             });
         }
@@ -270,7 +271,7 @@ export function init(main_div) {
         });
 
         if (trait_selected.length > 1 || trait_selected.length == 0) {
-            jQuery('#trait_histogram').html('Please select only one trait at a time to see the histogram!');
+            jQuery('#trait_histogram').html(gettext('Please select only one trait at a time to see the histogram!'));
         } else {
 
             var trait = trait_selected[0];
@@ -408,10 +409,10 @@ function get_dataset_id() {
         selected_datasets.push(jQuery(this).val());
     });
     if (selected_datasets.length < 1) {
-        alert('Please select at least one dataset!');
+        alert(gettext('Please select at least one dataset!'));
         return false;
     } else if (selected_datasets.length > 1) {
-        alert('Please select only one dataset!');
+        alert(gettext('Please select only one dataset!'));
         return false;
     } else {
         var dataset_id = selected_datasets[0];

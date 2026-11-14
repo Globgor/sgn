@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 
 /**
@@ -89,51 +90,51 @@ jQuery(document).ready(function ($) {
             include_plant_coordinates = 1;
 
             if (num_rows == "" || num_cols == "" || num_rows * num_cols == 0) {
-                alert("You need to specify the number of rows and columns to give plant coordinates within plots.");
+                alert(gettext("You need to specify the number of rows and columns to give plant coordinates within plots."));
                 return;
             }
             if (num_rows * num_cols < plants_per_plot) {
-                alert("Only one plant per (row, column) coordinate is allowed. You must specify fewer plants per plot, or add rows and columns.");
+                alert(gettext("Only one plant per (row, column) coordinate is allowed. You must specify fewer plants per plot, or add rows and columns."));
                 return;
             }
         }
         inherits_plot_treatments = $("trial_create_plants_per_plot_inherit_treatments").val();
 
         if (trial_name === '') {
-            alert("Please supply a trial name");
+            alert(gettext("Please supply a trial name"));
         }
         else if (breeding_program === '') {
-            alert("Please select a breeding program");
+            alert(gettext("Please select a breeding program"));
         }
         else if (location === '') {
-            alert("Please select at least one location");
+            alert(gettext("Please select at least one location"));
         }
         else if (trial_year === '') {
-            alert("Please select a trial year");
+            alert(gettext("Please select a trial year"));
         }
         else if (plot_width < 0 ){
-            alert("Please check the plot width");
+            alert(gettext("Please check the plot width"));
         }
         else if (plot_width > 13){
-            alert("Please check the plot width is too high");
+            alert(gettext("Please check the plot width is too high"));
         }
         else if (plot_length < 0){
-            alert("Please check the plot length");
+            alert(gettext("Please check the plot length"));
         }
         else if (plot_length > 13){
-            alert("Please check the plot length is too high");
+            alert(gettext("Please check the plot length is too high"));
         }
         else if (plants_per_plot > 500) {
-            alert("Please no more than 500 plants per plot.");
+            alert(gettext("Please no more than 500 plants per plot."));
         }
         else if (description === '') {
-            alert("Please supply a description!");
+            alert(gettext("Please supply a description!"));
         }
         else if (design_type === '') {
-            alert("Please select a design type");
+            alert(gettext("Please select a design type"));
         }
         else if (stock_type === '') {
-            alert("Please select a stock type");
+            alert(gettext("Please select a stock type"));
         }
         else {
             verify_create_trial_name(trial_name);
@@ -158,7 +159,7 @@ jQuery(document).ready(function ($) {
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred checking trial name');
+                alert(gettext('An error occurred checking trial name'));
             }
         });
     }
@@ -315,7 +316,7 @@ jQuery(document).ready(function ($) {
             if(stock_list && seedlot_list){
                 verify_seedlot_list(stock_list, seedlot_list, 'stock_list');
             } else {
-                alert('Please make sure to select an accession list above!');
+                alert(gettext('Please make sure to select an accession list above!'));
             }
             if(check_stock_list && seedlot_list){
                 verify_seedlot_list(check_stock_list, seedlot_list, 'check_stock_list');
@@ -345,7 +346,7 @@ jQuery(document).ready(function ($) {
 
     $(document).on('click', 'button[name="convert_accessions_to_seedlots"]', function(){
         if (!stock_list_id){
-            alert('Please first select a list of accessions above!');
+            alert(gettext('Please first select a list of accessions above!'));
         } else {
             var list = new CXGN.List();
             list.seedlotSearch(stock_list_id);
@@ -378,7 +379,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred. sorry');
+                alert(gettext('An error occurred. sorry'));
                 stock_list_verified = 0;
             }
         });
@@ -426,7 +427,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred. sorry');
+                alert(gettext('An error occurred. sorry'));
                 seedlot_list_verified = 0;
             }
         });
@@ -458,7 +459,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred. sorry');
+                alert(gettext('An error occurred. sorry'));
                 cross_list_verified = 0;
             }
         });
@@ -490,7 +491,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred. sorry');
+                alert(gettext('An error occurred. sorry'));
                 family_name_list_verified = 0;
             }
         });
@@ -633,7 +634,7 @@ jQuery(document).ready(function ($) {
         seedlot_hash_combined = extend_obj(seedlot_hash_combined, rep_list_seedlot_hash);
         if (!jQuery.isEmptyObject(seedlot_hash_combined)){
             if (num_seed_per_plot == ''){
-                alert('Number of seeds per plot is required if you have selected a seedlot list!');
+                alert(gettext('Number of seeds per plot is required if you have selected a seedlot list!'));
                 return;
             }
         }
@@ -678,7 +679,7 @@ jQuery(document).ready(function ($) {
             if (num_plants_per_treatment){
                 num_plants_per_plot = num_plants_per_treatment*num_subplots_per_plot;
             } else {
-                alert("You must supply the number of plants per treatment.");
+                alert(gettext("You must supply the number of plants per treatment."));
                 return;
             }
         }
@@ -702,7 +703,7 @@ jQuery(document).ready(function ($) {
             num_rows_per_plot * num_cols_per_plot < Math.max(...greenhouse_num_plants.map(Number)) ||
             num_rows_per_plot * num_cols_per_plot < num_plants_per_treatment
         )) {
-            alert("You specified in-plot coordinates, but the number of plants per plot is greater than the number of positions available in each plot. Please decrease the number of plants per plot or increase the number of available positions. If this is a greenhouse trial, make sure no accession is specified to have more plants than the number of allowed spaces. If this is a splitplot design, please make sure that the number of plants per plot specified in section (2) matches the number of plants per treatment.");
+            alert(gettext("You specified in-plot coordinates, but the number of plants per plot is greater than the number of positions available in each plot. Please decrease the number of plants per plot or increase the number of available positions. If this is a greenhouse trial, make sure no accession is specified to have more plants than the number of allowed spaces. If this is a splitplot design, please make sure that the number of plants per plot specified in section (2) matches the number of plants per treatment."));
             return;
         }
 
@@ -989,7 +990,7 @@ jQuery(document).ready(function ($) {
 
                       heatmapChart(datasets);
                       if (false_coord){
-                          alert("Row and column numbers were generated on the fly for displaying the physical layout or map. The plots are displayed in zigzag format. These row and column numbers will not be saved in the database. Click 'ok' to continue...");
+                          alert(gettext("Row and column numbers were generated on the fly for displaying the physical layout or map. The plots are displayed in zigzag format. These row and column numbers will not be saved in the database. Click 'ok' to continue..."));
                       }
                   }else {
                       jQuery("#d3_legend").css("display", "none");
@@ -1001,7 +1002,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 $('#working_modal').modal("hide");
-                alert('An error occurred. sorry.');
+                alert(gettext('An error occurred. sorry.'));
             }
        });
     }
@@ -1015,15 +1016,15 @@ jQuery(document).ready(function ($) {
         var planting_date = $('#add_project_planting_date').val();
         var desc = $('textarea#add_project_description').val();
         if (name == '') {
-            alert('Trial name required');
+            alert(gettext('Trial name required'));
             return;
         }
         if (year === '' || desc === '') {
-            alert('Year and description are required.');
+            alert(gettext('Year and description are required.'));
             return;
         }
         if(desc === '') {
-            alert('Description is required.');
+            alert(gettext('Description is required.'));
             return;
         }
         if (stock_list_verified == 1 && seedlot_list_verified == 1){
@@ -1033,7 +1034,7 @@ jQuery(document).ready(function ($) {
         } else if (family_name_list_verified == 1 && cross_list_verified == 0 && stock_list_verified == 0){
             generate_experimental_design();
         } else {
-            alert('Accession list, seedlot list, cross list or family name list is not valid!');
+            alert(gettext('Accession list, seedlot list, cross list or family name list is not valid!'));
             return;
         }
     });
@@ -2184,7 +2185,7 @@ jQuery(document).ready(function ($) {
         }
 
         else {
-            alert("Unsupported design method");
+            alert(gettext("Unsupported design method"));
         }
     });
 
@@ -2238,7 +2239,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         var breeding_program_id = jQuery('#select_breeding_program').val();
         if (!breeding_program_id) {
-            alert("Please select a breeding program first");
+            alert(gettext("Please select a breeding program first"));
             return;
         }
         jQuery('#autogenerated_name_metadata_program').val(breeding_program_id);
@@ -2505,7 +2506,7 @@ jQuery(document).ready(function ($) {
             },
             error: function () {
                 jQuery('#working_modal').modal("hide");
-                alert('An error occurred saving the trial.');
+                alert(gettext('An error occurred saving the trial.'));
             }
         });
     }

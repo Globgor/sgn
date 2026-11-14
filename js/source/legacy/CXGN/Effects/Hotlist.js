@@ -4,6 +4,7 @@
 * @author Chris Carpita <csc32@cornell.edu>
 *
 */
+JSAN.use("CXGN.I18N");
 JSAN.use("CXGN.Base");
 JSAN.use("CXGN.Effects");
 
@@ -53,7 +54,7 @@ Effects.Hotlist = {
 					button.setAttribute("onClick", "Hotlist.add('" + buttonId + "', '" + content + "'); return false;");
 				}
 			}
-			else { alert("You sent a bad switchTo variable to switchHotlistButton"); }
+			else { alert(gettext("You sent a bad switchTo variable to switchHotlistButton")); }
 		}
 	}
 }

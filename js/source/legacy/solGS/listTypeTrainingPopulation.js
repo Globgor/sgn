@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 
 For training populations options from list of plots and trials and datasets.
@@ -263,7 +264,7 @@ jQuery(document).ready(function () {
               solGS.combinedTrials.getCombinedPopsId(res.trials_ids);
             })
             .fail(function (res) {
-              alert("Error occured querying for trials ids");
+              alert(gettext("Error occured querying for trials ids"));
             });
         }
       } else {

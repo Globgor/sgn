@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 jQuery( document ).ready( function() {
 
@@ -13,7 +14,7 @@ jQuery( document ).ready( function() {
 
         let file = jQuery(fileSelector).val();
         if ( !file || file === '' ) {
-            return alert("Please select a file");
+            return alert(gettext("Please select a file"));
         }
 
         showPhenotypeUploadWorkingModal("Verifying file and data");
@@ -30,7 +31,7 @@ jQuery( document ).ready( function() {
             },
             error: function(response) {
                 hidePhenotypeUploadWorkingModal();
-                alert("An error occurred while trying to verify this file. Please check the formatting and try again");
+                alert(gettext("An error occurred while trying to verify this file. Please check the formatting and try again"));
             }
         });
     }
@@ -38,7 +39,7 @@ jQuery( document ).ready( function() {
     function storeData(formSelector, fileSelector, url, upload_type, div_type) {
         let file = jQuery(fileSelector).val();
         if ( !file || file === '' ) {
-            return alert("Please select a file");
+            return alert(gettext("Please select a file"));
         }
 
         showPhenotypeUploadWorkingModal("Storing file and data");
@@ -55,7 +56,7 @@ jQuery( document ).ready( function() {
             },
             error: function(response) {
                 hidePhenotypeUploadWorkingModal();
-                alert("An error occurred while trying to store this file. Please check the formatting and try again");
+                alert(gettext("An error occurred while trying to store this file. Please check the formatting and try again"));
             }
         });
     }
@@ -161,7 +162,7 @@ jQuery( document ).ready( function() {
     });
 
     jQuery('#delete_pheno_file_link').click(function() {
-        alert('Deleted successfully.');
+        alert(gettext('Deleted successfully.'));
     });
 
     jQuery('#phenotype_reset_dialog').click( function() {

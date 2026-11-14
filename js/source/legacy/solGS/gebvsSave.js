@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function () {
   var analysisArgs = solGS.analysisSave.saveGebvsArgs();
   jQuery('#analysis_result_save_type').val('gebvs');
@@ -15,7 +16,7 @@ jQuery(document).ready(function () {
     console.log(`analysisArgs: ${JSON.stringify(analysisArgs)}`)
     jQuery("#gebvs_output .multi-spinner-container").show();
     jQuery("#gebvs_save_message")
-      .html("Please wait...saving the GEBVs may take a few minutes.")
+      .html(gettext("Please wait...saving the GEBVs may take a few minutes."))
       .show();
     jQuery("#save_gebvs").hide();
 
@@ -85,7 +86,7 @@ jQuery(document).ready(function () {
 
       jQuery("#gebvs_output .multi-spinner-container").show();
       jQuery("#gebvs_save_message")
-        .html("Please wait...saving the genetic values (adjusted means) may take a few minutes.")
+        .html(gettext("Please wait...saving the genetic values (adjusted means) may take a few minutes."))
         .show();
       jQuery("#save_genetic_values").hide();
   

@@ -1,6 +1,7 @@
 import "../legacy/d3/d3v4Min.js";
 import "../legacy/jquery.js";
 import "../legacy/brapi/BrAPI.js";
+import "../legacy/CXGN/I18N.js";
 import { html, randomExponential } from "d3";
 
 // Colors to use when labelling multiple trials
@@ -917,7 +918,7 @@ export function init() {
                         },
                         error: function () {
                             jQuery("#working_modal").modal("hide");
-                            alert("An error occurred retrieving plot images");
+                            alert(gettext("An error occurred retrieving plot images"));
                         },
                     });
                 }

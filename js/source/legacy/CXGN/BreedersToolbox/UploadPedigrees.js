@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 
 /**
@@ -44,7 +45,7 @@ jQuery(document).ready(function ($) {
             $('#working_modal').modal("show");
             if (uploadedPedigreesFile === '') {
                 $('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(gettext("No file selected"));
             }
         },
         complete: function (r) {
@@ -78,7 +79,7 @@ jQuery(document).ready(function ($) {
         var uploadFile = $("#pedigrees_uploaded_file").val();
         $('#upload_pedigrees_form').attr("action", "/ajax/pedigrees/upload_verify");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(gettext("Please select a file"));
             return;
         }
         $("#upload_pedigrees_form").submit();
@@ -110,7 +111,7 @@ jQuery(document).ready(function ($) {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred storing the pedigrees. None were uploaded.');
+                alert(gettext('An error occurred storing the pedigrees. None were uploaded.'));
             }
         });
     });

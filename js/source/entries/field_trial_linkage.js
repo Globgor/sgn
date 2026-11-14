@@ -1,5 +1,6 @@
 import "../legacy/d3/d3v4Min.js"; // provides global `d3` (select/append/event); datum-first event handlers
 import "../legacy/jquery.js";
+import "../legacy/CXGN/I18N.js";
 import { sankey as d3sankey, sankeyCenter, sankeyLinkHorizontal } from "d3-sankey";
 
 // BrAPI v2 on this instance requires login (brapi_require_login), so browser
@@ -390,7 +391,7 @@ export function init(trial_id, trial_name) {
         },
         error: function(r){
           jQuery("#working_modal").modal("hide");
-          alert("Error retrieving field trial to field trial linkage.");
+          alert(gettext("Error retrieving field trial to field trial linkage."));
         }
       });
 }

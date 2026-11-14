@@ -7,6 +7,7 @@
 *
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use('jquery');
 JSAN.use('jqueryui');
 JSAN.use('popup');
@@ -42,7 +43,7 @@ var Ontology = {
                 if (error) { alert(error) ; }
             },
 	    error: function () {
-                alert('Error submitting ontology term');
+                alert(gettext('Error submitting ontology term'));
             }
 
 	} );

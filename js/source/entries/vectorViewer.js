@@ -3,6 +3,7 @@ import "../legacy/jqueryui.js";
 import "../legacy/d3/d3v4Min.js";
 import "../legacy/jquery/dataTables.js";
 import "../legacy/jquery/dataTables-buttons-min.js";
+import "../legacy/CXGN/I18N.js";
 
 var metadata;
 //var vectorLength;
@@ -179,7 +180,7 @@ export function init(vector_id) {
     //when someone clicks save the dialog is opened
     jQuery("#saveVector").click(function () {
 	//jQuery('#saveDialog').dialog('open');
-	var yes = confirm('Save current changes?');
+	var yes = confirm(gettext('Save current changes?'));
 	if (yes) {
 	    var table_data = getFeatureDataFromDataTable();
 	    var re_sites_table = getREsitesDataFromDataTable();
@@ -210,8 +211,8 @@ export function init(vector_id) {
 		url: '/vectorviewer/' + vector_id + '/store?data='+string_data,
 		'method' : "POST"
 	    }).then(
-		function() {  alert('Sequence successfully saved!');},
-		function() { alert('An error occurred while trying to save the vector data.');
+		function() {  alert(gettext('Sequence successfully saved!'));},
+		function() { alert(gettext('An error occurred while trying to save the vector data.'));
 			   }
 	    );   
 	}	
@@ -247,8 +248,8 @@ export function init(vector_id) {
 	    url: '/vectorviewer/' + vector_id + '/store?data='+string_data,
 	    'method' : "POST"
 	}).then(
-	    function() {  modified = false; alert('Sequence successfully saved!');},
-	    function() { alert('An error occurred while trying to save the vector data.');
+	    function() {  modified = false; alert(gettext('Sequence successfully saved!'));},
+	    function() { alert(gettext('An error occurred while trying to save the vector data.'));
 		       }
 	);
 	
@@ -262,7 +263,7 @@ export function init(vector_id) {
 	jQuery('#feature_color_select').val("");
 	jQuery('#feature_orientation_select').val("");
 
-	jQuery('#manage_feature_dialog_title').html('Add feature');
+	jQuery('#manage_feature_dialog_title').html(gettext('Add feature'));
 
 
 	jQuery('#add_feature_dialog').modal('show');
@@ -389,7 +390,7 @@ export function init(vector_id) {
 	jQuery('#feature_color_select').val(data[rowId][3]);
 	jQuery('#feature_orientation_select').val(data[rowId][4]);
 
-	jQuery('#manage_feature_dialog_title').html('Edit feature');
+	jQuery('#manage_feature_dialog_title').html(gettext('Edit feature'));
 
 	jQuery('#add_feature_dialog').modal("show");
 
@@ -401,7 +402,7 @@ export function init(vector_id) {
 
 	var data = jQuery(this).data();
 //	alert('RETRIEVED: '+JSON.stringify(data));
-	var yes = confirm('Are you sure that you would like to delete this row with id ? ');
+	var yes = confirm(gettext('Are you sure that you would like to delete this row with id ? '));
 	if (yes) { 
 	    delete_re_table_row(jQuery(this).data('id'));
 	}
@@ -449,18 +450,18 @@ export function updateFeatureDataTable(table_data) {
 	destroy: true,
 	columns: [
 	    { title: 'No.', data : 'no' },
-	    { title: 'Feature', data : 'feature' }, //data: table_data[0] },
-	    { title: 'Start', data: 'start' },
-	    { title: 'End', data: 'end' },
-	    { title: 'Color', data: 'color' },
-	    { title: 'Orientation', data: 'orientation' },
+	    { title: gettext('Feature'), data : 'feature' }, //data: table_data[0] },
+	    { title: gettext('Start'), data: 'start' },
+	    { title: gettext('End'), data: 'end' },
+	    { title: gettext('Color'), data: 'color' },
+	    { title: gettext('Orientation'), data: 'orientation' },
 	    { data: null,
 	      render: function(data, type, row) {
 		  var formatted = '<button class="edit_row_button" data-id="'+row.no+'">Edit</button>&nbsp;<button class="delete_row_button" data-id="'+row.no+'">Delete</button>';
 		  //alert('Formatted: '+formatted);
 		  return formatted;
 	      },
-	      title: "Actions",
+	      title: gettext("Actions"),
 	    }
 	]
     });

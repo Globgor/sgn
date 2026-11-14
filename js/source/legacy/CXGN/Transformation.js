@@ -1,6 +1,7 @@
+JSAN.use("CXGN.I18N");
 function deleteTransformationID(transformation_stock_id){
 
-    const confirmation = confirm('Are you sure you want to delete this transformation ID? The deletion cannot be undone.');
+    const confirmation = confirm(gettext('Are you sure you want to delete this transformation ID? The deletion cannot be undone.'));
 
     if (confirmation) {
         jQuery.ajax({
@@ -14,7 +15,7 @@ function deleteTransformationID(transformation_stock_id){
             success: function(response) {
                 jQuery('#working_modal').modal('hide');
                 if (response.success == 1) {
-                    alert('Deletion was successful');
+                    alert(gettext('Deletion was successful'));
                     location.reload();
                 }
                 if (response.error) {
@@ -23,7 +24,7 @@ function deleteTransformationID(transformation_stock_id){
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred during deletion');
+                alert(gettext('An error occurred during deletion'));
             }
         });
     }
@@ -58,7 +59,7 @@ function setTransformationControl(transformation_id, control_stock_id, program_n
         },
         error: function(response){
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred setting transformation control');
+            alert(gettext('An error occurred setting transformation control'));
         }
     });
 
@@ -92,7 +93,7 @@ function setAsAControl(transformation_id, program_name){
         },
         error: function(response){
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred setting transformation control');
+            alert(gettext('An error occurred setting transformation control'));
         }
     });
 

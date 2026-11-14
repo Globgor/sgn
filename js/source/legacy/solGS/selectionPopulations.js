@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * search and display selection populations
  * relevant to a training population.
@@ -237,7 +238,7 @@ jQuery(document).ready(function () {
     } else {
       jQuery(searchBox).css("border", "solid #FF0000");
 
-      jQuery(searchFormFeedBack).text("Please enter trial name.");
+      jQuery(searchFormFeedBack).text(gettext("Please enter trial name."));
       jQuery(searchBtn).show();
     }
   });

@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /*jslint browser: true, devel: true */
 /**
 
@@ -73,7 +74,7 @@ jQuery(document).ready(function ($) {
             var vectorsToAdd = vectorList;
 
             if (!vectorsToAdd || vectorsToAdd.length == 0) {
-                alert("No vectors to add");
+                alert(gettext("No vectors to add"));
                 return;
 	        }
 
@@ -92,7 +93,7 @@ jQuery(document).ready(function ($) {
 	    var uploadFile = jQuery("#new_vectors_upload_file").val();
 	    jQuery('#upload_new_vectors_form').attr("action", "/ajax/vectors/verify_vectors_file");
 	    if (uploadFile === '') {
-                alert("Please select a file");
+                alert(gettext("Please select a file"));
                 return;
 	    }
 	    jQuery("#upload_new_vectors_form").submit();
@@ -127,7 +128,7 @@ jQuery(document).ready(function ($) {
             }
             else {
                 fullParsedData = undefined;
-                alert("An unknown error occurred.  Please try again later or contact us for help.");
+                alert(gettext("An unknown error occurred.  Please try again later or contact us for help."));
             }
         }
     });
@@ -253,7 +254,7 @@ function review_verification_results(doFuzzySearch, verifyResponse, vector_list_
             if (verifyResponse.absent.length > 0 || infoToAdd.length>0){
                 populate_review_absent_dialog(verifyResponse.absent, infoToAdd);
             } else {
-                alert('All vectors in your list already exist in the database. (3)');
+                alert(gettext('All vectors in your list already exist in the database. (3)'));
             }
         }
     });
@@ -373,11 +374,11 @@ function process_fuzzy_options(vector_list_id) {
                 populate_review_absent_dialog(vectorList, infoToAdd);
                 jQuery('#review_absent_dialog').modal('show');
             } else {
-                alert('All vectors in your list now exist in the database. 2');
+                alert(gettext('All vectors in your list now exist in the database. 2'));
             }
         },
         error: function () {
-            alert('An error occurred checking your fuzzy options! Do not try to add a synonym to a synonym! Also do not use any special characters!');
+            alert(gettext('An error occurred checking your fuzzy options! Do not try to add a synonym to a synonym! Also do not use any special characters!'));
         }
     });
 }
