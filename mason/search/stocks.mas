@@ -302,7 +302,7 @@ my $breeding_programs_select = simple_selectbox_html(
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the stock names currently showing in the search results table to a new or exisiting list. Use "Show All entries" to capture all results.</i>'&>
+            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the stock names currently showing in the search results table to a new or existing list. Use "Show All entries" to capture all results.</i>'&>
             <br>
             <div style="text-align:right" id="results_to_list_menu"></div>
             <div id="search_result_names" style="display: none;"></div>
