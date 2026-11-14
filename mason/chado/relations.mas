@@ -56,7 +56,7 @@
   </div>
   <div class="row well well-sm">
     <div id="<% $item_list_div %>"></div>
-    Add items to a list:<br/><br/>
+    <% __('Add items to a list:') |h %><br/><br/>
     <div id="<% $item_list_menu_div %>"></div>
   </div>
 
