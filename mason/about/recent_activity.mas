@@ -3,42 +3,42 @@
 
 </%args>
 
-<& /page/page_title.mas, title => 'Recent activity' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Recent activity'), 'h' ) &>
 
 <& /util/import_javascript.mas, classes => [ 'd3.d3v4Min.js', 'd3pie_min.js', 'moment_min',  'd3.graphers.stackedObservationPhenotypeHistogram' ] &>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   
-<&| /page/info_section.mas, title => "Date Range" &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Date Range"), 'h' ) &>
 
-Filter by date of addition to database<br /><br />
+<% __('Filter by date of addition to database') |h %><br /><br />
 <table><tr><td>
 
-Start Date: <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
+<% __('Start Date:') |h %> <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
 <td>&nbsp;</td></td><td>
 
-End Date: <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
+<% __('End Date:') |h %> <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
 </td><td>
 &nbsp;
 </td><td>
-<input type="checkbox" id="include_dateless_items"> include items without a date</input>
+<input type="checkbox" id="include_dateless_items"> <% __('include items without a date') |h %></input>
 </td><td>
 &nbsp;
 </td><td>
-<button id="update_dbstats_by_date">Update</button>
+<button id="update_dbstats_by_date"><% __('Update') |h %></button>
 
 </td>
 </tr></table>
 </&>
 
 
-<div id="recent_activity_trials">[loading recent trial activity]</div>
+<div id="recent_activity_trials"><% __('[loading recent trial activity]') |h %></div>
 
-<div id="recent_activity_phenotypes">[loading recent phentoyping activity]</div>
+<div id="recent_activity_phenotypes"><% __('[loading recent phentoyping activity]') |h %></div>
 
-<div id="recent_activity_accessions">[loading recent accessions activity]</div>
+<div id="recent_activity_accessions"><% __('[loading recent accessions activity]') |h %></div>
 
-<div id="recent_activity_plots">[loading recent plots activity]</div>
+<div id="recent_activity_plots"><% __('[loading recent plots activity]') |h %></div>
 
 
