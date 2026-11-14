@@ -4,6 +4,7 @@ package SGN::Controller::Analysis;
 use Moose;
 use URI::FromHash 'uri';
 use Data::Dumper;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller' };
 
@@ -55,7 +56,7 @@ sub analysis_detail :Path('/analyses') Args(1) {
 
     if ($@) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'The requested analysis ID does not exist in the database or has been deleted.';
+        $c->stash->{message} = __('The requested analysis ID does not exist in the database or has been deleted.');
         return;
     }
 
@@ -102,7 +103,7 @@ sub analysis_model_detail :Path('/analyses_model') Args(1) {
 
     if (!$saved_model_object->{model_id}) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'The requested model ID does not exist in the database.';
+        $c->stash->{message} = __('The requested model ID does not exist in the database.');
         return;
     }
 
