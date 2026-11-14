@@ -9,28 +9,28 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="modal-header" style="text-align: center">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="updateStatusUsageInfoDialog">Update Status as Completed/Terminated and Undo Options</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="updateStatusUsageInfoDialog"><% __('Update Status as Completed/Terminated and Undo Options') |h %></h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <p> Only curators can update status to completed/terminated or undo the update status.</p>
+                                <p> <% __('Only curators can update status to completed/terminated or undo the update status.') |h %></p>
                                 <hr class ="solid">
                                 <h4>
-                                    Updating status to completed/terminated vs. Deleting:
+                                    <% __('Updating status to completed/terminated vs. Deleting:') |h %>
                                 </h4>
-                                <p> Terminating a process/experiment is different from deleting a process/experiment.
-                                <li>Deleting a process/experiment removes its identifier from the database. Marking a process/experiment as completed/terminated inactivates that process/experiment, but its related information is still kept in the database.</li>
-                                <li>You can delete a process/experiment only if there is no associated data</li>
-                                <li>You can still access the details page but the page is marked as "COMPLETED" or "TERMINATED". You can no longer add additional info to that page.</li>
+                                <p> <% __('Terminating a process/experiment is different from deleting a process/experiment.') |h %>
+                                <li><% __('Deleting a process/experiment removes its identifier from the database. Marking a process/experiment as completed/terminated inactivates that process/experiment, but its related information is still kept in the database.') |h %></li>
+                                <li><% __('You can delete a process/experiment only if there is no associated data') |h %></li>
+                                <li><% __('You can still access the details page but the page is marked as "COMPLETED" or "TERMINATED". You can no longer add additional info to that page.') |h %></li>
                                 <hr class ="solid">
                                 <h4>
-                                    Undo updating status:
+                                    <% __('Undo updating status:') |h %>
                                 </h4>
-                                <p>Completed or Terminated status can be reversed by using UNDO option. Deleting a process/experiment cannot be undone</p>
+                                <p><% __('Completed or Terminated status can be reversed by using UNDO option. Deleting a process/experiment cannot be undone') |h %></p>
                             </div>
                             <div class="modal-footer">
-                                <button id="close_update_status_usage_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="close_update_status_usage_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
                             </div>
                         </div>
                     </div>
