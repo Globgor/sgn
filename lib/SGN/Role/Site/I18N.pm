@@ -1,7 +1,11 @@
 package SGN::Role::Site::I18N;
+use strict;
+use warnings;
 use Moose::Role;
 use namespace::autoclean;
 
+use Digest::SHA ();
+use File::Spec;
 use I18N::LangTags qw( implicate_supers );
 use I18N::LangTags::Detect;
 use Locale::Messages qw( bindtextdomain bind_textdomain_codeset bind_textdomain_filter dgettext );
@@ -29,13 +33,28 @@ sub i18n_languages {
 after setup_finalize => sub {
     my $app       = shift;
     my @languages = $app->i18n_languages or return;
-    my $dir       = $app->config->{i18n_locale_dir} // $app->path_to( '..', 'sgn-translations', 'locale' );
+    my $dir       = File::Spec->rel2abs( $app->config->{i18n_locale_dir} // $app->path_to( '..', 'sgn-translations', 'locale' ), $app->config->{home} // $app->path_to() );
+    $app->config->{i18n_locale_dir} = $dir;
+    $app->config->{i18n_js_version} = {};
+    # Sites without a browser build keep working with server-only catalogs.
+    opendir( my $locale_dir, $dir ) or die "i18n_locale_dir: cannot read $dir: $!\n";
+    my $browser_built = grep {
+        $_ ne '.' && $_ ne '..' && -d "$dir/$_" && -f "$dir/$_/sgn.js"
+    } readdir $locale_dir;
+    closedir $locale_dir;
     Locale::Messages->select_package('gettext_pp');    # the same catalog reader on every install
     delete $ENV{LANGUAGE};                             # gettext ranks LANGUAGE above the locale
     bindtextdomain( sgn => "$dir" );
     bind_textdomain_codeset( sgn => 'utf-8' );
     bind_textdomain_filter( sgn => \&Locale::Messages::turn_utf_8_on );
     for my $language (@languages) {
+        my $js = "$dir/$language/sgn.js";
+        die "i18n_languages: no browser catalog $js\n" if $browser_built && !-f $js;
+        if ( -f $js ) {
+            open( my $catalog, '<:raw', $js ) or die "Cannot read browser catalog $js: $!\n";
+            $app->config->{i18n_js_version}{$language} = substr Digest::SHA->new(256)->addfile($catalog)->hexdigest, 0, 12;
+            close $catalog;
+        }
         set_locale( LC_MESSAGES, $language, undef, 'utf-8' ) or die "i18n_languages: no system locale for '$language'\n";
         dgettext( 'sgn', '' ) or die "i18n_languages: no gettext catalog $dir/$language/LC_MESSAGES/sgn.mo\n";
     }

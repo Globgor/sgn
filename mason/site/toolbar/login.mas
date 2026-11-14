@@ -12,7 +12,7 @@
 
     jQuery.ajax( { 
       url: '/ajax/user/login_button_html',
-      error: function(r) { alert('An error occurred'); },
+      error: function(r) { alert(<% __('An error occurred') |js %>); },
       success: function(r) { 
         if (r.error) { alert(r.error); }
         else { 
@@ -29,12 +29,12 @@
   }
         
   function logout() { 
-    var answer = confirm("Are you sure you want to log out?");
+    var answer = confirm(<% __('Are you sure you want to log out?') |js %>);
 
     if (answer === true) { 
       jQuery.ajax( { 
         url: '/ajax/user/logout',
-        error: function(r) { alert('An error occurred'); },
+        error: function(r) { alert(<% __('An error occurred') |js %>); },
         success: function(r) { 
           if (r.error) { alert(r.error); }
           else { 
