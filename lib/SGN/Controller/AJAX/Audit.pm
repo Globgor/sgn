@@ -80,9 +80,12 @@ sub retrieve_stock_audits : Path('/ajax/audit/retrieve_stock_audits'){
     my $self = shift;
     my $c = shift;
     my $stock_uniquename = $c->req->param('stock_uniquename');
-    my $q = "SELECT * FROM audit.stock_audit;";
+    # Trigger JSON contains typed text names and integer IDs, so ->> matches Perl eq.
+    my $q = q{SELECT * FROM audit.stock_audit
+        WHERE COALESCE((CASE WHEN operation = 'DELETE' THEN before ELSE after END)
+            ->> 'uniquename', '') = COALESCE(?, '')};
     my $h = $c->dbc->dbh->prepare($q);
-    $h->execute();
+    $h->execute($stock_uniquename);
     my @all_audits;
     my @before;
     my @after;
@@ -132,9 +135,11 @@ sub retrieve_trial_audits : Path('/ajax/audit/retrieve_trial_audits'){
     my $self = shift;
     my $c = shift;
     my $trial_id = $c->req->param('trial_id');
-    my $q = "SELECT * FROM audit.project_audit;";
+    my $q = q{SELECT * FROM audit.project_audit
+        WHERE COALESCE((CASE WHEN operation = 'DELETE' THEN before ELSE after END)
+            ->> 'project_id', '') = COALESCE(?, '')};
     my $h = $c->dbc->dbh->prepare($q);
-    $h->execute();
+    $h->execute($trial_id);
     my @all_audits;
     my @before;
     my @after;
