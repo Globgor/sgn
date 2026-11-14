@@ -18,6 +18,6 @@ Isaak Y Tecle (iyt2@cornell.edu)
   collapsed   => 1
 &>
 
-Now that the QTL data is uploaded to the database, you can proceed to perform the on-the-fly QTL analysis for one trait at a time. On the population page, click the graph icon under the 'QTL(s)' column and in a couple of minutes you will be taken to a page with the genome wide QTL mapping output. Further help can be found <a href="http://solgenomics.net/qtl/search/help">here</a>.
+<& /util/sentence.mas, text => __x('Now that the QTL data is uploaded to the database, you can proceed to perform the on-the-fly QTL analysis for one trait at a time.') &> <& /util/sentence.mas, text => __x('On the population page, click the graph icon under the \'QTL(s)\' column and in a couple of minutes you will be taken to a page with the genome wide QTL mapping output.') &> <& /util/sentence.mas, text => __x('Further help can be found {link}here{end_link}.'), link => '<a href="http://solgenomics.net/qtl/search/help">', end_link => '</a>' &>
 
 </&>

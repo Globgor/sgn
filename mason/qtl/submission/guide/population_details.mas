@@ -19,26 +19,26 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 <ul>
   <li>
-    <strong> Select organism:</strong> fill in the common name of the species the population belongs to. Press the 'associate organism' button. Then proceed with the rest of the form.
+    <& /util/sentence.mas, text => __x('{strong} Select organism:{end_strong} fill in the common name of the species the population belongs to. Press the \'associate organism\' button. Then proceed with the rest of the form.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong> Cross type:</strong> at this stage only inter cross (F2), backcross, RIL (from both sibling mating and selfing) diploid populations are supported.
+    <& /util/sentence.mas, text => __x('{strong} Cross type:{end_strong} at this stage only inter cross (F2), backcross, RIL (from both sibling mating and selfing) diploid populations are supported.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong> Population name:</strong> provide a concise and precise name for the population. This will also serve as the genetic map name of the population.
+    <& /util/sentence.mas, text => __x('{strong} Population name:{end_strong} provide a concise and precise name for the population. This will also serve as the genetic map name of the population.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
    <li>
-     <strong> Population description:</strong> provide an abstract style characterization of the population including experimental design highlights.
+     <& /util/sentence.mas, text => __x('{strong} Population description:{end_strong} provide an abstract style characterization of the population including experimental design highlights.'), strong => '<strong>', end_strong => '</strong>' &>
    </li>
    <li> 
-     <strong>Female and male parents:</strong> Include the species name and cultivar name. Eg. <i> Solanum lycopersicum</i> cv. moneymaker</it>.
+     <& /util/sentence.mas, text => __x('{strong}Female and male parents:{end_strong} Include the species name and cultivar name.'), strong => '<strong>', end_strong => '</strong>' &> Eg. <i> Solanum lycopersicum</i> cv. moneymaker</it>.
    </li>
   <li>
-    <strong> Recurrent and donor parents:</strong> In the same format as the female and male parents but required only in case of backcross population.
+    <& /util/sentence.mas, text => __x('{strong} Recurrent and donor parents:{end_strong} In the same format as the female and male parents but required only in case of backcross population.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
 
   <li>
-    <strong> Do you want to make the data public:</strong> Choose 'Yes' or 'No' depending on whether you want to share the QTL data with the community or not.
+    <& /util/sentence.mas, text => __x('{strong} Do you want to make the data public:{end_strong} Choose \'Yes\' or \'No\' depending on whether you want to share the QTL data with the community or not.'), strong => '<strong>', end_strong => '</strong>' &>
   </li> 
   
 </ul>  
