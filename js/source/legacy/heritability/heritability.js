@@ -182,14 +182,14 @@ function formatGenCorInputData (popId, type, indexFile) {
             } else {
                 jQuery(divPlace +" #heritability_message")
                     .css({"padding-left": '0px'})
-                    .html("This trial has no valid traits to calculate heritability.");
+                    .html(gettext("This trial has no valid traits to calculate heritability."));
         
             }
         },
         error: function(response) {
             jQuery(divPlace +"#heritability_message")
                 .css({"padding-left": '0px'})
-                .html("Error 3 occured preparing the additive genetic data for heritability analysis.");
+                .html(gettext("Error 3 occured preparing the additive genetic data for heritability analysis."));
              
             jQuery.unblockUI();
         }         
@@ -217,7 +217,7 @@ function phenotypicHeritability () {
  
     var population = getPopulationDetails();
     
-    jQuery("#heritability_message").html("Running heritability...");
+    jQuery("#heritability_message").html(gettext("Running heritability..."));
          
     jQuery.ajax({
             type: 'POST',
@@ -232,7 +232,7 @@ function phenotypicHeritability () {
                 } else {
                     jQuery("#heritability_message")
                         .css({"padding-left": '0px'})
-                        .html("This population has no phenotype data.");
+                        .html(gettext("This population has no phenotype data."));
 
 		    jQuery("#run_pheno_heritability").show();
                 }
@@ -240,7 +240,7 @@ function phenotypicHeritability () {
             error: function(response) {
                 jQuery("#heritability_message")
                     .css({"padding-left": '0px'})
-                    .html("Please check if the data has replicates.");
+                    .html(gettext("Please check if the data has replicates."));
 
 		jQuery("#run_pheno_heritability").show();
             }
@@ -275,7 +275,7 @@ function runPhenoHeritabilityAnalysis () {
             } else {
                 jQuery("#heritability_message")
                     .css({"padding-left": '0px'})
-                    .html("Please, check if there is numerical data and replicates for this trial."); 
+                    .html(gettext("Please, check if there is numerical data and replicates for this trial.")); 
         
 		jQuery("#run_pheno_heritability").show();
             }
@@ -283,7 +283,7 @@ function runPhenoHeritabilityAnalysis () {
         error: function(response) {                          
             jQuery("#heritability_message")
                 .css({"padding-left": '0px'})
-                .html("Error 2 occured running the heritability analysis.");
+                .html(gettext("Error 2 occured running the heritability analysis."));
             
         jQuery("#run_pheno_heritability").show();
         }                
