@@ -24,7 +24,7 @@ __PACKAGE__->config(
         comp_root => [
             [ main => SGN->path_to('mason') ],
         ],
-        preamble => "use utf8; ",
+        preamble => "use utf8; use Locale::TextDomain ( 'sgn', undef ); ",
     },
 );
 

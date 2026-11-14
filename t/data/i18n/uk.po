@@ -9,6 +9,9 @@ msgstr ""
 msgid "Search"
 msgstr "Пошук"
 
+msgid "Advanced"
+msgstr "Розширений"
+
 msgctxt "verb"
 msgid "Search"
 msgstr "Шукати"
