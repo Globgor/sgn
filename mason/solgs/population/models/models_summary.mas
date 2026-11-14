@@ -25,14 +25,14 @@ $model_data
 <&| /page/info_section.mas,
     collapsible => 1,
     collapsed   => 0,
-    title       => "Models summary"
+    title       => $m->interp->apply_escapes( __("Models summary"), 'h' )
 &>
 
 <table id="model_summary" style="width:95%">
   <tr>
-    <th>Training population</th>
-    <th>Description</th>
-    <th>Models</th>
+    <th><% __('Training population') |h %></th>
+    <th><% __('Description') |h %></th>
+    <th><% __('Models') |h %></th>
   </tr>
 
 % foreach my $model (@$model_data)
