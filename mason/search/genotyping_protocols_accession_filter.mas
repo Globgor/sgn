@@ -1,29 +1,29 @@
 <& /util/import_javascript.mas, classes => [ 'CXGN.List', 'jquery', 'jquery.dataTables', 'jquery.dataTables-buttons-min', 'jszip-min', 'buttons.bootstrap-min', 'buttons.html5-min' ],  &>
 
-<p style="padding: 12px">Starting with a list of Accessions, this tool will identify the genotyping protocols that contain the highest number of your accessions.</p>
+<p style="padding: 12px"><% __('Starting with a list of Accessions, this tool will identify the genotyping protocols that contain the highest number of your accessions.') |h %></p>
 
 <div class="well well-sm" style="padding: 24px">
-    <p><strong>Filter Protocols by Accessions:</strong></p>
+    <p><strong><% __('Filter Protocols by Accessions:') |h %></strong></p>
 
     <div style="display: flex; gap: 12px">
         <select class="form-control" id="accession_list_select"></select>
-        <button class="btn btn-primary" id="genotyping_protocol_search">Search</button>
+        <button class="btn btn-primary" id="genotyping_protocol_search"><% __('Search') |h %></button>
     </div>
 
 
     <div id="genotyping_protocol_filter_results_container" style="display: none;">
 
-        <p style="margin-top: 48px"><strong>Best Genotyping Protocols</strong></p>
+        <p style="margin-top: 48px"><strong><% __('Best Genotyping Protocols') |h %></strong></p>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div id="genotyping_protocol_filter_results"></div>
             </div>
         </div>
 
-        <p style="margin-top: 48px"><strong>Accession Usage Details</strong></p>
+        <p style="margin-top: 48px"><strong><% __('Accession Usage Details') |h %></strong></p>
         <div class="panel panel-default">
             <div class="panel-body">
-                <table id="genotyping_protocol_filter_usage" class="table display"><thead></thead><tr><th>Accession</th></tr><tbody></tbody></table>
+                <table id="genotyping_protocol_filter_usage" class="table display"><thead></thead><tr><th><% __('Accession') |h %></th></tr><tbody></tbody></table>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="genotypingProtocolAccessionsListDialog"></h4>
             </div>
             <div class="modal-body">
@@ -42,7 +42,7 @@
                     <pre><code id="genotyping_protocol_accessions_list_results"></code></pre>
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <&| /page/info_section.mas, title => 'Copy Results to a List', collapsible=>1, collapsed=>0, subtitle=>'' &>
+                            <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'' &>
                             <br>
                             <div style="text-align:right" id="gen_acc_results_to_list_menu"></div>
                             <div id="gen_acc_search_result_names" style="display: none;"></div>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
