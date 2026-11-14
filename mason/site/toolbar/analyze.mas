@@ -1,42 +1,42 @@
-<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown">Analyze</a>
+<li class="dropdown"><a class="menu_click_dropdown dropdown-toggle" data-toggle="dropdown"><% __('Analyze') |h %></a>
 <!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Genomes<span class="caret"></span></a> -->
   <ul class="dropdown-menu">
-    <li><a href="/tools/qualitycontrol">Phenotype Quality Control</a></li>
-    <li><a href="/tools/validatedtrials">Validated Trials</a></li>
+    <li><a href="/tools/qualitycontrol"><% __('Phenotype Quality Control') |h %></a></li>
+    <li><a href="/tools/validatedtrials"><% __('Validated Trials') |h %></a></li>
     <li role="separator" class="divider"></li>
-    <li><a href="/analyses">Stored Analyses</a></li>
-    <li class="dropdown-header">Breeder Tools</li>
-    <li><a href="/selection/index">Selection Index</a></li>
+    <li><a href="/analyses"><% __('Stored Analyses') |h %></a></li>
+    <li class="dropdown-header"><% __('Breeder Tools') |h %></li>
+    <li><a href="/selection/index"><% __('Selection Index') |h %></a></li>
     <!-- li><a href="/analyze/phenotypes">Analyze Phenotypes</a><li -->
     <!-- li><a href="/barcode">Barcode Tools</a></li -->
     <!--li><a href="/solgs/search">Genomic Selection</a></li -->
-    <li><a href="/pca/analysis">Population Structure</a></li>
-    <li><a href="/cluster/analysis">Clustering</a></li>
-    <li><a href="/correlation/analysis">Correlation</a></li>
-    <li><a href="/kinship/analysis">Kinship & Inbreeding</a></li>
-    <li><a href="/tools/stability">Stability AMMI/GGE</a></li>
-    <li><a href="/tools/environment_stratification">Environment Stratification</a></li>
-    <li><a href="/tools/heritability">Heritability</a></li>
+    <li><a href="/pca/analysis"><% __('Population Structure') |h %></a></li>
+    <li><a href="/cluster/analysis"><% __('Clustering') |h %></a></li>
+    <li><a href="/correlation/analysis"><% __('Correlation') |h %></a></li>
+    <li><a href="/kinship/analysis"><% __('Kinship & Inbreeding') |h %></a></li>
+    <li><a href="/tools/stability"><% __('Stability AMMI/GGE') |h %></a></li>
+    <li><a href="/tools/environment_stratification"><% __('Environment Stratification') |h %></a></li>
+    <li><a href="/tools/heritability"><% __('Heritability') |h %></a></li>
     <li role="separator" class="divider"></li>
-    <li><a href="/accession_usage">Accession Usage</a></li>
-    <li><a href="/tools/mixedmodels">Mixed Models</a></li>
-    <li><a href="/tools/trial/comparison/list">Compare Trials</a></li>
-    <li><a href="/tools/graphicalfiltering">Graphical Filtering</a></li>
-    <li><a href="/tools/boxplotter">BoxPlotter Tool</a></li>
-    <li><a href="/tools/solgwas">GWAS</a></li>
-    <li><a href="/tools/image_analysis">Image Analysis</a></li>
+    <li><a href="/accession_usage"><% __('Accession Usage') |h %></a></li>
+    <li><a href="/tools/mixedmodels"><% __('Mixed Models') |h %></a></li>
+    <li><a href="/tools/trial/comparison/list"><% __('Compare Trials') |h %></a></li>
+    <li><a href="/tools/graphicalfiltering"><% __('Graphical Filtering') |h %></a></li>
+    <li><a href="/tools/boxplotter"><% __('BoxPlotter Tool') |h %></a></li>
+    <li><a href="/tools/solgwas"><% __('GWAS') |h %></a></li>
+    <li><a href="/tools/image_analysis"><% __('Image Analysis') |h %></a></li>
 
     <li role="separator" class="divider"></li>
-    <li class="dropdown-header">Sequence Analysis</li>
-    <li><a class="footer" href="/tools/blast">BLAST</a></li>
+    <li class="dropdown-header"><% __('Sequence Analysis') |h %></li>
+    <li><a class="footer" href="/tools/blast"><% __('BLAST') |h %></a></li>
     <!-- li><a class="footer" href="http://vigs.solgenomics.net/">VIGS Tool</a></li>
     <li><a class="footer" href="https://cassavabase.org/jbrowse_cassavabase/?data=data/json/hapmap_variants">HapMap Jbrowse</a></li -->
 
     <li role="separator" class="divider"></li>
-    <li class="dropdown-header">Other</li>
-    <li><a href="/tools/onto/">Ontology Browser</a></li>
-    <li><a href="/tools/compose_trait/">Compose a New Trait</a></li>
-    <li><a href="/tools/compose_treatment/">Compose a New Treatment</a></li>
+    <li class="dropdown-header"><% __('Other') |h %></li>
+    <li><a href="/tools/onto/"><% __('Ontology Browser') |h %></a></li>
+    <li><a href="/tools/compose_trait/"><% __('Compose a New Trait') |h %></a></li>
+    <li><a href="/tools/compose_treatment/"><% __('Compose a New Treatment') |h %></a></li>
 
   </ul>
 </li>

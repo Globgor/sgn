@@ -43,3 +43,12 @@ msgstr "Селекційні програми"
 
 msgid "Seed Lots"
 msgstr "Партії насіння"
+
+msgid "Analyze"
+msgstr "Аналіз"
+
+msgid "Kinship & Inbreeding"
+msgstr "Спорідненість та інбридинг"
+
+msgid "Breeder Tools"
+msgstr "Інструменти селекціонера"
