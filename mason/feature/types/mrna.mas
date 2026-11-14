@@ -27,8 +27,8 @@
 %    for my $seqs ( mrna_cds_protein_sequence( $feature ) ) {
 %       if( $seqs->[0] ) {
         <&| /page/info_section.mas,
-                title         => 'mRNA sequence',
-                subtitle      => 'spliced mRNA sequence, including UTRs',
+                title         => $m->interp->apply_escapes( __('mRNA sequence'), 'h' ),
+                subtitle      => $m->interp->apply_escapes( __('spliced mRNA sequence, including UTRs'), 'h' ),
                 collapsible   => 1,
                 collapsed     => 0,
         &>
@@ -50,8 +50,8 @@
 %    }
 
 <&| /page/info_section.mas,
-     title         => 'Genomic sequence(s)',
-     subtitle      => "unprocessed genomic sequence underlying each location of this mRNA",
+     title         => $m->interp->apply_escapes( __('Genomic sequence(s)'), 'h' ),
+     subtitle      => $m->interp->apply_escapes( __("unprocessed genomic sequence underlying each location of this mRNA"), 'h' ),
      collapsible   => 1,
      collapsed     => 1,
      hide_if_empty => 1,
@@ -63,7 +63,7 @@
 </&>
 
 <&| /page/info_section.mas,
-   title => 'Related features',
+   title => $m->interp->apply_escapes( __('Related features'), 'h' ),
    collapsible => 1,
    hide_if_empty => 1,
 &>
@@ -76,7 +76,7 @@
 </&>
 
 <&| /page/info_section.mas,
-     title => 'Related views',
+     title => $m->interp->apply_escapes( __('Related views'), 'h' ),
      empty_message => 'None found',
      collapsible => 1,
      is_empty => ! scalar @$xrefs,
