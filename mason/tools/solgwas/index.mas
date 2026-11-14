@@ -21,16 +21,16 @@
 
 <& /page/page_title.mas, title=>"SolGWAS" &>
 
-<&| /page/info_section.mas, id=>"input_dataset_section", title=>"Select Input Data", collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/solgwas" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
+<&| /page/info_section.mas, id=>"input_dataset_section", title=>$m->interp->apply_escapes( __("Select Input Data"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/solgwas" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
   <input type="hidden" name="outformat" value="0" />
 
 
   <div class="form-group form-inline">
-    <label for="dataset_select">Available Datasets: </label><div id="dataset_select"></div>
+    <label for="dataset_select"><% __('Available Datasets:') |h %> </label><div id="dataset_select"></div>
     <br>
 
-    <button class="btn btn-info" id="createDataset"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Create Dataset</button>
-    <button class="btn btn-primary" id="selectDataset" type="submit" name="selectDataset" value="selectDataset">Select Dataset</button>
+    <button class="btn btn-info" id="createDataset"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<% __('Create Dataset') |h %></button>
+    <button class="btn btn-primary" id="selectDataset" type="submit" name="selectDataset" value="selectDataset"><% __('Select Dataset') |h %></button>
     <br>
     <br>
 
@@ -38,11 +38,11 @@
       <div class="form-group form-inline">
         <label class="blast_select_label" for="pheno_select">Available&nbspTraits:&nbsp; </label>        
         <& /page/html_select.mas, name=>'pheno_select', id=>'pheno_select', params=>"class\=\"form-control input-sm blast_select_box\"", choices=>"" &>                
-        <button class="btn btn-primary" id="preview_trait_histogram_btn" type="submit" name="preview_trait_histogram_btn" value="preview_trait_histogram_btn">View Trait Histogram</button>
-        <img id="loading-spinner" src="/img/wheel.gif" alt="loading" style="visibility: hidden;">
+        <button class="btn btn-primary" id="preview_trait_histogram_btn" type="submit" name="preview_trait_histogram_btn" value="preview_trait_histogram_btn"><% __('View Trait Histogram') |h %></button>
+        <img id="loading-spinner" src="/img/wheel.gif" alt="<% __('loading') |h %>" style="visibility: hidden;">
         <br>
         <input type="checkbox" id="dataset_trait_outliers" />
-        <label>Exclude dataset outliers &nbsp; </label>
+        <label><% __('Exclude dataset outliers') |h %> &nbsp; </label>
         <br>
         <br>
         <center>
@@ -53,11 +53,11 @@
         <br>
         <div class="form-group form-inline">
           <input type="checkbox" id="kinshipmat" />
-          <label>Include kinship matrix in model &nbsp; </label>
+          <label><% __('Include kinship matrix in model') |h %> &nbsp; </label>
           <br>
           <input type="checkbox" id="princomp" />
-          <label>Include principal components in model &nbsp; </label>
-          <button class="btn btn-primary" id="preview_pca" type="submit" name="preview_pca" value="preview_pca">View PCA Plot</button>
+          <label><% __('Include principal components in model') |h %> &nbsp; </label>
+          <button class="btn btn-primary" id="preview_pca" type="submit" name="preview_pca" value="preview_pca"><% __('View PCA Plot') |h %></button>
         </div>
         <br>
         <br>
@@ -73,7 +73,7 @@
       </div>
 
       <div style="text-align: center">
-        <button class="btn btn-primary" id="runGWA" name="runGWA">Run SolGWAS</button>
+        <button class="btn btn-primary" id="runGWA" name="runGWA"><% __('Run SolGWAS') |h %></button>
       </div>
       <br />
 
@@ -89,7 +89,7 @@
 
 
 
-<&| /page/info_section.mas, title=>"Output", collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Output"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
 
 
 
