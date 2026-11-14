@@ -20,22 +20,22 @@ sub n2a {
 
 <center>
 <br/>
-<h1>File Viewer</h1>
+<h1><% __('File Viewer') |h %></h1>
 <br/>
 </center>
 
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3>File Info</h3>
+		<h3><% __('File Info') |h %></h3>
 	</div>
 	<div class="panel-body">
 		<table class="table">
 		<thead>
 		<tr>
-		<th>Filename</th>
-		<th>File Type</th>
-		<th>Number of Sheets</th>
-		<th>Parser</th>
+		<th><% __('Filename') |h %></th>
+		<th><% __('File Type') |h %></th>
+		<th><% __('Number of Sheets') |h %></th>
+		<th><% __('Parser') |h %></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -54,7 +54,7 @@ sub n2a {
 
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3>File Contents</h3>
+		<h3><% __('File Contents') |h %></h3>
 	</div>
 	<div class="panel-body">
 
