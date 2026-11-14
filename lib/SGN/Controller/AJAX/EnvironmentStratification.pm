@@ -12,6 +12,7 @@ use CXGN::Dataset;
 use CXGN::Dataset::File;
 use CXGN::Job;
 use JSON::Any;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -28,7 +29,7 @@ sub shared_phenotypes : Path('/ajax/environment_stratification/shared_phenotypes
     my $exclude_outliers = $c->req->param('dataset_trait_outliers') || 0;
 
     if (!$dataset_id) {
-        $c->stash->{rest} = { error => 'Dataset id is required.' };
+        $c->stash->{rest} = { error => __('Dataset id is required.') };
         return;
     }
 
@@ -72,14 +73,14 @@ sub extract_trait_data : Path('/ajax/environment_stratification/getdata') Args(0
     my $trait = $c->req->param("trait");
 
     if (!$file) {
-        $c->stash->{rest} = { error => "Phenotype file is required." };
+        $c->stash->{rest} = { error => __("Phenotype file is required.") };
         return;
     }
 
     my $temppath = File::Spec->catfile($c->config->{basepath}, "static/documents/tempfiles/environment_stratification_files/" . $file);
     my $F;
     if (!open($F, "<", $temppath)) {
-        $c->stash->{rest} = { error => "Can't find data." };
+        $c->stash->{rest} = { error => __("Can't find data.") };
         return;
     }
 
@@ -114,11 +115,11 @@ sub generate_results : Path('/ajax/environment_stratification/generate_results')
     my $exclude_outliers = $c->req->param('dataset_trait_outliers') || 0;
 
     if (!$dataset_id || !$trait_id) {
-        $c->stash->{rest} = { error => 'Dataset and trait are required.' };
+        $c->stash->{rest} = { error => __('Dataset and trait are required.') };
         return;
     }
     if ($alpha !~ /^\d*\.?\d+$/ || $alpha <= 0 || $alpha >= 1) {
-        $c->stash->{rest} = { error => 'Alpha must be a number between 0 and 1.' };
+        $c->stash->{rest} = { error => __('Alpha must be a number between 0 and 1.') };
         return;
     }
 

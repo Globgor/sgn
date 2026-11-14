@@ -23,6 +23,7 @@ use CXGN::Tools::Run;
 use CXGN::Genotype::ProtocolProp;
 use CXGN::BreedersToolbox::Projects;
 use CXGN::Genotype::ParseUpload;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' }
@@ -68,7 +69,7 @@ sub genotyping_protocol_delete_GET : Args(1) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to delete genotypes! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to delete genotypes! Please contact us.') };
         $c->detach();
     }
 
@@ -160,7 +161,7 @@ sub genotyping_protocol_details_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to edit genotyping protocol'};
+            $c->stash->{rest} = {error=>__('You must be logged in to edit genotyping protocol')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -169,7 +170,7 @@ sub genotyping_protocol_details_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to edit genotyping protocol'};
+            $c->stash->{rest} = {error=>__('You must be logged in to edit genotyping protocol')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -178,7 +179,7 @@ sub genotyping_protocol_details_POST : Args(0) {
     }
 
     if ($user_role ne 'submitter' && $user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to edit genotyping protocol! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to edit genotyping protocol! Please contact us.') };
         $c->detach();
     }
 
@@ -210,7 +211,7 @@ sub genotyping_protocol_details_POST : Args(0) {
         });
         if ($existing_protocol_name) {
             print STDERR "Can't use this new protocol name: Protocol name already exists\n";
-            $c->stash->{rest} = {error => "New protocol name not saved: Protocol name already exists"};
+            $c->stash->{rest} = {error => __("New protocol name not saved: Protocol name already exists")};
             $c->detach();
         }
     }
@@ -230,11 +231,11 @@ sub genotyping_protocol_details_POST : Args(0) {
             push @found_organisms, $organism_id;
         }
         if (scalar(@found_organisms) == 0){
-            $c->stash->{rest} = { error => 'The species name you provided is not in the database! Please contact us.' };
+            $c->stash->{rest} = { error => __('The species name you provided is not in the database! Please contact us.') };
             $c->detach();
         }
         if (scalar(@found_organisms) > 1){
-            $c->stash->{rest} = { error => 'The species name you provided is not unique in the database! Please contact us.' };
+            $c->stash->{rest} = { error => __('The species name you provided is not unique in the database! Please contact us.') };
             $c->detach();
         }
 
@@ -364,7 +365,7 @@ sub genotyping_protocol_add_marker_metadata_POST : Args(1) {
     }
 
     if (!$parsed_data) {
-        $c->stash->{rest} = {error_string => 'The parser did not return any data!'};
+        $c->stash->{rest} = {error_string => __('The parser did not return any data!')};
         return;
     }
 
@@ -419,7 +420,7 @@ sub genotyping_protocol_update_marker_metadata_POST : Args(1) {
     # Must be logged in
     if (!$c->user()) {
         print STDERR "User not logged in... not deleting marker metadata.\n";
-        $c->stash->{rest} = {error => "You need to be logged in to update marker metadata." };
+        $c->stash->{rest} = {error => __("You need to be logged in to update marker metadata.") };
         return;
     }
 
@@ -427,7 +428,7 @@ sub genotyping_protocol_update_marker_metadata_POST : Args(1) {
     my $user_id = $c->user()->get_object()->get_sp_person_id();
     my $user_role = $c->user->get_object->get_user_type();
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => "You must be a curator to update marker metadata." };
+        $c->stash->{rest} = { error => __("You must be a curator to update marker metadata.") };
         return;
     }
 
@@ -497,14 +498,14 @@ sub genotyping_protocol_delete_marker_metadata_DELETE : Args(1) {
     # Must be logged in
     if (!$c->user()) {
         print STDERR "User not logged in... not deleting marker metadata.\n";
-        $c->stash->{rest} = {error => "You need to be logged in to delete marker metadata." };
+        $c->stash->{rest} = {error => __("You need to be logged in to delete marker metadata.") };
         return;
     }
 
     # Must be a curator
     my $user_role = $c->user->get_object->get_user_type();
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => "You must be a curator to delete marker metadata." };
+        $c->stash->{rest} = { error => __("You must be a curator to delete marker metadata.") };
         return;
     }
 
@@ -581,7 +582,7 @@ sub empty_protocol_delete_GET : Args(0) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to delete genotyping protocol! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to delete genotyping protocol! Please contact us.') };
         $c->detach();
     }
 

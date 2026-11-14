@@ -20,6 +20,7 @@ use CXGN::Blast::Parse;
 use CXGN::Blast::SeqQuery;
 use SGN::Model::Cvterm;
 use Cwd qw(cwd);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -165,7 +166,7 @@ sub extract_trait_data :Path('/ajax/gcpc/getdata') Args(0) {
 
     my $F;
     if (! open($F, "<", $temppath)) {
-	$c->stash->{rest} = { error => "Can't find data." };
+	$c->stash->{rest} = { error => __("Can't find data.") };
 	return;
     }
 
@@ -348,7 +349,7 @@ sub generate_results: Path('/ajax/gcpc/generate_results') : {
     }
 
     if (scalar(@missing_traits) == scalar(@si_r_traits)) {
-	$c->stash->{rest} = { error => "None of the traits in the selection index are present in the dataset. Please choose another selection index." };
+	$c->stash->{rest} = { error => __("None of the traits in the selection index are present in the dataset. Please choose another selection index.") };
 	return ;
     }
 

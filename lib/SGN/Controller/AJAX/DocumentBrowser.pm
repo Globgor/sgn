@@ -22,6 +22,7 @@ use Data::Dumper;
 use CXGN::UploadFile;
 use File::Basename qw | basename dirname|;
 use JSON;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -45,7 +46,7 @@ sub upload_document_POST : Args(0) {
     my $timestamp = $time->ymd()."_".$time->hms();
     
     if (!$c->user){
-        $c->stash->{rest} = { error => 'Must be logged in!' };
+        $c->stash->{rest} = { error => __('Must be logged in!') };
         $c->detach;
     }
     
@@ -63,12 +64,12 @@ sub upload_document_POST : Args(0) {
     });
     my $archived_filename_with_path = $uploader->archive();
     if (!$archived_filename_with_path){
-        $c->stash->{rest} = { error => 'Problem archiving the file!' };
+        $c->stash->{rest} = { error => __('Problem archiving the file!') };
         $c->detach;
     }
     my $md5 = $uploader->get_md5($archived_filename_with_path);
     if (!$md5){
-        $c->stash->{rest} = { error => 'Problem retrieving file md5!' };
+        $c->stash->{rest} = { error => __('Problem retrieving file md5!') };
         $c->detach;
     }
 
@@ -84,7 +85,7 @@ sub upload_document_POST : Args(0) {
         });
     $file_row->insert();
 
-    $c->stash->{rest} = {success => 'Successfully saved file!'};
+    $c->stash->{rest} = {success => __('Successfully saved file!')};
 }
 
 sub search_document :  Path('/ajax/tools/documents/search') : ActionClass('REST') { }
