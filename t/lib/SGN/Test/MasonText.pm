@@ -120,14 +120,15 @@ sub render {
 # makes its own catalog directory: gettext keeps a catalog it has read once.
 sub _use_catalog {
     my @texts = @_;
+    my $translate = ref $texts[0] eq 'CODE' ? shift @texts : sub { return "«$_[0]»" };
     _interp();
     my $locale_dir = tempdir( CLEANUP => 1 );
     make_path("$locale_dir/$LANGUAGE/LC_MESSAGES");
     open( my $po, '>:encoding(UTF-8)', "$locale_dir/test.po" ) or die "Can't write the test catalog: $!";
     print {$po} qq{msgid ""\nmsgstr "Content-Type: text/plain; charset=UTF-8\\n"\n};
     for my $text (@texts) {
-        ( my $quoted = $text ) =~ s/(["\\])/\\$1/g;
-        print {$po} qq{\nmsgid "$quoted"\nmsgstr "«$quoted»"\n};
+        my ( $quoted, $translation ) = map { s/(["\\])/\\$1/gr } $text, $translate->($text);
+        print {$po} qq{\nmsgid "$quoted"\nmsgstr "$translation"\n};
     }
     close $po;
     system( 'msgfmt', '-o', "$locale_dir/$LANGUAGE/LC_MESSAGES/sgn.mo", "$locale_dir/test.po" ) == 0 or die "msgfmt failed\n";
@@ -202,32 +203,41 @@ sub _sentence_page {
     return $page;
 }
 
+# The test translation of a sentence: «Message», with every placeholder between ‹ and ›,
+# so that a check sees where each value begins and ends.
+sub _use_sentence_catalog {
+    my @messages = @_;
+    return _use_catalog( sub { my $message = shift; $message =~ s/(\{\w+\})/‹$1›/g; return "«$message»" }, @messages );
+}
+
 sub _sentence_shown {
     my ( $page, $message, $translated ) = @_;
     my @pieces = split /\{\w+\}/, $message, -1;
-    for my $i ( 0 .. $#pieces ) {
-        $pieces[$i] =~ s/\s+/ /g;
-        # A value may be empty: the spaces around it then collapse into one.
-        $pieces[$i] =~ s/\A //  if $i > 0;
-        $pieces[$i] =~ s/ \z//  if $i < $#pieces;
+    s/\s+/ /g for @pieces;
+    if ($translated) {
+        my $pattern = '«' . join( '‹[^«»‹›]*›', map { quotemeta($_) } @pieces ) . '»';
+        return $page =~ /$pattern/;
     }
-    # What fills a placeholder never holds the markers of another translated message.
-    my $pattern = join '[^«»]*?', map { quotemeta($_) } @pieces;
-    $pattern = quotemeta('«') . $pattern . quotemeta('»') if $translated;
+    # In English a value may be empty: the spaces around it then collapse into one.
+    for my $i ( 0 .. $#pieces ) {
+        $pieces[$i] =~ s/\A // if $i > 0;
+        $pieces[$i] =~ s/ \z// if $i < $#pieces;
+    }
+    my $pattern = join '.*?', map { quotemeta($_) } @pieces;
     return $page =~ /$pattern/s;
 }
 
 =head2 page_sentences_ok( $component, @messages )
 
-One test: the page contains each message's literal pieces in order in English
-and between the markers of the test translation.
+One test: the page contains each message's literal pieces in order in English,
+and the whole test translation of each message, with a value in each placeholder.
 
 =cut
 
 sub page_sentences_ok {
     my ( $component, @messages ) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    _use_catalog(@messages);
+    _use_sentence_catalog(@messages);
     setlocale( LC_MESSAGES, 'C' );
     my $english = eval { _sentence_page( _render_raw($component) ) };
     my @problems = defined $english
