@@ -24,6 +24,6 @@ eval {
 </%perl>
 
 <div class="boxbgcolor1" style="margin:0px;">
-<div class="boxheading">SGN Presentations</div>
+<div class="boxheading"><% __('SGN Presentations') |h %></div>
 <div class="boxcontent"><% $contents %></div>
 </div>

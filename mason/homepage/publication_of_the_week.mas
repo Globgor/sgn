@@ -39,6 +39,6 @@ eval {
 <a href="oldpublications.pl">See all publications...</a></div>
 -->
 
-<h4>Featured Publication</h4>
+<h4><% __('Featured Publication') |h %></h4>
 <% $publications %>
-<button class="btn btn-info btn-sm" onclick='location.href="/oldpublications.pl"'>See all publications...</button>
+<button class="btn btn-info btn-sm" onclick='location.href="/oldpublications.pl"'><% __('See all publications...') |h %></button>

@@ -13,7 +13,7 @@ eval {
 
 </%perl>
 
-<& /page/page_title.mas, title=>'All past SGN news items' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('All past SGN news items'), 'h' ) &>
 
 <% $highlights %>
 
