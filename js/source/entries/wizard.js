@@ -156,7 +156,7 @@ export function WizardSetup(main_id) {
         const loadType     = toLoadType(validateType);
 
         if (!fetchTypes.includes(validateType)) {
-          setTimeout(() => alert("List is not of an appropriate type."), 1);
+          setTimeout(() => alert(gettext("List is not of an appropriate type.")), 1);
         }
 
 
