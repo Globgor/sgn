@@ -7,42 +7,42 @@ $stock_id
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="stockDetailPageCompareImagesDialog">Compare Images</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="stockDetailPageCompareImagesDialog"><% __('Compare Images') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "stock_detail_page_compare_images_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Comparison" &>
-                    <& /page/page_title.mas, title=>"Select the comparison you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Comparison"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the comparison you are interested in"), 'h' ) &>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Comparison: </label>
+                            <label class="col-sm-3 control-label"><% __('Comparison:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select id="stock_detail_page_compare_images_comparison_select" class="form-control">
-                                    <option value="compare_pixel_values_two_images">Compare pixel values for two different images</option>
+                                    <option value="compare_pixel_values_two_images"><% __('Compare pixel values for two different images') |h %></option>
                                 </select>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="stock_detail_page_compare_images_comparison_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="stock_detail_page_compare_images_comparison_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Image Selection" &>
-                    <& /page/page_title.mas, title=>"Select the images you are interested in comparing" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Image Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the images you are interested in comparing"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="stock_detail_page_compare_images_images_type_table">
                         <thead>
                             <tr>
-                                <th>Select</th>
-                                <th>Image</th>
-                                <th>Field Trial</th>
-                                <th>Drone Run Name</th>
-                                <th>Drone Run Band Name</th>
-                                <th>Drone Run Band Type</th>
-                                <th>Plot Polygon Type</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Image') |h %></th>
+                                <th><% __('Field Trial') |h %></th>
+                                <th><% __('Drone Run Name') |h %></th>
+                                <th><% __('Drone Run Band Name') |h %></th>
+                                <th><% __('Drone Run Band Type') |h %></th>
+                                <th><% __('Plot Polygon Type') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -50,11 +50,11 @@ $stock_id
                     <br/><br/>
 
                     <center>
-                    <button class="btn btn-primary" id="stock_detail_page_compare_images_images_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="stock_detail_page_compare_images_images_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Result" &>
-                    <& /page/page_title.mas, title=>"Image comparison results" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Result"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Image comparison results"), 'h' ) &>
 
                     <div id="stock_detail_page_compare_images_result_div"></div>
                 </&>
@@ -64,7 +64,7 @@ $stock_id
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

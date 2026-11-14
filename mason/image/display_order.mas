@@ -7,13 +7,13 @@ $display_order
 </%args>
 
 <center>
-<h4>Change display order for image</h4>
+<h4><% __('Change display order for image') |h %></h4>
 
 
-Display order: <input id="display_order" value="<% $display_order %>" >
+<% __('Display order:') |h %> <input id="display_order" value="<% $display_order %>" >
 
 <br />
-<button id="submit_display_order">change</button>
+<button id="submit_display_order"><% __('change') |h %></button>
 
 <script>
   jQuery(window).ready( function() {

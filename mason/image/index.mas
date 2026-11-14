@@ -59,12 +59,12 @@ my $image = SGN::Image->new($dbh, $object_id);
 
 <& /page/page_title.mas, title=>"SGN Image ".$image->get_name() &>
 
-<&| /page/info_section.mas, title=>"Image data" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image data"), 'h' ) &>
 
     <& /page/form.mas, object_type=>'image', object_id=>"$object_id", form_name=> 'image_form', server_side_script => '/image/ajax/image_ajax_form.pl', form_div_name=>'image_info_div', js_object_name=> 'image_form', page_url => '/image/index.pl', alternate_new_button => '' &>
 
 </&>
 
-<&| /page/info_section.mas, title=>"Image" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image"), 'h' ) &>
     <& /image/display_image.mas, image=>$image, size=>$size &>
 </&>

@@ -9,7 +9,7 @@ $sp_person_id
 $image_url
 </%args>
 
-<& /page/page_title.mas, title=>"Upload Image" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload Image"), 'h' ) &>
 
 <%perl>
 
