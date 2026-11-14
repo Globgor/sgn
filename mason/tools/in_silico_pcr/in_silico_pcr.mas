@@ -238,7 +238,7 @@
       
       if ($(primer).val().length < 10) {
         $(primer).addClass("alert-danger");
-        $(primer).parent().find("p:first").html("Primer must be 10 nt long at least. ");
+        $(primer).parent().find("p:first").html(<% __('Primer must be 10 nt long at least. ') |js %>);
       }
       
       if ($(primer).val().search(/[^ACGT]+/i) > 0) {
