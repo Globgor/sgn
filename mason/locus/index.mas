@@ -223,7 +223,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 <& /page/page_title.mas, title=> "$common_name locus ".$locus->get_locus_name &>
 
 
-<&| /page/info_section.mas, title=>"Locus details" , subtitle => "$locus_xml | $editor_note | $guide_html" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Locus details"), 'h' ) , subtitle => "$locus_xml | $editor_note | $guide_html" &>
 
 
 <& /page/form.mas,
@@ -259,9 +259,9 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 </td></tr>
 <tr><td>
 % if ($locus_id && $person_id) {
-  <a href="/phenome/claim_locus_ownership.pl?locus_id=<% $locus_id %>&amp;action=confirm"> [Request editor privileges]</a><br /><br />
+  <a href="/phenome/claim_locus_ownership.pl?locus_id=<% $locus_id %>&amp;action=confirm"> <% __('[Request editor privileges]') |h %></a><br /><br />
 % } elsif ( $locus_id ) {
-  <span class="ghosted">[log-in to request editor privileges]</span><br />
+  <span class="ghosted"><% __('[log-in to request editor privileges]') |h %></span><br />
 %}
 <& /locus/edits_info.mas, locus=>$locus  &>
         </td></tr>
@@ -279,7 +279,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 
 
 <&| /page/info_section.mas,
-    title     => "Links to external databases",
+    title     => $m->interp->apply_escapes( __("Links to external databases"), 'h' ),
     subtitle  => "",
     id        => "locus_dbxrefs",
     collapsible => 1,
@@ -304,13 +304,13 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 </&>
 
 % if($is_owner) {
-<&| /page/info_section.mas, title=>"Locus history", collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Locus history"), 'h' ), collapsible=>1, collapsed=>1 &>
        <& /locus/history.mas, locus=>$locus  &>
 </&>
 
 % }
 % if ( $locus_name && $curator ) {
-  <&| /page/info_section.mas, title=>"Curator tools",  collapsible=>1, collapsed=>1 &>
+  <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Curator tools"), 'h' ),  collapsible=>1, collapsed=>1 &>
        <& /locus/merge_locus.mas , locus_id=>"$locus_id" , common_name=>"$common_name" &>
 
   </&>
@@ -353,7 +353,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 </&>
 
 <&| /page/info_section.mas,
-   title       => "Associated loci - graphical view",
+   title       => $m->interp->apply_escapes( __("Associated loci - graphical view"), 'h' ),
    subtitle    => $network_sub,
    collapsible => 1,
    collapsed   => $collapsed,
@@ -365,18 +365,18 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 
 
 <&| /page/info_section.mas,
-  title       => "SolCyc links",
+  title       => $m->interp->apply_escapes( __("SolCyc links"), 'h' ),
   id          => "solcyc_links",
   collapsible => 1,
   collapsed   => 1,
   &>
 % ## solcyc links are generated from the unigenes function in the ajax/locus controller ##
-   <div id="solcyc" >[loading...]</div>
+   <div id="solcyc" ><% __('[loading...]') |h %></div>
 </&>
 
 
-<&| /page/info_section.mas, title=>"Sequence annotations" , collapsible=>1, collapsed=>0 &>
-   <&| /page/info_section.mas, title => "Genome features",
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Sequence annotations"), 'h' ) , collapsible=>1, collapsed=>0 &>
+   <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Genome features"), 'h' ),
         collapsible   => 1,
         collapsed     => 0,
         is_subsection => 1,
@@ -389,7 +389,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 %}
    </&>
 
-    <&| /page/info_section.mas, title => "Gene model matches",
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Gene model matches"), 'h' ),
         collapsible   => 1,
         collapsed     => 0,
         is_subsection => 1,
@@ -397,7 +397,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
        <& /feature/jbrowse_exact_match.mas, feature=> $feature, src_feature=> $src_feature &>
    </&>
 
-   <&| /page/info_section.mas, title => "SGN Unigenes",
+   <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("SGN Unigenes"), 'h' ),
         id => 'locus_unigenes',
         subtitle => $new_unigene_link,
         collapsible => 1,
@@ -412,7 +412,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
       <& /locus/locus_unigenes.mas, locus_id  => $locus_id  &>
   </&>
 
-  <&| /page/info_section.mas, title => "GenBank accessions",
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("GenBank accessions"), 'h' ),
               subtitle => $new_genbank_link,
               collapsible => 1,
               collapsed =>  1 ,
@@ -422,7 +422,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
  </&>
 
    <&| /page/info_section.mas,
-       title         => "Other genome matches",
+       title         => $m->interp->apply_escapes( __("Other genome matches"), 'h' ),
        collapsible   => 1,
        collapsed     => 1,
        is_subsection => 1,
@@ -462,7 +462,7 @@ my $ontology_subtitle = $curator || $submitter || $sequencer  ?
 </&>
 
 <&| /page/info_section.mas,
-     title       => 'Related views',
+     title       => $m->interp->apply_escapes( __('Related views'), 'h' ),
      collapsible => 1,
 &>
 
