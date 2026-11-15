@@ -19,9 +19,7 @@ $guide
 
 % if (!$guide) {$guide = 'guidelines';}
 
-<p>The uploading of QTL data needs to be done in one session. 
-  Therefore, prepare your data files in the required format before 
-  starting the process. Please read the submission <% lc($guide) %> first. If you 
+<p><& /util/sentence.mas, text => __x('The uploading of QTL data needs to be done in one session. Therefore, prepare your data files in the required format before starting the process.') &> Please read the submission <% lc($guide) %> first. If you 
   would like to have the formatting of your dataset checked 
   beforehand, send your data to: <a href=mailto:iyt2\@cornell.edu>iyt2@cornell.edu</a>.
 </p> 
@@ -34,9 +32,7 @@ $guide
   <li><% __('Phenotype data file (tab delimited),') |h %></li> 
   <li><% __('Genotype data file (tab delimited) and') |h %></li> 
   <li><% __('Statistical parameters.') |h %></li>
-  <li><i>Markers with their sequences need to be already in SGN. 
-      Read <a href="/cview/help/map_submission">here</a> on how 
-      to submit markers to SGN.
+  <li><i><& /util/sentence.mas, text => __x('Markers with their sequences need to be already in SGN. Read {link}here{end_link} on how to submit markers to SGN.'), link => '<a href="/cview/help/map_submission">', end_link => '</a>' &>
   </i>
 </ul>
 

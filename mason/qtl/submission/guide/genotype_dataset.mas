@@ -20,16 +20,16 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 <% __('The genotype dataset should be in a text file and in the following format. The plant names in the genotype dataset must be exactly the same as the ones submitted in the phenotype dataset file in the previous step.') |h %>
 <ul>
-  <li><strong>First row</strong>: first column refers to the label of the rows of lines. The rest of the columns are marker names.
+  <li><& /util/sentence.mas, text => __x('{strong}First row{end_strong}: first column refers to the label of the rows of lines. The rest of the columns are marker names.'), strong => '<strong>', end_strong => '</strong>' &>
 </li>
 <li>
-<strong>Second row</strong>: first column is empty. The rest of the columns are chromosome names for the corresponding markers. 
+<& /util/sentence.mas, text => __x('{strong}Second row{end_strong}: first column is empty. The rest of the columns are chromosome names for the corresponding markers.'), strong => '<strong>', end_strong => '</strong>' &> 
 </li>
 <li>
-<p><strong>Third row</strong>: first column is empty. The rest of the columns are marker positions in their respective chromosomes.
+<p><& /util/sentence.mas, text => __x('{strong}Third row{end_strong}: first column is empty. The rest of the columns are marker positions in their respective chromosomes.'), strong => '<strong>', end_strong => '</strong>' &>
 </li>
 <li>
-<p><strong>The rest of the rows</strong>: first column is the genotype name and the rest are the genotype values for each marker. 
+<p><& /util/sentence.mas, text => __x('{strong}The rest of the rows{end_strong}: first column is the genotype name and the rest are the genotype values for each marker.'), strong => '<strong>', end_strong => '</strong>' &> 
 </li></ul>
   
 <pre>

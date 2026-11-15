@@ -9,10 +9,10 @@ $title => ''
     
 <div class="boxbgcolor2">
 <p>
-    All available maps on SGN are listed on the <a href="/cview/">map index page</a>.
+    <& /util/sentence.mas, text => __x('All available maps on SGN are listed on the {link}map index page{end_link}.'), link => '<a href="/cview/">', end_link => '</a>' &>
     </p>
     <p>
-    Please contact <a href="mailto:sgn-feedback\@sgn.cornell.edu">SGN</a> if you think there is a problem.
+    <& /util/sentence.mas, text => __x('Please contact {link}SGN{end_link} if you think there is a problem.'), link => '<a href="mailto:sgn-feedback\\@sgn.cornell.edu">', end_link => '</a>' &>
     </p>
     <br />
 </div>

@@ -38,11 +38,7 @@ if ($pop_id)  {
     <table cellspacing=20>
     <tr>
       <td><b><p><% __('You have successfully uploaded your QTL data.') |h %></p> 
-           <p>On the next page you will see the population data summary. 
-             The qtl analysis is performed on-the-fly and you need to click the 
-             graph icon  corresponding to the trait of your interest to proceed 
-             with the QTL mapping analysis. The QTL analysis takes a few minutes, 
-             so please be patient. </p>
+           <p><& /util/sentence.mas, text => __x('On the next page you will see the population data summary. The qtl analysis is performed on-the-fly and you need to click the graph icon corresponding to the trait of your interest to proceed with the QTL mapping analysis. The QTL analysis takes a few minutes, so please be patient.') &> </p>
           <p><% __('To continue to the QTL analysis page, follow the link below:') |h %></p>
           <% $pop_link %></b>
       </td>

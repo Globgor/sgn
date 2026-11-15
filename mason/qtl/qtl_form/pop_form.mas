@@ -50,18 +50,18 @@ my $parent_f = tooltipped_text('Female parent', 'format eg. Solanum lycopersicum
 <form action="/phenome/qtl_load.pl" method="POST" enctype="MULTIPART/FORM-DATA">        
      <table>
      <tr>
-       <td>Cross type<% $required %></td>
+       <td><& /util/sentence.mas, text => __x('Cross type{required}'), required => $required &></td>
 	 <td> <select name="pop_type">
 	          <% $cross_options %>
              </select>
          </td>
      </tr>
      <tr>
-	<td>Population name<% $required %></td>
+	<td><& /util/sentence.mas, text => __x('Population name{required}'), required => $required &></td>
 	<td><input type="text" name="pop_name" size=42></td>    
      </tr>
      <tr>
-         <td>Population description<% $required %></td>
+         <td><& /util/sentence.mas, text => __x('Population description{required}'), required => $required &></td>
          <td><textarea name="pop_desc" rows = 5 cols=44></textarea></td>
      </tr>  
      <tr>

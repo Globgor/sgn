@@ -23,25 +23,25 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 <ul>
   <li>
-    <strong>QTL model:</strong> Select the one dimension single QTL genome scan&nbsp; (the two-dimension two genome QTL scan is under development)
+    <& /util/sentence.mas, text => __x('{strong}QTL model:{end_strong} Select the one dimension single QTL genome scan  (the two-dimension two genome QTL scan is under development)'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong>QTL mapping method:</strong> You can select&nbsp; 'Single Marker Analysis'&nbsp; or 'Maximum Likelihood' for standard interval mapping or for an approximation of it 'Haley-Knot Regression' or 'Multiple Imputation'. Use 'Multiple Imputation' only if you want to estimate the QTL genotype based on random imputation.
+    <& /util/sentence.mas, text => __x('{strong}QTL mapping method:{end_strong} You can select  \'Single Marker Analysis\'  or \'Maximum Likelihood\' for standard interval mapping or for an approximation of it \'Haley-Knot Regression\' or \'Multiple Imputation\'. Use \'Multiple Imputation\' only if you want to estimate the QTL genotype based on random imputation.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong>QTL genotype probability method:</strong> Select 'Calculate' if you want the QTL genotype to be estimated based the observed marker data. This method must be selected if you selected 'Maximum Likelihood' or 'Haley-Knot Regression'. If you selected 'Multiple Imputation' then choose the 'Simulate' method.
+    <& /util/sentence.mas, text => __x('{strong}QTL genotype probability method:{end_strong} Select \'Calculate\' if you want the QTL genotype to be estimated based the observed marker data. This method must be selected if you selected \'Maximum Likelihood\' or \'Haley-Knot Regression\'. If you selected \'Multiple Imputation\' then choose the \'Simulate\' method.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong>Genotype probability significance level:</strong> select the genotyping error rate you want to allow.
+    <& /util/sentence.mas, text => __x('{strong}Genotype probability significance level:{end_strong} select the genotyping error rate you want to allow.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong>Genome scan size (cM):</strong> select the genome size (interval) you want the QTL genotype probabilities to be calculated.
+    <& /util/sentence.mas, text => __x('{strong}Genome scan size (cM):{end_strong} select the genome size (interval) you want the QTL genotype probabilities to be calculated.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
   <li>
-    <strong>No. of imputations:</strong> applicable only for 'Multiple Imputation' mapping method and 'Simulate' QTL genotype probability method. 
+    <& /util/sentence.mas, text => __x('{strong}No. of imputations:{end_strong} applicable only for \'Multiple Imputation\' mapping method and \'Simulate\' QTL genotype probability method.'), strong => '<strong>', end_strong => '</strong>' &> 
   </li>
   <li>
-    <strong>No. of permutations and significance level:</strong> select the number of permutations to perform and the error rate for the calculation of the LOD threshold.
+    <& /util/sentence.mas, text => __x('{strong}No. of permutations and significance level:{end_strong} select the number of permutations to perform and the error rate for the calculation of the LOD threshold.'), strong => '<strong>', end_strong => '</strong>' &>
   </li>
 </ul>
 

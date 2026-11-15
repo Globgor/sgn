@@ -81,11 +81,11 @@ my $image_subtitle =
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Phenomic Details'), 'h' ), collapsible=>1 &>
 
-Number of phenotyped lines : <% $phenotypes %>
+<& /util/sentence.mas, text => __x('Number of phenotyped lines : {count}'), count => $phenotypes &>
 <br />
-Number of traits scored  : <% $trait_count %>
+<& /util/sentence.mas, text => __x('Number of traits scored : {count}'), count => $trait_count &>
 <br />
-Number of ontology annotations : <% $onto_count %>
+<& /util/sentence.mas, text => __x('Number of ontology annotations : {count}'), count => $onto_count &>
 <br /><br />
 
 

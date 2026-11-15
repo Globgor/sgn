@@ -35,9 +35,7 @@ $itag_release
 <div id="itag_reported_download_form" title="<% __('Access agreement and contact information') |h %>">
 
   <p>
-    By downloading pre-publication tomato genome sequence or ITAG
-    annotation files, you indicate your acceptance of the following data
-    access agreement.
+    <& /util/sentence.mas, text => __x('By downloading pre-publication tomato genome sequence or ITAG annotation files, you indicate your acceptance of the following data access agreement.') &>
   </p>
 
   <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data access agreement'), 'h' ) &>

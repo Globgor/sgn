@@ -9,16 +9,14 @@
 <div class="page_introduction">
   The genomes of tomato inbred lines consist mostly of <a href="/organism/1/view/"><i>Solanum lycopersicum</i></a>
   and carry genome fragments originating from various tomato wild species.
-  Breeders develop inbreds for introducing valuable genetic variation from multiple wild species and/or accessions while maintaining
-  a genetic background of the domesticated species. This is achieved by outcrossing followed by multiple genetrations of backcrossing and selection.
+  <& /util/sentence.mas, text => __x('Breeders develop inbreds for introducing valuable genetic variation from multiple wild species and/or accessions while maintaining a genetic background of the domesticated species. This is achieved by outcrossing followed by multiple genetrations of backcrossing and selection.') &>
 
 </div>
 
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Gh13 genome'), 'h' ) &>
   Gh13 is a begomovirus resistant line carrying the <a href="/locus/8216/view"><i>Ty3</i></a> gene.
-  This line was developed in Guatamala <a href="/publication/18734/view">(Mejia et al., 2004)</a>
-  were it has been tested over multiple seasons and consistently shows very good resistance against high begomovirus pressure there. Resistance in Gh13 is reportedly derived from <a href="/organism/938/view"><i>S. habrochaites</i></a>  <a href="/publication/18735/view">(Vidavsky and Czosnek, 1998)</a><br />
+  <& /util/sentence.mas, text => __x('This line was developed in Guatamala {citation} were it has been tested over multiple seasons and consistently shows very good resistance against high begomovirus pressure there.'), citation => '<a href="/publication/18734/view">(Mejia et al., 2004)</a>' &> Resistance in Gh13 is reportedly derived from <a href="/organism/938/view"><i>S. habrochaites</i></a>  <a href="/publication/18735/view">(Vidavsky and Czosnek, 1998)</a><br />
 
   <% info_table_html(
                      __border   => 0,

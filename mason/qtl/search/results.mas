@@ -41,7 +41,7 @@ $query
 &>
 %if ( $query )
 %{
-<br>No results found for <i><strong>'<% $query %>'.</strong></i><br />
+<br><& /util/sentence.mas, text => __x('No results found for {i}{strong}\'{query}\'.{end_strong}{end_i}'), i => '<i>', strong => '<strong>', query => $query, end_strong => '</strong>', end_i => '</i>' &><br />
 %}
 %else
 %{

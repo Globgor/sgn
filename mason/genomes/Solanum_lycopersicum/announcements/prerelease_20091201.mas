@@ -7,7 +7,7 @@
       <div style="text-align: center; font-size: 160%; font-weight: bold"><% __('Prerelease of Tomato Genome Shotgun Sequence') |h %></div>
 
       <div class="boxcontent">
-         The <span style="font-weight: bold">International Tomato Genome Sequencing Project</span> is happy to make available a prerelease version of the <span style="font-weight: bold">Tomato Genome Shotgun Sequence</span> to the community. <a href="/tomato/">More...</a>
+         <& /util/sentence.mas, text => __x('The {span}International Tomato Genome Sequencing Project{end_span} is happy to make available a prerelease version of the {span}Tomato Genome Shotgun Sequence{end_span} to the community.'), span => '<span style="font-weight: bold">', end_span => '</span>' &> <a href="/tomato/"><& /util/sentence.mas, text => __x('More...') &></a>
 
         <div style="text-align: center; margin: 1.5em 0 0 1em"><a href="/tomato/#disclaimer"><% __('Data Agreement and Disclaimer') |h %></a> | <a href="/tools/blast/index.pl?db_id=93">BLAST</a> | <a href="ftp://ftp.solgenomics.net/tomato_genome/wgs/assembly">FTP</a></div>
     

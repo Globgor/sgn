@@ -5,7 +5,7 @@
 <& /page/page_title.mas, title => '<i>'.$organism->species.'</i> Genome Data' &>
 
 <p>
-  Tobacco stands out as a complex allotetraploid with a large 4.5 Gb genome with significant proportion (>70%) of repeats.
+  <& /util/sentence.mas, text => __x('Tobacco stands out as a complex allotetraploid with a large 4.5 Gb genome with significant proportion (>70%) of repeats.') &>
   As a species, <i>N. tabacum</i> (2n=4x=48) evolved through the interspecific hybridization of the ancestors of <i>Nicotiana sylvestris</i> (2n=24, maternal donor) and <i>Nicotiana tomentosiformis</i> (2n=24, paternal donor) about 200,000 years ago.
   Common tobacco (<i>Nicotiana tabacum</i>) is one of the most widely cultivated non-food crops worldwide and is grown in ~120 countries.
   It belongs to the Nicotiana genus, which is named after Jean Nicot de Villemain who, in 1560, became the first person to import these plants from the Americas to Europe.

@@ -13,13 +13,11 @@
     </div>
     <&| /page/info_table.mas, border => 1 &>
 
-    Assembly issues
+    <& /util/sentence.mas, text => __x('Assembly issues') &>
 
     ----
 
-      <p>If in the course of your work you find errors or other issues with
-        these genome assemblies, please report them using one of the
-        following links:</p>
+      <p><& /util/sentence.mas, text => __x('If in the course of your work you find errors or other issues with these genome assemblies, please report them using one of the following links:') &></p>
 
       <ul>
         <li>

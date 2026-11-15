@@ -194,8 +194,8 @@ $parent2_stock_name => '(unknown)'
 % $parent1_stock_id ?  $stock1_link='' : $stock1_link = "/stock/$parent1_stock_id/view";
 % $parent2_stock_id ?  $stock2_link='' : $stock2_link = "/stock/$parent2_stock_id/view";
 <&| /page/info_section.mas, collapsible => 1, title=>$m->interp->apply_escapes( __("Parents of Mapping Population"), 'h' ) &>
-<p>Parent 1 <a href="<% $stock1_link %>"><% $parent1_stock_name %></a></p>
-<p>Parent 2 <a href="<% $stock2_link %>"><% $parent2_stock_name %></a></p>
+<p><& /util/sentence.mas, text => __x('Parent 1 {link}{name}{end_link}'), link => '<a href="' . $stock1_link . '">', name => $parent1_stock_name, end_link => '</a>' &></p>
+<p><& /util/sentence.mas, text => __x('Parent 2 {link}{name}{end_link}'), link => '<a href="' . $stock2_link . '">', name => $parent2_stock_name, end_link => '</a>' &></p>
 </&>
 
 

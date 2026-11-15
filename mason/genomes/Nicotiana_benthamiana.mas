@@ -2,9 +2,9 @@
 <& /page/page_title.mas, title=>"<i>Nicotiana benthamiana</i> draft genome sequence v1.0.1" &>
 
 <p>
-  A new draft sequence of the <i>Nicotiana benthamiana</i> genome has been released by researchers from the <a href="http://btiscience.org/" target="_blank">Boyce Thompson Institute for Plant Research (BTI)</a>.
-  It is accessible through the SGN BLAST tool and JBrowse, and can be downloaded from the SGN ftp site.
-  More information about this project can be found at the <a href="https://btiscience.org/our-research/research-facilities/research-resources/nicotiana-benthamiana/" target="_blank">BTI <i>Nicotiana benthamiana</i> Project site</a>
+  <& /util/sentence.mas, text => __x('A new draft sequence of the {species} genome has been released by researchers from the {link}Boyce Thompson Institute for Plant Research (BTI){end_link}.'), species => '<i>Nicotiana benthamiana</i>', link => '<a href="http://btiscience.org/" target="_blank">', end_link => '</a>' &>
+  <& /util/sentence.mas, text => __x('It is accessible through the SGN BLAST tool and JBrowse, and can be downloaded from the SGN ftp site.') &>
+  <& /util/sentence.mas, text => __x('More information about this project can be found at the {link}BTI {species} Project site{end_link}'), species => '<i>Nicotiana benthamiana</i>', link => '<a href="https://btiscience.org/our-research/research-facilities/research-resources/nicotiana-benthamiana/" target="_blank">', end_link => '</a>' &>
 </p>
 
 <p>
@@ -14,9 +14,8 @@
 </p>
 
 <p>
-  <i>N. benthamiana</i> is a widely used model for plant-microbe biology and other research applications.
-  It is particularly useful because it is related to tomato and potato and is amenable to virus-induced gene silencing (VIGS)
-  which facilitates the efficient functional study of plant genes.
+  <& /util/sentence.mas, text => __x('{species} is a widely used model for plant-microbe biology and other research applications.'), species => '<i>N. benthamiana</i>' &>
+  <& /util/sentence.mas, text => __x('It is particularly useful because it is related to tomato and potato and is amenable to virus-induced gene silencing (VIGS) which facilitates the efficient functional study of plant genes.') &>
 </p>
 
 <p>
@@ -149,12 +148,12 @@ N25 index:    12906 sequences<br />
 <h4><% __('Sequencing approach') |h %></h4>
 
 <p>
-  Seedlings were grown in the greenhouse and nuclear DNA was extracted from etiolated leaves.
+  <& /util/sentence.mas, text => __x('Seedlings were grown in the greenhouse and nuclear DNA was extracted from etiolated leaves.') &>
   From the DNA, three distinct libraries were synthesized for use in a Illumina HiSeq-2000 sequencer:
   1) a paired end library with an insert size of approximately 500 bp insert size;
   2) a mate-pair type library with an insert size of 2kb; and
   3) a mate pair with an insert size of 5kb.
-  Sequencing was performed using a full run with 4 lanes of the paired end library and 1 lane each of the mate pair libraries.
+  <& /util/sentence.mas, text => __x('Sequencing was performed using a full run with 4 lanes of the paired end library and 1 lane each of the mate pair libraries.') &>
 </p>
 
 <h4><% __('Accession sequenced') |h %></h4>
@@ -168,10 +167,10 @@ N25 index:    12906 sequences<br />
 
 <ul>
   <li>
-    More information about this project at the <a href="https://btiscience.org/our-research/research-facilities/research-resources/nicotiana-benthamiana/" target="_blank">BTI <i>Nicotiana benthamiana</i> Project site</a>
+    <& /util/sentence.mas, text => __x('More information about this project at the {link}BTI {species} Project site{end_link}'), species => '<i>Nicotiana benthamiana</i>', link => '<a href="https://btiscience.org/our-research/research-facilities/research-resources/nicotiana-benthamiana/" target="_blank">', end_link => '</a>' &>
   </li>
   <li>
-    <a href="http://sydney.edu.au/science/molecular_bioscience/sites/benthamiana/" target="_blank">Austrialia/New Zealand <i>Nicotiana benthamiana</i> sequencing project</a>
+    <& /util/sentence.mas, text => __x('{link}Austrialia/New Zealand {species} sequencing project{end_link}'), species => '<i>Nicotiana benthamiana</i>', link => '<a href="http://sydney.edu.au/science/molecular_bioscience/sites/benthamiana/" target="_blank">', end_link => '</a>' &>
   </li>
   <li>
     <a href="http://www.jove.com/video/1292/virus-induced-gene-silencing-vigs-in-nicotiana-benthamiana-and-tomato" target="_blank"><% __('On-line tutorial for VIGS procedure') |h %></a>

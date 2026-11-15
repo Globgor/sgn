@@ -2,26 +2,10 @@
 
   <p>
 
-  PLEASE READ BEFORE ACCESSING THE PRE-PUBLICATION TOMATO GENOME
-  SEQUENCE OR ANNOTATIONS: The International Tomato Genome Sequencing
-  Consortium is pleased to make available a pre-publication draft
-  assembly of the tomato genome for use by public and private research
-  communities as a resource to enable plant biology discovery and
-  improve the human condition through improved agriculture. This
-  assembly was produced by the Dutch/French assembly team and includes
-  both 454 data and Sanger sequence data (BAC-ends, fosmid-ends and
-  Selected BAC Mixture sequences).  </p>
+  <& /util/sentence.mas, text => __x('PLEASE READ BEFORE ACCESSING THE PRE-PUBLICATION TOMATO GENOME SEQUENCE OR ANNOTATIONS: The International Tomato Genome Sequencing Consortium is pleased to make available a pre-publication draft assembly of the tomato genome for use by public and private research communities as a resource to enable plant biology discovery and improve the human condition through improved agriculture. This assembly was produced by the Dutch/French assembly team and includes both 454 data and Sanger sequence data (BAC-ends, fosmid-ends and Selected BAC Mixture sequences).') &>  </p>
 
   <p>
-  We caution you that the current assembly is a "work-in-progress" and
-  as such is subject to modification prior to publication release
-  (anticipated for mid-2011), some of which is likely to be
-  substantial. Therefore we encourage you to carefully and
-  independently validate any conclusions you may draw from this
-  sequence. We will update this resource as improvements in the
-  assembly are made. We welcome any feedback regarding your successes
-  or that may assist us in improving the quality and accuracy of this
-  sequence.
+  <& /util/sentence.mas, text => __x('We caution you that the current assembly is a "work-in-progress" and as such is subject to modification prior to publication release (anticipated for mid-2011), some of which is likely to be substantial. Therefore we encourage you to carefully and independently validate any conclusions you may draw from this sequence.') &> <& /util/sentence.mas, text => __x('We will update this resource as improvements in the assembly are made. We welcome any feedback regarding your successes or that may assist us in improving the quality and accuracy of this sequence.') &>
   </p>
 
   <p>
