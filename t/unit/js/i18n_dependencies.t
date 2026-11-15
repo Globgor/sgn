@@ -35,8 +35,8 @@ my @legacy = qw(
 );
 
 my @entries = qw(
-    dataset_scatterplot environments field_trial_linkage fieldmap job mixedmodels qualitycontrol
-    sequenced_accessions trialallocation/app trialallocation/downloads wizard
+    dataset_scatterplot decision_meeting environments field_trial_linkage fieldmap job mixedmodels
+    qualitycontrol sequenced_accessions trialallocation/app trialallocation/downloads wizard
 );
 
 for my $script (@legacy) {

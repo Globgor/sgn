@@ -1,3 +1,4 @@
+import '../legacy/CXGN/I18N.js';
 (function (jQuery) {
   'use strict';
   jQuery(function ($) {
