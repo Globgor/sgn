@@ -18,6 +18,19 @@ use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
+    '/index.mas',
+    'There are a number of instances running for diverse crops, including Cassava ({cassava}), sweet potato ({sweet_potato}), banana ({banana}), rice ({rice}), tomato and other Solanaceae ({solanaceae}) and many others.',
+    'You can watch the Breedbase workshops on {link}Youtube{end_link}, covering topics such as ontologies, trial design, data collection using fieldbook, data analysis, and genomic selection.',
+    'Breedbase is a web application that only requires a browser. To get your Breedbase instance, contact the {link}Breedbase development team{end_link}.',
+);
+
+page_sentences_ok(
+    '/index_logged_in_user.mas',
+    'Your status is currently "{role}".',
+    'Welcome back {name}!',
+);
+
+page_sentences_ok(
     '/usage_policy.mas',
     'The data on this database is shared according to the Toronto agreement (see below).',
     'Datasets that are currently released but have not yet been published include:',
