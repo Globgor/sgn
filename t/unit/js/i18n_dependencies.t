@@ -18,11 +18,12 @@ use JSAN::ServerSide;
 use Test::More;
 
 my @legacy = qw(
-    CXGN/BreederSearch CXGN/BreedersToolbox/HTMLSelect CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
+    CXGN/BreederSearch CXGN/BreedersToolbox/AddTrial CXGN/BreedersToolbox/HTMLSelect
+    CXGN/BreedersToolbox/UploadTrial CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist CXGN/TrialTreeFolders
 );
 
 my @entries = qw(
-    wizard
+    field_trial_linkage fieldmap trialallocation/app trialallocation/downloads wizard
 );
 
 for my $script (@legacy) {

@@ -1,3 +1,4 @@
+import '../../legacy/CXGN/I18N.js';
 import { createAccessionTools } from './accessions.js';
 import { createDownloadTools } from './downloads.js';
 

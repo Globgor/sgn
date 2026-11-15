@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 // Depends on CXGN.BreedersToolbox.HTMLSelect
 
 function delete_phenotype_data_by_trial_id(trial_id) {
