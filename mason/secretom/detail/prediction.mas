@@ -37,21 +37,9 @@ span.filesize:after {
 <div class="page_introduction">
   <p>
 
-  A number of <a class="tools_popup" href="#">computational tools</a> have been
-  developed to predict the presence of SPs. These programs have been
-  greatly refined in recent years and their accuracy has improved with
-  the adoption of machine learning algorithms. However, while this is a
-  valuable approach, as with all prediction-based tools, there is a
-  consistent error rate and both false positive and negative predictions
-  should be expected. One of our major goals is to identify the
-  incorrect predictions and generate a database of computationally and
-  functionally confirmed secreted plant proteins. It has been reported
-  that one of the most effective predictors of SPs is <a
-  href="http://www.cbs.dtu.dk/services/SignalP">SignalP 3.0</a>. 
-  We have used both SignalP and our recently developed predictor, 
-  <a href="/secretom/secretary">SecreTary</a>, 
-  to screen the predicted proteomes of several plant species
-  to date. See below for these prediction results.
+  <& /util/sentence.mas, text => __x('A number of {link}computational tools{end_link} have been developed to predict the presence of SPs.'), link => '<a class="tools_popup" href="#">', end_link => '</a>' &> <& /util/sentence.mas, text => __x('These programs have been greatly refined in recent years and their accuracy has improved with the adoption of machine learning algorithms.') &> <& /util/sentence.mas, text => __x('However, while this is a valuable approach, as with all prediction-based tools, there is a consistent error rate and both false positive and negative predictions should be expected.') &> <& /util/sentence.mas, text => __x('One of our major goals is to identify the incorrect predictions and generate a database of computationally and functionally confirmed secreted plant proteins.') &> <& /util/sentence.mas, text => __x('It has been reported that one of the most effective predictors of SPs is {link}SignalP 3.0{end_link}.'), link => '<a
+  href="http://www.cbs.dtu.dk/services/SignalP">', end_link => '</a>' &> 
+  <& /util/sentence.mas, text => __x('We have used both SignalP and our recently developed predictor, {link}SecreTary{end_link}, to screen the predicted proteomes of several plant species to date.'), link => '<a href="/secretom/secretary">', end_link => '</a>' &> <& /util/sentence.mas, text => __x('See below for these prediction results.') &>
   </p>
 
 </div>
@@ -59,9 +47,7 @@ span.filesize:after {
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('New predictor: Secretary'), 'h' ) &>
 
   <p>
-  We have developed a new predictor, <a href="/secretom/secretary">SecreTary</a>,
-  for more accurate computational prediction of plant proteins that
-  traffic through the classical secretory pathway.  <a href="/secretom/secretary">Try SecreTary</a>,
+  <& /util/sentence.mas, text => __x('We have developed a new predictor, {link}SecreTary{end_link}, for more accurate computational prediction of plant proteins that traffic through the classical secretory pathway. {link}Try SecreTary{end_link},'), link => '<a href="/secretom/secretary">', end_link => '</a>' &>
   </p>
 
 </&>
@@ -113,11 +99,7 @@ span.filesize:after {
 
     <p>
     Use text terms (e.g. "polygalacturonase", "glycosyl hydrolase
-    family", "gh9"), or locus names (e.g. "At1G65610.1"). This will
-    provide you with a list of predicted proteins, grouped by species,
-    with the annotation protein length, molecular weight, confidence
-    scores for the presence of a secretory signal peptide and predicted
-    localization.
+    family", "gh9"), or locus names (e.g. "At1G65610.1"). <& /util/sentence.mas, text => __x('This will provide you with a list of predicted proteins, grouped by species, with the annotation protein length, molecular weight, confidence scores for the presence of a secretory signal peptide and predicted localization.') &>
     </p>
     
   </&>

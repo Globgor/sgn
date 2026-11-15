@@ -110,46 +110,23 @@
     <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Summary'), 'h' ) &>
 
       <p>
-      The <a class="info_link" href="/secretom/detail/cell_wall">plant cell wall/apoplast</a> plays a fundamental role
-      in many aspects of growth, development, and responses to environmental
-      conditions and assault by pathogens and insects. It is therefore not
-      surprising that a substantial portion of the plant proteome is
-      localized in the cell wall/apoplast. However, while major initiatives
-      are now underway to map the proteomes of many plant organelles, such
-      as the <a  href="http://ppdb.tc.cornell.edu/dbsearch/subproteome.aspx">
-      chloroplast</a>, the cell wall proteome, or "secretome", is far
-      less well characterized than those of other subcellular compartments.
+      <& /util/sentence.mas, text => __x('The {link}plant cell wall/apoplast{end_link} plays a fundamental role in many aspects of growth, development, and responses to environmental conditions and assault by pathogens and insects. It is therefore not surprising that a substantial portion of the plant proteome is localized in the cell wall/apoplast. However, while major initiatives are now underway to map the proteomes of many plant organelles, such as the {link2} chloroplast{end_link2}, the cell wall proteome, or "secretome", is far less well characterized than those of other subcellular compartments.'), link => '<a class="info_link" href="/secretom/detail/cell_wall">', end_link => '</a>', link2 => '<a  href="http://ppdb.tc.cornell.edu/dbsearch/subproteome.aspx">', end_link2 => '</a>' &>
       </p>
 
       <img width="250" style="display: block; margin: 0 auto" src="/img/secretom/proteome.png" />
 
       <p>
-      <strong>What is the "secretome"?</strong> The term "secretome" is
-      generally used to refer to the population of proteins that are
-      secreted outside the plasma membrane of a cell, but can also be used
-      to describe the subset of the proteome that enter the <a href="/secretom/detail/secretion_path">secretory
-      pathway</a>.
+      <& /util/sentence.mas, text => __x('{strong}What is the "secretome"?{end_strong} The term "secretome" is generally used to refer to the population of proteins that are secreted outside the plasma membrane of a cell, but can also be used to describe the subset of the proteome that enter the {link}secretory pathway{end_link}.'), strong => '<strong>', end_strong => '</strong>', link => '<a href="/secretom/detail/secretion_path">', end_link => '</a>' &>
       </p>
 
       <p>
-      <strong>The purpose of this NSF-funded project</strong> is to
-      catalog and study the dynamic properties of
-      the cell wall proteome, or secretome, using tomato (<i>Solanum
-      lycopersicum</i>) as a model system.
+      <& /util/sentence.mas, text => __x('{strong}The purpose of this NSF-funded project{end_strong} is to catalog and study the dynamic properties of the cell wall proteome, or secretome, using tomato ({species}) as a model system.'), species => '<i>Solanum
+      lycopersicum</i>', strong => '<strong>', end_strong => '</strong>' &>
       </p>
 
 
       <p>
-      <strong>Why study the "secretome"?</strong> Proteomic analysis of cellular
-      compartments reveals the subcellular locations of a specific protein,
-      or protein complex, which in turn can be a valuable step towards
-      understanding protein function. Localization information also helps in
-      the identification of protein interactions and targeting pathways, and
-      peptide motifs and structural signatures that can direct proteins to
-      various cellular locations. In addition the analysis of a subcellular
-      proteome has the advantage of requiring "biological
-      pre-fractionation," which can substantially enhance the detection of
-      lower-abundance proteins.
+      <& /util/sentence.mas, text => __x('{strong}Why study the "secretome"?{end_strong} Proteomic analysis of cellular compartments reveals the subcellular locations of a specific protein, or protein complex, which in turn can be a valuable step towards understanding protein function. Localization information also helps in the identification of protein interactions and targeting pathways, and peptide motifs and structural signatures that can direct proteins to various cellular locations. In addition the analysis of a subcellular proteome has the advantage of requiring "biological pre-fractionation," which can substantially enhance the detection of lower-abundance proteins.'), strong => '<strong>', end_strong => '</strong>' &>
       </p>
 
     </&>
@@ -174,15 +151,15 @@
       <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Resources'), 'h' ) &>
 
         <a href="ftp://ftp.solgenomics.net/secretom/">
-          <span class="secretom">secretom</span> datasets (<span style="text-decoration: underline">SGN FTP</span>)
+          <& /util/sentence.mas, text => __x('{span}secretom{end_span} datasets ({span2}SGN FTP{end_span2})'), span => '<span class="secretom">', end_span => '</span>', span2 => '<span style="text-decoration: underline">', end_span2 => '</span>' &>
         </a>
         <a href="/secretom/publications">
-          <span class="secretom">secretom</span> publications
+          <& /util/sentence.mas, text => __x('{span}secretom{end_span} publications'), span => '<span class="secretom">', end_span => '</span>' &>
         </a>
         <hr />
         <div class="secretary">
-          <a href="/secretom/secretary">Use SecreTary</a>
-          A tool for predicting secreted proteins.
+          <a href="/secretom/secretary"><& /util/sentence.mas, text => __x('Use SecreTary') &></a>
+          <& /util/sentence.mas, text => __x('A tool for predicting secreted proteins.') &>
         </div>
       </&>
      </div>
@@ -209,12 +186,10 @@
       <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Education, Training, and Outreach'), 'h' ), is_subsection => 1 &>
           <img style="border: 1px solid black; display: block; margin: 15px auto 0 auto" src="/img/secretom/tomato_bath.png" />
           <p>
-             <a href="/secretom/training">Education and training
-             opportunities</a> in plant proteomics and cell wall
-             biology are available as part of <span class="secretom">Secretom</span>.
+             <& /util/sentence.mas, text => __x('{link}Education and training opportunities{end_link} in plant proteomics and cell wall biology are available as part of {span}Secretom{end_span}.'), link => '<a href="/secretom/training">', end_link => '</a>', span => '<span class="secretom">', end_span => '</span>' &>
           </p>
 
-          <p><a href="/secretom/outreach">Internships</a> are also available.</p>
+          <p><& /util/sentence.mas, text => __x('{link}Internships{end_link} are also available.'), link => '<a href="/secretom/outreach">', end_link => '</a>' &></p>
        </&>
     </div>
 
@@ -235,13 +210,11 @@
        <table><tr>
        <td><a style="background: none" href="http://www.nsf.gov"><img border="0" src="/documents/img/secretom/NSF_Logo.jpg" width="100" height="100"/></a></td>
        <td style="vertical-align: middle; padding-left: 1em">
-        <p>This project and database are funded by National Science Foundation Grant 
-        <a href="http://nsf.gov/awardsearch/showAward.do?AwardNumber=0606595">0606595</a>.
+        <p><& /util/sentence.mas, text => __x('This project and database are funded by National Science Foundation Grant {grant}.'), grant => '<a href="http://nsf.gov/awardsearch/showAward.do?AwardNumber=0606595">0606595</a>' &>
         </p>
 
         <p>
-        For questions and comments regarding the SecreTom project, please
-        contact Jocelyn Rose at <a href="mailto:jr286@cornell.edu">jr286@cornell.edu</a>.
+        <& /util/sentence.mas, text => __x('For questions and comments regarding the SecreTom project, please contact {person} at {address}.'), address => '<a href="mailto:jr286@cornell.edu">jr286@cornell.edu</a>', person => 'Jocelyn Rose' &>
         </p>
       </td></tr>
       </table>

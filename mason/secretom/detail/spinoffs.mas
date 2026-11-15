@@ -8,8 +8,7 @@
 <div class="indented_content">
 
   <h1>
-    Interspecific Reproductive Barriers in Tomato 
-	<a href="http://www.irbtomato.org"> (IRBT) </a> 
+    <& /util/sentence.mas, text => __x('Interspecific Reproductive Barriers in Tomato {link}{acronym}{end_link}'), link => '<a href="http://www.irbtomato.org">', acronym => ' (IRBT) ', end_link => '</a>' &> 
   </h1>
 
   <div class="indented_content"  style="margin-bottom: 6em">
@@ -24,14 +23,7 @@
     </div>
 
     <p>
-      This is an NSF Plant Genome program funded collaborative scientific
-      endeavor to identify and understand the biological processes
-      underlying species isolation within the Tomato family. We are using
-      proteomic tools to study the molecular barriers between tomato
-      species, with particular focus on secreted proteins as these are
-      believed to be critical in establishing such barriers. We have been
-      characterizing the proteomes of pollen, styles and pollinated styles
-      from both Solanum lycopersicum, S. habrochaites and S. pennellii.
+      <& /util/sentence.mas, text => __x('This is an NSF Plant Genome program funded collaborative scientific endeavor to identify and understand the biological processes underlying species isolation within the Tomato family.') &> <& /util/sentence.mas, text => __x('We are using proteomic tools to study the molecular barriers between tomato species, with particular focus on secreted proteins as these are believed to be critical in establishing such barriers.') &> <& /util/sentence.mas, text => __x('We have been characterizing the proteomes of pollen, styles and pollinated styles from both {species1}, {species2} and {species3}.'), species1 => 'Solanum lycopersicum', species2 => 'S. habrochaites', species3 => 'S. pennellii' &>
     </p>
   </div>
 
@@ -46,34 +38,19 @@
       <img src="/documents/img/secretom/p_margaritaceum_306.png" />
 
       <p>
-        Cells of Penium margaritaceum, a member of the Charophycean green
-        alga, following treatment with a microtubule inhibitor. Pectin
-        components of the wall are shown in green. Microscopic imaging and
-        cover design by David Domozych.
+        <& /util/sentence.mas, text => __x('Cells of {species}, a member of the Charophycean green alga, following treatment with a microtubule inhibitor.'), species => 'Penium margaritaceum' &> <& /util/sentence.mas, text => __x('Pectin components of the wall are shown in green.') &> <& /util/sentence.mas, text => __x('Microscopic imaging and cover design by {name}.'), name => 'David Domozych' &>
       </p>
 
     </div>
 
     <p>
-      One of the most important phases of plant evolution occurred
-      approximately 460-480 million years ago when photosynthetic
-      organisms developed the capacity to colonize land. This transition
-      to harsh terrestrial conditions would have required the ability to
-      resist new abiotic stresses, including desiccation and UV radiation,
-      as well as the development of mechanisms to promote progeny
-      dispersal. It is likely that polysaccharide and cuticular cell walls
-      were essential for the transition to a terrestrial environment and
-      yet the evolutionary origins of their biosynthesis are not well
-      understood. In collaboration with Dr. William Willats (University of
+      <& /util/sentence.mas, text => __x('One of the most important phases of plant evolution occurred approximately 460-480 million years ago when photosynthetic organisms developed the capacity to colonize land.') &> <& /util/sentence.mas, text => __x('This transition to harsh terrestrial conditions would have required the ability to resist new abiotic stresses, including desiccation and UV radiation, as well as the development of mechanisms to promote progeny dispersal.') &> <& /util/sentence.mas, text => __x('It is likely that polysaccharide and cuticular cell walls were essential for the transition to a terrestrial environment and yet the evolutionary origins of their biosynthesis are not well understood.') &> In collaboration with Dr. William Willats (University of
       Copenhagen), Dr. David Domozych (Skidmore College). Dr. Jeffrey
       Doyle and Dr. Iben S&oslash;rensen (Cornell University), we are addressing
       the hypothesis that the origins of plant cell walls occurred during
       divergence within the Charophycean green algae (CGA), which
       represent the closest living relatives to land plants
-      (embryophytes). Characterization of the secretomes of divergent
-      members of the CGA will likely provide insights into the mechanisms
-      that are currently used by embryophytes for primary, secondary and
-      cuticular cell wall formation and restructuring.
+      (embryophytes). <& /util/sentence.mas, text => __x('Characterization of the secretomes of divergent members of the CGA will likely provide insights into the mechanisms that are currently used by embryophytes for primary, secondary and cuticular cell wall formation and restructuring.') &>
     </p>
   </div>
 

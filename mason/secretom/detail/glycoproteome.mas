@@ -6,45 +6,23 @@
       <img src="/documents/img/secretom/SDS_PAGE_x400.png" />
 
       <p>
-      SDS PAGE gel image showing tomato fruit proteins isolated by
-      lectin affinity, stained with Coomassie Blue (black) or
-      glycoprotein stain (pink).
+      <& /util/sentence.mas, text => __x('SDS PAGE gel image showing tomato fruit proteins isolated by lectin affinity, stained with Coomassie Blue (black) or glycoprotein stain (pink).') &>
       </p>
 
     </div>
 
 
   <p>
-  As with all eukaryotes, N-glycosylation in plant cells is a common
-  post-translational modification for proteins traveling through the
-  secretory pathway, many of which are destined for the cell wall. The
-  large-scale isolation and analysis of glycoproteins by lectin
-  affinity chromatography, coupled with mass spectrometry (MS), has
-  become a powerful tool to evaluate the glycoproteome of mammalian
-  cells; however, is has rarely been used with plants glycoproteins.
+  <& /util/sentence.mas, text => __x('As with all eukaryotes, N-glycosylation in plant cells is a common post-translational modification for proteins traveling through the secretory pathway, many of which are destined for the cell wall.') &> <& /util/sentence.mas, text => __x('The large-scale isolation and analysis of glycoproteins by lectin affinity chromatography, coupled with mass spectrometry (MS), has become a powerful tool to evaluate the glycoproteome of mammalian cells; however, is has rarely been used with plants glycoproteins.') &>
   </p>
 
 
   <p>
-  We are using affinity selection of glycoproteins using the lectin
-  Concanavalin A, coupled with two-dimensional liquid chromatography
-  (2-D LC) and matrix-assisted laser desorption/ionization mass
-  spectrometry (2DLC-MALDI MS/MS) and electrospray ionization MS
-  (ESI-MS) analysis, to identify extracellular and secretory pathway
-  proteins, focusing on those expressed in ripe tomato fruit.
+  <& /util/sentence.mas, text => __x('We are using affinity selection of glycoproteins using the lectin Concanavalin A, coupled with two-dimensional liquid chromatography (2-D LC) and matrix-assisted laser desorption/ionization mass spectrometry (2DLC-MALDI MS/MS) and electrospray ionization MS (ESI-MS) analysis, to identify extracellular and secretory pathway proteins, focusing on those expressed in ripe tomato fruit.') &>
   </p>
 
   <p>
-  Tomato has long served as model system for fleshy fruit development
-  and ripening is an excellent system to study cell wall proteins as it
-  is associated with dramatic changes in wall biology, including
-  dramatic enzyme-mediated cell wall polysaccharide degradation,
-  apoplastic sugar metabolism and extracellular defenses against
-  microbial pathogens. In spite of this, there are few published
-  proteomic analyses of ripening tomato fruit and most of those are
-  based on extraction of total proteins followed by 2-DE separation,
-  since the wall proteome was not the major target. Consequently, the
-  protein extraction step was not optimized for secreted proteins.
+  <& /util/sentence.mas, text => __x('Tomato has long served as model system for fleshy fruit development and ripening is an excellent system to study cell wall proteins as it is associated with dramatic changes in wall biology, including dramatic enzyme-mediated cell wall polysaccharide degradation, apoplastic sugar metabolism and extracellular defenses against microbial pathogens.') &> <& /util/sentence.mas, text => __x('In spite of this, there are few published proteomic analyses of ripening tomato fruit and most of those are based on extraction of total proteins followed by 2-DE separation, since the wall proteome was not the major target.') &> <& /util/sentence.mas, text => __x('Consequently, the protein extraction step was not optimized for secreted proteins.') &>
   </p>
 
 </div>
@@ -69,9 +47,7 @@
   <div style="width: 420px; float: left; margin: 0 20px 10px 0" class="captioned_image">
 
     <p>
-    Computational prediction of the subcellular location of the
-    N-glycoproteins isolated from green mature tomato fruit with
-    Concanavalin A.
+    <& /util/sentence.mas, text => __x('Computational prediction of the subcellular location of the N-glycoproteins isolated from green mature tomato fruit with Concanavalin A.') &>
     </p>
 
     <hr style="margin: 0 10px" />
@@ -82,11 +58,7 @@
   </div>
 
   <p>
-  This enrichment strategy has been highly effective, with a high
-  proportion the identified proteins showing predicted localization
-  either in the secretory pathway. We are currently investigating the
-  targeting of proteins from the secretory pathway to other
-  intracellular organelles.
+  <& /util/sentence.mas, text => __x('This enrichment strategy has been highly effective, with a high proportion the identified proteins showing predicted localization either in the secretory pathway.') &> <& /util/sentence.mas, text => __x('We are currently investigating the targeting of proteins from the secretory pathway to other intracellular organelles.') &>
   </p>
 
 </div>

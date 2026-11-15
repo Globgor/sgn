@@ -115,7 +115,7 @@ my $iframe_url = $jbrowse_url . "&tracklist=0&nav=1&overview=0" ;
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Funding'), 'h' ) &>
 
-Funding is provided by the NSF (<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1564366">IOS 1564366</a>).<br />
+<& /util/sentence.mas, text => __x('Funding is provided by the NSF ({link}{award}{end_link}).'), link => '<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1564366">', award => 'IOS 1564366', end_link => '</a>' &><br />
 <br />
 <img src="/static/img/nsf_logo2.png" />
 

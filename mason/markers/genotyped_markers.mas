@@ -35,7 +35,7 @@ David Waring <djw64@cornell.edu>
 </%init>
 
 <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Related Markers'), 'h' ), collapsible=>1, collapsed=>0 &>
-    <p><strong>Related Genotyped Markers:</strong> These markers have been genotyped and share a name with this marker</p>
+    <p><& /util/sentence.mas, text => __x('{bold}Related Genotyped Markers:{end_bold} These markers have been genotyped and share a name with this marker'), bold => '<strong>', end_bold => '</strong>' &></p>
     <div id="related-genotyped-markers">
         <em><% __('Loading...') |h %></em>
     </div>

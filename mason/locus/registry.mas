@@ -53,7 +53,7 @@ $registry => undef
 </%perl>
 
 % if ($registry) {
-This locus is associated with registry name: <% $registry %>
+<& /util/sentence.mas, text => __x('This locus is associated with registry name: {registry}'), registry => $registry &>
 % }
 % if ($is_owner)  {
 
@@ -79,7 +79,7 @@ This locus is associated with registry name: <% $registry %>
 
       </select>
 
-      Click <a href="javascript:Locus.addRegistryView()">here</a> to add a new registry name to our database
+      <& /util/sentence.mas, text => __x('Click {link}here{end_link} to add a new registry name to our database'), link => '<a href="javascript:Locus.addRegistryView()">', end_link => '</a>' &>
     </div>
 
     <div id="registry_add" style="display: none">
@@ -93,7 +93,7 @@ This locus is associated with registry name: <% $registry %>
       <% __('Registry Description:') |h %><br>
       <textarea id="registry_description" style="width: 100%"></textarea><br>
       <input type="button" disabled="true" id="add_registry_button" value="<% __('Add New Registry') |h %>" onclick="Locus.addRegistry('<% $locus_id %> ', '<% $person_id %> ');this.disabled=true;"><br>
-      Click <a href="javascript:Locus.searchRegistries()">here</a> to go back to the registry search
+      <& /util/sentence.mas, text => __x('Click {link}here{end_link} to go back to the registry search'), link => '<a href="javascript:Locus.searchRegistries()">', end_link => '</a>' &>
     </div>
   </div>
 
