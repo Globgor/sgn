@@ -19,11 +19,11 @@ use Test::More;
 
 my @legacy = qw(
     CXGN/AJAX/Ontology CXGN/BreederSearch CXGN/BreedersToolbox/Accessions CXGN/BreedersToolbox/AddTrial
-    CXGN/BreedersToolbox/DerivedAccessions CXGN/BreedersToolbox/FieldBook CXGN/BreedersToolbox/HTMLSelect
-    CXGN/BreedersToolbox/UploadGrafts CXGN/BreedersToolbox/UploadPedigrees
-    CXGN/BreedersToolbox/UploadPhenotype CXGN/BreedersToolbox/UploadRenameAccessions
-    CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
-    CXGN/Onto/Browser CXGN/Stock CXGN/TrialTreeFolders
+    CXGN/BreedersToolbox/CrossDetailPage CXGN/BreedersToolbox/Crosses CXGN/BreedersToolbox/DerivedAccessions
+    CXGN/BreedersToolbox/FieldBook CXGN/BreedersToolbox/HTMLSelect CXGN/BreedersToolbox/UploadGrafts
+    CXGN/BreedersToolbox/UploadPedigrees CXGN/BreedersToolbox/UploadPhenotype
+    CXGN/BreedersToolbox/UploadRenameAccessions CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects
+    CXGN/Effects/Hotlist CXGN/Hotlist CXGN/Onto/Browser CXGN/Stock CXGN/TrialTreeFolders
 );
 
 my @entries = qw(
