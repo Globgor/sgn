@@ -28,12 +28,12 @@
 
 <center>
     <a id="blue_button" href="/tools/blast/?db_id=266" target="_blank">BLAST</a>&nbsp;&nbsp;
-    <a id="blue_button" href="ftp://ftp.solgenomics.net/genomes/Nicotiana_benthamiana" target="_blank">FTP Site</a>&nbsp;&nbsp;
+    <a id="blue_button" href="ftp://ftp.solgenomics.net/genomes/Nicotiana_benthamiana" target="_blank"><% __('FTP Site') |h %></a>&nbsp;&nbsp;
     <a id="blue_button" href="http://solgenomics.net/jbrowse_solgenomics/?data=data%2Fjson%2FNiben1.0.1&loc=Niben101Scf00005" target="_blank" style="background-image:none;">JBrowse</a>&nbsp;&nbsp;
-    <a id="blue_button" href="http://vigs.solgenomics.net" target="_blank" style="background-image:none;">VIGS Tool</a>
+    <a id="blue_button" href="http://vigs.solgenomics.net" target="_blank" style="background-image:none;"><% __('VIGS Tool') |h %></a>
 </center>
 
-<h4>Data Agreement</h4>
+<h4><% __('Data Agreement') |h %></h4>
 
 <p>
   Accessing to the <i>Nicotiana benthamiana</i> genome data,
@@ -49,7 +49,7 @@
 If you have any questions, please contact Professor <a href="mailto:gbm7@cornell.edu">Gregory Martin</a> or Professor <a href="mailto:aurebg@vt.edu">Aureliano Bombarely</a>.
 </p>
 
-<h4>Assembly Statistics</h4>
+<h4><% __('Assembly Statistics') |h %></h4>
 
 <i>N. benthamiana</i> Genome v1.0.1. Statistics from file <a href="ftp://ftp.solgenomics.net/genomes/Nicotiana_benthamiana/assemblies/" target="_blank">Niben.genome.v1.0.1.scaffolds.nrcontigs.fasta</a>
 <br />
@@ -57,49 +57,49 @@ If you have any questions, please contact Professor <a href="mailto:gbm7@cornell
 
 <table id="assembly_stats_table">
   <tr>
-    <th>Sequences</th><td>56,094</td>
+    <th><% __('Sequences') |h %></th><td>56,094</td>
   </tr>
   <tr>
-    <th>Total Length (bp)</th><td>2,969,810,994</td>
+    <th><% __('Total Length (bp)') |h %></th><td>2,969,810,994</td>
   </tr>
   <tr>
-    <th>Average length (bp)</th><td>52,943</td>
+    <th><% __('Average length (bp)') |h %></th><td>52,943</td>
   </tr>
   <tr>
-    <th>Longest sequence (bp)</th><td>2,838,176</td><td>ID = Niben101Scf02793</td>
+    <th><% __('Longest sequence (bp)') |h %></th><td>2,838,176</td><td>ID = Niben101Scf02793</td>
   </tr>
   <tr>
-    <th>Shortest sequence (bp)</th><td>500</td><td>ID = Niben101Ctg00001</td>
+    <th><% __('Shortest sequence (bp)') |h %></th><td>500</td><td>ID = Niben101Ctg00001</td>
   </tr>
   <tr>
-    <th>N95 length (bp)</th><td>77,805</td>
+    <th><% __('N95 length (bp)') |h %></th><td>77,805</td>
   </tr>
   <tr>
-    <th>N90 length (bp)</th><td>140,694</td>
+    <th><% __('N90 length (bp)') |h %></th><td>140,694</td>
   </tr>
   <tr>
-    <th>N75 length (bp)</th><td>282,465</td>
+    <th><% __('N75 length (bp)') |h %></th><td>282,465</td>
   </tr>
   <tr>
-    <th>N50 length (bp)</th><td>520,105</td>
+    <th><% __('N50 length (bp)') |h %></th><td>520,105</td>
   </tr>
   <tr>
-    <th>N25 length (bp)</th><td>859,098</td>
+    <th><% __('N25 length (bp)') |h %></th><td>859,098</td>
   </tr>
   <tr>
-    <th>N95 index</th><td>7,206</td>
+    <th><% __('N95 index') |h %></th><td>7,206</td>
   </tr>
   <tr>
-    <th>N90 index</th><td>5,835</td>
+    <th><% __('N90 index') |h %></th><td>5,835</td>
   </tr>
   <tr>
-    <th>N75 index</th><td>3,671</td>
+    <th><% __('N75 index') |h %></th><td>3,671</td>
   </tr>
   <tr>
-    <th>N50 index</th><td>1,738</td>
+    <th><% __('N50 index') |h %></th><td>1,738</td>
   </tr>
   <tr>
-    <th>N25 index</th><td>612</td>
+    <th><% __('N25 index') |h %></th><td>612</td>
   </tr>
 </table>
 
@@ -146,7 +146,7 @@ N25 index:    12906 sequences<br />
 ==========================================================<br />
 <br /> -->
 
-<h4>Sequencing approach</h4>
+<h4><% __('Sequencing approach') |h %></h4>
 
 <p>
   Seedlings were grown in the greenhouse and nuclear DNA was extracted from etiolated leaves.
@@ -157,14 +157,14 @@ N25 index:    12906 sequences<br />
   Sequencing was performed using a full run with 4 lanes of the paired end library and 1 lane each of the mate pair libraries.
 </p>
 
-<h4>Accession sequenced</h4>
+<h4><% __('Accession sequenced') |h %></h4>
 
 <p>
   The accession sequenced is referred to as "Nb-1".
   Seeds can be obtained by contacting Professor <a href="mailto:gbm7@cornell.edu">Gregory Martin</a>.
 </p>
 
-<h4>Links</h4>
+<h4><% __('Links') |h %></h4>
 
 <ul>
   <li>
@@ -174,11 +174,11 @@ N25 index:    12906 sequences<br />
     <a href="http://sydney.edu.au/science/molecular_bioscience/sites/benthamiana/" target="_blank">Austrialia/New Zealand <i>Nicotiana benthamiana</i> sequencing project</a>
   </li>
   <li>
-    <a href="http://www.jove.com/video/1292/virus-induced-gene-silencing-vigs-in-nicotiana-benthamiana-and-tomato" target="_blank">On-line tutorial for VIGS procedure</a>
+    <a href="http://www.jove.com/video/1292/virus-induced-gene-silencing-vigs-in-nicotiana-benthamiana-and-tomato" target="_blank"><% __('On-line tutorial for VIGS procedure') |h %></a>
   </li>
 </ul>
 
-<h4>References</h4>
+<h4><% __('References') |h %></h4>
 
 <ol>
   <li>
@@ -198,7 +198,7 @@ N25 index:    12906 sequences<br />
   </li>
 </ol>
 
-<h4>Acknowledgments</h4>
+<h4><% __('Acknowledgments') |h %></h4>
 
 <p>
 Sequencing of the <i>N. benthamiana</i> genome was supported by funds from the Boyce Thompson Institute for Plant Research and

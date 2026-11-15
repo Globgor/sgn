@@ -7,11 +7,11 @@
   $bac_publish_subdir
 </%args>
 
-<& /page/page_title.mas, title => 'Tomato Genomic Clone Sequencing' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Tomato Genomic Clone Sequencing'), 'h' ) &>
 
 <div class="page_introduction"> <& /genomes/Solanum_lycopersicum/project_background.mas &> </div>
 
-<&| /page/info_section.mas, title => 'BAC-by-BAC sequencing statistics', empty_message => '&nbsp;' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('BAC-by-BAC sequencing statistics'), 'h' ), empty_message => '&nbsp;' &>
   <& /genomes/Solanum_lycopersicum/bac_by_bac_progress.mas,
       dbh      => $dbh,
       basepath => $basepath,
@@ -21,7 +21,7 @@
 </&>
 
 <&| /page/info_section.mas,
-     title => 'Clone preliminary annotations',
+     title => $m->interp->apply_escapes( __('Clone preliminary annotations'), 'h' ),
  &>
 
 %   my $ftp_link  = qq|<a href="|.$c->get_conf('ftpsite_url'). '/'. $bac_publish_subdir.'">[FTP]</a>';
@@ -42,8 +42,8 @@
 
 <a name ="clones"></a>
 <&| /page/info_section.mas,
-     title    => 'Clone sequences',
-     subtitle => 'browse and download individual genomic clone sequences',
+     title    => $m->interp->apply_escapes( __('Clone sequences'), 'h' ),
+     subtitle => $m->interp->apply_escapes( __('browse and download individual genomic clone sequences'), 'h' ),
  &>
 
      <% clone_sequences_html( $dbh, $chrnum ) %>

@@ -13,12 +13,12 @@ Isaak Y Tecle (iyt2@cornell.edu)
 </%doc>
 
 <&| /page/info_section.mas, 
-   title      => "Step 2: Traits list",
+   title      => $m->interp->apply_escapes( __("Step 2: Traits list"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>
 
-The traits list file needs to be in a text file and should look like the following format.<br/>
+<% __('The traits list file needs to be in a text file and should look like the following format.') |h %><br/>
 
 <pre>
   traits             definition                            unit
@@ -28,7 +28,7 @@ The traits list file needs to be in a text file and should look like the followi
 </pre>
 
 
-The definition and unit are optional but would make the phenotype data more informative to users of the database.<br/>
+<% __('The definition and unit are optional but would make the phenotype data more informative to users of the database.') |h %><br/>
 
-Use of the Solanaceae Phenotype Ontology is highly encouraged to allow cross-study comparative analysis but not required. <br/>  
+<% __('Use of the Solanaceae Phenotype Ontology is highly encouraged to allow cross-study comparative analysis but not required.') |h %> <br/>  
 </&>

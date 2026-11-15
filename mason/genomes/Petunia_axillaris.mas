@@ -15,14 +15,14 @@
 
 <center>
     <a class="btn btn-primary" href="/tools/blast/?db_id=272" target="_blank" style="color:white">BLAST</a>&nbsp;&nbsp;
-    <a class="btn btn-primary" href="ftp://ftp.solgenomics.net/genomes/Petunia_axillaris/" target="_blank" style="color:white">FTP Site</a>&nbsp;&nbsp;
+    <a class="btn btn-primary" href="ftp://ftp.solgenomics.net/genomes/Petunia_axillaris/" target="_blank" style="color:white"><% __('FTP Site') |h %></a>&nbsp;&nbsp;
     <a class="btn btn-primary" href="http://solgenomics.net/jbrowse_solgenomics/?data=data%2Fjson%2FPeaxi162&loc=Peaxi162Scf00001" target="_blank" style="color:white">JBrowse</a>&nbsp;&nbsp;
-    <a class="btn btn-primary" href="http://vigs.solgenomics.net" target="_blank" style="color:white">VIGS Tool</a>
+    <a class="btn btn-primary" href="http://vigs.solgenomics.net" target="_blank" style="color:white"><% __('VIGS Tool') |h %></a>
 </center>
 
 <br>
 <br>
-<h4>References</h4>
+<h4><% __('References') |h %></h4>
 <ul style="list-style-type:disc">
   <li>
     Bombarely, A., Moser, M, ... Sims, T.L. and Kuhlemeier, C. (2016)<br>

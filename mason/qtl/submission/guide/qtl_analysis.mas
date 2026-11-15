@@ -13,7 +13,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 </%doc>
 
 <&| /page/info_section.mas, 
-   title      => "Step 6: QTL analysis",
+   title      => $m->interp->apply_escapes( __("Step 6: QTL analysis"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>

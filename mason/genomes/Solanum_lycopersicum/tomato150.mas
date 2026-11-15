@@ -4,13 +4,13 @@
 </%doc>
 
 
-<& /page/page_title.mas, title=>"Wageningen UR 150 Tomato Genome Resequencing Project" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Wageningen UR 150 Tomato Genome Resequencing Project"), 'h' ) &>
 
 <div class="page_introduction">
 </div>
 
 
-<&| /page/info_section.mas, title => '150 Tomato Genomes' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('150 Tomato Genomes'), 'h' ) &>
   Resequencing of <a href="https://www.ebi.ac.uk/ena/data/view/ERP004618">84 tomato accessions</a><br />
   <a href="https://www.ebi.ac.uk/ena/data/view/ERP004607"><i>Solanum arcanum</i> LA2157</a><br />
   <a href="https://www.ebi.ac.uk/ena/data/view/ERP004608"><i>Solanum habrochaites</i> LYC4</a><br />

@@ -13,12 +13,12 @@ Isaak Y Tecle (iyt2@cornell.edu)
 </%doc>
 
 <&| /page/info_section.mas, 
-   title      => "Step 3: Phenotype dataset",
+   title      => $m->interp->apply_escapes( __("Step 3: Phenotype dataset"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>
 
-The phenotype dataset should be in a text file and in the following format. The traits names in the phenotype dataset must match exactly with the traits in the traits file, submitted in the previous step.
+<% __('The phenotype dataset should be in a text file and in the following format. The traits names in the phenotype dataset must match exactly with the traits in the traits file, submitted in the previous step.') |h %>
 
 <pre>
                 plant    fruit       fruit     fruit

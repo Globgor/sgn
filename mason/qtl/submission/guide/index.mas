@@ -14,7 +14,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 
 <& /page/page_title.mas, 
-   title => "QTL Data Submission Guidelines"
+   title => $m->interp->apply_escapes( __("QTL Data Submission Guidelines"), 'h' )
 &>
 
 <p>
@@ -25,7 +25,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 <& /qtl/qtl_form/general_intro.mas, 
    guide => undef 
 &>
-<p> Detailed guide:</p>
+<p> <% __('Detailed guide:') |h %></p>
 <& population_details.mas &>
 <& traits_list.mas &>
 <& phenotype_dataset.mas &>

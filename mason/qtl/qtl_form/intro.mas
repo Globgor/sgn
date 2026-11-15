@@ -24,11 +24,11 @@ my $links = $guide . '|' .  qq | <a href="http://www.biomedcentral.com/1471-2105
 </%perl>
 
 <& /page/page_title.mas, 
-   title => "Step 0: Introduction" 
+   title => $m->interp->apply_escapes( __("Step 0: Introduction"), 'h' ) 
 &>
 
 <&| /page/info_section.mas, 
-    title    => "Introduction", 
+    title    => $m->interp->apply_escapes( __("Introduction"), 'h' ), 
     subtitle => $links 
 &>
  <form action="/phenome/qtl_load.pl" method="POST" enctype="MULTIPART/FORM-DATA">  
@@ -45,7 +45,7 @@ my $links = $guide . '|' .  qq | <a href="http://www.biomedcentral.com/1471-2105
         </tr>
         <tr> 
           <td> <input type="hidden"  name = "type" value="begin"> </td>
-          <td> <input type="submit" value="Begin Uploading"> </td>
+          <td> <input type="submit" value="<% __('Begin Uploading') |h %>"> </td>
         </tr>
       </table>
  </form>

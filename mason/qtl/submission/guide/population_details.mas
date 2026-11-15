@@ -12,7 +12,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 </%doc>
 <&| /page/info_section.mas, 
-   title      => "Step 1:  Population details",
+   title      => $m->interp->apply_escapes( __("Step 1:  Population details"), 'h' ),
   collapsible => 1,
   collapsed   => 1
 &>

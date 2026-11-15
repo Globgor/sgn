@@ -12,14 +12,14 @@ $query
 </%args>
 
 <& /page/page_title.mas,
-    title => 'QTL search results',
+    title => $m->interp->apply_escapes( __('QTL search results'), 'h' ),
 &>
   
 % if ($data) 
 % { 
 
 <&| /page/info_section.mas,
-      title => 'Search Results',
+      title => $m->interp->apply_escapes( __('Search Results'), 'h' ),
 &>
   <& /page/columnar_table.mas,
      headings    => [ 'Trait name', 'Definition', 'QTL' ],
@@ -37,7 +37,7 @@ $query
 %else
 %{
 <&| /page/info_section.mas,
-      title => 'Search Results',
+      title => $m->interp->apply_escapes( __('Search Results'), 'h' ),
 &>
 %if ( $query )
 %{
@@ -45,13 +45,13 @@ $query
 %}
 %else
 %{
-<br>No results. Search again with with a trait name.<br />
+<br><% __('No results. Search again with with a trait name.') |h %><br />
 %}
 </&>
 %}
 
 <&| /page/info_section.mas,
-    title       => 'Search',
+    title       => $m->interp->apply_escapes( __('Search'), 'h' ),
     collapsible => '1',
     collapsed   => 1
  &>
