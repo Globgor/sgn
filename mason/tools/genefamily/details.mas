@@ -19,7 +19,7 @@ $align_link_disabled => undef
   <tr><td colspan="2">Note: <% $errors %></td></tr>
 </table>
 
-<h2>Gene family members</h2>
+<h2><% __('Gene family members') |h %></h2>
 Member count: <% $member_count %><br />
 <div id="family_members">
   <% $members %>
@@ -27,11 +27,11 @@ Member count: <% $member_count %><br />
 
 <table><tr>
     <hr>
-    <td>View</td>
+    <td><% __('View') |h %></td>
     <td>
       <form name="alignment_viewer_form" method="POST" action="/tools/align_viewer/index.pl">
 	<input type="hidden" name="seq_data" value="<% $seq_data %>" />
-	<input type="submit" value="Alignment" <% $align_link_disabled %> />
+	<input type="submit" value="<% __('Alignment') |h %>" <% $align_link_disabled %> />
 	<input type="hidden" name="format" value="fasta" />
       </form>
     </td>
@@ -39,7 +39,7 @@ Member count: <% $member_count %><br />
     <td>
       <form name="tree_browser_form" method="post" action="/tools/tree_browser/index.pl">
 	<input type="hidden" name="" value="<% $tree_data %>" />
-	<input type="submit" value="Tree" <% $tree_link_disabled %> />
+	<input type="submit" value="<% __('Tree') |h %>" <% $tree_link_disabled %> />
       </form>
     </td>
 
@@ -49,11 +49,11 @@ Member count: <% $member_count %><br />
 </table>
 <hr>
 <table><tr><td>
-Sequences in fasta:</td><td>
+<% __('Sequences in fasta:') |h %></td><td>
 <form name="tree_browser_unaligned" method="post" action="/tools/align_viewer/index.pl">
   <input type="hidden" name="seq_data" value="<% $fasta_data %>" />
   <input type="hidden" name="format" value="fasta_unaligned" />
-  <input type="submit" value="Align" />
+  <input type="submit" value="<% __('Align') |h %>" />
 </form>
 
 <td></tr>

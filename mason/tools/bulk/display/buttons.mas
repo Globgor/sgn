@@ -29,7 +29,7 @@ my $pages = ( int( $line_count / $page_size ) ) + 1;
  |
 <& /tools/bulk/display/buttons/summary.mas, dumpfile=>$dumpfile, idType=>$idType &>
  | 
-<a href="/tools/bulk">New query</a>
+<a href="/tools/bulk"><% __('New query') |h %></a>
  | 
 <& /tools/bulk/display/buttons/next.mas, page_number => $page_number, page_size=>$page_size, line_count => $line_count, dumpfile=>$dumpfile &>
 <br /><br />

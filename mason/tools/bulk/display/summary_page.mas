@@ -3,7 +3,7 @@
 $summary_data => {}
 </%args>
 
-    <& /page/page_title.mas, title=>"Bulk download summary" &>
+    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Bulk download summary"), 'h' ) &>
 
     The query you submitted contained <% $summary_data->{numlines} %> lines.<br />
     Your query resulted in <% $summary_data->{total} %> lines being retrieved in
@@ -16,7 +16,7 @@ $summary_data => {}
      unigene or bac assembly to download from. Also make sure that the submitted
      identifiers are appropriately formatted.<br />
      
-     Please try your search again.<br /><br />
+     <% __('Please try your search again.') |h %><br /><br />
 %   }
 %   else {
  
@@ -27,8 +27,8 @@ $summary_data => {}
     <br />
     <br />
 
-    <table border="0" cellpadding="0"><tr><td width="120"><b>View</b></td><td width="120">
-    <b>Download to disk</b></td></tr>
+    <table border="0" cellpadding="0"><tr><td width="120"><b><% __('View') |h %></b></td><td width="120">
+    <b><% __('Download to disk') |h %></b></td></tr>
     <tr><td>
 
     as <a href="/tools/bulk/display?outputType=text&amp;dumpfile=<% $summary_data->{file} %>&amp;idType=<% $summary_data->{idType} %>">Text</a>

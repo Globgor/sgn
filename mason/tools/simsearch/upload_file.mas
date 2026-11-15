@@ -12,13 +12,13 @@ $format => ""
 
 <div id="simsearch_input_form">
 
-   Optional: Select reference genotyping file:<br /> 
+   <% __('Optional: Select reference genotyping file:') |h %><br /> 
 
    <% $reference_files_menu %><br /><br />
 
    <input id="simsearch_filename" type="hidden" name="filename" value="<% $filename %>" />
 
-   <button class="btn" id="simsearch_run_button">Run SimSearch</button>
+   <button class="btn" id="simsearch_run_button"><% __('Run SimSearch') |h %></button>
 
 </div>
 <br /><br />
@@ -27,7 +27,7 @@ $format => ""
 
    <table id="simsearch_results_table">
       <thead>
-         <tr><th>Group #</th><th>Member count</th><th>Max score</th><th>Average score</th><th>Group members</th></tr>
+         <tr><th><% __('Group #') |h %></th><th><% __('Member count') |h %></th><th><% __('Max score') |h %></th><th><% __('Average score') |h %></th><th><% __('Group members') |h %></th></tr>
    </table>
 
    <div id="simsearch_results_histogram">[HISTOGRAM]</div>

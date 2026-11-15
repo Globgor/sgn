@@ -12,9 +12,9 @@
 
 </%perl>
 
-<& /page/page_title.mas, title=>"BLAST db details" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("BLAST db details"), 'h' ) &>
 
-<div >This page provides details for each of the BLAST sequence sets available at SGN.</div>
+<div ><% __('This page provides details for each of the BLAST sequence sets available at SGN.') |h %></div>
 
 % foreach my $g (@groups) { 
 

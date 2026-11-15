@@ -66,7 +66,7 @@ my $add_locus_link = $curator || $submitter || $sequencer  ?
 
 <& /page/page_title.mas, title=> "Gene family ". $genefamily->get_locusgroup_name &>
 
-<&| /page/info_section.mas, title=>"Gene family details"  &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Gene family details"), 'h' )  &>
 
 
   <& /page/form.mas,
@@ -83,7 +83,7 @@ my $add_locus_link = $curator || $submitter || $sequencer  ?
 </&>
 
 <&| /page/info_section.mas,
-    title       => "Gene family members",
+    title       => $m->interp->apply_escapes( __("Gene family members"), 'h' ),
     subtitle    => "$add_locus_link",
     id          => "locus_network",
     collapsible => 1,

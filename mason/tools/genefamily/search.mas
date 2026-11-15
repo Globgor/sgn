@@ -10,10 +10,10 @@ $member_id => undef
 $action => undef
 </%args>
 
-<& /page/page_title.mas, title=>'Gene family search' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Gene family search'), 'h' ) &>
 
 
-<h4>Browse Genefamilies</h4>
+<h4><% __('Browse Genefamilies') |h %></h4>
 
 <%perl>
 
@@ -43,7 +43,7 @@ print $select."<br /><br />";
 
 <table id="genefamily_datatable">
 <thead>
-  <th>Genefamily ID</th><th>Sequences</th><th>Alignments</th><th>Trees</th><th>Member Count</th><th>Members</th></thead>
+  <th><% __('Genefamily ID') |h %></th><th><% __('Sequences') |h %></th><th><% __('Alignments') |h %></th><th><% __('Trees') |h %></th><th><% __('Member Count') |h %></th><th><% __('Members') |h %></th></thead>
   </thead>
   <tbody>
   </tbody>
