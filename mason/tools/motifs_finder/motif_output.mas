@@ -27,9 +27,9 @@ $sum => ""
 			#print "<img src= \"/export/prod/tmp/motifs_finder/$logo[$i]\"><br/><br/><br/>";
 			print "<img src= \"/documents/tempfiles/motifs_finder/$logo[$i]\" ><br/><br/><br/>";
 		 	print "<b>Motif Table </b><br/>$motif_tab[$i]\n <br/><br/>" ;
-			print "<b>Motif Model (residue frequence x 100)</b><br\>$freq_tab[$i]\n <br\> ";
-			print "<b>Motif Probabilty Model </b><br\>$prob_tab[$i]\n <br/>" ;
-			print "<b>Background Probabilty Model </b> <br\>$BGPM_tab[$i]\n <br/>" ;
+			print "<b>Motif Model (residue frequency x 100)</b><br\>$freq_tab[$i]\n <br\> ";
+			print "<b>Motif Probability Model </b><br\>$prob_tab[$i]\n <br/>" ;
+			print "<b>Background Probability Model </b> <br\>$BGPM_tab[$i]\n <br/>" ;
 			print "<b>Motif $logoID[$i] Log MAP Value</b><br\>$sum_indv_tab[$i]\n <br/>" ;
 			print "</div>";
 		}

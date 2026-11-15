@@ -26,7 +26,7 @@ $debug => ''
 
 
 <br />
-<% __('Enter a list of identifiers or upload a file containing identifers separated by whitespace (returns, spaces or tabs):') |h %><br />
+<% __('Enter a list of identifiers or upload a file containing identifiers separated by whitespace (returns, spaces or tabs):') |h %><br />
 <table summary="" width="100%"><tr><td>
 <textarea name="ids" rows="5" cols="25"></textarea>
 </td>
