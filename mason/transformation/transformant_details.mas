@@ -10,7 +10,7 @@ $program_name
 
 <form class="form-horizontal" >
     <div class="form-group">
-        <label class="col-sm-2" for="analyzed_tissue_type">Tissue Type: </label>
+        <label class="col-sm-2" for="analyzed_tissue_type"><% __('Tissue Type:') |h %> </label>
         <div class="col-sm-3">
             <select class="form-control" id="analyzed_tissue_types_select">
 % my @tissue_types = split ',',$vector_analyzed_tissue_types;
@@ -21,7 +21,7 @@ $program_name
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">Assay Date: </label>
+        <label class="col-sm-2 control-label"><% __('Assay Date:') |h %> </label>
         <div class="col-sm-3" >
             <div id="assay_date_select_div">
             </div>
@@ -34,16 +34,16 @@ $program_name
     <table class="table table-hover table-bordered display" id="vector_transgenic_line_details_table">
         <thead>
             <tr>
-                <th>Accession</th>
-                <th>Number of Insertions</th>
+                <th><% __('Accession') |h %></th>
+                <th><% __('Number of Insertions') |h %></th>
 % my @column_header = split ',',$vector_related_genes;
 % foreach my $column_header(@column_header) {
                 <th><%$column_header. " ".'(Relative)'%></th>
 %}
-                <th>qPCR Tissue Type</th>
-                <th>qPCR Assay Date</th>
+                <th><% __('qPCR Tissue Type') |h %></th>
+                <th><% __('qPCR Assay Date') |h %></th>
 % if (!$transformation_id) {
-                <th>Transformation ID</th>
+                <th><% __('Transformation ID') |h %></th>
 % }
             </tr>
         </thead>
@@ -52,7 +52,7 @@ $program_name
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title => 'Copy accessions to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy accessions to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names to a new or exisiting list</i>'&>
         <br>
         <div id="transformant_names" style="display:none"></div>
         <div id="transformants_to_list_menu"></div>

@@ -5,17 +5,17 @@ $vector_related_genes => undef
 $number_of_insertions => undef
 </%args>
 
-<&| /page/info_section.mas, id=>'transformation_experiment', title => 'Transformation Experiment', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, id=>'transformation_experiment', title => $m->interp->apply_escapes( __('Transformation Experiment'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
                 <table id = "transformant_experiment_info" class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>Vector Construct</th>
-                            <th>Plant Material</th>
-                            <th>Transformation ID</th>
-                            <th>Project</th>
+                            <th><% __('Vector Construct') |h %></th>
+                            <th><% __('Plant Material') |h %></th>
+                            <th><% __('Transformation ID') |h %></th>
+                            <th><% __('Project') |h %></th>
                         </tr>
                     </thead>
                 </table>
@@ -24,20 +24,20 @@ $number_of_insertions => undef
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'analysis_data', title => 'Number of Insertions and Expression Data', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, id=>'analysis_data', title => $m->interp->apply_escapes( __('Number of Insertions and Expression Data'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-sm-6">
                     <table id = "transformant_number_of_insertions" class="table table-hover table-striped">
-                        <tr><td><b>Number of Insertions:</b></td><td><%$number_of_insertions%></td></tr>
+                        <tr><td><b><% __('Number of Insertions:') |h %></b></td><td><%$number_of_insertions%></td></tr>
                     </table>
                 </div>
                 <table id = "transformant_qPCR_data" class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>qPCR Tissue Type</th>
-                            <th>qPCR Assay Date</th>
+                            <th><% __('qPCR Tissue Type') |h %></th>
+                            <th><% __('qPCR Assay Date') |h %></th>
 % my @column_header = split ',',$vector_related_genes;
 % foreach my $column_header(@column_header) {
                             <th><%$column_header. " ".'(Relative)'%></th>
@@ -50,7 +50,7 @@ $number_of_insertions => undef
     </div>
 </&>
 
-<&| /page/info_section.mas, title => 'Transformants (Accessions) Derived from the same Transformation ID', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Transformants (Accessions) Derived from the same Transformation ID'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -60,7 +60,7 @@ $number_of_insertions => undef
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <&| /page/info_section.mas, title => 'Add accession names to a List', collapsible=>1, collapsed=>1, subtitle=>'<i>Adding accession names to a new or exisiting list</i>'&>
+                        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add accession names to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding accession names to a new or exisiting list</i>'&>
                             <br>
                             <div id="related_transformants_to_new_list" style="display:none"></div>
                             <div id="related_transformants_add_to_list"></div>
@@ -72,7 +72,7 @@ $number_of_insertions => undef
     </div>
 </&>
 
-<&| /page/info_section.mas, title => 'Control Transformants (Accessions)', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Control Transformants (Accessions)'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -82,7 +82,7 @@ $number_of_insertions => undef
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <&| /page/info_section.mas, title => 'Add accession names to a List', collapsible=>1, collapsed=>1, subtitle=>'<i>Adding accession names to a new or exisiting list</i>'&>
+                        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add accession names to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding accession names to a new or exisiting list</i>'&>
                             <br>
                             <div id="control_transformants_to_new_list" style="display:none"></div>
                             <div id="control_transformants_add_to_list"></div>

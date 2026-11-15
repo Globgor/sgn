@@ -9,41 +9,41 @@ $vector_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="reset" class="close" id="upload_qPCR_data_dismiss_button_1" name="upload_qPCR_data_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadqPCRDataDialog">Upload qPCR Data (Cq values)</h4>
+                <button type="reset" class="close" id="upload_qPCR_data_dismiss_button_1" name="upload_qPCR_data_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadqPCRDataDialog"><% __('Upload qPCR Data (Cq values)') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <center>
-                        <&| /page/explanation.mas, title=>'Template Information' &>
+                        <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                             <p>
-                                <b>File format information</b>
+                                <b><% __('File format information') |h %></b>
                                 <br>
-                                <a id="Cq_values_upload_spreadsheet_format_info">Spreadsheet Format</a>
+                                <a id="Cq_values_upload_spreadsheet_format_info"><% __('Spreadsheet Format') |h %></a>
                             </p>
                         </&>
                     </center>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_qPCR_data_form" name="upload_qPCR_data_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Tissue Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Tissue Type:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="qPCR_tissue_type_div"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Endogenous Control: </label>
+                            <label class="col-sm-4 control-label"><% __('Endogenous Control:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="qPCR_endogenous_control_div"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" >Assay Date: </label>
+                            <label class="col-sm-4 control-label" ><% __('Assay Date:') |h %> </label>
                             <div class="col-sm-8">
                                 <input class="form-control" id="assay_date" name="assay_date" title="assay_date" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Normalization Method: </label>
+                            <label class="col-sm-4 control-label"><% __('Normalization Method:') |h %> </label>
                             <div class="col-sm-8" >
                                 <div id="qPCR_normalization_methods_div"></div>
                             </div>
@@ -51,13 +51,13 @@ $vector_name
                         <div id="normalization_method_description_div">
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Notes:</label>
+                            <label class="col-sm-4 control-label"><% __('Notes:') |h %></label>
                             <div class="col-sm-8">
                                 <textarea class="form-control" id="qPCR_notes" name="qPCR_notes" ></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (Cq values): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (Cq values):') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="Cq_qPCR_data_file" id="Cq_qPCR_data_file" encoding="multipart/form-data" />
                                 <input name="qPCR_data_vector_id" id="qPCR_data_vector_id" type="hidden" value="<% $vector_id %>">
@@ -68,8 +68,8 @@ $vector_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="upload_qPCR_data_dismiss_button_2" name="upload_qPCR_data_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_qPCR_data_submit" id="upload_qPCR_data_submit">Upload</button>
+                <button id="upload_qPCR_data_dismiss_button_2" name="upload_qPCR_data_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_qPCR_data_submit" id="upload_qPCR_data_submit"><% __('Upload') |h %></button>
             </div>
         </div>
     </div>
@@ -79,19 +79,19 @@ $vector_name
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="qPCRDataSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="qPCRDataSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The qPCR data were saved successfully.
+                        <% __('The qPCR data were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_qPCR_data_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_qPCR_data_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -101,8 +101,8 @@ $vector_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadqPCRDataErrorDialog">Upload qPCR Data Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadqPCRDataErrorDialog"><% __('Upload qPCR Data Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -112,7 +112,7 @@ $vector_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -122,14 +122,14 @@ $vector_name
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCQqPCRDataInfoDialog">Upload Template Information For qPCR Data (Cq values)</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCQqPCRDataInfoDialog"><% __('Upload Template Information For qPCR Data (Cq values)') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -143,7 +143,7 @@ $vector_name
                         </tbody>
                     </table>
                     <br>
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                         <li>accession_name (must exist in the database)</li>
                         <li>replicate_number (If there is no replicate, please indicate 1. If any sample has replicates, the derived normalized value is an average value.)</li>
@@ -242,7 +242,7 @@ $vector_name
                 <& /help/file_upload_type.mas, type => "qPCR Data", optional_column => 0 &>
             </div>
             <div class="modal-footer">
-                <button id="close_relative_expression_data_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_relative_expression_data_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

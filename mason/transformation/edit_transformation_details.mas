@@ -11,14 +11,14 @@ $transformation_notes
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header text-center">
-                <button type="reset" class="close" id="edit_transformation_details_cancel_button_1" name="edit_transformation_details_cancel_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="transformationDetailsEditDialog">Edit Transformation Details</h4>
+                <button type="reset" class="close" id="edit_transformation_details_cancel_button_1" name="edit_transformation_details_cancel_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="transformationDetailsEditDialog"><% __('Edit Transformation Details') |h %></h4>
             </div>
             <div class="modal-body" id="edit_transformation_details_body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="edit_transformation_name">Transformation ID: </label>
+                            <label class="col-sm-3 control-label" for="edit_transformation_name"><% __('Transformation ID:') |h %> </label>
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control col-sm-8" id="edit_transformation_name" type="text" value="<%$transformation_name%>"/>
@@ -26,7 +26,7 @@ $transformation_notes
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="edit_transformation_notes">Notes: </label>
+                            <label class="col-sm-3 control-label" for="edit_transformation_notes"><% __('Notes:') |h %> </label>
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <textarea class="form-control" id="edit_transformation_notes" rows="5"><%$transformation_notes%></textarea>
@@ -37,9 +37,9 @@ $transformation_notes
                 </div>
             </div>
             <div class="modal-footer">
-                <p class="text-success vertical-align pull-left"><span class="glyphicon glyphicon-pencil"></span> Indicates pending change</p>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="edit_transformation_details_cancel_button_2" name="edit_transformation_details_cancel_button">Cancel</button>
-                <button type="button" class="btn btn-primary" id="save_transformation_details">Save Changes</button>
+                <p class="text-success vertical-align pull-left"><span class="glyphicon glyphicon-pencil"></span> <% __('Indicates pending change') |h %></p>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="edit_transformation_details_cancel_button_2" name="edit_transformation_details_cancel_button"><% __('Cancel') |h %></button>
+                <button type="button" class="btn btn-primary" id="save_transformation_details"><% __('Save Changes') |h %></button>
             </div>
         </div>
     </div>
@@ -49,14 +49,14 @@ $transformation_notes
     <div class="modal-dialog" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="transformationDetailsSavedDialog">Details Saved</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="transformationDetailsSavedDialog"><% __('Details Saved') |h %></h4>
             </div>
             <div class="modal-body" id="transformation_details_saved_body">
                 <ul class="list-group" id="transformation_details_saved_message"></ul>
             </div>
             <div class="modal-footer">
-                <button id="transformation_details_saved_close_button" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="transformation_details_saved_close_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -66,8 +66,8 @@ $transformation_notes
     <div class="modal-dialog" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header text-center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editTransformationDetailsErrorDialog">Error Saving Transformation Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editTransformationDetailsErrorDialog"><% __('Error Saving Transformation Details') |h %></h4>
             </div>
 
             <div class="modal-body">
@@ -78,7 +78,7 @@ $transformation_notes
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="transformation_details_error_close_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="transformation_details_error_close_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

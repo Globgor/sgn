@@ -5,7 +5,7 @@ $can_obsolete
 </%args>
 
 
-<&| /page/info_section.mas, title => 'Transgenic Lines (Accessions)', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Transgenic Lines (Accessions)'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -15,7 +15,7 @@ $can_obsolete
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <&| /page/info_section.mas, title => 'Add accessions to a List', collapsible=>1, collapsed=>1, subtitle=>'<i>Adding transgenic lines (accessions) to a new or exisiting list</i>'&>
+                        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Add accessions to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Adding transgenic lines (accessions) to a new or exisiting list</i>'&>
                             <br>
                             <div id="transgenic_lines_to_new_list" style="display:none"></div>
                             <div id="transgenic_lines_add_to_list"></div>
@@ -23,7 +23,7 @@ $can_obsolete
                     </div>
                 </div>
 % if($can_obsolete) {
-                <button class="btn btn-sm btn-primary" style="margin:3px" id="obsolete_transgenic_lines_in_bulk_link">Obsolete Accessions in Bulk</button>
+                <button class="btn btn-sm btn-primary" style="margin:3px" id="obsolete_transgenic_lines_in_bulk_link"><% __('Obsolete Accessions in Bulk') |h %></button>
 % }
             </div>
         </div>
