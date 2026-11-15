@@ -14,7 +14,7 @@ Does not require any parameters.
 <a href="/breeders/"><img src="/documents/img/tomato_breeders_toolbox.jpg" width="50" border ="0" /></a><br />
 <br />
 </td><td>
-<b>Access the SGN <a href="/breeders/">Breeder's Toolbox.</a></b>
+<b><& /util/sentence.mas, text => __x('Access the SGN {link}Breeder\'s Toolbox.{end_link}'), link => '<a href="/breeders/">', end_link => '</a>' &></b>
 </td></tr>
 </table>
 

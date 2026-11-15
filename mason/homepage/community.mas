@@ -1,6 +1,5 @@
 
 <div class="boxbgcolor6"  style="margin-bottom:2px">
 <div class="boxheading"><% __('Community Annotation') |h %></div>
-<div class="boxcontent">As an SGN locus editor, <a href="/phenome/">contribute to webpages for your favorite genes and mutant lines</a> and share
-relevant data and publications with the community.<br ><a href="/phenome/">&gt;&gt;<% __('more...') |h %></a></div>
+<div class="boxcontent"><& /util/sentence.mas, text => __x('As an SGN locus editor, {link}contribute to webpages for your favorite genes and mutant lines{end_link} and share relevant data and publications with the community.'), link => '<a href="/phenome/">', end_link => '</a>' &><br ><a href="/phenome/">&gt;&gt;<% __('more...') |h %></a></div>
 <!-- img src="/documents/img/submit_genes_and_phenotypes.png" height="117 " border="0" / --></center></div>

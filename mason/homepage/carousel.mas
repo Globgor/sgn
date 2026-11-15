@@ -68,13 +68,13 @@
       <div class="item">
         <div style="background:url(/documents/img/homepage_carousel/carousel_benth.jpeg) center center; background-size:cover;" class="slider-size">
         <div class="carousel-sgn-caption">
-            <h3><a href="/organism/Nicotiana_benthamiana/genome"><i>N. benthamiana</i> Genome</a></h3>
+            <h3><a href="/organism/Nicotiana_benthamiana/genome"><& /util/sentence.mas, text => __x('{species} Genome'), species => '<i>N. benthamiana</i>' &></a></h3>
             <p><a href="http://apsjournals.apsnet.org/doi/abs/10.1094/MPMI-06-12-0148-TA" target="_blank">A draft genome sequence of <i>Nicotiana benthamiana</i> to enhance molecular plant-microbe biology research</a></p>
         </div>
 
         <div class="carousel-sgn-links">
           <ul class="sgn_sm_list">
-            <a href="http://bti.cornell.edu/research/projects/nicotiana-benthamiana/"><li>The <i>N. benthamiana</i> sequencing project</li></a>
+            <a href="http://bti.cornell.edu/research/projects/nicotiana-benthamiana/"><li><& /util/sentence.mas, text => __x('The {species} sequencing project'), species => '<i>N. benthamiana</i>' &></li></a>
             <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FNiben1.0.1&loc=Niben101Scf00005"><li><% __('Browse the genome') |h %></li></a>
             <a href="/tools/blast/?db_id=266"><li><% __('Find sequences by similarity') |h %></li></a>
             <a href="http://vigs.solgenomics.net"><li><% __('Design VIGS constructs') |h %></li></a>
@@ -95,12 +95,12 @@
 
         <div class="carousel-sgn-links">
           <ul class="sgn_sm_list">
-            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeaxi162&loc=Peaxi162Scf00001"><li>Browse the <i>P. axillaris</i> genome</li></a>
-            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeinf101&loc=Peinf101Scf00001"><li>Browse the <i>P. inflata</i> genome</li></a>
+            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeaxi162&loc=Peaxi162Scf00001"><li><& /util/sentence.mas, text => __x('Browse the {species} genome'), species => '<i>P. axillaris</i>' &></li></a>
+            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeinf101&loc=Peinf101Scf00001"><li><& /util/sentence.mas, text => __x('Browse the {species} genome'), species => '<i>P. inflata</i>' &></li></a>
             <a href="/tools/blast/?db_id=270"><li><% __('Find sequences by similarity') |h %></li></a>
             <a href="http://vigs.solgenomics.net"><li><% __('Design VIGS constructs') |h %></li></a>
-            <a href="ftp://ftp.solgenomics.net/genomes/Petunia_axillaris"><li><i>P. axillaris</i> Downloads</li></a>
-            <a href="ftp://ftp.solgenomics.net/genomes/Petunia_inflata"><li><i>P. inflata</i> Downloads</li></a>
+            <a href="ftp://ftp.solgenomics.net/genomes/Petunia_axillaris"><li><& /util/sentence.mas, text => __x('{species} Downloads'), species => '<i>P. axillaris</i>' &></li></a>
+            <a href="ftp://ftp.solgenomics.net/genomes/Petunia_inflata"><li><& /util/sentence.mas, text => __x('{species} Downloads'), species => '<i>P. inflata</i>' &></li></a>
           </ul>
         </div>
 
