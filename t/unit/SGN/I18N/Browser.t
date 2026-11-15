@@ -16,7 +16,7 @@ for my $input ( SGN::Test::Anything->new, 42, undef ) {
 }
 
 my $empty_path = tempdir( CLEANUP => 1 );
-for my $test (qw( t/unit/mason/site/login_script.t )) {
+for my $test (qw( t/unit/js/i18n.t t/unit/mason/site/login_script.t )) {
     local $ENV{PATH} = $empty_path;
     open( my $child, '-|', $^X, '-Ilib', $test ) or die $!;
     my $output = do { local $/; <$child> };
