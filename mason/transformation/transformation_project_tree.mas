@@ -31,8 +31,8 @@ $user_id => undef
                 <input type="text" class="form-control input-sm" id="transformation_tree_search" placeholder="<% __('Search') |h %>" />
                 <hr>
 
-                <h5><i>Double click<br />transformation project (&nbsp;<span class="glyphicon glyphicon-text-width text-success"></span>&nbsp;) or folder (&nbsp;<span class="glyphicon glyphicon-folder-open text-danger"></span>&nbsp;)<br/>to view detail page.</i></h5>
-                <h5><i>Breeding programs (&nbsp;<span class="glyphicon glyphicon-briefcase text-info"></span>&nbsp;)</i></h5>
+                <h5><i><& /util/sentence.mas, text => __x('Double click{break}transformation project ( {icon} ) or folder ( {icon2} ){break2}to view detail page.'), break => '<br />', icon => '<span class="glyphicon glyphicon-text-width text-success"></span>', icon2 => '<span class="glyphicon glyphicon-folder-open text-danger"></span>', break2 => '<br/>' &></i></h5>
+                <h5><i><& /util/sentence.mas, text => __x('Breeding programs ( {icon} )'), icon => '<span class="glyphicon glyphicon-briefcase text-info"></span>' &></i></h5>
                 <hr>
                 <h4><% __('Folders') |h %></h4>
                 <button class="btn btn-sm btn-default" id="new_folder_dialog_link"><% __('Create new folder') |h %></button><br/><br/>
