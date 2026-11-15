@@ -26,6 +26,7 @@ use POSIX qw( setlocale LC_MESSAGES );
 use Test::More;
 
 sub Local::Context::config { return {} }
+sub Local::Context::stash { return {} }
 
 # The preamble that SGN::View::Mason gives to every component.
 open( my $view, '<', 'lib/SGN/View/Mason.pm' ) or die "Can't read the Mason view: $!";
