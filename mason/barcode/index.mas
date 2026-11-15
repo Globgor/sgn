@@ -230,7 +230,7 @@ my $date = join "/", ($dt->year, $dt->month, $dt->day);
   </div>
 
   <div class="form-group form-group-sm">
-    <label class="col-sm-4 control-label">Or Upload <font size="3" color="#5bc0de">Tab-delimited Text File</font> With Stock Names: </label>
+    <label class="col-sm-4 control-label"><& /util/sentence.mas, text => __x('Or Upload {font}Tab-delimited Text File{end_font} With Stock Names:'), font => '<font size="3" color="#5bc0de">', end_font => '</font>' &> </label>
     <div class="col-sm-8">
       <input type="file" name="stock_names_file" />
     </div>
@@ -302,7 +302,7 @@ my $date = join "/", ($dt->year, $dt->month, $dt->day);
     </div>
   </div>
   <div class="form-group form-group-sm">
-    <label class="col-sm-4 control-label">Or Upload <font size="3" color="#5bc0de">Tab-delimited Text File</font> With Stock Names: </label>
+    <label class="col-sm-4 control-label"><& /util/sentence.mas, text => __x('Or Upload {font}Tab-delimited Text File{end_font} With Stock Names:'), font => '<font size="3" color="#5bc0de">', end_font => '</font>' &> </label>
     <div class="col-sm-8">
       <input type="file" name="stock_names_file_2" />
     </div>
@@ -370,7 +370,7 @@ my $date = join "/", ($dt->year, $dt->month, $dt->day);
     </div>
   </div>
   <div class="form-group form-group-sm">
-    <label class="col-sm-4 control-label">Or Upload <font size="3" color="#5bc0de">Tab-delimited Text File</font> With Trial Names: </label>
+    <label class="col-sm-4 control-label"><& /util/sentence.mas, text => __x('Or Upload {font}Tab-delimited Text File{end_font} With Trial Names:'), font => '<font size="3" color="#5bc0de">', end_font => '</font>' &> </label>
     <div class="col-sm-8">
       <input type="file" name="trial_names_file_2" />
     </div>

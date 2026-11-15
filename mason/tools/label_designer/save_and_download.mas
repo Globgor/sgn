@@ -12,11 +12,11 @@
 
     <!-- Additional Sort Options -->
     <div id="sort_order_2_container" style="display: none">
-        <label>...Then by:<span style="font-size: 60%; margin-left: 15px; padding: 5px; border-radius: 5px; background-color: #ccc;">Optional</span></label>
+        <label><& /util/sentence.mas, text => __x('...Then by:{span}Optional{end_span}'), span => '<span style="font-size: 60%; margin-left: 15px; padding: 5px; border-radius: 5px; background-color: #ccc;">', end_span => '</span>' &></label>
         <select class="form-control" id="sort_order_2" name="sort_by" style="max-width: 300px"></select>
     </div>
     <div id="sort_order_3_container" style="display: none">
-        <label>...Then by:<span style="font-size: 60%; margin-left: 15px; padding: 5px; border-radius: 5px; background-color: #ccc;">Optional</span></label>
+        <label><& /util/sentence.mas, text => __x('...Then by:{span}Optional{end_span}'), span => '<span style="font-size: 60%; margin-left: 15px; padding: 5px; border-radius: 5px; background-color: #ccc;">', end_span => '</span>' &></label>
         <select class="form-control" id="sort_order_3" name="sort_by" style="max-width: 300px"></select>
     </div>
 
