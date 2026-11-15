@@ -6,8 +6,8 @@ $trial_id
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addDataAgreementDialog">Modify Data Agreement</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addDataAgreementDialog"><% __('Modify Data Agreement') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -18,8 +18,8 @@ $trial_id
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="data_agreement_cancel_button">Close</button>
-                <button type="button" class="btn btn-primary" name="data_agreement_ok_button" id="data_agreement_ok_button">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="data_agreement_cancel_button"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="data_agreement_ok_button" id="data_agreement_ok_button"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>

@@ -4,10 +4,10 @@
 <table class="table table-bordered table-hover" id="manage_file_share_dump_table">
     <thead>
         <tr>
-            <th>File Name</th>
-            <th>User Name</th>
-            <th>Date</th>
-            <th>Options</th>
+            <th><% __('File Name') |h %></th>
+            <th><% __('User Name') |h %></th>
+            <th><% __('Date') |h %></th>
+            <th><% __('Options') |h %></th>
         </tr>
     </thead>
 </table>

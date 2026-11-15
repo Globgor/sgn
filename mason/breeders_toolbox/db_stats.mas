@@ -10,25 +10,25 @@ $breeding_programs
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   
-<& /page/page_title.mas, title => 'Database Stats' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Database Stats'), 'h' ) &>
 
-<&| /page/info_section.mas, title => "Date Range" &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Date Range"), 'h' ) &>
 
-Filter by date of addition to database<br /><br />
+<% __('Filter by date of addition to database') |h %><br /><br />
 <table><tr><td>
 
-Start Date: <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
+<% __('Start Date:') |h %> <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
 <td>&nbsp;</td></td><td>
 
-End Date: <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
+<% __('End Date:') |h %> <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
 </td><td>
 &nbsp;
 </td><td>
-<input type="checkbox" id="include_dateless_items"> include items without a date</input>
+<input type="checkbox" id="include_dateless_items"> <% __('include items without a date') |h %></input>
 </td><td>
 &nbsp;
 </td><td>
-<button id="update_dbstats_by_date">Update</button>
+<button id="update_dbstats_by_date"><% __('Update') |h %></button>
 
 </td>
 </tr></table>
@@ -74,7 +74,7 @@ jQuery('input[title="dbstats_end_date"]').daterangepicker(
 
 </script>
 
-<&| /page/info_section.mas, title => "Data categories" &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Data categories"), 'h' ) &>
 
 <table><tr><td>
 

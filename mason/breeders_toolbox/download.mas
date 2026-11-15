@@ -5,34 +5,34 @@ $is_curator => 0
 
 <& /util/import_javascript.mas, classes => [ 'jqueryui', 'jquery.cookie', 'CXGN.BreederSearch', 'CXGN.List', 'CXGN.BreedersToolbox.HTMLSelect', 'spin_min', 'ladda_min' ] &>
 
-<& /page/page_title.mas, title=>"Download Using Lists" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Download Using Lists"), 'h' ) &>
 
 <div class="container-fluid">
 
 <div class="well">
-Choose a list for each parameter and click "Download".
+<% __('Choose a list for each parameter and click "Download".') |h %>
 </div>
 
 <div class="well well-sm">
-<h4>Download Phenotypes Using Lists</h4><p>Select Parameters:</p>
+<h4><% __('Download Phenotypes Using Lists') |h %></h4><p><% __('Select Parameters:') |h %></p>
 <form id="download_form" action="/breeders/download_action" method="POST" >
 <table class="table table-bordered" >
   <thead>
   <tr>
     <th>
-      Accessions
+      <% __('Accessions') |h %>
     </th>
     <th>
-      Trials
+      <% __('Trials') |h %>
     </th>
     <th>
-      Traits
+      <% __('Traits') |h %>
     </th>
     <th>
-        Options
+        <% __('Options') |h %>
     </th>
     <th>
-      Action
+      <% __('Action') |h %>
     </th>
   </tr>
   </thead>
@@ -51,52 +51,52 @@ Choose a list for each parameter and click "Download".
       </div>
    </td>
     <td>
-    <b>Format:</b><br/>
+    <b><% __('Format:') |h %></b><br/>
     <select class="form-control" id="format" name="format">
         <option value=".csv">CSV</option>
         <option value=".xlsx">XLSX</option>
         <option value="html">HTML</option>
     </select>
     <br/>
-    <b>Data Level:</b><br/>
+    <b><% __('Data Level:') |h %></b><br/>
     <select class="form-control" id="phenotype_datalevel" name="phenotype_datalevel">
-        <option value="all">All</option>
-        <option value="plot">Plot</option>
-        <option value="plant">Plant</option>
+        <option value="all"><% __('All') |h %></option>
+        <option value="plot"><% __('Plot') |h %></option>
+        <option value="plant"><% __('Plant') |h %></option>
     </select>
     <br/>
-    <b>Timestamp:</b><br/>
+    <b><% __('Timestamp:') |h %></b><br/>
     <select class="form-control" id="timestamp" name="timestamp">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+        <option value="0"><% __('No') |h %></option>
+        <option value="1"><% __('Yes') |h %></option>
     </select>
     <br/>
-    <b>Exclude Phenotype Outliers:</b><br/>
+    <b><% __('Exclude Phenotype Outliers:') |h %></b><br/>
     <select class="form-control" id="exclude_phenotype_outlier" name="exclude_phenotype_outlier">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+        <option value="0"><% __('No') |h %></option>
+        <option value="1"><% __('Yes') |h %></option>
     </select>
     <br/>
-    <b>Include Intercrop Accessions:</b><br/>
+    <b><% __('Include Intercrop Accessions:') |h %></b><br/>
     <select class="form-control" id="intercrop" name="intercrop">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+        <option value="0"><% __('No') |h %></option>
+        <option value="1"><% __('Yes') |h %></option>
     </select>
     <br/>
-    <b>Include Accession Entry Numbers:</b><br/>
+    <b><% __('Include Accession Entry Numbers:') |h %></b><br/>
     <select class="form-control" id="entry_numbers" name="entry_numbers">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+        <option value="0"><% __('No') |h %></option>
+        <option value="1"><% __('Yes') |h %></option>
     </select>
     <br/>
-    <b>Include Parents:</b><br/>
+    <b><% __('Include Parents:') |h %></b><br/>
     <select class="form-control" id="pedigrees" name="pedigrees">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+        <option value="0"><% __('No') |h %></option>
+        <option value="1"><% __('Yes') |h %></option>
     </select>
     </td>
     <td>
-      <button class="btn btn-primary" type="button" id="phenotype">Download</button>
+      <button class="btn btn-primary" type="button" id="phenotype"><% __('Download') |h %></button>
       <input type="hidden" id="phenotype_download_token" name="phenotype_download_token"/>
     </td>
   </tr>
@@ -106,12 +106,12 @@ Choose a list for each parameter and click "Download".
 </div>
 
 <div class="well well-sm">
-<h4>Inspect Datasets</h4>
+<h4><% __('Inspect Datasets') |h %></h4>
 <table class="table table-bordered" >
   <thead>
   <tr>
     <th>
-      Datasets
+      <% __('Datasets') |h %>
     </th>
   </tr>
   </thead>
@@ -127,19 +127,19 @@ Choose a list for each parameter and click "Download".
 </div>
 
 <div class="well well-sm">
-<h4>Download Metadata</h4><p>Select Parameters:</p>
+<h4><% __('Download Metadata') |h %></h4><p><% __('Select Parameters:') |h %></p>
 <form id="download_metadata_form" action="/breeders/download_action" method="POST" >
 <table class="table table-bordered" >
   <thead>
   <tr>
     <th>
-      Trials
+      <% __('Trials') |h %>
     </th>
     <th>
-        Options
+        <% __('Options') |h %>
     </th>
     <th>
-      Action
+      <% __('Action') |h %>
     </th>
   </tr>
   </thead>
@@ -150,7 +150,7 @@ Choose a list for each parameter and click "Download".
       </div>
     </td>
     <td>
-    <b>Format:</b><br/>
+    <b><% __('Format:') |h %></b><br/>
     <select class="form-control" id="metadata_format" name="metadata_format">
         <option value=".xlsx">XLSX</option>
         <option value=".csv">CSV</option>
@@ -164,7 +164,7 @@ Choose a list for each parameter and click "Download".
     </div>
     </td>
     <td>
-      <button class="btn btn-primary" type="button" id="metadata">Download</button>
+      <button class="btn btn-primary" type="button" id="metadata"><% __('Download') |h %></button>
       <input type="hidden" id="metadata_download_token" name="metadata_download_token"/>
     </td>
   </tr>
@@ -287,11 +287,11 @@ function download_phenotypes() {
   <form id="download_accession_properties" action="/breeders/download_accession_properties_action" method="POST">
     <table class="table"  cellpadding="10">
       <thead>
-        <tr><td colspan="2"><h4>Download Accession Properties</h4><p>Select parameters:</p></tr>
+        <tr><td colspan="2"><h4><% __('Download Accession Properties') |h %></h4><p><% __('Select parameters:') |h %></p></tr>
         <tr>
-          <th>Accessions</th>
-          <th>Format</th>
-          <th>Action</th>
+          <th><% __('Accessions') |h %></th>
+          <th><% __('Format') |h %></th>
+          <th><% __('Action') |h %></th>
         </tr>
       </thead>
       <tbody>
@@ -306,7 +306,7 @@ function download_phenotypes() {
           </select>
         </td>
         <td>
-          <button class="btn btn-primary" type="button" id="accession_properties_download">Download</button>
+          <button class="btn btn-primary" type="button" id="accession_properties_download"><% __('Download') |h %></button>
           <input type="hidden" id="accession_properties_download_token" name="accession_properties_download_token"/>
         </td>
       </tr>
@@ -368,19 +368,19 @@ $(document).ready(function() {
 <form id="download_pedigree" action="/breeders/download_pedigree_action" method="POST">
 <table class="table"  cellpadding="10">
   <thead>
-  <tr><td colspan="2"><h4>Download Pedigrees </h4><p>Select parameter:</p></tr>
+  <tr><td colspan="2"><h4><% __('Download Pedigrees') |h %> </h4><p><% __('Select parameter:') |h %></p></tr>
   <tr>
     <th>
-      Accessions
+      <% __('Accessions') |h %>
     </th>
     <th>
-      Query
+      <% __('Query') |h %>
     </th>
     <th>
-      Format
+      <% __('Format') |h %>
     </th>
     <th>
-      Action
+      <% __('Action') |h %>
     </th>
   </tr>
   </thead>
@@ -392,19 +392,19 @@ $(document).ready(function() {
     </td>
     <td>
       <div style="width: 175px">
-        <p><strong>Depth:</strong></p>
+        <p><strong><% __('Depth:') |h %></strong></p>
         <div class="radio">
-          <label><input type="radio" id="ped_format_parents" name="ped_format" value="parents_only" checked>Only One Generation</label>
+          <label><input type="radio" id="ped_format_parents" name="ped_format" value="parents_only" checked><% __('Only One Generation') |h %></label>
         </div>
         <div class="radio">
-          <label><input type="radio" id="ped_format_full" name="ped_format" value="full">All Generations</label>
+          <label><input type="radio" id="ped_format_full" name="ped_format" value="full"><% __('All Generations') |h %></label>
         </div>
-        <p><strong>Include:</strong></p>
+        <p><strong><% __('Include:') |h %></strong></p>
         <div class="radio">
-          <label><input type="radio" id="include_ancestors" name="ped_include" value="ancestors" checked>Only Ancestors</label>
+          <label><input type="radio" id="include_ancestors" name="ped_include" value="ancestors" checked><% __('Only Ancestors') |h %></label>
         </div>
         <div class="radio">
-          <label><input type="radio" id="include_ancestors_descendants" name="ped_include" value="ancestors_descendants">Ancestors and Descendants</label>
+          <label><input type="radio" id="include_ancestors_descendants" name="ped_include" value="ancestors_descendants"><% __('Ancestors and Descendants') |h %></label>
         </div>
       </div>
     </td>
@@ -415,7 +415,7 @@ $(document).ready(function() {
       </select>
     </td>
     <td>
-      <button class="btn btn-primary" type="button" id="pedigree">Download</button>
+      <button class="btn btn-primary" type="button" id="pedigree"><% __('Download') |h %></button>
       <input type="hidden" id="pedigree_download_token" name="pedigree_download_token"/>
     </td>
   </tr>
@@ -485,11 +485,11 @@ $(document).ready(function() {
     <form id="download_cross_family" action="/breeders/download_cross_family_of_progenies" method="POST">
         <table class="table"  cellpadding="10">
             <thead>
-                <tr><td colspan="2"><h4>Download Crosses and Families of Progenies </h4><p>Select parameters:</p></tr>
+                <tr><td colspan="2"><h4><% __('Download Crosses and Families of Progenies') |h %> </h4><p><% __('Select parameters:') |h %></p></tr>
                 <tr>
-                    <th>Accessions</th>
-                    <th>Format</th>
-                    <th>Action</th>
+                    <th><% __('Accessions') |h %></th>
+                    <th><% __('Format') |h %></th>
+                    <th><% __('Action') |h %></th>
                 </tr>
             </thead>
             <tbody>
@@ -503,7 +503,7 @@ $(document).ready(function() {
                         </select>
                     </td>
                     <td>
-                        <button class="btn btn-primary" type="button" id="cross_family">Download</button>
+                        <button class="btn btn-primary" type="button" id="cross_family"><% __('Download') |h %></button>
                         <input type="hidden" id="progeny_list_id" name="list_id" />
                         <input type="hidden" id="cross_family_download_token" name="list_download_token" />
                     </td>
@@ -549,11 +549,11 @@ $(document).ready(function() {
     <form id="download_seedlot_details" action="/list/download_details" method="POST">
         <table class="table"  cellpadding="10">
             <thead>
-                <tr><td colspan="2"><h4>Download Seedlot Details </h4><p>Select parameters:</p></tr>
+                <tr><td colspan="2"><h4><% __('Download Seedlot Details') |h %> </h4><p><% __('Select parameters:') |h %></p></tr>
                 <tr>
-                    <th>Seedlots</th>
-                    <th>Format</th>
-                    <th>Action</th>
+                    <th><% __('Seedlots') |h %></th>
+                    <th><% __('Format') |h %></th>
+                    <th><% __('Action') |h %></th>
                 </tr>
             </thead>
             <tbody>
@@ -567,7 +567,7 @@ $(document).ready(function() {
                         </select>
                     </td>
                     <td>
-                        <button class="btn btn-primary" type="button" id="seedlot">Download</button>
+                        <button class="btn btn-primary" type="button" id="seedlot"><% __('Download') |h %></button>
                         <input type="hidden" id="seedlot_list_id" name="list_id" />
                         <input type="hidden" id="seedlot_download_token" name="list_download_token" />
                     </td>
@@ -616,11 +616,11 @@ $(document).ready(function() {
   <form id="download_seedlot_maintenance_events" action="/breeders/download_seedlot_maintenance_events_action" method="POST">
       <table class="table"  cellpadding="10">
         <thead>
-          <tr><td colspan="2"><h4>Download Seedlot Maintenance Events</h4><p>Select parameters:</p></tr>
+          <tr><td colspan="2"><h4><% __('Download Seedlot Maintenance Events') |h %></h4><p><% __('Select parameters:') |h %></p></tr>
           <tr>
-            <th>Seedlots</th>
-            <th>Format</th>
-            <th>Action</th>
+            <th><% __('Seedlots') |h %></th>
+            <th><% __('Format') |h %></th>
+            <th><% __('Action') |h %></th>
           </tr>
         </thead>
         <tbody>
@@ -634,7 +634,7 @@ $(document).ready(function() {
             </select>
           </td>
           <td>
-            <button class="btn btn-primary" type="button" id="seedlot_maintenance_events_download">Download</button>
+            <button class="btn btn-primary" type="button" id="seedlot_maintenance_events_download"><% __('Download') |h %></button>
             <input type="hidden" id="seedlot_maintenance_events_download_token" name="seedlot_maintenance_events_download_token"/>
           </td>
         </tr>
@@ -693,11 +693,11 @@ $(document).ready(function() {
     <form id="download_obsolete_metadata_action" action="/breeders/download_obsolete_metadata_action" method="POST">
         <table class="table" cellpadding="10">
             <thead>
-                <tr><td colspan="2"><h4>Download Obsolete Metadata</h4><p>Select parameters:</p></tr>
+                <tr><td colspan="2"><h4><% __('Download Obsolete Metadata') |h %></h4><p><% __('Select parameters:') |h %></p></tr>
                 <tr>
-                    <th>Obsoleted Stocks</th>
-                    <th>Format</th>
-                    <th>Action</th>
+                    <th><% __('Obsoleted Stocks') |h %></th>
+                    <th><% __('Format') |h %></th>
+                    <th><% __('Action') |h %></th>
                 </tr>
             </thead>
             <tbody>
@@ -711,7 +711,7 @@ $(document).ready(function() {
                         </select>
                     </td>
                     <td>
-                        <button class="btn btn-primary" type="button" id="obsolete_metadata_download">Download</button>
+                        <button class="btn btn-primary" type="button" id="obsolete_metadata_download"><% __('Download') |h %></button>
                         <input type="hidden" id="obsolete_metadata_download_token" name="obsolete_metadata_download_token"/>
                     </td>
                 </tr>
@@ -757,16 +757,16 @@ jQuery(document).ready(function() {
 <form id="download_gbs" action="/breeders/download_gbs_action" method="POST">
 <table class="table"  cellpadding="10">
   <thead>
-  <tr><td colspan="2"><h4>Download Genotypes </h4><p>Select parameter:</p></tr>
+  <tr><td colspan="2"><h4><% __('Download Genotypes') |h %> </h4><p><% __('Select parameter:') |h %></p></tr>
   <tr>
     <th>
-      Accessions
+      <% __('Accessions') |h %>
     </th>
     <th>
-      Genotyping Protocol
+      <% __('Genotyping Protocol') |h %>
     </th>
     <th>
-      Action
+      <% __('Action') |h %>
     </th>
   </tr>
   </thead>
@@ -781,7 +781,7 @@ jQuery(document).ready(function() {
       </div>
     </td>
     <td>
-      <button class="btn btn-primary" type="button" id="genotype">Download</button>
+      <button class="btn btn-primary" type="button" id="genotype"><% __('Download') |h %></button>
       <input type="hidden" id="gbs_download_token" name="gbs_download_token"/>
     </td>
   </tr>
@@ -834,19 +834,19 @@ jQuery(document).ready(function() {
 <form id="gbs_qc" action="/breeders/gbs_qc_action" method="POST">
 <table class="table" cellpadding="10">
   <thead>
-  <tr><td colspan="3"><h4>Genotyping QC</h4><p>Select parameter:</p></tr>
+  <tr><td colspan="3"><h4><% __('Genotyping QC') |h %></h4><p><% __('Select parameter:') |h %></p></tr>
   <tr>
     <th>
-      Trials
+      <% __('Trials') |h %>
     </th>
     <th>
-      Accessions
+      <% __('Accessions') |h %>
     </th>
     <th>
-      Genotyping Protocol
+      <% __('Genotyping Protocol') |h %>
     </th>
     <th>
-      Action
+      <% __('Action') |h %>
     </th>
   </tr>
   </thead>
@@ -865,7 +865,7 @@ jQuery(document).ready(function() {
       </div>
     </td>
     <td>
-      <button class="btn btn-primary" type="button" id="genotype_qc">Download</button>
+      <button class="btn btn-primary" type="button" id="genotype_qc"><% __('Download') |h %></button>
       <input type="hidden" id="qc_download_token" name="qc_download_token"/>
     </td>
   </tr>

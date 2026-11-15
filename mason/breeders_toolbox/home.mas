@@ -4,40 +4,40 @@
 
 </%args>
 
-<& /page/page_title.mas, title=>'Breeder Tools' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Breeder Tools'), 'h' ) &>
 
 <div class="container-fluid">
 
 <dl>
-<dt><a href="/breeders/manage_programs">Breeding Programs</a></dt>
-<dd>Add new breeding program information.</dd>
+<dt><a href="/breeders/manage_programs"><% __('Breeding Programs') |h %></a></dt>
+<dd><% __('Add new breeding program information.') |h %></dd>
 
-<dt><a href="/breeders/accessions">Accessions</a></dt>
-<dd>Manage accessions. Add new accessions using fuzzy matching.</dd>
+<dt><a href="/breeders/accessions"><% __('Accessions') |h %></a></dt>
+<dd><% __('Manage accessions. Add new accessions using fuzzy matching.') |h %></dd>
 
-<dt><a href="/breeders/trials">Field Trials</a></dt>
-<dd>Manage trials. Add new trials and create field layouts.</dd>
+<dt><a href="/breeders/trials"><% __('Field Trials') |h %></a></dt>
+<dd><% __('Manage trials. Add new trials and create field layouts.') |h %></dd>
 
-<dt><a href="/breeders/genotyping">Genotyping Plates</a></dt>
-<dd>Upload and manage IGD genotyping plates.</dd>
+<dt><a href="/breeders/genotyping"><% __('Genotyping Plates') |h %></a></dt>
+<dd><% __('Upload and manage IGD genotyping plates.') |h %></dd>
 
-<dt><a href="/breeders/locations">Locations</a></dt>
-<dd>Manage locations. Add/remove locations</dd>
+<dt><a href="/breeders/locations"><% __('Locations') |h %></a></dt>
+<dd><% __('Manage locations. Add/remove locations') |h %></dd>
 
-<dt><a href="/breeders/crosses">Crosses</a></dt>
-<dd>Create new crosses.</dd>
+<dt><a href="/breeders/crosses"><% __('Crosses') |h %></a></dt>
+<dd><% __('Create new crosses.') |h %></dd>
 
-<dt><a href="/breeders/phenotyping">Phenotyping</a></dt>
-<dd>Upload phenotype information for accessions in the database.</dd>
+<dt><a href="/breeders/phenotyping"><% __('Phenotyping') |h %></a></dt>
+<dd><% __('Upload phenotype information for accessions in the database.') |h %></dd>
 
 <dt><a href="/fieldbook">Fieldbook</a><dt>
-<dd>Create files for the Android Fieldbook app, upload files from Fieldbook to the database.
+<dd><% __('Create files for the Android Fieldbook app, upload files from Fieldbook to the database.') |h %>
 
-<dt><a href="/barcode">Barcodes</a></dt>
-<dd>Download barcodes for accessions and plots.</dd>
+<dt><a href="/barcode"><% __('Barcodes') |h %></a></dt>
+<dd><% __('Download barcodes for accessions and plots.') |h %></dd>
 
-<dt><a href="/breeders/download">Download Data</a></dt>
-<dd>Download phenotypic and genotypic data by trial, triat and location.</dd>
+<dt><a href="/breeders/download"><% __('Download Data') |h %></a></dt>
+<dd><% __('Download phenotypic and genotypic data by trial, triat and location.') |h %></dd>
 
 </div>
 
