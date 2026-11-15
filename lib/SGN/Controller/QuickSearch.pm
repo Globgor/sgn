@@ -721,7 +721,7 @@ sub quick_bp_search {
 
 sub quick_web_search {
   my ($self, undef, $term) = @_;
-  # works the same way as quick_page_search, except that the domain contraint is removed from the
+  # works the same way as quick_page_search, except that the domain constraint is removed from the
   # search.
   print STDERR "Performing web search... ";
   return $self->google_search('the entire web',$term);

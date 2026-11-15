@@ -476,7 +476,7 @@ function updateRefMaps() {
     jQuery("#marker-refmap").html(html);
     jQuery("#marker-refmap").attr('disabled', false);
 
-    // Set intial value, if not already set
+    // Set initial value, if not already set
     if ( SEL_REFMAP ) {
         jQuery("#marker-refmap").val(SEL_REFMAP);
         SEL_REFMAP = undefined;
@@ -517,7 +517,7 @@ function updateChromosomes() {
         jQuery("#marker-chromosome").html(html);
         jQuery("#marker-chromosome").attr("disabled", false);
 
-        // Set intial value, if not already set
+        // Set initial value, if not already set
         if ( SEL_CHROM ) {
             jQuery("#marker-chromosome").val(SEL_CHROM);
             SEL_CHROM = undefined;
@@ -528,7 +528,7 @@ function updateChromosomes() {
 
 
 /**
- * Update the start/end postions based on the selected ref/map and chrom
+ * Update the start/end positions based on the selected ref/map and chrom
  * - update position units
  * - enable fields only when ref/map and chrom have been selected
  */
@@ -576,7 +576,7 @@ function updateSpecies() {
         jQuery("#marker-species").html(html);
         jQuery("#marker-species").attr("disabled", false);
 
-        // Set intial value, if not already set
+        // Set initial value, if not already set
         if ( SEL_SPECIES ) {
             jQuery("#marker-species").val(SEL_SPECIES);
             SEL_SPECIES = undefined;
@@ -636,7 +636,7 @@ function updateProtocols() {
         jQuery("#marker-protocol").html(html);
         jQuery("#marker-protocol").attr("disabled", false);
 
-        // Set intial value, if not already set
+        // Set initial value, if not already set
         if ( SEL_PROTOCOL ) {
             jQuery("#marker-protocol").val(SEL_PROTOCOL);
             SEL_PROTOCOL = undefined;
