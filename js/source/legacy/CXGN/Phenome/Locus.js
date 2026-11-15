@@ -8,6 +8,7 @@
 *
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use('MochiKit.DOM');
 JSAN.use('MochiKit.Visual');
 

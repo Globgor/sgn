@@ -10,6 +10,7 @@
 */
 
 
+JSAN.use("CXGN.I18N");
 JSAN.use('CXGN.Effects');
 JSAN.use('CXGN.Phenome.Locus');
 JSAN.use('CXGN.AJAX.Ontology');
