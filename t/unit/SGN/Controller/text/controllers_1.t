@@ -38,6 +38,7 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/Analytics.pm', 'SGN::Controller::Analytics', [ '__(\'The requested analytics protocol ID does not exist in the database.\')' ] ],
+    [ 'lib/SGN/Controller/Barcode.pm', 'SGN::Controller::Barcode', [ '__(\'You must be logged in to use the unique barcode tool.\')' ] ],
     [ 'lib/SGN/Controller/BreedingProgram.pm', 'SGN::Controller::BreedingProgram', [ '__("The requested breeding program does not exist or has been deleted.")' ] ],
     [ 'lib/SGN/Controller/Cross.pm', 'SGN::Controller::Cross', [ '__(\'The requested cross does not exist.\')', '__(\'The requested family name does not exist.\')' ] ],
     [ 'lib/SGN/Controller/Dataset.pm', 'SGN::Controller::Dataset', [ '__("The requested dataset does not exist or has been deleted.")', '__("The selected service does not exist in the server configuration")' ] ],
