@@ -29,16 +29,16 @@ Isaak Y Tecle (iyt2@cornell.edu)
 
 <div id="selected_trials" style="display:none;width:100%">
 
- <p class="message"> Selected trials </p>
+ <p class="message"> <% __('Selected trials') |h %> </p>
 
 <table class ="table" id="selected_trials_table" style="text-align:left;width:100%">
 <tr>
   <th></th>
-  <th>Trial</th>
-  <th>Description</th>
-  <th>Location</th>
-  <th>Year</th>
-  <th>More details</th>
+  <th><% __('Trial') |h %></th>
+  <th><% __('Description') |h %></th>
+  <th><% __('Location') |h %></th>
+  <th><% __('Year') |h %></th>
+  <th><% __('More details') |h %></th>
 </tr>
 <tr>
 </tr>
@@ -55,7 +55,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
   </td>
   <td>
     <div id="search_again_div" style="display:none;text-align:right">
-    <input style class="button" type="button" id="search_again" value="Search again"/>
+    <input style class="button" type="button" id="search_again" value="<% __('Search again') |h %>"/>
   </div>
  </td>
 </tr>

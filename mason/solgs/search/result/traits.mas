@@ -15,14 +15,14 @@ $genotyping_protocol_id => ''
 <& /util/import_javascript.mas, classes => ["solGS.solGS"] &>
 
 <& /page/page_title.mas,
-    title => 'Traits with genomic selection data',
+    title => $m->interp->apply_escapes( __('Traits with genomic selection data'), 'h' ),
 &>
   
 % if ($result) 
 % { 
 
 <&| /page/info_section.mas,
-      title => 'Search Results',
+      title => $m->interp->apply_escapes( __('Search Results'), 'h' ),
 &>
   <& /page/columnar_table.mas,
      headings    => ['Name', 'Definition'],
@@ -38,7 +38,7 @@ $genotyping_protocol_id => ''
 %else
 %{
 <&| /page/info_section.mas,
-      title => 'Search Results',
+      title => $m->interp->apply_escapes( __('Search Results'), 'h' ),
 &>
 %if ( $query )
 %{
@@ -46,7 +46,7 @@ $genotyping_protocol_id => ''
 %}
 %else
 %{
-<br>No results. Search again with a trait name.<br />
+<br><% __('No results. Search again with a trait name.') |h %><br />
 %}
 </&>
 %}

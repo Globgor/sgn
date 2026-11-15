@@ -33,7 +33,7 @@ if (@$traits_list) {
 
 <div class="container">
   <& /page/page_title.mas, 
-     title=>'List of traits with GS data'
+     title=>$m->interp->apply_escapes( __('List of traits with GS data'), 'h' )
     &>
 
     <&| /page/info_section.mas, 

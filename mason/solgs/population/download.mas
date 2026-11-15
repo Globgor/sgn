@@ -22,7 +22,7 @@ Isaak Y Tecle (iyt2@cornell.edu)
 <&| /page/info_section.mas,
     collapsible => 1,
     collapsed   => 0,
-    title       => "Download data"
+    title       => $m->interp->apply_escapes( __("Download data"), 'h' )
 &>
 
     <div id="training_pop_download"></div>

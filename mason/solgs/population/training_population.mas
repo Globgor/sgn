@@ -43,7 +43,7 @@ $training_pop_id = $pop_id;
 <&| /page/info_section.mas,
     collapsible => 1,
     collapsed   => 0,
-    title       => "Training population summary",
+    title       => $m->interp->apply_escapes( __("Training population summary"), 'h' ),
   &>
 
  <& /solgs/population/summary.mas,
@@ -68,7 +68,7 @@ $training_pop_id = $pop_id;
 <&| /page/info_section.mas,
       collapsible => 1,
       collapsed   => 0,
-      title       => "Model training"
+      title       => $m->interp->apply_escapes( __("Model training"), 'h' )
 &>
 
 <& /solgs/population/traits_list.mas,
@@ -107,11 +107,11 @@ $training_pop_id = $pop_id;
 <&| /page/info_section.mas,
       collapsible => 1,
       collapsed   => 0,
-      title       => "Genotype Data"
+      title       => $m->interp->apply_escapes( __("Genotype Data"), 'h' )
 &>
 
   <div id="traits_list_message"  class="message">
-    <p>There is no genotype data for this population.</p>
+    <p><% __('There is no genotype data for this population.') |h %></p>
   </div>
 
 </&>
@@ -121,10 +121,10 @@ $training_pop_id = $pop_id;
 <&| /page/info_section.mas,
     collapsible => 1,
     collapsed   => 0,
-    title       => "Data Accessibility",
+    title       => $m->interp->apply_escapes( __("Data Accessibility"), 'h' ),
   &>
 
-<p>This is private data.</p>
+<p><% __('This is private data.') |h %></p>
 
 </&>
 %}

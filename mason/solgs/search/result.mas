@@ -12,14 +12,14 @@ $form
 </%args>
 
 <& /page/page_title.mas,
-    title => 'solGS search results',
+    title => $m->interp->apply_escapes( __('solGS search results'), 'h' ),
 &>
   
 % if ($result) 
 % { 
 
 <&| /page/info_section.mas,
-      title => 'Search Results',
+      title => $m->interp->apply_escapes( __('Search Results'), 'h' ),
 &>
 
 <& /page/columnar_table.mas,
@@ -35,17 +35,17 @@ $form
 %else
 %{
 <&| /page/info_section.mas,
-      title => 'No Search Results',
+      title => $m->interp->apply_escapes( __('No Search Results'), 'h' ),
 &>
 
-<br>No results. Search again with a different term.<br />
+<br><% __('No results. Search again with a different term.') |h %><br />
 
 </&>
 
 %}
 
 <&| /page/info_section.mas,
-    title       => 'Search',
+    title       => $m->interp->apply_escapes( __('Search'), 'h' ),
     collapsible => '1',
     collapsed   =>  1
 &>
