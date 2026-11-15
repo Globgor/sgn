@@ -2,30 +2,23 @@
 
 <div style="margin: 1em 0; padding: 0.2em 2em 0.4em 2em">
   <p>
-  SGN and <a href="http://compbio.dfci.harvard.edu/tgi/">the Gene Index Project (TGI)</a>, now at <a href="http://www.dana-farber.org/">DFCI</a>, maintain
-  independent unigene/TC databases, entries in which tend to have common
-  member ESTs.
+  <& /util/sentence.mas, text => __x('SGN and {link}the Gene Index Project (TGI){end_link}, now at {link2}DFCI{end_link2}, maintain independent unigene/TC databases, entries in which tend to have common member ESTs.'), link => '<a href="http://compbio.dfci.harvard.edu/tgi/">', end_link => '</a>', link2 => '<a href="http://www.dana-farber.org/">', end_link2 => '</a>' &>
   </p>
 
   <p>
-  SGN no longer maintains a specific tool for mapping between these two
-  databases.  Instead, for users to establish correspondences between these two
-  sets, we recommend using the BLAST tools available on each of these
-  sites.
+  <& /util/sentence.mas, text => __x('SGN no longer maintains a specific tool for mapping between these two databases. Instead, for users to establish correspondences between these two sets, we recommend using the BLAST tools available on each of these sites.') &>
   </p>
 
 </div>
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Mapping SGN-U to TGI TC'), 'h' ) &>
 
-  Use the SGN-U sequences as input to the BLAST tool at
-  <a href="http://compbio.dfci.harvard.edu/tgi/">the TGI site</a>.
+  <& /util/sentence.mas, text => __x('Use the SGN-U sequences as input to the BLAST tool at {link}the TGI site{end_link}.'), link => '<a href="http://compbio.dfci.harvard.edu/tgi/">', end_link => '</a>' &>
 
 </&>
 
 <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Mapping TGI TC to SGN-U'), 'h' ) &>
 
-  Use the TGI TC sequences as input to the <a href="/tools/blast">SGN
-  BLAST tool</a>, selecting one of the SGN unigene data sets.
+  <& /util/sentence.mas, text => __x('Use the TGI TC sequences as input to the {link}SGN BLAST tool{end_link}, selecting one of the SGN unigene data sets.'), link => '<a href="/tools/blast">', end_link => '</a>' &>
 
 </&>

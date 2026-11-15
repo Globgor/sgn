@@ -102,7 +102,7 @@
   <div>
     <label style="font-size: 18px;"><% __('Welcome to the Personalized Report Generator') |h %></label>
 
-    <p>This is a <b>CURATOR's</b> tool which allows you to create customized reports based on scripts tailored to the specific instructions of your Breedbase instance. These reports are designed to meet your unique needs and provide detailed insights into your data. If you require a new report type or have specific requirements, please reach out to the Breedbase team for assistance.</p>
+    <p><& /util/sentence.mas, text => __x('This is a {bold}CURATOR\'s{end_bold} tool which allows you to create customized reports based on scripts tailored to the specific instructions of your Breedbase instance. These reports are designed to meet your unique needs and provide detailed insights into your data. If you require a new report type or have specific requirements, please reach out to the Breedbase team for assistance.'), bold => '<b>', end_bold => '</b>' &></p>
 
     <form>
       <hr>

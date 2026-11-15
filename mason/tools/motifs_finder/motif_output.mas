@@ -37,7 +37,7 @@ $sum => ""
 	</%perl>
 
 	<hr style="\&quot;color:" #006699;="" margin:="" 50px="" 20px;="" \"="">
-	<h ><b>Motif Finder Result Summary</h></b><br/><br/><%  $sum %> <br/><br/><br/>
+	<h ><b><& /util/sentence.mas, text => __x('Motif Finder Result Summary') &></h></b><br/><br/><%  $sum %> <br/><br/><br/>
 
 </center>
 
@@ -58,7 +58,7 @@ $sum => ""
 	</form>
 
  		<p><br/>
-		<a href="#top"  >Back to top</a> &nbsp &nbsp <!--<a href="javascript:javascript:history.go(-1)">Back to previous page</a> --> &nbsp &nbsp
-		<a id="back_to_input" href="/tools/motifs_finder">Go back to input page</a>
+		<& /util/sentence.mas, text => __x('{link}Back to top{end_link}'), link => '<a href="#top"  >', end_link => '</a>' &> &nbsp &nbsp <!--<a href="javascript:javascript:history.go(-1)">Back to previous page</a> --> &nbsp &nbsp
+		<& /util/sentence.mas, text => __x('{link}Go back to input page{end_link}'), link => '<a id="back_to_input" href="/tools/motifs_finder">', end_link => '</a>' &>
 		</p>
 </center>

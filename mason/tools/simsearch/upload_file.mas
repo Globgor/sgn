@@ -8,7 +8,7 @@ $format => ""
 
 <& /page/page_title.mas, title => "SimSearch: File $user_readable_filename uploaded for analysis [ $format format ]" &>
 
-(working file name <% $filename %>)
+<& /util/sentence.mas, text => __x('(working file name {filename})'), filename => $filename &>
 
 <div id="simsearch_input_form">
 

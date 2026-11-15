@@ -99,7 +99,7 @@
 
 <& /page/page_title.mas, title=>"BLAST" &>
 
-<div style="border-style:dotted;border-width:1px;margin-bottom:20px;"><div style="margin-top:10px;margin-right:10px;margin-bottom:10px;margin-left:10px;" ><b>Note</b>: To match shorter sequences:
+<div style="border-style:dotted;border-width:1px;margin-bottom:20px;"><div style="margin-top:10px;margin-right:10px;margin-bottom:10px;margin-left:10px;" ><& /util/sentence.mas, text => __x('{bold}Note{end_bold}: To match shorter sequences:'), bold => '<b>', end_bold => '</b>' &>
 <div>
 <ul>
 <li><% __('Consider setting the word_size to a lower value.') |h %></li>

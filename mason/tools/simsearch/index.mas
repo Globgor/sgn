@@ -9,7 +9,7 @@
 </div>
 <br />
 <div>
-Upload format is either <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">vcf</a> or <a href="">dosage</a> format.
+<& /util/sentence.mas, text => __x('Upload format is either {link}{vcf}{end_link} or {link2}{dosage}{end_link2} format.'), link => '<a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">', vcf => 'vcf', end_link => '</a>', link2 => '<a href="">', dosage => 'dosage', end_link2 => '</a>' &>
 </div>
 <br />
 
