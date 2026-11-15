@@ -5,6 +5,7 @@
 * @author Chris Carpita	<csc32@cornell.edu>
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("CXGN.Request");
 JSAN.use("CXGN.Effects.Hotlist");
 

@@ -14,6 +14,7 @@
 
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("MochiKit.Logging");
 
 var Effects = {
