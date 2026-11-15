@@ -20,103 +20,103 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addHighDimDataDialog">Upload High-Dimensional Phenotype Data</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addHighDimDataDialog"><% __('Upload High-Dimensional Phenotype Data') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "high_dim_data_upload_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through uploading high-dimensional data into the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading high-dimensional data into the database."), 'h' ) &>
 
                     <center>
                         <div class="well">
-                            <h4>High-dimensional phenotype data includes:</h4>
+                            <h4><% __('High-dimensional phenotype data includes:') |h %></h4>
                             <p>NIRS</p>
-                            <p>Transcriptomics</p>
-                            <p>Metabolomics</p>
+                            <p><% __('Transcriptomics') |h %></p>
+                            <p><% __('Metabolomics') |h %></p>
                         </div>
                     </center>
 
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Samples" &>
-                    <& /page/page_title.mas, title=>"Make sure your samples are already in the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Samples"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Make sure your samples are already in the database."), 'h' ) &>
 
                     <center>
                         <div class="well">
-                            <h4>The samples for which you are uploading high-dimensional phenotypes must exist in the database already. They can be field trial entities such as plot names, plant names, and tissue sample names. They can be genotyping plate well tissue sample names. They can also be sample names from a sampling trial in the database.</h4>
+                            <h4><% __('The samples for which you are uploading high-dimensional phenotypes must exist in the database already. They can be field trial entities such as plot names, plant names, and tissue sample names. They can be genotyping plate well tissue sample names. They can also be sample names from a sampling trial in the database.') |h %></h4>
                             <p>Go to <a href="/breeders/samples">Manage Tissue Samples</a> for more guidance.</p>
-                            <p>You can upload or create a new sampling trial <button class="btn btn-sm btn-primary" style="margin:3px" name="create_sampling_trial_button">Create new sampling trial</button></p>
+                            <p>You can upload or create a new sampling trial <button class="btn btn-sm btn-primary" style="margin:3px" name="create_sampling_trial_button"><% __('Create new sampling trial') |h %></button></p>
                         </div>
                     </center>
 
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Data Type" &>
-                    <& /page/page_title.mas, title=>"Select the type of high-dimensional data being uploaded" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Data Type"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the type of high-dimensional data being uploaded"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Data Type: </label>
+                            <label class="col-sm-3 control-label"><% __('Data Type:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="high_dim_data_upload_type_select">
 %  if ($high_dimensional_phenotype_type eq 'NIRS') {
-                                    <option value="">Select One</option>
+                                    <option value=""><% __('Select One') |h %></option>
                                     <option value="NIRS">NIRS</option>
-                                    <option disabled value="Transcriptomics">Transcriptomics</option>
-                                    <option disabled value="Metabolomics">Metabolomics</option>
+                                    <option disabled value="Transcriptomics"><% __('Transcriptomics') |h %></option>
+                                    <option disabled value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  } elsif ($high_dimensional_phenotype_type eq 'Transcriptomics') {
-                                    <option value="">Select One</option>
-                                    <option value="Transcriptomics">Transcriptomics</option>
+                                    <option value=""><% __('Select One') |h %></option>
+                                    <option value="Transcriptomics"><% __('Transcriptomics') |h %></option>
                                     <option disabled value="NIRS">NIRS</option>
-                                    <option disabled value="Metabolomics">Metabolomics</option>
+                                    <option disabled value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  } elsif ($high_dimensional_phenotype_type eq 'Metabolomics') {
-                                    <option value="">Select One</option>
-                                    <option value="Metabolomics">Metabolomics</option>
-                                    <option disabled value="Transcriptomics">Transcriptomics</option>
+                                    <option value=""><% __('Select One') |h %></option>
+                                    <option value="Metabolomics"><% __('Metabolomics') |h %></option>
+                                    <option disabled value="Transcriptomics"><% __('Transcriptomics') |h %></option>
                                     <option disabled value="NIRS">NIRS</option>
 %  } else {
-                                    <option value="">Select One</option>
+                                    <option value=""><% __('Select One') |h %></option>
                                     <option value="NIRS">NIRS</option>
-                                    <option value="Transcriptomics">Transcriptomics</option>
-                                    <option value="Metabolomics">Metabolomics</option>
+                                    <option value="Transcriptomics"><% __('Transcriptomics') |h %></option>
+                                    <option value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  }
                                 </select>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_upload_data_type_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="high_dim_data_upload_data_type_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Protocol Info" &>
-                    <& /page/page_title.mas, title=>"Select a protocol for how your data was generated or create a new protocol" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Protocol Info"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a protocol for how your data was generated or create a new protocol"), 'h' ) &>
 
                     <div id="high_dim_data_upload_protocol_select">
                     </div>
 
                     <hr>
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_upload_new_protocol">Protocol Not Shown. Create a New Protocol</button>
+                    <button class="btn btn-primary" id="high_dim_data_upload_new_protocol"><% __('Protocol Not Shown. Create a New Protocol') |h %></button>
                     </center>
                     <br/><br/>
 
                     <div id="high_dim_data_upload_protocol_div" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Protocol Name: </label>
+                                <label class="col-sm-3 control-label"><% __('Protocol Name:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_protocol_name" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Protocol Description: </label>
+                                <label class="col-sm-3 control-label"><% __('Protocol Description:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_protocol_desc"  type="text">
                                 </div>
@@ -127,7 +127,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     <div id="high_dim_data_upload_nirs_protocol_div" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">NIRS Device: </label>
+                                <label class="col-sm-3 control-label"><% __('NIRS Device:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_nirs_device_type_select">
                                         <option value="SCIO">SCIO</option>
@@ -152,7 +152,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     <div id="high_dim_data_upload_transcriptomics_protocol_div" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Transcriptomics Unit: </label>
+                                <label class="col-sm-3 control-label"><% __('Transcriptomics Unit:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_unit_select">
                                     <option value="RPKM">RPKM</option>
@@ -165,21 +165,21 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Genome Version: </label>
+                                <label class="col-sm-3 control-label"><% __('Genome Version:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_transcriptomics_genome_version_select" type="text" placeholder="e.g. v6.1, v7.0, v8.0">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Genome Annotation Version: </label>
+                                <label class="col-sm-3 control-label"><% __('Genome Annotation Version:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_transcriptomics_genome_annotation_version_select" type="text" placeholder="e.g. v6.0, v6.1, v7.0">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Instrument Model: </label>
+                                <label class="col-sm-3 control-label"><% __('Instrument Model:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_instrument_model_select">
                                     <option value="blank"></option>
@@ -195,7 +195,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Layout: </label>
+                                <label class="col-sm-3 control-label"><% __('Layout:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_layout_select" type = "text" placeholder="e.g. Paired end">
                                     <option value="blank"></option>
@@ -211,7 +211,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Library Method: </label>
+                                <label class="col-sm-3 control-label"><% __('Library Method:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_library_method_select">
                                     <option value="blank"></option>
@@ -227,14 +227,14 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Library Comments: </label>
+                                <label class="col-sm-3 control-label"><% __('Library Comments:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_transcriptomics_library_comments_select" type = "text" placeholder="e.g. Used the 3'RNA-seq method">
+                                    <input class="form-control" id="high_dim_data_upload_transcriptomics_library_comments_select" type = "text" placeholder="<% __('e.g. Used the 3\'RNA-seq method') |h %>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Mapping Software: </label>
+                                <label class="col-sm-3 control-label"><% __('Mapping Software:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_mapping_software_select" type = "text" placeholder="e.g. HISAT2">
                                     <option value="blank"></option>
@@ -250,7 +250,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sequencing Center: </label>
+                                <label class="col-sm-3 control-label"><% __('Sequencing Center:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_sequencing_center_select" type = "text" placeholder="e.g. Cornell University Institute of Biotechnology">
                                     <option value="blank"></option>
@@ -266,7 +266,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sequencing Platform: </label>
+                                <label class="col-sm-3 control-label"><% __('Sequencing Platform:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_transcriptomics_sequencing_platform_select" type = "text" placeholder="e.g. Illumina">
                                     <option value="blank"></option>
@@ -282,16 +282,16 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Read Length: </label>
+                                <label class="col-sm-3 control-label"><% __('Read Length:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_transcriptomics_read_length_select" type = "text" placeholder="e.g. 5x depth with 150 bp reads">
+                                    <input class="form-control" id="high_dim_data_upload_transcriptomics_read_length_select" type = "text" placeholder="<% __('e.g. 5x depth with 150 bp reads') |h %>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Nucleic Acid Extraction Method: </label>
+                                <label class="col-sm-3 control-label"><% __('Nucleic Acid Extraction Method:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <select class="form-control" id="high_dim_data_upload_transcriptomics_nucleic_acid_extraction_method_select" type = "text" placeholder="e.g. Hot borate">
+                                    <select class="form-control" id="high_dim_data_upload_transcriptomics_nucleic_acid_extraction_method_select" type = "text" placeholder="<% __('e.g. Hot borate') |h %>">
                                     <option value="blank"></option>
                                     <%perl>
                                     foreach my $option (@na_extraction_method_options) {
@@ -310,7 +310,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     <div id="high_dim_data_upload_metabolomics_protocol_div" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Equipment Type: </label>
+                                <label class="col-sm-3 control-label"><% __('Equipment Type:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="high_dim_data_upload_metabolomics_equipment_type">
                                         <option value="NMR">NMR</option>
@@ -319,49 +319,49 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Targeted: </label>
+                                <label class="col-sm-3 control-label"><% __('Targeted:') |h %> </label>
                                 <div class="col-sm-9" >
                                 <select class="form-control" id="high_dim_data_upload_metabolomics_targeted">
-                                    <option value="True">True</option>
-                                    <option value="False">False</option>
+                                    <option value="True"><% __('True') |h %></option>
+                                    <option value="False"><% __('False') |h %></option>
                                 </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Phenotype Protocol: </label>
+                                <label class="col-sm-3 control-label"><% __('Phenotype Protocol:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_metabolomics_phenotype_type" type="text" placeholder="e.g. relative abundance, BLUP, drBLUP, concentration">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Phenotype Units: </label>
+                                <label class="col-sm-3 control-label"><% __('Phenotype Units:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_metabolomics_phenotype_units" type="text" placeholder="e.g. ug/g">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sample Collection protocol: </label>
+                                <label class="col-sm-3 control-label"><% __('Sample Collection protocol:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_metabolomics_sample_collection_protocol" type="text" placeholder="e.g. mature dehulled oat seeds">
+                                    <input class="form-control" id="high_dim_data_upload_metabolomics_sample_collection_protocol" type="text" placeholder="<% __('e.g. mature dehulled oat seeds') |h %>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sample Extraction Protocol: </label>
+                                <label class="col-sm-3 control-label"><% __('Sample Extraction Protocol:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_metabolomics_sample_extraction_protocol" type="text" placeholder="e.g. describe extraction protocol used">
+                                    <input class="form-control" id="high_dim_data_upload_metabolomics_sample_extraction_protocol" type="text" placeholder="<% __('e.g. describe extraction protocol used') |h %>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">RawData Transformation Protocol: </label>
+                                <label class="col-sm-3 control-label"><% __('RawData Transformation Protocol:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_metabolomics_rawdata_transformation_protocol" type="text" placeholder="e.g. describe the raw data transformation protocol used">
+                                    <input class="form-control" id="high_dim_data_upload_metabolomics_rawdata_transformation_protocol" type="text" placeholder="<% __('e.g. describe the raw data transformation protocol used') |h %>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Metabolite Identification Protocol: </label>
+                                <label class="col-sm-3 control-label"><% __('Metabolite Identification Protocol:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_metabolomics_metabolite_identification_protocol" type="text" placeholder="e.g. describe the metabolomics identification protocol used">
+                                    <input class="form-control" id="high_dim_data_upload_metabolomics_metabolite_identification_protocol" type="text" placeholder="<% __('e.g. describe the metabolomics identification protocol used') |h %>">
                                 </div>
                             </div>
                         </div>
@@ -369,7 +369,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                         <div id="high_dim_data_upload_metabolomics_protocol_ms_div" style="display:none">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography Type: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography Type:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <select class="form-control" id="high_dim_data_upload_metabolomics_chromatography_type">
                                             <option value="LCMS">LCMS</option>
@@ -378,71 +378,71 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography Instrument: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography Instrument:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_system_brand" type="text" placeholder="e.g. ThermoFisher MS100 System">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography AutoSampler Model: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography AutoSampler Model:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_AutoSampler_Model" type="text" placeholder="e.g. write the name of AutoSampler Model used">
+                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_AutoSampler_Model" type="text" placeholder="<% __('e.g. write the name of AutoSampler Model used') |h %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography Column Model: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography Column Model:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_column_brand" type="text" placeholder="e.g. ThermoFisher MS100 Column">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography Column Type: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography Column Type:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_column_type" type="text" placeholder="e.g. high polarity">
+                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_column_type" type="text" placeholder="<% __('e.g. high polarity') |h %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Chromatography Protocol: </label>
+                                    <label class="col-sm-3 control-label"><% __('Chromatography Protocol:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_protocol" type="text" placeholder="e.g. describe chromatography protocol used">
+                                        <input class="form-control" id="high_dim_data_upload_metabolomics_chromatography_protocol" type="text" placeholder="<% __('e.g. describe chromatography protocol used') |h %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Mass Spectrometry Protocol: </label>
+                                    <label class="col-sm-3 control-label"><% __('Mass Spectrometry Protocol:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" id="high_dim_data_upload_metabolomics_mass_spectrometry_protocol" type="text" placeholder="e.g. describe mass spectrometry protocol used">
+                                        <input class="form-control" id="high_dim_data_upload_metabolomics_mass_spectrometry_protocol" type="text" placeholder="<% __('e.g. describe mass spectrometry protocol used') |h %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">MS Instrument: </label>
+                                    <label class="col-sm-3 control-label"><% __('MS Instrument:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input class="form-control" id="high_dim_data_upload_metabolomics_ms_brand" type="text" placeholder="e.g. ThermoFisher MS100">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">MS Mass Analyzer: </label>
+                                    <label class="col-sm-3 control-label"><% __('MS Mass Analyzer:') |h %> </label>
                                     <div class="col-sm-9" >
-                                        <input class="form-control" id="high_dim_data_upload_metabolomics_ms_mass_analyzer" type="text" placeholder="e.g. single quadropole">
+                                        <input class="form-control" id="high_dim_data_upload_metabolomics_ms_mass_analyzer" type="text" placeholder="<% __('e.g. single quadropole') |h %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">MS Ion Source: </label>
+                                    <label class="col-sm-3 control-label"><% __('MS Ion Source:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input class="form-control" id="high_dim_data_upload_metabolomics_ms_ion_source" type="text" placeholder="e.g. EI, ESI, APCI, MALDI">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">MS Scan Polarity: </label>
+                                    <label class="col-sm-3 control-label"><% __('MS Scan Polarity:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <select class="form-control" id="high_dim_data_upload_metabolomics_ms_scan_polarity">
-                                            <option value="negative">Negative</option>
-                                            <option value="positive">Positive</option>
-                                            <option value="both">Both</option>
+                                            <option value="negative"><% __('Negative') |h %></option>
+                                            <option value="positive"><% __('Positive') |h %></option>
+                                            <option value="both"><% __('Both') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">MS Scan MZ Range: </label>
+                                    <label class="col-sm-3 control-label"><% __('MS Scan MZ Range:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input class="form-control" id="high_dim_data_upload_metabolomics_ms_scan_MZ_Range" type="text" placeholder="e.g. 60-800">
                                     </div>
@@ -452,19 +452,19 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Equipment Description: </label>
+                                <label class="col-sm-3 control-label"><% __('Equipment Description:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="high_dim_data_upload_metabolomics_equipment_description" type="text" placeholder="e.g. ThermoFisher MS100 Electron Ionization TOF Negative Ion Mode">
+                                    <input class="form-control" id="high_dim_data_upload_metabolomics_equipment_description" type="text" placeholder="<% __('e.g. ThermoFisher MS100 Electron Ionization TOF Negative Ion Mode') |h %>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Data Process Description: </label>
+                                <label class="col-sm-3 control-label"><% __('Data Process Description:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <textarea rows="10" class="form-control" id="high_dim_data_upload_metabolomics_data_process_description" placeholder="e.g. This describes mode, instrument settings, calibration procedure. Also, describes how the files from the LCMS machine were transformed into peak area. Finally, describes how metabolite annotations were assigned to peaks"></textarea>
+                                    <textarea rows="10" class="form-control" id="high_dim_data_upload_metabolomics_data_process_description" placeholder="<% __('e.g. This describes mode, instrument settings, calibration procedure. Also, describes how the files from the LCMS machine were transformed into peak area. Finally, describes how metabolite annotations were assigned to peaks') |h %>"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Publication: </label>
+                                <label class="col-sm-3 control-label"><% __('Publication:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="high_dim_data_upload_metabolomics_publication" type="text" placeholder="e.g. https://doi.org/10.3389/fgene.2021.643733">
                                 </div>
@@ -473,29 +473,29 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     </div>
 
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_upload_data_protocol_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="high_dim_data_upload_data_protocol_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Template Info" &>
-                    <& /page/page_title.mas, title=>"High-dimensional data must be uploaded using the template information provided" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Template Info"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("High-dimensional data must be uploaded using the template information provided"), 'h' ) &>
 
                     <center>
-                    <&| /page/explanation.mas, title=>'Data Matrix Spreadsheet Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Data Matrix Spreadsheet Template Information'), 'h' ) &>
                         <p>
-                        <b>File format information</b>
+                        <b><% __('File format information') |h %></b>
                         <br>
-                        <a id="high_dim_data_spreadsheet_format_info">Data Matrix Spreadsheet Format</a>
+                        <a id="high_dim_data_spreadsheet_format_info"><% __('Data Matrix Spreadsheet Format') |h %></a>
                         </p>
                     </&>
                     </center>
 
                     <div id="high_dim_data_upload_transcriptomics_protocol_template_div">
                         <center>
-                        <&| /page/explanation.mas, title=>'Transcript Details Spreadsheet Template Information' &>
+                        <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Transcript Details Spreadsheet Template Information'), 'h' ) &>
                             <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="high_dim_data_spreadsheet_transcripts_format_info">Functional Annotation Spreadsheet Format</a>
+                            <a id="high_dim_data_spreadsheet_transcripts_format_info"><% __('Functional Annotation Spreadsheet Format') |h %></a>
                             </p>
                         </&>
                         </center>
@@ -503,22 +503,22 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
                     <div id="high_dim_data_upload_metabolomics_protocol_template_div">
                         <center>
-                        <&| /page/explanation.mas, title=>'Metabolite Details Spreadsheet Template Information' &>
+                        <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Metabolite Details Spreadsheet Template Information'), 'h' ) &>
                             <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="high_dim_data_spreadsheet_metabolites_format_info">Metabolite Details Spreadsheet Format</a>
+                            <a id="high_dim_data_spreadsheet_metabolites_format_info"><% __('Metabolite Details Spreadsheet Format') |h %></a>
                             </p>
                         </&>
                         </center>
                     </div>
 
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Upload" &>
-                    <& /page/page_title.mas, title=>"Select your high-dimensional data file to upload" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select your high-dimensional data file to upload"), 'h' ) &>
 
                     <div id="high_dim_data_upload_nirs_div" style="display:none">
                         <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_nirs_spreadsheet_file_form" name="upload_nirs_spreadsheet_file_form">
@@ -533,7 +533,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
                             -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">NIRS Spreadsheet: </label>
+                                <label class="col-sm-3 control-label"><% __('NIRS Spreadsheet:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input type="file" id="upload_nirs_spreadsheet_file_input" name="upload_nirs_spreadsheet_file_input" encoding="multipart/form-data" />
                                 </div>
@@ -547,8 +547,8 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
                         <hr>
                         <center>
-                            <button type="button" class="btn btn-info" name="upload_nirs_spreadsheet_submit_verify" id="upload_nirs_spreadsheet_submit_verify">Verify</button>
-                            <button disabled type="button" class="btn btn-primary" name="upload_nirs_spreadsheet_submit_store" id="upload_nirs_spreadsheet_submit_store" title="First Verify Your File">Store</button>
+                            <button type="button" class="btn btn-info" name="upload_nirs_spreadsheet_submit_verify" id="upload_nirs_spreadsheet_submit_verify"><% __('Verify') |h %></button>
+                            <button disabled type="button" class="btn btn-primary" name="upload_nirs_spreadsheet_submit_store" id="upload_nirs_spreadsheet_submit_store" title="<% __('First Verify Your File') |h %>"><% __('Store') |h %></button>
                         </center>
 
                         <div id="upload_nirs_spreadsheet_verify_status"></div>
@@ -568,13 +568,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                             </div>
                             -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Transcriptomics Data Matrix Spreadsheet: </label>
+                                <label class="col-sm-3 control-label"><% __('Transcriptomics Data Matrix Spreadsheet:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input type="file" id="upload_transcriptomics_spreadsheet_file_input" name="upload_transcriptomics_spreadsheet_file_input" encoding="multipart/form-data" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Transcripts Details Spreadsheet: </label>
+                                <label class="col-sm-3 control-label"><% __('Transcripts Details Spreadsheet:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input type="file" id="upload_transcriptomics_transcript_metadata_spreadsheet_file_input" name="upload_transcriptomics_transcript_metadata_spreadsheet_file_input" encoding="multipart/form-data" />
                                 </div>
@@ -599,8 +599,8 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
                         <hr>
                         <center>
-                            <button type="button" class="btn btn-info" name="upload_transcriptomics_spreadsheet_submit_verify" id="upload_transcriptomics_spreadsheet_submit_verify">Verify</button>
-                            <button disabled type="button" class="btn btn-primary" name="upload_transcriptomics_spreadsheet_submit_store" id="upload_transcriptomics_spreadsheet_submit_store" title="First Verify Your File">Store</button>
+                            <button type="button" class="btn btn-info" name="upload_transcriptomics_spreadsheet_submit_verify" id="upload_transcriptomics_spreadsheet_submit_verify"><% __('Verify') |h %></button>
+                            <button disabled type="button" class="btn btn-primary" name="upload_transcriptomics_spreadsheet_submit_store" id="upload_transcriptomics_spreadsheet_submit_store" title="<% __('First Verify Your File') |h %>"><% __('Store') |h %></button>
                         </center>
 
                         <div id="upload_transcriptomics_spreadsheet_verify_status"></div>
@@ -609,21 +609,21 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
                     <div id="high_dim_data_upload_metabolomics_div" style="display:none">
                         <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_metabolomics_spreadsheet_file_form" name="upload_metabolomics_spreadsheet_file_form">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Data Level: </label>
+                                <label class="col-sm-3 control-label"><% __('Data Level:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="upload_metabolomics_spreadsheet_data_level" name="upload_metabolomics_spreadsheet_data_level">
-                                        <option value="tissue_samples">Tissue Samples</option>
+                                        <option value="tissue_samples"><% __('Tissue Samples') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Metabolomics Data Matrix Spreadsheet: </label>
+                                <label class="col-sm-3 control-label"><% __('Metabolomics Data Matrix Spreadsheet:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input type="file" id="upload_metabolomics_spreadsheet_file_input" name="upload_metabolomics_spreadsheet_file_input" encoding="multipart/form-data" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Metabolites Details Spreadsheet: </label>
+                                <label class="col-sm-3 control-label"><% __('Metabolites Details Spreadsheet:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input type="file" id="upload_metabolomics_metabolite_details_spreadsheet_file_input" name="upload_metabolomics_metabolite_details_spreadsheet_file_input" encoding="multipart/form-data" />
                                 </div>
@@ -664,8 +664,8 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
 
                         <hr>
                         <center>
-                            <button type="button" class="btn btn-info" name="upload_metabolomics_spreadsheet_submit_verify" id="upload_metabolomics_spreadsheet_submit_verify">Verify</button>
-                            <button disabled type="button" class="btn btn-primary" name="upload_metabolomics_spreadsheet_submit_store" id="upload_metabolomics_spreadsheet_submit_store" title="First Verify Your File">Store</button>
+                            <button type="button" class="btn btn-info" name="upload_metabolomics_spreadsheet_submit_verify" id="upload_metabolomics_spreadsheet_submit_verify"><% __('Verify') |h %></button>
+                            <button disabled type="button" class="btn btn-primary" name="upload_metabolomics_spreadsheet_submit_store" id="upload_metabolomics_spreadsheet_submit_store" title="<% __('First Verify Your File') |h %>"><% __('Store') |h %></button>
                         </center>
 
                         <div id="upload_metabolomics_spreadsheet_verify_status"></div>
@@ -676,7 +676,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" name="met_close_refresh" id="met_close_refresh" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" name="met_close_refresh" id="met_close_refresh" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -686,13 +686,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="nirsUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="nirsUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h3>Upload NIRS in a tabular spreadsheet (.csv) format with the following columns:</h3>
+            <h3><% __('Upload NIRS in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
                 <li><strong>sample_name</strong>: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.</li>
@@ -715,7 +715,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -726,13 +726,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="transcriptomicsUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="transcriptomicsUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h3>Upload Transcriptomics in a tabular spreadsheet (.csv) format with the following columns:</h3>
+            <h3><% __('Upload Transcriptomics in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
 
@@ -756,7 +756,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -766,13 +766,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="metabolomicsUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="metabolomicsUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h3>Upload Metabolomics in a tabular spreadsheet (.csv) format with the following columns:</h3>
+            <h3><% __('Upload Metabolomics in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
                 <li><strong>sample_name</strong>: This should be a sample name that exists in the database. The sample can come from a sampling trial or a field trial or a genotyping plate.</li>
@@ -795,7 +795,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -805,13 +805,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="transcriptomicsDetailsUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="transcriptomicsDetailsUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h3>Upload details about the transcripts in a tabular spreadsheet (.csv) format with the following columns:</h3>
+            <h3><% __('Upload details about the transcripts in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
                 <li>gene_id (required): This should be the same name as present in a column in your transcriptomics data matrix file.</li>
@@ -837,7 +837,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -847,13 +847,13 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="metabolomicsDetailsUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="metabolomicsDetailsUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h3>Upload details about the metabolites in a tabular spreadsheet (.csv) format with the following columns:</h3>
+            <h3><% __('Upload details about the metabolites in a tabular spreadsheet (.csv) format with the following columns:') |h %></h3>
 
             <ul>
                 <li><strong>metabolite_name (required)</strong>: This should be the same name as present in a column in your metabolomics data matrix file.</li>
@@ -909,7 +909,7 @@ my @sequencing_center_options = split ",", $c->config->{genotyping_facilities};
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

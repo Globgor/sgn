@@ -10,94 +10,94 @@ $high_dimensional_phenotype_type => undef #either NIRS, Transcriptomics, Metabol
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="downloadHighDimRelationshipMatrixDataDialog">Download High-Dimensional Phenotype Relationship Matrix</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="downloadHighDimRelationshipMatrixDataDialog"><% __('Download High-Dimensional Phenotype Relationship Matrix') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "high_dim_data_download_relationship_matrix_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through downloading a relationship matrix from high-dimensional data from the database." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through downloading a relationship matrix from high-dimensional data from the database."), 'h' ) &>
 
                     <center>
                         <div class="well">
-                            <h4>High-dimensional phenotype data includes:</h4>
+                            <h4><% __('High-dimensional phenotype data includes:') |h %></h4>
                             <p>NIRS</p>
-                            <p>Transcriptomics</p>
-                            <p>Metabolomics</p>
+                            <p><% __('Transcriptomics') |h %></p>
+                            <p><% __('Metabolomics') |h %></p>
                         </div>
                     </center>
 
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Data Type" &>
-                    <& /page/page_title.mas, title=>"Select the type of high-dimensional data to download" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Data Type"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the type of high-dimensional data to download"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Data Type: </label>
+                            <label class="col-sm-3 control-label"><% __('Data Type:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="high_dim_data_relationship_matrix_download_type_select"> 
 %  if ($high_dimensional_phenotype_type eq 'NIRS') {
                                     <option value="NIRS">NIRS</option>
-                                    <option disabled value="Transcriptomics">Transcriptomics</option>
-                                    <option disabled value="Metabolomics">Metabolomics</option>
+                                    <option disabled value="Transcriptomics"><% __('Transcriptomics') |h %></option>
+                                    <option disabled value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  } elsif ($high_dimensional_phenotype_type eq 'Transcriptomics') {
-                                    <option value="Transcriptomics">Transcriptomics</option>
+                                    <option value="Transcriptomics"><% __('Transcriptomics') |h %></option>
                                     <option disabled value="NIRS">NIRS</option>
-                                    <option disabled value="Metabolomics">Metabolomics</option>
+                                    <option disabled value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  } elsif ($high_dimensional_phenotype_type eq 'Metabolomics') {
-                                    <option value="Metabolomics">Metabolomics</option>
-                                    <option disabled value="Transcriptomics">Transcriptomics</option>
+                                    <option value="Metabolomics"><% __('Metabolomics') |h %></option>
+                                    <option disabled value="Transcriptomics"><% __('Transcriptomics') |h %></option>
                                     <option disabled value="NIRS">NIRS</option>
 %  } else {
                                     <option value="NIRS">NIRS</option>
-                                    <option value="Transcriptomics">Transcriptomics</option>
-                                    <option value="Metabolomics">Metabolomics</option>
+                                    <option value="Transcriptomics"><% __('Transcriptomics') |h %></option>
+                                    <option value="Metabolomics"><% __('Metabolomics') |h %></option>
 %  }
                                 </select>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_download_data_relationship_matrix_type_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="high_dim_data_download_data_relationship_matrix_type_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Protocol Info" &>
-                    <& /page/page_title.mas, title=>"Select a protocol for the data to download" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Protocol Info"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a protocol for the data to download"), 'h' ) &>
 
                     <div id="high_dim_data_download_relationship_matrix_protocol_select">
                     </div>
 
                     <hr>
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_download_relationship_matrix_protocol_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="high_dim_data_download_relationship_matrix_protocol_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Dataset" &>
-                    <& /page/page_title.mas, title=>"Select a dataset for the data to download" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Dataset"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a dataset for the data to download"), 'h' ) &>
 
                     <div id="high_dim_data_download_relationship_matrix_dataset_select">
                     </div>
 
                     <hr>
                     <center>
-                    <button class="btn btn-primary" id="high_dim_data_download_relationship_matrix_dataset_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="high_dim_data_download_relationship_matrix_dataset_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Download" &>
-                    <& /page/page_title.mas, title=>"Download high dimensional phenotypes relationship matrix" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Download"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Download high dimensional phenotypes relationship matrix"), 'h' ) &>
 
                     <div class="form-horizontal" >
                         <div class="form-group">
-                            <label class="col-sm-6 control-label">Query Associated Stocks (e.g. Your dataset contains accessions, however, the high-dim phenotypes are saved for tissue samples of the accession): </label>
+                            <label class="col-sm-6 control-label"><% __('Query Associated Stocks (e.g. Your dataset contains accessions, however, the high-dim phenotypes are saved for tissue samples of the accession):') |h %> </label>
                             <div class="col-sm-6" >
                                 <select class="form-control" id="high_dim_data_download_relationship_matrix_associated_stocks" name="high_dim_data_download_relationship_matrix_associated_stocks">
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="yes"><% __('Yes') |h %></option>
+                                    <option value="no"><% __('No') |h %></option>
                                 </select>
                             </div>
                         </div>
@@ -105,7 +105,7 @@ $high_dimensional_phenotype_type => undef #either NIRS, Transcriptomics, Metabol
 
                     <hr>
                     <center>
-                        <button type="button" class="btn btn-primary" name="high_dim_data_download_relationship_matrix_submit" id="high_dim_data_download_relationship_matrix_submit" title="Download">Download</button>
+                        <button type="button" class="btn btn-primary" name="high_dim_data_download_relationship_matrix_submit" id="high_dim_data_download_relationship_matrix_submit" title="<% __('Download') |h %>"><% __('Download') |h %></button>
                     </center>
 
                 </&>
@@ -113,7 +113,7 @@ $high_dimensional_phenotype_type => undef #either NIRS, Transcriptomics, Metabol
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

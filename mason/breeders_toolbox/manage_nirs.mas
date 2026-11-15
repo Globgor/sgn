@@ -11,7 +11,7 @@ $sample_tissue_types => ()
 
 <& /util/import_javascript.mas, classes => [ 'CXGN.BreedersToolbox.Trial','CXGN.BreedersToolbox.FieldBook','CXGN.BreedersToolbox.UploadPhenotype', 'CXGN.BreederSearch', 'CXGN.Trial', 'jquery.iframe-post-form' ] &>
 
-<& /page/page_title.mas, title=>"Manage NIRS Data" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Manage NIRS Data"), 'h' ) &>
 
 <div>
 
