@@ -22,6 +22,7 @@ use DateTime;
 use CXGN::Phenotypes::StorePhenotypes;
 use CXGN::Phenotypes::HighDimensionalPhenotypesSearch;
 use CXGN::Phenotypes::HighDimensionalPhenotypesRelationshipMatrix;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -1696,7 +1697,7 @@ sub _check_user_login {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1705,7 +1706,7 @@ sub _check_user_login {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -1713,7 +1714,7 @@ sub _check_user_login {
         $user_role = $c->user->get_object->get_user_type();
     }
     if ($user_role ne 'submitter' && $user_role ne 'curator') {
-        $c->stash->{rest} = {error=>'You do not have permission in the database to do this! Please contact us.'};
+        $c->stash->{rest} = {error=>__('You do not have permission in the database to do this! Please contact us.')};
         $c->detach();
     }
     return ($user_id, $user_name, $user_role);
