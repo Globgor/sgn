@@ -19,17 +19,17 @@ David Waring <djw64@cornell.edu>
 
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 
-<& /page/page_title.mas, title=>"Marker Search Results" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Marker Search Results"), 'h' ) &>
 
 
 <button id="btn-modify-search" class="btn btn-info">
-    <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Modify Marker Search
+    <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;<% __('Modify Marker Search') |h %>
 </button>
 
 <br /><br /><br />
 
 <div id="genotyped-markers" style="display: none">
-    <&| /page/info_section.mas, title=>'Markers From Genotype Projects', collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Markers From Genotype Projects'), 'h' ), collapsible=>1, collapsed=>0 &>
         <div id="genotyped-marker-results" class="well">
             <table id="genotyped-marker-results-table" class="display"></table>
             <br />
@@ -39,8 +39,8 @@ David Waring <djw64@cornell.edu>
                     <span id="genotyped-marker-results-pages"></span>
                 </span>
                 <div class="btn-group" style="float: right">
-                    <button id="genotyped-marker-page-prev" type="button" class="btn btn-default" disabled><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Prev</button>
-                    <button id="genotyped-marker-page-next" type="button" class="btn btn-default" disabled>Next&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button id="genotyped-marker-page-prev" type="button" class="btn btn-default" disabled><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;<% __('Prev') |h %></button>
+                    <button id="genotyped-marker-page-next" type="button" class="btn btn-default" disabled><% __('Next') |h %>&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
             </div>
             <br /><br />
@@ -51,7 +51,7 @@ David Waring <djw64@cornell.edu>
 
 
 <div id="mapped-markers" style="display: none">
-    <&| /page/info_section.mas, title=>'Markers from Maps', collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Markers from Maps'), 'h' ), collapsible=>1, collapsed=>0 &>
         <div id="mapped-marker-results" class="well">
             <table id="mapped-marker-results-table" class="display"></table>
             <br />
@@ -61,8 +61,8 @@ David Waring <djw64@cornell.edu>
                     <span id="mapped-marker-results-pages"></span>
                 </span>
                 <div class="btn-group" style="float: right">
-                    <button id="mapped-marker-page-prev" type="button" class="btn btn-default" disabled><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Prev</button>
-                    <button id="mapped-marker-page-next" type="button" class="btn btn-default" disabled>Next&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button id="mapped-marker-page-prev" type="button" class="btn btn-default" disabled><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;<% __('Prev') |h %></button>
+                    <button id="mapped-marker-page-next" type="button" class="btn btn-default" disabled><% __('Next') |h %>&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
             </div>
             <br /><br />

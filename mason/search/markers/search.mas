@@ -17,28 +17,28 @@ David Waring <djw64@cornell.edu>
 
 </%doc>
 
-<& /page/page_title.mas, title=>"Marker Search" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Marker Search"), 'h' ) &>
 
 
 
 
 <!-- FILTER BY NAME -->
-<&| /page/info_section.mas, title=>'Filter By Name', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Filter By Name'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class="well">
 
         <!-- Marker Name -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Marker Name: </label>
+            <label class="col-sm-3 control-label"><% __('Marker Name:') |h %> </label>
             <div class="col-sm-4">
                 <select id="marker-name-match" class="form-control">
-                    <option value="exactly">Exactly</option>
-                    <option value="contains">Contains</option>
-                    <option value="starts_with">Starts With</option>
-                    <option value="ends_with">Ends With</option>
+                    <option value="exactly"><% __('Exactly') |h %></option>
+                    <option value="contains"><% __('Contains') |h %></option>
+                    <option value="starts_with"><% __('Starts With') |h %></option>
+                    <option value="ends_with"><% __('Ends With') |h %></option>
                 </select>
             </div>
             <div class="col-sm-5">
-                <input id="marker-name" class="form-control" type="text" placeholder="Any Name" />
+                <input id="marker-name" class="form-control" type="text" placeholder="<% __('Any Name') |h %>" />
             </div>
         </div>
 
@@ -50,12 +50,12 @@ David Waring <djw64@cornell.edu>
 
 
 <!-- FILTER BY POSITION -->
-<&| /page/info_section.mas, title=>'Filter By Position', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Filter By Position'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class="well">
 
         <!-- Reference Genome / Map -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Reference Genome / Map: </label>
+            <label class="col-sm-3 control-label"><% __('Reference Genome / Map:') |h %> </label>
             <div class="col-sm-9">
                 <select id="marker-refmap" class="form-control" disabled>
                     <option>Loading...</option>
@@ -67,7 +67,7 @@ David Waring <djw64@cornell.edu>
 
         <!-- Chromosome -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Chromosome: </label>
+            <label class="col-sm-3 control-label"><% __('Chromosome:') |h %> </label>
             <div class="col-sm-9">
                 <select id="marker-chromosome" class="form-control" disabled>
                     <option>Loading...</option>
@@ -79,14 +79,14 @@ David Waring <djw64@cornell.edu>
 
         <!-- Start / End Position -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Start: </label>
+            <label class="col-sm-3 control-label"><% __('Start:') |h %> </label>
             <div class="col-sm-4">
                 <div class="input-group">
                     <input id="marker-position-start" class="form-control" type="text" disabled />
                     <span class="input-group-addon marker-position-units"></span>
                 </div>
             </div>
-            <label class="col-sm-1 control-label">End: </label>
+            <label class="col-sm-1 control-label"><% __('End:') |h %> </label>
             <div class="col-sm-4">
                 <div class="input-group">
                     <input id="marker-position-end" class="form-control" type="text" disabled />
@@ -103,15 +103,15 @@ David Waring <djw64@cornell.edu>
 
 
 <!-- ADDITIONAL FILTERS -->
-<&| /page/info_section.mas, title=>'Additional Filters', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Additional Filters'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class="well">
 
         <!-- Species -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Species: </label>
+            <label class="col-sm-3 control-label"><% __('Species:') |h %> </label>
             <div class="col-sm-9">
                 <select id="marker-species" class="form-control" disabled>
-                    <option value=''>Loading...</option>
+                    <option value=''><% __('Loading...') |h %></option>
                 </select>
             </div>
         </div>
@@ -120,10 +120,10 @@ David Waring <djw64@cornell.edu>
 
         <!-- Protocol -->
         <div class="form-group">
-            <label class="col-sm-3 control-label">Protocol: </label>
+            <label class="col-sm-3 control-label"><% __('Protocol:') |h %> </label>
             <div class="col-sm-9">
                 <select id="marker-protocol" class="form-control" disabled>
-                    <option value=''>Loading...</option>
+                    <option value=''><% __('Loading...') |h %></option>
                 </select>
             </div>
         </div>
@@ -134,7 +134,7 @@ David Waring <djw64@cornell.edu>
 </&>
 
 
-<button class="btn btn-primary btn-block marker-search-button">Search</button>
+<button class="btn btn-primary btn-block marker-search-button"><% __('Search') |h %></button>
 
 
 

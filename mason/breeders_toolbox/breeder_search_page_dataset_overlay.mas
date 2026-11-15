@@ -22,7 +22,7 @@
 <div id="dsp-help">
     <div id="dsp-help-container">
         <p id="dsp-help-instructions"></p>
-        <button id="dsp-help-next" class='btn btn-primary'><span id="dsp-help-next-label">Next</span>&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
+        <button id="dsp-help-next" class='btn btn-primary'><span id="dsp-help-next-label"><% __('Next') |h %></span>&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></button>
         <a id="dsp-help-cancel" href="#"><span class='glyphicon glyphicon-remove'></span></a>
     </div>
 </div>

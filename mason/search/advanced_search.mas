@@ -11,7 +11,7 @@
             <td width="70%" class="left">
                 <div class="boxcontent">
                     <div class="subheading" style='font-size:1.1em'>
-                    Search<br>
+                    <% __('Search') |h %><br>
                     </div>
                     <div class="boxsubcontent">
                         <div style="margin-left:10px">

@@ -26,7 +26,7 @@ Lukas Mueller <lam87@cornell.edu>
 </%perl>
 
   <table class="search_form_title"><tr><td>
-    <span class="search_form_title">Directory search</span>
+    <span class="search_form_title"><% __('Directory search') |h %></span>
   </td>
   </tr>
   </table>

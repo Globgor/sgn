@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
 
-<& /page/page_title.mas, title=>'Search genomic sequences and annotations' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Search genomic sequences and annotations'), 'h' ) &>
 
 <%perl>
 
@@ -28,12 +28,12 @@ my $organism_select = simple_selectbox_html(
 
 </%perl>
 
-<&| /page/info_section.mas, title => 'Search', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search'), 'h' ), collapsible=>1, collapsed=>0 &>
   <div id="feature_search_form" class="form-horizontal well">
     <div class="row">
       <div class="col-sm-6">
 	<div class="form-group form-group-sm">
-	  <label class="col-sm-3 control-label">Organism: </label>
+	  <label class="col-sm-3 control-label"><% __('Organism:') |h %> </label>
 	  <div class="col-sm-9" >
             <% $organism_select %>
 	  </div>
@@ -41,7 +41,7 @@ my $organism_select = simple_selectbox_html(
       </div>
       <div class="col-sm-6">
 	<div class="form-group form-group-sm">
-	  <label class="col-sm-3 control-label">Type: </label>
+	  <label class="col-sm-3 control-label"><% __('Type:') |h %> </label>
 	  <div class="col-sm-9" >
             <% $f_type_select %>
 	  </div>
@@ -51,7 +51,7 @@ my $organism_select = simple_selectbox_html(
     <div class="row">
       <div class="col-sm-6">
 	<div class="form-group form-group-sm">
-	  <label class="col-sm-3 control-label">Name: </label>
+	  <label class="col-sm-3 control-label"><% __('Name:') |h %> </label>
 	  <div class="col-sm-9" >
             <input type="text" class="form-control" id="name" />
 	  </div>
@@ -59,32 +59,32 @@ my $organism_select = simple_selectbox_html(
       </div>
       <div class="col-sm-6">
 	<div class="form-group form-group-sm">
-	  <label class="col-sm-3 control-label">Description: </label>
+	  <label class="col-sm-3 control-label"><% __('Description:') |h %> </label>
 	  <div class="col-sm-9" >
             <input type="text" class="form-control" id="description" />
 	  </div>
 	</div>
       </div>
     </div>
- <button style="float:right" class="btn btn-primary" id="submit_feature_search" />Search</button>
+ <button style="float:right" class="btn btn-primary" id="submit_feature_search" /><% __('Search') |h %></button>
     <br/><br/>
   </div>
   
 </&>
 
 
-<&| /page/info_section.mas, title => 'Search Results', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search Results'), 'h' ), collapsible=>1, collapsed=>0 &>
 
 
 <div class="well">
 <table id="feature_search_results" class="display">
 <thead>
   <tr>
-    <th>Organism</th>
-    <th>Type</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Location</th>
+    <th><% __('Organism') |h %></th>
+    <th><% __('Type') |h %></th>
+    <th><% __('Name') |h %></th>
+    <th><% __('Description') |h %></th>
+    <th><% __('Location') |h %></th>
   </tr>
 </thead>
 </table>

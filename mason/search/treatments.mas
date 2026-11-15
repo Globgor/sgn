@@ -5,56 +5,56 @@
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables', 'jquery.dataTables-select-min' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css', '/documents/inc/datatables/custom_datatable_select_styles.css'] &>
 
-<& /page/page_title.mas, title => "Treatment Search" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Treatment Search"), 'h' ) &>
 
-    <&| /page/info_section.mas, title => 'Search', collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Search'), 'h' ), collapsible=>1, collapsed=>0 &>
         <div id="treatment_search_form" class="form-horizontal well">
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Select Ontology Name(s): </label>
+                <label class="col-sm-3 control-label"><% __('Select Ontology Name(s):') |h %> </label>
                 <div class="col-sm-9" >
                     <div id="treatment_search_ontology_select"></div>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Search Treatment Name: </label>
+                <label class="col-sm-3 control-label"><% __('Search Treatment Name:') |h %> </label>
                 <div class="col-sm-9" >
-                    <input type="text" class="form-control" id="treatment_search_name" placeholder="Search any treatment name or piece of name"/>
+                    <input type="text" class="form-control" id="treatment_search_name" placeholder="<% __('Search any treatment name or piece of name') |h %>"/>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Search Treatment ID: </label>
+                <label class="col-sm-3 control-label"><% __('Search Treatment ID:') |h %> </label>
                 <div class="col-sm-9" >
-                    <input type="text" class="form-control" id="treatment_search_id" placeholder="Search any trait ID or part of an ID"/>
+                    <input type="text" class="form-control" id="treatment_search_id" placeholder="<% __('Search any trait ID or part of an ID') |h %>"/>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Search Treatment Synonym: </label>
+                <label class="col-sm-3 control-label"><% __('Search Treatment Synonym:') |h %> </label>
                 <div class="col-sm-9" >
-                    <input type="text" class="form-control" id="treatment_search_synonym" placeholder="Search any trait synonym or part of a synonym"/>
+                    <input type="text" class="form-control" id="treatment_search_synonym" placeholder="<% __('Search any trait synonym or part of a synonym') |h %>"/>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Search Definition: </label>
+                <label class="col-sm-3 control-label"><% __('Search Definition:') |h %> </label>
                 <div class="col-sm-9" >
-                    <input type="text" class="form-control" id="treatment_search_definition" placeholder="Search any word or piece of definition"/>
+                    <input type="text" class="form-control" id="treatment_search_definition" placeholder="<% __('Search any word or piece of definition') |h %>"/>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Subset Treatments: </label>
+                <label class="col-sm-3 control-label"><% __('Subset Treatments:') |h %> </label>
                 <div class="col-sm-9" >
                     <div id="treatment_search_list_select">
-                        [LOADING...]
+                        <% __('[LOADING...]') |h %>
                     </div>
                 </div>
             </div>
         </div>
 
         <center>
-            <button class="btn btn-primary" id="submit_treatment_search" />Search</button>
+            <button class="btn btn-primary" id="submit_treatment_search" /><% __('Search') |h %></button>
         </center>
     </&>
 
-    <&| /page/info_section.mas, title => 'Results', collapsible=>1, collapsed=>0 &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Results'), 'h' ), collapsible=>1, collapsed=>0 &>
 
         <div class="well well-sm">
             <div class="panel panel-default">
@@ -63,18 +63,18 @@
                     <table id="treatment_search_results" width="100%" class="table table-hover table-striped">
                     <thead>
                       <tr>
-                        <th>Select</th>
-                        <th>Copy Name|ID</th>
-                        <th>Treatment ID</th>
-                        <th>Treatment Name</th>
-                        <th>Definition</th>
+                        <th><% __('Select') |h %></th>
+                        <th><% __('Copy Name|ID') |h %></th>
+                        <th><% __('Treatment ID') |h %></th>
+                        <th><% __('Treatment Name') |h %></th>
+                        <th><% __('Definition') |h %></th>
                         <th>Treatment&nbsp;Usage</th>
                       </tr>
                     </thead>
                     </table>
 
-                    <button type="button" class="selectAll-dt">Select All</button>
-                    <button type="button" class="deselectAll-dt">Deselect All</button>
+                    <button type="button" class="selectAll-dt"><% __('Select All') |h %></button>
+                    <button type="button" class="deselectAll-dt"><% __('Deselect All') |h %></button>
 
                 </div>
             </div>
@@ -82,7 +82,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <&| /page/info_section.mas, title => 'Copy Selected Results to a List', collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the treatment names currently selected in the search results table to a new or exisiting list</i>'&>
+                    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Selected Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the treatment names currently selected in the search results table to a new or exisiting list</i>'&>
                     <br>
                     <p><em><span id="treatment_result_count">0</span> treatment(s) selected.</em></p>
                     <div style="text-align:right" id="treatments_to_list_menu"></div>
