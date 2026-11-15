@@ -147,3 +147,16 @@ msgstr "Дата посіву"
 
 msgid "Copy Results to a List"
 msgstr "Копіювати результати до списку"
+
+msgid "Accessions and plots"
+msgstr "Зразки та ділянки"
+
+msgid "Progenies, Parents, Crosses"
+msgstr "Нащадки, батьки, схрещування"
+
+msgid "Genotyping Protocols"
+msgstr "Протоколи генотипування"
+
+# A translation with markup characters: the test checks that it is escaped.
+msgid "People"
+msgstr "Люди & <групи>"
