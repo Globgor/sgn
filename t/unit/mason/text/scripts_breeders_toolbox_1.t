@@ -42,4 +42,9 @@ page_script_texts_ok(
     'Next',
 );
 
+page_script_texts_ok(
+    '/breeders_toolbox/crossing_experiment_tree.mas',
+    'An error occurred while loading the trial data.',
+);
+
 done_testing;

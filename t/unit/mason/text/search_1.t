@@ -37,6 +37,15 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/search/cross.mas',
+    'Search common parents by using a list of accessions.',
+    'Search cross details of female or male parents.',
+    'Search progenies of female or male parents.',
+    'Search Progenies, Parents and Crosses',
+    'All cross entries in the database',
+);
+
+page_texts_ok(
     '/search/datasets.mas',
     'Dataset name',
     'Description',

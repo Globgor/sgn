@@ -34,4 +34,14 @@ page_texts_ok(
     'Next',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/crossing_experiment_tree.mas',
+    'Breeding Programs -- Folders -- Crossing Experiments',
+    'Select multiple folders by holding \'Ctrl\'.',
+    'Move crossing experiment(s) to folder',
+    'First Select Folder(s) to Edit',
+    'Create new folder',
+    'Edit Folder(s)',
+);
+
 done_testing;

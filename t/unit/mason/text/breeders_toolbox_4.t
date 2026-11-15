@@ -29,4 +29,6 @@ page_texts_ok(
     'Copy accessions to a List',
 );
 
+component_compiles_ok('/breeders_toolbox/manage_crosses.mas');
+
 done_testing;

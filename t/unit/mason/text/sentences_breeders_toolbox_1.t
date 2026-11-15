@@ -22,6 +22,8 @@ page_sentences_ok(
     'The first row (header) must contain the {bold}{accession_column}{end_bold} and {bold}{species_column}{end_bold} columns. Additional information can be included by selecting optional column(s) (see below). :',
 );
 
+component_compiles_ok('/breeders_toolbox/crossing_experiment_tree.mas');
+
 page_sentences_ok(
     '/breeders_toolbox/derived_accession_usage_info_dialog.mas',
     '{bold}Additional Info Section:{end_bold} Both direct source of that derived accession and its origin are displayed in the Additional Info section. If the direct source is a plant or tissue sample, the original source will also be provided (e.g., if the direct source is a plant in a trial, the original source of that plant name can be accession, cross or family name).',
