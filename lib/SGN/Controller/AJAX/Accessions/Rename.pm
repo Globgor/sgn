@@ -8,6 +8,7 @@ use List::MoreUtils qw| any |;
 use File::Temp qw| tempfile |;
 
 use CXGN::List::Validate;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' }
@@ -44,7 +45,7 @@ sub upload_rename_accessions_verify : Path('/ajax/rename_accessions/upload_verif
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -54,7 +55,7 @@ sub upload_rename_accessions_verify : Path('/ajax/rename_accessions/upload_verif
     } else{
 	print STDERR "We do not have a session id...\n";
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -65,7 +66,7 @@ sub upload_rename_accessions_verify : Path('/ajax/rename_accessions/upload_verif
     }
     
     if ($user_role ne "curator") {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to rename accessions." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to rename accessions.") };
 	return;
     }
     
@@ -83,7 +84,7 @@ sub upload_rename_accessions_verify : Path('/ajax/rename_accessions/upload_verif
     # check file type by file name extension
     #
     if ($upload_original_name =~ /\.xls$|\.xlsx/) {
-	$c->stash->{rest} = { error => "The rename accessions funtion requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again." };
+	$c->stash->{rest} = { error => __("The rename accessions funtion requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again.") };
 	return;
     }
     
@@ -161,7 +162,7 @@ sub upload_rename_accessions_store : Path('/ajax/rename_accessions/upload_store'
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -171,7 +172,7 @@ sub upload_rename_accessions_store : Path('/ajax/rename_accessions/upload_store'
     } else{
 	print STDERR "We do not have a session id...\n";
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -180,7 +181,7 @@ sub upload_rename_accessions_store : Path('/ajax/rename_accessions/upload_store'
     }
     
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($user_role)  ) {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to rename accessions." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to rename accessions.") };
 	return;
     }
 

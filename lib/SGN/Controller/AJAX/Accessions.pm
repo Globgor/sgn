@@ -35,6 +35,7 @@ use Encode;
 use JSON::XS qw | decode_json |;
 use utf8;
 use CXGN::Contact;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -63,7 +64,7 @@ sub verify_accession_list_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this info!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -72,7 +73,7 @@ sub verify_accession_list_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this info!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -121,11 +122,11 @@ sub do_fuzzy_search {
     my $absent_organisms;
 
     if (!$c->user()) {
-	$c->stash->{rest} = {error => "You need to be logged in to add accessions." };
+	$c->stash->{rest} = {error => __("You need to be logged in to add accessions.") };
 	return;
     }
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to add accessions." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to add accessions.") };
 	return;
     }
     #remove all trailing and ending spaces from accessions and organisms
@@ -217,7 +218,7 @@ sub verify_accessions_file_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this seedlot info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this seedlot info!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -226,7 +227,7 @@ sub verify_accessions_file_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this seedlot info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this seedlot info!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -248,7 +249,7 @@ sub verify_accessions_file_POST : Args(0) {
 
     # These roles are required by CXGN::UploadFile
     if ($user_role ne 'curator' && $user_role ne 'submitter' && $user_role ne 'sequencer' ) {
-        $c->stash->{rest} = {error=>'Only a curator, submitter or sequencer can upload a file'};
+        $c->stash->{rest} = {error=>__('Only a curator, submitter or sequencer can upload a file')};
         $c->detach();
     }
 
@@ -285,7 +286,7 @@ sub verify_accessions_file_POST : Args(0) {
         my $return_error = '';
         my $parse_errors;
         if (!$parser->has_parse_errors() ){
-            $c->stash->{rest} = {error_string => "Could not get parsing errors"};
+            $c->stash->{rest} = {error_string => __("Could not get parsing errors")};
             $c->detach();
         } else {
             $parse_errors = $parser->get_parse_errors();
@@ -408,14 +409,14 @@ sub add_accession_list_POST : Args(0) {
     my $phenome_schema = $c->dbic_schema("CXGN::Phenome::Schema", undef, $user_id);
 
     if (!$c->user()) {
-        $c->stash->{rest} = {error => "You need to be logged in to submit accessions." };
+        $c->stash->{rest} = {error => __("You need to be logged in to submit accessions.") };
         return;
     }
 
     my $user_name = $c->user()->get_object()->get_username();
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-        $c->stash->{rest} = {error =>  "You have insufficient privileges to submit accessions." };
+        $c->stash->{rest} = {error =>  __("You have insufficient privileges to submit accessions.") };
         return;
     }
 
