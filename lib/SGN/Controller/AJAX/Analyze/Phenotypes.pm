@@ -12,6 +12,7 @@ use CXGN::Trial::TrialLayout;
 use CXGN::Trial::Download;
 use CXGN::BreederSearch;
 use POSIX qw(strftime);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; };
 
@@ -96,7 +97,7 @@ sub analyze_trial_phenotypes : Path('/analyze/phenotypes/trials') Args(0) {
     return;
   }
   else {
-    $c->stash->{rest} = { error => "Error in R script R/Anova.R"};
+    $c->stash->{rest} = { error => __("Error in R script R/Anova.R")};
     return;
   }
 }

@@ -14,6 +14,7 @@ use URI::Encode qw(uri_encode uri_decode);
 use CXGN::BreedersToolbox::DeriveTrait;
 use CXGN::Phenotypes::StorePhenotypes;
 use Math::Expression::Evaluator;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN {extends 'Catalyst::Controller::REST'}
 
@@ -87,12 +88,12 @@ sub compute_derive_traits : Path('/ajax/phenotype/create_derived_trait') Args(0)
 
     if (!$c->user()) {
 	print STDERR "User not logged in... not computing trait.\n";
-	$c->stash->{rest} = {error => "You need to be logged in to compute trait." };
+	$c->stash->{rest} = {error => __("You need to be logged in to compute trait.") };
 	return;
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-	$c->stash->{rest} = {error =>  "You have insufficient privileges to compute trait." };
+	$c->stash->{rest} = {error =>  __("You have insufficient privileges to compute trait.") };
 	return;
     }
 
@@ -107,7 +108,7 @@ sub compute_derive_traits : Path('/ajax/phenotype/create_derived_trait') Args(0)
 
 
     if (scalar(@{$triat_name}) == 0)  {
-	$c->stash->{rest} = {error => "No trait assayed for this trial." };
+	$c->stash->{rest} = {error => __("No trait assayed for this trial.") };
 	return;
     }
 
@@ -120,7 +121,7 @@ sub compute_derive_traits : Path('/ajax/phenotype/create_derived_trait') Args(0)
 	}
 
 	elsif ($selected_trait_cvterm_id eq '')  {
-	    $c->stash->{rest} = {error => "Select trait to compute." };
+	    $c->stash->{rest} = {error => __("Select trait to compute.") };
 	    return;
 	}
     }
@@ -417,7 +418,7 @@ sub store_generated_plot_phenotypes : Path('/ajax/breeders/trial/store_generated
         my $user_type = $c->user()->get_object->get_user_type();
         #print STDERR $user_type."\n";
         if ($user_type ne 'curator') {
-            $c->stash->{rest} = {error => 'Must be a curator to overwrite values! Please contact us!'};
+            $c->stash->{rest} = {error => __('Must be a curator to overwrite values! Please contact us!')};
             $c->detach;
         }
     }

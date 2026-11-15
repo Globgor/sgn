@@ -35,6 +35,7 @@ use CXGN::BreedersToolbox::Projects;
 use CXGN::Phenotype;
 use CXGN::Trial;
 use CXGN::Project;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -428,11 +429,11 @@ sub update_plot_phenotype_POST : Args(0) {
 
   if (!$c->user()) {
     print STDERR "User not logged in... not recording phenotype.\n";
-    $c->stash->{rest} = {error => "You need to be logged in to record phenotype." };
+    $c->stash->{rest} = {error => __("You need to be logged in to record phenotype.") };
     return;
   }
   if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)  ) {
-    $c->stash->{rest} = {error =>  "You have insufficient privileges to record phenotype." };
+    $c->stash->{rest} = {error =>  __("You have insufficient privileges to record phenotype.") };
     return;
   }
 
@@ -452,7 +453,7 @@ sub update_plot_phenotype_POST : Args(0) {
 
   if ($plot_type_id == $accession_cvterm_id) {
     print "You are using accessions\n";
-    $c->stash->{rest} = {error => "Used only for Plot Phenotyping."};
+    $c->stash->{rest} = {error => __("Used only for Plot Phenotyping.")};
     return;
   }
 
@@ -567,7 +568,7 @@ sub update_single_observation :Path('/ajax/phenotype/edit/') Args(1) {
     my $observationID = shift;
 
     if (!$c->user()) {
-        $c->stash->{rest} = {error => "You need to be logged in to record a phenotype." };
+        $c->stash->{rest} = {error => __("You need to be logged in to record a phenotype.") };
         return;
     }
 
@@ -582,17 +583,17 @@ sub update_single_observation :Path('/ajax/phenotype/edit/') Args(1) {
     my $trial_id = $c->req->param('trial_id');
 
     if (!$trial_id) {
-        $c->stash->{rest} = {error => "This observation can only be edited in relation to a trial."};
+        $c->stash->{rest} = {error => __("This observation can only be edited in relation to a trial.")};
         return;
     }
 
     if (!$observationID) {
-        $c->stash->{rest} = {error => "You must supply an observation ID!"};
+        $c->stash->{rest} = {error => __("You must supply an observation ID!")};
         return;
     }
 
     if (!defined($new_value) || $new_value eq '') {
-        $c->stash->{rest} = {error => "This function can edit existing phenotype entries, but not delete them. Please enter a value."};
+        $c->stash->{rest} = {error => __("This function can edit existing phenotype entries, but not delete them. Please enter a value.")};
         return;
     }
 
@@ -605,7 +606,7 @@ sub update_single_observation :Path('/ajax/phenotype/edit/') Args(1) {
     my $owners = $this_trial->_get_trial_owners();
 
     if ( ! $user->check_roles("curator") && !defined($owners->{$sp_person_id}) ) {
-        $c->stash->{rest} = {error => "You do not have permission to make edits on this trial - only curators and trial owners can modify raw phenotype values."};
+        $c->stash->{rest} = {error => __("You do not have permission to make edits on this trial - only curators and trial owners can modify raw phenotype values.")};
         return;
     }
 
