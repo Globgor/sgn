@@ -9,7 +9,7 @@ SGN::I18N::Browser - browser helpers usable without starting the application
 
 =head1 DESCRIPTION
 
-The Mason view and unit tests share these functions.
+The Mason view, static configuration and unit tests share these functions.
 Keeping them independent of SGN startup allows tests to call production code.
 
 =cut
@@ -22,6 +22,16 @@ sub escape_js {
     $$value = $json->encode($text)
         =~ s/([<>&\x{2028}\x{2029}])/sprintf '\\u%04x', ord $1/ger;
     return;
+}
+
+# Static::Simple's own list, and the gettext files that lie next to the browser catalogs.
+sub static_ignore_extensions {
+    return [qw( tmpl tt tt2 html xhtml mo po pot )];
+}
+
+sub static_include_path {
+    my ($c) = @_;
+    return [ $c->config->{root}, ( $c->i18n_languages ? ( $c->config->{i18n_locale_dir} // () ) : () ) ];
 }
 
 1;

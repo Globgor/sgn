@@ -2,6 +2,9 @@ use strict;
 use warnings;
 use utf8;
 
+use Digest::SHA qw( sha256_hex );
+use File::Spec;
+use File::Copy qw( copy );
 use File::Path qw( make_path );
 use File::Temp qw( tempdir );
 use Locale::TextDomain ( 'sgn', undef );
@@ -76,6 +79,48 @@ subtest 'a wrong setup stops the application' => sub {
     %config = ( i18n_languages => 'xx', i18n_locale_dir => $dir );
     eval { Local::App->setup_finalize };
     like( $@, qr/no system locale for 'xx'/, 'a language without a system locale is reported' );
+};
+
+subtest 'browser catalogs are optional until the first browser build' => sub {
+    local %config = ( i18n_languages => 'uk', i18n_locale_dir => $dir );
+    Local::App->setup_finalize;
+    is_deeply( $config{i18n_js_version}, {}, 'server-only installation still starts' );
+    make_path("$dir/ar");
+    open( my $js, '>', "$dir/ar/sgn.js" ) or die $!;
+    print {$js} "var sgn_locale_data = {};\n";
+    close $js;
+    eval { Local::App->setup_finalize };
+    like( $@, qr{no browser catalog \Q$dir\E/uk/sgn\.js}, 'any browser build requires every configured browser catalog' );
+    rename "$dir/ar/sgn.js", "$dir/uk/sgn.js" or die $!;
+    Local::App->setup_finalize;
+    is( $config{i18n_locale_dir}, $dir, 'resolved directory is shared through configuration' );
+    is( $config{i18n_js_version}{uk}, substr( sha256_hex("var sgn_locale_data = {};\n"), 0, 12 ), 'cache version is the catalog content digest' );
+    my $before = $config{i18n_js_version}{uk};
+    my $mtime = ( stat "$dir/uk/sgn.js" )[9];
+    open( my $changed, '>', "$dir/uk/sgn.js" ) or die $!;
+    print {$changed} "var sgn_locale_data = {changed: true};\n";
+    close $changed;
+    utime $mtime, $mtime, "$dir/uk/sgn.js";
+    Local::App->setup_finalize;
+    isnt( $config{i18n_js_version}{uk}, $before, 'changed content has a new version even with the same mtime' );
+};
+
+subtest 'locale directory uses application home and literal path characters' => sub {
+    my $home = tempdir( CLEANUP => 1 );
+    my $relative = 'locale[review]{test}';
+    my $locale = "$home/$relative";
+    make_path("$locale/uk/LC_MESSAGES", "$locale/ar");
+    copy( "$dir/uk/LC_MESSAGES/sgn.mo", "$locale/uk/LC_MESSAGES/sgn.mo" ) or die $!;
+    open( my $js, '>', "$locale/ar/sgn.js" ) or die $!;
+    print {$js} "var sgn_locale_data = {};\n";
+    close $js;
+    local %config = ( home => $home, i18n_languages => 'uk', i18n_locale_dir => $relative );
+    eval { Local::App->setup_finalize };
+    like( $@, qr{no browser catalog \Q$locale\E/uk/sgn\.js}, 'brackets and braces do not bypass startup validation' );
+    is( $config{i18n_locale_dir}, $locale, 'relative locale path is resolved against application home' );
+    rename "$locale/ar/sgn.js", "$locale/uk/sgn.js" or die $!;
+    Local::App->setup_finalize;
+    like( $config{i18n_js_version}{uk}, qr/\A[0-9a-f]{12}\z/, 'literal-path catalog gets its digest version' );
 };
 
 %config = ( i18n_languages => 'uk', i18n_locale_dir => $dir );
