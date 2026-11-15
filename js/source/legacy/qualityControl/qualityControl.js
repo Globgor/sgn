@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /** 
 * qualityControl coefficients plotting using d3
 * Chris Simoes <cs263@cornell.edu>

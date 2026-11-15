@@ -25,12 +25,13 @@ my @legacy = qw(
     CXGN/BreedersToolbox/UploadGrafts CXGN/BreedersToolbox/UploadPedigrees
     CXGN/BreedersToolbox/UploadPhenotype CXGN/BreedersToolbox/UploadRenameAccessions
     CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
-    CXGN/Onto/Browser CXGN/Stock CXGN/TrialTreeFolders
+    CXGN/Onto/Browser CXGN/SelectionIndex CXGN/Stock CXGN/TrialTreeFolders heritability/heritability
+    qualityControl/qualityControl
 );
 
 my @entries = qw(
-    dataset_scatterplot field_trial_linkage fieldmap sequenced_accessions trialallocation/app
-    trialallocation/downloads wizard
+    dataset_scatterplot environments field_trial_linkage fieldmap job mixedmodels qualitycontrol
+    sequenced_accessions trialallocation/app trialallocation/downloads wizard
 );
 
 for my $script (@legacy) {
