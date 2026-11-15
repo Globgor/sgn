@@ -24,19 +24,19 @@ my @legacy = qw(
     CXGN/BreedersToolbox/GenotypingTrial CXGN/BreedersToolbox/HTMLSelect CXGN/BreedersToolbox/MarkerSet
     CXGN/BreedersToolbox/UploadGrafts CXGN/BreedersToolbox/UploadPedigrees
     CXGN/BreedersToolbox/UploadPhenotype CXGN/BreedersToolbox/UploadRenameAccessions
-    CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist CXGN/Image
-    CXGN/Locations CXGN/Onto/Browser CXGN/SelectionIndex CXGN/Stock CXGN/TrialTreeFolders
-    heritability/heritability qualityControl/qualityControl solGS/analysisSelect solGS/analysisStatus
-    solGS/anova solGS/clearCache solGS/cluster solGS/combineTrials solGS/correlation
-    solGS/gebvPhenoRegression solGS/gebvsSave solGS/geneticGain solGS/heatMap solGS/kinship
-    solGS/listTypeSelectionPopulation solGS/listTypeTrainingPopulation solGS/loadAcronyms solGS/pca
-    solGS/pcaSave solGS/searchTrials solGS/selectionIndex solGS/selectionPopulations solGS/solGS
-    tools/LabelDesigner
+    CXGN/BreedersToolbox/UploadTrial CXGN/BreedersToolbox/Vector CXGN/Dataset CXGN/Effects
+    CXGN/Effects/Hotlist CXGN/Hotlist CXGN/Image CXGN/Locations CXGN/Onto/Browser CXGN/SelectionIndex
+    CXGN/Stock CXGN/Transformation CXGN/TrialTreeFolders heritability/heritability
+    qualityControl/qualityControl solGS/analysisSelect solGS/analysisStatus solGS/anova solGS/clearCache
+    solGS/cluster solGS/combineTrials solGS/correlation solGS/gebvPhenoRegression solGS/gebvsSave
+    solGS/geneticGain solGS/heatMap solGS/kinship solGS/listTypeSelectionPopulation
+    solGS/listTypeTrainingPopulation solGS/loadAcronyms solGS/pca solGS/pcaSave solGS/searchTrials
+    solGS/selectionIndex solGS/selectionPopulations solGS/solGS tools/LabelDesigner
 );
 
 my @entries = qw(
     dataset_scatterplot decision_meeting environments field_trial_linkage fieldmap job mixedmodels
-    qualitycontrol sequenced_accessions trialallocation/app trialallocation/downloads wizard
+    qualitycontrol sequenced_accessions trialallocation/app trialallocation/downloads vectorViewer wizard
 );
 
 for my $script (@legacy) {

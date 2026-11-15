@@ -3,6 +3,7 @@ import "../legacy/jqueryui.js";
 import "../legacy/d3/d3v4Min.js";
 import "../legacy/jquery/dataTables.js";
 import "../legacy/jquery/dataTables-buttons-min.js";
+import "../legacy/CXGN/I18N.js";
 
 var metadata;
 //var vectorLength;
