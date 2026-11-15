@@ -358,11 +358,11 @@ function complete_intro_step() {
         setDataTypeDefinition(data.types[0].type_id);
       }
       else {
-        alert("ERROR: Could not load data types!");
+        alert(<% __('ERROR: Could not load data types!') |js %>);
       }
     },
     error: function() {
-      alert("ERROR: Could not load data types!");
+      alert(<% __('ERROR: Could not load data types!') |js %>);
     }
   });
 
@@ -412,11 +412,11 @@ function complete_data_type_step() {
         jQuery('#sequence_metadata_upload_protocol_reference_genome').prop('disabled', false);
       }
       else {
-        alert("ERROR: Could not load reference genomes!");
+        alert(<% __('ERROR: Could not load reference genomes!') |js %>);
       }
     },
     error: function() {
-      alert("ERROR: Could not load reference genomes");
+      alert(<% __('ERROR: Could not load reference genomes') |js %>);
     }
   });
 
@@ -434,7 +434,7 @@ function complete_protocol_step() {
   use_existing_protocol = jQuery('#sequence_metadata_upload_protocol_select').is(':visible');
   if ( use_existing_protocol ) {
     if ( jQuery('input[name="sequence_metadata_upload_protocol_id"]:checked').length !== 1 ) {
-      alert('Please select one existing protocol!');
+      alert(<% __('Please select one existing protocol!') |js %>);
       return false;
     }
   }
@@ -442,11 +442,11 @@ function complete_protocol_step() {
     new_protocol_name = jQuery('#sequence_metadata_upload_protocol_name').val();
     new_protocol_description = jQuery('#sequence_metadata_upload_protocol_description').val();
     if ( !new_protocol_name || new_protocol_name === "" ) {
-      alert('Please enter a name for the new protocol');
+      alert(<% __('Please enter a name for the new protocol') |js %>);
       return false;
     }
     if ( !new_protocol_description || new_protocol_description === "" ) {
-      alert('Please enter a description for the new protocol');
+      alert(<% __('Please enter a description for the new protocol') |js %>);
       return false;
     }
   }
@@ -473,12 +473,12 @@ function complete_protocol_step() {
 function upload_and_verify() {
   let file = jQuery('#sequence_metadata_upload_file_input').val();
   if ( !file || file === '' ) {
-    alert("Please select your gff file");
+    alert(<% __('Please select your gff file') |js %>);
     return false;
   }
 
   // Setup working modal
-  jQuery('#working_msg').html("Uploading GFF File");
+  jQuery('#working_msg').html(<% __('Uploading GFF File') |js %>);
   jQuery('#working_modal_progress').css('width', 0).attr('aria-valuenow', 0);
   jQuery('#working_modal_progress_div').css('display', 'block');
   jQuery('#working_modal').modal("show");
@@ -516,7 +516,7 @@ function upload_and_verify() {
             let prog = (e.loaded / e.total)*100;
             jQuery('#working_modal_progress').css('width', prog + "%").attr('aria-valuenow', prog);
             if ( prog >= 100 ) {
-              jQuery('#working_msg').html("Verifying GFF File");
+              jQuery('#working_msg').html(<% __('Verifying GFF File') |js %>);
             }
           }
         }, false);
@@ -601,7 +601,7 @@ function upload_and_verify() {
       jQuery('#working_modal_progress_div').css('display', 'none');
       jQuery('#working_modal').modal("hide");
 
-      alert("ERROR: Could not upload and verify gff file due to server error!");
+      alert(<% __('ERROR: Could not upload and verify gff file due to server error!') |js %>);
     }
   });
 }
@@ -612,7 +612,7 @@ function upload_and_verify() {
 function store() {
 
   // Setup working modal
-  jQuery('#working_msg').html("Storing Sequence Metadata");
+  jQuery('#working_msg').html(<% __('Storing Sequence Metadata') |js %>);
   jQuery('#working_modal').modal("show");
   jQuery('#sequence_metadata_upload_messages_list').empty();
 
@@ -686,7 +686,7 @@ function store() {
     error: function() {
       jQuery('#working_msg').html("");
       jQuery('#working_modal').modal("hide");
-      alert("ERROR: Could not store sequence metadata due to server error!");
+      alert(<% __('ERROR: Could not store sequence metadata due to server error!') |js %>);
     }
   });
 
@@ -720,7 +720,7 @@ function save_attribute_description() {
   let key = jQuery('#sequence_metadata_upload_new_attribute_key').val();
   let description = jQuery('#sequence_metadata_upload_new_attribute_description').val();
   if ( !key || key === "" ) {
-    alert("An attribute key is required!");
+    alert(<% __('An attribute key is required!') |js %>);
     return false;
   }
 
@@ -752,11 +752,11 @@ function save_link_definition() {
   let title = jQuery('#sequence_metadata_upload_new_link_title').val();
   let url = jQuery('#sequence_metadata_upload_new_link_url').val();
   if ( !title || title === "" ) {
-    alert("A link title is required!");
+    alert(<% __('A link title is required!') |js %>);
     return false;
   }
   if ( !url || url === "" ) {
-    alert("A link url is required!");
+    alert(<% __('A link url is required!') |js %>);
     return false;
   }
 

@@ -537,11 +537,11 @@ function get_reference_genomes(callback) {
                 if ( callback ) return callback();
             }
             else {
-                alert("ERROR: Could not load reference genomes!");
+                alert(<% __('ERROR: Could not load reference genomes!') |js %>);
             }
         },
         error: function() {
-            alert("ERROR: Could not load reference genomes!");
+            alert(<% __('ERROR: Could not load reference genomes!') |js %>);
         }
     });
 }
@@ -577,11 +577,11 @@ function get_features(callback) {
 
             }
             else {
-                alert("ERROR: Could not load features!");
+                alert(<% __('ERROR: Could not load features!') |js %>);
             }
         },
         error: function() {
-         alert("ERROR: Could not load features");
+         alert(<% __('ERROR: Could not load features') |js %>);
         }
     });
 }
@@ -633,11 +633,11 @@ function get_types(callback) {
 
             }
             else {
-                alert("ERROR: Could not load types!");
+                alert(<% __('ERROR: Could not load types!') |js %>);
             }
         },
         error: function() {
-         alert("ERROR: Could not load types");
+         alert(<% __('ERROR: Could not load types') |js %>);
         }
     });
 }
@@ -725,11 +725,11 @@ function get_protocols(callback) {
 
             }
             else {
-                alert("ERROR: Could not load protocols!");
+                alert(<% __('ERROR: Could not load protocols!') |js %>);
             }
         },
         error: function() {
-         alert("ERROR: Could not load protocols");
+         alert(<% __('ERROR: Could not load protocols') |js %>);
         }
     });
 }
@@ -970,8 +970,8 @@ function query() {
         dataType: 'json',
         success: handle_query_results,
         error: function() {
-            alert("ERROR: Could query database!");
-            jQuery('#sequence_metadata_filter_query').html('Search');
+            alert(<% __('ERROR: Could query database!') |js %>);
+            jQuery('#sequence_metadata_filter_query').html(<% __('Search') |js %>);
             jQuery('#sequence_metadata_filter_query').attr('disabled', false);
         }
     });
@@ -1016,7 +1016,7 @@ function handle_query_results(response) {
     markers = undefined;
 
     // Reset Query Button
-    jQuery('#sequence_metadata_filter_query').html('Search');
+    jQuery('#sequence_metadata_filter_query').html(<% __('Search') |js %>);
     jQuery('#sequence_metadata_filter_query').attr('disabled', false);
 }
 
@@ -1182,7 +1182,7 @@ function getMarkers(key, species, reference_genome, feature_name, start, end) {
 
         },
         error: function() {
-            alert("ERROR: Could not perform marker search");
+            alert(<% __('ERROR: Could not perform marker search') |js %>);
         }
     });
 }

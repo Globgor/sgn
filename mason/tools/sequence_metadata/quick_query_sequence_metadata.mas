@@ -191,13 +191,13 @@ function renderLinksColumn(data, type, row) {
                 autoWidth: false,
                 data: [],
                 columns: [
-                    { title: "Protocol", data: "nd_protocol_name" },
-                    { title: "Feature", data: "feature_name" },
-                    { title: "Start", data: "start" },
-                    { title: "End", data: "end" },
-                    { title: "Score", data: "score" },
-                    { title: "Attributes", data: "attributes", render: renderAttributesColumn },
-                    { title: "Links", data: "links", render: renderLinksColumn }
+                    { title: <% __('Protocol') |js %>, data: "nd_protocol_name" },
+                    { title: <% __('Feature') |js %>, data: "feature_name" },
+                    { title: <% __('Start') |js %>, data: "start" },
+                    { title: <% __('End') |js %>, data: "end" },
+                    { title: <% __('Score') |js %>, data: "score" },
+                    { title: <% __('Attributes') |js %>, data: "attributes", render: renderAttributesColumn },
+                    { title: <% __('Links') |js %>, data: "links", render: renderLinksColumn }
                 ],
                 order: [[ 2, "asc" ]]
             });
