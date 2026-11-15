@@ -119,8 +119,8 @@ $default_seedlot_material_type => undef
                     <label class="col-sm-3 control-label"><% __('Transaction Type:') |h %> </label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="seedlot_transaction_factor">
-                            <option value="1">Added to this Seedlot (<% $uniquename %>)</option>
-                            <option value="-1">Taken from this Seedlot (<% $uniquename %>)</option>
+                            <option value="1"><& /util/sentence.mas, text => __x('Added to this Seedlot ({name})'), name => $uniquename &></option>
+                            <option value="-1"><& /util/sentence.mas, text => __x('Taken from this Seedlot ({name})'), name => $uniquename &></option>
                         </select>
                     </div>
                 </div>

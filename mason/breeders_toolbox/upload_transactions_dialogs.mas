@@ -20,7 +20,7 @@
                                 <li><% __('Transferring seeds from existing seedlot to another existing seedlot.') |h %></li>
                                 <li><% __('Transferring seeds from existing seedlot to a new seedlot. A new seedlot is created beforing adding new transaction.') |h %></li>
                                 <li><% __('Removing seeds from existing seedlot to unspecified seedlot name or plot name') |h %></li>
-                                <li><b>Note:</b>To transfer seeds from existing seedlot to a previously stored plot, Please use <b>Upload Seedlots Planted in Trial</b> link in the Experimental Design section on the Trial Detail page.</li>
+                                <li><& /util/sentence.mas, text => __x('{bold}Note:{end_bold}To transfer seeds from existing seedlot to a previously stored plot, Please use {bold}Upload Seedlots Planted in Trial{end_bold} link in the Experimental Design section on the Trial Detail page.'), bold => '<b>', end_bold => '</b>' &></li>
                                 <li><% __('Add additional seeds from accession or cross to existing seedlot') |h %></li>
                             </ul>
                             <br/><br/>
@@ -81,7 +81,7 @@
                                     <br/>
                                     <hr class ="solid">
                                     <center>
-                                        <h4>Please provide basic information about the <b>new seedlots</b> and upload your file</h4>
+                                        <h4><& /util/sentence.mas, text => __x('Please provide basic information about the {bold}new seedlots{end_bold} and upload your file'), bold => '<b>', end_bold => '</b>' &></h4>
                                     </center>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label"><% __('Breeding Program:') |h %> </label>
@@ -300,18 +300,18 @@
                     </table>
                     <b><% __('Required fields:') |h %></b>
                     <ul>
-                        <li><b>from_seedlot_name:</b> Must exist in the database. Seeds were taken from this seedlot.</li>
-                        <li><b>to_seedlot_name:</b> Must exist in the database. Seeds were added to this seedlot.</li>
+                        <li><b>from_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were taken from this seedlot.') &></li>
+                        <li><b>to_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were added to this seedlot.') &></li>
                         <li>
-                            <b>amount:</b> Number of seeds being transaferred. Can be provided in conjunction with weight_gram. Must provide a value for amount or weight_gram or both.
+                            <b>amount:</b> <& /util/sentence.mas, text => __x('Number of seeds being transaferred. Can be provided in conjunction with {weight_gram}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                             <br/><b><% __('AND/OR') |h %></b><br/>
-                            <b>weight_gram:</b> Weight in grams of seedlot being transferred. Can be provided in conjunction with amount. Must provide a value for amount or weight_gram or both.
+                            <b>weight_gram:</b> <& /util/sentence.mas, text => __x('Weight in grams of seedlot being transferred. Can be provided in conjunction with {amount}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                         </li>
-                        <li><b>operator_name:</b> Name of the person who oversaw the transaction process. Can be any name.</li>
+                        <li><b>operator_name:</b> <& /util/sentence.mas, text => __x('Name of the person who oversaw the transaction process. Can be any name.') &></li>
                     </ul>
                     <b><% __('Optional fields:') |h %></b>
                     <ul>
-                        <li><b>transaction_description:</b> Information about why this transaction is processed.</li>
+                        <li><b>transaction_description:</b> <& /util/sentence.mas, text => __x('Information about why this transaction is processed.') &></li>
                     </ul>
                 </div>
                 <& /help/file_upload_type.mas, type => "Seedlot Transactions", optional_column => 1 &>
@@ -354,20 +354,20 @@
                     </table>
                     <b><% __('Required fields:') |h %></b>
                     <ul>
-                        <li><b>from_seedlot_name:</b> Must exist in the database. Seeds were taken from this seedlot.</li>
+                        <li><b>from_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were taken from this seedlot.') &></li>
                         <li>
-                            <b>amount:</b> Number of seeds being transferred. Can be provided in conjunction with weight_gram. Must provide a value for amount or weight_gram or both.
+                            <b>amount:</b> <& /util/sentence.mas, text => __x('Number of seeds being transferred. Can be provided in conjunction with {weight_gram}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                             <br/><b><% __('AND/OR') |h %></b><br/>
-                            <b>weight_gram:</b> Weight in grams of seedlot being transferred. Can be provided in conjunction with amount. Must provide a value for amount or weight_gram or both.
+                            <b>weight_gram:</b> <& /util/sentence.mas, text => __x('Weight in grams of seedlot being transferred. Can be provided in conjunction with {amount}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                         </li>
-                        <li><b>operator_name:</b> Name of the person who oversaw the transaction process. Can be any name.</li>
-                        <li><b>to_new_seedlot_name:</b> Must NOT exist in the database. New seedlot will be created using amount/weight of seeeds from existing seedlot.</li>
-                        <li><b>new_seedlot_box_name:</b> Box name that this new seedlot is stored. Can be any name.</li>
+                        <li><b>operator_name:</b> <& /util/sentence.mas, text => __x('Name of the person who oversaw the transaction process. Can be any name.') &></li>
+                        <li><b>to_new_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must NOT exist in the database. New seedlot will be created using amount/weight of seeeds from existing seedlot.') &></li>
+                        <li><b>new_seedlot_box_name:</b> <& /util/sentence.mas, text => __x('Box name that this new seedlot is stored. Can be any name.') &></li>
                     </ul>
                     <b><% __('Optional fields:') |h %></b>
                     <ul>
-                        <li><b>transaction_description:</b> Information about why this transaction is processed.</li>
-                        <li><b>new_seedlot_description:</b> Information about this new seedlot.</li>
+                        <li><b>transaction_description:</b> <& /util/sentence.mas, text => __x('Information about why this transaction is processed.') &></li>
+                        <li><b>new_seedlot_description:</b> <& /util/sentence.mas, text => __x('Information about this new seedlot.') &></li>
                         <li><b>new_seedlot_quality:</b> Status or condition of the seedlot, for example "ok", "moldy", "insect damage" etc.</li>
                     </ul>
                 </div>
@@ -410,18 +410,18 @@
                     </table>
                     <b><% __('Required fields:') |h %></b>
                     <ul>
-                        <li><b>from_seedlot_name:</b> Must exist in the database. Seeds were taken from this seedlot.</li>
-                        <li><b>to_plot_name:</b> Must exist in the database. Seeds were used for this plot. You can also record seedlot used for each plot during uploading existing trial on the Manage Trials page</li>
+                        <li><b>from_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were taken from this seedlot.') &></li>
+                        <li><b>to_plot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were used for this plot. You can also record seedlot used for each plot during uploading existing trial on the Manage Trials page') &></li>
                         <li>
-                            <b>amount:</b> Number of seeds being transaferred. Can be provided in conjunction with weight_gram. Must provide a value for amount or weight_gram or both.
+                            <b>amount:</b> <& /util/sentence.mas, text => __x('Number of seeds being transaferred. Can be provided in conjunction with {weight_gram}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                             <br/><b><% __('AND/OR') |h %></b><br/>
-                            <b>weight_gram:</b> Weight in grams of seedlot being transferred. Can be provided in conjunction with amount. Must provide a value for amount or weight_gram or both.
+                            <b>weight_gram:</b> <& /util/sentence.mas, text => __x('Weight in grams of seedlot being transferred. Can be provided in conjunction with {amount}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                         </li>
-                        <li><b>operator_name:</b> Name of the person who oversaw the transaction process. Can be any name.</li>
+                        <li><b>operator_name:</b> <& /util/sentence.mas, text => __x('Name of the person who oversaw the transaction process. Can be any name.') &></li>
                     </ul>
                     <b><% __('Optional fields:') |h %></b>
                     <ul>
-                        <li><b>transaction_description:</b> Information about why this transaction is processed.</li>
+                        <li><b>transaction_description:</b> <& /util/sentence.mas, text => __x('Information about why this transaction is processed.') &></li>
                     </ul>
                 </div>
             </div>
@@ -459,14 +459,14 @@
                     </table>
                     <b><% __('Required fields:') |h %></b>
                     <ul>
-                        <li><b>from_seedlot_name:</b> Must exist in the database. Seeds were taken from this seedlot.</li>
+                        <li><b>from_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database. Seeds were taken from this seedlot.') &></li>
                         <li>
-                            <b>amount:</b> Number of seeds being transaferred. Can be provided in conjunction with weight_gram. Must provide a value for amount or weight_gram or both.
+                            <b>amount:</b> <& /util/sentence.mas, text => __x('Number of seeds being transaferred. Can be provided in conjunction with {weight_gram}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                             <br/><b><% __('AND/OR') |h %></b><br/>
-                            <b>weight_gram:</b> Weight in grams of seedlot being transferred. Can be provided in conjunction with amount. Must provide a value for amount or weight_gram or both.
+                            <b>weight_gram:</b> <& /util/sentence.mas, text => __x('Weight in grams of seedlot being transferred. Can be provided in conjunction with {amount}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                         </li>
-                        <li><b>operator_name:</b> Name of the person who oversaw the transaction process. Can be any name.</li>
-                        <li><b>transaction_description:</b> Information about why this transaction is processed.</li>
+                        <li><b>operator_name:</b> <& /util/sentence.mas, text => __x('Name of the person who oversaw the transaction process. Can be any name.') &></li>
+                        <li><b>transaction_description:</b> <& /util/sentence.mas, text => __x('Information about why this transaction is processed.') &></li>
                     </ul>
                 </div>
                 <& /help/file_upload_type.mas, type => "Seedlot Transactions", optional_column => 0 &>
@@ -506,18 +506,18 @@
                     </table>
                     <b><% __('Required fields:') |h %></b>
                     <ul>
-                        <li><b>from_source_name:</b> Must be the same as the corresponding seedlot content.</li>
-                        <li><b>to_seedlot_name:</b> Must exist in the database.</li>
+                        <li><b>from_source_name:</b> <& /util/sentence.mas, text => __x('Must be the same as the corresponding seedlot content.') &></li>
+                        <li><b>to_seedlot_name:</b> <& /util/sentence.mas, text => __x('Must exist in the database.') &></li>
                         <li>
-                            <b>amount:</b> Number of seeds being added. Can be provided in conjunction with weight_gram. Must provide a value for amount or weight_gram or both.
+                            <b>amount:</b> <& /util/sentence.mas, text => __x('Number of seeds being added. Can be provided in conjunction with {weight_gram}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                             <br/><b><% __('AND/OR') |h %></b><br/>
-                            <b>weight_gram:</b> Weight in grams of seedlot being added. Can be provided in conjunction with amount. Must provide a value for amount or weight_gram or both.
+                            <b>weight_gram:</b> <& /util/sentence.mas, text => __x('Weight in grams of seedlot being added. Can be provided in conjunction with {amount}. Must provide a value for {amount} or {weight_gram} or both.'), weight_gram => 'weight_gram', amount => 'amount' &>
                         </li>
-                        <li><b>operator_name:</b> Name of the person who oversaw the transaction process. Can be any name.</li>
+                        <li><b>operator_name:</b> <& /util/sentence.mas, text => __x('Name of the person who oversaw the transaction process. Can be any name.') &></li>
                     </ul>
                     <b><% __('Optional fields:') |h %></b>
                     <ul>
-                        <li><b>transaction_description:</b> Information about why this transaction is processed.</li>
+                        <li><b>transaction_description:</b> <& /util/sentence.mas, text => __x('Information about why this transaction is processed.') &></li>
                     </ul>
                 </div>
                 <& /help/file_upload_type.mas, type => "Seedlot Transactions", optional_column => 1 &>

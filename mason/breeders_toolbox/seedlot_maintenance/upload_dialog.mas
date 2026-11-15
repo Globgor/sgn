@@ -15,8 +15,7 @@
                     <p><strong><% __('Requirements:') |h %></strong></p>
                     <ul>
                         <li>
-                            The Maintenance Events are associated with Seedlots, so the name of the Seedlot in the file must match an existing Seedlot in the database.
-                            If a Seedlot is not yet in the database, go to the <a href='/breeders/seedlots/'>Manage Seedlots</a> page to create it first.
+                            <& /util/sentence.mas, text => __x('The Maintenance Events are associated with Seedlots, so the name of the Seedlot in the file must match an existing Seedlot in the database. If a Seedlot is not yet in the database, go to the {link}Manage Seedlots{end_link} page to create it first.'), link => '<a href=\'/breeders/seedlots/\'>', end_link => '</a>' &>
                         </li>
                         <li>
                             <% __('The name of the Maintenance Event must be a valid event type.  Valid event types include:') |h %>

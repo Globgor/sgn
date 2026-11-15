@@ -159,8 +159,8 @@ $default_seedlot_material_type => undef
                 <div class="col-sm-7" style="padding-left: 5px; padding-right: 0">
                     <select class="form-control" id="search_seedlot_form_trial_usage">
                         <option value=""><% __('Select trial / seedlot usage...') |h %></option>
-                        <option value="source">Trial --> Seedlot: Find seedlots that are derived from this trial</option>
-                        <option value="sink">Seedlot --> Trial: Find seedlots that provided seed to this trial</option>
+                        <option value="source"><& /util/sentence.mas, text => __x('Trial --> Seedlot: Find seedlots that are derived from this trial') &></option>
+                        <option value="sink"><& /util/sentence.mas, text => __x('Seedlot --> Trial: Find seedlots that provided seed to this trial') &></option>
                         <option value="source|sink"><% __('Either of the above') |h %></option>
                     </select>
                 </div>
