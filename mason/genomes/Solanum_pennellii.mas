@@ -8,7 +8,7 @@
 
 <br>
 <p>
-  <& /util/sentence.mas, text => __x('{link}{i}{species}{end_i}{end_link} is a wild tomato that is relatively distant from the domesticated {link2}{i}{species2}{end_i}{end_link2}.'), link => '<a href="/chado/organism.pl?organism_id=19">', end_link => '</a>', link2 => '<a href="/chado/organism.pl?organism_id=1">', end_link2 => '</a>', i => '<i>', end_i => '</i>' , species => 'Solanum pennellii' , species2 => 'Solanum lycopersicum' &>  <& /util/sentence.mas, text => __x('It was sequenced by a group of scientists at MPI Golm and the Univeristy of Aachen and collaborators, under the direction of {person} and {person2}.') , person => 'Alistair Fernie' , person2 => 'Bj&ouml;rn Usadel' &>
+  <& /util/sentence.mas, text => __x('{link}{i}{species}{end_i}{end_link} is a wild tomato that is relatively distant from the domesticated {link2}{i}{species2}{end_i}{end_link2}.'), link => '<a href="/chado/organism.pl?organism_id=19">', end_link => '</a>', link2 => '<a href="/chado/organism.pl?organism_id=1">', end_link2 => '</a>', i => '<i>', end_i => '</i>' , species => 'Solanum pennellii' , species2 => 'Solanum lycopersicum' &>  <& /util/sentence.mas, text => __x('It was sequenced by a group of scientists at MPI Golm and the University of Aachen and collaborators, under the direction of {person} and {person2}.') , person => 'Alistair Fernie' , person2 => 'Bj&ouml;rn Usadel' &>
 <br>
   <& /util/sentence.mas, text => __x('It has been widely used for the construction of {link}mapping populations{end_link} and {link2}inbred lines{end_link2}.'), link => '<a href="/cview/map.pl?map_id=9&show_offsets=1&show_ruler=1">', end_link => '</a>', link2 => '<a href="/cview/map.pl?map_id=il6&show_offsets=1&show_ruler=1">', end_link2 => '</a>' &>
 </p>
