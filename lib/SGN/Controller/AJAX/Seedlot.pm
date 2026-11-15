@@ -21,6 +21,7 @@ use CXGN::List;
 use CXGN::List::Validate;
 use CXGN::Stock::Seedlot::Discard;
 use CXGN::Stock::RelatedStocks;
+use Locale::TextDomain ( 'sgn', undef );
 
 __PACKAGE__->config(
     default   => 'application/json',
@@ -169,11 +170,11 @@ sub seedlot_edit :Chained('seedlot_base') PathPart('edit') Args(0) {
     my $c = shift;
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in to edit seedlot details" };
+        $c->stash->{rest} = { error => __("You must be logged in to edit seedlot details") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to edit seedlot detail. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to edit seedlot detail. Please contact us.") };
         $c->detach();
     }
     my $seedlot = $c->stash->{seedlot};
@@ -206,7 +207,7 @@ sub seedlot_edit :Chained('seedlot_base') PathPart('edit') Args(0) {
        #make sure the seedlot name is unique across the entire stock table
         my $previous_seedlot = $schema->resultset('Stock::Stock')->find({uniquename=>$seedlot_name }); #type_id=>$seedlot_cvterm_id});
         if ($previous_seedlot){
-            $c->stash->{rest} = {error=>'The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.'};
+            $c->stash->{rest} = {error=>__('The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.')};
             $c->detach();
         }
     }
@@ -219,19 +220,19 @@ sub seedlot_edit :Chained('seedlot_base') PathPart('edit') Args(0) {
         $cross_id = $schema->resultset('Stock::Stock')->find({uniquename=>$cross_uniquename, type_id=>$cross_cvterm_id})->stock_id();
     }
     if ($accession_uniquename && !$accession_id){
-        $c->stash->{rest} = {error=>'The given accession name is not in the database! Seedlots can only be added onto existing accessions.'};
+        $c->stash->{rest} = {error=>__('The given accession name is not in the database! Seedlots can only be added onto existing accessions.')};
         $c->detach();
     }
     if ($cross_uniquename && !$cross_id){
-        $c->stash->{rest} = {error=>'The given cross name is not in the database! Seedlots can only be added onto existing crosses.'};
+        $c->stash->{rest} = {error=>__('The given cross name is not in the database! Seedlots can only be added onto existing crosses.')};
         $c->detach();
     }
     if ($accession_id && $cross_id){
-        $c->stash->{rest} = {error=>'A seedlot must have either an accession OR a cross as contents. Not both.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have either an accession OR a cross as contents. Not both.')};
         $c->detach();
     }
     if (!$accession_id && !$cross_id){
-        $c->stash->{rest} = {error=>'A seedlot must have either an accession or a cross as contents.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have either an accession or a cross as contents.')};
         $c->detach();
     }
 
@@ -260,11 +261,11 @@ sub seedlot_delete :Chained('seedlot_base') PathPart('delete') Args(0) {
     my $c = shift;
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in the delete seedlots" };
+        $c->stash->{rest} = { error => __("You must be logged in the delete seedlots") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete seedlots. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete seedlots. Please contact us.") };
         $c->detach();
     }
 
@@ -284,11 +285,11 @@ sub seedlot_verify_delete_by_list :Path('/ajax/seedlots/verify_delete_by_list') 
     my $list_id = $c->req->param("list_id");
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in the delete seedlots" };
+        $c->stash->{rest} = { error => __("You must be logged in the delete seedlots") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete seedlots. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete seedlots. Please contact us.") };
         $c->detach();
     }
 
@@ -309,11 +310,11 @@ sub seedlot_confirm_delete_by_list :Path('/ajax/seedlots/confirm_delete_by_list'
     my $list_id = $c->req->param("list_id");
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in the delete seedlots" };
+        $c->stash->{rest} = { error => __("You must be logged in the delete seedlots") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete seedlots. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete seedlots. Please contact us.") };
         $c->detach();
     }
 
@@ -335,11 +336,11 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
     my $self = shift;
     my $c = shift;
     if (!$c->user){
-        $c->stash->{rest} = {error=>'You must be logged in to add a seedlot transaction!'};
+        $c->stash->{rest} = {error=>__('You must be logged in to add a seedlot transaction!')};
         $c->detach();
     }
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => "You do not have the correct submitter or curator role to add seedlots. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct submitter or curator role to add seedlots. Please contact us.") };
         $c->detach();
     }
     my $schema = $c->dbic_schema("Bio::Chado::Schema");
@@ -363,7 +364,7 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
 
     my $previous_seedlot = $schema->resultset('Stock::Stock')->find({uniquename=>$seedlot_uniquename }); #type_id=>$seedlot_cvterm_id});
     if ($previous_seedlot){
-        $c->stash->{rest} = {error=>'The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.'};
+        $c->stash->{rest} = {error=>__('The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.')};
         $c->detach();
     }
     my $accession_id;
@@ -372,7 +373,7 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
         my $stock_lookup = CXGN::Stock::StockLookup->new({ schema => $schema, stock_name=>$accession_uniquename });
         my $stock_lookup_rs = $stock_lookup->get_stock($accession_cvterm_id);
         if (!$stock_lookup_rs){
-            $c->stash->{rest} = {error=>'The accession name you provided does not match to a unique accession. Please make sure you are using the correct name or contact us.'};
+            $c->stash->{rest} = {error=>__('The accession name you provided does not match to a unique accession. Please make sure you are using the correct name or contact us.')};
             $c->detach();
         }
         $accession_id = $stock_lookup_rs->stock_id();
@@ -382,7 +383,7 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
     if ($cross_uniquename){
         my $rs = $schema->resultset('Stock::Stock')->find({uniquename=>$cross_uniquename, type_id=>$cross_cvterm_id});
         if (!$rs){
-            $c->stash->{rest} = {error=>'The cross name you provided does not match an existing cross name in the database.  Please make sure you are using the correct name or contact us.'};
+            $c->stash->{rest} = {error=>__('The cross name you provided does not match an existing cross name in the database.  Please make sure you are using the correct name or contact us.')};
             $c->detach();
         }
         $cross_id = $rs->stock_id();
@@ -392,7 +393,7 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
     if ($seedlot_source) {
         my $rs = $schema->resultset('Stock::Stock')->find({uniquename=>$seedlot_source, type_id => { -in => [ $seedlot_cvterm_id, $plot_cvterm_id, $subplot_cvterm_id, $plant_cvterm_id ] }});
         if ( !$rs ) {
-            $c->stash->{rest} = {error=>'The given seedlot source name does not match an existing entry in the database. Seedlot sources must be an existing seedlot, plot, subplot, or plant name.'};
+            $c->stash->{rest} = {error=>__('The given seedlot source name does not match an existing entry in the database. Seedlot sources must be an existing seedlot, plot, subplot, or plant name.')};
             $c->detach();
         }
         $source_id = $rs->stock_id();
@@ -445,30 +446,30 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
                 }
             }
             else {
-                $c->stash->{rest} = { error => "Could not check seedlot source due to undefined source stock type" };
+                $c->stash->{rest} = { error => __("Could not check seedlot source due to undefined source stock type") };
                 $c->detach();
             }
         }
 
         else {
-            $c->stash->{rest} = {error => 'Unsupported seedlot source type'};
+            $c->stash->{rest} = {error => __('Unsupported seedlot source type')};
             $c->detach();
         }
     }
     if ($accession_uniquename && !$accession_id){
-        $c->stash->{rest} = {error=>'The given accession name is not in the database! Seedlots can only be added onto existing accessions.'};
+        $c->stash->{rest} = {error=>__('The given accession name is not in the database! Seedlots can only be added onto existing accessions.')};
         $c->detach();
     }
     if ($cross_uniquename && !$cross_id){
-        $c->stash->{rest} = {error=>'The given cross name is not in the database! Seedlots can only be added onto existing crosses.'};
+        $c->stash->{rest} = {error=>__('The given cross name is not in the database! Seedlots can only be added onto existing crosses.')};
         $c->detach();
     }
     if ($accession_id && $cross_id){
-        $c->stash->{rest} = {error=>'A seedlot must have either an accession OR a cross as contents. Not both.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have either an accession OR a cross as contents. Not both.')};
         $c->detach();
     }
     if (!$accession_id && !$cross_id){
-        $c->stash->{rest} = {error=>'A seedlot must have either an accession or a cross as contents.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have either an accession or a cross as contents.')};
         $c->detach();
     }
 
@@ -483,12 +484,12 @@ sub create_seedlot :Path('/ajax/breeders/seedlot-create/') :Args(0) {
     my $breeding_program_id = $c->req->param("seedlot_breeding_program_id");
 
     if (!$timestamp){
-        $c->stash->{rest} = {error=>'A seedlot must have a timestamp for the transaction.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have a timestamp for the transaction.')};
         $c->detach();
     }
 
     if (!$breeding_program_id){
-        $c->stash->{rest} = {error=>'A seedlot must have a breeding program.'};
+        $c->stash->{rest} = {error=>__('A seedlot must have a breeding program.')};
         $c->detach();
     }
 
@@ -581,7 +582,7 @@ sub upload_seedlots_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -590,7 +591,7 @@ sub upload_seedlots_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -599,7 +600,7 @@ sub upload_seedlots_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload seedlots'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload seedlots')};
         $c->detach();
     }
 
@@ -620,7 +621,7 @@ sub upload_seedlots_POST : Args(0) {
     my $upload_from_accessions = $c->req->upload('seedlot_uploaded_file');
     my $upload_harvested_from_crosses = $c->req->upload('seedlot_harvested_uploaded_file');
     if (!$upload_from_accessions && !$upload_harvested_from_crosses){
-        $c->stash->{rest} = {error=>'You must upload a seedlot file!'};
+        $c->stash->{rest} = {error=>__('You must upload a seedlot file!')};
         $c->detach();
     }
     my $upload;
@@ -840,7 +841,7 @@ sub upload_seedlots_inventory_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlot inventory!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlot inventory!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -849,7 +850,7 @@ sub upload_seedlots_inventory_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlot inventory!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlot inventory!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -858,7 +859,7 @@ sub upload_seedlots_inventory_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload seedlot inventory'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload seedlot inventory')};
         $c->detach();
     }
 
@@ -1022,11 +1023,11 @@ sub edit_seedlot_transaction :Chained('seedlot_transaction_base') PathPart('edit
     my $schema = $c->dbic_schema("Bio::Chado::Schema");
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in to edit seedlot transactions" };
+        $c->stash->{rest} = { error => __("You must be logged in to edit seedlot transactions") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to edit seedlot transactions. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to edit seedlot transactions. Please contact us.") };
         $c->detach();
     }
 
@@ -1071,7 +1072,7 @@ sub edit_seedlot_transaction :Chained('seedlot_transaction_base') PathPart('edit
 
         $c->stash->{rest} = { success => 1 };
     } else {
-        $c->stash->{rest} = { error => "Something went wrong with the transaction update" };
+        $c->stash->{rest} = { error => __("Something went wrong with the transaction update") };
     }
 }
 
@@ -1146,12 +1147,12 @@ sub add_seedlot_transaction :Chained('seedlot_base') :PathPart('transaction/add'
     my $default_seedlot_material_type = $c->config->{default_seedlot_material_type};
 
     if (!$c->user){
-        $c->stash->{rest} = {error=>'You must be logged in to add a seedlot transaction!'};
+        $c->stash->{rest} = {error=>__('You must be logged in to add a seedlot transaction!')};
         $c->detach();
     }
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'Only a submitter or a curator can add seedlot transaction' };
+        $c->stash->{rest} = { error => __('Only a submitter or a curator can add seedlot transaction') };
         $c->detach();
     }
 
@@ -1184,7 +1185,7 @@ sub add_seedlot_transaction :Chained('seedlot_base') :PathPart('transaction/add'
 
             my $previous_seedlot = $schema->resultset('Stock::Stock')->find({uniquename=>$stock_uniquename, type_id=>$seedlot_cvterm_id});
             if ($previous_seedlot){
-                $c->stash->{rest} = {error=>'The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.'};
+                $c->stash->{rest} = {error=>__('The given seedlot uniquename has been taken. Please use another name or use the existing seedlot.')};
                 $c->detach();
             }
             my $accession_id;
@@ -1196,19 +1197,19 @@ sub add_seedlot_transaction :Chained('seedlot_base') :PathPart('transaction/add'
                 $cross_id = $schema->resultset('Stock::Stock')->find({uniquename=>$cross_uniquename, type_id=>$cross_cvterm_id})->stock_id();
             }
             if ($accession_uniquename && !$accession_id){
-                $c->stash->{rest} = {error=>'The given accession name is not in the database! Seedlots can only be added onto existing accessions.'};
+                $c->stash->{rest} = {error=>__('The given accession name is not in the database! Seedlots can only be added onto existing accessions.')};
                 $c->detach();
             }
             if ($cross_uniquename && !$cross_id){
-                $c->stash->{rest} = {error=>'The given cross name is not in the database! Seedlots can only be added onto existing crosses.'};
+                $c->stash->{rest} = {error=>__('The given cross name is not in the database! Seedlots can only be added onto existing crosses.')};
                 $c->detach();
             }
             if ($accession_id && $cross_id){
-                $c->stash->{rest} = {error=>'A seedlot must have either an accession OR a cross as contents. Not both.'};
+                $c->stash->{rest} = {error=>__('A seedlot must have either an accession OR a cross as contents. Not both.')};
                 $c->detach();
             }
             if (!$accession_id && !$cross_id){
-                $c->stash->{rest} = {error=>'A seedlot must have either an accession or a cross as contents.'};
+                $c->stash->{rest} = {error=>__('A seedlot must have either an accession or a cross as contents.')};
                 $c->detach();
             }
 
@@ -1335,11 +1336,11 @@ sub delete_seedlot_transaction :Chained('seedlot_transaction_base') PathPart('de
     my $schema = $c->dbic_schema("Bio::Chado::Schema");
 
     if (!$c->user()){
-        $c->stash->{rest} = { error => "You must be logged in to delete seedlot transactions" };
+        $c->stash->{rest} = { error => __("You must be logged in to delete seedlot transactions") };
         $c->detach();
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete seedlot transactions. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete seedlot transactions. Please contact us.") };
         $c->detach();
     }
 
@@ -1373,7 +1374,7 @@ sub delete_seedlot_transaction :Chained('seedlot_transaction_base') PathPart('de
         $c->stash->{rest} = { success => 1 };
     }
     else {
-        $c->stash->{rest} = { error => "An error occurred deleting the seedlot transaction" };
+        $c->stash->{rest} = { error => __("An error occurred deleting the seedlot transaction") };
     }
 }
 
@@ -1403,7 +1404,7 @@ sub seedlot_maintenance_ontology : Path('/ajax/breeders/seedlot/maintenance/onto
 
     # Make sure ontology is set in the conf file
     if ( !defined $c->config->{seedlot_maintenance_event_ontology_root} || $c->config->{seedlot_maintenance_event_ontology_root} eq '' ) {
-        $c->stash->{rest} = { error => 'Seedlot Maintenance Events are not enabled on this server!' };
+        $c->stash->{rest} = { error => __('Seedlot Maintenance Events are not enabled on this server!') };
         $c->detach();
     }
 
@@ -1576,13 +1577,13 @@ sub seedlot_maintenance_events_POST {
 
     # Require user login
     if (!$c->user){
-        $c->stash->{rest} = {error => 'You must be logged in to add a seedlot transaction!'};
+        $c->stash->{rest} = {error => __('You must be logged in to add a seedlot transaction!')};
         $c->detach();
     }
 
     # Get user information and check role
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'You do not have the required privileges to seedlot maintenance events.' };
+        $c->stash->{rest} = { error => __('You do not have the required privileges to seedlot maintenance events.') };
         $c->detach();
     }
 
@@ -1590,7 +1591,7 @@ sub seedlot_maintenance_events_POST {
     my $body = $c->request->data;
     my $events = $body->{events};
     if ( !defined $events || $events eq '' || ref $events ne 'ARRAY' ) {
-        $c->stash->{rest} = {error => 'Event parameters not provided!'};
+        $c->stash->{rest} = {error => __('Event parameters not provided!')};
         $c->detach();
     }
 
@@ -1709,20 +1710,20 @@ sub seedlot_maintenance_event_upload_POST : Args(0) {
 
     # Check Logged In Status
     if (!$c->user){
-        $c->stash->{rest} = {error => 'You must be logged in to do this!'};
+        $c->stash->{rest} = {error => __('You must be logged in to do this!')};
         $c->detach();
     }
     my $user_id = $c->user()->get_object()->get_sp_person_id();
     my $user_role = $c->user->get_object->get_user_type();
     if ( $user_role ne 'submitter' && $user_role ne 'curator' ) {
-        $c->stash->{rest} = {error => 'You do not have permission in the database to do this! Please contact us.'};
+        $c->stash->{rest} = {error => __('You do not have permission in the database to do this! Please contact us.')};
         $c->detach();
     }
 
     # Archive upload file
     my $upload = $c->req->upload('file');
     if ( !defined $upload || $upload eq '' ) {
-        $c->stash->{rest} = {error => 'You must provide the upload file!'};
+        $c->stash->{rest} = {error => __('You must provide the upload file!')};
         $c->detach();
     }
     else {
@@ -1761,7 +1762,7 @@ sub seedlot_maintenance_event_upload_POST : Args(0) {
         # No parsed data returned...
         if (!$parsed_data) {
             if (!$parser->has_parse_errors()) {
-                $c->stash->{rest} = { error => "An unknown error occurred" };
+                $c->stash->{rest} = { error => __("An unknown error occurred") };
                 $c->detach();
             }
             else {
@@ -1812,11 +1813,11 @@ sub discard_seedlots : Path('/ajax/breeders/seedlot/discard') :Args(0) {
     my $discard_date = $time->ymd();
 
     if (!$c->user()){
-        $c->stash->{rest} = { error_string => "You must be logged in to discard seedlot" };
+        $c->stash->{rest} = { error_string => __("You must be logged in to discard seedlot") };
         return;
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error_string => "You do not have the correct role to discard seedlot. Please contact us." };
+        $c->stash->{rest} = { error_string => __("You do not have the correct role to discard seedlot. Please contact us.") };
         return;
     }
 
@@ -1868,7 +1869,7 @@ sub discard_seedlots : Path('/ajax/breeders/seedlot/discard') :Args(0) {
         $seedlot_to_discard->store();
 
         if (!$seedlot_to_discard->store()){
-            $c->stash->{rest} = {error_string => "Error discarding seedlot",};
+            $c->stash->{rest} = {error_string => __("Error discarding seedlot"),};
             return;
         }
     }
@@ -1889,11 +1890,11 @@ sub undo_discarded_seedlots : Path('/ajax/breeders/seedlot/undo_discard') :Args(
     my $seedlot_id = $c->req->param("seedlot_id");
 
     if (!$c->user()){
-        $c->stash->{rest} = { error_string => "You must be logged in to undo discading this seedlot" };
+        $c->stash->{rest} = { error_string => __("You must be logged in to undo discading this seedlot") };
         return;
     }
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error_string => "You do not have the correct role to undo discarding this seedlot. Please contact us." };
+        $c->stash->{rest} = { error_string => __("You do not have the correct role to undo discarding this seedlot. Please contact us.") };
         return;
     }
 
@@ -1933,7 +1934,7 @@ sub upload_transactions_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1942,7 +1943,7 @@ sub upload_transactions_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload seedlots!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload seedlots!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -1951,7 +1952,7 @@ sub upload_transactions_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload seedlot transactions'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload seedlot transactions')};
         $c->detach();
     }
 
@@ -1968,7 +1969,7 @@ sub upload_transactions_POST : Args(0) {
     my $new_seedlot_organization = $c->req->param("new_seedlot_organization_name");
 
     if (!$upload_seedlots_to_seedlots && !$upload_seedlots_to_new_seedlots && !$upload_seedlots_to_plots && !$upload_seedlots_to_unspecified_names && !$upload_accessions_crosses_to_existing_seedlots){
-        $c->stash->{rest} = {error=>'You must upload a transaction file!'};
+        $c->stash->{rest} = {error=>__('You must upload a transaction file!')};
         $c->detach();
     }
     my $upload;
@@ -2216,12 +2217,12 @@ sub add_transactions_using_list_POST : Args(0) {
     my $schema = $c->dbic_schema("Bio::Chado::Schema");
 
     if (!$c->user){
-        $c->stash->{rest} = {error=>'You must be logged in to add seedlot transactions!'};
+        $c->stash->{rest} = {error=>__('You must be logged in to add seedlot transactions!')};
         $c->detach();
     }
 
     if (!($c->user()->check_roles('curator') || $c->user()->check_roles('submitter'))) {
-        $c->stash->{rest} = { error => 'Only a submitter or a curator can add seedlot transactions' };
+        $c->stash->{rest} = { error => __('Only a submitter or a curator can add seedlot transactions') };
         $c->detach();
     }
 
