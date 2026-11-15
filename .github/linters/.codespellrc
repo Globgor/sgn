@@ -1,4 +1,4 @@
 [codespell]
 check-hidden =
 skip = */package-lock.json,*.log,.git
-ignore-words-list = multicat,isnt,caf,fro,mis,nam,regargs,som,tha,waring,wheight,acsess,diaplay,relaod,reponse,repsonse,requeriments,statistcs,weigths
+ignore-words-list = multicat,isnt,buttong,caf,fro,mis,nam,nd,regargs,som,tha,waring,wheight,acsess,diaplay,relaod,reponse,repsonse,requeriments,statistcs,weigths
