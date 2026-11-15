@@ -36,6 +36,14 @@ component_compiles_ok('/tools/environment_stratification.mas');
 component_compiles_ok('/tools/fieldmap.mas');
 
 page_texts_ok(
+    '/tools/gs.mas',
+    'Note: This tool is not yet available.',
+    'Predict Breeding Values',
+    'Genomic Selection',
+    'Generate Model',
+);
+
+page_texts_ok(
     '/tools/mixedmodels.mas',
     'Choose the dependent variable for your analysis',
     '[ Choose dataset and dependent variable first ]',
