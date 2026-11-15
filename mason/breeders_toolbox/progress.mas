@@ -48,8 +48,8 @@ jQuery('#display_stats_button').click(function () {
         columns: [
             { "title": "year" },
             { "title": "average" },
-            { "title": "std dev" },
-            { "title": "observations [count]" }
+            { "title": <% __('std dev') |js %> },
+            { "title": <% __('observations [count]') |js %> }
         ]
     });
 });
@@ -124,7 +124,7 @@ jQuery('#display_graph_button').click(function () {
         },
 
         error: function (e) {
-            alert('cannot show graph');
+            alert(<% __('cannot show graph') |js %>);
 
         }
     });
