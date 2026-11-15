@@ -50,6 +50,11 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/manage_nirs.mas',
+    'Manage NIRS Data',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_odk_data_collection.mas',
     'ONA is currently being used for collecting crossing information. This requires exporting a crossing plan from here to the ONA server. The crossing plan guides collection of cross information and this data is synched with ONA using ODK. From here, we run a script twice a day, which pulls data on ONA into our database.',
     'Import Crossing Data from Selected Form on ONA',

@@ -92,6 +92,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/upload_nirs_spreadsheet_dialogs.mas',
+    'All other columns are required wavelengths. You can add how many columns you want upload -- there is no limit.',
+    'With this model is possible to upload NIRS data just need to follow these columns',
+    'Template for Upload NIRS .csv:',
+    'Upload NIRS .csv template',
+    'File format information',
+    'Upload NIRS Spreadsheet',
+);
+
+page_texts_ok(
     '/breeders_toolbox/upload_pedigrees_dialogs.mas',
     'To Overwrite Parents In the Case That An Accession Already Has Male or Female Parents',
     'The first row (header) should contain the following:',

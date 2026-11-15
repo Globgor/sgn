@@ -26,6 +26,12 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/manage_transcriptomics.mas',
+    'Upload and download transcriptomic data.',
+    'Manage Transcriptomic Data',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_trial_phenotyping.mas',
     'Enter a List of Trait Names:',
     'Or Paste From a List:',

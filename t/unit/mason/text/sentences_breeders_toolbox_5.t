@@ -55,4 +55,14 @@ page_sentences_ok(
     '{column} must not conflict with an existing location name',
 );
 
+page_sentences_ok(
+    '/breeders_toolbox/upload_nirs_spreadsheet_dialogs.mas',
+    '{column}: Required field that matches with existing data in the database. It can be the plot name, subplots, plant name, or tissue sample, depending how your trial is designed.',
+    '{column}: Optional identifier for each NIRS read. The {identifier} must be an integer.',
+    '{column}: Optional field to identify your device. Strings are allowed.',
+    '{column}: Optional identifier for each sample. Strings are allowed.',
+    '{column}: Optional field. The format allowed is: {format}.',
+    '{column}: Optional field for general comments.',
+);
+
 done_testing;
