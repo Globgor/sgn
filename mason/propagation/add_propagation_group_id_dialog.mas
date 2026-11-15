@@ -156,27 +156,27 @@ jQuery(document).ready(function(){
         const propagation_project_id = "<%$trial_id%>";
 
         if (propagation_group_identifier == '') {
-            alert("Please provide a propagation group identifier");
+            alert(<% __('Please provide a propagation group identifier') |js %>);
             return;
         }
         if (accession_name == '') {
-            alert("Please provide accession name");
+            alert(<% __('Please provide accession name') |js %>);
             return;
         }
         if (material_type == '') {
-            alert("Please provide material type");
+            alert(<% __('Please provide material type') |js %>);
             return;
         }
         if (date == '') {
-            alert("Please provide date");
+            alert(<% __('Please provide date') |js %>);
             return;
         }
         if (description == '') {
-            alert("Please provide description");
+            alert(<% __('Please provide description') |js %>);
             return;
         }
         if (operator_name == '') {
-            alert("Please provide operator name");
+            alert(<% __('Please provide operator name') |js %>);
             return;
         }
 
@@ -213,7 +213,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred adding propagation group identifier');
+                alert(<% __('An error occurred adding propagation group identifier') |js %>);
             }
         });
     });

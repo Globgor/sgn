@@ -75,7 +75,7 @@ jQuery(document).ready(function(){
         const propagation_group_stock_id = "<%$propagation_group_id%>";
 
         if (propagation_identifier == '') {
-            alert("Please provide a propagation identifier");
+            alert(<% __('Please provide a propagation identifier') |js %>);
             return;
         }
 
@@ -103,7 +103,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred adding propagation identifier');
+                alert(<% __('An error occurred adding propagation identifier') |js %>);
             }
         });
     });

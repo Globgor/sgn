@@ -149,37 +149,37 @@ jQuery(document).ready(function(){
     jQuery('#create_activity_project_submit').click(function() {
         var project_name = jQuery("#activity_project_name").val();
         if (!project_name) {
-            alert("Project name is required");
+            alert(<% __('Project name is required') |js %>);
             return;
         }
 
         var activity_type = jQuery("#activity_type").val();
         if (!activity_type) {
-            alert("Activity type is required");
+            alert(<% __('Activity type is required') |js %>);
             return;
         }
 
         var breeding_program = jQuery("#activity_project_program").val();
         if (!breeding_program) {
-            alert("Breeding program is required");
+            alert(<% __('Breeding program is required') |js %>);
             return;
         }
 
         var project_location = jQuery("#activity_project_location").val();
         if (!project_location) {
-            alert ("Location is required");
+            alert (<% __('Location is required') |js %>);
             return;
         }
 
         var year = jQuery("#activity_project_year_select").val();
         if (!year) {
-            alert ("Year is required");
+            alert (<% __('Year is required') |js %>);
             return;
         }
 
         var project_description = jQuery("#activity_project_description").val();
         if (!project_description) {
-            alert ("Description is required");
+            alert (<% __('Description is required') |js %>);
             return;
         }
 
@@ -211,7 +211,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving new tracking activities project');
+                alert(<% __('An error occurred saving new tracking activities project') |js %>);
             }
         });
     });
