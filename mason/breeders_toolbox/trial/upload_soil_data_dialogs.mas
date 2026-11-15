@@ -221,25 +221,25 @@ jQuery(document).ready(function(){
 
         var soil_data_description = jQuery("#soil_data_description").val();
         if ( soil_data_description === ''){
-            alert("Please provide description");
+            alert(<% __('Please provide description') |js %>);
             return;
         }
 
         var soil_data_date = jQuery("#soil_data_date").val();
         if ( soil_data_date === ''){
-            alert("Please select a date");
+            alert(<% __('Please select a date') |js %>);
             return;
         }
 
         var type_of_sampling = jQuery("#type_of_sampling").val();
         if ( type_of_sampling === ''){
-            alert("Please indicate type of sampling");
+            alert(<% __('Please indicate type of sampling') |js %>);
             return;
         }
 
         var uploadFile = jQuery("#soil_data_upload_file").val();
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 

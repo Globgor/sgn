@@ -78,7 +78,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving accessions.");
+                alert(<% __('Error retrieving accessions.') |js %>);
             }
         });
     });

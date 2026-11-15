@@ -21,7 +21,7 @@ jQuery(document).ready(function(){
               jQuery("#stocks_counts").html(html);
           },
           error: function(response){
-              alert('Error displaying accession count');
+              alert(<% __('Error displaying accession count') |js %>);
           }
 
       });

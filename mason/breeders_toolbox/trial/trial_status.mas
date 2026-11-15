@@ -126,7 +126,7 @@ jQuery(document).ready(function () {
                 jQuery('#trial_completion_layout_section_div').html(html);
             },
             error: function(response){
-                alert('Error retrieving trial completion layout section');
+                alert(<% __('Error retrieving trial completion layout section') |js %>);
             }
         });
     });
@@ -144,7 +144,7 @@ jQuery(document).ready(function () {
                 jQuery('#trial_completion_phenotype_section_div').html(html);
             },
             error: function(response){
-                alert('Error retrieving trial completion phenotype section');
+                alert(<% __('Error retrieving trial completion phenotype section') |js %>);
             }
         });
     });

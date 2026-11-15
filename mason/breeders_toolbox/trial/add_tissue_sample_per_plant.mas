@@ -53,7 +53,7 @@ $trial_has_plants => undef
 jQuery(document).ready(function() {
 
     jQuery('#create_tissue_sample_entries_button').click( function () {
-        alert("Please check the Experimental Linkage section to see if this trial is linked to a Genotyping Plate already! You may not need to create new tissue samples for your use case!");
+        alert(<% __('Please check the Experimental Linkage section to see if this trial is linked to a Genotyping Plate already! You may not need to create new tissue samples for your use case!') |js %>);
         jQuery('#add_tissue_samples_dialog').modal("show");
     });
 
@@ -101,14 +101,14 @@ function add_tissue_samples_to_trial() {
           alert(response.error);
         }
         else {
-          alert("Successfully created tissue sample entries.");
+          alert(<% __('Successfully created tissue sample entries.') |js %>);
           jQuery('#add_plants_dialog').modal("hide");
           window.location.replace('/breeders/trial/'+<% $trial_id %>);
         }
       },
       error: function(response) {
         disable_working_modal();
-        alert("An error occurred creating tissue sample entries");
+        alert(<% __('An error occurred creating tissue sample entries') |js %>);
       },
     });
 

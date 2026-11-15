@@ -80,7 +80,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving tissue sources.");
+                alert(<% __('Error retrieving tissue sources.') |js %>);
             }
         });
     });

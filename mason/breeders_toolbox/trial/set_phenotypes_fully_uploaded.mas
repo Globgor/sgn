@@ -54,12 +54,12 @@ jQuery(document).ready(function() {
                     alert(response.error);
                 }
                 else {
-                    alert('Successfully saved');
+                    alert(<% __('Successfully saved') |js %>);
                     location.reload();
                 }
             },
             error: function(response) {
-                alert('An error occurred trying to set phenotypes fully uploaded.');
+                alert(<% __('An error occurred trying to set phenotypes fully uploaded.') |js %>);
             }
         });
     });

@@ -98,15 +98,15 @@ $trial_id => undef
                 })  
                 .finally(() => {
                     jQuery("#btn-load-plots").prop("disabled", false);
-                    jQuery("#btn-load-plots").html("Load plots");
+                    jQuery("#btn-load-plots").html(<% __('Load plots') |js %>);
                 }); 
             document.getElementById("formOptions").style.display="block";
-        } else alert("Invalid trial!");
+        } else alert(<% __('Invalid trial!') |js %>);
     }
 
     function setLocation(studyDbId) {
         jQuery("#select_trial_for_selection_index option[value="+studyDbId+"]").attr('selected', 'selected'); 
-        fieldMap.setLocation(studyDbId).then(()=>alert("Please select an area over the field and click 'Load plots'."), ()=>alert("No geo reference for location in this trial!"));
+        fieldMap.setLocation(studyDbId).then(()=>alert(<% __('Please select an area over the field and click \'Load plots\'.') |js %>), ()=>alert(<% __('No geo reference for location in this trial!') |js %>));
     }
     
     function update() {
@@ -117,7 +117,7 @@ $trial_id => undef
             .then((resp)=>alert(resp), (resp)=>alert(resp))
             .finally(() => {
                 jQuery("#btn-load-plots, #btn-save-geo-coordinates").prop("disabled", false);
-                jQuery("#btn-save-geo-coordinates").html("Save Geo coordinates");
+                jQuery("#btn-save-geo-coordinates").html(<% __('Save Geo coordinates') |js %>);
             });
     }
 

@@ -398,10 +398,10 @@ function trial_upload_additional_file_load_collections(selected_id) {
             }
             var collections = (response.collections || []).filter(function (c) { return c.user_can_modify; });
             if (!collections.length) {
-                select.append(jQuery('<option>').val('').text('No file collections available'));
+                select.append(jQuery('<option>').val('').text(<% __('No file collections available') |js %>));
                 return;
             }
-            select.append(jQuery('<option>').val('').text('Select a collection'));
+            select.append(jQuery('<option>').val('').text(<% __('Select a collection') |js %>));
             collections.forEach(function (c) {
                 select.append(jQuery('<option>').val(c.collection_id).text(c.name));
             });
@@ -432,13 +432,13 @@ function display_trial_additional_upload_files(){
             jQuery('#trial_additional_uploaded_files_table').DataTable({ 'autoWidth': false });
         },
         error: function(response){
-            alert("Error retrieving additional uploaded files.");
+            alert(<% __('Error retrieving additional uploaded files.') |js %>);
         }
     });
 }	
 						   
 function obsolete_additional_file(trial_id, file_id) {
-    var yes = confirm('Are you sure you want to obsolete this file? This operation cannot be undone.');
+    var yes = confirm(<% __('Are you sure you want to obsolete this file? This operation cannot be undone.') |js %>);
     if (yes) {
         jQuery.ajax({
             url: '/ajax/breeders/trial/'+trial_id+'/obsolete_uploaded_additional_file/'+file_id,
@@ -447,11 +447,11 @@ function obsolete_additional_file(trial_id, file_id) {
                     alert(r.error); 
                 }
                 else {
-                    alert("The file has been obsoleted.");
+                    alert(<% __('The file has been obsoleted.') |js %>);
                     display_trial_additional_upload_files();
                 }
             },
-            error: function(r) {  alert("An error occurred!") }
+            error: function(r) {  alert(<% __('An error occurred!') |js %>) }
         });
     }
 }

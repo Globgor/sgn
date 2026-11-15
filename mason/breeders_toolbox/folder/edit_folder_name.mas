@@ -62,13 +62,13 @@ function save_trial_name() {
         alert(response.error);
       }
       else {
-        alert("Successfully updated folder name");
+        alert(<% __('Successfully updated folder name') |js %>);
         jQuery('#edit_trial_name_dialog').modal("hide");
         jQuery('#pagetitle').html("<h3><% $trial_type %> detail for "+new_name+"</h3>");
       }
     },
     error: function(response) {
-      alert("An error occurred updating the folder name");
+      alert(<% __('An error occurred updating the folder name') |js %>);
     },
   });
 }

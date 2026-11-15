@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
     jQuery('#delete_individual_phenotype_data_dialog_submit').click( function() {
         traits = jQuery('#retrieve_assayed_trial_traits_select').val();
         if (!traits){
-            alert("No trait selected");
+            alert(<% __('No trait selected') |js %>);
         } else {
             delete_selected_assayed_traits();
         }
@@ -133,7 +133,7 @@ function delete_selected_assayed_traits() {
       },
       error: function(){
           jQuery('#working_modal').modal("hide");
-          alert('An error occurred deleting trait');
+          alert(<% __('An error occurred deleting trait') |js %>);
       }
   });
 

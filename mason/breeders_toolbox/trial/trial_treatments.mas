@@ -51,7 +51,7 @@ jQuery(document).ready(function () {
                             columns: [
                                 {
                                     data : 'trait_name', 
-                                    title : 'Treatment',
+                                    title : <% __('Treatment') |js %>,
                                     orderable : false,
                                     render : function(data, type, row, meta) {
                                         
@@ -64,10 +64,10 @@ jQuery(document).ready(function () {
                                         return html;
                                     }
                                 },
-                                {data : 'count', title : 'Total Stock Count'},
+                                {data : 'count', title : <% __('Total Stock Count') |js %>},
                                 {
                                     data : 'trait_id',
-                                    title : 'Remove treatment',
+                                    title : <% __('Remove treatment') |js %>,
                                     orderable : false,
                                     render : function(data, type, row, meta) {
                                         let html = `<button class="btn btn-small btn-danger treatment-delete-btn" id="delete_treatment_${data}"><span class="glyphicon glyphicon-trash"></span></button>`;
@@ -82,7 +82,7 @@ jQuery(document).ready(function () {
                             columns: [
                                 {
                                     data : 'trait_name', 
-                                    title : 'Treatment',
+                                    title : <% __('Treatment') |js %>,
                                     orderable : false,
                                     render : function(data, type, row, meta) {
                                         
@@ -95,7 +95,7 @@ jQuery(document).ready(function () {
                                         return html;
                                     }
                                 },
-                                {data : 'count', title : 'Total Stock Count'},
+                                {data : 'count', title : <% __('Total Stock Count') |js %>},
                             ]
                         });
                     }
@@ -104,7 +104,7 @@ jQuery(document).ready(function () {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving treatments.");
+                alert(<% __('Error retrieving treatments.') |js %>);
             }
         });
     }
@@ -131,14 +131,14 @@ jQuery(document).ready(function () {
                 columns : [
                     {
                         data : 'observationUnitName',
-                        title : 'Stock',
+                        title : <% __('Stock') |js %>,
                         orderable : true,
                         render : function(data, type, row, meta) {
                             let html = '<a href="/stock/'+row.observationUnitDbId+'/view/">'+data+'</a>';
                             return html;
                         }
                     },
-                    {data : 'value', title : 'Treatment Value'}
+                    {data : 'value', title : <% __('Treatment Value') |js %>}
                 ],
                 columnDefs : [
                     {targets : 0, width : "50%"}
@@ -178,8 +178,8 @@ jQuery(document).ready(function () {
     jQuery('#trial_treatments_raw_data').DataTable({
         'destroy': true,
         'columns': [
-            { title: 'Stock' },
-            { title: 'Treatment value' },
+            { title: <% __('Stock') |js %> },
+            { title: <% __('Treatment value') |js %> },
         ]
     });
 
@@ -189,7 +189,7 @@ jQuery(document).ready(function () {
         let splits = this_id.split('_');
         let treatment_id = splits[2];
 
-        if (confirm("Delete treatment data from all stocks?")) {
+        if (confirm(<% __('Delete treatment data from all stocks?') |js %>)) {
             jQuery.ajax({
                 url : '/ajax/breeders/trial/'+<% $trial_id %>+'/remove_treatment',
                 data : {
@@ -203,14 +203,14 @@ jQuery(document).ready(function () {
                     if (response.error) {
                         alert(response.error);
                     } else {
-                        alert("Treatment data removed.");
+                        alert(<% __('Treatment data removed.') |js %>);
                         window.location.reload();
                     }
                 },
                 error : function(response) {
                     jQuery('#working_modal').modal("hide");
                     console.log(response);
-                    alert("An error occurred deleting treatment data.");
+                    alert(<% __('An error occurred deleting treatment data.') |js %>);
                 }
             });
         }

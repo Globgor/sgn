@@ -279,7 +279,7 @@ jQuery(document).ready(function () {
             jQuery('#stocks_in_trial').html(trial_stocks_html);
         },
 	    error: function(response){
-            alert("Error retrieving stocks.");
+            alert(<% __('Error retrieving stocks.') |js %>);
 	    }
 	});
 
@@ -302,12 +302,12 @@ var phenotype_file;
 var dataTableToPass;
 jQuery("#confirm_calculating_spatial_correction").click(async function() {
   try { //try is a block of code that will run and if it encounters an error it will run the catch block
-    jQuery("#calculate_spatial_correction_status_message").html("starting analysis");
+    jQuery("#calculate_spatial_correction_status_message").html(<% __('starting analysis') |js %>);
 
     const response = await new Promise((resolve, reject) => {
       jQuery.ajax({
         beforeSend: function(xhr, settings) {
-          jQuery("#calculate_spatial_correction_status_message").html("starting analysis");
+          jQuery("#calculate_spatial_correction_status_message").html(<% __('starting analysis') |js %>);
           jQuery('#working_modal').modal("show");
         },
         url: '/ajax/spatial_model/generate_results/' + trial_id,
@@ -321,11 +321,11 @@ jQuery("#confirm_calculating_spatial_correction").click(async function() {
     });
 
     jQuery('#working_modal').modal("hide");
-    jQuery("#calculate_spatial_correction_status_message").html("Analysis complete. Click below to correct spatial correlation on necessary traits.");
+    jQuery("#calculate_spatial_correction_status_message").html(<% __('Analysis complete. Click below to correct spatial correlation on necessary traits.') |js %>);
 
     if (response.error) {
       alert(response.error);
-      alert("Error calculating spatial correction");
+      alert(<% __('Error calculating spatial correction') |js %>);
     } else {
       //jQuery("#confirm_store_spatial_correction").prop("disabled", false);
       jQuery("#spatial_correction_results_buttons button").show();
@@ -376,7 +376,7 @@ jQuery("#confirm_calculating_spatial_correction").click(async function() {
     }
   } catch (error) {
     console.error('Error:', error);
-    jQuery('#calculate_spatial_correction_status_message').text("Error calculating spatial correction.");
+    jQuery('#calculate_spatial_correction_status_message').text(<% __('Error calculating spatial correction.') |js %>);
   }
 });
 
@@ -420,7 +420,7 @@ jQuery("#correct_spatial").click(function() {
       jQuery('#working_modal').modal('hide');
       if (response.error) {
         alert(response.error);
-        alert("Error calculating spatial correction");
+        alert(<% __('Error calculating spatial correction') |js %>);
       } else {
         jQuery('#confirm_store_spatial_correction').prop('disabled', false);
         jQuery("#spatial_correction_blue_results_table").DataTable({
@@ -451,8 +451,8 @@ jQuery("#correct_spatial").click(function() {
           'data': response.moran_p_values,
           'scrollX': true,
           'columns': [
-            { 'title': 'Trait' },
-            { 'title': 'Moran P-value after spatial corrections' },
+            { 'title': <% __('Trait') |js %> },
+            { 'title': <% __('Moran P-value after spatial corrections') |js %> },
           ]
         });
       }
@@ -585,7 +585,7 @@ jQuery(document).on('click', '#confirm_store_spatial_correction', async function
             },
             error: function() {
                 jQuery('#working_modal').modal("hide");
-                alert('An error occurred replacing stock');
+                alert(<% __('An error occurred replacing stock') |js %>);
             }
         });
     }

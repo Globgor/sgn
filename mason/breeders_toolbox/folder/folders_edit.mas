@@ -95,7 +95,7 @@ function save_folders_categories() {
         });
     }
     if (error == 1){
-        alert('Error setting folder categories!');
+        alert(<% __('Error setting folder categories!') |js %>);
     } else {
         if(confirm('Categories set for folder(s)! Refresh <% $folder_tree_type %> Tree?')){
             jQuery("[name='<% $folder_tree_refresh_name %>']").trigger("click");

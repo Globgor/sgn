@@ -167,7 +167,7 @@ $design_types => ()
         },
         error: function(xhr) {
           console.log('Trial tree load failed:', xhr.status, xhr.responseText);
-          alert("An error occurred while loading the trial data.");
+          alert(<% __('An error occurred while loading the trial data.') |js %>);
         }
       });
     }

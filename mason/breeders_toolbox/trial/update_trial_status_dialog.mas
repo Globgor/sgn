@@ -100,7 +100,7 @@ jQuery(document).ready(function(){
 
         var activity_date = jQuery("#trial_activity_date").val();
         if (activity_date == '') {
-            alert("Please select a date");
+            alert(<% __('Please select a date') |js %>);
             return;
         }
 
@@ -129,7 +129,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred updating trial status');
+                alert(<% __('An error occurred updating trial status') |js %>);
             }
         });
     });

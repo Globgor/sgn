@@ -143,7 +143,7 @@ jQuery(document).ready(function(){
             let stock_validation = 1;
             stock_validation = lo.legacy_validate(stock_list_id, validate_type, true);
             if (stock_validation != 1) {
-                alert("The list did not pass validation. Names in the list must be in the database");
+                alert(<% __('The list did not pass validation. Names in the list must be in the database') |js %>);
                 return;
             } else {
                 additional_stocks_form(stock_list_id, default_number_plants);
@@ -177,12 +177,12 @@ jQuery(document).ready(function(){
 
         const addition_type = jQuery('#addition_type').val();
         if (!addition_type) {
-            alert("Please select an addition type");
+            alert(<% __('Please select an addition type') |js %>);
             return;
         }
 
         if (!stock_list_id) {
-            alert("Please select a list");
+            alert(<% __('Please select a list') |js %>);
             return;
         }
 
@@ -216,7 +216,7 @@ jQuery(document).ready(function(){
             },
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred storing additional accessions for greenhouse trial.');
+                alert(<% __('An error occurred storing additional accessions for greenhouse trial.') |js %>);
                 jQuery('#add_additional_stocks_using_list_dialog').modal("hide");
             },
         });

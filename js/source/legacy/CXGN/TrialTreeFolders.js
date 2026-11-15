@@ -48,7 +48,7 @@ function refreshTrailJsTree(refreshpage) {
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing trial jstree html');
+                alert(gettext('An error occurred refreshing trial jstree html'));
             }
         });
     }, 500);
@@ -71,7 +71,7 @@ function refreshCrossJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing crosses jstree html');
+                alert(gettext('An error occurred refreshing crosses jstree html'));
             }
         });
     }, 500);
@@ -92,7 +92,7 @@ function refreshGenotypingTrialJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing genotype trial jstree html');
+                alert(gettext('An error occurred refreshing genotype trial jstree html'));
             }
         });
     }, 500);
@@ -113,7 +113,7 @@ function refreshGenotypingProjectJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing genotype project jstree html');
+                alert(gettext('An error occurred refreshing genotype project jstree html'));
             }
         });
     }, 500);
@@ -136,7 +136,7 @@ function refreshActivityJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing activity jstree html');
+                alert(gettext('An error occurred refreshing activity jstree html'));
             }
         });
     }, 500);
@@ -157,7 +157,7 @@ function refreshTransformationProjectJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing transformation project jstree html');
+                alert(gettext('An error occurred refreshing transformation project jstree html'));
             }
         });
     }, 500);
@@ -178,7 +178,7 @@ function refreshPropagationProjectJsTree(refreshpage){
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred refreshing propagation project jstree html');
+                alert(gettext('An error occurred refreshing propagation project jstree html'));
             }
         });
     }, 500);

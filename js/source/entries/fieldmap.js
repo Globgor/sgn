@@ -918,7 +918,7 @@ export function init() {
                         },
                         error: function () {
                             jQuery("#working_modal").modal("hide");
-                            alert("An error occurred retrieving plot images");
+                            alert(gettext("An error occurred retrieving plot images"));
                         },
                     });
                 }
