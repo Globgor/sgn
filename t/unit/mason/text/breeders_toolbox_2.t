@@ -45,6 +45,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/create_tissue_samples_dialogs.mas',
+    'You can use the same tissue name, e.g. root and root, more than once below. The tissue name will still be unique because of a tissue index e.g. 1 and 2 added to the end.',
+    'You can use these tissue samples as source material for a genotyping plates (96 or 384 well plate)',
+    'Tissue samples are linked to a single plant, which is in turn linked to a single plot.',
+    'Tissue samples can then be transferred into genotyping plates (96 or 384 well plates).',
+    'This workflow will guide you through creating tissue samples for your field trial',
+    'You may want to go to the trial detail page for the trial now that it has plants.',
+);
+
+page_texts_ok(
     '/breeders_toolbox/crossing_experiment_tree.mas',
     'Breeding Programs -- Folders -- Crossing Experiments',
     'Select multiple folders by holding \'Ctrl\'.',

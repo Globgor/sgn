@@ -18,6 +18,12 @@ use warnings;
 use Test::More;
 
 my @scripts = (
+    [ 'js/source/entries/sequenced_accessions.js',
+        'gettext("The entry has been saved. Thank you!")',
+        'gettext("The entry has been deleted.")',
+        'gettext("An error occurred. The entry was not deleted.")',
+        'gettext("an error occurred")',
+    ],
     [ 'js/source/entries/wizard.js',
         'gettext("List is not of an appropriate type.")',
     ],

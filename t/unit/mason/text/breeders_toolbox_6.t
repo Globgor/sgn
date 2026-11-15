@@ -19,6 +19,8 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
+component_compiles_ok('/breeders_toolbox/manage_genotyping.mas');
+
 page_texts_ok(
     '/breeders_toolbox/manage_odk_data_collection.mas',
     'ONA is currently being used for collecting crossing information. This requires exporting a crossing plan from here to the ONA server. The crossing plan guides collection of cross information and this data is synched with ONA using ODK. From here, we run a script twice a day, which pulls data on ONA into our database.',
@@ -58,5 +60,13 @@ page_texts_ok(
 );
 
 component_compiles_ok('/breeders_toolbox/manage_projects.mas');
+
+page_texts_ok(
+    '/breeders_toolbox/manage_samples.mas',
+    'View and create tissue samples for genotyping plates. Genotyping plates represent tissue samples in a 96 or 384 well plate layout.',
+    'View and create tissue samples for field trials. Tissue samples come from a plant in a plot.',
+    'View and create tissue samples for generic sampling trials.',
+    'Manage Tissue Samples',
+);
 
 done_testing;

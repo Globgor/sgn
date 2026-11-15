@@ -70,6 +70,16 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/create_tissue_samples_dialogs.mas',
+    'An error occurred creating tissue sample entries',
+    'An error occurred checking trial for plants.',
+    'Successfully created tissue sample entries.',
+    'An error occurred saving plant entries',
+    'Successfully created plant entries.',
+    'Only select one trial!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/crossing_experiment_tree.mas',
     'An error occurred while loading the trial data.',
 );

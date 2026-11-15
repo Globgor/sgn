@@ -20,6 +20,11 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/manage_samples.mas',
+    'Automatic export to genotyping vendors is currently not available; however, you can download the layout and submit to vendor manually.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/manage_trial_phenotyping.mas',
     'An error occurred retrieving trial information',
     'An error occurred retrieving trait value',
