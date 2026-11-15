@@ -96,7 +96,7 @@
          url: '/ajax/user/update',
          method: 'POST',
          data: form_data,
-         error: function(r) { alert('An error occurred! Sorry!');  },
+         error: function(r) { alert(<% __('An error occurred! Sorry!') |js %>);  },
          success: function(r) {
            if (r.error) { alert(r.error); }
            else { 
