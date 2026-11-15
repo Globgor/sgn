@@ -26,25 +26,25 @@ $dataset_is_public => 0
     <div class="panel-body" style="padding: 0">
         <table id="dataset-table" class="table table-hover" style="padding: 15px">
                 <tr>
-                    <td>Name</td>
+                    <td><% __('Name') |h %></td>
                     <td><% $dataset_name %></td>
                 </tr>
 
 
                 <tr>
-                    <td>Description</td>
+                    <td><% __('Description') |h %></td>
                     <td>
                         <div id="dataset-description-update" style="display: none">
                             <textarea type="text" id="description" class="form-control" rows=5><% $dataset_description %></textarea>
                             <button class="btn btn-sm btn-primary" onclick="datasetUpdate(<% $dataset_id %>)">
-                                <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Update
+                                <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;<% __('Update') |h %>
                             </button>
                         </div>
                         <div id="dataset-description-display">
                             <p id="dataset-description-update-content"><% $dataset_description_string %></p>
 % if ( $is_dataset_owner ) {
                                 <button class="btn btn-sm btn-primary" onclick="datasetEdit()">
-                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<% __('Edit') |h %>
                                 </button>
 % }
                         </div>
@@ -52,48 +52,48 @@ $dataset_is_public => 0
                 </tr>
 
                 <tr>
-                    <td>Owner</td>
+                    <td><% __('Owner') |h %></td>
                     <td><a href='/solpeople/personal-info.pl?sp_person_id=<% $dataset_owner_id %>'><% $dataset_owner_name %></a></td>
                 </tr>
 
                 <tr>
-                    <td>Contents</td>
+                    <td><% __('Contents') |h %></td>
                     <td><% $dataset_contents %></td>
                 </tr>
 
 % if ( $is_dataset_owner ) {
                     <tr>
-                        <td>Edit</td>
+                        <td><% __('Edit') |h %></td>
                         <td>
                             <button id="dataset-edit-private"
                                 style="display: <% $dataset_is_public ? 'inline-block' : 'none' %>" 
                                 class="btn btn-sm btn-primary" 
                                 onclick="datasetPrivate(<% $dataset_id %>)">
-                                    <span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;Make Private
+                                    <span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;<% __('Make Private') |h %>
                             </button>
                             <button id="dataset-edit-public"
                                 style="display: <% $dataset_is_public ? 'none' : 'inline-block' %>"
                                 class="btn btn-sm btn-primary"
                                 onclick="datasetPublic(<% $dataset_id %>)">
-                                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Make Public
+                                    <span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;<% __('Make Public') |h %>
                             </button>
                             <button 
                                 style="margin-left:4px;"
                                 class="btn btn-sm btn-danger"
                                 onclick="datasetDelete(<% $dataset_id %>)">
-                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;<% __('Delete') |h %>
                             </button>
                         </td>
                     </tr>
 % }
 
                 <tr>
-                    <td>Select Dataset in Wizard</td>
+                    <td><% __('Select Dataset in Wizard') |h %></td>
                     <td><% $wizard_link %></td>
                 </tr>
 
                 <tr>
-                    <td>Analyses using this dataset</td>
+                    <td><% __('Analyses using this dataset') |h %></td>
                     <td id="dataset_analysis_usage"></td>
                 </tr>
         </table>

@@ -3,11 +3,11 @@ $dataset_id
 $dataset_name
 </%args>
 
-<p><small>Predicted tool compatibility based on dataset definition. The table details the traits and types of analyses that can be performed. If database elements are updated, such as phenotypes added to field trials or accessions, you may wish to recalculate tool compatibility for more accurate results. Warning symbols indicate compatibility, but with low sample sizes.</small></p>
+<p><small><% __('Predicted tool compatibility based on dataset definition. The table details the traits and types of analyses that can be performed. If database elements are updated, such as phenotypes added to field trials or accessions, you may wish to recalculate tool compatibility for more accurate results. Warning symbols indicate compatibility, but with low sample sizes.') |h %></small></p>
 
 <div id="predicted-tool-compatibility" style="width:100%;overflow-x:auto;overflow-y:auto"></div>
 <div style="margin-top: 15px">
-    <button type="button" class="btn btn-sm btn-success" id="tool-compatibility-calc-button">Calculate Tool Compatibility</button>
+    <button type="button" class="btn btn-sm btn-success" id="tool-compatibility-calc-button"><% __('Calculate Tool Compatibility') |h %></button>
 </div>
 
 <script>

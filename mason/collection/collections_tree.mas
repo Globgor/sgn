@@ -33,27 +33,27 @@ $instance_id => 'collections_tree'
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th style="width:30%;">Search</th>
-                <th>Breeding Programs -- Collections
+                <th style="width:30%;"><% __('Search') |h %></th>
+                <th><% __('Breeding Programs -- Collections') |h %>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-sm btn-default" id="<% $instance %>_refresh_button">Refresh</button>
+                    <button class="btn btn-sm btn-default" id="<% $instance %>_refresh_button"><% __('Refresh') |h %></button>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    <input type="text" class="form-control input-sm" id="<% $instance %>_search" placeholder="Search" />
+                    <input type="text" class="form-control input-sm" id="<% $instance %>_search" placeholder="<% __('Search') |h %>" />
                     <hr>
-                    <h5><i>Double click a collection to view its detail page.</i></h5>
+                    <h5><i><% __('Double click a collection to view its detail page.') |h %></i></h5>
                     <h5><i>Breeding programs (&nbsp;<span class="glyphicon glyphicon-briefcase text-info"></span>&nbsp;),
                         collections (&nbsp;<span class="glyphicon glyphicon-folder-close text-warning"></span>&nbsp;)</i></h5>
                 </td>
                 <td>
                     <div id="<% $instance %>_loading" class="text-muted" style="padding:10px;">
-                        <span class="glyphicon glyphicon-refresh"></span> Loading collections&hellip;
+                        <span class="glyphicon glyphicon-refresh"></span> <% __('Loading collections') |h %>&hellip;
                     </div>
-                    <div id="<% $instance %>" >[loading...]</div>
+                    <div id="<% $instance %>" ><% __('[loading...]') |h %></div>
                 </td>
             </tr>
         </tbody>

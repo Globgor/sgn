@@ -13,20 +13,20 @@ $list_size
 
 <& /page/page_title.mas, title => "Details for List '$list_name'" &>
 
-<&| /page/info_section.mas, title=>"Details",  collapsible => 1, collapsed=>0,&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Details"), 'h' ),  collapsible => 1, collapsed=>0,&>
     <table class="table table-bordered table-hover">
-        <tr><td><b>List Name</b></td><td><% $list_name %></td></tr>
-        <tr><td><b>List ID</b></td><td><% $list_id %></td></tr>
-        <tr><td><b>Type</b></td><td><% $list_type %></td></tr>
-        <tr><td><b>Number of Items</b></td><td><% $list_size %></td></tr>
-        <tr><td><b>Description</b></td><td><% $list_description %></td></tr>
+        <tr><td><b><% __('List Name') |h %></b></td><td><% $list_name %></td></tr>
+        <tr><td><b><% __('List ID') |h %></b></td><td><% $list_id %></td></tr>
+        <tr><td><b><% __('Type') |h %></b></td><td><% $list_type %></td></tr>
+        <tr><td><b><% __('Number of Items') |h %></b></td><td><% $list_size %></td></tr>
+        <tr><td><b><% __('Description') |h %></b></td><td><% $list_description %></td></tr>
     </table>
 </&>
 
-<&| /page/info_section.mas, title => 'List Items', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('List Items'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <form id="download_list_details" action="/list/download_details" method="POST">
-            <button class="btn btn-primary" type="button" id="download_details_button">Download List Items</button>
+            <button class="btn btn-primary" type="button" id="download_details_button"><% __('Download List Items') |h %></button>
             <input type="hidden" id="list_download_token" name="list_download_token"/>
             <input name="list_id" id="list_id" type="hidden" value="<% $list_id %>">
         </form>

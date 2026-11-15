@@ -4,9 +4,9 @@ $code => undef
 
 <p id="authorize-status">
 % if ( defined $code ) {
-    Connecting account...
+    <% __('Connecting account...') |h %>
 % } else {
-    ERROR: Authorization code not returned
+    <% __('ERROR: Authorization code not returned') |h %>
 % }
 </p>
 
