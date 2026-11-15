@@ -6,7 +6,7 @@ $data_level => undef
 <& /util/import_javascript.mas, classes => [ ] &>
 
 <div class="well well-sm">
-    <button class="btn btn-primary" id="trial_detail_page_analysis_numerical_derivative_workflow">Numerical Derivatives Across Row and Columns On Saved Measurements</button>
+    <button class="btn btn-primary" id="trial_detail_page_analysis_numerical_derivative_workflow"><% __('Numerical Derivatives Across Row and Columns On Saved Measurements') |h %></button>
 </div>
 <hr>
 
@@ -14,28 +14,28 @@ $data_level => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="trialAnalysisNumericalDerivativeWorkflowDialog">Calculate Numerical Derivatives Across Row and Columns</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="trialAnalysisNumericalDerivativeWorkflowDialog"><% __('Calculate Numerical Derivatives Across Row and Columns') |h %></h4>
             </div>
             <div class="modal-body">
 
                 <&| /util/workflow.mas, id=> "trial_analysis_numerical_derivative_workflow_dialog_workflow" &>
-                    <&| /util/workflow.mas:step, title=> "Traits" &>
-                        <& /page/page_title.mas, title=>"Select the input measurements to calculate derivatives for" &>
+                    <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Traits"), 'h' ) &>
+                        <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the input measurements to calculate derivatives for"), 'h' ) &>
 
                         <div class="container-fluid">
                             <div class="form-horizontal">
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Derivative: </label>
+                                    <label class="col-sm-3 control-label"><% __('Derivative:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <select class="form-control" id="trial_analysis_numerical_derivative_workflow_derivative_div">
-                                            <option value="first">First 2D Derivative</option>
+                                            <option value="first"><% __('First 2D Derivative') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Trait(s): </label>
+                                    <label class="col-sm-3 control-label"><% __('Trait(s):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="trial_analysis_numerical_derivative_workflow_traits_div"></div>
                                     </div>
@@ -44,14 +44,14 @@ $data_level => undef
                             </div>
 
                             <center>
-                                <button class="btn btn-primary" id="trial_analysis_numerical_derivative_workflow_submit" >Compute and Save!</button>
+                                <button class="btn btn-primary" id="trial_analysis_numerical_derivative_workflow_submit" ><% __('Compute and Save!') |h %></button>
                             </center>
                         </div>
                     </&>
                 </&>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

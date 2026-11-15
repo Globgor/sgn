@@ -15,14 +15,14 @@ $user_name
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="updateTrialStatusDialog">Update <% $trial_name %> Status</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Trial Status: </label>
+                            <label class="col-sm-4 control-label"><% __('Trial Status:') |h %> </label>
                             <div class="col-sm-6" >
                                 <select class="form-control" id="trial_status_select">
 % foreach my $activity(@all_activities){
@@ -32,7 +32,7 @@ $user_name
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="trial_activity_date">Trial Activity Date: </label>
+                            <label class="col-sm-4 control-label" for="trial_activity_date"><% __('Trial Activity Date:') |h %> </label>
                             <div class="col-sm-6">
                                 <input class="form-control" id="trial_activity_date" title="activity_date" type="text" value=""/>
                             </div>
@@ -41,8 +41,8 @@ $user_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_trial_set_phenotypes_fully_loaded_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="update_trial_status_submit" id="update_trial_status_submit" >Update</button>
+                <button id="close_trial_set_phenotypes_fully_loaded_modal" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="update_trial_status_submit" id="update_trial_status_submit" ><% __('Update') |h %></button>
             </div>
         </div>
     </div>
@@ -52,19 +52,19 @@ $user_name
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updateTrialStatusMessage">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateTrialStatusMessage"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        Trial status was updated successfully.
+                        <% __('Trial status was updated successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_update_message_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_update_message_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>

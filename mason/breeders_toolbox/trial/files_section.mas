@@ -8,13 +8,13 @@ $for_analysis_page => undef
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Data Collection Files", is_subsection => 1, collapsible=>1, collapsed=>0, &>
-                <&| /page/info_section.mas, title=>"Phenotyping Spreadsheets", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-default" style="margin:3px" name="create_spreadsheet_link">Create Spreadsheet</button>' &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Data Collection Files"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0, &>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Phenotyping Spreadsheets"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-default" style="margin:3px" name="create_spreadsheet_link">Create Spreadsheet</button>' &>
                 </&>
 %  if (!$for_analysis_page) {
-                <&| /page/info_section.mas, title=>"Android Field Book Layout", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-default" style="margin:3px" name="create_fieldbook_link">Create Field Book</button>' &>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Android Field Book Layout"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-default" style="margin:3px" name="create_fieldbook_link">Create Field Book</button>' &>
                 </&>
-                <&| /page/info_section.mas, title=>"Data Collector Spreadsheet", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=> '<button class="btn btn-sm btn-default" style="margin:3px" id="create_DataCollector_link">Create DataCollector Spreadsheet</button>' &>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Data Collector Spreadsheet"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=> '<button class="btn btn-sm btn-default" style="margin:3px" id="create_DataCollector_link">Create DataCollector Spreadsheet</button>' &>
                 </&>
 %  }
             </&><!-- closes create new phenotyping file section -->
@@ -22,13 +22,13 @@ $for_analysis_page => undef
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Upload Phenotyping Files", is_subsection => 1, collapsible=>1, collapsed=>0, &>
-                <&| /page/info_section.mas, title=>"Phenotyping Spreadsheets", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_spreadsheet_phenotypes_link">Upload</button>'&>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Upload Phenotyping Files"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0, &>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Phenotyping Spreadsheets"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_spreadsheet_phenotypes_link">Upload</button>'&>
                 </&>
 %  if (!$for_analysis_page) {
-                <&| /page/info_section.mas, title=>"Android Field Book Exported", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_fieldbook_phenotypes_link">Upload</button>'&>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Android Field Book Exported"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_fieldbook_phenotypes_link">Upload</button>'&>
                 </&>
-                <&| /page/info_section.mas, title=>"Data Collector Spreadsheet", empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_datacollector_phenotypes_link">Upload</button>'&>
+                <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Data Collector Spreadsheet"), 'h' ), empty_message=>'', is_subsection => 1, collapsible=>0, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_datacollector_phenotypes_link">Upload</button>'&>
                 </&>
 %  }
             </&><!-- closes upload new phenotype file section -->
@@ -36,7 +36,7 @@ $for_analysis_page => undef
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Uploaded Phenotyping Files", is_subsection => 1, collapsible=>1, collapsed=>0 &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Uploaded Phenotyping Files"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0 &>
 
                 <table class="table table-bordered" id="trial_phenotype_files_datatables" alt="">
                 </table>
@@ -46,7 +46,7 @@ $for_analysis_page => undef
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Uploaded Additional Files", is_subsection => 1, collapsible=>1, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="trial_upload_additional_files_link">Upload Additional Files</button>' &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Uploaded Additional Files"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0, subtitle=>'<button class="btn btn-sm btn-primary" style="margin:3px" id="trial_upload_additional_files_link">Upload Additional Files</button>' &>
 
             <& /breeders_toolbox/trial/upload_additional_file.mas, trial_id => $trial_id &>
 
@@ -55,10 +55,10 @@ $for_analysis_page => undef
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"File Collections", subtitle=>"Collections that contain at least one file from this trial", is_subsection => 1, collapsible=>1, collapsed=>0 &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("File Collections"), 'h' ), subtitle=>$m->interp->apply_escapes( __("Collections that contain at least one file from this trial"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0 &>
 
                 <div id="trial_file_collections_loading" class="text-muted" style="padding:5px;">
-                    <span class="glyphicon glyphicon-refresh"></span> Loading collections&hellip;
+                    <span class="glyphicon glyphicon-refresh"></span> <% __('Loading collections') |h %>&hellip;
                 </div>
                 <div id="trial_file_collections_empty" class="text-muted" style="display:none; padding:5px;">
                     No collections contain files from this trial yet. Files can be added to a
@@ -67,11 +67,11 @@ $for_analysis_page => undef
                 <table class="table table-hover table-condensed" id="trial_file_collections_table" style="width:100%; display:none;">
                     <thead>
                         <tr>
-                            <th>Collection</th>
-                            <th>Description</th>
-                            <th>Owner</th>
-                            <th>Trial Files</th>
-                            <th>Created</th>
+                            <th><% __('Collection') |h %></th>
+                            <th><% __('Description') |h %></th>
+                            <th><% __('Owner') |h %></th>
+                            <th><% __('Trial Files') |h %></th>
+                            <th><% __('Created') |h %></th>
                         </tr>
                     </thead>
                     <tbody></tbody>

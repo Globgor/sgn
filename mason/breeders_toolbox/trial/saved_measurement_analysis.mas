@@ -16,7 +16,7 @@ $trial_id
 <&| /page/info_section.mas, 
   collapsible => 1, 
   collapsed   => 1, 
-  title       => "Analysis tools on saved measurements"
+  title       => $m->interp->apply_escapes( __("Analysis tools on saved measurements"), 'h' )
   &>
 
 

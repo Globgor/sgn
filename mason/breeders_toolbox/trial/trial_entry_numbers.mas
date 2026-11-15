@@ -15,11 +15,11 @@ $trial_name
     <br /><br />
 </div>
 
-<button id="set_entry_numbers_template_btn" class="btn btn-default">Generate Entry Number Template</button>
+<button id="set_entry_numbers_template_btn" class="btn btn-default"><% __('Generate Entry Number Template') |h %></button>
 
-<button id="set_entry_numbers_upload_btn" class="btn btn-default">Upload Entry Number Template</button>
+<button id="set_entry_numbers_upload_btn" class="btn btn-default"><% __('Upload Entry Number Template') |h %></button>
 
-<button id="delete_entry_numbers_btn" class="btn btn-default" disabled="1">Delete Entry Numbers</button>
+<button id="delete_entry_numbers_btn" class="btn btn-default" disabled="1"><% __('Delete Entry Numbers') |h %></button>
 
 <script src="//cdn.datatables.net/plug-ins/1.11.3/sorting/natural.js" defer></script>
 <script type="text/javascript">

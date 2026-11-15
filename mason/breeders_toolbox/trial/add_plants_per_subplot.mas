@@ -8,7 +8,7 @@ $trial_name => undef
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="addPlantsSubplotDialog">Add plants to <% $trial_name %> subplots</h4>
       </div>
       <div class="modal-body">
@@ -16,34 +16,34 @@ $trial_name => undef
 
 	       <form class="form-horizontal" role="form" method="post" id="add_plants_subplot_dialog_form" name="add_plants_subplot_dialog_form">
 	        <div class="form-group">
-      	      <label class="col-sm-5 control-label">Number of plants per subplot: </label>
+      	      <label class="col-sm-5 control-label"><% __('Number of plants per subplot:') |h %> </label>
       	      <div class="col-sm-7" >
                 <input name="add_plants_per_subplot_num" id="add_plants_per_subplot_num" class="form-control" type="number" autofocus/>
               </div>
 	        </div>
             <div class="form-group">
-      	      <label class="col-sm-5 control-label">Inherits Treatment(s) From Plots: </label>
+      	      <label class="col-sm-5 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
       	      <div class="col-sm-7" >
                 <input name="add_plants_per_subplot_inherit_treatments" id="add_plants_per_subplot_inherit_treatments" type="checkbox" checked disabled/>
               </div>
 	        </div>
             <div class="form-group">
-      	      <label class="col-sm-5 control-label">Assign row and column data to plants within plots?</label>
+      	      <label class="col-sm-5 control-label"><% __('Assign row and column data to plants within plots?') |h %></label>
       	      <div class="col-sm-7" >
                 <input name="add_rows_and_columns_to_subplot_plants" id="add_rows_and_columns_to_subplot_plants" type="checkbox"/>
                 <div id="subplot_plant_row_column_format_dialog" style="display:none">
-                    <p><i>One plant per (row,column) coordinate. Rows and columns will be populated in a Cartesian pattern. Row and column numbers start at 1 within each subplot. If adding additional plants, there must be enough spaces to accommodate both the previous plants and the new plants.</i></p>
+                    <p><i><% __('One plant per (row,column) coordinate. Rows and columns will be populated in a Cartesian pattern. Row and column numbers start at 1 within each subplot. If adding additional plants, there must be enough spaces to accommodate both the previous plants and the new plants.') |h %></i></p>
                     <table style="width:60%">
                         <tr>
                             <td>
-                                <label>Number of rows per plot</label>
+                                <label><% __('Number of rows per plot') |h %></label>
                             </td>
                             <td>
                                 <input name="rows_per_subplot" id="rows_per_subplot" type="number"/>
                             </td>
                         </tr><tr>
                             <td>
-                                <label>Number of columns per plot</label>
+                                <label><% __('Number of columns per plot') |h %></label>
                             </td>
                             <td>
                                 <input name="cols_per_subplot" id="cols_per_subplot" type="number"/>
@@ -58,8 +58,8 @@ $trial_name => undef
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" name="add_plants_subplot_cancel_button" id="add_plants_subplot_cancel_button" data-dismiss="modal">Close</button>
-	      <button type="button" class="btn btn-primary" name="add_plants_subplot_save_button" id="add_plants_subplot_save_button" title="Save">Save</button>
+        <button type="button" class="btn btn-default" name="add_plants_subplot_cancel_button" id="add_plants_subplot_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+	      <button type="button" class="btn btn-primary" name="add_plants_subplot_save_button" id="add_plants_subplot_save_button" title="<% __('Save') |h %>"><% __('Save') |h %></button>
       </div>
     </div>
   </div>
@@ -69,35 +69,35 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadPlantsSubplotDialog">Upload plants to <% $trial_name %> subplots</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="trial_upload_plants_subplot_spreadsheet_info_format">Spreadsheet format</a>
+                            <a id="trial_upload_plants_subplot_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_plants_subplot_dialog_form" name="upload_plants_subplot_dialog_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (.xls or .xlsx): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="trial_upload_plants_subplot_file" id="trial_upload_plants_subplot_file" encoding="multipart/form-data" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Maximum number of plants per subplot: </label>
+                            <label class="col-sm-4 control-label"><% __('Maximum number of plants per subplot:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_per_subplot_number" id="upload_plants_per_subplot_number" class="form-control" type="number" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Inherits Treatment(s) From Plots: </label>
+                            <label class="col-sm-4 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_per_subplot_inherit_treatments" id="upload_plants_per_subplot_inherit_treatments" type="checkbox" checked disabled/>
                             </div>
@@ -106,8 +106,8 @@ $trial_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="upload_plants_subplot_cancel_button" id="upload_plants_subplot_cancel_button" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_plants_subplot_save_button" id="upload_plants_subplot_save_button" title="Upload">Upload</button>
+                <button type="button" class="btn btn-default" name="upload_plants_subplot_cancel_button" id="upload_plants_subplot_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_plants_subplot_save_button" id="upload_plants_subplot_save_button" title="<% __('Upload') |h %>"><% __('Upload') |h %></button>
             </div>
         </div>
     </div>
@@ -117,18 +117,18 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadPlantsSubplotInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadPlantsSubplotInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for recording individual plants in a subplot.</b>
+                    <b><% __('This is for recording individual plants in a subplot.') |h %></b>
                     <br/>
-                    <b>Plant names may be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('Plant names may be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -141,23 +141,23 @@ $trial_name => undef
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <br/>
                     subplot_name (must exist in the database already)
                     <br />
                     plant_name (must be globally unique. usually this is a concatenation of subplot_name + plant_number, such as MyTrial_plot101_subplot1_plant1)
                     <br>
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <br>
                     - row_num
                     <br>
                     - col_num
                     <br>
-                    Rows and columns are at the subplot level if each subplot contains multiple plants. If including this data, both fields must be present.
+                    <% __('Rows and columns are at the subplot level if each subplot contains multiple plants. If including this data, both fields must be present.') |h %>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_plants_subplot_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_plants_subplot_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -168,35 +168,35 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadPlantsWithIndexNumberDialog">Upload plants to <% $trial_name %> subplots with plant index number</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="trial_upload_plants_subplot_with_index_number_spreadsheet_info_format">Spreadsheet format</a>
+                            <a id="trial_upload_plants_subplot_with_index_number_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_plants_subplot_with_index_number_dialog_form" name="upload_plants_subplot_with_index_number_dialog_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (.xls or .xlsx): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="trial_upload_plants_subplot_with_index_number_file" id="trial_upload_plants_subplot_with_index_number_file" encoding="multipart/form-data" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Maximum number of plants per subplot: </label>
+                            <label class="col-sm-4 control-label"><% __('Maximum number of plants per subplot:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_subplot_with_index_number_per_subplot_number" id="upload_plants_subplot_with_index_number_per_subplot_number" class="form-control" type="number" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Inherits Treatment(s) From Plots: </label>
+                            <label class="col-sm-4 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_subplot_with_index_number_inherit_treatments" id="upload_plants_subplot_with_index_number_inherit_treatments" type="checkbox" checked disabled/>
                             </div>
@@ -205,8 +205,8 @@ $trial_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="upload_plants_subplot_with_index_number_cancel_button" id="upload_plants_subplot_with_index_number_cancel_button" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_plants_subplot_with_index_number_save_button" id="upload_plants_subplot_with_index_number_save_button" title="Upload">Upload</button>
+                <button type="button" class="btn btn-default" name="upload_plants_subplot_with_index_number_cancel_button" id="upload_plants_subplot_with_index_number_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_plants_subplot_with_index_number_save_button" id="upload_plants_subplot_with_index_number_save_button" title="<% __('Upload') |h %>"><% __('Upload') |h %></button>
             </div>
         </div>
     </div>
@@ -216,18 +216,18 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadPlantsSubplotWithIndexNumberInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadPlantsSubplotWithIndexNumberInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>This is for recording individual plants in a subplot. The plant name will be saved as a concatenation of subplot_name + _ + plant_index_number</b>
                     <br/>
-                    <b>May be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('May be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -240,23 +240,23 @@ $trial_name => undef
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <br/>
                     subplot_name (must exist in the database already)
                     <br />
                     plant_index_number (must be a number. the saved plant name will be a concatenation of subplot_name + plant_index_number, such as MyTrial_plot101_subplot1_plant1.)
                     <br>
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <br>
                     - row_num
                     <br>
                     - col_num
                     <br>
-                    Rows and columns are at the subplot level if each subplot contains multiple plants. If including this data, both fields must be present.
+                    <% __('Rows and columns are at the subplot level if each subplot contains multiple plants. If including this data, both fields must be present.') |h %>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_plants_subplot_with_index_number_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_plants_subplot_with_index_number_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -266,35 +266,35 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="uploadPlantsSubplotWithNumPlantsPerPlotDialog">Upload plants to <% $trial_name %> subplots with number of plants per subplot</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
-                    <&| /page/explanation.mas, title=>'Template information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                         <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="trial_upload_plants_subplot_with_num_plants_spreadsheet_info_format">Spreadsheet format</a>
+                            <a id="trial_upload_plants_subplot_with_num_plants_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                         </p>
                     </&>
 
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_plants_subplot_with_num_plants_dialog_form" name="upload_plants_subplot_with_num_plants_dialog_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (.xls): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (.xls):') |h %> </label>
                             <div class="col-sm-8" >
                                 <input type="file" name="trial_upload_plants_subplot_with_number_of_plants_file" id="trial_upload_plants_subplot_with_number_of_plants_file" encoding="multipart/form-data" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Maximum number of plants per subplot: </label>
+                            <label class="col-sm-4 control-label"><% __('Maximum number of plants per subplot:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_subplot_with_num_plants_per_subplot_number" id="upload_plants_subplot_with_num_plants_per_subplot_number" class="form-control" type="number" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Inherits Treatment(s) From Plots: </label>
+                            <label class="col-sm-4 control-label"><% __('Inherits Treatment(s) From Plots:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input name="upload_plants_subplot_with_num_plants_inherit_treatments" id="upload_plants_subplot_with_num_plants_inherit_treatments" type="checkbox" checked disabled/>
                             </div>
@@ -303,8 +303,8 @@ $trial_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="upload_plants_subplot_with_num_plants_cancel_button" id="upload_plants_subplot_with_num_plants_cancel_button" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_plants_subplot_with_num_plants_save_button" id="upload_plants_subplot_with_num_plants_save_button" title="Upload">Upload</button>
+                <button type="button" class="btn btn-default" name="upload_plants_subplot_with_num_plants_cancel_button" id="upload_plants_subplot_with_num_plants_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_plants_subplot_with_num_plants_save_button" id="upload_plants_subplot_with_num_plants_save_button" title="<% __('Upload') |h %>"><% __('Upload') |h %></button>
             </div>
         </div>
     </div>
@@ -314,18 +314,18 @@ $trial_name => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadPlantsSubplotWithNumPlantsInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadPlantsSubplotWithNumPlantsInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>This is for recording individual plants in a subplot. The plant name will be saved as a concatenation of subplot_name + _ + plant_index_number for as many plants as specfied by num_plants_per_subplot</b>
                     <br/>
-                    <b>May be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('May be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -338,13 +338,13 @@ $trial_name => undef
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <br/>
                     subplot_name (must exist in the database already)
                     <br />
                     num_plants_per_subplot (must be a number. the number of plants in the subplot. the saved plant name will be a concatenation of subplot_name + plant_number, such as MyTrial_plot101_subplot1_plant1)
                     <br>
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <br>
                     - num_rows
                     <br>
@@ -354,7 +354,7 @@ $trial_name => undef
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_plants_subplot_with_number_plants_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_plants_subplot_with_number_plants_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

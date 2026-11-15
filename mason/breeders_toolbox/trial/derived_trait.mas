@@ -8,10 +8,10 @@ $trial_id
     <div class="row">
         <div class="col-sm-6">
             <div class="well">
-                <h4>Derive Trait Phenotypes</h4>
+                <h4><% __('Derive Trait Phenotypes') |h %></h4>
                 <div class="row">
                     <div class="col-sm-4">
-                        <a id="compute_derived_trait_link"><button class="button" type="button" id="derived_button" value="Create_Trait" >Derive Trait</button></a>
+                        <a id="compute_derived_trait_link"><button class="button" type="button" id="derived_button" value="Create_Trait" ><% __('Derive Trait') |h %></button></a>
                     </div>
                     <div class="col-sm-8">
                         <p><b>P <sub>Calculated</sub></b> = <i>f</i> ( <b>P <sub>Trait1</sub></b> , <b>P <sub>Trait2</sub></b> )</p>
@@ -21,10 +21,10 @@ $trial_id
         </div>
         <div class="col-sm-6">
             <div class="well">
-                <h4>Calculate Plot Phenotypes from Plant Phenotypes</h4>
+                <h4><% __('Calculate Plot Phenotypes from Plant Phenotypes') |h %></h4>
                 <div class="row">
                     <div class="col-sm-4">
-                        <a id="generate_plot_pheno_link"><button class="button" type="button" >Calculate</button></a>
+                        <a id="generate_plot_pheno_link"><button class="button" type="button" ><% __('Calculate') |h %></button></a>
                     </div>
                     <div class="col-sm-8">
                         <p><b>P <sub>Plot</sub></b> = <i>average</i> ( <b>P <sub>Plants</sub></b> )</p>
@@ -34,19 +34,19 @@ $trial_id
         </div>
     </div>
 
-<div id="compute_derived_trait_dialog" title="Compute Derived Traits" style="display:none;">
+<div id="compute_derived_trait_dialog" title="<% __('Compute Derived Traits') |h %>" style="display:none;">
   	<div id="trait_list_dc" name="trait_list">
-    		<label id="trait_list_label_dc" for="trait_list_list_select" style="display: inline-block; width: 300px;">Please select trait to compute: <br />
+    		<label id="trait_list_label_dc" for="trait_list_list_select" style="display: inline-block; width: 300px;"><% __('Please select trait to compute:') |h %> <br />
   			<select id="derived_trait_select"></select>
     		</label> 
     			
   	</div>
 </div>
 
-<div id="derived_trait_saved_dialog_message" title="Computation of Derived Traits" style="display:none;">
+<div id="derived_trait_saved_dialog_message" title="<% __('Computation of Derived Traits') |h %>" style="display:none;">
   	<p>
     		<span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-    		The trait was created and saved successfully
+    		<% __('The trait was created and saved successfully') |h %>
   	</p>
 </div>
 
@@ -54,8 +54,8 @@ $trial_id
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="generatePlotPhenoDialog">Generate Plot Phenotypes from Plant Phenotypes</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="generatePlotPhenoDialog"><% __('Generate Plot Phenotypes from Plant Phenotypes') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -65,40 +65,40 @@ $trial_id
                     <form class="form-horizontal" role="form" method="post" id="generate_plot_pheno_dialog_form" name="generate_plot_pheno_dialog_form">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Trait: </label>
+                            <label class="col-sm-3 control-label"><% __('Trait:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="generate_plot_pheno_trait_select_dropdown">
-                                    [No Plants Phenotyped]
+                                    <% __('[No Plants Phenotyped]') |h %>
                                     <!--ajax populated -->
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Method: </label>
+                            <label class="col-sm-3 control-label"><% __('Method:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select id="generate_plot_pheno_method_select" class="form-control">
-                                    <option value="arithmetic_mean">Arithmetic Mean</option>
-                                    <option value="mode">Mode</option>
-                                    <option value="maximum">Maximum</option>
-                                    <option value="minimum">Minimum</option>
-                                    <option value="median">Median</option>
+                                    <option value="arithmetic_mean"><% __('Arithmetic Mean') |h %></option>
+                                    <option value="mode"><% __('Mode') |h %></option>
+                                    <option value="maximum"><% __('Maximum') |h %></option>
+                                    <option value="minimum"><% __('Minimum') |h %></option>
+                                    <option value="median"><% __('Median') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Rounding: </label>
+                            <label class="col-sm-3 control-label"><% __('Rounding:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select id="generate_plot_pheno_rounding_select" class="form-control">
-                                    <option value="no_rounding">No rounding</option>
-                                    <option value="round">Round to nearest integer</option>
-                                    <option value="round_up">Always round up to nearest integer</option>
-                                    <option value="round_down">Always round down to nearest integer</option>
+                                    <option value="no_rounding"><% __('No rounding') |h %></option>
+                                    <option value="round"><% __('Round to nearest integer') |h %></option>
+                                    <option value="round_up"><% __('Always round up to nearest integer') |h %></option>
+                                    <option value="round_down"><% __('Always round down to nearest integer') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Overwrite Previous Plot Values for this Trait: </label>
+                            <label class="col-sm-3 control-label"><% __('Overwrite Previous Plot Values for this Trait:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type='checkbox' id="generate_plot_pheno_overwrite" name="generate_plot_pheno_overwrite"/>
                             </div>
@@ -117,9 +117,9 @@ $trial_id
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="generate_plot_pheno_calc_submit" id="generate_plot_pheno_calc_submit" title="Calculate">View Calculation (Does Not Save)</button>
-        <button disabled type="button" class="btn btn-primary" name="generate_plot_pheno_save" id="generate_plot_pheno_save" title="">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="generate_plot_pheno_calc_submit" id="generate_plot_pheno_calc_submit" title="<% __('Calculate') |h %>"><% __('View Calculation (Does Not Save)') |h %></button>
+        <button disabled type="button" class="btn btn-primary" name="generate_plot_pheno_save" id="generate_plot_pheno_save" title=""><% __('Save') |h %></button>
       </div>
     </div>
   </div>

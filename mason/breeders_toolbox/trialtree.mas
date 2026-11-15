@@ -14,14 +14,14 @@ $breeding_programs
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Information</th>
-      <th>Breeding Programs -- -- Trials</th>
+      <th><% __('Information') |h %></th>
+      <th><% __('Breeding Programs -- -- Trials') |h %></th>
     </tr>
   </thead>
   <tbody>
   <tr>
     <td>
-      <h4>Download Trial</h4>
+      <h4><% __('Download Trial') |h %></h4>
       <button class="btn btn-primary" id="download_button" disabled="disabled" title="First Select a Trial to Download">Excel</button>
       <button class="btn btn-primary" id="download_button_csv" disabled="disabled" title="First Select a Trial to Download">CSV</button><br />
       <hr>
@@ -31,7 +31,7 @@ $breeding_programs
       <br />
     </td>
     <td>
-      <div id="trial_list" >[loading...]</div>
+      <div id="trial_list" ><% __('[loading...]') |h %></div>
     </td>
   </tr>
   </tbody>

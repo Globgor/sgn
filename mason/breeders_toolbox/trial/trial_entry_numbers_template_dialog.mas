@@ -8,8 +8,8 @@ $trial_name => undef
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="setEntryNumbersDialog">Generate Entry Numbers Template</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="setEntryNumbersDialog"><% __('Generate Entry Numbers Template') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -17,21 +17,21 @@ $trial_name => undef
           <&| /util/workflow.mas, id=> "set_entry_numbers_workflow" &>
             
             <!-- Step 1: Intro -->
-            <&| /util/workflow.mas:step, title=> "Intro" &>
-              <& /page/page_title.mas, title=>"Generate Entry Numbers Template" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Generate Entry Numbers Template"), 'h' ) &>
               <div class="well">
                   <p>This workflow will generate an Excel spreadsheet which can be used to upload entry numbers (numbers assigned to acccessions in a set of trials).  In the first step, select one or more trials you want to assign accession entry numbers.  Then, download the Excel template containing the selected trials' accessions.  Once you have the entry numbers filled in, use the <strong>Upload Template</strong> function to upload the accession numbers to the database.</p>
               </div>
 
               <div class="center">
-                <button class="btn btn-primary" id="set_entry_numbers_intro_step">Start</button>
+                <button class="btn btn-primary" id="set_entry_numbers_intro_step"><% __('Start') |h %></button>
               </div>
             </&>
             <!-- End Intro -->
 
             <!-- Step 2: Select Trials -->
-            <&| /util/workflow.mas:step, title=> "Select Trials" &>
-              <& /page/page_title.mas, title=>"Select Trial(s) to assign Entry Numbers" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select Trials"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select Trial(s) to assign Entry Numbers"), 'h' ) &>
               <p>
                 <strong>Select Trial(s):</strong> 
                 Select one or more individual Trials or a List of Trials to assign entry numbers.
@@ -46,7 +46,7 @@ $trial_name => undef
                     </select>
                   </div>
                   <div class="col-md-4">
-                    <button id="set_entry_numbers_selection_change" class="btn btn-primary btn-block">Change Trial Selections</button>
+                    <button id="set_entry_numbers_selection_change" class="btn btn-primary btn-block"><% __('Change Trial Selections') |h %></button>
                   </div>
                 </div>
               </div>
@@ -57,16 +57,16 @@ $trial_name => undef
               <br /><br />
 
               <div class="center">
-                <button class="btn btn-primary" id="set_entry_numbers_select_trials_step">Go to Next Step</button>
+                <button class="btn btn-primary" id="set_entry_numbers_select_trials_step"><% __('Go to Next Step') |h %></button>
               </div>
             </&>
             <!-- End Select Trials -->
 
             <!-- Step 2: Generate Template -->
-            <&| /util/workflow.mas:step, title=> "Download Template" &>
-              <& /page/page_title.mas, title=>"Download Entry Number Template" &>
+            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Download Template"), 'h' ) &>
+              <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Download Entry Number Template"), 'h' ) &>
               <div id="set_entry_numbers_template_loading" style="max-width: 250px; margin: 50px auto; text-align: center;">
-                <p>Generating Template...</p>
+                <p><% __('Generating Template...') |h %></p>
               </div>
 
               <div id="set_entry_numbers_template">
@@ -77,7 +77,7 @@ $trial_name => undef
                   using the <strong>Upload Template</strong> function.</p>
                 </div>
                 <div style="max-width: 250px; margin: 50px auto; text-align: center">
-                  <button class="btn btn-primary" id="set_entry_numbers_template_download">Download Template</button>
+                  <button class="btn btn-primary" id="set_entry_numbers_template_download"><% __('Download Template') |h %></button>
                 </div>
               </div>
             </&>
@@ -89,7 +89,7 @@ $trial_name => undef
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" name="set_entry_numbers_cancel_button" id="set_entry_numbers_cancel_button" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" name="set_entry_numbers_cancel_button" id="set_entry_numbers_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ $trial_id
 
 
 
-<&| /page/info_section.mas, title => "Trial Soil Data", collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Trial Soil Data"), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">

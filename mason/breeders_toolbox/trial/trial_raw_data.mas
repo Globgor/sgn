@@ -26,7 +26,7 @@ $user_can_modify
 </style>
 
 <div class="well well-sm" id="phenotypes_recorded_observation_level">
-	<center><h4>Traits recorded across observation levels</h4></center></hr>
+	<center><h4><% __('Traits recorded across observation levels') |h %></h4></center></hr>
 	<div id="phenotypes_measured_per_observation_level">
 		<div class="row">
 			<div class="col-sm-8">
@@ -34,15 +34,15 @@ $user_can_modify
 				<table id="phenotypes_measured_per_observation_level" style= "text-align:left; width:100%;">
 					<thead>
 						<tr>
-							<th>Observation Level </th>
-							<th>Number of Traits Measured</th>
+							<th><% __('Observation Level') |h %> </th>
+							<th><% __('Number of Traits Measured') |h %></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr><td>Plot</td><td id="phenotypes_per_plot"></td></tr>
-						<tr><td>Plant</td><td id="phenotypes_per_plant"></td></tr>
-						<tr><td>Sub plot</td><td id="phenotypes_per_subplot"></td></tr>
-						<tr><td>Tissue sample</td><td id="phenotypes_per_tissue_sample"></td></tr>
+						<tr><td><% __('Plot') |h %></td><td id="phenotypes_per_plot"></td></tr>
+						<tr><td><% __('Plant') |h %></td><td id="phenotypes_per_plant"></td></tr>
+						<tr><td><% __('Sub plot') |h %></td><td id="phenotypes_per_subplot"></td></tr>
+						<tr><td><% __('Tissue sample') |h %></td><td id="phenotypes_per_tissue_sample"></td></tr>
 					</tbody>
 				</table>
 				</form>
@@ -52,26 +52,26 @@ $user_can_modify
 </div>
 
 <div class="well well-sm" id="raw_phenotypic_data">
-	<h4 style= "text-align:center">Choose trait and observation level</h4>
+	<h4 style= "text-align:center"><% __('Choose trait and observation level') |h %></h4>
 	<br/>
 
 	<table>
 	<tr>
 	    <td>
 			<div class="form-group">
-				<label for="trait_selector_for_raw_data"> Trait:</label>
-	    	  <div id="trait_selector_for_raw_data">[Loading...]</div>
+				<label for="trait_selector_for_raw_data"> <% __('Trait:') |h %></label>
+	    	  <div id="trait_selector_for_raw_data"><% __('[Loading...]') |h %></div>
 			</div>
 	    </td>
 	    <td width="30"></td>
 	    <td>
 			<div class="form-group">
-				<label for="raw_data_observation_level">Observation Level:</label>
+				<label for="raw_data_observation_level"><% __('Observation Level:') |h %></label>
 				<select class="form-control" id="raw_data_observation_level">
-					<option value="plot">Plots</option>
-					<option value="plant">Plants</option>
-					<option value="subplot">Subplots</option>
-					<option value="tissue_sample">Tissue samples</option>
+					<option value="plot"><% __('Plots') |h %></option>
+					<option value="plant"><% __('Plants') |h %></option>
+					<option value="subplot"><% __('Subplots') |h %></option>
+					<option value="tissue_sample"><% __('Tissue samples') |h %></option>
 	      		</select>
 			</div>
 	    </td>
@@ -85,7 +85,7 @@ $user_can_modify
 				views are updated before analyses or
 				data downloads.
 				"></span> &nbsp;
-				<button id="refresh_phenoview_btn" class="btn btn-primary btn-sm">Refresh Materialized Phenotype View</button>
+				<button id="refresh_phenoview_btn" class="btn btn-primary btn-sm"><% __('Refresh Materialized Phenotype View') |h %></button>
 			</div>
 		</td>
 	</tr>
@@ -108,7 +108,7 @@ $user_can_modify
 	</tr>
 	<tr>
 	    <td colspan="4", style="text-align: center;">
-	      <button id="raw_data_trait_select_button" class="btn btn-primary">Submit</button>
+	      <button id="raw_data_trait_select_button" class="btn btn-primary"><% __('Submit') |h %></button>
 	    </td>
 	</tr>
 	</table>

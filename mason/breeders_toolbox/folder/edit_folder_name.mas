@@ -8,7 +8,7 @@ $trial_type
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="editTrialNameDialog">Edit Name for <% $trial_type %></h4>
       </div>
       <div class="modal-body">
@@ -27,8 +27,8 @@ $trial_type
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" name="edit_name_cancel_button" id="edit_name_cancel_button" data-dismiss="modal">Close</button>
-	      <button type="button" class="btn btn-primary" name="edit_name_save_button" id="edit_name_save_button" title="Save">Save</button>
+        <button type="button" class="btn btn-default" name="edit_name_cancel_button" id="edit_name_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+	      <button type="button" class="btn btn-primary" name="edit_name_save_button" id="edit_name_save_button" title="<% __('Save') |h %>"><% __('Save') |h %></button>
       </div>
     </div>
   </div>
