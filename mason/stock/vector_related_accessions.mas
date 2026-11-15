@@ -12,7 +12,7 @@ $stock_type => undef
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Accessions to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names to a new or exisiting list</i>'&>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Accessions to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the accession names to a new or existing list</i>'&>
         <br>
         <div id="transformant_names" style="display:none"></div>
         <div id="transformants_to_list_menu"></div>
