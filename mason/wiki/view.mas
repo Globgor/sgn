@@ -119,7 +119,7 @@ jQuery(window).ready( function() {
 		    // alert('Successfully stored page '+page_name);
 		}
 	    },
-	    function(r) { alert('ERROR!'); }
+	    function(r) { alert(<% __('ERROR!') |js %>); }
 	);
     });
 
@@ -206,7 +206,7 @@ function create_page(new_page_name) {
 			jQuery('#edit_wiki_page_modal').modal('show');
 		    }
 		    else {
-			alert('The page creation was not successful for unknown reasons.');
+			alert(<% __('The page creation was not successful for unknown reasons.') |js %>);
 			window.location.href="/wiki";
 		    }
 		}
@@ -214,7 +214,7 @@ function create_page(new_page_name) {
 
 	},
 	function(r) {
-	    alert('An error occurred!');
+	    alert(<% __('An error occurred!') |js %>);
 	    window.location.href="/wiki";
 	}
     );
@@ -228,7 +228,7 @@ function view_page(page_name) {
     }).then(
 	function(r) {
 	    if (r.error) {
-		var yes = confirm('The page you are trying to access may not exist. Create the page?');
+		var yes = confirm(<% __('The page you are trying to access may not exist. Create the page?') |js %>);
 		if (yes) {
 		    create_page(page_name);
 		}
