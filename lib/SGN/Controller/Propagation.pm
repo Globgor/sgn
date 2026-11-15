@@ -7,6 +7,7 @@ use CXGN::People::Person;
 use Data::Dumper;
 use CXGN::Propagation::Propagation;
 use JSON;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -36,7 +37,7 @@ sub propagation_group_page : Path('/propagation_group') Args(1) {
     my $propagation_group_name;
 	if (!$propagation_group) {
     	$c->stash->{template} = '/generic_message.mas';
-    	$c->stash->{message} = 'The requested propagation group ID does not exist.';
+    	$c->stash->{message} = __('The requested propagation group ID does not exist.');
     	return;
     } else {
         $propagation_group_id = $propagation_group->stock_id();

@@ -23,6 +23,7 @@ use JSON;
 use JSON::Any;
 use List::MoreUtils qw /any /;
 use Sort::Key::Natural qw(natkeysort);
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' }
@@ -54,7 +55,7 @@ sub add_propagation_project_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a propagation project." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a propagation project.") };
         return;
     }
 
@@ -73,7 +74,7 @@ sub add_propagation_project_POST :Args(0){
     my $geolocation_lookup = CXGN::Location::LocationLookup->new(schema =>$schema);
        $geolocation_lookup->set_location_name($location);
        if(!$geolocation_lookup->get_geolocation()){
-           $c->stash->{rest}={error => "Location not found"};
+           $c->stash->{rest}={error => __("Location not found")};
            return;
        }
 
@@ -97,7 +98,7 @@ sub add_propagation_project_POST :Args(0){
     };
 
     if (!$return){
-        $c->stash->{rest} = {error => "Error saving project",};
+        $c->stash->{rest} = {error => __("Error saving project"),};
         return;
     }
 
@@ -146,7 +147,7 @@ sub add_propagation_group_identifier_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a propagation group ID." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a propagation group ID.") };
         return;
     }
 
@@ -164,18 +165,18 @@ sub add_propagation_group_identifier_POST :Args(0){
     my $accession_cvterm_id = SGN::Model::Cvterm->get_cvterm_row($schema,'accession', 'stock_type')->cvterm_id();
 
     if ($schema->resultset("Stock::Stock")->find({uniquename => $propagation_group_identifier})){
-        $c->stash->{rest} = {error =>  "Propagation Group Identifier already exists. Please use another name" };
+        $c->stash->{rest} = {error =>  __("Propagation Group Identifier already exists. Please use another name") };
         return;
     }
 
     if (! $schema->resultset("Stock::Stock")->find({uniquename => $accession_name, type_id => $accession_cvterm_id })){
-        $c->stash->{rest} = {error =>  "Accession name does not exist or does not exist as accession uniquename." };
+        $c->stash->{rest} = {error =>  __("Accession name does not exist or does not exist as accession uniquename.") };
         return;
     }
 
     if ($source_name) {
         if (! $schema->resultset("Stock::Stock")->find({uniquename => $source_name})){
-            $c->stash->{rest} = {error =>  "Source name does not exist in the database." };
+            $c->stash->{rest} = {error =>  __("Source name does not exist in the database.") };
             return;
         }
     }
@@ -255,7 +256,7 @@ sub upload_propagation_group_identifiers_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation group identifers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation group identifers!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -264,12 +265,12 @@ sub upload_propagation_group_identifiers_POST : Args(0) {
         $user_name = $p->get_username;
 
         if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-            $c->stash->{rest} = {error=>'Only a submitter or a curator can upload propagation group identifiers'};
+            $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload propagation group identifiers')};
             $c->detach();
         }
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation group identifiers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation group identifiers!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -396,7 +397,7 @@ sub add_propagation_identifier_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a propagation ID." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a propagation ID.") };
         return;
     }
 
@@ -407,13 +408,13 @@ sub add_propagation_identifier_POST :Args(0){
     my $accession_cvterm_id = SGN::Model::Cvterm->get_cvterm_row($schema,'accession', 'stock_type')->cvterm_id();
 
     if ($schema->resultset("Stock::Stock")->find({uniquename => $propagation_identifier})){
-        $c->stash->{rest} = {error =>  "Propagation Identifier already exists. Please use another name" };
+        $c->stash->{rest} = {error =>  __("Propagation Identifier already exists. Please use another name") };
         return;
     }
 
     if ($rootstock_name) {
         if (! $schema->resultset("Stock::Stock")->find({uniquename => $rootstock_name, type_id => $accession_cvterm_id })){
-            $c->stash->{rest} = {error =>  "Rootstock name does not exist or does not exist as accession uniquename." };
+            $c->stash->{rest} = {error =>  __("Rootstock name does not exist or does not exist as accession uniquename.") };
             return;
         }
     }
@@ -450,7 +451,7 @@ sub add_propagation_identifier_POST :Args(0){
         my $added_status = $status->add_status_info();
 
         if (!$added_status) {
-            $c->stash->{rest} = {error => "Error saving status for propagation identifier",};
+            $c->stash->{rest} = {error => __("Error saving status for propagation identifier"),};
             return;
         }
     }
@@ -495,7 +496,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation identifers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation identifers!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -504,7 +505,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation identifiers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation identifiers!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -513,7 +514,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload propagation identifiers'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload propagation identifiers')};
         $c->detach();
     }
 
@@ -590,7 +591,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
                 my $propagation_stock_id = $add->{propagation_stock_id};
 
                 if (!$propagation_stock_id) {
-                    $c->stash->{rest} = {error => "Error saving new propagation identifier",};
+                    $c->stash->{rest} = {error => __("Error saving new propagation identifier"),};
                     return;
                 }
 
@@ -617,7 +618,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
                     my $added_status = $status->add_status_info();
 
                     if (!$added_status) {
-                        $c->stash->{rest} = {error => "Error saving status for new propagation identifier",};
+                        $c->stash->{rest} = {error => __("Error saving status for new propagation identifier"),};
                         return;
                     }
 
@@ -635,7 +636,7 @@ sub upload_propagation_identifiers_POST : Args(0) {
                         my $inventory_stock_id = $add->{inventory_stock_id};
                         print STDERR "INVENTORY STOCK ID =".Dumper($inventory_stock_id)."\n";
                         if (!$inventory_stock_id) {
-                            $c->stash->{rest} = {error => "Error saving Inventory Identifier!",};
+                            $c->stash->{rest} = {error => __("Error saving Inventory Identifier!"),};
                             return;
                         }
                     }
@@ -800,7 +801,7 @@ sub update_propagation_status_POST : Args(0) {
     my $user_id;
 
     if (!$c->user){
-        $c->stash->{rest} = {error=>'You must be logged in to update the status!'};
+        $c->stash->{rest} = {error=>__('You must be logged in to update the status!')};
         $c->detach();
     }
 
@@ -817,7 +818,7 @@ sub update_propagation_status_POST : Args(0) {
     if ($inventory_identifier) {
         my $inventory_identifier_stock = $schema->resultset('Stock::Stock')->find({ uniquename => $inventory_identifier});
         if ($inventory_identifier_stock) {
-            $c->stash->{rest} = {error => "Error: inventory identifier already exists, please use another inventory identifier!"};
+            $c->stash->{rest} = {error => __("Error: inventory identifier already exists, please use another inventory identifier!")};
             return;
         }
     }
@@ -845,7 +846,7 @@ sub update_propagation_status_POST : Args(0) {
     my $added_status = $status->add_status_info();
 
     if (!$added_status) {
-        $c->stash->{rest} = {error => "Error updating status",};
+        $c->stash->{rest} = {error => __("Error updating status"),};
         return;
     }
 
@@ -864,7 +865,7 @@ sub update_propagation_status_POST : Args(0) {
         $inventory_stock_id = $add->{inventory_stock_id};
 
         if (!$inventory_stock_id) {
-            $c->stash->{rest} = {error => "Error saving Inventory Identifier!",};
+            $c->stash->{rest} = {error => __("Error saving Inventory Identifier!"),};
             return;
         }
     }
@@ -909,7 +910,7 @@ sub upload_propagation_identifier_status_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation identifer statuses!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation identifer statuses!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -918,7 +919,7 @@ sub upload_propagation_identifier_status_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload propagation identifier statuses!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload propagation identifier statuses!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -927,7 +928,7 @@ sub upload_propagation_identifier_status_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload propagation identifier status'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload propagation identifier status')};
         $c->detach();
     }
 
@@ -998,7 +999,7 @@ sub upload_propagation_identifier_status_POST : Args(0) {
             my $added_status = $status->add_status_info();
 
             if (!$added_status) {
-                $c->stash->{rest} = {error => "Error updating status",};
+                $c->stash->{rest} = {error => __("Error updating status"),};
                 return;
             }
 
@@ -1017,7 +1018,7 @@ sub upload_propagation_identifier_status_POST : Args(0) {
                 $inventory_stock_id = $add->{inventory_stock_id};
 
                 if (!$inventory_stock_id) {
-                    $c->stash->{rest} = {error => "Error saving Inventory Identifier!",};
+                    $c->stash->{rest} = {error => __("Error saving Inventory Identifier!"),};
                     return;
                 }
             }
