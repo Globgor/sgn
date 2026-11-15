@@ -56,7 +56,7 @@ $stock_id
                 <div class="container-fluid">
                     <b><% __('This is for uploading any additional files you may have for the accession.') |h %></b>
                     <br/><br/>
-                    <p><% __('Possible additional files inlude, but are not limited to:') |h %></p>
+                    <p><% __('Possible additional files include, but are not limited to:') |h %></p>
                     <ul>
                         <li><% __('Accession Related Images, such as a physical field image or an aerial picture of the field.') |h %></li>
                         <li><% __('Accession Related Documentation, such as protocols or permits for the accession.') |h %></li>

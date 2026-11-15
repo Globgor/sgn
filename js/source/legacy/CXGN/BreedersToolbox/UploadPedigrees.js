@@ -103,7 +103,7 @@ jQuery(document).ready(function ($) {
             success: function(response) {
                 jQuery('#working_modal').modal('hide');
                 if (response.error) {
-                    alert('An Error Occured: No pedigrees were saved! Try Fixing Your File For The Issues Identified In the Validation. '+response.error);
+                    alert('An Error Occurred: No pedigrees were saved! Try Fixing Your File For The Issues Identified In the Validation. '+response.error);
                 }
                 else {
                     jQuery('#pedigrees_upload_success_dialog_message').modal('show');

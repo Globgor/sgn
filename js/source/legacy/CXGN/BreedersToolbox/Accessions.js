@@ -164,7 +164,7 @@ jQuery(document).ready(function ($) {
         },
         error: function(response) {
           enable_ui();
-          alert(gettext('An error occured retrieving population data.'));
+          alert(gettext('An error occurred retrieving population data.'));
         }
       });
     });
