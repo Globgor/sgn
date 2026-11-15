@@ -5,6 +5,7 @@ use URI::FromHash 'uri';
 use SGN::Model::Cvterm;
 use CXGN::People::Person;
 use Data::Dumper;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -75,7 +76,7 @@ sub catalog_item_details : Path('/catalog/item_details') Args(1) {
     my $item_prop_id;
     if (!$stock_catalog_info){
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'The requested catalog item does not exist.';
+        $c->stash->{message} = __('The requested catalog item does not exist.');
         return;
     } else {
         $item_prop_id = $stock_catalog_info->stockprop_id();
