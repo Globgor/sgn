@@ -11,7 +11,7 @@ Naama Menda (nm249@cornell.edu)
 =cut
 
 </%doc>
-<h2>SGN phenotype submission guide</h2>
+<h2><% __('SGN phenotype submission guide') |h %></h2>
 <p>For submitting phenotyping experiments to SGN you will be asked to fill in a few steps.
 Phenotypes are linked with plant accessions.
 If the accession is already in the database, you will have to make sure the accession in your file has exactly the same name.
@@ -21,7 +21,7 @@ you will need to assign in each experiment unique identifiers for each one of yo
 </p>
 
 <&| /page/info_section.mas,
-   title      => "Define experiment metadata",
+   title      => $m->interp->apply_escapes( __("Define experiment metadata"), 'h' ),
   collapsible => 1,
   collapsed   => 0
 &>
@@ -31,50 +31,50 @@ you will need to assign in each experiment unique identifiers for each one of yo
     <strong>Organism name:</strong> Start typing the species scientific name. An autocomplete list should pop up. If your organism is not in the list, please <a href="mailto:sgn-feedback@solgenomics.net">contact us</a>.
   </li>
   <li>
-    <strong>Population name</strong><br />
-    Provide a name for the population in this experiment. Your population may or may not have a known structure, and its name can be arbitrary. If you are adding accessions to an existing population, start typing its name and select the appropriate one from the autocomplete list.
+    <strong><% __('Population name') |h %></strong><br />
+    <% __('Provide a name for the population in this experiment. Your population may or may not have a known structure, and its name can be arbitrary. If you are adding accessions to an existing population, start typing its name and select the appropriate one from the autocomplete list.') |h %>
   </li>
   <li>
-    <strong> Population description</strong><br />
-    (optional) provide an abstract style characterization of the population including experimental design highlights.
+    <strong> <% __('Population description') |h %></strong><br />
+    <% __('(optional) provide an abstract style characterization of the population including experimental design highlights.') |h %>
    </li>
   <li>
-    <strong> Project name</strong></br >
-    provide a name for your project which reflects the scope of your phenotyping experiments. For adding experiments to an existing projects, start typing and select the appropriate project name for the autocomplete list.
+    <strong> <% __('Project name') |h %></strong></br >
+    <% __('provide a name for your project which reflects the scope of your phenotyping experiments. For adding experiments to an existing projects, start typing and select the appropriate project name for the autocomplete list.') |h %>
   </li>
   <li>
-    <strong> Year</strong><br />
+    <strong> <% __('Year') |h %></strong><br />
     Date string denoting when the data was collected. Can be year only (i.e. 2012), month and year (March 2012 or 3/2012), or a full date. This will be recorded as the date for the project.
   </li>
   <li>
-    <strong> Location</strong><br />
+    <strong> <% __('Location') |h %></strong><br />
     Where the experiment was performed. We also support <a href="http://en.wikipedia.org/wiki/WGS84">WGS84 geodetic datum</a>. For a full geolocation fill in the longitude, latitide, and altitude fields.
   </li>
   </ul>
 </&>
 
 <&| /page/info_section.mas,
-    title      => "Upload phenotyping data file",
+    title      => $m->interp->apply_escapes( __("Upload phenotyping data file"), 'h' ),
   collapsible => 1,
   collapsed   => 0
 &>
 <ul>
-  <li><strong>Format</strong><br />
-    Save your data file in tab-delimited format. Make sure there is only one column header row. Both row and column headers should be unique. You can save your spreadsheet as text, and choose tab-delimited format (tab-delimited text in MS Excel).
+  <li><strong><% __('Format') |h %></strong><br />
+    <% __('Save your data file in tab-delimited format. Make sure there is only one column header row. Both row and column headers should be unique. You can save your spreadsheet as text, and choose tab-delimited format (tab-delimited text in MS Excel).') |h %>
   </li>
-  <li><strong>Row headers</strong><br />
-    First column has the row headers. These must be unique. It can be the accession name or number only if you have one row of measurements for each.<br />
-    If you have more than one row of data for each accession (e.g. several repeats or plots of the same accession) then row headers could be just incremented row numbers.
+  <li><strong><% __('Row headers') |h %></strong><br />
+    <% __('First column has the row headers. These must be unique. It can be the accession name or number only if you have one row of measurements for each.') |h %><br />
+    <% __('If you have more than one row of data for each accession (e.g. several repeats or plots of the same accession) then row headers could be just incremented row numbers.') |h %>
   <li>
-  <li><strong>Accession name column</strong><br />
-    Second column should be names of the plant accessions - this will be loaded literally into the database. If the accession already exists in SGN, please make sure to use exactly the same name (case insensitive, but spaces, hyphens, and other special characters are important).
+  <li><strong><% __('Accession name column') |h %></strong><br />
+    <% __('Second column should be names of the plant accessions - this will be loaded literally into the database. If the accession already exists in SGN, please make sure to use exactly the same name (case insensitive, but spaces, hyphens, and other special characters are important).') |h %>
   </li>
-  <li><strong>Plot names or numbers</strong><br />
+  <li><strong><% __('Plot names or numbers') |h %></strong><br />
     Usually phenotping data is assayed on plants in plots. We load each plot as subject of the plant accession, meaning any number of plots from any number of different experiments can be loaded, allowing to keep track of when and where the data came from. If you have multiple phenotyping repeats for each plots, write each in a new row. If only some of the traits were score in each phenotyping repeat, keep those cells empty (do not write 0, since it will be loaded as a measurement with a value of zero).
   <li><strong>Repeat number</strong> (optional)<br />
-    If you have multiple repeats, the loading software will automatically increment the repeat number each time it sees a row of data for a plot or accession. If you provide repeat number (or fruit/plant/leaf number etc.) it will be used instead.
+    <% __('If you have multiple repeats, the loading software will automatically increment the repeat number each time it sees a row of data for a plot or accession. If you provide repeat number (or fruit/plant/leaf number etc.) it will be used instead.') |h %>
   </li>
-  <li><strong>Traits</strong><br />
+  <li><strong><% __('Traits') |h %></strong><br />
     following columns should have trait scored values. Headers should be ontology IDs. These terms <b>must</b> be pre-loaded in the database (e.g. the  <a href="http://solgenomics.net/search/phenotypes/traits">Solanaceae Phenotype Ontology</a> ). If your ontology does not exist in the database, or if you have terms that need to be added to an existing ontology,<a href="mailto:sgn-feedback@solgenomics.net"> contact us</a> first.<br />
     Units may also be attached to ontology IDs using a pipe ("|") followed by "unit:unit_name" (e.g. SP:0000123|unit:cm). Number of data columns is unlimited.
 
@@ -88,6 +88,6 @@ you will need to assign in each experiment unique identifiers for each one of yo
     </pre>
 </ul>
 
-<h3><a href="/phenotype/upload">Upload phenotyping data</a></h3>
+<h3><a href="/phenotype/upload"><% __('Upload phenotyping data') |h %></a></h3>
 
 </&>

@@ -7,37 +7,37 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addDatacollectorPhenotypeDialog">Upload Data Collector File</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addDatacollectorPhenotypeDialog"><% __('Upload Data Collector File') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
         
             <&| /page/explanation.mas, title=>'Template Information' &>
                 <p>
-                <b>File format information</b>
+                <b><% __('File format information') |h %></b>
                 <br>
-                <a id="phenotype_upload_datacollector_format_info">Datacollector Format</a>
+                <a id="phenotype_upload_datacollector_format_info"><% __('Datacollector Format') |h %></a>
                 </p>
             </&>
         
             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_datacollector_phenotype_file_form" name="upload_datacollector_phenotype_file_form">
                 <div class="form-group">
-                    <label class="col-sm-6 control-label">Timestamps Included: </label>
+                    <label class="col-sm-6 control-label"><% __('Timestamps Included:') |h %> </label>
                     <div class="col-sm-6" >
                         <input type="checkbox" id="upload_datacollector_phenotype_timestamp_checkbox" name="upload_datacollector_phenotype_timestamp_checkbox" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-6 control-label">Data Level: </label>
+                    <label class="col-sm-6 control-label"><% __('Data Level:') |h %> </label>
                     <div class="col-sm-6" >
                         <select class="form-control" id="upload_phenotype_datacollector_data_level">
-                            <option value="plots">Plots</option>
+                            <option value="plots"><% __('Plots') |h %></option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-6 control-label">Data Collector File: </label>
+                    <label class="col-sm-6 control-label"><% __('Data Collector File:') |h %> </label>
                     <div class="col-sm-6" >
                         <input type="file" id="upload_datacollector_phenotype_file_input" name="upload_datacollector_phenotype_file_input" encoding="multipart/form-data" />
                     </div>
@@ -50,9 +50,9 @@
       </div>
       
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-info" name="upload_datacollector_phenotype_submit_verify" id="upload_datacollector_phenotype_submit_verify">Verify</button>
-        <button disabled type="button" class="btn btn-primary" name="upload_datacollector_phenotype_submit_store" id="upload_datacollector_phenotype_submit_store" title="First Verify Your File">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-info" name="upload_datacollector_phenotype_submit_verify" id="upload_datacollector_phenotype_submit_verify"><% __('Verify') |h %></button>
+        <button disabled type="button" class="btn btn-primary" name="upload_datacollector_phenotype_submit_store" id="upload_datacollector_phenotype_submit_store" title="<% __('First Verify Your File') |h %>"><% __('Store') |h %></button>
       </div>
       
     </div>
@@ -64,17 +64,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="datacollectorUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="datacollectorUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
         
-            <h4>Must be in .xls or .xlsx excel file format</h4>
-            <p>(tab-delimited text formats are NOT supported)</p>
+            <h4><% __('Must be in .xls or .xlsx excel file format') |h %></h4>
+            <p><% __('(tab-delimited text formats are NOT supported)') |h %></p>
             <hr>
             <h4>"Field Book" Sheet Header: (8th Sheet in Workbook)</h4>
-            <p>The first row (header) should contain the following:</p>
+            <p><% __('The first row (header) should contain the following:') |h %></p>
 
             <table class="table table-hover table-bordered">
                 <body>
@@ -90,25 +90,25 @@
                 </body>
             </table>
 
-            <h4>Required fields:</h4>
+            <h4><% __('Required fields:') |h %></h4>
             <ul>
                 <li>plot_name (must exist in the database)</li>
                 <li>trait name|trait id (must exist in the trait ontology)</li>
             </ul>
 
-            <h4>Notes</h4>
+            <h4><% __('Notes') |h %></h4>
             <ul>
                 <li>For <i>"sprouting proportion"</i> in cassava, <i>"trait name|trait id"</i><br> should be written as <i>"sprouting proportion|CO_334:0000008"</i>.</li>
                 <li>If trait file was not generated from the database, </br> consult the <i>Trait Ontology</i> to ensure you have the correct trait id.</li>
-                <li>Two or more traits can be uploaded at the same time.</li>
+                <li><% __('Two or more traits can be uploaded at the same time.') |h %></li>
             </ul>
 
-            <h4>Timestamps:</h4>
+            <h4><% __('Timestamps:') |h %></h4>
             <ul>
-                <li>To include timestamp information for your measurements, click the checkbox "Includes Timestamps".</li>
+                <li><% __('To include timestamp information for your measurements, click the checkbox "Includes Timestamps".') |h %></li>
                 <li>For timestamps, values should be recorded as <i>"Value,Timestamp"</i>.<br/>For no timestamps, values should be recorded as <i>"Value"</i>.</li>
                 <li>Timestamp format must be YYYY-MM-DD HH:MM:SS-0000 or YYYY-MM-DD HH:MM:SS+0000</li><br/>
-                <li>Example with timestamps: <br/><br/>
+                <li><% __('Example with timestamps:') |h %> <br/><br/>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -134,7 +134,7 @@
                     </tbody>
                 </table>
                 </li>
-                <li>Example without timestamps: <br/><br/>
+                <li><% __('Example without timestamps:') |h %> <br/><br/>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -165,7 +165,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
