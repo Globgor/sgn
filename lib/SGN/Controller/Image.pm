@@ -8,6 +8,7 @@ use CXGN::Login;
 
 
 use URI::FromHash 'uri';
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -53,7 +54,7 @@ sub confirm :Path('/image/confirm') {
     $c->forward('require_logged_in');
 
     my $upload = $c->req->upload('file')
-        or $c->throw( public_message => 'No image file uploaded.', is_client_error => 1 );
+        or $c->throw( public_message => __('No image file uploaded.'), is_client_error => 1 );
     my $filename = $upload->filename();
     my $tempfile = $upload->tempname();
     #print STDERR "FILENAME: $filename TEMPNAME: $tempfile\n";
