@@ -7,6 +7,7 @@ use CXGN::People::Person;
 use Data::Dumper;
 use CXGN::Transformation::Transformation;
 use JSON;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -36,7 +37,7 @@ sub transformation_page : Path('/transformation') Args(1) {
     my $transformation_name;
 	if (!$transformation) {
     	$c->stash->{template} = '/generic_message.mas';
-    	$c->stash->{message} = 'The requested transformation does not exist.';
+    	$c->stash->{message} = __('The requested transformation does not exist.');
     	return;
     } else {
         $transformation_id = $transformation->stock_id();

@@ -26,6 +26,7 @@ use Try::Tiny;
 use Encode;
 use JSON::XS qw | decode_json |;
 use utf8;
+use Locale::TextDomain ( 'sgn', undef );
 
 
 BEGIN { extends 'Catalyst::Controller::REST' }
@@ -202,7 +203,7 @@ sub verify_vectors_file_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this vector info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this vector info!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -211,7 +212,7 @@ sub verify_vectors_file_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this vector info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this vector info!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -225,13 +226,13 @@ sub verify_vectors_file_POST : Args(0) {
     my $autogenerate_uniquename = !$c->req->param('autogenerate_uniquename') ? 0 : 1;
 
     if ($user_role ne 'curator' && !$do_fuzzy_search) {
-        $c->stash->{rest} = {error=>'Only a curator can add vectors without using the fuzzy search!'};
+        $c->stash->{rest} = {error=>__('Only a curator can add vectors without using the fuzzy search!')};
         $c->detach();
     }
 
     # These roles are required by CXGN::UploadFile
     if ($user_role ne 'curator' && $user_role ne 'submitter' && $user_role ne 'sequencer' ) {
-        $c->stash->{rest} = {error=>'Only a curator, submitter or sequencer can upload a file'};
+        $c->stash->{rest} = {error=>__('Only a curator, submitter or sequencer can upload a file')};
         $c->detach();
     }
 
@@ -268,7 +269,7 @@ sub verify_vectors_file_POST : Args(0) {
         my $return_error = '';
         my $parse_errors;
         if (!$parser->has_parse_errors() ){
-            $c->stash->{rest} = {error_string => "Could not get parsing errors"};
+            $c->stash->{rest} = {error_string => __("Could not get parsing errors")};
             $c->detach();
         } else {
             $parse_errors = $parser->get_parse_errors();

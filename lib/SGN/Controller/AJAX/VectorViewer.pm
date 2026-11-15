@@ -7,6 +7,7 @@ use File::Spec;
 use JSON::Any;
 use SGN::Model::Cvterm;
 use CXGN::VectorViewer;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; }
 
@@ -35,13 +36,13 @@ sub store_POST : Args(0) {
     $c->response->headers->header( 'Access-Control-Allow-Headers' => 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization');
 	
     if (! $c->user()) {
-	$c->stash->{rest} = { error => 'You need to be logged in with corresponding privileges to store vectors.' };
+	$c->stash->{rest} = { error => __('You need to be logged in with corresponding privileges to store vectors.') };
 	return;
     }
     
     if ($c->user && ! ($c->user->check_roles('submitter') || $c->user->check_roles('curator'))) {
 
-	$c->stash->{rest} = { error => 'You do not have the privileges to store vectors.' };
+	$c->stash->{rest} = { error => __('You do not have the privileges to store vectors.') };
 	return;
     }
     
@@ -106,7 +107,7 @@ sub retrieve :Chained('vector') PathPart('retrieve') Args(0) {
 	$genbank_record_id = $genbank_record_term->cvterm_id();
     }
     if (! $c->user()) {
-	$c->stash->{rest} = { error => 'You need to be logged in to view vector data.' };
+	$c->stash->{rest} = { error => __('You need to be logged in to view vector data.') };
 	return;
     }
 
@@ -213,7 +214,7 @@ sub import :Chained('vector') PathPart('import') Args(0) {
     $c->response->headers->header( 'Access-Control-Allow-Headers' => 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range,Authorization');
     
     if (! $c->user()) {
-	$c->stash->{rest} = { error => 'You need to be logged in to store vectors.' };
+	$c->stash->{rest} = { error => __('You need to be logged in to store vectors.') };
 	return;
     }
 
@@ -252,7 +253,7 @@ sub import :Chained('vector') PathPart('import') Args(0) {
 	
 	$c->stash->{rest} = { sequence => $sequence, re_sites => $vv->re_sites(), features => $parsed, metadata => $metadata };
     }
-    else { $c->stash->{rest} = { error => "You do not have the privileges to import vector data." };
+    else { $c->stash->{rest} = { error => __("You do not have the privileges to import vector data.") };
 	   
     }
 }

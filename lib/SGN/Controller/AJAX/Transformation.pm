@@ -30,6 +30,7 @@ use CXGN::Stock;
 use CXGN::Transformation::ParseUpload;
 use CXGN::Transformation::StoreTransgeneExpressionData;
 use Time::Piece;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -59,7 +60,7 @@ sub add_transformation_project_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a transformation project." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a transformation project.") };
         return;
     }
 
@@ -78,7 +79,7 @@ sub add_transformation_project_POST :Args(0){
     my $geolocation_lookup = CXGN::Location::LocationLookup->new(schema =>$schema);
        $geolocation_lookup->set_location_name($location);
        if(!$geolocation_lookup->get_geolocation()){
-           $c->stash->{rest}={error => "Location not found"};
+           $c->stash->{rest}={error => __("Location not found")};
            return;
        }
 
@@ -101,7 +102,7 @@ sub add_transformation_project_POST :Args(0){
     };
 
     if (!$return){
-        $c->stash->{rest} = {error => "Error saving project",};
+        $c->stash->{rest} = {error => __("Error saving project"),};
         return;
     }
 
@@ -138,7 +139,7 @@ sub add_transformation_project_POST :Args(0){
 
         my $return = $add_tracking_project->save_activity_project();
         if (!$return){
-            $c->stash->{rest} = {error => "Error saving project",};
+            $c->stash->{rest} = {error => __("Error saving project"),};
             return;
         }
 
@@ -175,7 +176,7 @@ sub add_transformation_identifier_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a transformation ID." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a transformation ID.") };
         return;
     }
 
@@ -195,17 +196,17 @@ sub add_transformation_identifier_POST :Args(0){
     my $vector_construct_cvterm_id = SGN::Model::Cvterm->get_cvterm_row($schema,'vector_construct', 'stock_type')->cvterm_id();
 
     if ($schema->resultset("Stock::Stock")->find({uniquename => $transformation_identifier})){
-        $c->stash->{rest} = {error =>  "Transformation ID already exists. Please use another name" };
+        $c->stash->{rest} = {error =>  __("Transformation ID already exists. Please use another name") };
         return;
     }
 
     if (! $schema->resultset("Stock::Stock")->find({uniquename => $plant_material, type_id => $accession_cvterm_id })){
-        $c->stash->{rest} = {error =>  "Plant material does not exist or does not exist as accession uniquename." };
+        $c->stash->{rest} = {error =>  __("Plant material does not exist or does not exist as accession uniquename.") };
         return;
     }
 
     if (! $schema->resultset("Stock::Stock")->find({uniquename => $vector_construct, type_id => $vector_construct_cvterm_id })){
-        $c->stash->{rest} = {error =>  "vector construct does not exist or does not exist as vector construct uniquename." };
+        $c->stash->{rest} = {error =>  __("vector construct does not exist or does not exist as vector construct uniquename.") };
         return;
     }
 
@@ -253,7 +254,7 @@ sub add_transformation_identifier_POST :Args(0){
 
         my $return = $tracking_obj->store();
         if (!$return){
-            $c->stash->{rest} = {error => "Error generating tracking identifier",};
+            $c->stash->{rest} = {error => __("Error generating tracking identifier"),};
             return;
         } elsif ($return->{error}) {
             my $error = $return->{error};
@@ -301,7 +302,7 @@ sub upload_transformation_identifiers_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transformation identifiers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transformation identifiers!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -310,7 +311,7 @@ sub upload_transformation_identifiers_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transformation identifiers!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transformation identifiers!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -319,7 +320,7 @@ sub upload_transformation_identifiers_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload transformation identifiers'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload transformation identifiers')};
         $c->detach();
     }
 
@@ -509,7 +510,7 @@ sub add_transformants_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add new transformants." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add new transformants.") };
         return;
     }
 
@@ -528,7 +529,7 @@ sub add_transformants_POST :Args(0){
     my $autogenerated_names = CXGN::Transformation::CreateTransformantAutogeneratedNames->new({schema => $schema, dbh => $dbh, breeding_program_id => $program_id, name_format => $name_format, number_of_names => $new_name_count, source_info => $source_info });
     my $return = $autogenerated_names->create_names();
     if (!$return){
-        $c->stash->{rest} = {error => "Error generating transformant names"};
+        $c->stash->{rest} = {error => __("Error generating transformant names")};
         return;
     } elsif ($return->{error}) {
         $c->stash->{rest} = {error => $return->{error}};
@@ -590,7 +591,7 @@ sub add_transformants_POST :Args(0){
         });
         my $return = $add_activity_info->add_info();
         if (!$return){
-            $c->stash->{rest} = {error => "Error saving tracking information"};
+            $c->stash->{rest} = {error => __("Error saving tracking information")};
             return;
         } elsif ($return->{error}) {
             $c->stash->{rest} = {error => $return->{error}};
@@ -616,7 +617,7 @@ sub add_transformants_using_list_POST : Args(0) {
     }
 
     if (!($c->user()->has_role('submitter') or $c->user()->has_role('curator'))) {
-        $c->stash->{rest} = { error_string => "You do not have sufficient privileges to add new transformants." };
+        $c->stash->{rest} = { error_string => __("You do not have sufficient privileges to add new transformants.") };
         return;
     }
 
@@ -771,7 +772,7 @@ sub set_autogenerated_name_format_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to set autogenerated name format for this project." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to set autogenerated name format for this project.") };
         return;
     }
 
@@ -824,7 +825,7 @@ sub set_default_plant_material_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to set default plant material for this project." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to set default plant material for this project.") };
         return;
     }
 
@@ -846,7 +847,7 @@ sub set_default_plant_material_POST :Args(0){
     my $plant_material_stock_id;
     my $plant_material_rs = $schema->resultset("Stock::Stock")->find({uniquename => $default_plant_material_name, type_id => $accession_cvterm_id });
     if (!$plant_material_rs){
-        $c->stash->{rest} = {error =>  "Plant material does not exist or does not exist as accession uniquename." };
+        $c->stash->{rest} = {error =>  __("Plant material does not exist or does not exist as accession uniquename.") };
         return;
     } else {
         $plant_material_stock_id = $plant_material_rs->stock_id();
@@ -940,7 +941,7 @@ sub delete_transformation_id_POST :Args(0){
     }
 
     if (!$c->user()->check_roles("curator")) {
-        $c->stash->{rest} = { error => "You do not have the correct role to delete transformation ID. Please contact us." };
+        $c->stash->{rest} = { error => __("You do not have the correct role to delete transformation ID. Please contact us.") };
         $c->detach();
     }
 
@@ -974,7 +975,7 @@ sub set_transformation_control_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to set a control for this transformation ID." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to set a control for this transformation ID.") };
         return;
     }
 
@@ -1017,7 +1018,7 @@ sub set_as_control_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to set this transformation ID as a control." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to set this transformation ID as a control.") };
         return;
     }
 
@@ -1226,7 +1227,7 @@ sub upload_transgenic_historical_data_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transgenic historical data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transgenic historical data!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1235,12 +1236,12 @@ sub upload_transgenic_historical_data_POST : Args(0) {
         $user_name = $p->get_username;
 
         if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-            $c->stash->{rest} = {error=>'Only a submitter or a curator can upload transgenic historical data'};
+            $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload transgenic historical data')};
             $c->detach();
         }
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transgenic historical data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transgenic historical data!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -1326,7 +1327,7 @@ sub upload_transgenic_historical_data_POST : Args(0) {
                 my $transformant_info = $vector_construct_info->{$type};
                 my @check_accession_type = keys %$transformant_info;
                 if (scalar(@check_accession_type) > 1) {
-                    $c->stash->{rest} = { error => "Error! All accessions in the same file should have the same accession type (either an existing accession in the database or new accession)."};
+                    $c->stash->{rest} = { error => __("Error! All accessions in the same file should have the same accession type (either an existing accession in the database or new accession).")};
                     return;
                 }
 
@@ -1549,7 +1550,7 @@ sub upload_qPCR_data_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload relative expression data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload relative expression data!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1558,7 +1559,7 @@ sub upload_qPCR_data_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload relative expression data!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload relative expression data!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -1567,7 +1568,7 @@ sub upload_qPCR_data_POST : Args(0) {
     }
 
     if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-        $c->stash->{rest} = {error=>'Only a submitter or a curator can upload relative expression data'};
+        $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload relative expression data')};
         $c->detach();
     }
 
@@ -1876,7 +1877,7 @@ sub update_transformation_metadata_POST :Args(0){
     }
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to edit this transformation metadata." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to edit this transformation metadata.") };
         return;
     }
 
@@ -1930,7 +1931,7 @@ sub upload_transgenic_lines_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transgenic lines!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transgenic lines!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -1939,12 +1940,12 @@ sub upload_transgenic_lines_POST : Args(0) {
         $user_name = $p->get_username;
 
         if (($user_role ne 'curator') && ($user_role ne 'submitter')) {
-            $c->stash->{rest} = {error=>'Only a submitter or a curator can upload transgenic lines'};
+            $c->stash->{rest} = {error=>__('Only a submitter or a curator can upload transgenic lines')};
             $c->detach();
         }
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload transgenic lines!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload transgenic lines!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
