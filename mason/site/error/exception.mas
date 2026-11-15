@@ -17,7 +17,7 @@
 % if( $e->public_message ) {
     <% $e->public_message . ( $e->public_message =~ /\.\s*$/ ? '' : '.' ) %>
 % } else {
-    Our apologies, there was an error processing your request.  
+    <% __('Our apologies, there was an error processing your request.') |h %>  
 % }
     </p>
 
@@ -53,7 +53,7 @@
      </style>
 
     <div style="margin: 1em 0; border: 2px solid orange; padding: 0 1em 1em 1em">
-      <h3>Developer message:</h3>
+      <h3><% __('Developer message:') |h %></h3>
         <pre><% defined $e->developer_message ? $e->developer_message : 'none provided' | h %></pre>
     </div>
 %   }

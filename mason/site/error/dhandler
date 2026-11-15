@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Server Error</h1>
+<h1 style="text-align: center"><% __('Server Error') |h %></h1>
 
 <p>Our apologies, there was an error processing your request.  An error
 report has been sent to the SGN development team.</p>
