@@ -102,8 +102,7 @@
         <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Advanced Search'), 'h' ), subtitle=>$m->interp->apply_escapes( __('Filter by attribute values'), 'h' ), collapsible=>1, collapsed=>1 &>
             <div class="well">
 
-                <p>Return only sequence metadata features that have attribute values that match the added comparisons.  If more than one attribute 
-                filter is added, the sequence metadata feature must match all of the filters.</p>
+                <p><& /util/sentence.mas, text => __x('Return only sequence metadata features that have attribute values that match the added comparisons. If more than one attribute filter is added, the sequence metadata feature must match all of the filters.') &></p>
 
                 <br />
 
@@ -237,7 +236,7 @@
     <!-- Return -->
     <div class="center">
         <button id="sequence_metadata_filter_return" class="btn btn-primary btn-block" style="max-width: 400px; margin: auto">
-            <span class="glyphicon glyphicon-chevron-left">&nbsp;</span>Back to Search
+            <& /util/sentence.mas, text => __x('{icon}Back to Search'), icon => '<span class="glyphicon glyphicon-chevron-left">&nbsp;</span>' &>
         </button>
     </div>
 

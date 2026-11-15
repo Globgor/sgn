@@ -20,20 +20,19 @@
             <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
               <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload Sequence Metadata"), 'h' ) &>
               <div class="well">
-                  <p>This workflow will guide you through the process of uploading sequence metadata to the database using a 
-                  <a href="https://m.ensembl.org/info/website/upload/gff3.html">gff3-formatted</a> file.</p>
+                  <p><& /util/sentence.mas, text => __x('This workflow will guide you through the process of uploading sequence metadata to the database using a {link}gff3-formatted{end_link} file.'), link => '<a href="https://m.ensembl.org/info/website/upload/gff3.html">', end_link => '</a>' &></p>
                   <p><% __('The following gff3 columns are used by the sequence metadata uploader:') |h %></p>
                   <ul>
                     <li>
-                      <strong>#1 / seqid:</strong> The name of the database feature (ie chromosome) the metadata is associated with<br />
+                      <& /util/sentence.mas, text => __x('{column} The name of the database feature (ie chromosome) the metadata is associated with'), column => '<strong>#1 / seqid:</strong>' &><br />
                       <em><% __('The names in this column must match existing features in the database.') |h %></em>
                     </li>
-                    <li><strong>#4 / start:</strong> The metadata's start position</li>
-                    <li><strong>#5 / end:</strong> The metadata's end position</li>
-                    <li><strong>#6 / score:</strong> The primary score attribute of the metadata</li>
+                    <li><& /util/sentence.mas, text => __x('{column} The metadata\'s start position'), column => '<strong>#4 / start:</strong>' &></li>
+                    <li><& /util/sentence.mas, text => __x('{column} The metadata\'s end position'), column => '<strong>#5 / end:</strong>' &></li>
+                    <li><& /util/sentence.mas, text => __x('{column} The primary score attribute of the metadata'), column => '<strong>#6 / score:</strong>' &></li>
                     <li>
-                      <strong>#9 / attributes:</strong> Secondary key/value attributes to be saved with the score<br />
-                      <em>The attribute key cannot be either <strong>score</strong>, <strong>start</strong>, or <strong>end</strong>.</em>
+                      <& /util/sentence.mas, text => __x('{column} Secondary key/value attributes to be saved with the score'), column => '<strong>#9 / attributes:</strong>' &><br />
+                      <em><& /util/sentence.mas, text => __x('The attribute key cannot be either {score}, {start}, or {end}.'), score => '<strong>score</strong>', start => '<strong>start</strong>', end => '<strong>end</strong>' &></em>
                     </li>
                   </ul>
               </div>
@@ -63,7 +62,7 @@
                   </div>
                 </div>
               </form>
-              <p><span class="glyphicon glyphicon-question-sign"></span>&nbsp;If your data is not one of the above data types, please <a href="/contact/form">contact us</a> about adding a new data type.</p>
+              <p><span class="glyphicon glyphicon-question-sign"></span>&nbsp;<& /util/sentence.mas, text => __x('If your data is not one of the above data types, please {link}contact us{end_link} about adding a new data type.'), link => '<a href="/contact/form">', end_link => '</a>' &></p>
               
               <br /><br />
 
@@ -181,9 +180,7 @@
                     <h3><% __('External Links') |h %></h3>
 
                     <p><strong><% __('Add templates for generating external links displayed with the sequence metadata results.') |h %></strong></p>
-                    <p>External links are defined using templates that can include the feature/chrom name, start and/or end position, and/or any attribute value 
-                    as a variable in the URL.  The variable will be replaced with the value for each sequence metadata result and displayed in the query results table.  The variable in the URL takes the form of: <code>{{variable}}</code> where <code>variable</code> can be: <code>feature</code>, <code>start</code>,
-                    <code>end</code> or the key of any attribute defined by the sequence metadata protocol.</p>
+                    <p><& /util/sentence.mas, text => __x('External links are defined using templates that can include the feature/chrom name, start and/or end position, and/or any attribute value as a variable in the URL. The variable will be replaced with the value for each sequence metadata result and displayed in the query results table. The variable in the URL takes the form of: {pattern} where {variable} can be: {feature}, {start}, {end} or the key of any attribute defined by the sequence metadata protocol.'), pattern => '<code>{{variable}}</code>', variable => '<code>variable</code>', feature => '<code>feature</code>', start => '<code>start</code>', end => '<code>end</code>' &></p>
                     <p>Example: <code>https://wheat.pw.usda.gov/jb/?data=/ggds/whe-iwgsc2018&loc={{Locus}}&highlight={{feature}}:{{start}}..{{end}}</code></p>
 
                     <div class="form-group">
@@ -238,8 +235,7 @@
               <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload your gff3 file"), 'h' ) &>
               <br /><br />
 
-              <p>Select your gff3 file to upload.  Then, click the <strong>Verify</strong> button to upload your file and check its format and contents.  If 
-              successfully verified, click the <strong>Store</strong> button to store the data in the database.</p>
+              <p><& /util/sentence.mas, text => __x('Select your gff3 file to upload. Then, click the {bold}Verify{end_bold} button to upload your file and check its format and contents. If successfully verified, click the {bold}Store{end_bold} button to store the data in the database.'), bold => '<strong>', end_bold => '</strong>' &></p>
 
               <br /><br />
 

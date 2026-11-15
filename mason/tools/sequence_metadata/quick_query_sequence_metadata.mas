@@ -51,7 +51,7 @@ my %params = (
                 <td><% $params->{$id}->{'feature'} %></td>
                 <td><% $params->{$id}->{'start'} %></td>
                 <td><% $params->{$id}->{'end'} %></td>
-                <td><a href="/search/sequence_metadata?reference_genome=<% $params->{$id}->{'reference_genome'} %>&feature=<% $params->{$id}->{'feature'} %>&start=<% $params->{$id}->{'start'} %>&end=<% $params->{$id}->{'end'} %>">Modify&nbsp;Query</a></td>
+                <td><a href="/search/sequence_metadata?reference_genome=<% $params->{$id}->{'reference_genome'} %>&feature=<% $params->{$id}->{'feature'} %>&start=<% $params->{$id}->{'start'} %>&end=<% $params->{$id}->{'end'} %>"><& /util/sentence.mas, text => __x('Modify Query') &></a></td>
             </tr>
         </table>
     </div>
