@@ -13,7 +13,7 @@ JSAN.use("CXGN.Effects.Hotlist");
 var Hotlist = window.Hotlist || {};
 Hotlist = { //buttonId: id of the clicked button, for changing the button
 	add: function(buttonId, content) {
-		if(!buttonId) { alert("buttonId not sent!"); }
+		if(!buttonId) { alert(gettext("buttonId not sent!")); }
 		var waitIndicator;// = new RequestWaitIndicator("hotlistWait:" + content);		
 		var request = new Request();
 		if(request.isValid()) {
@@ -21,10 +21,10 @@ Hotlist = { //buttonId: id of the clicked button, for changing the button
  			var parameters = "owner=" + user_id + "&button_id=" + buttonId + "&cookie_string=" + cookie_string + "&action=add&content=" + content;
  			request.send("/scraps/hotlist.pl", parameters, "POST");
 		}
-		else { alert('invalid request') }
+		else { alert(gettext('invalid request')) }
 	},
 	remove: function (buttonId, content) {
-		if(!buttonId) { alert("buttonId not sent!"); }
+		if(!buttonId) { alert(gettext("buttonId not sent!")); }
 		var waitIndicator;// = new RequestWaitIndicator("hotlistWait:" + content);		
 		var request = new Request();
 		if(request.isValid()) {
