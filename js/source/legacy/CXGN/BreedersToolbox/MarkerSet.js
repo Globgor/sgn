@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 // Cached allele values by marker name
 // This is updated each time the selected markerset is changed
 var ALLELES = {}
