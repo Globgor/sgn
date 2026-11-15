@@ -39,6 +39,7 @@ sub run_perl {
 my @modules = (
     [ 'lib/SGN/Controller/AJAX/Grafting.pm', 'SGN::Controller::AJAX::Grafting', [ '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to add grafts.")', '__("Grafting upload requires a tab delimited file. Excel files (.xls and .xlsx) are currently not supported. Please convert the file and try again.")', '__(\'You must be logged in to upload seedlots!\')', '__(\'You must be logged in to upload seedlots!\')', '__("You have insufficient privileges to add grafts.")' ] ],
     [ 'lib/SGN/Controller/AJAX/HTMLSelect.pm', 'SGN::Controller::AJAX::HTMLSelect', [ '__("Parameter not supported!")' ] ],
+    [ 'lib/SGN/Controller/AJAX/Onto.pm', 'SGN::Controller::AJAX::Onto', [ '__("You must be logged in to recompute an ontology\'s cvtermpath.")', '__("You have insufficient privileges to recompute an ontology\'s cvtermpath.")', '__("An ontology namespace is required.")', '__("An ontology namespace is required.")', '__(\'You must be logged in to create ontology!\')', '__(\'You must be logged in to create ontology!\')', '__("You have insufficient privileges to add ontology.")', '__(\'You must be logged in to create observation variables!\')', '__(\'You must be logged in to create observation variables!\')', '__("You have insufficient privileges to add observation variables.")', '__("No exact matches found.")', '__("No matches found.")' ] ],
 );
 
 for my $module (@modules) {

@@ -20,6 +20,34 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/breeders_toolbox/manage_odk_data_collection.mas',
+    'ONA is currently being used for collecting crossing information. This requires exporting a crossing plan from here to the ONA server. The crossing plan guides collection of cross information and this data is synched with ONA using ODK. From here, we run a script twice a day, which pulls data on ONA into our database.',
+    'Import Crossing Data from Selected Form on ONA',
+    'Crossing Data: ONA ODK Application',
+    'Summary of Received Plant Status',
+    'What do I do from this page?',
+    'Manage ODK Data Collection',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/manage_phenotyping.mas',
+    'These files will not be shown anywhere else on the website',
+    'Manage Phenotypic Data',
+    'Your Obsoleted Files',
+    'Your Uploaded Files',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/manage_plot_phenotyping.mas',
+    'Enter a List of Trait Names:',
+    'Manage Plot Phenotyping',
+    'Or Paste From a List:',
+    'Enter trait value:',
+    'Or Use Trait List:',
+    'Traits assayed',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_populations_dialogs.mas',
     'Choose a List of Accessions to Add:',
     'Choose a List of Members to Add:',

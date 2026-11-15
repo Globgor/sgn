@@ -22,6 +22,16 @@ use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 component_compiles_ok('/tools/fieldmap.mas');
 
 page_script_texts_ok(
+    '/tools/trait_designer.mas',
+    'Please select a CV before rebuilding its cvterm paths.',
+    'Assign an ordinal value to the new category.',
+    'An error occurred, check console.',
+    'Please select an ontology.',
+    'No special characters.',
+    'Default category:',
+);
+
+page_script_texts_ok(
     '/tools/treatment_designer.mas',
     'Please select a CV before rebuilding its cvterm paths.',
     'Assign an ordinal value to the new category.',

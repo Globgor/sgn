@@ -19,6 +19,13 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
+page_script_texts_ok(
+    '/breeders_toolbox/manage_trial_phenotyping.mas',
+    'An error occurred retrieving trial information',
+    'An error occurred retrieving trait value',
+    'An error occurred saving trait value',
+);
+
 component_compiles_ok('/breeders_toolbox/trial.mas');
 
 page_script_texts_ok(

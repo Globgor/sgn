@@ -39,4 +39,14 @@ page_texts_ok(
     'Names in the list must exist in the database',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/add_new_trait_dialogs.mas',
+    'An observation variable is composed of a trait for the attribute being observed, a method describing how the attribute was measured, and a scale indicating the units of the observation.',
+    'In this workflow you can add a new ontology to the database. Once an ontology is added, you can add terms into it from the add observation variables workflow.',
+    'Having many observation variables that are in fact recording the same thing is dangerous and can cause the database data to become fragmented.',
+    'A method defines the how it was measured measured. It is one component of an observation variable; the others are a trait and a scale.',
+    'A trait defines the attribute being measured. It is one component of an observation variable; the others are a method and a scale.',
+    'Here you can select a trait that already exists in an ontology in the database or you can add a new trait into an ontology.',
+);
+
 done_testing;

@@ -26,6 +26,16 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/add_new_trait_dialogs.mas',
+    'Please select an existing method or give a new method name, and not both!',
+    'Please select an existing scale or give a new scale name, and not both!',
+    'Please select an existing trait or give a new trait name, and not both!',
+    'Please select an existing method or give a new method name!',
+    'Please select an existing scale or give a new scale name!',
+    'Please select an existing trait or give a new trait name!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/breeder_search_page_dataset_overlay.mas',
     'Are you sure you want to close the dataset creation help?',
     'Return',

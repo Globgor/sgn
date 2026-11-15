@@ -84,6 +84,12 @@ my @scripts = (
     [ 'js/source/legacy/CXGN/BreedersToolbox/DerivedAccessions.js',
         'gettext("Please select a file")',
     ],
+    [ 'js/source/legacy/CXGN/BreedersToolbox/FieldBook.js',
+        'gettext(\'Layout deleted successfully.\')',
+        'gettext("Traits, from a list or selected individually, are required.")',
+        'gettext("A trait file name is required.")',
+        'gettext(\'An error occurred creating the trait file.\')',
+    ],
 );
 
 my $node = grep { -x "$_/node" && !-d "$_/node" } split /:/, $ENV{PATH} // q{};

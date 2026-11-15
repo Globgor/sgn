@@ -37,6 +37,7 @@ sub run_perl {
 }
 
 my @modules = (
+    [ 'lib/SGN/Controller/AJAX/DeriveTrait.pm', 'SGN::Controller::AJAX::DeriveTrait', [ '__("You need to be logged in to compute trait.")', '__("You have insufficient privileges to compute trait.")', '__("No trait assayed for this trial.")', '__("Select trait to compute.")', '__(\'Must be a curator to overwrite values! Please contact us!\')' ] ],
     [ 'lib/SGN/Controller/AJAX/FamilyName.pm', 'SGN::Controller::AJAX::FamilyName', [ '__("You do not have the correct role to modify family members. Please contact us.")', '__("You do not have the correct role to delete family. Please contact us.")', '__(\'Only a submitter or a curator can add family members\')' ] ],
 );
 

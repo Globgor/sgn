@@ -21,4 +21,14 @@ use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 component_compiles_ok('/tools/fieldmap.mas');
 
+page_texts_ok(
+    '/tools/trait_designer.mas',
+    'The ontology that the new term will belong to. This is separate from the parent term(s) that the new term is chained to.',
+    'Make it descriptive. Be sure to describe category meanings if using categorical data.',
+    'Alternate names for the new term. Synonyms must not already exist in the database.',
+    'Pipes (|)  will be removed from name.',
+    'Optional. Pipes (|) will be removed.',
+    'Optional. No special characters.',
+);
+
 done_testing;

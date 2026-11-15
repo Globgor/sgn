@@ -38,6 +38,7 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/AJAX/Pedigrees.pm', 'SGN::Controller::AJAX::Pedigrees', [ '__(\'You must be logged in to upload pedigrees!\')', '__(\'You must be logged in to upload pedigrees!\')', '__(\'Only a submitter or a curator can upload pedigrees\')', '__("Could not get parsing errors")' ] ],
+    [ 'lib/SGN/Controller/AJAX/PhenotypesUpload.pm', 'SGN::Controller::AJAX::PhenotypesUpload', [ '__("You need to be logged in to record phenotype.")', '__("You have insufficient privileges to record phenotype.")', '__("Used only for Plot Phenotyping.")', '__("You need to be logged in to record a phenotype.")', '__("This observation can only be edited in relation to a trial.")', '__("You must supply an observation ID!")', '__("This function can edit existing phenotype entries, but not delete them. Please enter a value.")', '__("You do not have permission to make edits on this trial - only curators and trial owners can modify raw phenotype values.")' ] ],
 );
 
 for my $module (@modules) {

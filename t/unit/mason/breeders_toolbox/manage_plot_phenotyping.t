@@ -23,6 +23,7 @@ use Cwd qw | abs_path |;
 use File::Path qw | make_path |;
 use File::Temp qw | tempdir |;
 use HTML::Mason::Interp;
+use SGN::I18N::Browser ();
 
 my $mason_root = abs_path('mason');
 
@@ -47,11 +48,17 @@ foreach my $path (keys %stubs) {
     close($fh);
 }
 
+# The preamble that SGN::View::Mason gives to every component.
+open(my $view, '<', 'lib/SGN/View/Mason.pm') or die "Can't read the Mason view: $!";
+my ($preamble) = join('', <$view>) =~ /preamble\s*=>\s*"([^"]*)"/;
+close $view;
+
 my $interp = HTML::Mason::Interp->new(
     comp_root => [ [ stubs => $stub_root ], [ main => $mason_root ] ],
     data_dir => $data_dir,
     autohandler_name => '',
-    preamble => "use utf8; ",
+    preamble => $preamble,
+    escape_flags => { js => \&SGN::I18N::Browser::escape_js },
 );
 
 sub render {

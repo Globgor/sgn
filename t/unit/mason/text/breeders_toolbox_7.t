@@ -20,6 +20,26 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/breeders_toolbox/manage_trial_phenotyping.mas',
+    'Enter a List of Trait Names:',
+    'Or Paste From a List:',
+    'Stored trait value:',
+    'Enter trait value:',
+    'Or Use Trait List:',
+    'Traits assayed',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/manage_upload.mas',
+    'Upload progeny names that already EXIST in database',
+    'Upload progeny names that are NOT in database',
+    'Upload Cross Info of Existing Crosses',
+    'Create An IGD Genotyping Plate',
+    'Create Phenotyping Spreadsheet',
+    'Go To Manage Genotyping Plates',
+);
+
+page_texts_ok(
     '/breeders_toolbox/management_factor.mas',
     'View and edit the public data agreement on this experiment.',
     'View experimental design information for this treatment.',
