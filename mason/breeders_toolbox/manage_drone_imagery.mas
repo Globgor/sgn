@@ -778,9 +778,9 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
                     <div class="well well-sm">
                         <h5><% __('The background can be removed by placing a threshold on pixel values') |h %></h5>
                         <ul>
-                            <li><b>1.</b> Click on the two right-most, highest peaks in the histogram. The right most peak represents the pixels we are interested in, while the peak immediately to the left of that peak represents the soil background.</li>
-                            <li><b>2.</b> Click on the "Find Minimum" button.</li>
-                            <li><b>3.</b> If the image looks good with the applied threshold, click Save. Otherwise, you can start over.</li>
+                            <li><& /util/sentence.mas, text => __x('{bold}1.{end_bold} Click on the two right-most, highest peaks in the histogram. The right most peak represents the pixels we are interested in, while the peak immediately to the left of that peak represents the soil background.'), bold => '<b>', end_bold => '</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{bold}2.{end_bold} Click on the "Find Minimum" button.'), bold => '<b>', end_bold => '</b>' &></li>
+                            <li><& /util/sentence.mas, text => __x('{bold}3.{end_bold} If the image looks good with the applied threshold, click Save. Otherwise, you can start over.'), bold => '<b>', end_bold => '</b>' &></li>
                         </ul>
                     </div>
 
@@ -1852,7 +1852,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
         <div class="container-fluid">
             <p>
                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                It will take time to finish processing your imaging event and calculating phenotypes for all plot polygon images, vegetative indices, and processing combinations. Once it is complete, the "Processing Icon" on the Manage->Aerial Imagery page will disappear for the imaging event.
+                <& /util/sentence.mas, text => __x('It will take time to finish processing your imaging event and calculating phenotypes for all plot polygon images, vegetative indices, and processing combinations. Once it is complete, the "Processing Icon" on the Manage->Aerial Imagery page will disappear for the imaging event.') &>
             </p>
         </div>
       </div>
@@ -1894,7 +1894,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
       <div class="modal-body">
         <div class="container-fluid">
             <div class="well well-sm">
-                Growing Degree Days (GDD) are calculated using the average high and low temperature for each day from planting date to the date of the imaging event. <a href="https://www.canr.msu.edu/news/understanding_growing_degree_days" target=_blank >More Information on GDD</a>. The average daily high and low temperature is fetched from the <a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>NOAA NCDC</a>.
+                <& /util/sentence.mas, text => __x('Growing Degree Days (GDD) are calculated using the average high and low temperature for each day from planting date to the date of the imaging event. {link}More Information on GDD{end_link}. The average daily high and low temperature is fetched from the {link2}NOAA NCDC{end_link2}.'), link => '<a href="https://www.canr.msu.edu/news/understanding_growing_degree_days" target=_blank >', end_link => '</a>', link2 => '<a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>', end_link2 => '</a>' &>
             </div>
 
             <div id="drone_imagery_calculate_gdd_time_div"></div>
@@ -1953,7 +1953,7 @@ my $buttons_html = "<button class='btn btn-primary' style='margin:3px' id='uploa
       <div class="modal-body">
         <div class="container-fluid">
             <div class="well well-sm">
-                The average daily precipitation is fetched from the <a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>NOAA NCDC</a>.
+                <& /util/sentence.mas, text => __x('The average daily precipitation is fetched from the {link}NOAA NCDC{end_link}.'), link => '<a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2" target=_blank>', end_link => '</a>' &>
             </div>
 
             <div id="drone_imagery_calculate_precipitation_time_div"></div>

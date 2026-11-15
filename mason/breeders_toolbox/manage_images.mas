@@ -50,8 +50,7 @@ $user_can_modify => 1
 <h4 style="margin-top:0;"><% __('Uploading Images') |h %></h4>
 
 <p class="text-muted" style="font-size:12px;">
-  There are three ways to upload, depending on how the images relate to
-  your data:
+  <& /util/sentence.mas, text => __x('There are three ways to upload, depending on how the images relate to your data:') &>
 </p>
 
 <div class="row">
@@ -60,8 +59,7 @@ $user_can_modify => 1
       <h5 style="margin-top:0;"><b><% __('Images Alone') |h %></b></h5>
       <ul style="font-size:12px; padding-left:18px;">
         <li><% __('Select multiple images directly for upload.') |h %></li>
-        <li>Fieldbook photos carry EXIF data with the observation unit
-            name, trait name, and timestamp </li>
+        <li><& /util/sentence.mas, text => __x('Fieldbook photos carry EXIF data with the observation unit name, trait name, and timestamp') &> </li>
         <li>Otherwise, name files
             observationUnitName_traitname_number_time,
             joined by underscores (Fieldbook's default naming).</li>
@@ -72,10 +70,8 @@ $user_can_modify => 1
     <div class="well well-sm" style="min-height:220px;">
       <h5 style="margin-top:0;"><b><% __('Images with Barcodes') |h %></b></h5>
       <ul style="font-size:12px; padding-left:18px;">
-        <li>Upload multiple selected images that contain a barcode with
-            a stock ID.</li>
-        <li>Each image must contain exactly one barcode, and the
-            associated stock must already exist in the database.</li>
+        <li><& /util/sentence.mas, text => __x('Upload multiple selected images that contain a barcode with a stock ID.') &></li>
+        <li><& /util/sentence.mas, text => __x('Each image must contain exactly one barcode, and the associated stock must already exist in the database.') &></li>
       </ul>
     </div>
   </div>
@@ -120,15 +116,11 @@ $user_can_modify => 1
     <div class="panel-body">
 
       <p>
-        Images can be sorted into groups using collections. An image can belong to several
-        collections, and removing it from one does not delete the image or affect
-        the others.
+        <& /util/sentence.mas, text => __x('Images can be sorted into groups using collections.') &> <& /util/sentence.mas, text => __x('An image can belong to several collections, and removing it from one does not delete the image or affect the others.') &>
       </p>
 
       <p class="text-muted" style="font-size:12px;">
-        To add images to a collection, select them in
-        <a href="/search/images">image search</a> and use
-        <b>Add selected to collection</b>.
+        <& /util/sentence.mas, text => __x('To add images to a collection, select them in {link}image search{end_link} and use {bold}Add selected to collection{end_bold}.'), link => '<a href="/search/images">', end_link => '</a>', bold => '<b>', end_bold => '</b>' &>
       </p>
 
 % if ($user_can_modify) {
@@ -215,7 +207,7 @@ $user_can_modify => 1
                    placeholder="<% __('New collection name') |h %>">
           </div>
           <button class="btn btn-default btn-sm" id="mi_pick_collection_create_button">
-            Create &amp; Add
+            <& /util/sentence.mas, text => __x('Create & Add') &>
           </button>
         </div>
 
@@ -313,10 +305,7 @@ $user_can_modify => 1
     <div class="panel-body">
 
       <p>
-        Analysis pipelines detect objects in an image and measure them. Each
-        detected object is stored as a <b>tissue sample</b>, and its
-        measurements are stored as <b>observations</b> on that sample, so
-        results flow into the same phenotype tables as field data.
+        <& /util/sentence.mas, text => __x('Analysis pipelines detect objects in an image and measure them.') &> <& /util/sentence.mas, text => __x('Each detected object is stored as a {bold}tissue sample{end_bold}, and its measurements are stored as {bold}observations{end_bold} on that sample, so results flow into the same phenotype tables as field data.'), bold => '<b>', end_bold => '</b>' &>
       </p>
 
       <a class="btn btn-primary btn-sm" href="/tools/image_analysis" style="color: #fff;">

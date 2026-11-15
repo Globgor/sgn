@@ -146,7 +146,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <li>The values in the <b>image_name</b> column should should match the image filenames in the zipfile.</li>
+                <li><& /util/sentence.mas, text => __x('The values in the {column} column should should match the image filenames in the zipfile.'), column => '<b>image_name</b>' &></li>
             </ul>
 
         </div>

@@ -469,7 +469,7 @@
         <div class="container-fluid">
             <p>
                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                It will take time to finish processing your drone run and calculating phenotypes for all plot polygon images, vegetative indices, and processing combinations. Once it is complete, the "Processing Icon" on the Manage->Drone Imagery page will disappear from the drone run.
+                <& /util/sentence.mas, text => __x('It will take time to finish processing your drone run and calculating phenotypes for all plot polygon images, vegetative indices, and processing combinations. Once it is complete, the "Processing Icon" on the Manage->Drone Imagery page will disappear from the drone run.') &>
             </p>
         </div>
       </div>

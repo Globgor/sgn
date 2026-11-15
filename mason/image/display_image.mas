@@ -112,7 +112,7 @@ background: white;
 
 
 <br /><br />
-<center><table><tr><td class="boxbgcolor5"><b>Note:</b> The above image may be subject to copyright. Please contact the submitter about permissions to use the image.</td></tr></table></center><br />
+<center><table><tr><td class="boxbgcolor5"><& /util/sentence.mas, text => __x('{bold}Note:{end_bold} The above image may be subject to copyright. Please contact the submitter about permissions to use the image.'), bold => '<b>', end_bold => '</b>' &></td></tr></table></center><br />
 
 
 % my $tag_count = scalar($image->get_tags());

@@ -17,7 +17,7 @@ $refering_page => undef
         <p> Supported file formats include .jpg. .jpeg, .gif, .png, .pdf, .ps,
 	.eps <br></p>
 	<form name="upload_image_form" action="/image/confirm" method="post" enctype="multipart/form-data" >
-	    Upload an image, and associated with object <b><% $type %></b> id <% $type_id %><br /><br />
+	    <& /util/sentence.mas, text => __x('Upload an image, and associated with object {bold}{type}{end_bold} id {id}'), bold => '<b>', type => $type, end_bold => '</b>', id => $type_id &><br /><br />
 	    <input type="file" name="file" value="Choose image file" />
 	    <input type="hidden" name="action" value="confirm" /><br /><br />
 	    <input type="hidden" name="type" value="<% $type %>" />
