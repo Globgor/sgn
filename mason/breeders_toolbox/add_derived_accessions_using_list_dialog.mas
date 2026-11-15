@@ -106,7 +106,7 @@ jQuery(document).ready(function(){
             let derived_from_list_validation = 1;
             derived_from_list_validation = list.legacy_validate(derived_from_list_id, list_type, true);
             if (derived_from_list_validation != 1) {
-                alert("The list did not pass validation. Names in the list must be uniquenames in the database");
+                alert(<% __('The list did not pass validation. Names in the list must be uniquenames in the database') |js %>);
                 return;
             } else {
                 add_derived_accessions_form(derived_from_list_id);
@@ -178,7 +178,7 @@ jQuery(document).ready(function(){
 
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred storing new accessions.');
+                alert(<% __('An error occurred storing new accessions.') |js %>);
             },
         });
     });

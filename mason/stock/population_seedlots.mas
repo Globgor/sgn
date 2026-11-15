@@ -29,19 +29,19 @@ jQuery(document).ready(function(){
         'autoWidth': false,
         destroy: true,
         columns: [
-            { title: "Member Name", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.member_id+"/view'>"+row.member_name+"</a>"; } },
-            { title: "Member Type", "data": "member_type" },
-            { title: "Seedlot Name", "data": null, "render": function ( data, type, row ) {
+            { title: <% __('Member Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.member_id+"/view'>"+row.member_name+"</a>"; } },
+            { title: <% __('Member Type') |js %>, "data": "member_type" },
+            { title: <% __('Seedlot Name') |js %>, "data": null, "render": function ( data, type, row ) {
                 if (row.seedlot_id === null){
                     return 'No Seedlot'
                 } else {
                     return "<a href='/breeders/seedlot/"+row.seedlot_id+"'>"+row.seedlot_name+"</a>"
                 }
             }},
-            { title: "Current Count", "data": "current_count" },
-            { title: "Current Weight (g) ", "data": "current_weight_gram" },
-            { title: "Box Name", "data": "box_name" },
-            { title: "Location", "data": "location" },
+            { title: <% __('Current Count') |js %>, "data": "current_count" },
+            { title: <% __('Current Weight (g) ') |js %>, "data": "current_weight_gram" },
+            { title: <% __('Box Name') |js %>, "data": "box_name" },
+            { title: <% __('Location') |js %>, "data": "location" },
         ],
     });
 

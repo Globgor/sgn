@@ -86,13 +86,13 @@ jQuery('#shared_trials_2_lists').hide();
 
 	if (!accession_list_id) {
       	    enable_ui();
-      	    alert("You need to select an accession list!");
+      	    alert(<% __('You need to select an accession list!') |js %>);
 	    return;
       	    }
 
       	if (accession_validation != 1) {
       	    enable_ui();
-      	    alert("Accession list did not pass validation. Please correct the list and try again");
+      	    alert(<% __('Accession list did not pass validation. Please correct the list and try again') |js %>);
 	    return;
       	    }
 

@@ -57,7 +57,7 @@ $uri => "/ajax/cvterm/autocomplete"
 
    function associate_phenotype() {
       var trait = jQuery("#trait_ontology_name").val();
-      if (!trait) { alert("Must choose a trait name!"); return; }
+      if (!trait) { alert(<% __('Must choose a trait name!') |js %>); return; }
       var stock_id = '<% $stock_id %>';
       var phenotype_value = jQuery("#phenotye_value").val();
       jQuery.ajax({

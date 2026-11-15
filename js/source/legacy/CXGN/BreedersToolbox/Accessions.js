@@ -48,13 +48,13 @@ jQuery(document).ready(function ($) {
 
         const population_name = jQuery('#create_population_name').val();
         if (!population_name) {
-            alert ("Population name is required");
+            alert (gettext("Population name is required"));
             return;
         }
 
         const member_type = jQuery('#member_type').val();
         if (!member_type) {
-            alert ("Member type is required");
+            alert (gettext("Member type is required"));
             return;
         }
 
@@ -64,36 +64,36 @@ jQuery(document).ready(function ($) {
         if (member_type == 'accessions') {
             list_id =  jQuery('#create_population_accession_list_div_list_select').val();
             if (!list_id) {
-                alert ("A list of accessions is required");
+                alert (gettext("A list of accessions is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(list_id, 'accessions', true);
                 if (list_validation != 1) {
-                    alert("The accession list did not pass validation. Names in the list must be uniquenames with accession stock type in the database");
+                    alert(gettext("The accession list did not pass validation. Names in the list must be uniquenames with accession stock type in the database"));
                     return;
                 }
             }
         } else if (member_type == 'plots') {
             list_id =  jQuery('#create_population_plot_list_div_list_select').val();
             if (!list_id) {
-                alert ("A list of plots is required");
+                alert (gettext("A list of plots is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(list_id, 'plots', true);
                 if (list_validation != 1) {
-                    alert("The plot list did not pass validation. Names in the list must be uniquenames with plot stock type in the database");
+                    alert(gettext("The plot list did not pass validation. Names in the list must be uniquenames with plot stock type in the database"));
                     return;
                 }
             }
         } else if (member_type == 'plants') {
             list_id =  jQuery('#create_population_plant_list_div_list_select').val();
             if (!list_id) {
-                alert ("A list of plants is required");
+                alert (gettext("A list of plants is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(list_id, 'plants', true);
                 if (list_validation != 1) {
-                    alert("The plant list did not pass validation. Names in the list must be uniquenames with plant stock type in the database");
+                    alert(gettext("The plant list did not pass validation. Names in the list must be uniquenames with plant stock type in the database"));
                     return;
                 }
             }
@@ -164,7 +164,7 @@ jQuery(document).ready(function ($) {
         },
         error: function(response) {
           enable_ui();
-          alert('An error occured retrieving population data.');
+          alert(gettext('An error occured retrieving population data.'));
         }
       });
     });
@@ -178,11 +178,11 @@ jQuery(document).ready(function ($) {
             ajax: '/ajax/manage_accessions/population_members/'+population_id,
             destroy: true,
             columns: [
-                { title: "Member Name", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.name+"</a>"; } },
-                { title: "Member Type", "data": "stock_type" },
-                { title: "Description", "data": "description" },
-                { title: "Synonyms", "data": "synonyms[, ]" },
-                { title: "Remove From Population", "data": null, "render": function ( data, type, row ) { return "<a name='populations_member_remove' data-stock_relationship_id='"+row.stock_relationship_id+"'>X</a>"; } },
+                { title: gettext("Member Name"), "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.stock_id+"/view'>"+row.name+"</a>"; } },
+                { title: gettext("Member Type"), "data": "stock_type" },
+                { title: gettext("Description"), "data": "description" },
+                { title: gettext("Synonyms"), "data": "synonyms[, ]" },
+                { title: gettext("Remove From Population"), "data": null, "render": function ( data, type, row ) { return "<a name='populations_member_remove' data-stock_relationship_id='"+row.stock_relationship_id+"'>X</a>"; } },
             ],
             "fnInitComplete": function(oSettings, json) {
                 //console.log(json);
@@ -243,45 +243,45 @@ jQuery(document).ready(function ($) {
 
         if (member_type == 'accessions') {
             if (!member_list_id) {
-                alert ("A list of accessions is required");
+                alert (gettext("A list of accessions is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(member_list_id, 'accessions', true);
                 if (list_validation != 1) {
-                    alert("The accession list did not pass validation. Names in the list must be uniquenames with accession stock type in the database");
+                    alert(gettext("The accession list did not pass validation. Names in the list must be uniquenames with accession stock type in the database"));
                     return;
                 }
             }
         } else if (member_type == 'plots') {
             if (!member_list_id) {
-                alert ("A list of plots is required");
+                alert (gettext("A list of plots is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(member_list_id, 'plots', true);
                 if (list_validation != 1) {
-                    alert("The plot list did not pass validation. Names in the list must be uniquenames with plot stock type in the database");
+                    alert(gettext("The plot list did not pass validation. Names in the list must be uniquenames with plot stock type in the database"));
                     return;
                 }
             }
         } else if (member_type == 'plants') {
             if (!member_list_id) {
-                alert ("A list of plants is required");
+                alert (gettext("A list of plants is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(member_list_id, 'plants', true);
                 if (list_validation != 1) {
-                    alert("The plant list did not pass validation. Names in the list must be uniquenames with plant stock type in the database");
+                    alert(gettext("The plant list did not pass validation. Names in the list must be uniquenames with plant stock type in the database"));
                     return;
                 }
             }
         } else {
             if (!member_list_id) {
-                alert ("A list of accessions is required");
+                alert (gettext("A list of accessions is required"));
                 return;
             } else {
                 list_validation = lo.legacy_validate(member_list_id, 'accessions', true);
                 if (list_validation != 1) {
-                    alert("The accession list did not pass validation. Names in the list must be  in the database");
+                    alert(gettext("The accession list did not pass validation. Names in the list must be  in the database"));
                     return;
                 }
             }
@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function () {
-                alert('An error occurred in adding members to population. sorry');
+                alert(gettext('An error occurred in adding members to population. sorry'));
             }
         });
     });
@@ -337,14 +337,14 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function () {
-                alert('An error occurred in deleting population. sorry');
+                alert(gettext('An error occurred in deleting population. sorry'));
             }
         });
     });
 
     jQuery(document).on("click", "a[name='populations_member_remove']", function(){
         var stock_relationship_id= jQuery(this).data("stock_relationship_id");
-        if (confirm("Are you sure?")){
+        if (confirm(gettext("Are you sure?"))){
             jQuery.ajax({
                 url: '/ajax/population/remove_member?stock_relationship_id='+stock_relationship_id,
                 dataType: "json",
@@ -363,7 +363,7 @@ jQuery(document).ready(function ($) {
                     }
                 },
                 error: function () {
-                    alert('An error occurred in removing accession from population. sorry');
+                    alert(gettext('An error occurred in removing accession from population. sorry'));
                 }
             });
         }
@@ -405,7 +405,7 @@ jQuery(document).ready(function ($) {
         console.log(full_info);
 
         if (email_option_enabled) {
-            var user_response = confirm('You will receive an email when the process is complete. Do you want to continue ?');
+            var user_response = confirm(gettext('You will receive an email when the process is complete. Do you want to continue ?'));
             if (!user_response) {
                 console.log("no accessions saved + no email sent");
                 return;
@@ -496,7 +496,7 @@ jQuery(document).ready(function ($) {
     }
 
     $('#species_name_input').focusout(function () {
-        verify_species_name().then( function(r) { if (r.error) { alert(r.error); } }, function(r) { alert('An error occurred. The site may not be available right now.'); });
+        verify_species_name().then( function(r) { if (r.error) { alert(r.error); } }, function(r) { alert(gettext('An error occurred. The site may not be available right now.')); });
     });
 
     $('#review_absent_accessions_submit').click(function () {
@@ -509,7 +509,7 @@ jQuery(document).ready(function ($) {
             var email_option_enabled = $("#email_option_to_recieve_accession_upload_status").prop('checked') ? 1 : 0;
 
             if (!speciesName) {
-                alert("Species name required");
+                alert(gettext("Species name required"));
                 return;
             }
 
@@ -517,7 +517,7 @@ jQuery(document).ready(function ($) {
                 populationName = '';
             }
             if (!accessionsToAdd || accessionsToAdd.length == 0) {
-                alert("No accessions to add");
+                alert(gettext("No accessions to add"));
                 return;
 	        }
 
@@ -540,7 +540,7 @@ jQuery(document).ready(function ($) {
 		        }
 		    },
 		    function(r) {
-		        alert('ERROR! Try again later.');
+		        alert(gettext('ERROR! Try again later.'));
 		    }
 	        );
 	    } else {
@@ -560,7 +560,7 @@ jQuery(document).ready(function ($) {
         } else if (selected_tab == 'Uploading a File'){
 	    var uploadFile = jQuery("#new_accessions_upload_file").val();
 	    if (uploadFile === '') {
-                alert("Please select a file");
+                alert(gettext("Please select a file"));
                 return;
 	    }
 
@@ -593,13 +593,13 @@ jQuery(document).ready(function ($) {
                 }
                 else {
                     fullParsedData = undefined;
-                    alert("An unknown error occurred.  Please try again later or contact us for help.");
+                    alert(gettext("An unknown error occurred.  Please try again later or contact us for help."));
                 }
             },
             error: function () {
                 jQuery('#working_modal').modal("hide");
                 fullParsedData = undefined;
-                alert("An unknown error occurred.  Please try again later or contact us for help.");
+                alert(gettext("An unknown error occurred.  Please try again later or contact us for help."));
             }
         });
     }
@@ -769,7 +769,7 @@ function review_verification_results(doFuzzySearch, verifyResponse, accession_li
             if (verifyResponse.absent.length > 0 || infoToAdd.length>0){
                 populate_review_absent_dialog(verifyResponse.absent, infoToAdd);
             } else {
-                alert('All accessions in your list already exist in the database. (3)');
+                alert(gettext('All accessions in your list already exist in the database. (3)'));
             }
         }
     });
@@ -898,11 +898,11 @@ function process_fuzzy_options(accession_list_id) {
                 populate_review_absent_dialog(accessionList, infoToAdd);
                 jQuery('#review_absent_dialog').modal('show');
             } else {
-                alert('All accessions in your list now exist in the database. 2');
+                alert(gettext('All accessions in your list now exist in the database. 2'));
             }
         },
         error: function () {
-            alert('An error occurred checking your fuzzy options! Do not try to add a synonym to a synonym! Also do not use any special characters!');
+            alert(gettext('An error occurred checking your fuzzy options! Do not try to add a synonym to a synonym! Also do not use any special characters!'));
         }
     });
 }

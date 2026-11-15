@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
             $('#working_modal').modal("show");
             if (uploadedGraftsFile === '') {
                 $('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(gettext("No file selected"));
             }
         },
         complete: function (r) {
@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
         var uploadFile = $("#graft_uploaded_file").val();
         $('#upload_graft_form').attr("action", "/ajax/grafts/upload_verify");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(gettext("Please select a file"));
             return;
         }
         $("#upload_graft_form").submit();
