@@ -69,7 +69,7 @@
                         <th><% __('Trait Name') |h %></th>
                         <th><% __('Synonym') |h %></th>
                         <th><% __('Definition') |h %></th>
-                        <th>Trait&nbsp;Usage</th>
+                        <th><& /util/sentence.mas, text => __x('Trait Usage') &></th>
                       </tr>
                     </thead>
                     </table>
@@ -85,7 +85,7 @@
 
                     <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Selected Results to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the trait names currently selected in the search results table to a new or exisiting list</i>'&>
                     <br>
-                    <p><em><span id="trait_result_count">0</span> trait(s) selected.</em></p>
+                    <p><em><& /util/sentence.mas, text => __x('{span}{count}{end_span} trait(s) selected.'), span => '<span id="trait_result_count">', end_span => '</span>', count => '0' &></em></p>
                     <div style="text-align:right" id="traits_to_list_menu"></div>
                     <div id="trait_result_names" style="display: none;"></div>
                     </&>
@@ -106,8 +106,8 @@
 %  if ($c->config->{allow_observation_variable_submission_interface}) {
                         <button class="btn btn-primary" name="add_new_observation_variable_button"><% __('Add A New Observation Variable To the Database') |h %></button>
 %  } else {
-                        <p>Please submit your new trait <a href="http://submit.rtbbase.org/">using the trait submission form</a>.</p>
-                        <p>To speed up addition of your trait into the database please contact us using the <a href="/contact/form">Contact Form</a>.</p>
+                        <p><& /util/sentence.mas, text => __x('Please submit your new trait {link}using the trait submission form{end_link}.'), link => '<a href="http://submit.rtbbase.org/">', end_link => '</a>' &></p>
+                        <p><& /util/sentence.mas, text => __x('To speed up addition of your trait into the database please contact us using the {link}Contact Form{end_link}.'), link => '<a href="/contact/form">', end_link => '</a>' &></p>
 %  }
                 </div>
             </div>
