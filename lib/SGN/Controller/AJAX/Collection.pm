@@ -10,6 +10,7 @@ use Moose;
 use Data::Dumper;
 use JSON;
 use CXGN::Collection;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -29,7 +30,7 @@ sub _collection_object {
 sub _require_login {
     my ($self, $c) = @_;
     if (!$c->user()) {
-        $c->stash->{rest} = { error => "You must be logged in to do this." };
+        $c->stash->{rest} = { error => __("You must be logged in to do this.") };
         $c->detach();
     }
     return $c->user->get_object()->get_sp_person_id();
@@ -54,12 +55,12 @@ sub _require_edit_privileges {
     my $cobj = $self->_collection_object($c);
     my $collection = $cobj->get_collection($collection_id);
     unless ($collection) {
-        $c->stash->{rest} = { error => "collection was not found." };
+        $c->stash->{rest} = { error => __("collection was not found.") };
         $c->detach();
     }
     unless ($self->_can_modify($c, $collection)) {
         $c->stash->{rest} = {
-            error => "Only the collection's creator or a curator can modify it."
+            error => __("Only the collection's creator or a curator can modify it.")
         };
         $c->detach();
     }
@@ -90,7 +91,7 @@ sub _item_ids {
            map  { my $v = $_; $v =~ s/\s//g if defined $v; $v } @ids;
 
     unless (@ids) {
-        $c->stash->{rest} = { error => "No valid ids were supplied." };
+        $c->stash->{rest} = { error => __("No valid ids were supplied.") };
         $c->detach();
     }
     return \@ids;
@@ -100,7 +101,7 @@ sub _item_type {
     my ($self, $c) = @_;
     my $type = $c->req->param('item_type') || '';
     unless ($type eq 'image' || $type eq 'file') {
-        $c->stash->{rest} = { error => "item_type must be 'image' or 'file'." };
+        $c->stash->{rest} = { error => __("item_type must be 'image' or 'file'.") };
         $c->detach();
     }
     return $type;
@@ -117,7 +118,7 @@ sub collections_GET : Args(0) {
     my %args;
     if (my $project_id = $c->req->param('project_id')) {
         unless ($project_id =~ /^\d+$/) {
-            $c->stash->{rest} = { error => "project_id must be numeric." };
+            $c->stash->{rest} = { error => __("project_id must be numeric.") };
             $c->detach();
         }
         $args{project_id} = $project_id;
@@ -151,7 +152,7 @@ sub contents_GET : Args(0) {
 
     my $collection = $cobj->get_collection($collection_id);
     unless ($collection) {
-        $c->stash->{rest} = { error => "collection was not found.", contents => [] };
+        $c->stash->{rest} = { error => __("collection was not found."), contents => [] };
         $c->detach();
     }
 
@@ -192,7 +193,7 @@ sub create_POST : Args(0) {
     if (defined $bp_id && length $bp_id) {
         unless ($bp_id =~ /^\d+$/) {
             $c->stash->{rest} = {
-                error => "Collection created, but breeding_program_id must be numeric.",
+                error => __("Collection created, but breeding_program_id must be numeric."),
                 collection_id => $collection_id,
             };
             $c->detach();
@@ -377,7 +378,7 @@ sub for_item_GET : Args(0) {
     my $type    = $self->_item_type($c);
     my $item_id = $c->req->param('item_id');
     unless (defined $item_id && $item_id =~ /^\d+$/) {
-        $c->stash->{rest} = { error => "A valid item_id is required." };
+        $c->stash->{rest} = { error => __("A valid item_id is required.") };
         $c->detach();
     }
 
@@ -398,7 +399,7 @@ sub for_trial_GET : Args(0) {
     my ($self, $c) = @_;
     my $trial_id = $c->req->param('trial_id');
     unless (defined $trial_id && $trial_id =~ /^\d+$/) {
-        $c->stash->{rest} = { error => "A valid trial_id is required." };
+        $c->stash->{rest} = { error => __("A valid trial_id is required.") };
         $c->detach();
     }
 
