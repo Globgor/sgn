@@ -42,6 +42,16 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/location_edit.mas',
+    'The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!',
+    'Could not verify the NOAA StationID you provided, however, your details were still updated.',
+    'An error occurred while storing the location details. Please try again later.',
+    'A location abbreviation is required.',
+    'A location longitude is required.',
+    'A location altitude is required.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/manage_odk_data_collection.mas',
     'Error retrieving available ODK crossing forms',
     'Error scheduling import of ODK crossing data.',

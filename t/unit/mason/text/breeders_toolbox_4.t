@@ -20,6 +20,31 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/breeders_toolbox/location_edit.mas',
+    'Program: (One or More)',
+    'Store Location Details',
+    'Location Details',
+    'Abbreviation:',
+    'Altitude (m):',
+    'Screenhouse',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/location_map.mas',
+    'Add a new location by clicking on the map. Or select an existing location to view details and options.',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/location_table.mas',
+    'Filter Locations by List:',
+    'Nearest NOAA Station ID',
+    'Abbreviation',
+    'Altitude(m)',
+    'Country',
+    'Program',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_accessions.mas',
     'Download All Accessions and Pedigree Info',
     'Accessions Missing Pedigree Information',

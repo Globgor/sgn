@@ -32,6 +32,16 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/noaa_ncdc_analysis.mas',
+    'Could not verify the NOAA StationID you provided. Go to Manage->Locations and make sure your location has a valid NOAA station id!',
+    'No NOAA NCDC station id for this location. Go to Manage->Locations and edit your location to add a valid NOAA station id!',
+    'The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!',
+    'There was an error getting NOAA analysis!',
+    'Error getting NOAA NCDC ID for location!',
+    'Error getting NOAA NCDC analysis!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/radargraph.mas',
     'Please select at least one dataset!',
 );

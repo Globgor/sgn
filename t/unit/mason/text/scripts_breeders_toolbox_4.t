@@ -20,6 +20,12 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/upload_locations_dialogs.mas',
+    'Please select a file',
+    'An error occurred',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/upload_seedlots_dialogs.mas',
     'Seedlots were saved in the database',
     'Please choose a breeding program',

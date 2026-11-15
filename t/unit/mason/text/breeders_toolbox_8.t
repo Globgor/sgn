@@ -72,6 +72,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/upload_locations_dialogs.mas',
+    'The first row (header) must contain the following:',
+    'Optional values:',
+    'Required values:',
+    'Upload Locations',
+    'Location File:',
+    'Header:',
+);
+
+page_texts_ok(
     '/breeders_toolbox/upload_pedigrees_dialogs.mas',
     'To Overwrite Parents In the Case That An Accession Already Has Male or Female Parents',
     'The first row (header) should contain the following:',

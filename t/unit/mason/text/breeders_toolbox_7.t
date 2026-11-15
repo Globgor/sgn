@@ -53,6 +53,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/noaa_ncdc_analysis.mas',
+    'Daily Temperature and Precipitation Chart',
+    'Window Start (YYYY-MM-DD) (Optional):',
+    'Window End (YYYY-MM-DD) (Optional):',
+    'Analyze NOAA NCDC Weather Data',
+    'Cumulative Values by Year:',
+    'Start Date (YYYY-MM-DD):',
+);
+
+page_texts_ok(
     '/breeders_toolbox/radargraph.mas',
     'Render Graph',
     '[loading...]',

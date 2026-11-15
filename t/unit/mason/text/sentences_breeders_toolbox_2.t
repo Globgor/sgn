@@ -18,6 +18,11 @@ use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
+    '/breeders_toolbox/location_edit.mas',
+    '{i}Optional:{end_i} Nearest NOAA Weather Station ID ({link}Search Here{end_link})',
+);
+
+page_sentences_ok(
     '/breeders_toolbox/manage_genotype_qc.mas',
     '{bold} Run genotype quality control{end_bold} with the qc markers by comparing with existing protocol in the database.',
     'This requires two files for the storage: {em}Intertek grid file{end_em} which has allele calls for each genotype.',
