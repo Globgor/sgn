@@ -63,7 +63,7 @@ jQuery(document).ready(function(){
                 }
             },
             error: function(response){
-                alert('Error downloading new identifiers!');
+                alert(<% __('Error downloading new identifiers!') |js %>);
             }
         });
     });
@@ -91,7 +91,7 @@ jQuery(document).ready(function(){
                 }
             },
             error: function(response){
-                alert('Error getting identifier list history!');
+                alert(<% __('Error getting identifier list history!') |js %>);
             }
         });
     });
