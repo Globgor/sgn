@@ -140,7 +140,7 @@ jQuery(document).ready(function() {
           },
           error: function(response) {
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });
@@ -217,7 +217,7 @@ jQuery(document).ready(function() {
             },
             'error': function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred in fuzzy search!');
+                alert(<% __('An error occurred in fuzzy search!') |js %>);
             }
         })
     });
@@ -251,7 +251,7 @@ jQuery(document).ready(function() {
                     request++;
                 },
                 'error': function(response){
-                    alert('An error occurred getting details to save!');
+                    alert(<% __('An error occurred getting details to save!') |js %>);
                 }
             });
         }
@@ -287,7 +287,7 @@ function perform_save(to_save){
             jQuery('#working_modal').modal('hide');
         },
         'error': function(response){
-            alert('An error occurred in fuzzy search!');
+            alert(<% __('An error occurred in fuzzy search!') |js %>);
             jQuery('#working_modal').modal('hide');
         }
     })

@@ -21,7 +21,7 @@ jQuery("#brapi_home_show_studytypes").click(function() {
         brapi_create_paginated_table(response.result.data, response.metadata.pagination, 'brapi_studytypes_div', jQuery('#brapi_home_url_select').val()+'/brapi/v1/studyTypes', undefined);
       },
       error: function(response) {
-        alert('An error occurred getting seasons');
+        alert(<% __('An error occurred getting seasons') |js %>);
       }
     });
 });

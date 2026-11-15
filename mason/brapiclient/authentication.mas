@@ -37,7 +37,7 @@ jQuery(document).ready(function() {
             //location.reload();
           },
           error: function(response) {
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });
@@ -48,11 +48,11 @@ jQuery(document).ready(function() {
           'method': 'DELETE',
           'success': function(response) {
             console.log(response);
-            alert('Successfully logged out!');
+            alert(<% __('Successfully logged out!') |js %>);
             //location.reload();
           },
           error: function(response) {
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });

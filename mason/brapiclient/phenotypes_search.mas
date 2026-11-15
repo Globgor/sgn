@@ -159,7 +159,7 @@ jQuery(document).ready(function() {
           },
           error: function(response) {
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
           }
         });
     });
@@ -194,7 +194,7 @@ jQuery(document).ready(function() {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred');
+                alert(<% __('An error occurred') |js %>);
             }
         });
 
@@ -229,7 +229,7 @@ jQuery(document).ready(function() {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred');
+                alert(<% __('An error occurred') |js %>);
             }
         });
 
@@ -264,7 +264,7 @@ jQuery(document).ready(function() {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred');
+                alert(<% __('An error occurred') |js %>);
             }
         });
 
@@ -287,7 +287,7 @@ function brapi_phenotypes_get_studies(url, div_id) {
         },
         error: function(response) {
             jQuery('#working_modal').modal('hide');
-            alert('An error occurred');
+            alert(<% __('An error occurred') |js %>);
         }
     });
 }
