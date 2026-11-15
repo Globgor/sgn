@@ -37,6 +37,7 @@ sub run_perl {
 }
 
 my @modules = (
+    [ 'lib/SGN/Controller/QuickSearch.pm', 'SGN::Controller::QuickSearch', [ '__(\'Must provide a search term\')' ] ],
     [ 'lib/SGN/Controller/SiteStatus.pm', 'SGN::Controller::SiteStatus', [ '__(\'You do not have the required privileges to view this page\')' ] ],
 );
 

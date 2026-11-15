@@ -18,6 +18,16 @@ use warnings;
 use Test::More;
 
 my @scripts = (
+    [ 'js/source/legacy/CXGN/BreederSearch.js',
+        'gettext("No filters selected for download.")',
+        'gettext(\'Please enter a name for the selection.\')',
+        'gettext("Successfully stored the dataset!")',
+        'gettext("An error occurred.")',
+        'gettext(\'No trials selected\')',
+        'gettext(\'No accessions selected\')',
+        'gettext(\'No genotyping protocols selected. Default will be used.\')',
+        'gettext(\'No Selection\')',
+    ],
     [ 'js/source/legacy/CXGN/Hotlist.js',
         'gettext("buttonId not sent!")',
         'gettext(\'invalid request\')',

@@ -1,0 +1,37 @@
+=head1 NAME
+
+t/unit/mason/text/breeders_toolbox_2.t - breeders_toolbox templates, part 2 of 10: the text is shown in the user's language
+
+=head1 DESCRIPTION
+
+Renders the components with HTML::Mason through SGN::Test::MasonText, without a
+database or a Catalyst context. Each text must be on the page in English and,
+with a test catalog, in its translated form. A component that needs real data
+to run is only compiled.
+
+=cut
+
+use strict;
+use warnings;
+use utf8;
+
+use lib 't/lib';
+use Test::More;
+use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
+
+page_texts_ok(
+    '/breeders_toolbox/breeder_search_page.mas',
+    'Select accessions, traits, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. When many traits are selected and these traits are not treated as repeated measurements, the traits are treated separately and distinct results are returned e.g. several Manhattan plots are returned. If the selected traits are in fact repeated measurements, then select \'yes\'; a single GWAS will be run against all of the phenotypes e.g. a single Manhattan plot is returned. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GWAS uses a fixed effect for different field trials and a fixed effect for replicate. GWAS uses Kinship matrix calculated from the genotype data. MAF and missing data used to filter prior to GWAS and Kinship matrix calculation. Can select whether to return results in Manhattan and QQ Plot (.pdf) form or as the tabular results (.tsv).',
+    'Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. If you want to filter genotypes, use the chromosome, start position, end position, or marker alleles. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. Genotypes can be downloaded in VCF and Dosage Matrix Formats.',
+    'Select accessions, and optionally a genotyping protocol. If no genotyping protocol is selected, the default genotyping protocol is used in your system. Specify minor allele frequency (MAF), marker filter, and individuals filter. Can compute genotypes from parents if the parents of the accessions you selected have genotypes by checking the checkbox. GRM can be downloaded in a matrix format (.tsv) and a three column format.',
+    'To download related genotype data, select 1 or more Accessions and optionally no more than 1 Genotyping Protocol in the wizard. If no genotyping protocol is selected, the database default protocol will be used. Click the checkbox here to compute genotypes for the selected accessions from genotypes of parents; this works for downloading genotypes, downloading the GRM, and performing GWAS.',
+    'If an update isn\'t already in progress, you can initiate one below. It will run independently on the server without any additional input required from the user. Depending on the size of the database, it will take from a few minutes to a few hours to complete.',
+    'For the search wizard to be fast and flexible, it avoids querying the database directly. Instead, it stores a copy of the data from the database in a temporary format that is optimized for the types of queries the wizard makes.',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/breeder_search_page_dataset_overlay.mas',
+    'Next',
+);
+
+done_testing;
