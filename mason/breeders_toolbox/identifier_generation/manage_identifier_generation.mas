@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, info_section_title => "<h4 style='display:inline'>Available Identifiers</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View, add, and dowload identifiers.'), 'h' ), buttons_html => '<button class="btn btn-primary btn-sm" id="add_new_identifier_button" style="margin:3px">Add New Identifier</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "identifier_generation_list" &>
+<& /page/detail_page_2_col_section.mas, info_section_collapsed => 0, info_section_title => "<h4 style='display:inline'>Available Identifiers</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View, add, and download identifiers.'), 'h' ), buttons_html => '<button class="btn btn-primary btn-sm" id="add_new_identifier_button" style="margin:3px">Add New Identifier</button>', icon_class => "glyphicon glyphicon-dashboard", info_section_id => "identifier_generation_list" &>
 
 <div class="modal fade" id="add_new_identifier_dialog" name="add_new_identifier_dialog" tabindex="-1" role="dialog" aria-labelledby="addNewIdentifierDialog">
     <div class="modal-dialog modal-xl" role="document">
