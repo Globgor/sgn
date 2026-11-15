@@ -59,7 +59,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Progenies to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Copy the progeny names showing in table to a new or exisiting list</i>'&>
+                <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Progenies to a List'), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<i>Copy the progeny names showing in table to a new or existing list</i>'&>
                     <br>
                     <div style="text-align:right" id="progenies_to_list_menu"></div>
                     <div id="progeny_names" style="display: none;"></div>
