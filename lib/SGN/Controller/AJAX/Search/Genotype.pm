@@ -28,6 +28,7 @@ use File::Basename qw | basename dirname|;
 use Digest::MD5;
 use DateTime;
 use SGN::Model::Cvterm;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -325,7 +326,7 @@ sub pcr_genotyping_data_download_POST : Args(0) {
 #    print STDERR "TEMPFILE : $tempfile\n";
 
     if (!$c->user()) {
-        $c->stash->{rest} = {error => "You need to be logged in to download genotype data" };
+        $c->stash->{rest} = {error => __("You need to be logged in to download genotype data") };
         return;
     }
     my $metadata_schema = $c->dbic_schema('CXGN::Metadata::Schema');

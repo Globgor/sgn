@@ -18,6 +18,7 @@ use Bio::Chado::Schema;
 use CXGN::Marker::SearchMatView;
 use Try::Tiny;
 use Data::Dumper;
+use Locale::TextDomain ( 'sgn', undef );
 
 =head1 NAME
 
@@ -116,7 +117,7 @@ sub quick_search: Path('/search/quick') {
     $term =~ s/^\s*|\s*$//g;
 
     defined $term && length $term
-        or $c->throw_client_error( public_message => 'Must provide a search term' );
+        or $c->throw_client_error( public_message => __('Must provide a search term') );
 
     $c->stash(
         quick_search_term => $term,
