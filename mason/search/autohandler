@@ -25,19 +25,19 @@ Lukas Mueller &st;lam87@cornell.edu&gt;. Based on Perl code by Rob Buels.
 
 <& /page/mode_buttons.mas, buttons => [
 
-    ['/breeders/search', 'Wizard' ],
-    ['/search/phenotypes/stock','Accessions and plots'],
-    ['/search/organisms','Organisms'],
-    ['/search/cross','Progenies, Parents, Crosses'],
-    ['/search/trials', 'Field Trials' ],
-    ['/search/genotyping_trials', 'Genotyping Plates' ],
-    ['/search/genotyping_data_projects', 'Genotyping Projects' ],
-    ['/search/genotyping_protocols', 'Genotyping Protocols' ],
-    ['/search/traits', 'Traits' ],
-    ['/search/treatments', 'Treatments' ],
+    ['/breeders/search', $m->interp->apply_escapes( __('Wizard'), 'h' ) ],
+    ['/search/phenotypes/stock',$m->interp->apply_escapes( __('Accessions and plots'), 'h' )],
+    ['/search/organisms',$m->interp->apply_escapes( __('Organisms'), 'h' )],
+    ['/search/cross',$m->interp->apply_escapes( __('Progenies, Parents, Crosses'), 'h' )],
+    ['/search/trials', $m->interp->apply_escapes( __('Field Trials'), 'h' ) ],
+    ['/search/genotyping_trials', $m->interp->apply_escapes( __('Genotyping Plates'), 'h' ) ],
+    ['/search/genotyping_data_projects', $m->interp->apply_escapes( __('Genotyping Projects'), 'h' ) ],
+    ['/search/genotyping_protocols', $m->interp->apply_escapes( __('Genotyping Protocols'), 'h' ) ],
+    ['/search/traits', $m->interp->apply_escapes( __('Traits'), 'h' ) ],
+    ['/search/treatments', $m->interp->apply_escapes( __('Treatments'), 'h' ) ],
     #['/search/markers','Markers'],
-    ['/search/images','Images'],
-    ['/search/people', 'People' ],
+    ['/search/images',$m->interp->apply_escapes( __('Images'), 'h' )],
+    ['/search/people', $m->interp->apply_escapes( __('People'), 'h' ) ],
 
    ]
 &>

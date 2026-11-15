@@ -54,18 +54,18 @@ $dataset_id => undef
 
           <div class="panel-heading">
             <select class="wizard-type-select form-control input-sm form-inline">
-              <option value="" disabled selected>Select Column Type</option>
+              <option value="" disabled selected><% __('Select Column Type') |h %></option>
               <optgroup class="wizard-types-group" label="--------------------"></optgroup>
               <optgroup class="wizard-lists-group" label="Load Selection from List:"></optgroup>
             </select>
           </div>
 
           <div class="wizard-search-container">
-            <textarea class="wizard-search form-control" placeholder="Search"></textarea>
+            <textarea class="wizard-search form-control" placeholder="<% __('Search') |h %>"></textarea>
             <div class="wizard-search-options">
               <div class="wizard-search-options-group btn-group" role="group">
-                <button type="button" class="btn btn-xs btn-primary active wizard-search-options-btn wizard-search-options-contains">Contains</button>
-                <button type="button" class="btn btn-xs btn-default wizard-search-options-btn wizard-search-options-exact">Exact</button>
+                <button type="button" class="btn btn-xs btn-primary active wizard-search-options-btn wizard-search-options-contains"><% __('Contains') |h %></button>
+                <button type="button" class="btn btn-xs btn-default wizard-search-options-btn wizard-search-options-exact"><% __('Exact') |h %></button>
               </div>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-xs btn-danger wizard-search-options-clear">
@@ -82,11 +82,11 @@ $dataset_id => undef
 
             <div class="wizard-btn-center">
               <div class="btn-group">
-                <button class="wizard-select-all btn btn-default btn-xs">Select All</button
+                <button class="wizard-select-all btn btn-default btn-xs"><% __('Select All') |h %></button
                 ><button class="wizard-btn-tag btn btn-primary btn-xs">
                   <span class="wizard-count-selected">0</span>/<span class="wizard-count-all">0</span>
                 </button
-                ><button class="wizard-select-clear btn btn-default btn-xs">Clear</button>
+                ><button class="wizard-select-clear btn btn-default btn-xs"><% __('Clear') |h %></button>
               </div>
             </div>
 
@@ -98,10 +98,10 @@ $dataset_id => undef
 
             <div class="wizard-btn-center wizard-union-toggle">
               <div class="btn-group wizard-union-toggle-btn-group">
-                <button type="button" class="btn btn-xs btn-default disabled">Match</button>
-                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-any btn-primary active">ANY</button>
-                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-min btn-default">MIN</button>
-                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-all btn-default">ALL</button>
+                <button type="button" class="btn btn-xs btn-default disabled"><% __('Match') |h %></button>
+                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-any btn-primary active"><% __('ANY') |h %></button>
+                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-min btn-default"><% __('MIN') |h %></button>
+                <button type="button" class="btn btn-xs wizard-union-toggle-btn wizard-union-toggle-btn-all btn-default"><% __('ALL') |h %></button>
               </div>
               <div class="input-group input-group-sm wizard-union-toggle-min-group">
                 <span class="input-group-btn">
@@ -122,20 +122,20 @@ $dataset_id => undef
               <tr>
                 <td>
                   <select class="wizard-add-to-list-id form-control input-sm">
-                    <option selected value="" disabled>Add to List...</option>
+                    <option selected value="" disabled><% __('Add to List...') |h %></option>
                     <optgroup class="wizard-lists-group" label="--------------------"></optgroup>
                   </select>
                 </td>
                 <td>
-                  <button class="wizard-add-to-list btn btn-sm btn-primary btn-block">Add</button>
+                  <button class="wizard-add-to-list btn btn-sm btn-primary btn-block"><% __('Add') |h %></button>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input class="wizard-create-list-name form-control input-sm" type="text" placeholder="Create New List..."></input>
+                  <input class="wizard-create-list-name form-control input-sm" type="text" placeholder="<% __('Create New List...') |h %>"></input>
                 </td>
                 <td>
-                  <button class="wizard-create-list btn btn-primary btn-sm btn-block">Create</button>
+                  <button class="wizard-create-list btn btn-primary btn-sm btn-block"><% __('Create') |h %></button>
                 </td>
               </tr>
             </&>
