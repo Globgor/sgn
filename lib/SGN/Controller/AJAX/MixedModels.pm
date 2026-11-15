@@ -12,6 +12,7 @@ use DateTime;
 use CXGN::Dataset::File;
 use CXGN::Phenotypes::File;
 use CXGN::MixedModels;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' };
 
@@ -96,7 +97,7 @@ sub prepare: Path('/ajax/mixedmodels/prepare') Args(0) {
     my $exclude_outliers = $c->req->param('dataset_trait_outliers');
 
     if (! $c->user()) {
-        $c->stash->{rest} = {error=>'You must be logged in first!'};
+        $c->stash->{rest} = {error=>__('You must be logged in first!')};
         $c->detach;
     }
 
@@ -156,7 +157,7 @@ sub prepare: Path('/ajax/mixedmodels/prepare') Args(0) {
      };
 
     if (!@factor_select) {
-	$c->stash->{rest}->{error} = "There are no factors with multiple levels in this dataset.";
+	$c->stash->{rest}->{error} = __("There are no factors with multiple levels in this dataset.");
     }
 }
 
@@ -375,7 +376,7 @@ sub extract_trait_data :Path('/ajax/mixedmodels/grabdata') Args(0) {
 
     my $F;
     if (! open($F, "<", $temppath)) {
-	$c->stash->{rest} = { error => "Can't find data." };
+	$c->stash->{rest} = { error => __("Can't find data.") };
 	return;
     }
 

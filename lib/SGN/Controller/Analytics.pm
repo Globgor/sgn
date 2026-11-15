@@ -7,6 +7,7 @@ use Data::Dumper;
 use JSON::XS;
 use Statistics::Descriptive::Full;
 use Time::Piece;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller' };
 
@@ -57,7 +58,7 @@ sub analytics_protocol_detail :Path('/analytics_protocols') Args(1) {
 
     if (! $name) {
         $c->stash->{template} = '/generic_message.mas';
-        $c->stash->{message} = 'The requested analytics protocol ID does not exist in the database.';
+        $c->stash->{message} = __('The requested analytics protocol ID does not exist in the database.');
         return;
     }
 

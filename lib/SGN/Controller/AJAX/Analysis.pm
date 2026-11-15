@@ -11,6 +11,7 @@ use CXGN::AnalysisModel::GetModel;
 use URI::FromHash 'uri';
 use JSON;
 use CXGN::BreederSearch;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' };
 
@@ -72,7 +73,7 @@ sub store_analysis_json_POST {
     my ($user_id, $user_name, $user_role) = _check_user_login($c);
 
     if ($analysis_to_save_boolean eq 'yes' && !$analysis_name) {
-        $c->stash->{rest} = {error => "You are trying to save an analysis, but no name was given."};
+        $c->stash->{rest} = {error => __("You are trying to save an analysis, but no name was given.")};
         return;
     }
     if ($analysis_name) {
@@ -319,7 +320,7 @@ sub store_analysis_spreadsheet_POST {
         $data_level = 'accession';
     }
     else {
-        $c->stash->{rest} = {error => "Analysis result type not accepted!"};
+        $c->stash->{rest} = {error => __("Analysis result type not accepted!")};
         $c->detach();
     }
 
@@ -787,7 +788,7 @@ sub analysis_model_delete :Path('/ajax/analysis_model/delete') Args(0) {
     my $model_id = $c->req->param('model_id');
     my $analysis_by_model = CXGN::AnalysisModel::GetModel::get_analyses_by_model($schema, $model_id);
     if (scalar(@$analysis_by_model) > 0) {
-        $c->stash->{rest} = {error=>'This model still has analyses associated! Please delete the analyses before deleting this model!'};
+        $c->stash->{rest} = {error=>__('This model still has analyses associated! Please delete the analyses before deleting this model!')};
         $c->detach();
     }
 
@@ -824,7 +825,7 @@ sub _check_user_login {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -833,7 +834,7 @@ sub _check_user_login {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to do this!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to do this!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -841,7 +842,7 @@ sub _check_user_login {
         $user_role = $c->user->get_object->get_user_type();
     }
     if ($role_check && $user_role ne $role_check) {
-        $c->stash->{rest} = {error=>'You must have permission to do this! Please contact us!'};
+        $c->stash->{rest} = {error=>__('You must have permission to do this! Please contact us!')};
         $c->detach();
     }
     return ($user_id, $user_name, $user_role);
