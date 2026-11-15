@@ -20,6 +20,13 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/folder/folder.mas',
+    'Are you sure you want to delete this folder?',
+    'An error occurred trying to delete folder.',
+    'Folder successfully deleted.',
+);
+
+page_script_texts_ok(
     '/search/stocks_using_genotypes.mas',
     'Please choose a list of marker alleles',
     'Please choose a list of accessions',
