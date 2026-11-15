@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
 
     jQuery('.files_datatables').on('click', 'button[name=delete_pheno_file_link]', function() {
         var delete_phenotypes_file_id = jQuery(this).data('file_id');
-        if (confirm('Are you sure you want to delete all phenotype values related to this file from the database and make this file obsolete?')){
+        if (confirm(<% __('Are you sure you want to delete all phenotype values related to this file from the database and make this file obsolete?') |js %>)){
             jQuery.ajax ( {
                 url : '/ajax/breeders/phenotyping/delete/'+delete_phenotypes_file_id,
                 beforeSend : function() {
@@ -55,12 +55,12 @@ jQuery(document).ready(function() {
                 },
                 success: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert('Made phenotype file obsolete and deleted all related phenotype values in the database!');
+                    alert(<% __('Made phenotype file obsolete and deleted all related phenotype values in the database!') |js %>);
                     location.reload();
                 },
                 error: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert("Error deleting file and phenotypes!");
+                    alert(<% __('Error deleting file and phenotypes!') |js %>);
                 }
             });
         }

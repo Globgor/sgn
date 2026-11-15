@@ -188,7 +188,7 @@ $type_name => "plot"
           }
         },
           error: function() {
-            alert('An error occurred saving trait value');
+            alert(<% __('An error occurred saving trait value') |js %>);
           }
 
       });
@@ -232,7 +232,7 @@ $type_name => "plot"
             }
           },
             error: function() {
-              alert('An error occurred retrieving trait value');
+              alert(<% __('An error occurred retrieving trait value') |js %>);
             }
 
         });

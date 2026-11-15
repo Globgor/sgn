@@ -228,14 +228,14 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                     } else if (response.error) {
                         alert(response.error);
                     } else {
-                        alert("New trait saved.");
+                        alert(<% __('New trait saved.') |js %>);
                         window.location.reload();
                     }
                 },
                 error: function(response) {
                     jQuery('#working_modal').modal("hide");
                     console.log(response);
-                    alert("An error occurred, check console.");
+                    alert(<% __('An error occurred, check console.') |js %>);
                 }
             });
         });
@@ -313,7 +313,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                 jQuery('#new_trait_default_value_container').show();
                 jQuery('#new_trait_maximum_value_container').show();
                 jQuery('#new_trait_add_categories_container').hide();
-                jQuery('#new_trait_default_value_label').html("Default value:");
+                jQuery('#new_trait_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_trait_default_value').val('');
                 jQuery('#new_trait_min_value').val('');
                 jQuery('#new_trait_max_value').val('');
@@ -323,7 +323,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                 jQuery('#new_trait_default_value_container').show();
                 jQuery('#new_trait_maximum_value_container').hide();
                 jQuery('#new_trait_add_categories_container').show();
-                jQuery('#new_trait_default_value_label').html("Default category:");
+                jQuery('#new_trait_default_value_label').html(<% __('Default category:') |js %>);
                 jQuery('#new_trait_default_value').val('');
                 jQuery('#new_trait_min_value').val('');
                 jQuery('#new_trait_max_value').val('');
@@ -342,7 +342,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                 jQuery('#new_trait_default_value_container').show();
                 jQuery('#new_trait_maximum_value_container').show();
                 jQuery('#new_trait_add_categories_container').hide();
-                jQuery('#new_trait_default_value_label').html("Default value:");
+                jQuery('#new_trait_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_trait_default_value').val('');
                 jQuery('#new_trait_min_value').val('0');
                 jQuery('#new_trait_max_value').val('100');
@@ -352,7 +352,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                 jQuery('#new_trait_default_value_container').show();
                 jQuery('#new_trait_maximum_value_container').show();
                 jQuery('#new_trait_add_categories_container').hide();
-                jQuery('#new_trait_default_value_label').html("Default value:");
+                jQuery('#new_trait_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_trait_default_value').val('');
                 jQuery('#new_trait_min_value').val('0');
                 jQuery('#new_trait_max_value').val('');
@@ -362,7 +362,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
                 jQuery('#new_trait_default_value_container').show();
                 jQuery('#new_trait_maximum_value_container').show();
                 jQuery('#new_trait_add_categories_container').hide();
-                jQuery('#new_trait_default_value_label').html("Default value:");
+                jQuery('#new_trait_default_value_label').html(<% __('Default value:') |js %>);
                 jQuery('#new_trait_default_value').val('');
                 jQuery('#new_trait_min_value').val('0');
                 jQuery('#new_trait_max_value').val('1');
@@ -403,12 +403,12 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
             let new_ordinal = jQuery('#new_trait_category_ordinal').val();
 
             if (! new_ordinal) {
-                alert("Assign an ordinal value to the new category.");
+                alert(<% __('Assign an ordinal value to the new category.') |js %>);
                 return;
             }
 
             if (new_category.includes('/') || new_category.includes('=')){
-                alert("No special characters.");
+                alert(<% __('No special characters.') |js %>);
                 return;
             }
 
@@ -462,7 +462,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
             let db_name = jQuery('#trait_cvtermpath_rebuild_select').val();
 
             if (!db_name || db_name == null || db_name == "") {
-                alert("Please select a CV before rebuilding its cvterm paths.");
+                alert(<% __('Please select a CV before rebuilding its cvterm paths.') |js %>);
                 return;
             }
 
@@ -491,7 +491,7 @@ Will be the trait root term by default if none are added."></span>&nbsp;<% __('C
             let db_name = jQuery('#trait_ontology_download_select').val();
 
             if (!db_name || db_name == null || db_name == "") {
-                alert("Please select an ontology.");
+                alert(<% __('Please select an ontology.') |js %>);
                 return;
             }
 

@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
     });
 
     jQuery('#delete_fieldbook_layout_link').click(function() {
-        alert('Layout deleted successfully.');
+        alert(gettext('Layout deleted successfully.'));
     });
 
 });
@@ -101,7 +101,7 @@ function generate_trait_file() {
     }
 
     if (trait_ids == '') {
-        alert("Traits, from a list or selected individually, are required.");
+        alert(gettext("Traits, from a list or selected individually, are required."));
         return;
     }
 
@@ -109,7 +109,7 @@ function generate_trait_file() {
     var trait_file_name = jQuery('#trait_file_name').val();
 
     if (trait_file_name == '') {
-        alert("A trait file name is required.");
+        alert(gettext("A trait file name is required."));
         return;
     }
     jQuery.ajax({
@@ -138,7 +138,7 @@ function generate_trait_file() {
         },
         error: function() {
             jQuery("#working_modal").modal("hide");
-            alert('An error occurred creating the trait file.');
+            alert(gettext('An error occurred creating the trait file.'));
             jQuery('#create_trait_file_dialog').modal("hide");
         },
     });

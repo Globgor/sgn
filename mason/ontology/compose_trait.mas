@@ -301,7 +301,7 @@ jQuery('#compose_trait').on('click', function () {
     //console.log("just disabled ui");
     const selectedOptions = jQuery("#new_traits option:selected");
     if (selectedOptions.length === 0) {
-        alert("Please select at least one trait to compose.");
+        alert(<% __('Please select at least one trait to compose.') |js %>);
         return;
     }
     const new_trait_names = {};
