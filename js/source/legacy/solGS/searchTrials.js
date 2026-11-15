@@ -181,7 +181,7 @@ jQuery(document).ready(function () {
         },
         error: function () {
           jQuery(searchResultMsg)
-            .html(gettext("Error occured fetching the next set of GS trials."))
+            .html(gettext("Error occurred fetching the next set of GS trials."))
             .show();
         },
       });
@@ -221,7 +221,7 @@ jQuery(document).ready(function () {
       })
       .fail(function () {
         jQuery(searchResultMsg)
-          .html(gettext("Error occured fetching the first set of GS trials."))
+          .html(gettext("Error occurred fetching the first set of GS trials."))
           .show();
       });
   }
@@ -310,7 +310,7 @@ jQuery(document).ready(function () {
               })
               .fail(function () {
                 var msg =
-                  "Error occured checking for if trial can be used as training population.";
+                  "Error occurred checking for if trial can be used as training population.";
                 solGS.showMessage(msgDiv, msg);
               });
           } else {
@@ -319,7 +319,7 @@ jQuery(document).ready(function () {
           }
         })
         .fail(function (res) {
-          msg = "Error occured checking if the training population exists.";
+          msg = "Error occurred checking if the training population exists.";
           solGS.showMessage(msgDiv, msg);
         });
     } else {

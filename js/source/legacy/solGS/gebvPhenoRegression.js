@@ -84,7 +84,7 @@ jQuery(document).ready( function() {
     }); 
 
     solGS.gebvPhenoRegression.getRegressionData(args).fail(function(res){ 
-        jQuery("#gebvs_pheno_regression_message").html(gettext('Error occured requesting for theGEBVs vs observed phenotypes regression data.'));
+        jQuery("#gebvs_pheno_regression_message").html(gettext('Error occurred requesting for theGEBVs vs observed phenotypes regression data.'));
     });
 
     jQuery("#gebv_pheno_regression_canvas").on('click' , 'a', function(e) {

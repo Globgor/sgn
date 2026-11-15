@@ -136,7 +136,7 @@ jQuery(document).ready(function () {
       // jQuery(searchBtn).show();
     })
     .fail(function () {
-      var msg = "Errro occured querying for selection populations";
+      var msg = "Error occurred querying for selection populations";
       solGS.selectionPopulation.feedbackOnFail(msg);
       // jQuery(searchBtn).show();
     });
@@ -164,7 +164,7 @@ jQuery(document).ready(function () {
         }
       })
       .fail(function () {
-        var msg = "Error occured searching for the selection populations.";
+        var msg = "Error occurred searching for the selection populations.";
         jQuery(this.msgDiv).html(msg).show().fadeOut(8000);
       });
   });
@@ -229,7 +229,7 @@ jQuery(document).ready(function () {
             jQuery(`${selPopsDiv} .multi-spinner-container`).hide();
           })
           .fail(function () {
-            var msg = "Error occured processing the query.";
+            var msg = "Error occurred processing the query.";
             solGS.selectionPopulation.feedbackOnFail(msg);
             jQuery(searchBtn).show();
             jQuery(`${selPopsDiv} .multi-spinner-container`).hide();

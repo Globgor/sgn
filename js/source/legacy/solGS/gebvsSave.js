@@ -28,7 +28,7 @@ jQuery(document).ready(function () {
     });
   
     solGS.analysisSave.checkUserStatus().fail(function () {
-      solGS.alertMessage("Error occured checking for user status");
+      solGS.alertMessage("Error occurred checking for user status");
     });
   
       solGS.analysisSave.getGebvsResultDetails(analysisArgs).done(function (res) {
@@ -98,7 +98,7 @@ jQuery(document).ready(function () {
       });
   
       solGS.analysisSave.checkUserStatus().fail(function () {
-        solGS.alertMessage("Error occured checking for user status");
+        solGS.alertMessage("Error occurred checking for user status");
       });
   
       solGS.analysisSave.getGebvsResultDetails(analysisArgs).done(function (res) {

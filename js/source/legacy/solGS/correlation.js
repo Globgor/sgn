@@ -515,7 +515,7 @@ jQuery(document).ready(function () {
       })
       .fail(function (res) {
         jQuery(`${canvas} .multi-spinner-container`).hide();
-        jQuery(corrMsgDiv).html(res.status + " Error occured running correlation analysis.").fadeOut(8400);
+        jQuery(corrMsgDiv).html(res.status + " Error occurred running correlation analysis.").fadeOut(8400);
         jQuery(runCorrBtnId).show();
       });
     }
@@ -564,7 +564,7 @@ jQuery(document).ready(function () {
       })
       .fail(function (res) {
         jQuery(`${canvas} .multi-spinner-container`).hide();
-        jQuery(corrMsgDiv).html(res.status + " Error occured running correlation analysis.").fadeOut(8400);
+        jQuery(corrMsgDiv).html(res.status + " Error occurred running correlation analysis.").fadeOut(8400);
         jQuery(runCorrBtnId).show();
         
       });
