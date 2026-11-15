@@ -34,6 +34,7 @@ use File::Basename qw | basename dirname|;
 use IO::Compress::Gzip qw(gzip $GzipError);
 use JSON;
 use Encode qw(decode FB_CROAK);
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -64,7 +65,7 @@ sub upload_genotype_verify_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this VCF genotype info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this VCF genotype info!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -73,7 +74,7 @@ sub upload_genotype_verify_POST : Args(0) {
         $user_name = $p->get_username;
     } else{
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload this VCF genotype info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload this VCF genotype info!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -82,7 +83,7 @@ sub upload_genotype_verify_POST : Args(0) {
     }
 
     if ($user_role ne 'submitter' && $user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to upload VCF genotypes! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to upload VCF genotypes! Please contact us.') };
         $c->detach();
     }
     my $is_curator = $user_role eq 'curator' ? 1 : 0;
@@ -140,12 +141,12 @@ sub upload_genotype_verify_POST : Args(0) {
         my $associated_protocol  = $protocol_info->get_associated_protocol();
         my @info;
         if ((defined $associated_protocol) && (scalar(@$associated_protocol)>1)) {
-            $c->stash->{rest} = { error => "Each genotyping project should be associated with only one protocol" };
+            $c->stash->{rest} = { error => __("Each genotyping project should be associated with only one protocol") };
             $c->detach();
         } elsif (defined $associated_protocol && scalar(@$associated_protocol) == 1) {
             my $stored_protocol_id = $associated_protocol->[0]->[0];
             if ($stored_protocol_id != $protocol_id) {
-                $c->stash->{rest} = { error => "The selected genotyping project is already associated with different protocol. Each project should be associated with only one protocol" };
+                $c->stash->{rest} = { error => __("The selected genotyping project is already associated with different protocol. Each project should be associated with only one protocol") };
                 $c->detach();
             }
         }
@@ -156,7 +157,7 @@ sub upload_genotype_verify_POST : Args(0) {
         });
         my $associated_protocol  = $protocol_info->get_associated_protocol();
         if ((defined $associated_protocol) && (scalar(@$associated_protocol) > 0)) {
-            $c->stash->{rest} = { error => "The selected genotyping project is already associated with a protocol. Each project should be associated with only one protocol" };
+            $c->stash->{rest} = { error => __("The selected genotyping project is already associated with a protocol. Each project should be associated with only one protocol") };
             $c->detach();
         }
     }
@@ -177,19 +178,19 @@ sub upload_genotype_verify_POST : Args(0) {
     }
 
     if (defined($upload_vcf) && defined($upload_intertek_genotypes)) {
-        $c->stash->{rest} = { error => 'Do not try to upload both VCF and Intertek at the same time!' };
+        $c->stash->{rest} = { error => __('Do not try to upload both VCF and Intertek at the same time!') };
         $c->detach();
     }
     if (defined($upload_vcf) && defined($upload_tassel_hdf5)) {
-        $c->stash->{rest} = { error => 'Do not try to upload both VCF and Tassel HDF5 at the same time!' };
+        $c->stash->{rest} = { error => __('Do not try to upload both VCF and Tassel HDF5 at the same time!') };
         $c->detach();
     }
     if (defined($upload_intertek_genotypes) && defined($upload_tassel_hdf5)) {
-        $c->stash->{rest} = { error => 'Do not try to upload both Intertek and Tassel HDF5 at the same time!' };
+        $c->stash->{rest} = { error => __('Do not try to upload both Intertek and Tassel HDF5 at the same time!') };
         $c->detach();
     }
     if ((defined($upload_intertek_genotypes) && !defined($upload_inteterk_marker_info)) || (!defined($upload_intertek_genotypes) && defined($upload_inteterk_marker_info))) {
-        $c->stash->{rest} = { error => 'To upload Intertek genotype data please provide both the Grid Genotypes File and the Marker Info File.' };
+        $c->stash->{rest} = { error => __('To upload Intertek genotype data please provide both the Grid Genotypes File and the Marker Info File.') };
         $c->detach();
     }
 
@@ -471,11 +472,11 @@ sub upload_genotype_verify_POST : Args(0) {
             push @found_organisms, $organism_id;
         }
         if (scalar(@found_organisms) == 0){
-            $c->stash->{rest} = { error => 'The organism species you provided is not in the database! Please contact us.' };
+            $c->stash->{rest} = { error => __('The organism species you provided is not in the database! Please contact us.') };
             $c->detach();
         }
         if (scalar(@found_organisms) > 1){
-            $c->stash->{rest} = { error => 'The organism species you provided is not unique in the database! Please contact us.' };
+            $c->stash->{rest} = { error => __('The organism species you provided is not unique in the database! Please contact us.') };
             $c->detach();
         }
         $organism_id = $found_organisms[0];
@@ -658,7 +659,7 @@ sub upload_genotype_verify_POST : Args(0) {
 			    print STDERR "Adding new markers\n";
 			    $store_genotypes->store_new_markers_in_protocolprop(\@mismatch_markers);
 			} else {
-			    $c->stash->{rest} = { error => "Too many new markers"};
+			    $c->stash->{rest} = { error => __("Too many new markers")};
                             $c->detach();
 		        }
 		    } else {
@@ -831,7 +832,7 @@ sub upload_genotype_verify_POST : Args(0) {
                         $store_genotypes->store_new_markers_in_protocolprop(\@mismatch_markers);
                     } else {
 			print STDERR "Too many new markers, should be less than 20\n";
-		        $c->stash->{rest} = { error => "Too many new markers, should be less than 20"};
+		        $c->stash->{rest} = { error => __("Too many new markers, should be less than 20")};
                         $c->detach();
                     }
 		} else {

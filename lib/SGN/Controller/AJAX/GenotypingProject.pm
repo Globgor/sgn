@@ -8,6 +8,7 @@ use CXGN::Job;
 use List::MoreUtils qw /any /;
 
 use CXGN::Genotype::StoreGenotypingProject;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -52,7 +53,7 @@ sub genotyping_project_delete_POST : Args(1) {
     }
 
     if ($user_role ne 'curator') {
-        $c->stash->{rest} = { error => 'Must have correct permissions to delete genotypes! Please contact us.' };
+        $c->stash->{rest} = { error => __('Must have correct permissions to delete genotypes! Please contact us.') };
         $c->detach();
     }
 
@@ -172,7 +173,7 @@ sub add_genotyping_project_POST :Args(0){
 
     if (!any { $_ eq "curator" || $_ eq "submitter" } ($c->user()->roles)){
         print STDERR "User does not have sufficient privileges.\n";
-        $c->stash->{rest} = {error =>  "you have insufficient privileges to add a genotyping project." };
+        $c->stash->{rest} = {error =>  __("you have insufficient privileges to add a genotyping project.") };
         return;
     }
     my $user_id = $c->user()->get_object()->get_sp_person_id();

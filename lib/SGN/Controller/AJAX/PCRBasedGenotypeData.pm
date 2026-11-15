@@ -29,6 +29,7 @@ use CXGN::People::Person;
 use CXGN::Genotype::Protocol;
 use CXGN::Genotype::StorePCRMarkerInfo;
 use File::Basename qw | basename dirname|;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -74,7 +75,7 @@ sub upload_ssr_protocol_POST : Args(0) {
         my $dbh = $c->dbc->dbh;
         my @user_info = CXGN::Login->new($dbh)->query_from_cookie($session_id);
         if (!$user_info[0]){
-            $c->stash->{rest} = {error=>'You must be logged in to upload SSR marker info!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload SSR marker info!')};
             $c->detach();
         }
         $user_id = $user_info[0];
@@ -83,7 +84,7 @@ sub upload_ssr_protocol_POST : Args(0) {
         $user_name = $p->get_username;
     } else {
         if (!$c->user){
-            $c->stash->{rest} = {error=>'You must be logged in to upload progenies!'};
+            $c->stash->{rest} = {error=>__('You must be logged in to upload progenies!')};
             $c->detach();
         }
         $user_id = $c->user()->get_object()->get_sp_person_id();
@@ -124,11 +125,11 @@ sub upload_ssr_protocol_POST : Args(0) {
         push @found_organisms, $organism_id;
     }
     if (scalar(@found_organisms) == 0){
-        $c->stash->{rest} = { error => 'The organism species you provided is not in the database! Please contact us.' };
+        $c->stash->{rest} = { error => __('The organism species you provided is not in the database! Please contact us.') };
         $c->detach();
     }
     if (scalar(@found_organisms) > 1){
-        $c->stash->{rest} = { error => 'The organism species you provided is not unique in the database! Please contact us.' };
+        $c->stash->{rest} = { error => __('The organism species you provided is not unique in the database! Please contact us.') };
         $c->detach();
     }
     my $organism_id = $found_organisms[0];
@@ -179,7 +180,7 @@ sub upload_ssr_protocol_POST : Args(0) {
 #    print STDERR "PROTOCOL ID =".Dumper($protocol_id)."\n";
 
     if (!$protocol_id) {
-        $c->stash->{rest} = {error_string => "Error saving PCR marker info",};
+        $c->stash->{rest} = {error_string => __("Error saving PCR marker info"),};
         return;
     }
 
