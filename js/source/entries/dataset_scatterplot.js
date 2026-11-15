@@ -1,3 +1,4 @@
+import '../legacy/CXGN/I18N.js';
 export function init(datasetId, datasetName, baseWidth) {
     class Dataset {
         constructor() {
