@@ -4,9 +4,9 @@
   $private_email => ''
 </%args>
 
-<& /page/page_title.mas, title => "Update User Information" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Update User Information"), 'h' ) &>
 
-Please verify your current password to make changes. Select changes desired by checking the appropriate checkbox and entering the new information. <br /><br />
+<% __('Please verify your current password to make changes. Select changes desired by checking the appropriate checkbox and entering the new information.') |h %> <br /><br />
 
 <style>
 
@@ -42,36 +42,36 @@ Please verify your current password to make changes. Select changes desired by c
 </div>
 
 <br />
-<h4><input type="checkbox" id="change_password" name="change_password">Change password</input></h4>
+<h4><input type="checkbox" id="change_password" name="change_password"><% __('Change password') |h %></input></h4>
 
 <div>
-  <label class="textlabel" for="new_password" >New password</label>
+  <label class="textlabel" for="new_password" ><% __('New password') |h %></label>
   <input class="form-control" id="new_password" name="new_password" type="password" />
 </div>
 
 <div>
-  <label class="textlabel" for="confirm_password" >Confirm password</label>
+  <label class="textlabel" for="confirm_password" ><% __('Confirm password') |h %></label>
   <input class="form-control" id="confirm_password" name="confirm_password" type="password" />
 </div>
 <br />
 <br />
 
-<h4><input type="checkbox" id="change_email" name="change_email">Change email</input></h4>
-<div>Your private e-mail address is not publicly displayed online. It is used only for SGN staff to contact you about changes to your record or for e-mailing your password to you. Changing your private e-mail address will trigger a confirmation message from SGN to verify the address is usable by SGN.</div><br />
+<h4><input type="checkbox" id="change_email" name="change_email"><% __('Change email') |h %></input></h4>
+<div><% __('Your private e-mail address is not publicly displayed online. It is used only for SGN staff to contact you about changes to your record or for e-mailing your password to you. Changing your private e-mail address will trigger a confirmation message from SGN to verify the address is usable by SGN.') |h %></div><br />
 <div>
-  <label class="textlabel" for="private_email" >New email</label>
+  <label class="textlabel" for="private_email" ><% __('New email') |h %></label>
   <input class="form-control" id="private_email" name="private_email" value="<% $private_email %>" />
 </div>
 <div>
-  <label class="textlabel" for="confirm_email" >Confirm email</label>
+  <label class="textlabel" for="confirm_email" ><% __('Confirm email') |h %></label>
   <input class="form-control" id="confirm_email" name="confirm_email" value="<% $private_email %>" />
 </div>
 
 <br />
 <br />
-<h4><input class="checkboxes" type="checkbox" id="change_username" name="change_username">Change username</input></h4>
+<h4><input class="checkboxes" type="checkbox" id="change_username" name="change_username"><% __('Change username') |h %></input></h4>
 <div>
-  <label class="textlabel" for="new_username">New username</label>
+  <label class="textlabel" for="new_username"><% __('New username') |h %></label>
   <input class="form-control" id="new_username" name="new_username" value="<% $logged_in_username %>" />
 </div>
 
@@ -79,9 +79,9 @@ Please verify your current password to make changes. Select changes desired by c
 
 <br />
 <br />
-<button class="btn btn-secondary" type="clear_form" id="clear_form">Reset form</button>
+<button class="btn btn-secondary" type="clear_form" id="clear_form"><% __('Reset form') |h %></button>
 
-<button type="submit" class="btn btn-primary" id="submit_account_info">Change Account Information</button>
+<button type="submit" class="btn btn-primary" id="submit_account_info"><% __('Change Account Information') |h %></button>
 
 </form>
 

@@ -24,11 +24,11 @@
 
 </style>
 
-<& /page/page_title.mas, title=>"Login" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Login"), 'h' ) &>
 
 <div>
 <center>
-<a href="javascript:history.back();"><button class="btn btn-primary">Go back</button></a>
+<a href="javascript:history.back();"><button class="btn btn-primary"><% __('Go back') |h %></button></a>
 </center>
 </div>
 
