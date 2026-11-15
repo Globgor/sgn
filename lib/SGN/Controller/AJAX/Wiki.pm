@@ -7,6 +7,7 @@ use Text::MultiMarkdown qw | markdown |;
 use CXGN::People::Wiki;
 
 use Moose;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; }
 
@@ -49,7 +50,7 @@ sub ajax_wiki_new :Path('/ajax/wiki/new') Args(0) {
     my $c = shift;
 
     if (! $c->user()->check_roles("curator")) {
-	$c->stash->{rest} = { error => "You do not have the privileges to create wiki pages." };
+	$c->stash->{rest} = { error => __("You do not have the privileges to create wiki pages.") };
 	$c->detach();
     }
 
@@ -98,14 +99,14 @@ sub store_POST {
     my $sp_person_id = $c->user->get_object->get_sp_person_id();
 
     if (! $sp_person_id) {
-	$c->stash->{rest} = { error => "You need to be logged in to store wiki pages." };
+	$c->stash->{rest} = { error => __("You need to be logged in to store wiki pages.") };
 	$c->detach();
     }
 
     my $page_name = $c->stash->{page_name};
 
     if (! $c->user()->check_roles("curator")) {
-	$c->stash->{rest} = { error => "You do not have the privileges to modify wiki pages." };
+	$c->stash->{rest} = { error => __("You do not have the privileges to modify wiki pages.") };
 	$c->detach();
     }
 
@@ -115,7 +116,7 @@ sub store_POST {
 
     print STDERR "PAGE OWNED BY ".$wiki->sp_person_id()."\n";
     if ($wiki->sp_person_id() != $sp_person_id) {
-	$c->stash->{rest} = { error => "Only the original owner can modify the wiki page." };
+	$c->stash->{rest} = { error => __("Only the original owner can modify the wiki page.") };
 	$c->detach();
     }
     my $content_data;
@@ -148,7 +149,7 @@ sub delete : Chained('ajax_wiki') PathPart('delete') Args(0) {
     print STDERR "DELETE WIKI PAGE ".$c->stash->{page_name}."\n";
 
     if (! $c->user()->check_roles("curator")) {
-	$c->stash->{rest} = { error => "You do not have the privileges to delete wiki pages." };
+	$c->stash->{rest} = { error => __("You do not have the privileges to delete wiki pages.") };
 	$c->detach();
     }
     my $user_id = $c->user()->get_object->get_sp_person_id();
@@ -158,7 +159,7 @@ sub delete : Chained('ajax_wiki') PathPart('delete') Args(0) {
     print STDERR "WIKI PAGE OWNER: ".$wiki->sp_person_id()." (user id is $user_id)\n";
 
     if ($user_id != $wiki->sp_person_id()) {
-	$c->stash->{rest} = { error => "Only the original page creator can delete the page. It is not you." };
+	$c->stash->{rest} = { error => __("Only the original page creator can delete the page. It is not you.") };
 	$c->detach();
     }
 
