@@ -7,22 +7,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCatalogItemsDialog">Upload Catalog Items </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCatalogItemsDialog"><% __('Upload Catalog Items') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="upload_catalog_items_format">Spreadsheet Format</a>
+                            <a id="upload_catalog_items_format"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_catalog_items_form" name="upload_catalog_items_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (.xls or .xlsx): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                                 <div class="col-sm-8">
                                     <input type="file" name="catalog_items_upload_file" id="catalog_items_upload_file" encoding="multipart/form-data" />
                                 </div>
@@ -31,8 +31,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_catalog_items_submit" id="upload_catalog_items_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_catalog_items_submit" id="upload_catalog_items_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -42,8 +42,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCatalogItemsErrorDialog">Upload Catalog Items File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCatalogItemsErrorDialog"><% __('Upload Catalog Items File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -63,19 +63,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="catalogItemsSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="catalogItemsSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The catalog items were saved successfully.
+                        <% __('The catalog items were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_catalog_items_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_catalog_items_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -85,16 +85,16 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCatalogItemsFormatDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCatalogItemsFormatDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Catalog Items may be uploaded in an Excel file (.xls or .xlsx)</b>
+                    <b><% __('Catalog Items may be uploaded in an Excel file (.xls or .xlsx)') |h %></b>
                     <br>
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following:
+                    <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -108,7 +108,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <b>Required columns:</b>
+                    <b><% __('Required columns:') |h %></b>
                     <ul>
                         <li><b>item_name:</b>Item name must be in the database, can be accession, seedlot, population or vector_construct stock type</li>
                         <li><b>category:</b>Must be one of the following (released variety, pathogen assay, control, transgenic line). This field can be customized, please contact us. </li>
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
