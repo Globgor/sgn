@@ -160,7 +160,7 @@
             let step = col+1;
             let html = "<strong>Step " + step + ":</strong> Choose items of type <strong>" + valid_col_types.join(" or ") + "</strong> from column " + step + ".";
             jQuery('#dsp-help-instructions').html(html);
-            jQuery('#dsp-help-next-label').html("Next");
+            jQuery('#dsp-help-next-label').html(<% __('Next') |js %>);
             jQuery("#dsp-help-next").prop('disabled', true);
             jQuery('#dsp-help-next').css('display', 'block');
             jQuery('#dsp-help-next').off('click').on('click', function() {
@@ -210,7 +210,7 @@
 
         // Set Return Button
         if ( DSP_RETURN ) {
-            jQuery('#dsp-help-next-label').html("Return");
+            jQuery('#dsp-help-next-label').html(<% __('Return') |js %>);
             jQuery('#dsp-help-next').off('click').on('click', function() {
                 window.location = DSP_RETURN;
                 return false;
@@ -241,7 +241,7 @@
      * Disable the dataset creation pipeline and restore the normal search wizard
      */
     function disableDatasetPipeline() {
-        var r = confirm("Are you sure you want to close the dataset creation help?");
+        var r = confirm(<% __('Are you sure you want to close the dataset creation help?') |js %>);
         if ( r == true ) {
             DSP_ENABLED = false;
             jQuery("#dsp-help").css('display', 'none');

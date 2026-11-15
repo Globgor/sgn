@@ -85,7 +85,7 @@ my $new_stock_link = qq| <a href="/stock/0/new">Submit new stock</a> \| <a href=
       addToListMenu('item_list_menu', 'item_list', 'div');
     }
     else { 
-      jQuery('#item_list_menu').html('Log in to use lists.');
+      jQuery('#item_list_menu').html(<% __('Log in to use lists.') |js %>);
     }
   });
 

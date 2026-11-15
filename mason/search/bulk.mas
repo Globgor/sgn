@@ -150,7 +150,7 @@ function updateDataTypes() {
             }
         },
         error: function() {
-            alert("Could not get supported data types!");
+            alert(<% __('Could not get supported data types!') |js %>);
         }
     })
 }
@@ -178,12 +178,12 @@ function bulkSearch() {
             "items": JSON.stringify(names),
         },
         success: function(data) {
-            jQuery('#bulk_search_start').html('Search').attr('disabled', false);
+            jQuery('#bulk_search_start').html(<% __('Search') |js %>).attr('disabled', false);
             displayResults(data, type_name);
         },
         error: function() {
-            alert("Could not run bulk search!");
-            jQuery('#bulk_search_start').html('Search').attr('disabled', false);
+            alert(<% __('Could not run bulk search!') |js %>);
+            jQuery('#bulk_search_start').html(<% __('Search') |js %>).attr('disabled', false);
         }
     });
 }
@@ -226,7 +226,7 @@ function displayResults(data, type) {
         }
     }
     else {
-        alert("Invalid response from the server!");
+        alert(<% __('Invalid response from the server!') |js %>);
     }
 
     dte.draw();
