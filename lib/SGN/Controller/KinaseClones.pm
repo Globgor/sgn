@@ -3,6 +3,7 @@ package SGN::Controller::KinaseClones;
 use Moose;
 use namespace::autoclean;
 use CXGN::People;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -62,7 +63,7 @@ END_HEREDOC
 
        $c->forward('View::Email');
 
-       $c->stash->{message} = "Thank you. Your message has been sent.";
+       $c->stash->{message} = __("Thank you. Your message has been sent.");
        $c->stash->{template} = "/generic_message.mas";
     } else {
 
