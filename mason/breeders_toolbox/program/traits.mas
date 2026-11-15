@@ -8,21 +8,21 @@ $collapse_phenotypes_section => 1
 
 
 <div class="well well-sm table-responsive">
-  <center><h4>Raw Data Statistics</h4></center>
+  <center><h4><% __('Raw Data Statistics') |h %></h4></center>
   <br/>
 
   <div id="pheno_summary_table_div">
     <table id="phenotype_summary_data_<% $program_id %>" class="display">
       <thead>
         <tr>
-          <th>Trait</th>
-          <th>Mean</th>
-          <th>Min</th>
-          <th>Max</th>
-          <th>Std Dev</th>
-          <th>CV</th>
-          <th>Count</th>
-          <th>Histogram</th>
+          <th><% __('Trait') |h %></th>
+          <th><% __('Mean') |h %></th>
+          <th><% __('Min') |h %></th>
+          <th><% __('Max') |h %></th>
+          <th><% __('Std Dev') |h %></th>
+          <th><% __('CV') |h %></th>
+          <th><% __('Count') |h %></th>
+          <th><% __('Histogram') |h %></th>
         </tr>
       </thead>
       <tbody>
@@ -33,13 +33,13 @@ $collapse_phenotypes_section => 1
 
 
 <div class="well well-sm" id="raw_data_histogram_well">
-  <center><h4>Raw Data Histogram</h4></center><hr>
+  <center><h4><% __('Raw Data Histogram') |h %></h4></center><hr>
   <div id="program_summary_hist_div">
     <div class="row">
       <div class="col-sm-8">
         <form class="form-horizontal">
           <div class="form-group form-group-sm">
-            <label for="program_summary_hist_dropdown" class="col-sm-2 control-label">Select:</label>
+            <label for="program_summary_hist_dropdown" class="col-sm-2 control-label"><% __('Select:') |h %></label>
             <div class="col-sm-10">
               <div id="traits_assayed_dropdown">
               </div>

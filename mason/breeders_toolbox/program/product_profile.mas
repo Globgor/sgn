@@ -9,11 +9,11 @@ $program_id
 <table id="product_profile_table" class="display">
     <thead>
         <tr>
-            <th>Product Profile Name</th>
-            <th>Scope</th>
-            <th>Trait</th>
-            <th>Submitter</th>
-            <th>Date (Y-M-D)</th>
+            <th><% __('Product Profile Name') |h %></th>
+            <th><% __('Scope') |h %></th>
+            <th><% __('Trait') |h %></th>
+            <th><% __('Submitter') |h %></th>
+            <th><% __('Date (Y-M-D)') |h %></th>
         </tr>
     </thead>
 </table>

@@ -9,18 +9,18 @@ $program_id
 <div class="well well-sm">
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Location Info", is_subsection => 1, collapsible=>1, collapsed=>0 &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Location Info"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0 &>
                 <table class="table table-hover table-bordered" id="program_location_table">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Abbreviation</th>
-                            <th>Country</th>
-                            <th>Type</th>
-                            <th>Altitude(m)</th>
-                            <th>Trials</th>
-                            <th>Nearest NOAA Station ID</th>
+                            <th><% __('Id') |h %></th>
+                            <th><% __('Name') |h %></th>
+                            <th><% __('Abbreviation') |h %></th>
+                            <th><% __('Country') |h %></th>
+                            <th><% __('Type') |h %></th>
+                            <th><% __('Altitude(m)') |h %></th>
+                            <th><% __('Trials') |h %></th>
+                            <th><% __('Nearest NOAA Station ID') |h %></th>
                         </tr>
                     </thead>
                 </table>

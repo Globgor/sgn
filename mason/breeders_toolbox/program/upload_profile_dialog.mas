@@ -11,89 +11,89 @@ $program_name
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProfileDialog">Upload Product Profile</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProfileDialog"><% __('Upload Product Profile') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <&| /util/workflow.mas, id=> "upload_profile_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Product Profile" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Product Profile"), 'h' ) &>
                             <ul>
-                                <li>Product profiles can be stored in the database for downstream variety selection process for each breeding program.</li>
-                                <li>To facilitate data curation, targeted trait names and trait IDs can be retrieved directly from the database.</li>
-                                <li>Please use the product profile template generated from our database to fill out product profile details.</li>
-                                <li>You can find the link for creating the template in the product profile section, simply provide a file name and a list of traits.</li>
-                                <li>Instructions for filling out the form are on the next page</li>
+                                <li><% __('Product profiles can be stored in the database for downstream variety selection process for each breeding program.') |h %></li>
+                                <li><% __('To facilitate data curation, targeted trait names and trait IDs can be retrieved directly from the database.') |h %></li>
+                                <li><% __('Please use the product profile template generated from our database to fill out product profile details.') |h %></li>
+                                <li><% __('You can find the link for creating the template in the product profile section, simply provide a file name and a list of traits.') |h %></li>
+                                <li><% __('Instructions for filling out the form are on the next page') |h %></li>
                             </ul>
                             <br/><br/>
                             <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
-                        <&| /util/workflow.mas:step, title=> "File format" &>
-                            <& /page/page_title.mas, title=>"Make sure your file matches the correct file format" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("File format"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Make sure your file matches the correct file format"), 'h' ) &>
                             <center>
                                 <&| /page/explanation.mas, title=>'Product Profile Spreadsheet' &>
                                     <p>
                                         <br>
-                                        <a id="product_profile_instructions">Instructions for Product Profile Spreadsheet</a>
+                                        <a id="product_profile_instructions"><% __('Instructions for Product Profile Spreadsheet') |h %></a>
                                         <br>
                                         <br>
                                     </p>
                                 </&>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Once you think your file matches, go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once you think your file matches, go to Next Step') |h %></button>
                             </center>
                         </&>
-                        <&| /util/workflow.mas:step, title=> "Upload Product Profile" &>
-                            <& /page/page_title.mas, title=>"Provide basic information about the product profile and upload your file" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Upload Product Profile"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide basic information about the product profile and upload your file"), 'h' ) &>
                             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_profile_form" name="upload_profile_form">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Breeding Program: </label>
+                                    <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" name="profile_program_name" id="profile_program_name" disabled value="<% $program_name %>">
                                         <input name="profile_program_id" id="profile_program_id" type="hidden" value="<% $program_id %>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Product Profile Name: </label>
+                                    <label class="col-sm-3 control-label"><% __('Product Profile Name:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="new_profile_name" name="new_profile_name" type="text"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Scope: </label>
+                                    <label class="col-sm-3 control-label"><% __('Scope:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="new_profile_scope" name="new_profile_scope" type="text"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Upload File (.xls or .xlsx): </label>
+                                    <label class="col-sm-3 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input type="file" name="profile_uploaded_file" id="profile_uploaded_file" encoding="multipart/form-data" />
                                     </div>
                                 </div>
                             </form>
                             <center>
-                                <button type="button" class="btn btn-lg btn-primary" onclick="Workflow.complete(this, false);" id ="upload_profile_submit" name="upload_profile_submit" >Upload Profile</button><br/><br/>
+                                <button type="button" class="btn btn-lg btn-primary" onclick="Workflow.complete(this, false);" id ="upload_profile_submit" name="upload_profile_submit" ><% __('Upload Profile') |h %></button><br/><br/>
                             </center>
                         </&>
                         <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your profile is now in the database" &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your profile is now in the database"), 'h' ) &>
                             <p>
                                 <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                The profile file was uploaded successfully
+                                <% __('The profile file was uploaded successfully') |h %>
                             </p>
                             <br/>
                             <center>
-                                <button class="btn btn-primary" name="upload_profile_success_complete_button">The profile was saved to the database with no errors! Congrats Click Here</button><br/><br/>
+                                <button class="btn btn-primary" name="upload_profile_success_complete_button"><% __('The profile was saved to the database with no errors! Congrats Click Here') |h %></button><br/><br/>
                             </center>
                         </&>
                     </&>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_profile_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_profile_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -103,8 +103,8 @@ $program_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadProfileErrorDialog">Upload Profile File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadProfileErrorDialog"><% __('Upload Profile File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -114,7 +114,7 @@ $program_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -124,22 +124,22 @@ $program_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="profileInstructionDialog">Instructions for Product Profile Spreadsheet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="profileInstructionDialog"><% __('Instructions for Product Profile Spreadsheet') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Product Profile Template
+                        <% __('Product Profile Template') |h %>
                     </b>
                     <ul>
-                        <li>Product profile template is an Excel file (.xls)</li>
-                        <li>After filling out the product profile details, please also save the spreadsheet in the .xls format</li>
-                        <li>Please do not modify or delete any column header in the template.
+                        <li><% __('Product profile template is an Excel file (.xls)') |h %></li>
+                        <li><% __('After filling out the product profile details, please also save the spreadsheet in the .xls format') |h %></li>
+                        <li><% __('Please do not modify or delete any column header in the template.') |h %>
                     </ul>
                     <br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
                     <table class="table table-bordered table-hover">
@@ -155,7 +155,7 @@ $program_name
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>Trait Name:</b> The template already contains trait names based on your trait list</li>
@@ -163,7 +163,7 @@ $program_name
                         <li><b>Performance:</b> Please specifies the performance of each targeted trait (equal, smaller or larger) compared to the target value or benchmark variety </li>
                     </ul>
                     <b>
-                        Optional columns:
+                        <% __('Optional columns:') |h %>
                     </b>
                     <ul>
                         <li><b>Weight:</b> Default is 1</li>
@@ -172,7 +172,7 @@ $program_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
