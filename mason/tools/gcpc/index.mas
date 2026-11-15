@@ -238,12 +238,12 @@ jQuery(document).ready(function() {
         'contentType': 'application/json',
         error: function(error) {
           jQuery('#working_modal').modal('hide');
-          alert("An error occured" +error.responseText);
+          alert("An error occurred" +error.responseText);
         },
         success:function(data) {
           jQuery('#working_modal').modal('hide');
           if (!data.histogram || data.histogram == "") {
-            alert("An error occured. Possible causes include: \n - The factors included have less than 2 levels. \n - No genotypic data. \n - Phenotypic data has a lot of missing data.");          
+            alert("An error occurred. Possible causes include: \n - The factors included have less than 2 levels. \n - No genotypic data. \n - Phenotypic data has a lot of missing data.");          
           } else {
             if (data.download_link) {
               jQuery('#gcpc_results_download_link').html(data.download_link);
