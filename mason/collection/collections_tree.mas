@@ -46,8 +46,7 @@ $instance_id => 'collections_tree'
                     <input type="text" class="form-control input-sm" id="<% $instance %>_search" placeholder="<% __('Search') |h %>" />
                     <hr>
                     <h5><i><% __('Double click a collection to view its detail page.') |h %></i></h5>
-                    <h5><i>Breeding programs (&nbsp;<span class="glyphicon glyphicon-briefcase text-info"></span>&nbsp;),
-                        collections (&nbsp;<span class="glyphicon glyphicon-folder-close text-warning"></span>&nbsp;)</i></h5>
+                    <h5><i><& /util/sentence.mas, text => __x('Breeding programs ( {icon} ), collections ( {icon2} )'), icon => '<span class="glyphicon glyphicon-briefcase text-info"></span>', icon2 => '<span class="glyphicon glyphicon-folder-close text-warning"></span>' &></i></h5>
                 </td>
                 <td>
                     <div id="<% $instance %>_loading" class="text-muted" style="padding:10px;">
