@@ -142,7 +142,7 @@ $editable_stock_props_definitions
                 <div class="container-fluid">
                     <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the <b>accession_name</b> and <b>species_name</b> columns. Additional information can be included by selecting optional column(s) (see below). :
+                    <& /util/sentence.mas, text => __x('The first row (header) must contain the {bold}{accession_column}{end_bold} and {bold}{species_column}{end_bold} columns. Additional information can be included by selecting optional column(s) (see below). :'), bold => '<b>', end_bold => '</b>', accession_column => 'accession_name', species_column => 'species_name' &>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >

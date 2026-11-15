@@ -97,7 +97,7 @@
         <div class="container-fluid">
  	  <b><% __('Accession renaming information may be uploaded in tab-delimited text file format') |h %></b>
 	  <br>
-	  <p>(.xls or .xlsx formats are <b>NOT</b> supported)</p>
+	  <p><& /util/sentence.mas, text => __x('({xls} or {xlsx} formats are {bold}NOT{end_bold} supported)'), xls => '.xls', xlsx => '.xlsx', bold => '<b>', end_bold => '</b>' &></p>
 	  <hr>
 	  <b><% __('Header:') |h %></b>
 	  <br>
