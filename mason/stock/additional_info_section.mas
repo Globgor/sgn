@@ -22,15 +22,15 @@ $original_stock_link
     <div class="panel panel-default">
         <div class="panel-body panel-body-sm">
 % if ($derived_accession_relationship eq 'is_a_derived_accession') {
-        <b>Derived from: </b>
+        <b><% __('Derived from:') |h %> </b>
         </br>
-        <b>Direct Source: </b><% $related_stock_link %>
+        <b><% __('Direct Source:') |h %> </b><% $related_stock_link %>
         </br>
 % if ($original_stock_link) {
-        <b>Original Source: </b><% $original_stock_link %>
+        <b><% __('Original Source:') |h %> </b><% $original_stock_link %>
 % }
 % } elsif ($derived_accession_relationship eq 'has_a_derived_accession') {
-        <b>Derived Accession: </b>
+        <b><% __('Derived Accession:') |h %> </b>
         <br/>
         <% $related_stock_link %>
 % }
@@ -41,7 +41,7 @@ $original_stock_link
 <div class="panel panel-default">
     <div class="panel-body panel-body-sm">
 
-        <&| /page/info_section.mas, title => "Synonyms", is_subsection => 1 &>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Synonyms"), 'h' ), is_subsection => 1 &>
             <& /stock/stockprops.mas,
                stock_id    => $stock_id,
 	        form_div_id => 'stock_add_synonym',
@@ -58,7 +58,7 @@ $original_stock_link
 <div class="panel panel-default">
     <div class="panel-body panel-body-sm">
 
-        <&| /page/info_section.mas, title => "Additional information", is_subsection => 1 &>
+        <&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Additional information"), 'h' ), is_subsection => 1 &>
             <& /stock/stockprops.mas,
                 stock_id  =>$stock_id,
                 form_div_id => 'stock_add_props',
@@ -74,7 +74,7 @@ $original_stock_link
 
 <div class="panel panel-default">
     <div class="panel-body panel-body-sm">
-        <b>Stock editors: </b>
+        <b><% __('Stock editors:') |h %> </b>
         <br/>
         <% $editor_link %>
     </div>
@@ -82,7 +82,7 @@ $original_stock_link
 
 <div class="panel panel-default">
     <div class="panel-body panel-body-sm">
-        <b>External Database Links: </b>
+        <b><% __('External Database Links:') |h %> </b>
         <ul>
 % foreach my $db_url (keys %$source_dbs) {
             <li>

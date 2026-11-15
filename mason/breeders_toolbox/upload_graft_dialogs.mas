@@ -5,8 +5,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadGraftValidateDialog">Results From Validation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadGraftValidateDialog"><% __('Results From Validation') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -17,8 +17,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="upload_graft_store" id="upload_graft_store" data-dismiss="modal">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="upload_graft_store" id="upload_graft_store" data-dismiss="modal"><% __('Store') |h %></button>
 	
       </div>
     </div>
@@ -30,19 +30,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadGraftSuccessDialog">Upload Successful</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadGraftSuccessDialog"><% __('Upload Successful') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
- 	  <h2>The graft upload was successful.</h2>
+ 	  <h2><% __('The graft upload was successful.') |h %></h2>
 
-	  Successfully created:<br />
+	  <% __('Successfully created:') |h %><br />
 	  <textarea id="list_of_uploaded_grafts">
 	  </textarea>
 	  <br />
 	  
-	  Already in the system:<br />
+	  <% __('Already in the system:') |h %><br />
 	  <textarea id="list_of_already_uploaded_grafts">
 	  </textarea>
 
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="graft_upload_success_dismiss" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="graft_upload_success_dismiss" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -61,28 +61,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadGraftDialog">Upload Grafting Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadGraftDialog"><% __('Upload Grafting Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-    	  <&| /page/explanation.mas, title=>'Template Information' &>
+    	  <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
     	  <p>
-      	  <b>File format information</b>
+      	  <b><% __('File format information') |h %></b>
       	  <br>
-      	  <a id="graft_upload_spreadsheet_format_info" data-toggle='modal' data-target='#graft_upload_spreadsheet_format_info_dialog'>Spreadsheet Format</a>
+      	  <a id="graft_upload_spreadsheet_format_info" data-toggle='modal' data-target='#graft_upload_spreadsheet_format_info_dialog'><% __('Spreadsheet Format') |h %></a>
     	  </p>
   	  </&>
 
   	  <form method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_graft_form" name="upload_graft_form">
-    	    <label for="graft_uploaded_file" style="display: inline-block; width: 100px;">Upload Grafting File:</label>
+    	    <label for="graft_uploaded_file" style="display: inline-block; width: 100px;"><% __('Upload Grafting File:') |h %></label>
     	    <input type="file" name="graft_uploaded_file" id="graft_uploaded_file" encoding="multipart/form-data" />
     	  </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	<button type="button" class="btn btn-primary" name="upload_graft_dialog_submit" id="upload_graft_dialog_submit">Validate</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+	<button type="button" class="btn btn-primary" name="upload_graft_dialog_submit" id="upload_graft_dialog_submit"><% __('Validate') |h %></button>
       </div>
     </div>
   </div>
@@ -92,18 +92,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="graftUploadInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="graftUploadInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
- 	  <b>Graft may be uploaded in tab-delimited text file format</b>
+ 	  <b><% __('Graft may be uploaded in tab-delimited text file format') |h %></b>
 	  <br>
 	  <p>(.xls or .xlsx formats are <b>NOT</b> supported)</p>
 	  <hr>
-	  <b>Header:</b>
+	  <b><% __('Header:') |h %></b>
 	  <br>
-	  <p>The first row (header) should contain the following:</p>
+	  <p><% __('The first row (header) should contain the following:') |h %></p>
 	  
 	  <table class="table table-hover table-bordered">
   	  <body>
@@ -114,20 +114,20 @@
 	  </body>
 	  </table>
 	  
-	  <h4>Required fields:</h4>
+	  <h4><% __('Required fields:') |h %></h4>
 	  <ul>
             <li>scion accession (exact name must exist in the database)</li>
             <li>rootstock accession (must exist in the database)</li>
 	  </ul>
 	  
-	  <h4>Notes</h4>
+	  <h4><% __('Notes') |h %></h4>
 	  <ul>
 	    <li>The graft accession will be created in the database upon upload. The name of the graft will be "scion"+"rootstock", where "+" is the default graft separator character. The default separator can be changed before upload. The default can be changed in the sgn_local.conf, default_graft_separator key.
 	  </ul>
         </div>
 	
 	<div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
 	</div>
       </div>
     </div>

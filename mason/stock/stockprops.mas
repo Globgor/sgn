@@ -68,8 +68,8 @@ my $prop_select = simple_selectbox_html(
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header" style="text-align: center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="add<% $div_name %>Dialog">Add Property</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add<% $div_name %>Dialog"><% __('Add Property') |h %></h4>
       </div>
       <div class="modal-body">
 	<div class="container-fluid">
@@ -88,8 +88,8 @@ my $prop_select = simple_selectbox_html(
         </div>
       
       <div class="modal-footer">
-        <button id="close_add_<% $div_name %>_stockprop_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="<% $div_name %>_addProp_submit" id="<% $div_name %>_addProp_submit" title="submit">Submit</button>  
+        <button id="close_add_<% $div_name %>_stockprop_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="<% $div_name %>_addProp_submit" id="<% $div_name %>_addProp_submit" title="<% __('submit') |h %>"><% __('Submit') |h %></button>  
       </div>
       </form>
     </div>

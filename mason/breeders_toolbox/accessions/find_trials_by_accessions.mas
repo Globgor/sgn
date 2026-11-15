@@ -7,13 +7,13 @@
 <form id="accession_list_selector">
 <table class="table borderless" cellpadding="10" border="0" >
   <tbody>
-  <p>Select accession list:</p>
+  <p><% __('Select accession list:') |h %></p>
     <td>
       <div id="accession_list">
       </div>
     </td>
     <td>
-      <input class="btn btn-primary" type="button" id="find_trials" value="Find Trials" />
+      <input class="btn btn-primary" type="button" id="find_trials" value="<% __('Find Trials') |h %>" />
     </td>
   </tbody>
   </table>
@@ -22,9 +22,9 @@
 <table id="trial_summary_data" style="margin-top: 50px;" class="display">
 <thead>
   <tr>
-    <th>Accession name</th>
-    <th>Number of associated trials</th>
-    <th>Trial list</th>
+    <th><% __('Accession name') |h %></th>
+    <th><% __('Number of associated trials') |h %></th>
+    <th><% __('Trial list') |h %></th>
   </tr>
 </thead>
 
@@ -34,7 +34,7 @@
 <tbody>
 	<tr>
 	<td>
-	<p style="font-size:14px"><b>Use the trials in common in lists:</b></p>
+	<p style="font-size:14px"><b><% __('Use the trials in common in lists:') |h %></b></p>
 	</td>
        </tr>
        <tr>
@@ -45,13 +45,13 @@
 	</td>
 	<td>
 		<hr style="margin-top:4px;margin-bottom:4px" />
-		<div class="well well-sm"><div id="c1_data_count">No Selection</div></div>
+		<div class="well well-sm"><div id="c1_data_count"><% __('No Selection') |h %></div></div>
 		<div id="c1_to_list_menu" align="center"></div>
 	</td>
 	</tr>
 	<tr>
 	<td>
-		<button class="btn btn-default btn-sm" id="c1_select_all" name ="1" align="center"/>Select All</button>
+		<button class="btn btn-default btn-sm" id="c1_select_all" name ="1" align="center"/><% __('Select All') |h %></button>
 	</td>
 </tr>
 </tbody>

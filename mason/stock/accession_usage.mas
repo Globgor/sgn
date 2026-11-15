@@ -6,51 +6,51 @@
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<& /page/page_title.mas, title=>'Accession Usage' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Accession Usage'), 'h' ) &>
 
-<&| /page/info_section.mas, title => 'Accession Usage for Trials', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Accession Usage for Trials'), 'h' ), collapsible=>1, collapsed=>1 &>
 
 <table id="accession_usage_trials" width="100%" class="table table-hover table-striped">
 <thead>
   <tr>
-    <th>Accession Name</th>
-    <th>Number of Trials</th>
-    <th>Total Number of Plots</th>
+    <th><% __('Accession Name') |h %></th>
+    <th><% __('Number of Trials') |h %></th>
+    <th><% __('Total Number of Plots') |h %></th>
   </tr>
 </thead>
 </table>
 
 </&>
 
-<&| /page/info_section.mas, title => 'Accession Usage as Female Parent', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Accession Usage as Female Parent'), 'h' ), collapsible=>1, collapsed=>1 &>
 
 <table id="accession_usage_female" width="100%" class="table table-hover table-striped">
 <thead>
   <tr>
-    <th>Accession Name</th>
-    <th>Number of Progenies</th>
+    <th><% __('Accession Name') |h %></th>
+    <th><% __('Number of Progenies') |h %></th>
   </tr>
 </thead>
 </table>
-<a href="/search/download_parents_and_numbers_of_progenies?parent_type=female_parent" class="btn btn-sm btn-default">Download</a>
+<a href="/search/download_parents_and_numbers_of_progenies?parent_type=female_parent" class="btn btn-sm btn-default"><% __('Download') |h %></a>
 
 </&>
 
-<&| /page/info_section.mas, title => 'Accession Usage as Male Parent', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Accession Usage as Male Parent'), 'h' ), collapsible=>1, collapsed=>1 &>
 
 <table id="accession_usage_male" width="100%" class="table table-hover table-striped">
 <thead>
   <tr>
-    <th>Accession Name</th>
-    <th>Number of Progenies</th>
+    <th><% __('Accession Name') |h %></th>
+    <th><% __('Number of Progenies') |h %></th>
   </tr>
 </thead>
 </table>
-<a href="/search/download_parents_and_numbers_of_progenies?parent_type=male_parent" class="btn btn-sm btn-default">Download</a>
+<a href="/search/download_parents_and_numbers_of_progenies?parent_type=male_parent" class="btn btn-sm btn-default"><% __('Download') |h %></a>
 
 </&>
 
-<&| /page/info_section.mas, title => 'Accession Phenotype Performance', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Accession Phenotype Performance'), 'h' ), collapsible=>1, collapsed=>0 &>
 
 <div class="well">
     <div class="panel panel-default">
@@ -59,14 +59,14 @@
             <table id="accession_usage_phenotypes" class='table table-bordered table-hover'>
                 <thead>
                     <tr>
-                        <th>Accession</th>
-                        <th>Observation Variable</th>
-                        <th>Mean</th>
-                        <th>Min</th>
-                        <th>Max</th>
-                        <th>Std Dev</th>
+                        <th><% __('Accession') |h %></th>
+                        <th><% __('Observation Variable') |h %></th>
+                        <th><% __('Mean') |h %></th>
+                        <th><% __('Min') |h %></th>
+                        <th><% __('Max') |h %></th>
+                        <th><% __('Std Dev') |h %></th>
                         <th>CV</th>
-                        <th>Count</th>
+                        <th><% __('Count') |h %></th>
                     </tr>
                 </thead>
                 <tbody>

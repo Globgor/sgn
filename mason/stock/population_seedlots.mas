@@ -7,7 +7,7 @@ $stock_id
 
 <div class = "well well-sm">
     <form id="download_population_seedlots_action" action="/breeders/download_population_seedlots_action" method="POST">
-        <button class="btn btn-primary" type="button" id="population_seedlots_download_button">Download Seedlot Info</button>
+        <button class="btn btn-primary" type="button" id="population_seedlots_download_button"><% __('Download Seedlot Info') |h %></button>
         <input name="population_stock_id" id="population_stock_id" type="hidden" value="<% $stock_id %>">
         <input type="hidden" id="population_seedlots_download_token" name="population_seedlots_download_token"/>
     </form>

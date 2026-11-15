@@ -6,21 +6,21 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadDerivedAccessionsDialog">Upload Derived Accessions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDerivedAccessionsDialog"><% __('Upload Derived Accessions') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File format information</b>
+                            <b><% __('File format information') |h %></b>
                             <br>
-                            <a id="derived_accession_upload_spreadsheet_format_info">Spreadsheet Format</a>
+                            <a id="derived_accession_upload_spreadsheet_format_info"><% __('Spreadsheet Format') |h %></a>
                         </p>
                     </&>
                     <form method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_derived_accessions_form" name="upload_derived_accessions_form">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Upload File: </label>
+                            <label class="col-sm-3 control-label"><% __('Upload File:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input type="file" name="derived_accessions_file" id="derived_accessions_file" encoding="multipart/form-data" />
                             </div>
@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_derived_accessions_submit" id="upload_derived_accessions_submit">Upload</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_derived_accessions_submit" id="upload_derived_accessions_submit"><% __('Upload') |h %></button>
             </div>
         </div>
     </div>
@@ -40,19 +40,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="derivedAccessionsSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="derivedAccessionsSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The derived accessions were saved successfully.
+                        <% __('The derived accessions were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_derived_accessions_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_derived_accessions_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -62,8 +62,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadDerivedAccessionsErrorDialog">Upload Derived Accessions Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDerivedAccessionsErrorDialog"><% __('Upload Derived Accessions Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -83,14 +83,14 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadDerivedAccessionsInfoDialog">Upload Template Information For Derived Accessions</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadDerivedAccessionsInfoDialog"><% __('Upload Template Information For Derived Accessions') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) should contain the following:
+                    <% __('The first row (header) should contain the following:') |h %>
                     <br />
 
                     <table class="table table-hover table-bordered table-condensed" >
@@ -104,7 +104,7 @@
                         </tbody>
                     </table>
 
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                         <li>source_name (must be in the database. Stock type can be accession, plant or tissue sample)</li>
                         <li>derived_accession_name (must NOT exist in the database)</li>
@@ -114,7 +114,7 @@
                 <& /help/file_upload_type.mas, type => "Derived Accessions", optional_column => 0 &>
             </div>
             <div class="modal-footer">
-                <button id="close_derived_accession_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_derived_accession_info_upload_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

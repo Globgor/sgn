@@ -3,14 +3,14 @@
 $stock_id
 </%args>
 
-<&| /page/info_section.mas, title=>'Pedigree string' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Pedigree string'), 'h' ) &>
   <select id="pedigree_level_select">
-    <option value="Parents">Parents</option>
-    <option value="Grandparents">Grandparents</option>
-    <option value="Great-Grandparents">Great-Grandparents</option>
+    <option value="Parents"><% __('Parents') |h %></option>
+    <option value="Grandparents"><% __('Grandparents') |h %></option>
+    <option value="Great-Grandparents"><% __('Great-Grandparents') |h %></option>
   </select>
 
-  <span id="pedigree_string">[loading...]</span>
+  <span id="pedigree_string"><% __('[loading...]') |h %></span>
 
   <br /><br />
 </&>

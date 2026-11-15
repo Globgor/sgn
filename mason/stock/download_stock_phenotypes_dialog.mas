@@ -20,7 +20,7 @@ $stock_name => undef
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="downloadStockPhenotypesDialog">Download Phenotypes for <% $stock_name %></h4>
       </div>
       <div class="modal-body">
@@ -28,7 +28,7 @@ $stock_name => undef
 
 	       <form class="form-horizontal" role="form" method="post" >
 	        <div class="form-group">
-                <label class="col-sm-3 control-label">Format: </label>
+                <label class="col-sm-3 control-label"><% __('Format:') |h %> </label>
                 <div class="col-sm-9" >
                     <select class="form-control" id="download_stock_phenotypes_format">
                         <option value="csv">CSV</option>
@@ -37,94 +37,94 @@ $stock_name => undef
                 </div>
 	        </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Data Level: </label>
+                <label class="col-sm-3 control-label"><% __('Data Level:') |h %> </label>
                 <div class="col-sm-9" >
                     <select class="form-control" id="download_stock_phenotypes_level_option">
-                        <option value="all">All</option>
-                        <option value="plot">Plots</option>
-                        <option value="plant">Plants</option>
+                        <option value="all"><% __('All') |h %></option>
+                        <option value="plot"><% __('Plots') |h %></option>
+                        <option value="plant"><% __('Plants') |h %></option>
                     </select>
                 </div>
             </div>
 
-<&| /page/info_section.mas, title=>"Additional Search Options",  collapsible => 1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Additional Search Options"), 'h' ),  collapsible => 1, collapsed=>1 &>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">For repeated measurements, return the: </label>
+                <label class="col-sm-8 control-label"><% __('For repeated measurements, return the:') |h %> </label>
                 <div class="col-sm-4">
                     <select class="form-control" id="download_stock_phenotypes_repetitive_measurements_option">
-                        <option value="first">First value</option>
-                        <option value="last">Last value</option>
-                        <option value="average">Averaged value</option>
-                        <option value="sum">Sum values</option>
-                        <option value="all_values_single_line">All Values Single Line</option>
-                        <option value="all_values_multiple_line">All Values Multiple Line</option>
+                        <option value="first"><% __('First value') |h %></option>
+                        <option value="last"><% __('Last value') |h %></option>
+                        <option value="average"><% __('Averaged value') |h %></option>
+                        <option value="sum"><% __('Sum values') |h %></option>
+                        <option value="all_values_single_line"><% __('All Values Single Line') |h %></option>
+                        <option value="all_values_multiple_line"><% __('All Values Multiple Line') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Include Timestamps: </label>
+                <label class="col-sm-8 control-label"><% __('Include Timestamps:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_timestamp_option">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Include Intercrop Accessions: </label>
+                <label class="col-sm-8 control-label"><% __('Include Intercrop Accessions:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_intercrop_accessions_option">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Include Entry Numbers: </label>
+                <label class="col-sm-8 control-label"><% __('Include Entry Numbers:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_entry_numbers_option">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Include Trait Synonyms: </label>
+                <label class="col-sm-8 control-label"><% __('Include Trait Synonyms:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_trait_synonyms_option">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Suppress User Defined Phenotype Outliers: </label>
+                <label class="col-sm-8 control-label"><% __('Suppress User Defined Phenotype Outliers:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_exclude_outliers">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-8 control-label">Include Parents: </label>
+                <label class="col-sm-8 control-label"><% __('Include Parents:') |h %> </label>
                 <div class="col-sm-4" >
                     <select class="form-control" id="download_stock_phenotypes_pedigrees_option">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
+                        <option value="0"><% __('No') |h %></option>
+                        <option value="1"><% __('Yes') |h %></option>
                     </select>
                 </div>
             </div>
 
             <div class="row form-group">
-                <label class="col-sm-3 control-label">Traits:</label>
+                <label class="col-sm-3 control-label"><% __('Traits:') |h %></label>
                 <div class="col-sm-9" >
                     <div id="download_stock_phenotypes_traits">
                     </div>
@@ -133,8 +133,8 @@ $stock_name => undef
            <div class="row form-group">
               <div class="col-sm-3"></div>
               <div class="col-sm-9">
-                <div id="download_stock_phenotypes_select_all" class="btn btn-sm btn-primary" style="margin:3px">Select all traits</div>
-                <div id="download_stock_phenotypes_select_reset" class="btn btn-sm btn-default" style="margin:3px">Unselect all traits</div>
+                <div id="download_stock_phenotypes_select_all" class="btn btn-sm btn-primary" style="margin:3px"><% __('Select all traits') |h %></div>
+                <div id="download_stock_phenotypes_select_reset" class="btn btn-sm btn-default" style="margin:3px"><% __('Unselect all traits') |h %></div>
               </div>
            </div>
 </&>
@@ -143,8 +143,8 @@ $stock_name => undef
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" name="download_stock_phenotypes_cancel_button" id="download_stock_phenotypes_cancel_button" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="download_stock_phenotypes_submit_button" id="download_stock_phenotypes_submit_button" title="Submit">Submit</button>
+        <button type="button" class="btn btn-default" name="download_stock_phenotypes_cancel_button" id="download_stock_phenotypes_cancel_button" data-dismiss="modal"><% __('Close') |h %></button>
+        <button type="button" class="btn btn-primary" name="download_stock_phenotypes_submit_button" id="download_stock_phenotypes_submit_button" title="<% __('Submit') |h %>"><% __('Submit') |h %></button>
       </div>
     </div>
   </div>

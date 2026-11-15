@@ -8,47 +8,47 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" name="create_population_dismiss_button" id="create_population_dismiss_button_1" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addPopulationDialog">Create A Population</h4>
+                <button type="button" class="close" name="create_population_dismiss_button" id="create_population_dismiss_button_1" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addPopulationDialog"><% __('Create A Population') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <form class="form-horizontal" role="form" name="create_population_form" id="create_population_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Population Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Population Name:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" id="create_population_name" name="create_population_name" type="text" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Member Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Member Type:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="member_type">
-                                    <option value="">Select a member type</option>
-                                    <option value="accessions">accessions</option>
-                                    <option value="plots">plots</option>
-                                    <option value="plants">plants</option>
+                                    <option value=""><% __('Select a member type') |h %></option>
+                                    <option value="accessions"><% __('accessions') |h %></option>
+                                    <option value="plots"><% __('plots') |h %></option>
+                                    <option value="plants"><% __('plants') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div id="population_accession_list" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Choose a List of Accessions to Add: </label>
+                                <label class="col-sm-4 control-label"><% __('Choose a List of Accessions to Add:') |h %> </label>
                                 <div class="col-sm-8" id="create_population_accession_list_div" name="create_population_accession_list_div">
                                 </div>
                             </div>
                         </div>
                         <div id="population_plot_list" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Choose a List of Plots to Add: </label>
+                                <label class="col-sm-4 control-label"><% __('Choose a List of Plots to Add:') |h %> </label>
                                 <div class="col-sm-8" id="create_population_plot_list_div" name="create_population_plot_list_div">
                                 </div>
                             </div>
                         </div>
                         <div id="population_plant_list" style="display:none">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Choose a List of Plants to Add: </label>
+                                <label class="col-sm-4 control-label"><% __('Choose a List of Plants to Add:') |h %> </label>
                                 <div class="col-sm-8" id="create_population_plant_list_div" name="create_population_plant_list_div">
                                 </div>
                             </div>
@@ -57,8 +57,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" name="create_population_dismiss_button" id="create_population_dismiss_button_2" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="create_population_submit" id="create_population_submit">Submit</button>
+                <button type="button" class="btn btn-default" name="create_population_dismiss_button" id="create_population_dismiss_button_2" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="create_population_submit" id="create_population_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -68,7 +68,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="addMembersToPopulationsDialog">Add Members to Population <div id="add_member_population_name"></div></h4>
             </div>
             <div class="modal-body">
@@ -76,7 +76,7 @@
 
                     <form class="form-horizontal" role="form" name="add_member_to_population_form" id="add_member_to_population_form">
                         <div class="form-group">
-                            <label class="col-sm-6 control-label">Choose a List of Members to Add: </label>
+                            <label class="col-sm-6 control-label"><% __('Choose a List of Members to Add:') |h %> </label>
                             <div class="col-sm-6" id="add_member_to_population_list_div" name="list_div">
                             </div>
                         </div>
@@ -85,8 +85,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="add_members_to_population_submit" id="add_members_to_population_submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="add_members_to_population_submit" id="add_members_to_population_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="deletePopulationsDialog">Delete Population <div id="delete_population_name"></div></h4>
             </div>
             <div class="modal-body">
@@ -104,15 +104,15 @@
 
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-sm-6 control-label">Are You Sure?</label>
+                            <label class="col-sm-6 control-label"><% __('Are You Sure?') |h %></label>
                         </div>
                     </form>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="delete_population_submit" id="delete_population_submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="delete_population_submit" id="delete_population_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -122,8 +122,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="createPopulationSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="createPopulationSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_create_population_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_create_population_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
