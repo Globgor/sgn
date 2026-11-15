@@ -18,7 +18,7 @@
                             <center><% __('You can upload 4 different types of seedlot transactions. All of the transactions in each file have to be the same type.') |h %></center>
                             <ul>
                                 <li><% __('Transferring seeds from existing seedlot to another existing seedlot.') |h %></li>
-                                <li><% __('Transferring seeds from existing seedlot to a new seedlot. A new seedlot is created beforing adding new transaction.') |h %></li>
+                                <li><% __('Transferring seeds from existing seedlot to a new seedlot. A new seedlot is created before adding new transaction.') |h %></li>
                                 <li><% __('Removing seeds from existing seedlot to unspecified seedlot name or plot name') |h %></li>
                                 <li><& /util/sentence.mas, text => __x('{bold}Note:{end_bold}To transfer seeds from existing seedlot to a previously stored plot, Please use {bold}Upload Seedlots Planted in Trial{end_bold} link in the Experimental Design section on the Trial Detail page.'), bold => '<b>', end_bold => '</b>' &></li>
                                 <li><% __('Add additional seeds from accession or cross to existing seedlot') |h %></li>
@@ -165,7 +165,7 @@
                                     <br/>
                                     <hr class ="solid">
                                     <center>
-                                        <h4><% __('You want to remove seeds from existing seedlots to unspefified seedlots/plots') |h %></h4>
+                                        <h4><% __('You want to remove seeds from existing seedlots to unspecified seedlots/plots') |h %></h4>
                                     </center>
                                     <div class="well well-sm">
                                         <div class="row">

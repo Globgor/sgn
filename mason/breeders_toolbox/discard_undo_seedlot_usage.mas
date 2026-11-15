@@ -30,13 +30,13 @@
                                 <h4>
                                     <% __('How to Mark Seedlot as DISCARDED:') |h %>
                                 </h4>
-                                <li><% __('Using a List: Several seedlots can be discarded at once by using a list with seedlots list type. The link can be found at the buttom of Manage Seedlots (Available Seedlots) page.') |h %></li>
-                                <li><% __('Discarding single seedlot: The link can be found at the buttom of Seedlot Details page.') |h %></li>
+                                <li><% __('Using a List: Several seedlots can be discarded at once by using a list with seedlots list type. The link can be found at the bottom of Manage Seedlots (Available Seedlots) page.') |h %></li>
+                                <li><% __('Discarding single seedlot: The link can be found at the bottom of Seedlot Details page.') |h %></li>
                                 <hr class ="solid">
                                 <h4>
                                     <% __('UNDO Discarding seedlots:') |h %>
                                 </h4>
-                                <p><% __('Discarded seedlot can be reversed by using UNDO option at the buttom of Seedlot Details page') |h %> </p>
+                                <p><% __('Discarded seedlot can be reversed by using UNDO option at the bottom of Seedlot Details page') |h %> </p>
                             </div>
                             <div class="modal-footer">
                                 <button id="close_discarded_seedlot_usage_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
