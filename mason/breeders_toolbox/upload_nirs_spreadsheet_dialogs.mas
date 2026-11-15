@@ -93,13 +93,13 @@
             <h3><% __('Upload NIRS .csv:') |h %></h3>
 
             <ul>
-                <li><strong>id</strong>: Optional identifier for each NIRS read. The id must be an integer.</li>
-                <li><strong>sampling_id</strong>: Optional identifier for each sample. Strings are allowed.</li>
-                <li><strong>sampling_date</strong>: Optional field. The format allowed is: YYYY-MM-DD.</li>
-                <li><strong>observationunit_name</strong>: Required field that matches with existing data in the database. It can be the plot name, subplots, plant name, or tissue sample, depending how your trial is designed.</li>
-                <li><strong>device_id</strong>: Optional field to identify your device. Strings are allowed.</li>
+                <li><& /util/sentence.mas, text => __x('{column}: Optional identifier for each NIRS read. The {identifier} must be an integer.'), identifier => 'id', column => '<strong>id</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Optional identifier for each sample. Strings are allowed.'), column => '<strong>sampling_id</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Optional field. The format allowed is: {format}.'), format => 'YYYY-MM-DD', column => '<strong>sampling_date</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Required field that matches with existing data in the database. It can be the plot name, subplots, plant name, or tissue sample, depending how your trial is designed.'), column => '<strong>observationunit_name</strong>' &></li>
+                <li><& /util/sentence.mas, text => __x('{column}: Optional field to identify your device. Strings are allowed.'), column => '<strong>device_id</strong>' &></li>
                 <li><strong>device_type</strong>: Required field. It is possible upload data for a single device type. They can be: <strong>SCiO, QST, Foss6500,FOSSDS2500, FOSSXDS, ASDQualityspec,ASDLabSpec,SpecimFX17, BunchiN500, InnoSpectraNIR-S-G1, LinkSquare, FTIR6X, or Viavi microNIR </strong>.</li>
-                <li><strong>comments</strong>: Optional field for general comments.</li>
+                <li><& /util/sentence.mas, text => __x('{column}: Optional field for general comments.'), column => '<strong>comments</strong>' &></li>
                 <li><% __('All other columns are required wavelengths. You can add how many columns you want upload -- there is no limit.') |h %></li>
             </ul>
             <table class="table table-hover table-bordered table-condensed" >
