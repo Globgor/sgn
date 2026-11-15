@@ -9,7 +9,10 @@ Mason View Component for SGN. This extends Catalyst::View::HTML::Mason.
 =cut
 
 package SGN::View::Mason;
+use strict;
+use warnings;
 use Moose;
+use SGN::I18N::Browser ();
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
@@ -21,6 +24,7 @@ __PACKAGE__->config(
     template_extension => '.mas',
     interp_args => {
         data_dir => SGN->tempfiles_base->subdir('mason'),
+        escape_flags => { js => \&SGN::I18N::Browser::escape_js },
         comp_root => [
             [ main => SGN->path_to('mason') ],
         ],
