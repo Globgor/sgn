@@ -23,6 +23,7 @@ use CXGN::Stock::TissueSample::Search;
 use CXGN::Genotype::Protocol;
 use CXGN::TrackingActivity::ActivityProject;
 use CXGN::Transformation::Transformation;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -96,7 +97,7 @@ sub trial_info : Chained('trial_init') PathPart('') Args(0) {
     my $program_object = CXGN::BreedersToolbox::Projects->new( { schema => $schema });
 
     if (!$program_object->trial_exists($c->stash->{trial_id})) {
-	$c->stash->{message} = "The requested trial does not exist or has been deleted.";
+	$c->stash->{message} = __("The requested trial does not exist or has been deleted.");
 	$c->stash->{template} = 'generic_message.mas';
 	return;
     }

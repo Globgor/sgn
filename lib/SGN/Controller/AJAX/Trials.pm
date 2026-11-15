@@ -11,6 +11,7 @@ use File::Path qw(make_path);
 use File::Spec;
 use File::Slurp qw | read_file |;
 use SGN::Model::Cvterm;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST'; }
 
@@ -216,7 +217,7 @@ sub trial_lookup : Path('/ajax/breeders/trial_lookup') Args(0) {
     my $schema = $c->dbic_schema("Bio::Chado::Schema", undef, $sp_person_id);
 
     if ( !$trial_name || $trial_name eq '' ) {
-        $c->stash->{rest} = {error => "Trial name required"};
+        $c->stash->{rest} = {error => __("Trial name required")};
         $c->detach();
     }
 
@@ -231,7 +232,7 @@ sub trial_lookup : Path('/ajax/breeders/trial_lookup') Args(0) {
 
     # Trial not found
     if ( !$trial_id || $trial_id eq '' ) {
-        $c->stash->{rest} = {error => "Trial not found"};
+        $c->stash->{rest} = {error => __("Trial not found")};
         $c->detach();
     }
 

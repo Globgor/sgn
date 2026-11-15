@@ -6,6 +6,7 @@ use Try::Tiny;
 use SGN::Model::Cvterm;
 use Data::Dumper;
 use CXGN::Trial::Folder;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -105,7 +106,7 @@ sub folder_page :Path("/folder") Args(1) {
     $c->stash->{folder_description} = $folder_project->description();
     $c->stash->{has_child_folders} = $has_child_folders;
     if (!$folder->breeding_program) {
-        $c->stash->{message} = "The requested folder does not exist or has been deleted.";
+        $c->stash->{message} = __("The requested folder does not exist or has been deleted.");
         $c->stash->{template} = 'generic_message.mas';
         return;
     }
