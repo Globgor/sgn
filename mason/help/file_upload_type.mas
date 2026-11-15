@@ -13,7 +13,7 @@
     </p>
 % if ($optional_column) {
     <p>
-      Optional columns may be left out, if not used in your data.
+      <% __('Optional columns may be left out, if not used in your data.') |h %>
     </p>
 % }
   </div>

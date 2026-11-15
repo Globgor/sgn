@@ -1,6 +1,6 @@
      <tr>
         <td>
-          <h4>Ordering Clones</h4>
+          <h4><% __('Ordering Clones') |h %></h4>
 
           <div class="boxcontent">
             <dl>

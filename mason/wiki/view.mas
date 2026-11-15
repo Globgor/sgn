@@ -16,27 +16,27 @@ $page_name => 'WikiHome'
     }
 </style>
 
-<h3><a href="/wiki"><b>Wiki</b></a>&nbsp;&nbsp;&nbsp;
-  <button id="new_wiki_page_button" class="btn" >New</button>  <button id="edit_wiki_page_button" class="btn">Edit</button> <button id="delete_wiki_page_button" class="btn">Delete</button>  &nbsp;&nbsp;&nbsp;<a style="font-size:10pt" href="/wiki/all_pages">All Pages</a> &nbsp;&nbsp;&nbsp;<a style="font-size:10pt" href="/breeders/file_share_dump">Upload</a>&nbsp;&nbsp;&nbsp; <a target="_new" href="https://daringfireball.net/projects/markdown/syntax#list" style="font-size:10pt">Syntax</a></h3>
+<h3><a href="/wiki"><b><% __('Wiki') |h %></b></a>&nbsp;&nbsp;&nbsp;
+  <button id="new_wiki_page_button" class="btn" ><% __('New') |h %></button>  <button id="edit_wiki_page_button" class="btn"><% __('Edit') |h %></button> <button id="delete_wiki_page_button" class="btn"><% __('Delete') |h %></button>  &nbsp;&nbsp;&nbsp;<a style="font-size:10pt" href="/wiki/all_pages"><% __('All Pages') |h %></a> &nbsp;&nbsp;&nbsp;<a style="font-size:10pt" href="/breeders/file_share_dump"><% __('Upload') |h %></a>&nbsp;&nbsp;&nbsp; <a target="_new" href="https://daringfireball.net/projects/markdown/syntax#list" style="font-size:10pt"><% __('Syntax') |h %></a></h3>
 <hr>
-<b><span id="page_name" title="page name">?</span> (v<span id="page_version">?</span></b>)
+<b><span id="page_name" title="<% __('page name') |h %>">?</span> (v<span id="page_version">?</span></b>)
 <hr>
 <div class="modal" id="new_wiki_page_modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-	<h5 class="modal-title">Create New Wiki Page</h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<h5 class="modal-title"><% __('Create New Wiki Page') |h %></h5>
+	<button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
 	  <span aria-hidden="true">&times;</span>
         </button>
       </div>
     <div class="modal-body">
-    <p>Please enter a page name in camelCase (for example: myFavoritePage). Spaces and special characters will be converted.</p>
-	<p>Page Name <input type="text" id="wiki_page_name" alt="enter page name" length="20" /></p>
+    <p><% __('Please enter a page name in camelCase (for example: myFavoritePage). Spaces and special characters will be converted.') |h %></p>
+	<p><% __('Page Name') |h %> <input type="text" id="wiki_page_name" alt="<% __('enter page name') |h %>" length="20" /></p>
       </div>
       <div class="modal-footer">
-        <button type="button" id="create_wiki_page_button" class="btn btn-primary">Create Page</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="create_wiki_page_button" class="btn btn-primary"><% __('Create Page') |h %></button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><% __('Cancel') |h %></button>
       </div>
     </div>
   </div>
@@ -47,16 +47,16 @@ $page_name => 'WikiHome'
     <div class="modal-content">
       <div class="modal-header">
 	<h5 class="modal-title">Edit Wiki Page <b><span id="edit_page_name"></span></b></h5>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
 	  <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-    <p><textarea id="wiki_page_content" rows="50" cols="400" alt="ENTER WIKI PAGE IN MARKDOWN"></textarea></p>
+    <p><textarea id="wiki_page_content" rows="50" cols="400" alt="<% __('ENTER WIKI PAGE IN MARKDOWN') |h %>"></textarea></p>
       </div>
       <div class="modal-footer">
-        <button type="button" id="save_wiki_page_button" class="btn btn-primary">Save Page</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" id="save_wiki_page_button" class="btn btn-primary"><% __('Save Page') |h %></button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><% __('Cancel') |h %></button>
       </div>
     </div>
   </div>

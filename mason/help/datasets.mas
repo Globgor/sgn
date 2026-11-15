@@ -1,7 +1,7 @@
 
-<& /page/page_title.mas, title => "Dataset Help" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Dataset Help"), 'h' ) &>
 
-<p><b>Working with Datasets</b></p>
+<p><b><% __('Working with Datasets') |h %></b></p>
 
 <p>Datasets are collections of identifiers that are stored in
 the database. Datasets can be composed of accessions, plots, traits, locations,
@@ -10,7 +10,7 @@ only be created and seen by the user while logged in. SGN databases use
 Datasets in analysis tools on the website such as Wizard, GWAS, GS,
 Heritability, and Stability tools.</p>
 
-<p><b>Creating Datasets</b></p>
+<p><b><% __('Creating Datasets') |h %></b></p>
 
 <p>Datasets are generated in the Wizard. Up to 4 identifiers
 can be selected. First select the categories and entries in each column. In
@@ -22,14 +22,14 @@ list then selecting the “Make Public” button.</p>
 <img src="/static/documents/help/screenshots/DatasetHelpImage001.png" width="1000px">
 <img src="/static/documents/help/screenshots/DatasetHelpImage002.png" width="600px">
 
-<p><b>Retrieving Datasets</b></p>
+<p><b><% __('Retrieving Datasets') |h %></b></p>
 
 <p>To retrieve a dataset in the Wizard, select the dataset in
 the “Load Dataset” input then select the “Load” button. This will populate the
 columns in the Wizard and then allow you to download and analyze the dataset.</p><br>
 <img src="/static/documents/help/screenshots/DatasetHelpImage003.png" width="600px">
 
-<p><b>Searching Datasets</b></p>
+<p><b><% __('Searching Datasets') |h %></b></p>
 
 <p>To search for a dataset, select the “Datasets” link in the
 toolbar at the top right of the website. Selecting the Dataset name will

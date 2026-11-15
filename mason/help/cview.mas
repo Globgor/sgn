@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title=>"SGN Comparative Viewer Help" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("SGN Comparative Viewer Help"), 'h' ) &>
 
   <center>
     
@@ -16,32 +16,32 @@
                 viewer</a> is a tool for displaying, browsing, and
                 comparing map information on SGN.
 
-    <h3>Map overview page</h3>
+    <h3><% __('Map overview page') |h %></h3>
 
-    <p>When choosing a map from the map menu, the map overview page will be displayed. It shows some overview information about the map and allows the map to be queried with marker names. The basic elements on this page are:
+    <p><% __('When choosing a map from the map menu, the map overview page will be displayed. It shows some overview information about the map and allows the map to be queried with marker names. The basic elements on this page are:') |h %>
  <ol>
-<li>A small overview graph with all the chromosomes in the map that illustrates the marker density of each linkage group. The glyphs are clickable and will open the clicked chromosome in chromosome detail view.</li>
-<li>A text box that can be used to locate markers on the map - you can highlight multiple markers by entering marker names separated by spaces.</li>
-<li>Size increase/decrease, to change the display size of the map.
-<li>The abstract gives more details about the origins, submitters, and methodologies of the map.</li>
-<li>A list of chromosomes in the map along with the number of markers located on the map. </li>
-<li>Statistics about the marker collections, such as COSII markers.</li>
-<li>Statistics about the different assay protocols that were used to construct the map, such as RFLP markers or CAPS markers.</li>
-<li>User comments. Any logged in user can leave a comment about the map displayed. The comment feature is not available on all maps.</li>
+<li><% __('A small overview graph with all the chromosomes in the map that illustrates the marker density of each linkage group. The glyphs are clickable and will open the clicked chromosome in chromosome detail view.') |h %></li>
+<li><% __('A text box that can be used to locate markers on the map - you can highlight multiple markers by entering marker names separated by spaces.') |h %></li>
+<li><% __('Size increase/decrease, to change the display size of the map.') |h %>
+<li><% __('The abstract gives more details about the origins, submitters, and methodologies of the map.') |h %></li>
+<li><% __('A list of chromosomes in the map along with the number of markers located on the map.') |h %> </li>
+<li><% __('Statistics about the marker collections, such as COSII markers.') |h %></li>
+<li><% __('Statistics about the different assay protocols that were used to construct the map, such as RFLP markers or CAPS markers.') |h %></li>
+<li><% __('User comments. Any logged in user can leave a comment about the map displayed. The comment feature is not available on all maps.') |h %></li>
 </ol>
 
 <div class="boxbgcolor5">
 <center>
-    <img src="/documents/img/cview_overview_screenshot1as.png" border="0" alt="cview overview page screenshot" />
-    <img src="/documents/img/cview_overview_screenshot2as.png" border="0" alt="cview overview page screenshot" />
+    <img src="/documents/img/cview_overview_screenshot1as.png" border="0" alt="<% __('cview overview page screenshot') |h %>" />
+    <img src="/documents/img/cview_overview_screenshot2as.png" border="0" alt="<% __('cview overview page screenshot') |h %>" />
 </center>
 </div>
 
-<h3>The chromosome view</h3>
+<h3><% __('The chromosome view') |h %></h3>
 
-<p>Clicking on one of the chromosome glyphs on the overview page will bring up the chromosome view. In this view, a chromosome is displayed in its entirety, but most of the marker names will be hidden because on most maps there are too many markers to be displayed. To see all the markers, the map can be zoomed into by clicking on a point of interest. This will bring up a zoomed-in view alongside the chromosome. The chromosome can also be compared to another chromosome of another map by choosing a comparison chromosome from the list.</p>
+<p><% __('Clicking on one of the chromosome glyphs on the overview page will bring up the chromosome view. In this view, a chromosome is displayed in its entirety, but most of the marker names will be hidden because on most maps there are too many markers to be displayed. To see all the markers, the map can be zoomed into by clicking on a point of interest. This will bring up a zoomed-in view alongside the chromosome. The chromosome can also be compared to another chromosome of another map by choosing a comparison chromosome from the list.') |h %></p>
 
-<div class="boxbgcolor5"><center><img src="/documents/img/cview_screenshot.jpg" alt="comparative viewer" /></center></div>
+<div class="boxbgcolor5"><center><img src="/documents/img/cview_screenshot.jpg" alt="<% __('comparative viewer') |h %>" /></center></div>
 
     <p>A typical image from a chromosome view is shown in the figure above (the exact rendering of the buttons will depend on the platform and browser used).
     The different screen elements are:</p>
@@ -148,9 +148,9 @@
 </center>
 
 
-    <h3>The map comparison view</h3>
+    <h3><% __('The map comparison view') |h %></h3>
 
-<p>Clicking on the "view entire map" link in the chromosome view displays the map comparison view. In total, three maps can be compared at the same time. Below is a screenshot of a comparison of tomato and potato.</p>
+<p><% __('Clicking on the "view entire map" link in the chromosome view displays the map comparison view. In total, three maps can be compared at the same time. Below is a screenshot of a comparison of tomato and potato.') |h %></p>
 
 <div class="boxbgcolor5">
 <center>

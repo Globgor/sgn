@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title=>"Breedbase Help" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Breedbase Help"), 'h' ) &>
 
 <div>Breedbase is a comprehensive breeding management and analysis software. It can be used to design field layouts, collect <a href="https://phenoapps.org">phenotypic and other information using Phenoapps software</a>, support the collection of genotyping samples in a field, store large amounts of high density genotypic information, and provide Genomic Selection related analyses and predictions. Breedbase supports the <a href="https://brapi.org">BrAPI standard</a>.
 </div>
@@ -15,7 +15,7 @@
 
 <div class="panel panel-default">
 <div class="panel-body">
-     To cite Breedbase, use the following publication:<br />
+     <% __('To cite Breedbase, use the following publication:') |h %><br />
 <br />
 <b>Breedbase: a digital ecosystem for modern plant breeding</b>
 Nicolas Morales, Alex C Ogbonna, Bryan J Ellerbrock, Guillaume J Bauchet, Titima Tantikanjana, Isaak Y Tecle, Adrian F Powell, David Lyon, Naama Menda, Christiano C Simoes, Surya Saha, Prashant Hosmani, Mirella Flores, Naftali Panitz, Ryan S Preble, Afolabi Agbona, Ismail Rabbi, Peter Kulakow, Prasad Peteti, Robert Kawuki, Williams Esuma, Micheal Kanaabi, Doreen M Chelangat, Ezenwanyi Uba, Adeyemi Olojede, Joseph Onyeka, Trushar Shah, Margaret Karanja, Chiedozie Egesi, Hale Tufan, Agre Paterne, Asrat Asfaw, Jean-Luc Jannink, Marnin Wolfe, Clay L Birkett, David J Waring, Jenna M Hershberger, Michael A Gore, Kelly R Robbins, Trevor Rife, Chaney Courtney, Jesse Poland, Elizabeth Arnaud, Marie-Angélique Laporte, Heneriko Kulembeka, Kasele Salum, Emmanuel Mrema, Allan Brown, Stanley Bayo, Brigitte Uwimana, Violet Akech, Craig Yencho, Bert de Boeck, Hugo Campos, Rony Swennen, Jeremy D Edwards, Lukas A Mueller.

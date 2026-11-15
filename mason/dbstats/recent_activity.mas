@@ -8,55 +8,55 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<& /page/page_title.mas, title => 'Recent activity' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Recent activity'), 'h' ) &>
 
-Start Date: <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
+<% __('Start Date:') |h %> <input type="text" id="dbstats_start_date" title="dbstats_start_date"  />
 <td>&nbsp;</td></td><td>
 
-End Date: <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
+<% __('End Date:') |h %> <input type="text" id="dbstats_end_date" title="dbstats_end_date"  />
 </td><td>
 &nbsp;
 </td><td>
-<input type="checkbox" id="include_dateless_items" checked="1" > include items without a date</input>
+<input type="checkbox" id="include_dateless_items" checked="1" > <% __('include items without a date') |h %></input>
 </td><td>
 &nbsp;
 </td><td>
-<button id="update_dbstats_by_date">Update</button>
+<button id="update_dbstats_by_date"><% __('Update') |h %></button>
 <br /><br />
 <div id="dbstats_message"></div>
 
-<h3>Trials</h3>
+<h3><% __('Trials') |h %></h3>
 <div id="recent_activity_trials_div">
   <table id="recent_activity_trials" width="600">
   <thead>
-    <tr><th width="200">Breeding Program</th><th width="200">Trials</th></tr>
+    <tr><th width="200"><% __('Breeding Program') |h %></th><th width="200"><% __('Trials') |h %></th></tr>
     </thead>
   </table>
 </div>
 
-<h3>Phenotypes</h3>
+<h3><% __('Phenotypes') |h %></h3>
 <div id="recent_activity_phenotypes_div">
   <table id="recent_activity_phenotypes" width="600">
   <thead>
-    <tr><th width="200">Breeding Program</th><th width="200">Phenotypes</th></tr>
+    <tr><th width="200"><% __('Breeding Program') |h %></th><th width="200"><% __('Phenotypes') |h %></th></tr>
     </thead>
   </table>
 </div>
 
-<h3>Accessions</h3>
+<h3><% __('Accessions') |h %></h3>
 <div id="recent_activity_accessions_div">
   <table id="recent_activity_accessions" width="600">
   <thead>
-    <tr><th width="200">Breeding Program</th><th width="200">Accessions</th></tr>
+    <tr><th width="200"><% __('Breeding Program') |h %></th><th width="200"><% __('Accessions') |h %></th></tr>
     </thead>
   </table>
 </div>
 
-<h3>Plots</h3>
+<h3><% __('Plots') |h %></h3>
 <div id="recent_activity_plots_div">
   <table id="recent_activity_plots" width="600">
   <thead>
-    <tr><th width="200">Breeding Program</th><th width="200">Plots</th></tr>
+    <tr><th width="200"><% __('Breeding Program') |h %></th><th width="200"><% __('Plots') |h %></th></tr>
     </thead>
   </table>
 </div>

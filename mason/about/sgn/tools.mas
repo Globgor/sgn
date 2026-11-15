@@ -2,9 +2,9 @@
   use CXGN::Page::FormattingHelpers qw/info_table_html/;
 </%once>
 
-<&| /page/info_section.mas, title => 'Data' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data'), 'h' ) &>
 <dl>
-<dt>Solanaceae and other Genomes</dt>
+<dt><% __('Solanaceae and other Genomes') |h %></dt>
 <dd>SGN is a home for Solanaceae and closely related genomes, such as selected Rubiaceae genomes (e.g., <i>Coffea</i>). The <a href="/organism/Solanum_lycopersicum/genome">tomato</a>, <a href="/organism/Solanum_tuberosum/genome">potato</a>, <a href="/organism/Capsicum_annuum/genome">pepper</a>, and <a href="/organism/Solanum_melongena">eggplant</a> genome are examples of genomes that are currently available. If you would like to include a Solanaceae genome that you sequenced in SGN, please <a href="/contact/form">contact us</a>.</dd>
 <dt>ESTs</dt>
 <dd>SGN houses EST collections for tomato, potato, pepper, eggplant and
@@ -14,14 +14,14 @@ sequence similarity, the study of syntenic relationships between
 species in comparative mapping projects, and are essential for
 microarray technology.
 </dd>
-<dt>Unigenes</dt>
+<dt><% __('Unigenes') |h %></dt>
 <dd>SGN assembles and publishes unigene builds from these EST sequences.  For more information, see <a href="/methods/unigene/index.pl">Unigene Methods</a>.</dd>
-<dt>Maps and Markers</dt>
+<dt><% __('Maps and Markers') |h %></dt>
 <dd>SGN has genetic maps and a searchable catalog of markers for
 tomato, potato, pepper, and eggplant.</dd>
   </ul>
 </dd>
-<dt>Tools</dt>
+<dt><% __('Tools') |h %></dt>
 <dd>SGN makes available a wide range of web-based bioinformatics tools
 for use by anyone, listed <a href="/tools/">here</a>.  Some of our
 most popular tools include <a href="/tools/blast/">BLAST</a> searches,
@@ -42,7 +42,7 @@ Overview</a>. Entire datasets can also be downloaded from our <a href="ftp://ftp
 </&>
 
 
-<&| /page/info_section.mas, title => 'SGN community-driven gene and phenotype database' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('SGN community-driven gene and phenotype database'), 'h' ) &>
 <ul style="margin: 0; padding-left: 1em">
 
    <li>We have developed simple web interfaces for the SGN user-community to submit, annotate, and curate the Solanaceae locus and phenotype databases. Our goal is to share biological information, and have the experts in their field

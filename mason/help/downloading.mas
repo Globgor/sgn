@@ -1,5 +1,5 @@
 
-<& /page/page_title.mas, title=>"Data Download Options" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Data Download Options"), 'h' ) &>
 
 <div>
 <p>SGN provides various data files for download via anonymous FTP and

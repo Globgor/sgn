@@ -1,5 +1,5 @@
 
- <& /page/page_title.mas, title=>"Tomato Genome Project - clone distribution policy" &>
+ <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Tomato Genome Project - clone distribution policy"), 'h' ) &>
 
   <center>
     
@@ -45,7 +45,7 @@
           through this project to offset some of the associated
           costs.</strong></p>
 
-          <strong>Cost Basis</strong>
+          <strong><% __('Cost Basis') |h %></strong>
           <p>CUGI received a total of \$100,000 (apx. \$80K in direct
           costs) spread over 3 years in support of clone
           maintenance and distribution. These funds have been used
@@ -60,7 +60,7 @@
           localizing, and picking each clone represents a
           significant effort.</p>
 
-          <strong>Clone Request Charges</strong>
+          <strong><% __('Clone Request Charges') |h %></strong>
           <p>Up to 150 clones can be requested per laboratory per year
           at the subsidized rate of \$5 per clone. An unlimited
           number of additional clones can be requested by any one
@@ -74,7 +74,7 @@
 
           <table summary="" border="0">
             <tr>
-              <td>Clones 1 - 150 in any twelve month period:</td>
+              <td><% __('Clones 1 - 150 in any twelve month period:') |h %></td>
               <td>\$5/clone</td>
             </tr>
 
@@ -104,7 +104,7 @@
           Atkins</a> at the Clemson University Genomics Institute
           (CUGI).</p>
 
-          <strong>Acknowledgements</strong>
+          <strong><% __('Acknowledgements') |h %></strong>
           <p>Publications referring to the use of clones resulting
           from the NSF Tomato Genome Project should include an
           acknowledgement similar to the following: "Tomato EST

@@ -1,11 +1,11 @@
 
-<& /page/page_title.mas, title=>"FISH Data Submission Help" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("FISH Data Submission Help"), 'h' ) &>
 
 <p>This document describes what we at SGN are prepared to accept for FISH
 experiment data. Please <a href="/contact/form">contact us</a> if you have any questions about these guidelines.</p>
 
 
-<p>When submitting spreads, the preferred folder layout looks like this:</p>
+<p><% __('When submitting spreads, the preferred folder layout looks like this:') |h %></p>
 
 <pre>&lt;chromosome arm&gt;/&lt;BACS on arm&gt;/&lt;spreads for BAC&gt;/&lt;files for spread&gt;</pre>
 
