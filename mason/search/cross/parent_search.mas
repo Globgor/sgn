@@ -49,12 +49,12 @@ jQuery(document).ready(function (){
     jQuery("#search_parents").click(function(){
         var accession_list_id = jQuery('#accession_list_select').val();
         if (!accession_list_id) {
-            alert("Please select a list of accessions");
+            alert(<% __('Please select a list of accessions') |js %>);
             return;
         }
 
         if (! lo.legacy_validate(accession_list_id, 'uniquenames', true)) {
-            alert('The accession list contains elements that are not accessions or are not uniquenames.');
+            alert(<% __('The accession list contains elements that are not accessions or are not uniquenames.') |js %>);
             return;
         }
 
@@ -67,7 +67,7 @@ jQuery(document).ready(function (){
             },
             columns: [
                 {
-                    title: "Female Parent",
+                    title: <% __('Female Parent') |js %>,
                     data: null,
                     render: function(data, type, row){
                         if (row.female_id === null) {
@@ -78,7 +78,7 @@ jQuery(document).ready(function (){
                     }
                 },
                 {
-                    title: "Male Parent",
+                    title: <% __('Male Parent') |js %>,
                     data: null,
                     render: function(data, type, row){
                         if (row.male_id === null) {
@@ -89,11 +89,11 @@ jQuery(document).ready(function (){
                     }
                 },
                 {
-                    title: "Number of Accessions",
+                    title: <% __('Number of Accessions') |js %>,
                     data: "no_of_accessions",
                 },
                 {
-                    title: "Accession Names",
+                    title: <% __('Accession Names') |js %>,
                     data: "progenies",
                 },
             ],

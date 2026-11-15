@@ -23,26 +23,26 @@ jQuery(document).ready(function(){
             'destroy': true,
             'ajax':'/ajax/search/all_cross_entries',
             columns: [
-                { title: "Cross Unique ID", "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
-                { title: "Cross Type", "data": "cross_type" },
-                { title: "Female Parent", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.female_id+"/view'>"+row.female_name+"</a>"; } },
-                { title: "Female Ploidy", "data": "female_ploidy" },
-                { title: "Female Genome Structure", "data": "female_genome_structure" },
-                { title: "Male Parent", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Cross Unique ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
+                { title: <% __('Cross Type') |js %>, "data": "cross_type" },
+                { title: <% __('Female Parent') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.female_id+"/view'>"+row.female_name+"</a>"; } },
+                { title: <% __('Female Ploidy') |js %>, "data": "female_ploidy" },
+                { title: <% __('Female Genome Structure') |js %>, "data": "female_genome_structure" },
+                { title: <% __('Male Parent') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.male_parent_id === null){
                         return 'NA';
                     } else {
                         return "<a href='/stock/"+row.male_id+"/view'>"+row.male_name+"</a>";
                     }
                 }},
-                { title: "Male Ploidy", "data": "male_ploidy" },
-                { title: "Male Genome Structure", "data": "male_genome_structure" },
-                { title: "Pollination Date", "data": "pollination_date" },
-                { title: "Number of Seeds", "data": "number_of_seeds" },
-                { title: "Number of Progenies", "data": "progeny_count" },
-                { title: "Crossing Experiment", "data": null, "render": function ( data, type, row ) { return "<a href='/breeders/trial/"+row.project_id+"'>"+row.project_name+"</a>"; } },
-                { title: "Description", "data": "project_description" },
-                { title: "Location", "data": "project_location" },
+                { title: <% __('Male Ploidy') |js %>, "data": "male_ploidy" },
+                { title: <% __('Male Genome Structure') |js %>, "data": "male_genome_structure" },
+                { title: <% __('Pollination Date') |js %>, "data": "pollination_date" },
+                { title: <% __('Number of Seeds') |js %>, "data": "number_of_seeds" },
+                { title: <% __('Number of Progenies') |js %>, "data": "progeny_count" },
+                { title: <% __('Crossing Experiment') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/breeders/trial/"+row.project_id+"'>"+row.project_name+"</a>"; } },
+                { title: <% __('Description') |js %>, "data": "project_description" },
+                { title: <% __('Location') |js %>, "data": "project_location" },
             ],
         });
     });

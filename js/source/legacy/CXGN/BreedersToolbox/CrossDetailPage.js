@@ -129,11 +129,11 @@ jQuery(document).ready(function() {
             'Cancel': {
                 id: 'add_more_progeny_dialog_cancel_button',
                 click:  function() { jQuery('#add_more_progeny_dialog').dialog("close") },
-                text: "Cancel"
+                text: gettext("Cancel")
             }
         },
         autoOpen: false,
-        title: 'Add more progeny'
+        title: gettext('Add more progeny')
     });
 
     function add_more_progeny(cross_id, cross_name, basename, start_number, progeny_count) {
@@ -162,11 +162,11 @@ jQuery(document).ready(function() {
 	        'Done': {
                 id: 'edit_properties_dialog_done_button',
                 click:  function() { jQuery('#edit_properties_dialog').dialog("close") },
-                text: "Done",
+                text: gettext("Done"),
             }
         },
         autoOpen: false,
-        title: 'Edit Field Crossing Data'
+        title: gettext('Edit Field Crossing Data')
     });
 
     jQuery('#edit_properties_link').click( function() {
@@ -228,11 +228,11 @@ jQuery(document).ready(function() {
             if (response.message) {
                 yes = confirm(response.message + " Continue? ");
                 if (yes) {
-                    alert("Saving it.");
+                    alert(gettext("Saving it."));
                     save_property(cross_id, type, value);
                 }
                 else {
-                    alert("Not saving.");
+                    alert(gettext("Not saving."));
                 }
             }
             if (response.success) {
@@ -240,7 +240,7 @@ jQuery(document).ready(function() {
                 property_table.ajax.relaod();
             }
         }).fail( function() {
-            alert("The request for checking the parameters failed. Please try again.");
+            alert(gettext("The request for checking the parameters failed. Please try again."));
         });
     }
 
@@ -262,7 +262,7 @@ jQuery(document).ready(function() {
             return;
         }
         else {
-            alert("The property was successfully saved.");
+            alert(gettext("The property was successfully saved."));
         }
     }
 
@@ -304,11 +304,11 @@ jQuery(document).ready(function() {
 	        'Done': {
                 id: 'edit_additional_info_dialog_done_button',
                 click:  function() { jQuery('#edit_additional_info_dialog').dialog("close") },
-                text: "Done",
+                text: gettext("Done"),
             }
         },
         autoOpen: false,
-        title: 'Edit Additional Parent Info'
+        title: gettext('Edit Additional Parent Info')
     });
 
     jQuery('#edit_additional_info_link').click( function() {

@@ -33,10 +33,10 @@ jQuery(document).ready(function(){
         'destroy': true,
         'autoWidth': false,
         columns: [
-            { title: "Cross Unique ID", "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
-            { title: "Cross Type", "data": "cross_type" },
-            { title: "Number of Progenies", "data": "progeny_number" },
-            { title: "Crossing Experiment", "data": null, "render": function ( data, type, row ) { return "<a href='/breeders/trial/"+row.crossing_experiment_id+"'>"+row.crossing_experiment_name+"</a>"; } },
+            { title: <% __('Cross Unique ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
+            { title: <% __('Cross Type') |js %>, "data": "cross_type" },
+            { title: <% __('Number of Progenies') |js %>, "data": "progeny_number" },
+            { title: <% __('Crossing Experiment') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/breeders/trial/"+row.crossing_experiment_id+"'>"+row.crossing_experiment_name+"</a>"; } },
         ],
         "fnInitComplete": function(oSettings, json) {
             //console.log(json);

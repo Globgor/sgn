@@ -93,14 +93,14 @@ jQuery(document).ready(function (){
                 html = html + "</select>";
                 console.log(html);
                 if(i ==''){
-                    alert("No male parent");
+                    alert(<% __('No male parent') |js %>);
                     return;
                 }
 
                 jQuery('#pedigree_male_parent').html(html);
             },
             error:function(response){
-                alert("An error occurred");
+                alert(<% __('An error occurred') |js %>);
             }
         });
     });

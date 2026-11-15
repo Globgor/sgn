@@ -29,8 +29,8 @@ jQuery(document).ready(function(){
         'destroy': true,
         'autoWidth': false,
         columns: [
-            { title: "Progeny Name", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.progeny_id+"/view'>"+row.progeny_name+"</a>"; } },
-            { title: "Cross Unique ID", "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
+            { title: <% __('Progeny Name') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.progeny_id+"/view'>"+row.progeny_name+"</a>"; } },
+            { title: <% __('Cross Unique ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
         ],
         "fnInitComplete": function(oSettings, json) {
             //console.log(json);

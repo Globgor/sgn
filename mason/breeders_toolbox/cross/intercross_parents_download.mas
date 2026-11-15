@@ -154,12 +154,12 @@ jQuery(document).ready(function(){
         var male_list_id = jQuery('#male_parents_list_select').val();
 
         if (!female_list_id) {
-            alert("Please choose a list of female parents");
+            alert(<% __('Please choose a list of female parents') |js %>);
             return;
         }
 
         if (!male_list_id) {
-            alert("Please choose a list of male parents");
+            alert(<% __('Please choose a list of male parents') |js %>);
             return;
         }
 
@@ -187,7 +187,7 @@ jQuery(document).ready(function(){
             },
             error: function() {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occurred creating the parents file.');
+                alert(<% __('An error occurred creating the parents file.') |js %>);
                 jQuery('#intercross_parents_download_dialog').modal("hide");
             },
         });

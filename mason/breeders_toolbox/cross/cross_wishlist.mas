@@ -388,7 +388,7 @@ jQuery(document).ready(function($) {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert("An error occurred getting cross wishlists");
+                alert(<% __('An error occurred getting cross wishlists') |js %>);
             }
         });
 
@@ -443,7 +443,7 @@ jQuery(document).ready(function($) {
                             }
                         },
                         error: function(response_forms){
-                            alert("Error retrieving saved ODK ONA forms");
+                            alert(<% __('Error retrieving saved ODK ONA forms') |js %>);
                         }
                     });
 
@@ -451,7 +451,7 @@ jQuery(document).ready(function($) {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert("Error retrieving available ODK crossing forms");
+                alert(<% __('Error retrieving available ODK crossing forms') |js %>);
             }
         });
 
@@ -476,11 +476,11 @@ jQuery(document).ready(function($) {
             var male_accession_list_id = $('#male_accession_list_div_list_select').val();
             var female_trial_id = jQuery('#cross_wishlist_list_female_trial_id').val();
             if (! lo.legacy_validate(female_accession_list_id, 'accessions', true)) {
-                alert('The female accession list contains elements that are not accessions.');
+                alert(<% __('The female accession list contains elements that are not accessions.') |js %>);
                 return;
             }
             if (! lo.legacy_validate(male_accession_list_id, 'accessions', true)) {
-                alert('The male accession list contains elements that are not accessions.');
+                alert(<% __('The male accession list contains elements that are not accessions.') |js %>);
                 return;
             }
 
@@ -556,7 +556,7 @@ jQuery(document).ready(function($) {
                 jQuery('#cross_wishlist_trial_select_no_list_cross_wishlist_name_div').html('<input type="text" class="form-control" disabled value="'+cross_wishlist_name+'" />');
             },
             error: function(response) {
-                alert("An error occurred getting trial location");
+                alert(<% __('An error occurred getting trial location') |js %>);
             }
         });
 
@@ -595,7 +595,7 @@ jQuery(document).ready(function($) {
                 jQuery('#cross_wishlist_trial_select_list_cross_wishlist_name_div').html('<input type="text" class="form-control" disabled value="'+cross_wishlist_name+'" />');
             },
             error: function(response) {
-                alert("An error occurred getting trial location");
+                alert(<% __('An error occurred getting trial location') |js %>);
             }
         });
     };
@@ -631,7 +631,7 @@ jQuery(document).ready(function($) {
                 jQuery('#cross_wishlist_trial_select_upload_cross_wishlist_name_div').html('<input type="text" class="form-control" disabled value="'+cross_wishlist_name+'" />');
             },
             error: function(response) {
-                alert("An error occurred getting trial location");
+                alert(<% __('An error occurred getting trial location') |js %>);
             }
         });
     };
@@ -652,7 +652,7 @@ jQuery(document).ready(function($) {
             male_trial_ids_string = male_trial_ids;
         }
         if (male_trial_ids.length == 0){
-            alert('Please select a male trial first!');
+            alert(<% __('Please select a male trial first!') |js %>);
             return;
         }
 
@@ -743,17 +743,17 @@ jQuery(document).ready(function($) {
         //console.log(trial_id);
         //console.log(female_male_tracker);
         if(!female_trial_id){
-            alert('You must select a female trial!');
+            alert(<% __('You must select a female trial!') |js %>);
             return;
         }
         if(!male_trial_id){
-            alert('You must select a male trial! It can be the same trial as the female trial.');
+            alert(<% __('You must select a male trial! It can be the same trial as the female trial.') |js %>);
             return;
         }
         for (f in female_male_tracker){
             var male_array = female_male_tracker[f];
             if (male_array.length > male_accession_limit){
-                alert('A maximum of 60 male accessions can be selected for each cross!');
+                alert(<% __('A maximum of 60 male accessions can be selected for each cross!') |js %>);
                 return;
             }
         }
@@ -781,7 +781,7 @@ jQuery(document).ready(function($) {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert("An error occurred submitting plots for cross wishlist");
+                alert(<% __('An error occurred submitting plots for cross wishlist') |js %>);
             }
         });
     });
@@ -818,7 +818,7 @@ jQuery(document).ready(function($) {
         for (f in female_male_tracker){
             var male_array = female_male_tracker[f];
             if (male_array.length > male_plot_limit){
-                alert('A maximum of 60 male plots can be selected for each cross!');
+                alert(<% __('A maximum of 60 male plots can be selected for each cross!') |js %>);
                 return;
             }
         }
@@ -836,7 +836,7 @@ jQuery(document).ready(function($) {
             },
             dataType:'json',
             beforeSend: function() {
-                jQuery('#working_msg').html('Creating cross wishlist files and sending information to ONA... This can take time...');
+                jQuery('#working_msg').html(<% __('Creating cross wishlist files and sending information to ONA... This can take time...') |js %>);
                 jQuery('#working_modal').modal('show');
             },
             success: function(response) {
@@ -857,7 +857,7 @@ jQuery(document).ready(function($) {
             error: function(response) {
                 jQuery('#working_msg').html('');
                 jQuery('#working_modal').modal('hide');
-                alert("An error occurred creating cross wishlist");
+                alert(<% __('An error occurred creating cross wishlist') |js %>);
             }
         });
     });
@@ -878,19 +878,19 @@ jQuery(document).ready(function($) {
     function upload_wishlist_file() {
         var female_trial_id = $('#cross_wishlist_upload_female_trial_id').val();
         if (!female_trial_id) {
-            alert('A female trial is required');
+            alert(<% __('A female trial is required') |js %>);
             return;
         }
 
         var male_trial_id = $('#cross_wishlist_upload_male_trial_id').val();
         if (!male_trial_id) {
-            alert('A male trial is required');
+            alert(<% __('A male trial is required') |js %>);
             return;
         }
 
         var uploadFile = $("#wishlist_file").val();
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 
@@ -905,9 +905,9 @@ jQuery(document).ready(function($) {
         post: function() {
             var uploadFile = $('#wishlist_file').val();
             if (uploadFile === '') {
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
-            jQuery('#working_msg').html('Creating cross wishlist files and sending information to ONA... This can take time...');
+            jQuery('#working_msg').html(<% __('Creating cross wishlist files and sending information to ONA... This can take time...') |js %>);
             jQuery('#working_modal').modal('show');
         },
         complete: function(response) {
@@ -961,7 +961,7 @@ jQuery(document).ready(function($) {
                     error: function(response) {
                         jQuery('#working_msg').html('');
                         jQuery('#working_modal').modal('hide');
-                        alert("An error occurred creating cross wishlist");
+                        alert(<% __('An error occurred creating cross wishlist') |js %>);
                     }
                 });
             }
@@ -990,7 +990,7 @@ jQuery(document).ready(function($) {
             },
             error: function(response) {
                 jQuery('#working_modal').modal('hide');
-                alert("An error occurred checking accession list");
+                alert(<% __('An error occurred checking accession list') |js %>);
             }
         });
 

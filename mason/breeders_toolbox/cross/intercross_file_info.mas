@@ -34,11 +34,11 @@ jQuery('#intercross_section_onswitch').click(function(){
         'destroy': true,
         'ajax': { 'url': '/ajax/breeders/trial/<% $trial_id %>/downloaded_intercross_file_metadata' },
         columns: [
-            { title: "Filename", "data": null, "render": function ( data, type, row ) { return row[4]; } },
-            { title: "Create Date", "data": null, "render": function ( data, type, row ) { return row[1]; } },
-            { title: "Created By", "data": null, "render": function ( data, type, row ) { return '<a href="/solpeople/profile/'+row[2]+'">'+row[3]+'</a>'; } },
-            { title: "File Type", "data": null, "render": function ( data, type, row ) { return row[6]; } },
-            { title: "Options", "data": null, "render": function ( data, type, row ) { return '<a href="/breeders/phenotyping/view/'+row[0]+'">View</a> | <a href="/breeders/phenotyping/download/'+row[0]+'">Download</a>'; } },
+            { title: <% __('Filename') |js %>, "data": null, "render": function ( data, type, row ) { return row[4]; } },
+            { title: <% __('Create Date') |js %>, "data": null, "render": function ( data, type, row ) { return row[1]; } },
+            { title: <% __('Created By') |js %>, "data": null, "render": function ( data, type, row ) { return '<a href="/solpeople/profile/'+row[2]+'">'+row[3]+'</a>'; } },
+            { title: <% __('File Type') |js %>, "data": null, "render": function ( data, type, row ) { return row[6]; } },
+            { title: <% __('Options') |js %>, "data": null, "render": function ( data, type, row ) { return '<a href="/breeders/phenotyping/view/'+row[0]+'">View</a> | <a href="/breeders/phenotyping/download/'+row[0]+'">Download</a>'; } },
         ]
     });
 
@@ -47,11 +47,11 @@ jQuery('#intercross_section_onswitch').click(function(){
         'destroy': true,
         'ajax': { 'url': '/ajax/breeders/trial/<% $trial_id %>/uploaded_intercross_file_metadata' },
         columns: [
-            { title: "Filename", "data": null, "render": function ( data, type, row ) { return row[4]; } },
-            { title: "Create Date", "data": null, "render": function ( data, type, row ) { return row[1]; } },
-            { title: "Created By", "data": null, "render": function ( data, type, row ) { return '<a href="/solpeople/profile/'+row[2]+'">'+row[3]+'</a>'; } },
-            { title: "File Type", "data": null, "render": function ( data, type, row ) { return row[6]; } },
-            { title: "Options", "data": null, "render": function ( data, type, row ) { return '<a href="/breeders/phenotyping/view/'+row[0]+'">View</a> | <a href="/breeders/phenotyping/download/'+row[0]+'">Download</a>'; } },
+            { title: <% __('Filename') |js %>, "data": null, "render": function ( data, type, row ) { return row[4]; } },
+            { title: <% __('Create Date') |js %>, "data": null, "render": function ( data, type, row ) { return row[1]; } },
+            { title: <% __('Created By') |js %>, "data": null, "render": function ( data, type, row ) { return '<a href="/solpeople/profile/'+row[2]+'">'+row[3]+'</a>'; } },
+            { title: <% __('File Type') |js %>, "data": null, "render": function ( data, type, row ) { return row[6]; } },
+            { title: <% __('Options') |js %>, "data": null, "render": function ( data, type, row ) { return '<a href="/breeders/phenotyping/view/'+row[0]+'">View</a> | <a href="/breeders/phenotyping/download/'+row[0]+'">Download</a>'; } },
         ]
     });
 

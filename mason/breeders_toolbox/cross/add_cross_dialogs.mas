@@ -518,19 +518,19 @@ jQuery(document).ready(function($) {
         }
 
         if (!field_trial) {
-            alert("Please provide trial name");
+            alert(<% __('Please provide trial name') |js %>);
             return;
         }
 
         if (!maternal_parent) {
-            alert("Please provide female parent name");
+            alert(<% __('Please provide female parent name') |js %>);
             return;
         }
 
         if ((crossType == 'biparental') || (crossType == 'backcross') || (crossType == 'sib')) {
             paternal_parent = jQuery('#paternal_parent').val();
             if (!paternal_parent) {
-                alert("Please provide male parent name");
+                alert(<% __('Please provide male parent name') |js %>);
                 return;
              }
         }
@@ -556,7 +556,7 @@ jQuery(document).ready(function($) {
                 console.log(html);
 
                 if(i ==''){
-                    alert("No female plot");
+                    alert(<% __('No female plot') |js %>);
                     return;
                 }
 
@@ -568,7 +568,7 @@ jQuery(document).ready(function($) {
             },
 
             error:function(response){
-                alert("An error occurred getting female plots or plants.");
+                alert(<% __('An error occurred getting female plots or plants.') |js %>);
             }
         });
 
@@ -588,7 +588,7 @@ jQuery(document).ready(function($) {
                     console.log(html);
 
                     if(i ==''){
-                        alert("No male plot");
+                        alert(<% __('No male plot') |js %>);
                         return;
                     }
 

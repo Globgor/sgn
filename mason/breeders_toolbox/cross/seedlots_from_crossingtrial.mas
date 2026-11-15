@@ -49,15 +49,15 @@ jQuery(document).ready(function(){
             'ajax':'/ajax/breeders/trial/'+ <% $trial_id %> + '/seedlots_from_crossingtrial',
 
             columns: [
-                { title: "Cross Unique ID", "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
-                { title: "Seedlot Name", "data": null, "render": function ( data, type, row ) {
+                { title: <% __('Cross Unique ID') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/cross/"+row.cross_id+"'>"+row.cross_name+"</a>"; } },
+                { title: <% __('Seedlot Name') |js %>, "data": null, "render": function ( data, type, row ) {
                     if (row.seedlot_id === null){
                         return 'No Seedlot'
                     } else {
                         return "<a href='/breeders/seedlot/"+row.seedlot_id+"'>"+row.seedlot_name+"</a>"
                     }
                 }},
-                { title: "Add New Seedlot", "data": "null", "render": function ( data, type, row ) {
+                { title: <% __('Add New Seedlot') |js %>, "data": "null", "render": function ( data, type, row ) {
                     return `<a onclick='addSeedlot("${row.cross_name}")'>Add</a>`;
                 }},
             ]
@@ -68,44 +68,44 @@ jQuery(document).ready(function(){
 
         var seedlot_name = jQuery('#new_seedlot_name').val();
         if (!seedlot_name) {
-            alert ("Seedlot name is required");
+            alert (<% __('Seedlot name is required') |js %>);
             return;
         }
 
         var seedlot_program = jQuery('#new_seedlot_program').val();
         if (!seedlot_program) {
-            alert ("Error retrieving breeding program name");
+            alert (<% __('Error retrieving breeding program name') |js %>);
             return;
         }
 
         var seedlot_program_id = jQuery('#new_seedlot_breeding_program_id').val();
         if (!seedlot_program_id) {
-            alert ("Error retrieving breeding program id");
+            alert (<% __('Error retrieving breeding program id') |js %>);
             return;
         }
 
         var seedlot_location = jQuery('#new_seedlot_location').val();
         if (!seedlot_location) {
-            alert ("Location is required");
+            alert (<% __('Location is required') |js %>);
             return;
         }
 
         var box_name = jQuery('#new_seedlot_box_name').val();
         if (!box_name) {
-            alert ("Box name is required");
+            alert (<% __('Box name is required') |js %>);
             return;
         }
 
         var seedlot_content = jQuery('#new_seedlot_content').val();
         if (!seedlot_content) {
-            alert ("Cross Unique ID is required");
+            alert (<% __('Cross Unique ID is required') |js %>);
             return;
         }
 
         var seedlot_amount = jQuery('#new_seedlot_amount').val();
         var seedlot_weight = jQuery('#new_seedlot_weight').val();
         if (!seedlot_amount && !seedlot_weight) {
-            alert ("Seedlot amount or weight is required");
+            alert (<% __('Seedlot amount or weight is required') |js %>);
             return;
         }
 
@@ -113,7 +113,7 @@ jQuery(document).ready(function(){
 
         var seedlot_timestamp = jQuery('#new_seedlot_timestamp').val();
         if (!seedlot_timestamp) {
-            alert ("Timestamp is required");
+            alert (<% __('Timestamp is required') |js %>);
             return;
         }
 
@@ -121,7 +121,7 @@ jQuery(document).ready(function(){
 
         const cross_seedlot_material_type = jQuery('#cross_seedlot_material_type').val();
         if (!cross_seedlot_material_type) {
-            alert ("Material type is required");
+            alert (<% __('Material type is required') |js %>);
             return;
         }
 
@@ -147,7 +147,7 @@ jQuery(document).ready(function(){
             success: function(response) {
                 jQuery('#working_modal').modal('hide');
                 if (response.success == 1) {
-                    alert("The seedlot has been added.");
+                    alert(<% __('The seedlot has been added.') |js %>);
                     jQuery('#add_cross_seedlot_dialog').modal('hide');
                     location.reload();
                 }
@@ -157,7 +157,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred adding seedlot');
+                alert(<% __('An error occurred adding seedlot') |js %>);
             }
         });
     });
