@@ -362,8 +362,8 @@ CXGN.List.prototype = {
         var types = this.allListTypes();
 
         var html = '';
-        html = html + '<div class="well well-sm"><form class="form-horizontal"><div class="form-group form-group-sm"><label class="col-sm-3 control-label">Create New List: </label><div class="col-sm-9"><div class="input-group"><input id="add_list_input" type="text" class="form-control" placeholder="Create New List. Type New List Name Here" /><span class="input-group-btn"><button class="btn btn-primary btn-sm" type="button" id="add_list_button" value="new list">New List</button></span></div></div></div><div class="form-group form-group-sm"><label class="col-sm-3 control-label"></label><div class="col-sm-9">';
-        html = html + '<input id="add_list_input_description" type="text" class="form-control" placeholder="Description For New List" /></div></div></form></div>';
+        html = html + '<div class="well well-sm"><form class="form-horizontal"><div class="form-group form-group-sm"><label class="col-sm-3 control-label">' + i18n_html(gettext('Create New List:')) + ' </label><div class="col-sm-9"><div class="input-group"><input id="add_list_input" type="text" class="form-control" placeholder="' + i18n_html(gettext('Create New List. Type New List Name Here')) + '" /><span class="input-group-btn"><button class="btn btn-primary btn-sm" type="button" id="add_list_button" value="new list">' + i18n_html(gettext('New List')) + '</button></span></div></div></div><div class="form-group form-group-sm"><label class="col-sm-3 control-label"></label><div class="col-sm-9">';
+        html = html + '<input id="add_list_input_description" type="text" class="form-control" placeholder="' + i18n_html(gettext('Description For New List')) + '" /></div></div></form></div>';
 
         if (lists.length===0) {
             html = html + "None";
@@ -381,9 +381,9 @@ CXGN.List.prototype = {
 
         // Filter by List Type
         html += "<div style='display: flex; align-items: baseline; column-gap: 15px;'>"
-        html += "<p style='white-space: nowrap'><strong>Filter Lists by Type</strong>:</p>";
+        html += "<p style='white-space: nowrap'><strong>" + i18n_html(gettext('Filter Lists by Type')) + "</strong>:</p>";
         html += "<select id='render_lists_type' class='render_lists_filter form-control' style='max-width: 200px'>";
-        html += "<option value=''>Any</option>";
+        html += "<option value=''>" + i18n_html(gettext('Any')) + "</option>";
         for ( let i = 0; i < types.length; i++ ) {
             let selected = type && type === types[i][1] ? 'selected' : '';
             html += "<option value='" + types[i][1] + "' " + selected + ">"+types[i][1]+"</option>";
@@ -393,7 +393,7 @@ CXGN.List.prototype = {
 
         // Autocreated filter
         html += "<div style='display: flex; align-items: baseline; column-gap: 15px;'>";
-        html += "<p style='white-space: nowrap'><strong>Include Autocreated Lists</strong>:</p>";
+        html += "<p style='white-space: nowrap'><strong>" + i18n_html(gettext('Include Autocreated Lists')) + "</strong>:</p>";
         let checked = autocreated ? 'checked' : ''
         html += "<input id='render_lists_autocreated' class='render_lists_filter' type='checkbox' " + checked + " />";
         html += "</div>";
@@ -409,7 +409,7 @@ CXGN.List.prototype = {
 
         // List Table
         html += '<table id="private_list_data_table" class="table table-hover table-condensed">';
-        html += '<thead><tr><th>List Name</th><th>Description</th><th>Date Created</th><th>Date Modified</th><th>Count</th><th>Type</th><th>Validate</th><th>View</th><th>Delete</th><th>Download</th><th>Share</th><th>Group</th></tr></thead><tbody>';
+        html += '<thead><tr><th>' + i18n_html(gettext('List Name')) + '</th><th>' + i18n_html(gettext('Description')) + '</th><th>' + i18n_html(gettext('Date Created')) + '</th><th>' + i18n_html(gettext('Date Modified')) + '</th><th>' + i18n_html(gettext('Count')) + '</th><th>' + i18n_html(gettext('Type')) + '</th><th>' + i18n_html(gettext('Validate')) + '</th><th>' + i18n_html(gettext('View')) + '</th><th>' + i18n_html(gettext('Delete')) + '</th><th>' + i18n_html(gettext('Download')) + '</th><th>' + i18n_html(gettext('Share')) + '</th><th>' + i18n_html(gettext('Group')) + '</th></tr></thead><tbody>';
         for (var i = 0; i < lists.length; i++) {
             if ( (!type || type === lists[i][5]) && (autocreated || !(lists[i][2] || '').startsWith("Autocreated")) ) {
                 html += '<tr><td><a href="javascript:showListItems(\'list_item_dialog\','+lists[i][0]+')"><b>'+lists[i][1]+'</b></a></td>';
@@ -419,13 +419,13 @@ CXGN.List.prototype = {
                 html += '<td>'+(lists[i][3] ? lists[i][3] : '0')+'</td>';
                 html += '<td>'+(lists[i][5] ? lists[i][5] : '&lt;NOT SET&gt;')+'</td>';
                 html += '<td><a onclick="javascript:validateList(\''+lists[i][0]+'\',\''+lists[i][5]+'\')"><span class="glyphicon glyphicon-ok"></span></a></td>';
-                html += '<td><a title="View" id="view_list_'+lists[i][1]+'" href="javascript:showListItems(\'list_item_dialog\','+lists[i][0]+')"><span class="glyphicon glyphicon-th-list"></span></span></td>';
-                html += '<td><a title="Delete" id="delete_list_'+lists[i][1]+'" href="javascript:deleteList('+lists[i][0]+')"><span class="glyphicon glyphicon-remove"></span></a></td>';
-                html += '<td><a target="_blank" title="Download" id="download_list_'+lists[i][1]+'" href="/list/download?list_id='+lists[i][0]+'"><span class="glyphicon glyphicon-arrow-down"></span></a></td>';
+                html += '<td><a title="' + i18n_html(gettext('View')) + '" id="view_list_'+lists[i][1]+'" href="javascript:showListItems(\'list_item_dialog\','+lists[i][0]+')"><span class="glyphicon glyphicon-th-list"></span></span></td>';
+                html += '<td><a title="' + i18n_html(gettext('Delete')) + '" id="delete_list_'+lists[i][1]+'" href="javascript:deleteList('+lists[i][0]+')"><span class="glyphicon glyphicon-remove"></span></a></td>';
+                html += '<td><a target="_blank" title="' + i18n_html(gettext('Download')) + '" id="download_list_'+lists[i][1]+'" href="/list/download?list_id='+lists[i][0]+'"><span class="glyphicon glyphicon-arrow-down"></span></a></td>';
                 if (lists[i][6] == 0){
-                    html += '<td><a title="Make Public" id="share_list_'+lists[i][1]+'" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-share-alt"></span></a></td>';
+                    html += '<td><a title="' + i18n_html(gettext('Make Public')) + '" id="share_list_'+lists[i][1]+'" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-share-alt"></span></a></td>';
                 } else if (lists[i][6] == 1){
-                    html += '<td><a title="Make Private" id="share_list_'+lists[i][1]+'" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-ban-circle"></span></a></td>';
+                    html += '<td><a title="' + i18n_html(gettext('Make Private')) + '" id="share_list_'+lists[i][1]+'" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-ban-circle"></span></a></td>';
                 }
                 html += '<td><input type="checkbox" id="list_select_checkbox_'+lists[i][0]+'" name="list_select_checkbox" value="'+lists[i][0]+'"/></td></tr>';
             }
@@ -471,10 +471,10 @@ CXGN.List.prototype = {
 
                 // Delete / Public / Private Functions
                 list_group_select_action_html += '<div class="row">';
-                list_group_select_action_html += '<div class="col-sm-4"><p><strong>Modify Selected Lists:</strong></p></div>';
+                list_group_select_action_html += '<div class="col-sm-4"><p><strong>' + i18n_html(gettext('Modify Selected Lists:')) + '</strong></p></div>';
                 list_group_select_action_html += '<div class="col-sm-8">';
                 var compare_disabled = (total === 2)? '' : 'disabled style="opacity:0.6;cursor:not-allowed;"';
-                list_group_select_action_html += '<a id="delete_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:deleteSelectedListGroup(['+selected+'])">Delete</a>&nbsp;<a id="make_public_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:makePublicSelectedListGroup(['+selected+'])">Make Public</a>&nbsp;<a id="make_private_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:makePrivateSelectedListGroup(['+selected+'])">Make Private</a>&nbsp<a id="compare_selected_list_group" class="btn btn-primary btn-sm" style="color:white" '+compare_disabled+' href="javascript:createThreeColumnDiff(['+selected+'])">Compare Selected Lists</a>';
+                list_group_select_action_html += '<a id="delete_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:deleteSelectedListGroup(['+selected+'])">' + i18n_html(gettext('Delete')) + '</a>&nbsp;<a id="make_public_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:makePublicSelectedListGroup(['+selected+'])">' + i18n_html(gettext('Make Public')) + '</a>&nbsp;<a id="make_private_selected_list_group" class="btn btn-primary btn-sm" style="color:white" href="javascript:makePrivateSelectedListGroup(['+selected+'])">' + i18n_html(gettext('Make Private')) + '</a>&nbsp<a id="compare_selected_list_group" class="btn btn-primary btn-sm" style="color:white" '+compare_disabled+' href="javascript:createThreeColumnDiff(['+selected+'])">' + i18n_html(gettext('Compare Selected Lists')) + '</a>';
                 list_group_select_action_html += '</div>';  // end column
                 list_group_select_action_html += '</div>';  // end row
 
@@ -484,10 +484,10 @@ CXGN.List.prototype = {
 
                 // Union / Intersection Functions
                 list_group_select_action_html += '<div class="row" style="margin-top: 15px">';
-                list_group_select_action_html += '<div class="col-sm-4"><p><strong>Combine List Items From Selected Lists to a New List:</strong></p></div>';
+                list_group_select_action_html += '<div class="col-sm-4"><p><strong>' + i18n_html(gettext('Combine List Items From Selected Lists to a New List:')) + '</strong></p></div>';
                 list_group_select_action_html += '<div class="col-sm-8">';
                 list_group_select_action_html += '<div class="input-group input-group-sm">'
-                list_group_select_action_html += '<input type="text" class="form-control" id="new_combined_list_name" placeholder="New List Name"><span class="input-group-btn">';
+                list_group_select_action_html += '<input type="text" class="form-control" id="new_combined_list_name" placeholder="' + i18n_html(gettext('New List Name')) + '"><span class="input-group-btn">';
                 list_group_select_action_html += '<button id="combine_selected_list_group_union" class="btn btn-primary btn-sm" style="color:white; display: inline-flex; align-items: center; gap: 5px;" onclick="javascript:combineSelectedListGroup(['+selected+'], \'union\')">' + unionIcon + 'Union</button>';
                 list_group_select_action_html += '<button id="combine_selected_list_group_intersection" class="btn btn-primary btn-sm" style="color:white; display: inline-flex; align-items: center; gap: 5px;" onclick="javascript:combineSelectedListGroup(['+selected+'], \'intersection\')">' + intersectionIcon + 'Intersection</button>';
                 list_group_select_action_html += '</input></span>';
@@ -497,7 +497,7 @@ CXGN.List.prototype = {
             }
             else {
                 list_group_select_action_html += '<div style="width: 100%; text-align: right">';
-                list_group_select_action_html += '<p><em>Select 2 or more lists in the <strong>Group</strong> column to modify or combine them</em></p>';
+                list_group_select_action_html += '<p><em>' + i18n_html(gettext('Select 2 or more lists in the {bold}Group{end_bold} column to modify or combine them'), { bold: '<strong>', end_bold: '</strong>' }) + '</em></p>';
                 list_group_select_action_html += '</div>';
             }
             jQuery("#list_group_select_action").html(list_group_select_action_html);
@@ -523,7 +523,7 @@ CXGN.List.prototype = {
         var html = '';
 
         html += '<table id="public_list_data_table" class="table table-hover table-condensed">';
-        html += '<thead><tr><th>List Name</th><th>Description</th><th>Date Created</th><th>Date Modified</th><th>Count</th><th>Type</th><th>Validate</th><th>View</th><th>Download</th><th>Copy To Your Lists</th><th>Owner</th><th>Make Private</th></tr></thead><tbody>';
+        html += '<thead><tr><th>' + i18n_html(gettext('List Name')) + '</th><th>' + i18n_html(gettext('Description')) + '</th><th>' + i18n_html(gettext('Date Created')) + '</th><th>' + i18n_html(gettext('Date Modified')) + '</th><th>' + i18n_html(gettext('Count')) + '</th><th>' + i18n_html(gettext('Type')) + '</th><th>' + i18n_html(gettext('Validate')) + '</th><th>' + i18n_html(gettext('View')) + '</th><th>' + i18n_html(gettext('Download')) + '</th><th>' + i18n_html(gettext('Copy To Your Lists')) + '</th><th>' + i18n_html(gettext('Owner')) + '</th><th>' + i18n_html(gettext('Make Private')) + '</th></tr></thead><tbody>';
         for (var i = 0; i < lists.length; i++) {
             html += '<tr>';
             html += '<td><a href="javascript:showPublicListItems(\'list_item_dialog\','+lists[i][0]+')"><b>'+lists[i][1]+'</b></a></td>';
@@ -533,11 +533,11 @@ CXGN.List.prototype = {
             html += '<td>'+lists[i][3]+'</td>';
             html += '<td>'+lists[i][5]+'</td>';
             html += '<td><a onclick="(new CXGN.List()).validate(\''+lists[i][0]+'\',\''+lists[i][5]+'\')"><span class="glyphicon glyphicon-ok"></span></a></td>';
-            html += '<td><a title="View" id="view_public_list_'+lists[i][1]+'" href="javascript:showPublicListItems(\'list_item_dialog\','+lists[i][0]+')"><span class="glyphicon glyphicon-th-list"></span></a></td>';
-            html += '<td><a target="_blank" title="Download" id="download_public_list_'+lists[i][1]+'" href="/list/download?list_id='+lists[i][0]+'"><span class="glyphicon glyphicon-arrow-down"></span></a></td>';
-            html += '<td><a title="Copy to Your Lists" id="copy_public_list_'+lists[i][1]+'" href="javascript:copyPublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-plus"></span></a></td>';
+            html += '<td><a title="' + i18n_html(gettext('View')) + '" id="view_public_list_'+lists[i][1]+'" href="javascript:showPublicListItems(\'list_item_dialog\','+lists[i][0]+')"><span class="glyphicon glyphicon-th-list"></span></a></td>';
+            html += '<td><a target="_blank" title="' + i18n_html(gettext('Download')) + '" id="download_public_list_'+lists[i][1]+'" href="/list/download?list_id='+lists[i][0]+'"><span class="glyphicon glyphicon-arrow-down"></span></a></td>';
+            html += '<td><a title="' + i18n_html(gettext('Copy to Your Lists')) + '" id="copy_public_list_'+lists[i][1]+'" href="javascript:copyPublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-plus"></span></a></td>';
             html += '<td>'+lists[i][6]+'</td>';
-            html += '<td><a title="Make Private" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-ban-circle"></span></a></td>';
+            html += '<td><a title="' + i18n_html(gettext('Make Private')) + '" href="javascript:togglePublicList('+lists[i][0]+')"><span class="glyphicon glyphicon-ban-circle"></span></a></td>';
             html += '</tr>';
         }
         html = html + '</tbody></table>';
