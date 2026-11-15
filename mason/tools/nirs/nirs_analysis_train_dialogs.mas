@@ -246,7 +246,7 @@ jQuery(document).ready(function(){
         });
 
         if(selected_train.length > 1 || selected_train.length == 0) {
-            alert('Please select one dataset!');
+            alert(<% __('Please select one dataset!') |js %>);
             return false;
         }
         else {
@@ -275,7 +275,7 @@ jQuery(document).ready(function(){
         });
 
         if(selected_test.length > 1) {
-            alert('Please select one dataset!');
+            alert(<% __('Please select one dataset!') |js %>);
             return false;
         }
         else {
@@ -354,7 +354,7 @@ jQuery(document).ready(function(){
                 Workflow.focus('#nirs_analysis_training_workflow', 5);
             },
             error: function(response){
-                alert('Error training NIRS!');
+                alert(<% __('Error training NIRS!') |js %>);
                 jQuery('#working_modal').modal('hide');
             }
         });

@@ -117,7 +117,7 @@ jQuery(document).ready(function(){
         });
 
         if(selected.length > 1 || selected.length == 0) {
-            alert('Please select one dataset!');
+            alert(<% __('Please select one dataset!') |js %>);
             return false;
         }
         else {
@@ -139,7 +139,7 @@ jQuery(document).ready(function(){
         });
 
         if(selected.length > 1 || selected.length == 0) {
-            alert('Please select one model!');
+            alert(<% __('Please select one model!') |js %>);
             return false;
         }
         else {
@@ -196,7 +196,7 @@ jQuery(document).ready(function(){
                     window.scrollTo(0,0);
                 },
                 error: function(response){
-                    alert('Error predicting phenotypes from NIRS!');
+                    alert(<% __('Error predicting phenotypes from NIRS!') |js %>);
                     jQuery('#working_modal').modal('hide');
                 }
             });
