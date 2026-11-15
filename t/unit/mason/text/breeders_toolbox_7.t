@@ -20,6 +20,12 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/breeders_toolbox/manage_sequence_metadata.mas',
+    'Upload and query sequence metadata.',
+    'Manage Sequence Metadata',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_trial_phenotyping.mas',
     'Enter a List of Trait Names:',
     'Or Paste From a List:',

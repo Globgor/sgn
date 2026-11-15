@@ -59,4 +59,14 @@ page_texts_ok(
     'Only users with curator role can mark seedlots as "DISCARDED" or undo discarding seedlots.',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/genotype_data_project.mas',
+    'View information about genotyping plates in this project or move genotyping plates to this project.',
+    'Delete genotyping project, genotyping plates and/or genotyping data associated with this project.',
+    'View basic information about the genotyping protocols used in this genotyping project.',
+    'Download archived VCF files associated with this genotyping project.',
+    'View and edit the public data agreement on this experiment.',
+    'View basic information about the genotyping project.',
+);
+
 done_testing;

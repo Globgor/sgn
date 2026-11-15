@@ -19,6 +19,16 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
+page_texts_ok(
+    '/breeders_toolbox/manage_genotype_qc.mas',
+    'The steps below will guide you through uploading a new fingerprint or performing a quality control.',
+    'The intertek quality control marker sets can be used in 2 ways:',
+    'Upload Genotyping Data (VCF or Intertek Format)',
+    'Only CSV file format is supported',
+    'Run Genotype Quality Control',
+    'sample grid file',
+);
+
 component_compiles_ok('/breeders_toolbox/manage_genotyping.mas');
 
 page_texts_ok(

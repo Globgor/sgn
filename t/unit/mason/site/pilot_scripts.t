@@ -27,6 +27,13 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/genotyping_protocol/delete_genotype_data.mas',
+    'Are you sure you want to delete this genotyping protocol? This cannot be undone!',
+    'Error deleting genotyping protocol!',
+    'Genotyping protocol deleted!',
+);
+
+page_script_texts_ok(
     '/search/stocks_using_genotypes.mas',
     'Please choose a list of marker alleles',
     'Please choose a list of accessions',
