@@ -91,7 +91,7 @@ var Tools = {
 		}
             },
 	    error: function(response) {                                                                                                                                                                           
-                alert("an error occurred");                                                                                                                                                   
+                alert(gettext("an error occurred"));                                                                                                                                                   
             }                                   
         });
     },

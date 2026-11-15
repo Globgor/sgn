@@ -123,7 +123,7 @@ CXGN.Page.Form.JSFormPage.prototype = {
 	if (!action) action = 'view';
         if ( this.getObjectId() == 0 ) action = 'new';
 	if (!action || !this.getObjectName() || !this.getAjaxScript() )  {
-	    alert("Cannot print from without a objectName, action, and ajaxScript name ! ");
+	    alert(gettext("Cannot print from without a objectName, action, and ajaxScript name ! "));
 	} else if  (action == 'delete') { 
 	    this.printDeleteDialog();
 	}
