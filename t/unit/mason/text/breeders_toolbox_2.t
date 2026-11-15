@@ -35,6 +35,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/create_seedlots_from_trial_dialogs.mas',
+    'Enter a template for naming each new seedlot.  The following variables (surrounded by curly braces) can be used in the template and the value of that variable will be replaced.',
+    'Enter the name of the field trial from which to create the seedlots:',
+    'Create Seedlots from a Trial',
+    'Computed Value from Traits',
+    'Creating Seedlots...',
+    'Select a Field Trial',
+);
+
+page_texts_ok(
     '/breeders_toolbox/crossing_experiment_tree.mas',
     'Breeding Programs -- Folders -- Crossing Experiments',
     'Select multiple folders by holding \'Ctrl\'.',
@@ -42,6 +52,16 @@ page_texts_ok(
     'First Select Folder(s) to Edit',
     'Create new folder',
     'Edit Folder(s)',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/delete_seedlots.mas',
+    'Only seedlots that are not associated with crosses or trials can be deleted.',
+    'Deleting seedlots cannot be undone.',
+    'Select a List of Seedlots:',
+    'Seedlot Deletion Verify',
+    'Delete green elements',
+    'Delete Seedlots',
 );
 
 done_testing;

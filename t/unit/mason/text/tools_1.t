@@ -19,6 +19,16 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
+page_texts_ok(
+    '/tools/available_seedlots.mas',
+    'Select/Deselect All',
+    'Breeding Program',
+    'Seedlot Location',
+    'Seedlot Name',
+    'Accessions',
+    'Weight(g)',
+);
+
 component_compiles_ok('/tools/fieldmap.mas');
 
 page_texts_ok(

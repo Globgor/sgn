@@ -20,6 +20,28 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/delete_seedlots.mas',
+    'An error occurred',
+    'ERROR!',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/discard_seedlots.mas',
+    'Please provide reason for discarding these seedlots',
+    'An error occurred discarding seedlots',
+    'Please select a list',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/discard_single_seedlot.mas',
+    'Are you sure you want to UNDO marking this seedlot as DISCARDED ?',
+    'Please provide reason for discarding this seedlot',
+    'An error occurred processing your request',
+    'An error occurred discarding seedlot',
+    'Error retrieving seedlot info',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/manage_odk_data_collection.mas',
     'Error retrieving available ODK crossing forms',
     'Error scheduling import of ODK crossing data.',

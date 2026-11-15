@@ -19,6 +19,11 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
+page_script_texts_ok(
+    '/tools/available_seedlots.mas',
+    'Something went wrong in the available-seedlots AJAX call. See console for more information.',
+);
+
 component_compiles_ok('/tools/fieldmap.mas');
 
 page_script_texts_ok(

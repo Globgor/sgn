@@ -26,6 +26,36 @@ page_script_texts_ok(
     'An error occurred saving trait value',
 );
 
+page_script_texts_ok(
+    '/breeders_toolbox/seedlot_details.mas',
+    'Please provide an accession name OR a cross unique id as the content of the seedlot. Not both.',
+    'Please provide an accession name or a cross unique id as the content of the seedlot.',
+    'Please provide a starting amount OR weight in grams for new seedlot.',
+    'Are you sure you want to delete this seedlot transaction?',
+    'An error occurred editing seedlot transaction details',
+    'Please provide a timestamp for new seedlot created.',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/seedlots.mas',
+    'Are you sure you want to delete this seedlot?',
+    'An error occurred deleting seed lot',
+    'The seedlot has been deleted.',
+    'Breeding Program',
+    'Material Type',
+    'Organization',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/seedlots_section.mas',
+    'Breeding Program',
+    'Seedlot Location',
+    'Material Type',
+    'Seedlot Name',
+    'Weight(g)',
+    'Box Name',
+);
+
 component_compiles_ok('/breeders_toolbox/trial.mas');
 
 page_script_texts_ok(

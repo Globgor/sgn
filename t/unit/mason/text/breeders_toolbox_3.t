@@ -29,4 +29,34 @@ page_texts_ok(
     'What are derived accessions:',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/discard_seedlots.mas',
+    'The seedlots were marked as DISCARDED.',
+    'Mark Seedlots as Discarded',
+    'Reason for Discarding:',
+    'List of Seedlots:',
+    'Close & Reload',
+    'Required',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/discard_single_seedlot.mas',
+    'This seedlot was marked as DISCARDED.',
+    'Mark this Seedlot as DISCARDED',
+    'This seedlot was restored.',
+    'Reason for Discarding:',
+    'Close & Reload',
+    'Seedlot Name:',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/discard_undo_seedlot_usage.mas',
+    'Deleting a seedlot permanently removes that seedlot and all associated transactions from database. Discarding a seedlot inactivates the seedlot, but information related to that seedlot is still kept in the database.',
+    'Using a List: Several seedlots can be discarded at once by using a list with seedlots list type. The link can be found at the bottom of Manage Seedlots (Available Seedlots) page.',
+    'Discarded seedlots still can be viewed in seedlot details pages and are searchable. However, links for adding new transaction, editing details and transaction are removed.',
+    'Discarding a seedlot can be reversed with UNDO function, but deletion a seedlot cannot be undone.',
+    'Discarded seedlot can be reversed by using UNDO option at the bottom of Seedlot Details page',
+    'Only users with curator role can mark seedlots as "DISCARDED" or undo discarding seedlots.',
+);
+
 done_testing;

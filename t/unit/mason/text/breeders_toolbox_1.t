@@ -49,4 +49,24 @@ page_texts_ok(
     'Here you can select a trait that already exists in an ontology in the database or you can add a new trait into an ontology.',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/add_seedlot_dialogs.mas',
+    'Seedlot/Plot/Subplot/Plant name to be used as the source for the first transaction',
+    'Amount (number of materials):',
+    'Amount OR Weight(g) Required',
+    'Transaction Description:',
+    'One Content Required',
+    'Seedlot Description:',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/add_transactions_using_list.mas',
+    'There are four different types of seedlot transactions: Transferring seeds from an existing seedlot to another existing seedlot, to a new seedlot, to a plot or to unspecified seedlot or plot.',
+    'Seedlot list option can be used only for transferring seeds from existing seedlots to unspecified seedlots/plots.',
+    'Note: This option is for transferring seeds to unspecified seedlots/plots only',
+    'You can use upload option for all transaction types',
+    'The seedlot transactions were saved successfully.',
+    'New seedlot transactions were added successfully',
+);
+
 done_testing;

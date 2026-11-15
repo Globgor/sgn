@@ -46,4 +46,30 @@ page_texts_ok(
     'View and edit basic information about the treatment.',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/seedlot_details.mas',
+    'You need to be logged in or you do not have sufficient privileges to mark this seedlot as DISCARDED.',
+    'Taken From Existing Seedlot or the Same Accession/Cross:',
+    'Only showing seedlots with matching content',
+    'Transaction Amount (number of materials):',
+    'The transaction was saved successfully.',
+    'Starting Amount (number of materials):',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/seedlots.mas',
+    'Make sure your seedlots are in the database. Use "Add New Seedlot" to add a single seedlot or "Upload New Seedlots" to add many.',
+    'It is also possible to manually enter a transaction by going to the seedlot detail page and clicking "Add New Transaction".',
+    'The inventory app is currently not available but you can continue using it if it is installed on your tablet device.',
+    'You need to be logged in or you do not have sufficient privileges to mark seedlots as DISCARDED using lists.',
+    'Plant material can be transferred into and out of a seedlot. Such as from a seedlot into a plot.',
+    'Make sure your seedlots are barcoded. You can print these barcodes from the database.',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/seedlots_section.mas',
+    'Copy Seedlots to a List',
+    '[LOADING...]',
+);
+
 done_testing;
