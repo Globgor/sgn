@@ -37,7 +37,7 @@ sub login : Path('/ajax/user/login') Args(0) {
     my $login_info = $login->login_user($username, $password);
 
     if (exists($login_info->{incorrect_password}) && $login_info->{incorrect_password} == 1) {
-	$c->stash->{rest} = { error => "Login credentials are incorrect. Please try again." };
+	$c->stash->{rest} = { error => __("Login credentials are incorrect. Please try again.") };
 	return;
     }
     elsif (exists($login_info->{account_disabled}) && $login_info->{account_disabled}) {
@@ -46,7 +46,7 @@ sub login : Path('/ajax/user/login') Args(0) {
     }
     else {
 	$c->stash->{rest} = {
-	    message => "Login successful",
+	    message => __("Login successful"),
 	    goto_url => $goto_url
 	};
     }
@@ -59,7 +59,7 @@ sub logout :Path('/ajax/user/logout') Args(0) {
     my $login = CXGN::Login->new($c->dbc->dbh());
     $login->logout_user();
 
-    $c->stash->{rest} = { message => "User successfully logged out." };
+    $c->stash->{rest} = { message => __("User successfully logged out.") };
 }
 
 sub logout_externally :Path('/ajax/user/logout_externally') QueryParam('redirect_uri') {
@@ -88,7 +88,7 @@ sub new_account :Path('/ajax/user/new') Args(0) {
     print STDERR "Adding new account...\n";
     if ($c->config->{is_mirror}) {
 	$c->stash->{template} = '/system_message.mas';
-	$c->stash->{message} = "This site is a mirror site and does not support adding users. Please go to the main site to create an account.";
+	$c->stash->{message} = __("This site is a mirror site and does not support adding users. Please go to the main site to create an account.");
 	return;
     }
 
@@ -262,7 +262,7 @@ sub change_account_info_action :Path('/ajax/user/update') Args(0) {
     return if !$self->_require_post($c);
 
     if (! $c->user() ) {
-        $c->stash->{rest} = { error => "You must be logged in to use this page." };
+        $c->stash->{rest} = { error => __("You must be logged in to use this page.") };
 	return;
     }
 
@@ -320,7 +320,7 @@ sub change_account_info_action :Path('/ajax/user/update') Args(0) {
 	my ($new_password, $confirm_password) = ($args->{new_password}, $args->{confirm_password});
 	if(length($args->{new_password}) < 7) {
 	    print STDERR "Password too short\n";
-	    $c->stash->{rest} = { error => "Passwords must be at least 7 characters long. Please try again." };
+	    $c->stash->{rest} = { error => __("Passwords must be at least 7 characters long. Please try again.") };
 	    return;
 	}
 	#format check
@@ -331,7 +331,7 @@ sub change_account_info_action :Path('/ajax/user/update') Args(0) {
 	}
 	if($args->{new_password} ne $args->{confirm_password}) {
 	    print STDERR "Password don't match.\n";
-	    $c->stash->{rest} = { error => "New password entries do not match. You must enter your new password twice to verify accuracy." };
+	    $c->stash->{rest} = { error => __("New password entries do not match. You must enter your new password twice to verify accuracy.") };
 	    return;
 	}
 
@@ -350,7 +350,7 @@ sub change_account_info_action :Path('/ajax/user/update') Args(0) {
 	}
 	if($private_email ne $confirm_email) {
 	    print STDERR "Emails don't match\n";
-	    $c->stash->{rest} = { error => "An error occurred. Please use your browser's back button to try again. New e-mail address entries do not match. You must enter your new e-mail address twice to verify accuracy." };
+	    $c->stash->{rest} = { error => __("An error occurred. Please use your browser's back button to try again. New e-mail address entries do not match. You must enter your new e-mail address twice to verify accuracy.") };
 	    return;
 	}
 
@@ -366,7 +366,7 @@ sub change_account_info_action :Path('/ajax/user/update') Args(0) {
 
     }
 
-    $c->stash->{rest} = { message => "Update successful" };
+    $c->stash->{rest} = { message => __("Update successful") };
 
 }
 
@@ -406,7 +406,7 @@ sub forgot_username : Path('/ajax/user/forgot_username') Args(0) {
     $self->send_forgot_username_email_message($c, $email, \@person_ids);
 
     $c->stash->{rest} = {
-        message => "Username email requested. If you have an account on this database with this email, you will receive a message that includes the username associated with this email address.  If you do not have an account with this email address, you will not receive a message."
+        message => __("Username email requested. If you have an account on this database with this email, you will receive a message that includes the username associated with this email address.  If you do not have an account with this email address, you will not receive a message.")
     };
 }
 
@@ -431,7 +431,7 @@ sub reset_password :Path('/ajax/user/reset_password') Args(0) {
     }
 
     $c->stash->{rest} = {
-        message => "Password reset email requested. If you have an account on this database with this email, you will receive a message with a password reset link.  If you do not have an account with this email address, you will not receive a message.",
+        message => __("Password reset email requested. If you have an account on this database with this email, you will receive a message with a password reset link.  If you do not have an account with this email address, you will not receive a message."),
     };
 }
 
@@ -446,12 +446,12 @@ sub process_reset_password_form :Path('/ajax/user/process_reset_password') Args(
     my $new_password = $c->req->body_parameters->{new_password};
 
     if (length($new_password) < 7) {
-        $c->stash->{rest} = { error => "Password is too short. Password must be 7 or more characters" };
+        $c->stash->{rest} = { error => __("Password is too short. Password must be 7 or more characters") };
         $c->detach();
     }
 
     if ($confirm_password ne $new_password){
-        $c->stash->{rest} = { error => "Please enter the same password in the confirm password field!" };
+        $c->stash->{rest} = { error => __("Please enter the same password in the confirm password field!") };
         $c->detach();
     }
 
@@ -479,10 +479,10 @@ sub process_reset_password_form :Path('/ajax/user/process_reset_password') Args(
     }
 
     if ($person_id) {
-        $c->stash->{rest} = { message => "The password was successfully updated." };
+        $c->stash->{rest} = { message => __("The password was successfully updated.") };
     }
     else {
-        $c->stash->{rest} = { error => "The password reset link is invalid or has already been used. Please request a new password reset email." };
+        $c->stash->{rest} = { error => __("The password reset link is invalid or has already been used. Please request a new password reset email.") };
     }
 }
 
@@ -578,7 +578,7 @@ sub _require_post {
 
     $c->res->status(405);
     $c->res->header('Allow' => 'POST');
-    $c->stash->{rest} = { error => "This request must be sent using POST." };
+    $c->stash->{rest} = { error => __("This request must be sent using POST.") };
     return 0;
 }
 
@@ -685,12 +685,12 @@ sub quick_create_user :Path('/ajax/user/quick_create_account') Args(0) {
     return if !$self->_require_post($c);
 
     if (!$c->user()) {
-	$c->stash->{rest} = { error => "Need to be logged in to use feature." };
+	$c->stash->{rest} = { error => __("Need to be logged in to use feature.") };
 	return;
     }
 
     if (!$c->user()->check_roles("curator")) {
-	$c->stash->{rest} = { error => "You don't have the privileges to use this feature" };
+	$c->stash->{rest} = { error => __("You don't have the privileges to use this feature") };
 	return;
     }
     my $logged_in_person_id = $c->user()->get_sp_person_id();

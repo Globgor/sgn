@@ -20,6 +20,7 @@ use Moose;
 use Data::Dumper;
 use LWP::UserAgent;
 use JSON;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -40,7 +41,7 @@ sub submit_contact_form_POST : Args(0) {
     my $security_attempt = $c->req->param('security_attempt');
 
     if (!$security_attempt || !$security_answer || $security_answer ne $security_attempt){
-        $c->stash->{rest} = {error => "You must be a clever bot"};
+        $c->stash->{rest} = {error => __("You must be a clever bot")};
         $c->detach;
     }
 
@@ -65,10 +66,10 @@ sub submit_contact_form_POST : Args(0) {
         if ($message_hash->{id}){
             $c->stash->{rest} = {success => 1};
         } else {
-            $c->stash->{rest} = {error => 'The message was not posted to github correctly. Please try again.'};
+            $c->stash->{rest} = {error => __('The message was not posted to github correctly. Please try again.')};
         }
     } else {
-        $c->stash->{rest} = {error => "There was an error submitting the message. Please try again."};
+        $c->stash->{rest} = {error => __("There was an error submitting the message. Please try again.")};
     }
 }
 
