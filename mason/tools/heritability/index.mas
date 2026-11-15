@@ -131,7 +131,7 @@
 var require_login = "<%  $c->get_conf('brapi_require_login') %>";
 if (require_login === '1'){
     auth_token = "<%  CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
-    if (!auth_token){ alert("Login required to display heritability"); }
+    if (!auth_token){ alert(<% __('Login required to display heritability') |js %>); }
 }
 
 var check_outliers = "<% $c->get_conf('exclude_phenotype_outliers') || 0 %>";
@@ -145,7 +145,7 @@ jQuery(document).ready(function() {
     get_select_box("datasets", "dataset_select", {"checkbox_name":"dataset_select_checkbox", "analysis_type":"Heritability", "show_compatibility":"yes"});
   }
   else {
-    alert('You must be logged in to use Heritability');
+    alert(<% __('You must be logged in to use Heritability') |js %>);
   }
   $('#pheno_select').attr("disabled",true).html('');
   jQuery('#dataset_select').click(function() {
@@ -187,7 +187,7 @@ jQuery(document).ready(function() {
 
       },
       error: function(response) {
-        alert("An error occurred, the service may temporarily be unavailable, ponto 1 selectDataset ");
+        alert(<% __('An error occurred, the service may temporarily be unavailable, ponto 1 selectDataset ') |js %>);
         document.getElementById("preview_trait_histogram_btn").disabled = false;
         document.getElementById("loading-spinner").style.visibility = 'hidden';
       }
@@ -196,7 +196,7 @@ jQuery(document).ready(function() {
 
   jQuery('#preview_trait_histogram_btn').on('click', function() {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.")
+      alert(<% __('Please select a dataset and trait.') |js %>)
     } else {
       //alert("Inside trait preview");
       var tempfile = jQuery('#tempfile').html();
@@ -250,7 +250,7 @@ jQuery(document).ready(function() {
       success: function(response) {
         if (response.error) {
           $('#dataset_select').val('ERROR');          
-          alert("An error occurred, the is some problem with data");          
+          alert(<% __('An error occurred, the is some problem with data') |js %>);          
           document.getElementById("loading-spinner").style.visibility = 'hidden';
         }
         else {	        
@@ -260,7 +260,7 @@ jQuery(document).ready(function() {
 	      }
       },
       error: function(response) {
-        alert("An error occurred, the service may temporarily be unavailable");
+        alert(<% __('An error occurred, the service may temporarily be unavailable') |js %>);
         document.getElementById("preview_trait_histogram_btn").disabled = false; 
         document.getElementById("loading-spinner").style.visibility = 'hidden';
       }
@@ -271,7 +271,7 @@ jQuery(document).ready(function() {
 
   jQuery('#runH2').click( function () {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.");
+      alert(<% __('Please select a dataset and trait.') |js %>);
       $('#heritability_output').empty();      
     } else {
       $('#heritability_output').empty();
@@ -377,10 +377,10 @@ function get_dataset_id() {
           selected_datasets.push(jQuery(this).val());
       });
       if (selected_datasets.length < 1){
-          alert('Please select at least one dataset!');
+          alert(<% __('Please select at least one dataset!') |js %>);
           return false;
       } else if (selected_datasets.length > 1){
-          alert('Please select only one dataset!');
+          alert(<% __('Please select only one dataset!') |js %>);
           return false;
       } else {
     var dataset_id=selected_datasets[0];

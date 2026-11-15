@@ -93,7 +93,7 @@ var check_outliers = "<% $c->get_conf('exclude_phenotype_outliers') || 0 %>";
 if (require_login === '1') {
   var auth_token = "<% CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
   if (!auth_token) {
-    alert("Login required to use Environment Stratification");
+    alert(<% __('Login required to use Environment Stratification') |js %>);
   }
 }
 

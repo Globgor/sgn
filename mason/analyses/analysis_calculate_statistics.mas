@@ -260,7 +260,7 @@ jQuery(document).ready(function() {
 
         analysis_calculate_statistics_field_trial_id_string = analysis_calculate_statistics_field_trial_id_array.join(",");
         if (analysis_calculate_statistics_field_trial_id_string == '') {
-            alert('Please select a field trial first!');
+            alert(<% __('Please select a field trial first!') |js %>);
         } else {
             get_select_box('traits', 'analysis_calculate_statistics_trait_select_div', { 'name' : 'analysis_calculate_statistics_trait_id_select', 'id' : 'analysis_calculate_statistics_trait_id_select', 'empty':1, 'multiple':0, 'trial_ids':analysis_calculate_statistics_field_trial_id_string, 'stock_type':'plot' });
 
@@ -285,7 +285,7 @@ jQuery(document).ready(function() {
 
         analysis_calculate_statistics_trait_id = jQuery('#analysis_calculate_statistics_trait_id_select').val();
         if (analysis_calculate_statistics_trait_id == null || analysis_calculate_statistics_trait_id == undefined) {
-            alert('Please select one observation variable!');
+            alert(<% __('Please select one observation variable!') |js %>);
             return false;
         }
 
@@ -496,7 +496,7 @@ jQuery(document).ready(function() {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert('Error calculating statistics!')
+                alert(<% __('Error calculating statistics!') |js %>)
             }
         });
     });
@@ -512,15 +512,15 @@ jQuery(document).ready(function() {
         var generic_save_analysis_template_breeding_program_id = jQuery('#generic_save_analysis_template_breeding_program_id').val();
 
         if (generic_save_analysis_template_analysis_name == '') {
-            alert('Please give an analysis template name');
+            alert(<% __('Please give an analysis template name') |js %>);
             return false;
         }
         if (generic_save_analysis_template_analysis_description == '') {
-            alert('Please give an analysis template description');
+            alert(<% __('Please give an analysis template description') |js %>);
             return false;
         }
         if (generic_save_analysis_template_analysis_year == '') {
-            alert('Please give an analysis template year');
+            alert(<% __('Please give an analysis template year') |js %>);
             return false;
         }
 
@@ -764,20 +764,20 @@ jQuery(document).ready(function() {
                                         }
                                     },
                                     error: function(response){
-                                        alert('Error saving analysis multiple!');
+                                        alert(<% __('Error saving analysis multiple!') |js %>);
                                     }
                                 });
                             }
                         },
                         error: function(response){
-                            alert('Error saving analysis multiple!');
+                            alert(<% __('Error saving analysis multiple!') |js %>);
                         }
                     });
                 }
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('Error saving analysis multiple!');
+                alert(<% __('Error saving analysis multiple!') |js %>);
             }
         });
     });
@@ -873,7 +873,7 @@ jQuery(document).ready(function() {
 
     jQuery('#analysis_calculate_statistics_analysis_save_blups_spatial').click(function(){
         if (analysis_calculate_statistics_field_trial_id_array.length>1) {
-            alert('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis');
+            alert(<% __('Saving spatial BLUPs currently only implemented for a single trial, so only select one field trial in your analysis') |js %>);
             return false;
         }
 

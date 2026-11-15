@@ -88,13 +88,13 @@ $datasets
   var require_login = "<%  $c->get_conf('brapi_require_login') %>";
   if (require_login === '1'){
       auth_token = "<%  CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
-      if (!auth_token){ alert("Login required to display boxplots"); }
+      if (!auth_token){ alert(<% __('Login required to display boxplots') |js %>); }
   } 
   $("#downloadBxpltBtn").hide();
   $("#createBtn").click(function(){
     var ds = $("#datasetSelect option:selected").val();
     var ou = $("#obsunitSelect option:selected").val();
-    if(ds=="") { alert("Choose a dataset!"); return; }
+    if(ds=="") { alert(<% __('Choose a dataset!') |js %>); return; }
     boxplotter.loadDatasetObsUnits(ds,ou,auth_token);
     $("#downloadBxpltBtn").show();
   });

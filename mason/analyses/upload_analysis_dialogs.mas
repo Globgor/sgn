@@ -317,27 +317,27 @@ jQuery(document).ready(function () {
         var upload_new_analysis_file = jQuery('#upload_new_analysis_file').val();
 
         if (upload_new_analysis_name == '' || upload_new_analysis_description == '') {
-            alert('Please give an analysis name and description');
+            alert(<% __('Please give an analysis name and description') |js %>);
             return false;
         }
         else if (upload_new_analysis_protocol == '') {
-            alert('Please give an analysis protocol');
+            alert(<% __('Please give an analysis protocol') |js %>);
             return false;
         }
         else if (upload_new_analysis_result_values_type == '') {
-            alert('Please select result values type');
+            alert(<% __('Please select result values type') |js %>);
             return false;
         }
         else if (upload_new_analysis_breeding_program_id == '') {
-            alert('Please select a breeding program');
+            alert(<% __('Please select a breeding program') |js %>);
             return false;
         }
         else if (upload_new_analysis_statistical_ontology_term == '') {
-            alert('Please select a statistical ontology term');
+            alert(<% __('Please select a statistical ontology term') |js %>);
             return false;
         }
         else if (upload_new_analysis_file === '') {
-            alert('Please select a results file');
+            alert(<% __('Please select a results file') |js %>);
             return false;
         }
         else {
@@ -351,7 +351,7 @@ jQuery(document).ready(function () {
         var uploadFile = jQuery("#upload_new_analysis_file").val();
         jQuery('#upload_new_analysis_dialog_form').attr("action", "/ajax/analysis/store/spreadsheet");
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 
@@ -383,27 +383,27 @@ jQuery(document).ready(function () {
         //     return false;
         // }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_description == '') {
-            alert('Please give a new model description');
+            alert(<% __('Please give a new model description') |js %>);
             return false;
         }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_is_public == '') {
-            alert('Please specify if the new model is public');
+            alert(<% __('Please specify if the new model is public') |js %>);
             return false;
         }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_language == '') {
-            alert('Please give a new model language');
+            alert(<% __('Please give a new model language') |js %>);
             return false;
         }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_properties_string == '') {
-            alert('Please give a new model properties. At least one key:value!');
+            alert(<% __('Please give a new model properties. At least one key:value!') |js %>);
             return false;
         }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_application_name == '') {
-            alert('Please give a new model application name');
+            alert(<% __('Please give a new model application name') |js %>);
             return false;
         }
         if (upload_new_analysis_model_id == '' && upload_new_analysis_model_name !== '' && upload_new_analysis_model_application_version == '') {
-            alert('Please give a new model application version');
+            alert(<% __('Please give a new model application version') |js %>);
             return false;
         }
         // if (upload_new_analysis_model_training_data_file === '') {
@@ -415,19 +415,19 @@ jQuery(document).ready(function () {
         //     return false;
         // }
         if ( (upload_new_analysis_model_file == '' && upload_new_analysis_model_file_type != '') || (upload_new_analysis_model_file != '' && upload_new_analysis_model_file_type == '') ) {
-            alert('If you give a new model file, please give a new model file type also');
+            alert(<% __('If you give a new model file, please give a new model file type also') |js %>);
             return false;
         }
         if ( (upload_new_analysis_model_auxiliary_file_1 == '' && upload_new_analysis_model_auxiliary_file_type_1 != '') || (upload_new_analysis_model_auxiliary_file_1 != '' && upload_new_analysis_model_auxiliary_file_type_1 == '') ) {
-            alert('If you give a new model aux file 1, please give a new model aux file 1 type also');
+            alert(<% __('If you give a new model aux file 1, please give a new model aux file 1 type also') |js %>);
             return false;
         }
         if ( (upload_new_analysis_model_auxiliary_file_2 == '' && upload_new_analysis_model_auxiliary_file_type_2 != '') || (upload_new_analysis_model_auxiliary_file_2 != '' && upload_new_analysis_model_auxiliary_file_type_2 == '') ) {
-            alert('If you give a new model aux file 2, please give a new model aux file 2 type also');
+            alert(<% __('If you give a new model aux file 2, please give a new model aux file 2 type also') |js %>);
             return false;
         }
         if ( (upload_new_analysis_model_auxiliary_file_3 == '' && upload_new_analysis_model_auxiliary_file_type_3 != '') || (upload_new_analysis_model_auxiliary_file_3 != '' && upload_new_analysis_model_auxiliary_file_type_3 == '') ) {
-            alert('If you give a new model aux file 3, please give a new model aux file 3 type also');
+            alert(<% __('If you give a new model aux file 3, please give a new model aux file 3 type also') |js %>);
             return false;
         }
 
@@ -449,13 +449,13 @@ jQuery(document).ready(function () {
                 alert(response.error_messages);
             }
             else {
-                alert('Successfully saved! Page will now refresh!')
+                alert(<% __('Successfully saved! Page will now refresh!') |js %>)
                 location.reload();
             }
         },
         error: function(response) {
             jQuery('#working_modal').modal("hide");
-            alert("An error occurred uploading analysis");
+            alert(<% __('An error occurred uploading analysis') |js %>);
         }
     });
 

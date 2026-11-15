@@ -49,13 +49,13 @@ jQuery(document).ready(function(){
                     alert(response.error);
                 }
                 if  (response.success) {
-                    alert('DELETED MODEL!')
+                    alert(<% __('DELETED MODEL!') |js %>)
                     location.reload();
                 }
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('Error deleting analysis model!');
+                alert(<% __('Error deleting analysis model!') |js %>);
             }
         });
     });

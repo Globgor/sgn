@@ -141,7 +141,7 @@
 var require_login = "<%  $c->get_conf('brapi_require_login') %>";
 if (require_login === '1'){
     auth_token = "<%  CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
-    if (!auth_token){ alert("Login required to display heritability"); }
+    if (!auth_token){ alert(<% __('Login required to display heritability') |js %>); }
 }
 
 var check_outliers = "<% $c->get_conf('exclude_phenotype_outliers') || 0 %>";
@@ -155,7 +155,7 @@ jQuery(document).ready(function() {
     get_select_box("datasets", "dataset_select", {"checkbox_name":"dataset_select_checkbox", "analysis_type":"Stability", "show_compatibility":"yes"});
   }
   else {
-    alert('You must be logged in to use Stability');
+    alert(<% __('You must be logged in to use Stability') |js %>);
   }
   $('#pheno_select').attr("disabled",true).html('');
   jQuery('#dataset_select').click(function() {
@@ -182,7 +182,7 @@ jQuery(document).ready(function() {
     }
         },
         error: function(response) {
-          alert("An error occurred, please check the datase.");
+          alert(<% __('An error occurred, please check the datase.') |js %>);
       }
     });
   });
@@ -315,12 +315,12 @@ function calculateMissingPercentage(data) {
 
 jQuery('#runAMMI').click( function () {
     if (!jQuery('#pheno_select').val()) {
-        alert("Please select a dataset and trait.")
+        alert(<% __('Please select a dataset and trait.') |js %>)
         $('#stability_files').empty();
     } else if (jQuery('#select_imput').val() == "imput_empty") {
-        alert("Please select if phenotype imputation is required.")
+        alert(<% __('Please select if phenotype imputation is required.') |js %>)
     } else if (jQuery('#select_method').val() == "method_empty"){
-        alert("Please select the stability method.")
+        alert(<% __('Please select the stability method.') |js %>)
     } else {
         $('#stability_files').empty();
         if ($('#pheno_select').val() != ""){
@@ -532,7 +532,7 @@ jQuery('#runAMMI').click( function () {
             }
           },
           error: function(response) {
-            alert("An error occurred, the service may temporarily be unavailable");
+            alert(<% __('An error occurred, the service may temporarily be unavailable') |js %>);
           }
         });
       }
@@ -799,10 +799,10 @@ function get_dataset_id() {
           selected_datasets.push(jQuery(this).val());
       });
       if (selected_datasets.length < 1){
-          alert('Please select at least one dataset!');
+          alert(<% __('Please select at least one dataset!') |js %>);
           return false;
       } else if (selected_datasets.length > 1){
-          alert('Please select only one dataset!');
+          alert(<% __('Please select only one dataset!') |js %>);
           return false;
       } else {
       var dataset_id=selected_datasets[0];

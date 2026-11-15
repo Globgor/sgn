@@ -119,7 +119,7 @@ jQuery(document).ready(function() {
     get_select_box("datasets", "dataset_select", {"checkbox_name":"dataset_select_checkbox"});
   }
   else {
-     alert('Login required!');
+     alert(<% __('Login required!') |js %>);
      return;
   }
   $('#pheno_select').attr("disabled",true).html('');
@@ -147,7 +147,7 @@ jQuery(document).ready(function() {
         }
       },
       error: function(response) {
-        alert("An error occurred, the service may be temporarily unavailable. Please try again later.");
+        alert(<% __('An error occurred, the service may be temporarily unavailable. Please try again later.') |js %>);
       }
     });
   });
@@ -163,7 +163,7 @@ jQuery(document).ready(function() {
 
   jQuery('#preview_trait_histogram_btn').on('click', function() {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.")
+      alert(<% __('Please select a dataset and trait.') |js %>)
     } else {
         //alert("Inside trait preview");
         var tempfile = jQuery('#tempfile').html();
@@ -223,7 +223,7 @@ jQuery(document).ready(function() {
 			      var sin_list_id = jQuery('#sin_list_list_select option:selected').val();
 			      //alert("SIN LIST ID "+sin_list_id);
       if (! sin_list_id || sin_list_id == "") {
-          alert("Please select a selection index.")
+          alert(<% __('Please select a selection index.') |js %>)
           $('#gcpc_files').empty();
           return;
       }
@@ -276,7 +276,7 @@ jQuery(document).ready(function() {
                 'pdf',
                 {
                   extend: 'print',
-                  text: 'Print all (not just selected)',
+                  text: <% __('Print all (not just selected)') |js %>,
                   exportOptions: {
                     modifier: {
                         selected: null
@@ -304,10 +304,10 @@ jQuery(document).ready(function() {
           selected_datasets.push(jQuery(this).val());
       });
       if (selected_datasets.length < 1){
-          alert('Please select at least one dataset!');
+          alert(<% __('Please select at least one dataset!') |js %>);
           return false;
       } else if (selected_datasets.length > 1){
-          alert('Please select only one dataset!');
+          alert(<% __('Please select only one dataset!') |js %>);
           return false;
       } else {
     var dataset_id=selected_datasets[0];

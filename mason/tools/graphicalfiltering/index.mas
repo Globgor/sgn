@@ -75,7 +75,7 @@
   var require_login = "<%  $c->get_conf('brapi_require_login') %>";
   if (require_login === '1'){
       auth_token = "<%  CXGN::Login->new($c->dbc->dbh)->get_login_cookie() %>";
-      if (!auth_token){ alert("Login required to display graphical filtering"); }
+      if (!auth_token){ alert(<% __('Login required to display graphical filtering') |js %>); }
   }
 
   $('#confirm_list_select').on("click", function() {
@@ -89,7 +89,7 @@
     switch (list_type) {
       case 'plots':
       case 'plants':
-        alert("not yet implimented");
+        alert(<% __('not yet implimented') |js %>);
         break;
       case 'trials':
         updateGFilter(group,
@@ -202,7 +202,7 @@
   // set up the form for saving results as a list
   $('#new-list-form').submit(function () {
     if (!window.gfiltering.data){
-      alert("Can't create a list from nothing.")
+      alert(<% __('Can\'t create a list from nothing.') |js %>)
       return false;
     }
     try {

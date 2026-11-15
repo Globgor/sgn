@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
     get_select_box("datasets", "dataset_select", {"checkbox_name":"dataset_select_checkbox", "analysis_type":"GWAS", "show_compatibility":"yes"});
   }
   else {
-    alert('You must be logged in to use SolGWAS');
+    alert(<% __('You must be logged in to use SolGWAS') |js %>);
   }
   $('#pheno_select').attr("disabled",true).html('');
 
@@ -170,7 +170,7 @@ jQuery(document).ready(function() {
 	      }
       },
       error: function(response) {
-        alert("An error occurred, the service may temporarily be unavailable");
+        alert(<% __('An error occurred, the service may temporarily be unavailable') |js %>);
         document.getElementById("preview_trait_histogram_btn").disabled = false;
         document.getElementById("loading-spinner").style.visibility = 'hidden'; 
       }
@@ -194,7 +194,7 @@ jQuery(document).ready(function() {
       success: function(response) {
         if (response.error) {
           $('#dataset_select').val('ERROR');
-          alert("An error occurred, the is some problem with data");
+          alert(<% __('An error occurred, the is some problem with data') |js %>);
           document.getElementById("preview_trait_histogram_btn").disabled = false;          
           document.getElementById("loading-spinner").style.visibility = 'hidden'; 
         }        
@@ -205,7 +205,7 @@ jQuery(document).ready(function() {
 	      }
       },
       error: function(response) {
-        alert("An error occurred, the service may temporarily be unavailable");
+        alert(<% __('An error occurred, the service may temporarily be unavailable') |js %>);
         document.getElementById("preview_trait_histogram_btn").disabled = false;
         document.getElementById("loading-spinner").style.visibility = 'hidden'; 
       }
@@ -215,7 +215,7 @@ jQuery(document).ready(function() {
 
   jQuery('#preview_trait_histogram_btn').on('click', function() {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.")
+      alert(<% __('Please select a dataset and trait.') |js %>)
     } else {
       //alert("Inside trait preview");
       var tempfile = jQuery('#tempfile').html();
@@ -260,7 +260,7 @@ jQuery(document).ready(function() {
 
   jQuery('#preview_pca').click( function () {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.")
+      alert(<% __('Please select a dataset and trait.') |js %>)
     } else {
       $('#pca_output').empty();
       if ($('#pheno_select').val() != ""){
@@ -287,7 +287,7 @@ jQuery(document).ready(function() {
   	      }
           },
           error: function(response) {
-            alert("An error occurred, the service may temporarily be unavailable");
+            alert(<% __('An error occurred, the service may temporarily be unavailable') |js %>);
           }
         });
       }
@@ -296,7 +296,7 @@ jQuery(document).ready(function() {
 
   jQuery('#runGWA').click( function () {
     if (!jQuery('#pheno_select').val()) {
-      alert("Please select a dataset and trait.")
+      alert(<% __('Please select a dataset and trait.') |js %>)
       $('#Solgwas_output').empty();
     } else {
       $('#Solgwas_output').empty();
@@ -359,10 +359,10 @@ jQuery(document).ready(function() {
           selected_datasets.push(jQuery(this).val());
       });
       if (selected_datasets.length < 1){
-          alert('Please select at least one dataset!');
+          alert(<% __('Please select at least one dataset!') |js %>);
           return false;
       } else if (selected_datasets.length > 1){
-          alert('Please select only one dataset!');
+          alert(<% __('Please select only one dataset!') |js %>);
           return false;
       } else {
   	var dataset_id=selected_datasets[0];
