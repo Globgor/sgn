@@ -37,9 +37,11 @@ sub run_perl {
 }
 
 my @modules = (
+    [ 'lib/SGN/Controller/Feature.pm', 'SGN::Controller::Feature', [ '__(\'Feature ID must be a positive integer.\')', '__(\'Multiple matching features\')' ] ],
     [ 'lib/SGN/Controller/Folder.pm', 'SGN::Controller::Folder', [ '__("The requested folder does not exist or has been deleted.")' ] ],
     [ 'lib/SGN/Controller/Genefamily.pm', 'SGN::Controller::Genefamily', [ '__(\'Need a family to display!\')' ] ],
     [ 'lib/SGN/Controller/Image.pm', 'SGN::Controller::Image', [ '__(\'No image file uploaded.\')' ] ],
+    [ 'lib/SGN/Controller/KinaseClones.pm', 'SGN::Controller::KinaseClones', [ '__("Thank you. Your message has been sent.")' ] ],
 );
 
 for my $module (@modules) {
