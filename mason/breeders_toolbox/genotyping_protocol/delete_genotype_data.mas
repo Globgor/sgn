@@ -2,7 +2,7 @@
 $protocol_id
 </%args>
 
-<button class="btn btn-danger" id="genotyping_protocol_detail_page_delete">Delete Genotyping Data For this Protocol</button>
+<button class="btn btn-danger" id="genotyping_protocol_detail_page_delete"><% __('Delete Genotyping Data For this Protocol') |h %></button>
 
 <script>
 

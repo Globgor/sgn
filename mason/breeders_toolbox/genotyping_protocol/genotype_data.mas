@@ -2,22 +2,22 @@
 $protocol_id
 </%args>
 
-<input type="checkbox" id="protocol_genotype_data_forbid_cache"> Refresh results
+<input type="checkbox" id="protocol_genotype_data_forbid_cache"> <% __('Refresh results') |h %>
 <hr>
 
 <div style="overflow:scroll">
     <table id="protocol_genotype_data" width="100%" class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>Protocol</th>
-                <th>Sample Name</th>
-                <th>Sample Type</th>
-                <th>Accession Name</th>
-                <th>Synonyms</th>
-                <th>Description</th>
-                <th>Number of Marker Scores</th>
-                <th>IGD Number</th>
-                <th>Download</th>
+                <th><% __('Protocol') |h %></th>
+                <th><% __('Sample Name') |h %></th>
+                <th><% __('Sample Type') |h %></th>
+                <th><% __('Accession Name') |h %></th>
+                <th><% __('Synonyms') |h %></th>
+                <th><% __('Description') |h %></th>
+                <th><% __('Number of Marker Scores') |h %></th>
+                <th><% __('IGD Number') |h %></th>
+                <th><% __('Download') |h %></th>
             </tr>
         </thead>
     </table>

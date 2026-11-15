@@ -6,59 +6,59 @@ endpoints related to sequence metadata that can be used to query the database us
 
 <br />
 
-<h3>Sequence Metadata Query</h3>
-<p class='sequence_metadata_description'>Perform a query of the stored sequence metadata for a specific parent feature (i.e., chromosome) using any combination of additional filter criteria, provided as query parameters.  The feature must be provided, either by the feature ID or by the feature and species names.  If either the start or end positions are given, the name of the reference genome for those positions must be provided.</p>
+<h3><% __('Sequence Metadata Query') |h %></h3>
+<p class='sequence_metadata_description'><% __('Perform a query of the stored sequence metadata for a specific parent feature (i.e., chromosome) using any combination of additional filter criteria, provided as query parameters.  The feature must be provided, either by the feature ID or by the feature and species names.  If either the start or end positions are given, the name of the reference genome for those positions must be provided.') |h %></p>
 <code class='sequence_metadata_method'>GET</code>&nbsp;
 <code class='sequence_metadata_path'><span class='sequence_metadata_host'></span>/ajax/sequence_metadata/query</code>
 <br /><br />
-<p><strong>Query Parameters:</strong></p>
+<p><strong><% __('Query Parameters:') |h %></strong></p>
 <table class='table table-striped sequence_metadata_query_params'>
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Example</th>
+            <th><% __('Name') |h %></th>
+            <th><% __('Description') |h %></th>
+            <th><% __('Example') |h %></th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>feature_id<br /><strong>REQUIRED</strong><br />if&nbsp;<code>feature_name</code> and&nbsp;<code>species_name</code> are not provided</td>
-            <td>ID of the parent feature (i.e., chromosome) associated with the sequence metadata</td>
+            <td><% __('ID of the parent feature (i.e., chromosome) associated with the sequence metadata') |h %></td>
             <td><code>2881383</code></td>
         </tr>
         <tr>
             <td>feature_name<br /><strong>REQUIRED</strong><br />with&nbsp;<code>species_name</code> if&nbsp;<code>feature_id</code> is not provided</td>
-            <td>Name of the parent feature (i.e., chromosome) associated with the sequence metadata</td>
+            <td><% __('Name of the parent feature (i.e., chromosome) associated with the sequence metadata') |h %></td>
             <td><code>1A</code></td>
         </tr>
         <tr>
             <td>species_name<br /><strong>REQUIRED</strong><br />with&nbsp;<code>feature_name</code> if&nbsp;<code>feature_id</code> is not provided</td>
-            <td>Name of the species associated with the provided feature name</td>
+            <td><% __('Name of the species associated with the provided feature name') |h %></td>
             <td><code>Triticum aestivum</code></td>
         </tr>
         <tr>
             <td>start</td>
-            <td>start position of the query range<br /><strong>default:</strong> 0</td>
+            <td><% __('start position of the query range') |h %><br /><strong>default:</strong> 0</td>
             <td><code>1000000</code></td>
         </tr>
         <tr>
             <td>end</td>
-            <td>end position of the query range<br /><strong>default:</strong> max of specified feature</td>
+            <td><% __('end position of the query range') |h %><br /><strong>default:</strong> max of specified feature</td>
             <td><code>2000000</code></td>
         </tr>
         <tr>
             <td>reference_genome<br /><strong>REQUIRED</strong><br />if&nbsp;either&nbsp;<code>start</code> or&nbsp;<code>end</code> positions are provided</td>
-            <td>Name of the reference genome used for the start and/or end positions</td>
+            <td><% __('Name of the reference genome used for the start and/or end positions') |h %></td>
             <td><code>RefSeq_v1</code></td>
         </tr>
         <tr>
             <td>type_id</td>
-            <td>cvterm_id(s) of sequence metadata type(s) (comma separated list of multiple type_ids)<br /><strong>default:</strong> any</td>
+            <td><% __('cvterm_id(s) of sequence metadata type(s) (comma separated list of multiple type_ids)') |h %><br /><strong>default:</strong> any</td>
             <td><code>86273</code><br /><code>86273,86275</code></td>
         </tr>
         <tr>
             <td>nd_protocol_id</td>
-            <td>nd_protocol_id(s) of sequence metadata protocol(s) (comma separated list of multiple nd_protocol_ids)<br /><strong>default:</strong> any</td>
+            <td><% __('nd_protocol_id(s) of sequence metadata protocol(s) (comma separated list of multiple nd_protocol_ids)') |h %><br /><strong>default:</strong> any</td>
             <td><code>204</code><br /><code>204,207</code></td>
         </tr>
         <tr>
@@ -76,7 +76,7 @@ endpoints related to sequence metadata that can be used to query the database us
         <tr>
             <td>format</td>
             <td>
-                The output format of the response<br />
+                <% __('The output format of the response') |h %><br />
                 <strong>format:</strong> 'JSON' (breedbase JSON format), 'GA4GH' (Global Alliance for Genomics &amp; Health JSON format), 'gff' (gff3 format)<br />
                 <strong>default:</strong> JSON
             </td>
@@ -85,8 +85,8 @@ endpoints related to sequence metadata that can be used to query the database us
     </tbody>
 </table>
 <br />
-<p><strong>Response:</strong></p>
-<p>An example response for each format:</p>
+<p><strong><% __('Response:') |h %></strong></p>
+<p><% __('An example response for each format:') |h %></p>
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#sequence_metadata_response_json">JSON</a></li>
   <li><a data-toggle="tab" href="#sequence_metadata_response_ga4gh">GA4GH</a></li>
@@ -488,13 +488,13 @@ chr1A	.	.	1342766	1342766	0.0394888300035745	.	.	ID=Kukri_c2408_857;qvalue=0.039
 
 <br /><br /><br />
 
-<h3>Get Features</h3>
-<p class='sequence_metadata_description'>Get all of the parent features (i.e., chromosomes) associated with loaded sequence metadata</p>
+<h3><% __('Get Features') |h %></h3>
+<p class='sequence_metadata_description'><% __('Get all of the parent features (i.e., chromosomes) associated with loaded sequence metadata') |h %></p>
 <code class='sequence_metadata_method'>GET</code>&nbsp;
 <code class='sequence_metadata_path'><span class='sequence_metadata_host'></span>/ajax/sequence_metadata/features</code>
 <br /><br />
-<p><strong>Response:</strong></p>
-<p>An example response in JSON format:</p>
+<p><strong><% __('Response:') |h %></strong></p>
+<p><% __('An example response in JSON format:') |h %></p>
 <pre class='sequence_metadata_response'>
 {
   "features": [
@@ -688,13 +688,13 @@ chr1A	.	.	1342766	1342766	0.0394888300035745	.	.	ID=Kukri_c2408_857;qvalue=0.039
 
 <br /><br /><br />
 
-<h3>Get Data Types</h3>
-<p class='sequence_metadata_description'>Get all of the sequence metadata data types supported by the database</p>
+<h3><% __('Get Data Types') |h %></h3>
+<p class='sequence_metadata_description'><% __('Get all of the sequence metadata data types supported by the database') |h %></p>
 <code class='sequence_metadata_method'>GET</code>&nbsp;
 <code class='sequence_metadata_path'><span class='sequence_metadata_host'></span>/ajax/sequence_metadata/types</code>
 <br /><br />
-<p><strong>Response:</strong></p>
-<p>An example response in JSON format:</p>
+<p><strong><% __('Response:') |h %></strong></p>
+<p><% __('An example response in JSON format:') |h %></p>
 <pre class='sequence_metadata_response'>
 {
   "types": [
@@ -719,13 +719,13 @@ chr1A	.	.	1342766	1342766	0.0394888300035745	.	.	ID=Kukri_c2408_857;qvalue=0.039
 
 <br /><br /><br />
 
-<h3>Get Protocols</h3>
-<p class='sequence_metadata_description'>Get all of the existing sequence metadata protocols</p>
+<h3><% __('Get Protocols') |h %></h3>
+<p class='sequence_metadata_description'><% __('Get all of the existing sequence metadata protocols') |h %></p>
 <code class='sequence_metadata_method'>GET</code>&nbsp;
 <code class='sequence_metadata_path'><span class='sequence_metadata_host'></span>/ajax/sequence_metadata/protocols</code>
 <br /><br />
-<p><strong>Response:</strong></p>
-<p>An example response in JSON format:</p>
+<p><strong><% __('Response:') |h %></strong></p>
+<p><% __('An example response in JSON format:') |h %></p>
 <pre class='sequence_metadata_response'>
 {
   "protocols": [

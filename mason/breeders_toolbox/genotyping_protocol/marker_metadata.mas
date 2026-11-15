@@ -12,7 +12,7 @@
 <& /util/import_javascript.mas, entries => [], classes => [ 'jquery', 'jquery.dataTables','jquery.dataTables-buttons-min', 'jszip-min', 'buttons.bootstrap-min', 'buttons.html5-min' ],  &>
 
 <div id="marker_metadata_loading">
-    <p>Loading...</p>
+    <p><% __('Loading...') |h %></p>
 </div>
 
 <div id="marker_metadata_table_container" style="display: none">
@@ -28,29 +28,29 @@
 </div>
 
 <div id="marker_metadata_delete" style="margin-top: 15px; display:none">
-    <button class="btn btn-danger" <% $curator ? '' : 'disabled' %> onclick="deleteMetadata()"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete All Marker Metadata</button>
+    <button class="btn btn-danger" <% $curator ? '' : 'disabled' %> onclick="deleteMetadata()"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;<% __('Delete All Marker Metadata') |h %></button>
 </div>
 
 <div class="modal fade" id="edit_marker_metadata_dialog" name="edit_marker_metadata_dialog" tabindex="-1" role="dialog" aria-labelledby="EditMarkerMetadataDialog">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="EditMarkerMetadataDialog">Edit Marker Metadata</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="EditMarkerMetadataDialog"><% __('Edit Marker Metadata') |h %></h4>
             </div>
             <div class="modal-body">
 
-                <p><strong>Marker Name:</strong><input class="form-control" id="edit_marker_metadata_marker" name="Marker" /></p>
-                <p><strong>Alias:</strong><input class="form-control" id="edit_marker_metadata_alias" name="Alias" /></p>
-                <p><strong>Description:</strong><textarea class="form-control" id="edit_marker_metadata_description" name="Description" rows="3"></textarea></p>
-                <p><strong>Alleles (one per line):</strong><textarea class="form-control" id="edit_marker_metadata_alleles" name="Alleles" rows="5"></textarea></p>
-                <p><strong>References (one per line):</strong><textarea class="form-control" id="edit_marker_metadata_references" name="References" rows="5"></textarea></p>
+                <p><strong><% __('Marker Name:') |h %></strong><input class="form-control" id="edit_marker_metadata_marker" name="Marker" /></p>
+                <p><strong><% __('Alias:') |h %></strong><input class="form-control" id="edit_marker_metadata_alias" name="Alias" /></p>
+                <p><strong><% __('Description:') |h %></strong><textarea class="form-control" id="edit_marker_metadata_description" name="Description" rows="3"></textarea></p>
+                <p><strong><% __('Alleles (one per line):') |h %></strong><textarea class="form-control" id="edit_marker_metadata_alleles" name="Alleles" rows="5"></textarea></p>
+                <p><strong><% __('References (one per line):') |h %></strong><textarea class="form-control" id="edit_marker_metadata_references" name="References" rows="5"></textarea></p>
                 <span>The references include the associated trait categories and external database references.  The format of each reference is <code>{database name}:{entity name}</code></span>
                 <input type="hidden" id="edit_marker_metadata_locus_id" />
             </div>
             <div class="modal-footer">
-                <button id="close_delete_model_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="edit_marker_metadata_dialog_submit" id="edit_marker_metadata_dialog_submit">Save</button>
+                <button id="close_delete_model_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="edit_marker_metadata_dialog_submit" id="edit_marker_metadata_dialog_submit"><% __('Save') |h %></button>
             </div>
         </div>
     </div>
