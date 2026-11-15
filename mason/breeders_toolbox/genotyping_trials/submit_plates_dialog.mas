@@ -117,7 +117,7 @@ $genotyping_facility
                     <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Finalize"), 'h' ) &>
                         <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finalize your order"), 'h' ) &>
                         <p>Submission Id: <b><label id="submission_lbl"></label></b></p>
-                        <p>Please click <a id="facility_href" target="_blank">HERE</a> to complete your order. </p><br><br>
+                        <p><& /util/sentence.mas, text => __x('Please click {link}HERE{end_link} to complete your order.'), link => '<a id="facility_href" target="_blank">', end_link => '</a>' &> </p><br><br>
                         <p><% __('After order has been complete click continue.') |h %></p>
                         <div style="text-align: center">
                             <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="continue_submission_btn" id="continue_submission_btn"><% __('Continue') |h %></button>
