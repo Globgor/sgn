@@ -20,6 +20,26 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/site/dataset.mas',
+    'Dataset Validation Failed',
+    'View Public Datasets',
+    'Elements not found:',
+    'Dataset Contents',
+    'Public Datasets',
+    'Your Datasets',
+);
+
+page_texts_ok(
+    '/site/list.mas',
+    'Items listed here have multiple case mismatches and must be fixed manually. If accessions need to be merged, contact the database directly.',
+    'Multiple synonym matches have to be resolved manually. Contact database administrators if necessary.',
+    'Click the Adjust Case button to align the case in the list with what is in the database.',
+    'Replace synonyms with corresponding DB name',
+    'Optional: Add Missing Accessions to A List',
+    'Create a New List from Selected Seedlots:',
+);
+
+page_texts_ok(
     '/site/status.mas',
     'Site Status',
     'Logins',

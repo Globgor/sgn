@@ -20,6 +20,11 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/site/toolbar/dataset.mas',
+    'Dataset',
+);
+
+page_texts_ok(
     '/site/toolbar/genomes.mas',
     'Tomato - Apollo genome annotation editor',
     '150 Tomato Genome Resequencing Project',

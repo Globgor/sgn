@@ -18,6 +18,10 @@ use warnings;
 use Test::More;
 
 my @scripts = (
+    [ 'js/source/entries/dataset_scatterplot.js',
+        'gettext(\'outliers successfully stored!\')',
+        'gettext(\'outliers successfully reset!\')',
+    ],
     [ 'js/source/entries/field_trial_linkage.js',
         'gettext("Error retrieving field trial to field trial linkage.")',
     ],
