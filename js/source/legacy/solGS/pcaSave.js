@@ -23,7 +23,7 @@ jQuery(document).ready(function () {
                 jQuery(savePcaBtnId).html(link);
             } else {
                 jQuery(pcaSaveMsgDiv)
-                .html("Please wait...saving the PCs may take a few minutes.")
+                .html(gettext("Please wait...saving the PCs may take a few minutes."))
                 .show();
                 jQuery(`#${elemId}`).hide();
 

@@ -17,7 +17,7 @@ solGS.searchTrials = {
 
   searchAllTrials: function (url, result) {
     jQuery(this.searchResultMsg)
-      .html("Searching for GS trials..")
+      .html(gettext("Searching for GS trials.."))
       .show();
 
     var traitTrials = jQuery.ajax({
@@ -48,7 +48,7 @@ solGS.searchTrials = {
 
       this.displayTrainingPopulations(tableDetails);
     } else {
-      jQuery(this.searchResultMsg).html("No trials were found.").show();
+      jQuery(this.searchResultMsg).html(gettext("No trials were found.")).show();
     }
   },
 
@@ -164,7 +164,7 @@ jQuery(document).ready(function () {
   jQuery(searchResultDiv).on("click", "div.paginate_nav a", function (e) {
     jQuery(searchResultDiv).empty();
     jQuery(searchResultMsg)
-      .html("Searching for more GS trials..")
+      .html(gettext("Searching for more GS trials.."))
       .show();
 
     var page = jQuery(this).attr("href");
@@ -181,7 +181,7 @@ jQuery(document).ready(function () {
         },
         error: function () {
           jQuery(searchResultMsg)
-            .html("Error occured fetching the next set of GS trials.")
+            .html(gettext("Error occured fetching the next set of GS trials."))
             .show();
         },
       });
@@ -215,13 +215,13 @@ jQuery(document).ready(function () {
           jQuery(searchResultDiv).append(pagination);
         } else {
           jQuery(searchResultMsg)
-            .html("No trials phenotyped for the trait were found.")
+            .html(gettext("No trials phenotyped for the trait were found."))
             .show();
         }
       })
       .fail(function () {
         jQuery(searchResultMsg)
-          .html("Error occured fetching the first set of GS trials.")
+          .html(gettext("Error occured fetching the first set of GS trials."))
           .show();
       });
   }
@@ -325,7 +325,7 @@ jQuery(document).ready(function () {
     } else {
       jQuery("#trial_search_box").css("border", "solid #FF0000");
 
-      jQuery("#form-feedback-search-trials").text("Please enter a trial name.");
+      jQuery("#form-feedback-search-trials").text(gettext("Please enter a trial name."));
     }
   });
 });

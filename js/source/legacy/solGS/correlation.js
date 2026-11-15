@@ -488,7 +488,7 @@ jQuery(document).ready(function () {
         runCorrBtnId = `#${runCorrBtnId}`;
         jQuery(runCorrBtnId).hide();
         jQuery(`${canvas} .multi-spinner-container`).show();
-        jQuery(corrMsgDiv).html("Running correlation... please wait...").show();
+        jQuery(corrMsgDiv).html(gettext("Running correlation... please wait...")).show();
 
         solGS.correlation.runPhenoCorrelation(corrArgs).done(function (res) {
         if (res.data || (res.status && res.status.match(/success/))) {

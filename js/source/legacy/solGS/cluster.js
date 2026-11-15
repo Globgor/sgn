@@ -1188,7 +1188,7 @@ jQuery(document).ready(function () {
     var clusterPopId = clusterArgs.cluster_pop_id;
 
     if (clusterPopId) {
-      jQuery(clusterMsgDiv).text("Running cluster... please wait...it may take minutes.").show();
+      jQuery(clusterMsgDiv).text(gettext("Running cluster... please wait...it may take minutes.")).show();
       jQuery(`${canvas} .multi-spinner-container`).show();
 
       solGS.cluster.checkCachedCluster(url, clusterArgs).done(function (res) {
@@ -1335,10 +1335,10 @@ jQuery(document).ready(function () {
               height: "auto",
               width: "auto",
               modal: true,
-              title: "cluster job submission",
+              title: gettext("cluster job submission"),
               buttons: {
                 OK: {
-                  text: "Yes",
+                  text: gettext("Yes"),
                   class: "btn btn-success",
                   id: "queue_job",
                   click: function () {
@@ -1348,7 +1348,7 @@ jQuery(document).ready(function () {
                 },
 
                 No: {
-                  text: "No, I will wait till it completes.",
+                  text: gettext("No, I will wait till it completes."),
                   class: "btn btn-warning",
                   id: "no_queue",
                   click: function () {
@@ -1356,7 +1356,7 @@ jQuery(document).ready(function () {
 
                     jQuery(runClusterBtnId).hide();
                     jQuery(clusterMsgDiv)
-                      .text("Running cluster... please wait...it may take minutes.")
+                      .text(gettext("Running cluster... please wait...it may take minutes."))
                       .show();
                     jQuery(`${canvas} .multi-spinner-container`).show();
 
@@ -1387,7 +1387,7 @@ jQuery(document).ready(function () {
                 },
 
                 Cancel: {
-                  text: "Cancel",
+                  text: gettext("Cancel"),
                   class: "btn btn-info",
                   id: "cancel_queue_info",
                   click: function () {

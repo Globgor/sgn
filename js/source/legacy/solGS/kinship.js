@@ -414,7 +414,7 @@ jQuery(document).ready(function () {
     
         jQuery(`#${runKinshipBtnId}`).hide();
         var kinshipMsgDiv = solGS.kinship.kinshipMsgDiv;
-        jQuery(kinshipMsgDiv).text("Running kinship... please wait...it may take minutes.").show();
+        jQuery(kinshipMsgDiv).text(gettext("Running kinship... please wait...it may take minutes.")).show();
         jQuery(`${canvas} .multi-spinner-container`).show();
 
         var kinshipArgs = solGS.kinship.getKinshipArgs();
@@ -439,7 +439,7 @@ jQuery(document).ready(function () {
             .checkCachedKinship(kinshipUrl, kinshipArgs)
             .done(function (res) {
             if (res.kinship_output_data) {
-                jQuery(kinshipMsgDiv).html("Generating heatmap... please wait...").show();
+                jQuery(kinshipMsgDiv).html(gettext("Generating heatmap... please wait...")).show();
 
                 kinshipPlotDivId = `${kinshipPlotDivId}_${res.kinship_file_id}`;
 
@@ -473,10 +473,10 @@ jQuery(document).ready(function () {
                 height: "auto",
                 width: "auto",
                 modal: true,
-                title: "Kinship job submission",
+                title: gettext("Kinship job submission"),
                 buttons: {
                     OK: {
-                    text: "Yes",
+                    text: gettext("Yes"),
                     class: "btn btn-success",
                     id: "queue_job",
                     click: function () {
@@ -487,13 +487,13 @@ jQuery(document).ready(function () {
                     },
 
                     No: {
-                    text: "No, I will wait till it completes.",
+                    text: gettext("No, I will wait till it completes."),
                     class: "btn btn-warning",
                     id: "no_queue",
                     click: function () {
                         jQuery(this).dialog("close");
 
-                        jQuery(kinshipMsgDiv).text("Running kinship... please wait...it may take minutes.").show();
+                        jQuery(kinshipMsgDiv).text(gettext("Running kinship... please wait...it may take minutes.")).show();
                         jQuery(`${canvas} .multi-spinner-container`).show();
 
                         solGS.kinship
@@ -501,7 +501,7 @@ jQuery(document).ready(function () {
                         .done(function (res) {
                             if (res.kinship_output_data) {
                             jQuery(kinshipMsgDiv)
-                                .html("Generating heatmap... please wait...")
+                                .html(gettext("Generating heatmap... please wait..."))
                                 .show();
 
                             kinshipPlotDivId = `${kinshipPlotDivId}_${res.kinship_file_id}`;
@@ -525,7 +525,7 @@ jQuery(document).ready(function () {
                                 .css({
                                 "padding-left": "0px",
                                 })
-                                .html("This population has no kinship output data.")
+                                .html(gettext("This population has no kinship output data."))
                                 .fadeOut(8400);
 
                             jQuery(runKinshipBtnId).show();
@@ -533,7 +533,7 @@ jQuery(document).ready(function () {
                         })
                         .fail(function () {
                             jQuery(kinshipMsgDiv)
-                            .html("Error occured running the kinship.")
+                            .html(gettext("Error occured running the kinship."))
                             .show()
                             .fadeOut(8400);
 
@@ -544,7 +544,7 @@ jQuery(document).ready(function () {
                     },
 
                     Cancel: {
-                    text: "Cancel",
+                    text: gettext("Cancel"),
                     class: "btn btn-info",
                     id: "cancel_queue_info",
                     click: function () {
@@ -557,7 +557,7 @@ jQuery(document).ready(function () {
             }
             })
             .fail(function () {
-            jQuery(kinshipMsgDiv).html("Error occured running the kinship.").show().fadeOut(8400);
+            jQuery(kinshipMsgDiv).html(gettext("Error occured running the kinship.")).show().fadeOut(8400);
             jQuery(`${canvas} .multi-spinner-container`).hide();
             jQuery(runKinshipBtnId).show();
             });
@@ -580,7 +580,7 @@ jQuery(document).ready(function () {
           var kinshipMsgDiv = solGS.kinship.kinshipMsgDiv;
           var canvas = solGS.kinship.canvas;
 
-          jQuery(kinshipMsgDiv).html("Generating heatmap... please wait...").show();
+          jQuery(kinshipMsgDiv).html(gettext("Generating heatmap... please wait...")).show();
           jQuery(`${canvas} .multi-spinner-container`).show();
 
           var kinshipPlotDivId = solGS.kinship.kinshipPlotDivPrefix;

@@ -390,7 +390,7 @@ jQuery(document).ready(function () {
                 }
               })
               .fail(function () {
-                alert("Error occured checking if the selection population has predicted output.");
+                alert(gettext("Error occured checking if the selection population has predicted output."));
               });
           } else {
             //TO-DO
@@ -424,7 +424,7 @@ jQuery(document).ready(function () {
             }
           })
           .fail(function () {
-            alert("Error occured checking if the selection population has predicted output.");
+            alert(gettext("Error occured checking if the selection population has predicted output."));
           });
         }
       }

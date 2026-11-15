@@ -163,7 +163,7 @@ solGS.sIndex = {
       //         );
       //    return;
     } else if (nm == "all" && val == 0) {
-      alert("At least two traits must be assigned relative weight.");
+      alert(gettext("At least two traits must be assigned relative weight."));
       return;
     } else {
       return true;
@@ -380,7 +380,7 @@ jQuery(document).on("click", "#calculate_si", function () {
           var corrPlotDivId = genArgs.corr_plot_div;
          
           jQuery(`${canvas} .multi-spinner-container`).show();
-          jQuery(siMsgDiv).html("Running correlation... please wait...").show();
+          jQuery(siMsgDiv).html(gettext("Running correlation... please wait...")).show();
 
           solGS.correlation
             .runGeneticCorrelation(genArgs)
@@ -415,7 +415,7 @@ jQuery(document).on("click", "#calculate_si", function () {
               }
             })
             .fail(function (res) {
-              jQuery(siMsgDiv).html("Error occured running correlation analysis.").fadeOut(8400);
+              jQuery(siMsgDiv).html(gettext("Error occured running correlation analysis.")).fadeOut(8400);
             });
 
           jQuery("#si_canvas #selected_pop").val("");

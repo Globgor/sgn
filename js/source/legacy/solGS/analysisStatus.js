@@ -53,7 +53,7 @@ solGS.log = {
                     alert("Encountered an error on the server: "+response.error);
                     console.log(response);
                 } else {
-                    alert("Jobs cleared from recent activity."); 
+                    alert(gettext("Jobs cleared from recent activity.")); 
                     window.location.reload();
                 }     
     	    },
@@ -75,7 +75,7 @@ solGS.log = {
                     alert("Encountered an error on the server: "+response.error);
                     console.log(response);
                 } else {
-                    alert("Jobs cleared from recent activity."); 
+                    alert(gettext("Jobs cleared from recent activity.")); 
                     window.location.reload(); 
                 } 
     	    },
