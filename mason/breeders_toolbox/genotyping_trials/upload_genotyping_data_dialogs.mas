@@ -1264,7 +1264,7 @@ jQuery(document).ready(function(){
     jQuery('#upload_genotyping_data_type_check_button').click(function(){
         var data_type = jQuery('#genotype_data_type_select').val();
         if (data_type == '') {
-            alert('Please select a data type');
+            alert(<% __('Please select a data type') |js %>);
         } else {
             Workflow.complete('#upload_genotyping_data_type_check_button');
             Workflow.focus('#upload_genotypes_workflow', 2);
@@ -1278,21 +1278,21 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length > 1){
-            alert('Only select one genotyping project!');
+            alert(<% __('Only select one genotyping project!') |js %>);
         } else {
             if (selected.length == 0 && jQuery('#upload_genotype_vcf_project_name').val() == ''){
-                alert('Select a genotyping project or create a new one!');
+                alert(<% __('Select a genotyping project or create a new one!') |js %>);
             } else if (selected.length == 1 && jQuery('#upload_genotype_vcf_project_name').val() != ''){
-                alert('If you selected a project, do not try to make a new one at the same time!');
+                alert(<% __('If you selected a project, do not try to make a new one at the same time!') |js %>);
             } else if (selected.length == 1 && jQuery('#upload_genotype_vcf_project_name').val() == ''){
                 jQuery('#upload_genotype_project_id').val(selected[0]);
                 Workflow.complete('#upload_genotyping_data_project_check_button');
                 Workflow.focus('#upload_genotypes_workflow', 3);
             } else if (selected.length == 0 && jQuery('#upload_genotype_vcf_project_name').val() != '') {
                 if (jQuery('#upload_genotype_year_select').val() == ''){
-                    alert('Please give a year');
+                    alert(<% __('Please give a year') |js %>);
                 } else if (jQuery('#upload_genotype_vcf_project_description').val() == ''){
-                    alert('Please give a description.');
+                    alert(<% __('Please give a description.') |js %>);
                 } else {
                     jQuery('#upload_genotype_project_id').val(undefined);
                     Workflow.complete('#upload_genotyping_data_project_check_button');
@@ -1316,7 +1316,7 @@ jQuery(document).ready(function(){
                     source: '/organism/autocomplete'
                 });
             } else if (selected.length > 0) {
-                alert('If you selected a protocol, do not try to make a new one at the same time!');
+                alert(<% __('If you selected a protocol, do not try to make a new one at the same time!') |js %>);
             }
         } else {
             jQuery('#upload_genotype_data_protocol_details').show();
@@ -1333,12 +1333,12 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length > 1){
-            alert('Only select one genotyping protocol!');
+            alert(<% __('Only select one genotyping protocol!') |js %>);
         } else {
             if (selected.length == 0 && jQuery('#upload_genotype_vcf_protocol_name').val() == '' && jQuery('#upload_genotype_protocol_id').val() == ''){
-                alert('Select a genotyping protocol or create a new one!');
+                alert(<% __('Select a genotyping protocol or create a new one!') |js %>);
             } else if (selected.length == 1 && jQuery('#upload_genotype_vcf_protocol_name').val() != ''){
-                alert('If you selected a protocol, do not try to make a new one at the same time!');
+                alert(<% __('If you selected a protocol, do not try to make a new one at the same time!') |js %>);
             } else if (selected.length == 1 && jQuery('#upload_genotype_vcf_protocol_name').val() == ''){
                 jQuery('#upload_genotype_protocol_id').val(selected[0]);
                 Workflow.complete('#upload_genotyping_data_protocol_check_button');
@@ -1348,9 +1348,9 @@ jQuery(document).ready(function(){
                 Workflow.focus('#upload_genotypes_workflow', 4);
             } else if (selected.length == 0 && jQuery('#upload_genotype_vcf_protocol_name').val() != '') {
                 if (jQuery('#upload_genotype_vcf_reference_genome_name').val() == ''){
-                    alert('Please give a reference genome name.');
+                    alert(<% __('Please give a reference genome name.') |js %>);
                 } else if (jQuery('#upload_genotypes_species_name_input').val() == ''){
-                    alert('Please give a species name.');
+                    alert(<% __('Please give a species name.') |js %>);
                 } else {
                     jQuery('#upload_genotype_protocol_id').val(undefined);
                     Workflow.complete('#upload_genotyping_data_protocol_check_button');
@@ -1365,7 +1365,7 @@ jQuery(document).ready(function(){
         var data_type = jQuery('#genotype_data_type_select').val();
         if (data_type == 'vcf') {
             if (jQuery('#upload_genotype_vcf_file_input').val() == ''){
-                alert('Please select a VCF file.');
+                alert(<% __('Please select a VCF file.') |js %>);
             } else {
                 jQuery('#file_check_button').hide();
                 jQuery('#genotyping_data_upload_next').show();
@@ -1373,7 +1373,7 @@ jQuery(document).ready(function(){
             }
         } else if (data_type == 'tassel_hdf5') {
             if (jQuery('#upload_genotype_tassel_hdf5_file_input').val() == ''){
-                alert('Please select a Tassel HDF5 file.');
+                alert(<% __('Please select a Tassel HDF5 file.') |js %>);
             } else {
                 jQuery('#file_check_button').hide();
                 jQuery('#genotyping_data_upload_next').show();
@@ -1381,9 +1381,9 @@ jQuery(document).ready(function(){
             }
         } else if (data_type == 'intertek') {
             if (jQuery('#upload_genotype_intertek_file_input').val() == ''){
-                alert('Please select an Intertek SNP Result Grid file.');
+                alert(<% __('Please select an Intertek SNP Result Grid file.') |js %>);
             } else if (jQuery('#upload_genotype_intertek_snp_file_input').val() == ''){
-                alert('Please select an Intertek SNP Information File.');
+                alert(<% __('Please select an Intertek SNP Information File.') |js %>);
             } else {
                 jQuery('#file_check_button').hide();
                 jQuery('#genotyping_data_upload_next').show();
@@ -1391,9 +1391,9 @@ jQuery(document).ready(function(){
             }
         } else if (data_type == 'KASP') {
                 if (jQuery('#upload_genotype_data_kasp_file_input').val() == ''){
-                    alert('Please select a KASP Result file.');
+                    alert(<% __('Please select a KASP Result file.') |js %>);
                 } else if (jQuery('#upload_genotype_kasp_marker_info_file_input').val() == ''){
-                    alert('Please select a KASP Marker Information File.');
+                    alert(<% __('Please select a KASP Marker Information File.') |js %>);
                 } else {
                     jQuery('#file_check_button').hide();
                     jQuery('#genotyping_data_upload_next').show();
@@ -1402,7 +1402,7 @@ jQuery(document).ready(function(){
 
         } else if (data_type == 'ssr') {
             if (jQuery('#upload_genotype_ssr_file_input').val() == ''){
-                alert('Please select a SSR file.');
+                alert(<% __('Please select a SSR file.') |js %>);
             } else {
                 jQuery('#file_check_button').hide();
                 jQuery('#genotyping_data_upload_next').show();
@@ -1445,19 +1445,19 @@ jQuery(document).ready(function(){
 
         jQuery('#upload_ssr_protocol_form').attr("action", "/ajax/genotype/upload_ssr_protocol");
         if (ssr_protocol_name === ''){
-            alert("Please give a protocol name");
+            alert(<% __('Please give a protocol name') |js %>);
             return;
         }
         if (ssr_protocol_species_name === ''){
-            alert("Please give a species name");
+            alert(<% __('Please give a species name') |js %>);
             return;
         }
         if (ssr_protocol_description === ''){
-            alert("Please give a description");
+            alert(<% __('Please give a description') |js %>);
             return;
         }
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery('#upload_ssr_protocol_form').submit();
@@ -1503,11 +1503,11 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length > 1) {
-            alert('Only select one genotyping protocol!');
+            alert(<% __('Only select one genotyping protocol!') |js %>);
         }
         else {
             if (selected.length == 0 ) {
-                alert('Select a genotyping protocol!');
+                alert(<% __('Select a genotyping protocol!') |js %>);
             }
             else {
                 Workflow.complete('#upload_mla_protocol_check_button');
@@ -1522,11 +1522,11 @@ jQuery(document).ready(function(){
         var uploadFile = jQuery("#upload_mla_file").val();
 
         if ( !genoProtocolId || genoProtocolId === '' ) {
-            alert("Please go back and select a Genotyping Protocol");
+            alert(<% __('Please go back and select a Genotyping Protocol') |js %>);
             return;
         }
         if (uploadFile === '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 

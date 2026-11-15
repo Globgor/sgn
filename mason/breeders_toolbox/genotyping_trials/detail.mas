@@ -360,7 +360,7 @@ genotyping_facility => $genotyping_facility
                 jQuery('#genotyping_trial_check_layout_section_div').html(html);
             },
             error: function(response){
-                alert('Error retrieving trial check layout section');
+                alert(<% __('Error retrieving trial check layout section') |js %>);
             }
 
         });

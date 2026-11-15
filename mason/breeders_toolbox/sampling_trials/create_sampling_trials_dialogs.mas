@@ -376,27 +376,27 @@ jQuery(document).ready(function(){
         sampling_data.sample_notes = jQuery('#sampling_trial_notes').val();
 
         if (sampling_data.breeding_program == '') {
-            alert("A breeding program is required. Please try again.");
+            alert(<% __('A breeding program is required. Please try again.') |js %>);
             return;
         }
         if (sampling_data.year == '') {
-            alert("A year is required. Please try again.");
+            alert(<% __('A year is required. Please try again.') |js %>);
             return;
         }
         if (sampling_data.location == '') {
-            alert("A location is required. Please try again.");
+            alert(<% __('A location is required. Please try again.') |js %>);
             return;
         }
         if (sampling_data.name == '') {
-            alert("A sampling trial name is required and it should be unique in the database. Please try again.");
+            alert(<% __('A sampling trial name is required and it should be unique in the database. Please try again.') |js %>);
             return;
         }
         if (sampling_data.description == '') {
-            alert("A sampling trial description is required. Please try again.");
+            alert(<% __('A sampling trial description is required. Please try again.') |js %>);
             return;
         }
         if (sampling_data.sample_type == '') {
-            alert("A sampling trial type is required. Please try again.");
+            alert(<% __('A sampling trial type is required. Please try again.') |js %>);
             return;
         }
         if (sampling_data.replicates == '') {
@@ -408,12 +408,12 @@ jQuery(document).ready(function(){
             sampling_data.list_id = jQuery('#sampling_trial_accession_select_box_list_select').val();
             var l = new CXGN.List();
             if (! l.validate(sampling_data.list_id, 'accessions', true) && ! l.validate(sampling_data.list_id, 'plots', true) && ! l.validate(sampling_data.list_id, 'plants', true) && ! l.validate(sampling_data.list_id, 'tissue_samples', true)) {
-                alert('The list contains elements that are not accessions or plots or plants or tissue_samples.');
+                alert(<% __('The list contains elements that are not accessions or plots or plants or tissue_samples.') |js %>);
                 return;
             }
             var elements = l.getList(sampling_data.list_id);
             if (typeof elements == 'undefined' ) {
-                alert("There are no elements in the list provided.");
+                alert(<% __('There are no elements in the list provided.') |js %>);
                 return;
             }
             sampling_data.elements = elements;
@@ -439,7 +439,7 @@ jQuery(document).ready(function(){
                     }
                 },
                 error: function(response) {
-                    alert('An error occurred trying the create the sampling trial layout.');
+                    alert(<% __('An error occurred trying the create the sampling trial layout.') |js %>);
                     jQuery("working_modal").modal('hide');
                 }
             });
@@ -494,7 +494,7 @@ jQuery(document).ready(function(){
                 }
             },
             error: function(response) {
-                alert('An error occurred trying the create the layout.');
+                alert(<% __('An error occurred trying the create the layout.') |js %>);
                 jQuery("#working_modal").modal('hide');
             }
         });

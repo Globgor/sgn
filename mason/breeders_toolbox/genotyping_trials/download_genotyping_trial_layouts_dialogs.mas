@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 % if ($genotyping_trial_ids) {
         jQuery('#download_genotyping_trial_layouts_dialog').modal('show');
 % } else {
-        alert('There are no genotyping layouts in this folder!');
+        alert(<% __('There are no genotyping layouts in this folder!') |js %>);
 % }
     });
 

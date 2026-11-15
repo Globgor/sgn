@@ -171,7 +171,7 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length !== 1){
-            alert('Only select one trial!');
+            alert(<% __('Only select one trial!') |js %>);
         } else {
             new jQuery.ajax({
                 type: 'POST',
@@ -197,7 +197,7 @@ jQuery(document).ready(function(){
                 },
                 error: function () {
                     jQuery("#working_modal").modal("hide");
-                    alert('An error occurred checking trial for plants.');
+                    alert(<% __('An error occurred checking trial for plants.') |js %>);
                 }
             });
         }
@@ -225,14 +225,14 @@ jQuery(document).ready(function(){
                     alert(response.error);
                 }
                 else {
-                    alert("Successfully created plant entries.");
+                    alert(<% __('Successfully created plant entries.') |js %>);
                     Workflow.complete('#create_tissue_samples_plants_per_plot_submit');
                     Workflow.focus("#field_tissue_samples_create_workflow", 3);
                 }
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert("An error occurred saving plant entries");
+                alert(<% __('An error occurred saving plant entries') |js %>);
             },
         });
     });
@@ -281,14 +281,14 @@ jQuery(document).ready(function(){
                     alert(response.error);
                 }
                 else {
-                    alert("Successfully created tissue sample entries.");
+                    alert(<% __('Successfully created tissue sample entries.') |js %>);
                     Workflow.complete('#create_tissue_samples_plants_per_plant_submit');
                     Workflow.focus("#field_tissue_samples_create_workflow", -1); //go to success
                 }
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert("An error occurred creating tissue sample entries");
+                alert(<% __('An error occurred creating tissue sample entries') |js %>);
             },
         });
     });
