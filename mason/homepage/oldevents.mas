@@ -16,6 +16,6 @@ eval {
 
 </%perl>
 
-<& /page/page_title.mas, title=>'Past and Present Events' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Past and Present Events'), 'h' ) &>
 
 <% $news %>

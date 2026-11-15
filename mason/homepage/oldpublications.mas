@@ -20,6 +20,6 @@ eval {
 
 </%perl>
 
-<& /page/page_title.mas, title=>"All Publications" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("All Publications"), 'h' ) &>
 <% $publications %>
 

@@ -139,48 +139,48 @@ pages.
 
 <div id="icon_nav">
 <ul>
-	<li class="MapsMarkers"><a href="/cview/" ><img src="/img/soliconmenu/MapsMarkers.png" title="Maps and Markers" /></a>
+	<li class="MapsMarkers"><a href="/cview/" ><img src="/img/soliconmenu/MapsMarkers.png" title="<% __('Maps and Markers') |h %>" /></a>
 
    		<ul>
         	  <div class="submenu MapsMarkersSubMenu">
-		    <li><a href="/cview/index.pl">Available maps</a></li>
-                    <li><a href="/cview/view_chromosome.pl?show_offsets=1&show_ruler=1&show_offsets=1">Comparative viewer</a></li>
-                    <li><a href="/search/direct_search.pl?search=markers">Search markers</a></li>
+		    <li><a href="/cview/index.pl"><% __('Available maps') |h %></a></li>
+                    <li><a href="/cview/view_chromosome.pl?show_offsets=1&show_ruler=1&show_offsets=1"><% __('Comparative viewer') |h %></a></li>
+                    <li><a href="/search/direct_search.pl?search=markers"><% __('Search markers') |h %></a></li>
 		    <li><a href="">&nbsp;</a></li>
-		    <li><a href="/cview/help/map_submission">Submit map information to SGN</a></li>
+		    <li><a href="/cview/help/map_submission"><% __('Submit map information to SGN') |h %></a></li>
 		  </div>
 		</ul>
 	</li>
 
-	<li class="Genes"><a href="/search/direct_search.pl?search=loci" style="background: none"><img src="/img/soliconmenu/Genes.png" title="Genes" /></a>
+	<li class="Genes"><a href="/search/direct_search.pl?search=loci" style="background: none"><img src="/img/soliconmenu/Genes.png" title="<% __('Genes') |h %>" /></a>
 	  <ul>
             <div class="submenu GenesSubMenu"  >
-              <li><a href="/search/direct_search.pl?search=loci">Search loci</a></li>
-              <li><a href="/search/direct_search.pl?search=unigene">Search unigenes</a></li>
-              <li><a href="/search/direct_search.pl?search=template">Expression</a></li>
-              <li><a href="/organism/Solanum_lycopersicum/genome">Search/browse tomato genome</a></li>
-	      <li><a href="/phenome/">Become an SGN locus editor</a></li>              
+              <li><a href="/search/direct_search.pl?search=loci"><% __('Search loci') |h %></a></li>
+              <li><a href="/search/direct_search.pl?search=unigene"><% __('Search unigenes') |h %></a></li>
+              <li><a href="/search/direct_search.pl?search=template"><% __('Expression') |h %></a></li>
+              <li><a href="/organism/Solanum_lycopersicum/genome"><% __('Search/browse tomato genome') |h %></a></li>
+	      <li><a href="/phenome/"><% __('Become an SGN locus editor') |h %></a></li>              
 	      </div>
 	      
 	  </ul>
 
 
 
-	<li class="Phenotypes"><a href="/search/direct_search.pl?search=phenotypes" style="background: none"><img src="/img/soliconmenu/Phenotypes.png" alt="Phenotypes and QTLs" title="Phenotypes and QTLs" /></a>
+	<li class="Phenotypes"><a href="/search/direct_search.pl?search=phenotypes" style="background: none"><img src="/img/soliconmenu/Phenotypes.png" alt="<% __('Phenotypes and QTLs') |h %>" title="<% __('Phenotypes and QTLs') |h %>" /></a>
 	  <ul>
 	    <div class="submenu PhenotypesSubMenu">
-              <li><a href="/search/direct_search.pl?search=phenotypes">Search phenotypes</a></li>
+              <li><a href="/search/direct_search.pl?search=phenotypes"><% __('Search phenotypes') |h %></a></li>
 
-              <li><a href="/qtl/">Analyze QTLs</a></li>
-              <li><a href="/tools/onto/">Ontology browser</a></li>
+              <li><a href="/qtl/"><% __('Analyze QTLs') |h %></a></li>
+              <li><a href="/tools/onto/"><% __('Ontology browser') |h %></a></li>
 	      <li><a href="">&nbsp;</a></li>
-	      <li><a href="/phenome/">Submit phenotype data</a></li>
+	      <li><a href="/phenome/"><% __('Submit phenotype data') |h %></a></li>
             </div>
           </ul>
 
 	</li>
     
-    <li class="BreedersToolBox"><a href="/breeders/"><img src="/img/soliconmenu/BreedersToolBox.png" alt="Breeders Toolbox" title="Click to access the Breeder's toolbox" /></a>
+    <li class="BreedersToolBox"><a href="/breeders/"><img src="/img/soliconmenu/BreedersToolBox.png" alt="<% __('Breeders Toolbox') |h %>" title="<% __('Click to access the Breeder\'s toolbox') |h %>" /></a>
     	<!--
 		<ul>
             <div class="submenu BreedersToolBoxSubMenu">
@@ -192,21 +192,21 @@ pages.
         -->
 	</li>
     
-  <li class="GenomesSequences"><a href="/genomes"><img src="/img/soliconmenu/GenomesSequences.png" alt="Genomes and Sequences" title="Genomes and Sequences" /></a>
+  <li class="GenomesSequences"><a href="/genomes"><img src="/img/soliconmenu/GenomesSequences.png" alt="<% __('Genomes and Sequences') |h %>" title="<% __('Genomes and Sequences') |h %>" /></a>
     <ul>
       <div class="submenu GenomesSequencesSubMenu">
-        <li><a href="/organism/Solanum_lycopersicum/genome">Tomato Genome Project</a></li>
+        <li><a href="/organism/Solanum_lycopersicum/genome"><% __('Tomato Genome Project') |h %></a></li>
         <!-- <li><a href="/organism/Solanum_lycopersicum/genome">Search/browse tomato genome</a></li> -->
         <li><a href="/organism/Solanum_pimpinellifolium/genome"><i>Solanum pimpinellifolium</i> genome</a></li>
         <li><a href="/organism/Nicotiana_benthamiana/genome"><i>Nicotiana benthamiana</i> genome</a></li>
         
         <li><a href=""></a>&nbsp;<li>
-        <li><a href="/sequencing/sol100.pl">SOL100 genomes</a></li>
+        <li><a href="/sequencing/sol100.pl"><% __('SOL100 genomes') |h %></a></li>
       </div>
     </ul>
   </li>
     
-    <li class="Pathways"><a href="http://solcyc.solgenomics.net/"><img src="/img/soliconmenu/Pathways.png" alt="Pathways" title="Click to access SolCyc" /></a>
+    <li class="Pathways"><a href="http://solcyc.solgenomics.net/"><img src="/img/soliconmenu/Pathways.png" alt="<% __('Pathways') |h %>" title="<% __('Click to access SolCyc') |h %>" /></a>
     	<!--
 		<ul>
             <div class="submenu PathwaysSubMenu">

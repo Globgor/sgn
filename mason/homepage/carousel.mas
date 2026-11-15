@@ -18,8 +18,8 @@
 	<div style="background:url(/documents/img/homepage_carousel/varitome.jpeg) center center; background-size:cover;" class="slider-size">
 	  <div class="carousel-sgn-caption" style="opacity: 0.95; background-color: #efefef">
 	    <a href="/projects/varitome/" target="_blank" style="color: #00426c">
-              <h3>The Varitome Project</h3>
-              <p>Exploitation of genetic and epigenetic variation in the regulation of tomato fruit quality traits</p>
+              <h3><% __('The Varitome Project') |h %></h3>
+              <p><% __('Exploitation of genetic and epigenetic variation in the regulation of tomato fruit quality traits') |h %></p>
 	    </a>
 	  </div>
 	</div>
@@ -28,18 +28,18 @@
       <div class="item">
         <div style="background:url(/documents/img/homepage_carousel/5.jpg) center center; background-size:cover;" class="slider-size">
           <div class="carousel-sgn-caption">
-            <h3><a href="/organism/Solanum_lycopersicum/genome">Tomato Genome</a></h3>
-            <p><a href="/organism/Solanum_lycopersicum/genome">The new Tomato Genome assembly (SL3.0) and annotations (ITAG3.0) are now available on SGN</a></p>
+            <h3><a href="/organism/Solanum_lycopersicum/genome"><% __('Tomato Genome') |h %></a></h3>
+            <p><a href="/organism/Solanum_lycopersicum/genome"><% __('The new Tomato Genome assembly (SL3.0) and annotations (ITAG3.0) are now available on SGN') |h %></a></p>
             <!--<p><a href="http://www.nature.com/nature/journal/v485/n7400/full/nature11119.html" target="_blank">The tomato genome sequence provides insights into fleshy fruit evolution</a></p> -->
           </div>
 
           <div class="carousel-sgn-links">
             <ul class="sgn_sm_list">
-              <a href="/jbrowse_solgenomics/?data=data/json/SL3.0"><li>Browse the tomato genome</li></a>
-              <a href="/tools/blast?db_id=283"><li>Find sequences by similarity</li></a>
+              <a href="/jbrowse_solgenomics/?data=data/json/SL3.0"><li><% __('Browse the tomato genome') |h %></li></a>
+              <a href="/tools/blast?db_id=283"><li><% __('Find sequences by similarity') |h %></li></a>
               <!--<a href="http://vigs.solgenomics.net"><li>Design VIGS constructs</li></a> -->
-              <a href="ftp://ftp.solgenomics.net/genomes/Solanum_lycopersicum/annotation/ITAG3.0_release/"><li>Download the annotations</li></a>
-              <a href="ftp://ftp.solgenomics.net/genomes/Solanum_lycopersicum/assembly/build_3.00/"><li>Download the Genome Sequence</li></a>
+              <a href="ftp://ftp.solgenomics.net/genomes/Solanum_lycopersicum/annotation/ITAG3.0_release/"><li><% __('Download the annotations') |h %></li></a>
+              <a href="ftp://ftp.solgenomics.net/genomes/Solanum_lycopersicum/assembly/build_3.00/"><li><% __('Download the Genome Sequence') |h %></li></a>
             </ul>
           </div>
         </div>
@@ -49,16 +49,16 @@
       <div class="item">
         <div style="background:url(/documents/img/homepage_carousel/3.jpg) center center; background-size:cover;" class="slider-size">
         <div class="carousel-sgn-caption">
-            <h3><a href="/organism/Capsicum_annuum/genome">Pepper Sps. Genomes</a></h3>
+            <h3><a href="/organism/Capsicum_annuum/genome"><% __('Pepper Sps. Genomes') |h %></a></h3>
             <p><a href="http://www.nature.com/ng/journal/v46/n3/full/ng.2877.html" target="_blank">Genome sequence of the hot pepper provides insights into the evolution of pungency in Capsicum species</a></p>
         </div>
 
         <div class="carousel-sgn-links">
           <ul class="sgn_sm_list">
-            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPepper.v.1.55"><li>Browse the pepper genome</li></a>
-            <a href="/tools/blast?db_id=217"><li>Find sequences by similarity</li></a>
-            <a href="ftp://ftp.solgenomics.net/genomes/Capsicum_annuum/"><li>Download the annotations</li></a>
-            <a href="ftp://ftp.solgenomics.net/genomes/Capsicum_annuum/"><li>Download the Genome Sequence</li></a>
+            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPepper.v.1.55"><li><% __('Browse the pepper genome') |h %></li></a>
+            <a href="/tools/blast?db_id=217"><li><% __('Find sequences by similarity') |h %></li></a>
+            <a href="ftp://ftp.solgenomics.net/genomes/Capsicum_annuum/"><li><% __('Download the annotations') |h %></li></a>
+            <a href="ftp://ftp.solgenomics.net/genomes/Capsicum_annuum/"><li><% __('Download the Genome Sequence') |h %></li></a>
           </ul>
         </div>
 
@@ -75,10 +75,10 @@
         <div class="carousel-sgn-links">
           <ul class="sgn_sm_list">
             <a href="http://bti.cornell.edu/research/projects/nicotiana-benthamiana/"><li>The <i>N. benthamiana</i> sequencing project</li></a>
-            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FNiben1.0.1&loc=Niben101Scf00005"><li>Browse the genome</li></a>
-            <a href="/tools/blast/?db_id=266"><li>Find sequences by similarity</li></a>
-            <a href="http://vigs.solgenomics.net"><li>Design VIGS constructs</li></a>
-            <a href="ftp://ftp.solgenomics.net/genomes/Nicotiana_benthamiana"><li>Downloads</li></a>
+            <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FNiben1.0.1&loc=Niben101Scf00005"><li><% __('Browse the genome') |h %></li></a>
+            <a href="/tools/blast/?db_id=266"><li><% __('Find sequences by similarity') |h %></li></a>
+            <a href="http://vigs.solgenomics.net"><li><% __('Design VIGS constructs') |h %></li></a>
+            <a href="ftp://ftp.solgenomics.net/genomes/Nicotiana_benthamiana"><li><% __('Downloads') |h %></li></a>
           </ul>
         </div>
 
@@ -89,7 +89,7 @@
       <div class="item">
         <div style="background:url(/documents/img/homepage_carousel/carousel_petunia.jpeg) center center; background-size:cover;" class="slider-size">
         <div class="carousel-sgn-caption">
-            <h3><a href="http://www.nature.com/articles/nplants201674" target="_blank">Petunia Sps. Genomes</a></h3>
+            <h3><a href="http://www.nature.com/articles/nplants201674" target="_blank"><% __('Petunia Sps. Genomes') |h %></a></h3>
             <p><a href="http://www.nature.com/articles/nplants201674" target="_blank">Insight into the evolution of the Solanaceae from the parental genomes of Petunia hybrida</a></p>
         </div>
 
@@ -97,8 +97,8 @@
           <ul class="sgn_sm_list">
             <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeaxi162&loc=Peaxi162Scf00001"><li>Browse the <i>P. axillaris</i> genome</li></a>
             <a href="/jbrowse_solgenomics/?data=data%2Fjson%2FPeinf101&loc=Peinf101Scf00001"><li>Browse the <i>P. inflata</i> genome</li></a>
-            <a href="/tools/blast/?db_id=270"><li>Find sequences by similarity</li></a>
-            <a href="http://vigs.solgenomics.net"><li>Design VIGS constructs</li></a>
+            <a href="/tools/blast/?db_id=270"><li><% __('Find sequences by similarity') |h %></li></a>
+            <a href="http://vigs.solgenomics.net"><li><% __('Design VIGS constructs') |h %></li></a>
             <a href="ftp://ftp.solgenomics.net/genomes/Petunia_axillaris"><li><i>P. axillaris</i> Downloads</li></a>
             <a href="ftp://ftp.solgenomics.net/genomes/Petunia_inflata"><li><i>P. inflata</i> Downloads</li></a>
           </ul>
@@ -134,16 +134,16 @@
             <div class="carousel-sgn-caption" style="opacity: 0.95; background-color: #efefef">
               <a href="https://www.sol2019.org/" target="_blank" style="color: #00426c">
                 <!-- <h3>Solcuc2017</h3> -->
-                <h3>The 16th Solanaceae Conference</h3>
-                <p>September 15th - 19th 2019, Jerusalem, Israel</p>
+                <h3><% __('The 16th Solanaceae Conference') |h %></h3>
+                <p><% __('September 15th - 19th 2019, Jerusalem, Israel') |h %></p>
               </a>
             </div>
 
             <div class="carousel-sgn-links" style="background-color: #efefef">
               <ul class="sgn_sm_list">
-                <a href="https://www.sol2019.org/registration" target="_blank"><li style="color: #00426c">Registration</li></a>
-                <a href="https://www.sol2019.org/program-outline" target="_blank"><li style="color: #00426c">Program outline</li></a>
-                <a href="https://www.sol2019.org/general-information" target="_blank"><li style="color: #00426c">Venue and Information</li></a>
+                <a href="https://www.sol2019.org/registration" target="_blank"><li style="color: #00426c"><% __('Registration') |h %></li></a>
+                <a href="https://www.sol2019.org/program-outline" target="_blank"><li style="color: #00426c"><% __('Program outline') |h %></li></a>
+                <a href="https://www.sol2019.org/general-information" target="_blank"><li style="color: #00426c"><% __('Venue and Information') |h %></li></a>
               </ul>
             </div>
 
@@ -161,22 +161,22 @@
   <!-- Left and right controls -->
   <a id="prev_slide" class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" style="color:white;">
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
+    <span class="sr-only"><% __('Previous') |h %></span>
   </a>
   <a  id="next_slide" class="right carousel-control" href="#myCarousel" role="button" data-slide="next" style="color:white;">
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
+    <span class="sr-only"><% __('Next') |h %></span>
   </a>
 
 </div>
 
 <ul id="btn_carousel_indicators" class="nav nav-pills nav-justified sgn_carousel_button_group">
     <li><a data-target="#myCarousel" data-slide-to="0">Varitome</a></li>
-    <li class="active"><a data-target="#myCarousel" data-slide-to="1">Tomato</a></li>
-  <li><a data-target="#myCarousel" data-slide-to="2">Pepper</a></li>
+    <li class="active"><a data-target="#myCarousel" data-slide-to="1"><% __('Tomato') |h %></a></li>
+  <li><a data-target="#myCarousel" data-slide-to="2"><% __('Pepper') |h %></a></li>
   <li><a data-target="#myCarousel" data-slide-to="3"><i>N. benthamiana</i></a></li>
   <li><a data-target="#myCarousel" data-slide-to="4">Petunia</a></li>
-  <li><a data-target="#myCarousel" data-slide-to="5">SOL Meeting</a></li>
+  <li><a data-target="#myCarousel" data-slide-to="5"><% __('SOL Meeting') |h %></a></li>
   <!-- <li><a data-target="#myCarousel" data-slide-to="6">5th ISTD</a></li> -->
 </ul>
 

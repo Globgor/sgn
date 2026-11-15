@@ -1,13 +1,13 @@
 <div class="boxbgcolor1" style="margin:0px;" >
-<div class="boxheading">Forum topics</div>
+<div class="boxheading"><% __('Forum topics') |h %></div>
 <div class="boxcontent">
 <div class="subheading">
-<a href="/forum/posts.pl?topic_id=2">Job Listings</a>
+<a href="/forum/posts.pl?topic_id=2"><% __('Job Listings') |h %></a>
 </div>
 <div class="boxsubcontent">
-Browse or advertise jobs here.
+<% __('Browse or advertise jobs here.') |h %>
 </div>
-<a href="/forum/topics.pl">View all topics...</a><br /><br />
+<a href="/forum/topics.pl"><% __('View all topics...') |h %></a><br /><br />
 </div>
 </div>
 

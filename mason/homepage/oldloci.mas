@@ -28,7 +28,7 @@ eval {
 
 </%perl>
 
-<& /page/page_title.mas, title=>'All Loci of the Week' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('All Loci of the Week'), 'h' ) &>
 
 <% $loci %>
 

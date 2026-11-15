@@ -35,7 +35,7 @@ if ($@) { print "ERROR $@\n"; }
 </%perl>
 
 <div class="boxbgcolor1" style="margin:0px;">
-<div class="boxheading">Tomato Genome Published</div>
+<div class="boxheading"><% __('Tomato Genome Published') |h %></div>
 <div class="boxcontent"><% $publication %>
 
 </div>
