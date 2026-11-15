@@ -19,7 +19,7 @@ $user_id => undef
 
 </&>
 
-<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Locations to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the location names in the table to a new or exisiting list</i>'&>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Copy Locations to a List'), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<i>Copy the location names in the table to a new or existing list</i>'&>
 <br>
 <div style="text-align:right" id="locations_to_list_menu"></div>
 <div id="location_names" style="display: none;"></div>
