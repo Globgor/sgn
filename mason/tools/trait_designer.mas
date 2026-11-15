@@ -5,7 +5,7 @@
 <div style="text-align: center; margin: 2em 0">
    <h2 style="margin-bottom: 1em"><% __('Design new traits') |h %></h2>
 
-   <h4> Check the <a href='/search/traits'>trait search page</a> to see if your trait has already been made before designing new traits.</h4>
+   <h4> <& /util/sentence.mas, text => __x('Check the {link}trait search page{end_link} to see if your trait has already been made before designing new traits.'), link => '<a href=\'/search/traits\'>', end_link => '</a>' &></h4>
 
     <br>
 

@@ -103,14 +103,14 @@ $composable_meta_root_cvterm => undef
     <div class="col-sm-12 col-md-12 col-lg-12">
     <div id="tod_div" class="col-md-6" style="display: none;">
       <label for="tod_select_div" class="control-label"><% __('Time of Day') |h %></label>
-      <p class="help-block"><small><i>Optional</i> Pick the time of day at which the new trait is measured</small></p>
+      <p class="help-block"><small><& /util/sentence.mas, text => __x('{i}Optional{end_i} Pick the time of day at which the new trait is measured'), i => '<i>', end_i => '</i>' &></small></p>
       <div id="tod_select_div"></div><br>
       <button class="btn btn-default btn-sm" id="tod_select_all" name="tod_select_all"/><% __('Select All') |h %></button>
       <button class="btn btn-default btn-sm" id="tod_select_clear" name="tod_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="toy_div" class="col-md-6" style="display: none;">
       <label for="toy_select_div" class="control-label"><% __('Time of Year') |h %></label>
-      <p class="help-block"><small><i>Optional</i> Pick the day, week, or month in which the new trait is measured</small></p>
+      <p class="help-block"><small><& /util/sentence.mas, text => __x('{i}Optional{end_i} Pick the day, week, or month in which the new trait is measured'), i => '<i>', end_i => '</i>' &></small></p>
       <input type="text" id="toy_search" class="form-control input-sm" placeholder="Search minute, hour, day, week, month...">
       <div id="toy_select_div"></div><br>
       <button class="btn btn-default btn-sm" id="toy_select_all" name="toy_select_all"/><% __('Select All') |h %></button>
@@ -118,7 +118,7 @@ $composable_meta_root_cvterm => undef
     </div>
     <div id="tiy_div" class="col-md-6" style="display: none;">
       <label for="tiy_select_div" class="control-label"><% __('Time in Years') |h %></label>
-      <p class="help-block"><small><i>Optional</i> Pick the year in which the new trait is measured</small></p>
+      <p class="help-block"><small><& /util/sentence.mas, text => __x('{i}Optional{end_i} Pick the year in which the new trait is measured'), i => '<i>', end_i => '</i>' &></small></p>
       <input type="text" id="tiy_search" class="form-control input-sm" placeholder="Search year...">
       <div id="tiy_select_div"></div><br>
       <button class="btn btn-default btn-sm" id="tiy_select_all" name="tiy_select_all"/><% __('Select All') |h %></button>
@@ -126,14 +126,14 @@ $composable_meta_root_cvterm => undef
     </div>
     <div id="gen_div" class="col-md-6" style="display: none;">
       <label for="gen_select_div" class="control-label"><% __('Generation') |h %></label>
-      <p class="help-block"><small><i>Optional</i> Pick the generation on which the new trait is measured</small></p>
+      <p class="help-block"><small><& /util/sentence.mas, text => __x('{i}Optional{end_i} Pick the generation on which the new trait is measured'), i => '<i>', end_i => '</i>' &></small></p>
       <div id="gen_select_div"></div><br>
       <button class="btn btn-default btn-sm" id="gen_select_all" name="gen_select_all"/><% __('Select All') |h %></button>
       <button class="btn btn-default btn-sm" id="gen_select_clear" name="gen_select_clear"/><% __('Clear') |h %></button>
     </div>
     <div id="evt_div" class="col-md-6" style="display: none;">
       <label for="evt_select_div" class="control-label"><% __('Event') |h %></label>
-      <p class="help-block"><small><i>Optional</i> Pick the breeding event to which you selected time term relates.</small></p>
+      <p class="help-block"><small><& /util/sentence.mas, text => __x('{i}Optional{end_i} Pick the breeding event to which you selected time term relates.'), i => '<i>', end_i => '</i>' &></small></p>
       <div id="evt_select_div"></div><br>
       <button class="btn btn-default btn-sm" id="evt_select_all" name="evt_select_all"/><% __('Select All') |h %></button>
       <button class="btn btn-default btn-sm" id="evt_select_clear" name="evt_select_clear"/><% __('Clear') |h %></button>
