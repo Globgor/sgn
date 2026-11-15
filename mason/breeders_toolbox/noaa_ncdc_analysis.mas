@@ -116,23 +116,23 @@ jQuery(document).ready(function() {
                                 jQuery('#noaa_ncdc_analysis_input_div').show();
                             }
                             else {
-                                alert('Could not verify the NOAA StationID you provided. Go to Manage->Locations and make sure your location has a valid NOAA station id!');
+                                alert(<% __('Could not verify the NOAA StationID you provided. Go to Manage->Locations and make sure your location has a valid NOAA station id!') |js %>);
                                 jQuery('#noaa_ncdc_analysis_input_div').hide();
                             }
                         },
                         error: function() {
-                            alert('The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!');
+                            alert(<% __('The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!') |js %>);
                             jQuery('#noaa_ncdc_analysis_input_div').hide();
                         }
                     });
                 }
                 else {
-                    alert('No NOAA NCDC station id for this location. Go to Manage->Locations and edit your location to add a valid NOAA station id!');
+                    alert(<% __('No NOAA NCDC station id for this location. Go to Manage->Locations and edit your location to add a valid NOAA station id!') |js %>);
                     jQuery('#noaa_ncdc_analysis_input_div').hide();
                 }
             },
             error: function(response){
-                alert('Error getting NOAA NCDC ID for location!');
+                alert(<% __('Error getting NOAA NCDC ID for location!') |js %>);
                 jQuery('#noaa_ncdc_analysis_input_div').hide();
             }
         });
@@ -146,11 +146,11 @@ jQuery(document).ready(function() {
         noaa_ncdc_analysis_window_end_date = jQuery('#noaa_ncdc_analysis_window_end_date').val();
         noaa_ncdc_analysis_cumulative_year = jQuery('#noaa_ncdc_analysis_cumulative_year').val();
         if (noaa_ncdc_analysis_start_date == '') {
-            alert('Please give a start date!');
+            alert(<% __('Please give a start date!') |js %>);
             return false;
         }
         if (noaa_ncdc_analysis_end_date == '') {
-            alert('Please give a end date!');
+            alert(<% __('Please give a end date!') |js %>);
             return false;
         }
 
@@ -166,11 +166,11 @@ jQuery(document).ready(function() {
                     jQuery('#noaa_ndcd_analysis_result').html(html);
                 }
                 else {
-                    alert('There was an error getting NOAA analysis!');
+                    alert(<% __('There was an error getting NOAA analysis!') |js %>);
                 }
             },
             error: function(response){
-                alert('Error getting NOAA NCDC analysis!');
+                alert(<% __('Error getting NOAA NCDC analysis!') |js %>);
             }
         });
     });
