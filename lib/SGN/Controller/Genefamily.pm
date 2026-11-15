@@ -4,6 +4,7 @@ package SGN::Controller::Genefamily;
 use Moose;
 
 use Data::Dumper;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -120,7 +121,7 @@ sub genefamily_details :Path('/tools/genefamily/details') Args(2) {
 
     if (!$family) {
 	$c->stash->{template} = '/generic_message.mas';
-	$c->stash->{message} = 'Need a family to display!';
+	$c->stash->{message} = __('Need a family to display!');
 	return;
     }
 

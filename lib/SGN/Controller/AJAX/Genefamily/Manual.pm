@@ -24,6 +24,7 @@ use CXGN::Phenome::Schema;
 use CXGN::Chado::Publication;
 
 use CXGN::Page::FormattingHelpers qw/ info_table_html html_alternate_show /;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller::REST' }
 
@@ -65,7 +66,7 @@ sub add_member:Path('/ajax/genefamily/manual/add') :ActionClass('REST') {}
 
 sub add_member_GET :Args(0) {
     my ($self, $c) = @_;
-    $c->stash->{rest} = { error => "Nothing here, it's a GET.." } ;
+    $c->stash->{rest} = { error => __("Nothing here, it's a GET..") } ;
 }
 
 sub add_member_POST :Args(0) {
@@ -91,7 +92,7 @@ sub add_member_POST :Args(0) {
     }
     my $locusgroup = $phenome_schema->resultset("Locusgroup")->find({locusgroup_id => $locusgroup_id } ) ;
     if (!$c->user) {
-        $c->stash->{rest} = { error => 'Must be logged in for associating loci! ' };
+        $c->stash->{rest} = { error => __('Must be logged in for associating loci! ') };
         return;
     }
     if ( any { $_ eq 'curator' || $_ eq 'submitter' || $_ eq 'sequencer' } $c->user->roles() ) {
@@ -114,7 +115,7 @@ sub add_member_POST :Args(0) {
                 return;
             };
         } else {
-            $c->stash->{rest} = { error => 'need both valid locusgroup_id and locus_id for adding the locusgroup member! ' };
+            $c->stash->{rest} = { error => __('need both valid locusgroup_id and locus_id for adding the locusgroup member! ') };
         }
     } else {
         $c->stash->{rest} = { error => 'No privileges for adding new locus to the locusgroup. You must have an sgn submitter account. Please contact sgn-feedback@solgenomics.net for upgrading your user account. ' };
