@@ -43,6 +43,8 @@ page_texts_ok(
     'Generate Model',
 );
 
+component_compiles_ok('/tools/image_analysis.mas');
+
 page_texts_ok(
     '/tools/mixedmodels.mas',
     'Choose the dependent variable for your analysis',

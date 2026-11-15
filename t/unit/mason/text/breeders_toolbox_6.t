@@ -32,6 +32,16 @@ page_texts_ok(
 component_compiles_ok('/breeders_toolbox/manage_genotyping.mas');
 
 page_texts_ok(
+    '/breeders_toolbox/manage_images.mas',
+    'Images are linked to observation units (plots, plants, tissue samples)',
+    'Upload a zip file of images alongside phenotype values.',
+    'Image descriptors (name, description, or filename):',
+    'How images are linked, and how to upload them',
+    'No image analysis runs have been saved yet.',
+    'Select multiple images directly for upload.',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_locations.mas',
     'Copy Locations to a List',
     'Manage Locations',

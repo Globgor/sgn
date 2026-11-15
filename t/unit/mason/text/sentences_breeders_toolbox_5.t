@@ -41,6 +41,11 @@ page_sentences_ok(
 );
 
 page_sentences_ok(
+    '/breeders_toolbox/upload_images.mas',
+    'The values in the {column} column should should match the image filenames in the zipfile.',
+);
+
+page_sentences_ok(
     '/breeders_toolbox/upload_locations_dialogs.mas',
     '{column} must be an existing Breeding Program in the database, or multiple breeding programs separated by {separator}',
     '{column} The NOAA Station ID that is nearest and most relevant to the location. {link}Search Here{end_link}',

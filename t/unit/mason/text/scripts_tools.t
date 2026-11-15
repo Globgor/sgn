@@ -30,6 +30,8 @@ component_compiles_ok('/tools/environment_stratification.mas');
 
 component_compiles_ok('/tools/fieldmap.mas');
 
+component_compiles_ok('/tools/image_analysis.mas');
+
 page_script_texts_ok(
     '/tools/trait_designer.mas',
     'Please select a CV before rebuilding its cvterm paths.',

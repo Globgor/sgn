@@ -42,6 +42,17 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/drone_run_project.mas',
+    'Error saving details',
+    'Details saved!',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/image_analysis_run.mas',
+    'Could not load the image list.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/location_edit.mas',
     'The NOAA NCDC authorization token may not be valid! We could not verify your NOAA StationID. Please contact us!',
     'Could not verify the NOAA StationID you provided, however, your details were still updated.',
@@ -49,6 +60,23 @@ page_script_texts_ok(
     'A location abbreviation is required.',
     'A location longitude is required.',
     'A location altitude is required.',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/manage_drone_imagery.mas',
+    'Up not implemented if your first plot starts in bottom right. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clockwise, then first plot starts in bottom left corner and plot assignment can follow going right).',
+    'Down not implemented if your first plot starts in top right. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clockwise, then first plot starts in bottom right corner and plot assignment can follow going left).',
+    'Up not implemented if your first plot starts in bottom left. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image clockwise 90 degrees, then first plot starts in top-left corner and plot assignment can follow going right).',
+    'Down not implemented if first plot starts in top left. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clock-wise, then first plot starts in top right and you can go left for plot assignment).',
+    'This only works for Micasense 5-band camera currently, where plot images are extracted for blue, green, red, NIR, and red-edge bands, and the standard process has been completed! So only select imaging events that meet this criteria!',
+    'The standard process will continue in the background and may take some time. You can check the indicator on the manage aerial imagery page to see when it is complete.',
+);
+
+page_script_texts_ok(
+    '/breeders_toolbox/manage_images.mas',
+    'Could not load recent analysis runs.',
+    'Could not load image collections.',
+    'Could not load collections.',
 );
 
 page_script_texts_ok(

@@ -72,6 +72,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/upload_images.mas',
+    'The "Associated Images" format is useful for uploading a zipfile of images in association with phenotype values.',
+    'There should only be one barcode in each image, and the associated stock must already exist in the database.',
+    'The phenotype values should be included in a .xls or .xlsx spreadsheet with the following columns:',
+    'Upload multiple selected images that contain a barcode with a stock ID.',
+    'Select multiple images directly for upload.',
+    'Images with Associated Phenotypes:',
+);
+
+page_texts_ok(
     '/breeders_toolbox/upload_locations_dialogs.mas',
     'The first row (header) must contain the following:',
     'Optional values:',

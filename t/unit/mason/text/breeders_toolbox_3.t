@@ -60,6 +60,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/drone_run_project.mas',
+    'View and edit the public data agreement on this experiment.',
+    'View basic information about the imaging event project.',
+    'Edit Imaging Event Details',
+    'Imaging Event Name:',
+    'Description:',
+    'Save Changes',
+);
+
+page_texts_ok(
     '/breeders_toolbox/genotype_data_project.mas',
     'View information about genotyping plates in this project or move genotyping plates to this project.',
     'Delete genotyping project, genotyping plates and/or genotyping data associated with this project.',
@@ -67,6 +77,25 @@ page_texts_ok(
     'Download archived VCF files associated with this genotyping project.',
     'View and edit the public data agreement on this experiment.',
     'View basic information about the genotyping project.',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/image_analysis_run.mas',
+    'View basic information about this image analysis run.',
+    'No per-image results are stored for this run.',
+    'Image Analysis Results by Image',
+    'Loading images…',
+    'Run Details',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/image_analysis_run_details.mas',
+    'Click a filename to jump to that image\'s results below.',
+    'Pipeline Details',
+    'Pipeline Version',
+    'Analyzed Images',
+    'Images Analyzed',
+    'Loading images…',
 );
 
 done_testing;
