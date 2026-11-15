@@ -29,4 +29,9 @@ page_sentences_ok(
     'Trial --> Seedlot: Find seedlots that are derived from this trial',
 );
 
+page_sentences_ok(
+    '/breeders_toolbox/selection_index.mas',
+    'The {bold}Calculate Rankings{end_bold} button will produce a SIN score and ranking for each accession, based on the selected parameters and phenotype means. The rankings and phenotype means are displayed in the {bold}Rankings{end_bold} and {bold}Unweighted Means{end_bold} tabs of the results section, where they can be manipulated, copied and downloaded. Below the results table, users have the option to {bold}save top ranked accessions to a list{end_bold}.',
+);
+
 done_testing;

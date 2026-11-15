@@ -24,6 +24,10 @@ page_script_texts_ok(
     'Something went wrong in the available-seedlots AJAX call. See console for more information.',
 );
 
+component_compiles_ok('/tools/boxplotter.mas');
+
+component_compiles_ok('/tools/environment_stratification.mas');
+
 component_compiles_ok('/tools/fieldmap.mas');
 
 page_script_texts_ok(

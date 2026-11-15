@@ -41,6 +41,10 @@ my @scripts = (
         'gettext("buttonId not sent!")',
         'gettext(\'invalid request\')',
     ],
+    [ 'js/source/legacy/CXGN/SelectionIndex.js',
+        'gettext(\'Add another trait\')',
+        'gettext("An error occurred while retrieving average phenotypes")',
+    ],
 );
 
 my $node = grep { -x "$_/node" && !-d "$_/node" } split /:/, $ENV{PATH} // q{};

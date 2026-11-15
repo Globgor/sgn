@@ -37,6 +37,7 @@ sub run_perl {
 }
 
 my @modules = (
+    [ 'lib/SGN/Controller/Analytics.pm', 'SGN::Controller::Analytics', [ '__(\'The requested analytics protocol ID does not exist in the database.\')' ] ],
     [ 'lib/SGN/Controller/Cross.pm', 'SGN::Controller::Cross', [ '__(\'The requested cross does not exist.\')', '__(\'The requested family name does not exist.\')' ] ],
     [ 'lib/SGN/Controller/Dataset.pm', 'SGN::Controller::Dataset', [ '__("The requested dataset does not exist or has been deleted.")', '__("The selected service does not exist in the server configuration")' ] ],
 );

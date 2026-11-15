@@ -32,6 +32,11 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/radargraph.mas',
+    'Please select at least one dataset!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/seedlot_details.mas',
     'Please provide an accession name OR a cross unique id as the content of the seedlot. Not both.',
     'Please provide an accession name or a cross unique id as the content of the seedlot.',

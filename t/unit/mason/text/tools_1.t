@@ -29,7 +29,21 @@ page_texts_ok(
     'Weight(g)',
 );
 
+component_compiles_ok('/tools/boxplotter.mas');
+
+component_compiles_ok('/tools/environment_stratification.mas');
+
 component_compiles_ok('/tools/fieldmap.mas');
+
+page_texts_ok(
+    '/tools/mixedmodels.mas',
+    'Choose the dependent variable for your analysis',
+    '[ Choose dataset and dependent variable first ]',
+    'Random factors with variable slope/intersects',
+    'Choose the dataset for your analysis',
+    'sommer with spatial correction spl2D',
+    'Run analysis and go to next step',
+);
 
 page_texts_ok(
     '/tools/trait_designer.mas',

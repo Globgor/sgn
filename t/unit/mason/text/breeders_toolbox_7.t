@@ -53,6 +53,13 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/radargraph.mas',
+    'Render Graph',
+    '[loading...]',
+    'Radar Graph',
+);
+
+page_texts_ok(
     '/breeders_toolbox/seedlot_details.mas',
     'You need to be logged in or you do not have sufficient privileges to mark this seedlot as DISCARDED.',
     'Taken From Existing Seedlot or the Same Accession/Cross:',
@@ -76,6 +83,16 @@ page_texts_ok(
     '/breeders_toolbox/seedlots_section.mas',
     'Copy Seedlots to a List',
     '[LOADING...]',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/selection_index.mas',
+    'Accessions with missing phenotypes are excluded by default. If the allow missing phenotypes option is enabled, the rankings will expand to include any accessions which were planted in the trial but which are missing observations for one or more of the traits in the index. Missing phenotypes will not contribute to the SIN score, so the final SIN interpretation should change accordingly.',
+    'A selection index is a method of optimizing selection by acting on multiple traits simultaneously. An index can accomplish this because it incorporates multiple sources of information about an individual into a single best linear prediction of breeding value. This selection index tool combines phenotypic observations with index coefficients into a selection index, SIN, of the form:',
+    'The save option allows a user to enter a name, and save the current index formula as a dataset. It is then available for later use, and visible in their list manager where it can be edited or shared with others.',
+    'By default the unadjusted mean of phenotypic observations is used. For each trait, users have the option to normalize these means using a control mean or the overall trial mean.',
+    'One for each trait. Must be a positive or negative number, and should reflect the importance of the trait in the index. If left blank it defaults to 1.',
+    'The select option allows a user to load a saved formula, which will consist of a saved combination of traits, coefficients, and normalization options.',
 );
 
 done_testing;
