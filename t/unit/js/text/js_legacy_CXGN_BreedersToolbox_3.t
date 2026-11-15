@@ -43,6 +43,14 @@ my @scripts = (
         'gettext("An error occurred while trying to upload this file. Please check the formatting and try again")',
         'gettext("Success! All trials successfully updated.")',
     ],
+    [ 'js/source/legacy/CXGN/BreedersToolbox/Vector.js',
+        'gettext("No vectors to add")',
+        'gettext("Please select a file")',
+        'gettext("An unknown error occurred.  Please try again later or contact us for help.")',
+        'gettext(\'All vectors in your list already exist in the database. (3)\')',
+        'gettext(\'All vectors in your list now exist in the database. 2\')',
+        'gettext(\'An error occurred checking your fuzzy options! Do not try to add a synonym to a synonym! Also do not use any special characters!\')',
+    ],
 );
 
 my $node = grep { -x "$_/node" && !-d "$_/node" } split /:/, $ENV{PATH} // q{};

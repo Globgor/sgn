@@ -20,9 +20,16 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/stock/accession_related_transformation_info.mas',
+    'Accession',
+);
+
+page_script_texts_ok(
     '/stock/add_phenotype.mas',
     'Must choose a trait name!',
 );
+
+component_compiles_ok('/stock/add_vector.mas');
 
 page_script_texts_ok(
     '/stock/audit.mas',
@@ -74,6 +81,14 @@ page_script_texts_ok(
     'File uploaded successfully',
     'Please select a file',
     'An error occurred!',
+);
+
+page_script_texts_ok(
+    '/stock/vector_related_accessions.mas',
+    'Obsolete Accession',
+    'Transformation ID',
+    'Plant Material',
+    'Accession',
 );
 
 done_testing;

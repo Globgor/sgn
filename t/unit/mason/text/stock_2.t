@@ -84,4 +84,9 @@ page_texts_ok(
     'Accession Related Recordings, whether audio or video.',
 );
 
+page_texts_ok(
+    '/stock/vector_related_accessions.mas',
+    'Copy Accessions to a List',
+);
+
 done_testing;

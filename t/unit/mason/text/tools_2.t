@@ -39,4 +39,14 @@ page_texts_ok(
     'Use the grid tools to place borders, define border accessions, and review plot details by moving the cursor over each plot.',
 );
 
+page_texts_ok(
+    '/tools/vectorviewer.mas',
+    'Vector Viewer',
+    'Update/Reset',
+    'Load Vector',
+    'Orientation',
+    'Save Vector',
+    'Start Coord',
+);
+
 done_testing;

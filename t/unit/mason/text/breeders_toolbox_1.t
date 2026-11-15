@@ -76,4 +76,6 @@ page_texts_ok(
     'New seedlot transactions were added successfully',
 );
 
+component_compiles_ok('/breeders_toolbox/add_vectors_dialogs.mas');
+
 done_testing;

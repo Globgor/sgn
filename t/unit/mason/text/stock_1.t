@@ -25,6 +25,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/stock/accession_related_transformation_info.mas',
+    'Transformants (Accessions) Derived from the same Transformation ID',
+    'Number of Insertions and Expression Data',
+    'Control Transformants (Accessions)',
+    'Add accession names to a List',
+    'Transformation Experiment',
+    'Number of Insertions:',
+);
+
+page_texts_ok(
     '/stock/accession_usage.mas',
     'Accession Usage as Female Parent',
     'Accession Phenotype Performance',
@@ -40,6 +50,8 @@ page_texts_ok(
     'Submit',
     'Value',
 );
+
+component_compiles_ok('/stock/add_vector.mas');
 
 component_compiles_ok('/stock/additional_info_section.mas');
 

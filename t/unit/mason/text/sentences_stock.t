@@ -17,6 +17,8 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
+component_compiles_ok('/stock/add_vector.mas');
+
 page_sentences_ok(
     '/stock/download_stock_phenotypes_dialog.mas',
     'Download Phenotypes for {name}',
