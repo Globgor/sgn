@@ -3,12 +3,12 @@
 
 <div id="brapi_home_maps_detail_div">
 
-    <h4>Genome Map Details</h4>
+    <h4><% __('Genome Map Details') |h %></h4>
     <input name="brapi_home_mapsdbid" id="brapi_home_mapsdbid" class="form-control" type="text" placeholder="MapsDbId e.g. 1" value="1"/>
     <input name="brapi_home_maps_linkagegroupids" id="brapi_home_maps_linkagegroupids" class="form-control" type="text" placeholder="LinkageGroupIds e.g. S5,S13" value="S5,S13"/>
-    <input name="brapi_home_maps_min" id="brapi_home_maps_min" class="form-control" type="text" placeholder="Minimum Position e.g. 10000" value="10000"/>
-    <input name="brapi_home_maps_max" id="brapi_home_maps_max" class="form-control" type="text" placeholder="Maximum Position e.g. 200000" value="200000"/>
-    <button class="btn btn-primary" name="brapi_home_mapsdbid_submit" id="brapi_home_mapsdbid_submit">Get Map Details</button>
+    <input name="brapi_home_maps_min" id="brapi_home_maps_min" class="form-control" type="text" placeholder="<% __('Minimum Position e.g. 10000') |h %>" value="10000"/>
+    <input name="brapi_home_maps_max" id="brapi_home_maps_max" class="form-control" type="text" placeholder="<% __('Maximum Position e.g. 200000') |h %>" value="200000"/>
+    <button class="btn btn-primary" name="brapi_home_mapsdbid_submit" id="brapi_home_mapsdbid_submit"><% __('Get Map Details') |h %></button>
     <br/><br/>
     <div id="brapi_maps_detail_result_div">
     </div>

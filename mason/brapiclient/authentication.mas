@@ -5,14 +5,14 @@
 
     <div class="row">
     <div class="col-sm-6">
-    <h4>Login</h4>
-    <input name="brapi_auth_login_username" id="brapi_auth_login_username" class="form-control" type="text" placeholder="Your Username" />
-    <input name="brapi_auth_login_password" id="brapi_auth_login_password" class="form-control" type="password" placeholder="Password" />
-    <button class="btn btn-primary" name="brapi_auth_login_submit" id="brapi_auth_login_submit">Login</button>
+    <h4><% __('Login') |h %></h4>
+    <input name="brapi_auth_login_username" id="brapi_auth_login_username" class="form-control" type="text" placeholder="<% __('Your Username') |h %>" />
+    <input name="brapi_auth_login_password" id="brapi_auth_login_password" class="form-control" type="password" placeholder="<% __('Password') |h %>" />
+    <button class="btn btn-primary" name="brapi_auth_login_submit" id="brapi_auth_login_submit"><% __('Login') |h %></button>
     </div>
     <div class="col-sm-6">
-    <h4>Logout</h4>
-    <button class="btn btn-danger" name="brapi_auth_logout_submit" id="brapi_auth_logout_submit">Logout</button>
+    <h4><% __('Logout') |h %></h4>
+    <button class="btn btn-danger" name="brapi_auth_logout_submit" id="brapi_auth_logout_submit"><% __('Logout') |h %></button>
     </div>
     </div>
 

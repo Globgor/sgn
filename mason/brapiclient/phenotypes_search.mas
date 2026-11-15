@@ -3,11 +3,11 @@
 
 <& /util/import_javascript.mas, classes => [ 'brapi.Table' ] &>
 
-<& /page/page_title.mas, title=>"Phenotype Retrieval" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Phenotype Retrieval"), 'h' ) &>
 
-<h4>Database Select</h4>
+<h4><% __('Database Select') |h %></h4>
 <select name="brapi_home_phenotypes_url_select" id="brapi_home_phenotypes_url_select" class="form-control" />
-    <option value="">local</option>
+    <option value=""><% __('local') |h %></option>
     <option value="https://cassbase.org">cassbase.org</option>
     <option value="https://cassavabase.org">cassavabase.org</option>
     <option value="https://musabase.org">musabase.org</option>
@@ -18,22 +18,22 @@
     <option value="https://www.crop-diversity.org/mgis">crop-diversity.org</option>
 </select>
 
-<h4>Phenotype Search</h4>
+<h4><% __('Phenotype Search') |h %></h4>
 
 <div id="brapi_home_phenotype_search_div" class="well">
 
-    <input name="brapi_home_phenosearch_germplasmDbIds" id="brapi_home_phenosearch_germplasmDbIds" class="form-control" type="text" placeholder="GermplasmDbIds e.g. 139" />
-    <input name="brapi_home_phenosearch_studyDbIds" id="brapi_home_phenosearch_studyDbIds" class="form-control" type="text" placeholder="StudyDbIds e.g. 139,137" />
-    <input name="brapi_home_phenosearch_observationVariableDbIds" id="brapi_home_phenoseach_observationVariableDbIds" class="form-control" type="text" placeholder="ObservationDbIds e.g. 70741,70666,70773" />
-    <input name="brapi_home_phenosearch_locationDbIds" id="brapi_home_phenosearch_locationDbIds" class="form-control" type="text" placeholder="LocationDbIds e.g. 23" value="23"/>
-    <input name="brapi_home_phenosearch_years" id="brapi_home_phenosearch_years" class="form-control" type="text" placeholder="Years e.g. 2014,2015" />
+    <input name="brapi_home_phenosearch_germplasmDbIds" id="brapi_home_phenosearch_germplasmDbIds" class="form-control" type="text" placeholder="<% __('GermplasmDbIds e.g. 139') |h %>" />
+    <input name="brapi_home_phenosearch_studyDbIds" id="brapi_home_phenosearch_studyDbIds" class="form-control" type="text" placeholder="<% __('StudyDbIds e.g. 139,137') |h %>" />
+    <input name="brapi_home_phenosearch_observationVariableDbIds" id="brapi_home_phenoseach_observationVariableDbIds" class="form-control" type="text" placeholder="<% __('ObservationDbIds e.g. 70741,70666,70773') |h %>" />
+    <input name="brapi_home_phenosearch_locationDbIds" id="brapi_home_phenosearch_locationDbIds" class="form-control" type="text" placeholder="<% __('LocationDbIds e.g. 23') |h %>" value="23"/>
+    <input name="brapi_home_phenosearch_years" id="brapi_home_phenosearch_years" class="form-control" type="text" placeholder="<% __('Years e.g. 2014,2015') |h %>" />
     <select name="brapi_home_phenosearch_observations_level" id="brapi_home_phenosearch_observations_level" class="form-control" />
-        <option value="all">All</option>
-        <option value="plot">Plot</option>
-        <option value="plant">Plant</option>
+        <option value="all"><% __('All') |h %></option>
+        <option value="plot"><% __('Plot') |h %></option>
+        <option value="plant"><% __('Plant') |h %></option>
     </select>
     <br/>
-    <button class="btn btn-primary" name="brapi_home_phenosearch_submit" id="brapi_home_phenosearch_submit">Search Phenotypes</button>
+    <button class="btn btn-primary" name="brapi_home_phenosearch_submit" id="brapi_home_phenosearch_submit"><% __('Search Phenotypes') |h %></button>
     <br/><br/>
     <div id="brapi_phenosearch_data_result_div">
     </div>
@@ -41,7 +41,7 @@
 </div>
 
 <br/>
-<h4>Phenotypes For a Study in Table Format</h4>
+<h4><% __('Phenotypes For a Study in Table Format') |h %></h4>
 
 <div id="brapi_home_phenotype_study_table_div" class="well">
 
@@ -61,7 +61,7 @@
 </div>
 
 <br/>
-<h4>Phenotypes For a Study in ObservationUnits Format</h4>
+<h4><% __('Phenotypes For a Study in ObservationUnits Format') |h %></h4>
 
 <div id="brapi_home_phenotype_study_observation_units_div" class="well">
 
@@ -74,7 +74,7 @@
 </div>
 
 <br/>
-<h4>Phenotypes For a Study in Granular Format</h4>
+<h4><% __('Phenotypes For a Study in Granular Format') |h %></h4>
 
 <div id="brapi_home_phenotype_study_granular_div" class="well">
 

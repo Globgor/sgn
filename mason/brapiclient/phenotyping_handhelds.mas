@@ -3,11 +3,11 @@
 
 <& /util/import_javascript.mas, classes => [ 'brapi.Table' ] &>
 
-<& /page/page_title.mas, title=>"Phenotyping Handhelds" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Phenotyping Handhelds"), 'h' ) &>
 
-<h4>Database Select</h4>
+<h4><% __('Database Select') |h %></h4>
 <select name="brapi_phenotyping_handhelds_url_select" id="brapi_phenotyping_handhelds_url_select" class="form-control" />
-    <option value="">local</option>
+    <option value=""><% __('local') |h %></option>
     <option value="https://cassbase.org">cassbase.org</option>
     <option value="https://cassavabase.org">cassavabase.org</option>
     <option value="https://musabase.org">musabase.org</option>
@@ -22,7 +22,7 @@
 
 <div id="brapi_phenotyping_handhelds_layout_div" class="well">
 
-    <h3>Get Trial Layout(s)</h3>
+    <h3><% __('Get Trial Layout(s)') |h %></h3>
 
     <select name="brapi_phenotyping_handhelds_layout_format" id="brapi_phenotyping_handhelds_layout_format" class="form-control" />
         <option value="json">JSON</option>
@@ -41,7 +41,7 @@
 
 <div id="brapi_phenotyping_handhelds_traits_div" class="well">
 
-    <h3>Get Observation Variables</h3>
+    <h3><% __('Get Observation Variables') |h %></h3>
 
     <div id="brapi_phenotyping_handhelds_traits_div">
     </div>
@@ -55,11 +55,11 @@
 
     <h3>Upload Phenotypes Using POST brapi/v1/studies/studyId/observationunits?observationLevel=observationLevel</h3>
 
-    <h4>Not yet implemented</h4>
+    <h4><% __('Not yet implemented') |h %></h4>
 
     <h3>Upload Phenotypes Using POST brapi/v1/studies/studyId/table</h3>
 
-    <h4>Not yet implemented</h4>
+    <h4><% __('Not yet implemented') |h %></h4>
 
 </div>
 

@@ -3,17 +3,17 @@
 
 <div id="brapi_home_germplasm_attributes_div">
 
-    <h4>Germplasm Attributes List</h4>
-    <button class="btn btn-primary" name="brapi_home_germplasm_attributes_submit" id="brapi_home_germplasm_attributes_submit">Get Attributes</button>
+    <h4><% __('Germplasm Attributes List') |h %></h4>
+    <button class="btn btn-primary" name="brapi_home_germplasm_attributes_submit" id="brapi_home_germplasm_attributes_submit"><% __('Get Attributes') |h %></button>
     <br/><br/>
     <div id="brapi_germplasm_attributes_result_div">
     </div>
     <div id="brapi_germplasm_attributes_categories_result_div">
     </div>
 
-    <h4>Germplasm Attributes Detail</h4>
+    <h4><% __('Germplasm Attributes Detail') |h %></h4>
     <input name="brapi_home_germplasm_attribute_dbid" id="brapi_home_germplasm_attribute_dbid" class="form-control" type="text" placeholder="GermplasmDbId e.g. 38841" value="38841"/>
-    <button class="btn btn-primary" name="brapi_home_germplasmdbid_attributes_submit" id="brapi_home_germplasmdbid_attributes_submit">Get Attributes for Germplasm</button>
+    <button class="btn btn-primary" name="brapi_home_germplasmdbid_attributes_submit" id="brapi_home_germplasmdbid_attributes_submit"><% __('Get Attributes for Germplasm') |h %></button>
     <br/><br/>
     <div id="brapi_germplasm_dbid_attributes_result_div">
     </div>

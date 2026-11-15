@@ -3,11 +3,11 @@
 
 <& /util/import_javascript.mas, classes => [ 'brapi.Table' ] &>
 
-<& /page/page_title.mas, title=>"Germplasm Search and Exchange" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Germplasm Search and Exchange"), 'h' ) &>
 
-<h4>Database Select</h4>
+<h4><% __('Database Select') |h %></h4>
 <select name="brapi_home_url_select" id="brapi_home_url_select" class="form-control" />
-    <option value="">local</option>
+    <option value=""><% __('local') |h %></option>
     <option value="https://cassbase.org">cassbase.org</option>
     <option value="https://cassavabase.org">cassavabase.org</option>
     <option value="https://musabase.org">musabase.org</option>
@@ -18,7 +18,7 @@
     <option value="https://www.crop-diversity.org/mgis">crop-diversity.org</option>
 </select>
 
-<h4>Germplasm Search</h4>
+<h4><% __('Germplasm Search') |h %></h4>
 
 <div id="brapi_germplasm_search_home_div" class="well">
 
@@ -29,11 +29,11 @@
 <input name="brapi_germplasm_search_germplasmDbId" id="brapi_germplasm_search_germplasmDbId" class="form-control" type="text" placeholder="GermplasmDbId" />
 <input name="brapi_germplasm_search_germplasmPUI" id="brapi_germplasm_search_germplasmPUI" class="form-control" type="text" placeholder="GermplasmPUI" />
 <select name="brapi_germplasm_search_matchMethod" id="brapi_germplasm_search_matchMethod" class="form-control" />
-    <option value="exact">Exact</option>
-    <option value="wildcard">Wildcard. Wildcard allows % or * for multiple characters and ? for single characters.</option>
+    <option value="exact"><% __('Exact') |h %></option>
+    <option value="wildcard"><% __('Wildcard. Wildcard allows % or * for multiple characters and ? for single characters.') |h %></option>
 </select>
 <br/>
-<button class="btn btn-primary" name="brapi_germplasm_search_submit" id="brapi_germplasm_search_submit">Search</button>
+<button class="btn btn-primary" name="brapi_germplasm_search_submit" id="brapi_germplasm_search_submit"><% __('Search') |h %></button>
 
 <br/><br/>
 
@@ -46,8 +46,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="brapiGermplasmSearchSavedDialog">BrAPI Germplasm Exchange</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="brapiGermplasmSearchSavedDialog"><% __('BrAPI Germplasm Exchange') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_brapi_germplasm_saved_message_modal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_brapi_germplasm_saved_message_modal" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

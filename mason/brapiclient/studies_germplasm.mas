@@ -3,9 +3,9 @@
 
 <div id="brapi_home_study_germplasm_detail_div">
 
-    <h4>Study Germplasm</h4>
-    <input name="brapi_home_studygermplasmdbid" id="brapi_home_studygermplasmdbid" class="form-control" type="text" placeholder="StudyDbId e.g. 139" value="139"/>
-    <button class="btn btn-primary" name="brapi_home_studygermplasmdbid_submit" id="brapi_home_studygermplasmdbid_submit">Get Germplasm</button>
+    <h4><% __('Study Germplasm') |h %></h4>
+    <input name="brapi_home_studygermplasmdbid" id="brapi_home_studygermplasmdbid" class="form-control" type="text" placeholder="<% __('StudyDbId e.g. 139') |h %>" value="139"/>
+    <button class="btn btn-primary" name="brapi_home_studygermplasmdbid_submit" id="brapi_home_studygermplasmdbid_submit"><% __('Get Germplasm') |h %></button>
     <br/><br/>
     <div id="brapi_studygermplasm_detail_result_div">
     </div>

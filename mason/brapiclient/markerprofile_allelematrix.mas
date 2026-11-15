@@ -3,11 +3,11 @@
 
 <& /util/import_javascript.mas, classes => [ 'brapi.Table' ] &>
 
-<& /page/page_title.mas, title=>"Genotype Retrieval" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Genotype Retrieval"), 'h' ) &>
 
-<h4>Database Select</h4>
+<h4><% __('Database Select') |h %></h4>
 <select name="brapi_home_genotypes_url_select" id="brapi_home_genotypes_url_select" class="form-control" />
-    <option value="">local</option>
+    <option value=""><% __('local') |h %></option>
     <option value="https://cassbase.org">cassbase.org</option>
     <option value="https://cassavabase.org">cassavabase.org</option>
     <option value="https://musabase.org">musabase.org</option>
@@ -20,18 +20,18 @@
 
 <div id="brapi_home_markerprofile_allelematrix_div">
 
-    <h4>MarkerProfile Details</h4>
+    <h4><% __('MarkerProfile Details') |h %></h4>
     <input name="brapi_home_markerprofiledbid1" id="brapi_home_markerprofiledbid1" class="form-control" type="text" placeholder="MarkerProfileDbId e.g. 1622" value="1622"/>
     <input name="brapi_home_markerprofiledbid2" id="brapi_home_markerprofiledbid2" class="form-control" type="text" placeholder="MarkerProfileDbId e.g. 1623" value="1623"/>
     <input name="brapi_home_markerprofiledbid3" id="brapi_home_markerprofiledbid3" class="form-control" type="text" placeholder="MarkerProfileDbId e.g. 1624" value="1624"/>
     <input name="brapi_home_markerprofiledbid4" id="brapi_home_markerprofiledbid4" class="form-control" type="text" placeholder="MarkerProfileDbId e.g. 1625" value="1625"/>
     <select name="brapi_home_allelematrix_format" id="brapi_home_allelematrix_format" class="form-control" />
-        <option value="json">JSON (transformed to HTML table)</option>
+        <option value="json"><% __('JSON (transformed to HTML table)') |h %></option>
         <option value="tsv">TSV</option>
         <option value="csv">CSV</option>
     </select>
     <br/>
-    <button class="btn btn-primary" name="brapi_home_allelematrix_submit" id="brapi_home_allelematrix_submit">Get AlleleMatrix</button>
+    <button class="btn btn-primary" name="brapi_home_allelematrix_submit" id="brapi_home_allelematrix_submit"><% __('Get AlleleMatrix') |h %></button>
     <br/><br/>
     <div id="brapi_markerprofile_allelematrix_div">
     </div>
