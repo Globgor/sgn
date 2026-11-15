@@ -20,6 +20,13 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/captcha.mas',
+    'Javascript is required for bot detection...',
+    'Verifying your request...',
+    'Verification Failed',
+);
+
+page_texts_ok(
     '/cookie_popup.mas',
     'This site uses cookies to provide logins and other features. Please accept the use of cookies by clicking Accept.',
     'Accept',

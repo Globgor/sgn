@@ -40,6 +40,7 @@ my @modules = (
     [ 'lib/SGN/Controller/QuickSearch.pm', 'SGN::Controller::QuickSearch', [ '__(\'Must provide a search term\')' ] ],
     [ 'lib/SGN/Controller/Seedlot.pm', 'SGN::Controller::Seedlot', [ '__(\'Seedlot Maintenance Events are not enabled on this server!\')', '__(\'Your account must have either submitter or curator privileges to add seedlot maintenance events.\')', '__(\'Seedlot Maintenance Events are not enabled on this server!\')' ] ],
     [ 'lib/SGN/Controller/SiteStatus.pm', 'SGN::Controller::SiteStatus', [ '__(\'You do not have the required privileges to view this page\')' ] ],
+    [ 'lib/SGN/Controller/User.pm', 'SGN::Controller::User', [ '__("The provided password reset link is invalid. Please try again with another link.")', '__("No token provided. Please try again.")' ] ],
 );
 
 for my $module (@modules) {
