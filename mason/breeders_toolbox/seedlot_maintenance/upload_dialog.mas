@@ -169,12 +169,12 @@
     function uploadMaintenanceEvents() {
         let file = jQuery('#maintenance_events_upload_file').val();
         if ( !file || file === '' ) {
-            alert("Please select your upload file");
+            alert(<% __('Please select your upload file') |js %>);
             return false;
         }
 
         // Setup working modal
-        jQuery('#working_msg').html("Uploading Seedlot Maintenance Events File");
+        jQuery('#working_msg').html(<% __('Uploading Seedlot Maintenance Events File') |js %>);
         jQuery('#working_modal_progress').css('width', 0).attr('aria-valuenow', 0);
         jQuery('#working_modal_progress_div').css('display', 'block');
         jQuery('#working_modal').modal("show");
@@ -200,7 +200,7 @@
                             let prog = (e.loaded / e.total)*100;
                             jQuery('#working_modal_progress').css('width', prog + "%").attr('aria-valuenow', prog);
                             if ( prog >= 100 ) {
-                               jQuery('#working_msg').html("Uploading Seedlot Maintenance Events File");
+                               jQuery('#working_msg').html(<% __('Uploading Seedlot Maintenance Events File') |js %>);
                             }
                         }
                     }, false);
@@ -212,7 +212,7 @@
             },
             error: function(e) {
                 console.log(e);
-                alert("ERROR: Could not upload file!");
+                alert(<% __('ERROR: Could not upload file!') |js %>);
             },
             complete: function() {
                 jQuery('#working_msg').html("");

@@ -531,7 +531,7 @@
 
         function _finish(complete) {
             jQuery("#seedlot_event_submit").attr('disabled', false);
-            jQuery("#seedlot_event_submit").html("Submit");
+            jQuery("#seedlot_event_submit").html(<% __('Submit') |js %>);
             if ( complete ) {
                 window.scrollTo(0, 0);
                 resetUI();

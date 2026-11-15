@@ -416,7 +416,7 @@ jQuery(document).ready(function(){
             material_type = jQuery('#upload_seedlot_material_type').val();
         }
         if (material_type === '') {
-            alert("Please select a material type");
+            alert(<% __('Please select a material type') |js %>);
             return;
         }
 
@@ -426,15 +426,15 @@ jQuery(document).ready(function(){
         var breeding_program = jQuery("#upload_seedlot_breeding_program_id").val();
         jQuery('#upload_seedlot_form').attr("action", "/ajax/breeders/seedlot-upload");
         if (breeding_program === '') {
-            alert("Please choose a breeding program");
+            alert(<% __('Please choose a breeding program') |js %>);
             return;
         }
         if (location === '') {
-            alert("Please give a location");
+            alert(<% __('Please give a location') |js %>);
             return;
         }
         if (uploadSeedlotAccessionsFile === '' && uploadSeedlotsHarvestedFile == '') {
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
         jQuery("#upload_seedlot_form").submit();
@@ -448,7 +448,7 @@ jQuery(document).ready(function(){
             jQuery('#working_modal').modal("show");
             if (uploadSeedlotAccessionsFile === '' && uploadSeedlotsHarvestedFile == '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function (response) {
@@ -513,7 +513,7 @@ jQuery(document).ready(function(){
     });
 
     jQuery(document).on('click', '[name="upload_seedlot_success_complete_button"]', function(){
-        alert('Seedlots were saved in the database');
+        alert(<% __('Seedlots were saved in the database') |js %>);
         jQuery('#upload_seedlot_dialog').modal('hide');
         //location.reload();
     });

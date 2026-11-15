@@ -651,7 +651,7 @@ function upload_transactions_file() {
                 if (uploadSeedlotsToUnspecified === '') {
                     var uploadSourcesToExistingSeedlots = jQuery("#sources_to_existing_seedlots_file").val();
                     if (uploadSourcesToExistingSeedlots === '') {
-                        alert("Please select a file");
+                        alert(<% __('Please select a file') |js %>);
                         return;
                     }
                 }
@@ -663,11 +663,11 @@ function upload_transactions_file() {
         var breeding_program = jQuery("#new_seedlot_breeding_program_id").val();
         var location = jQuery("#new_seedlot_location").val();
         if (breeding_program === '') {
-            alert("Please choose a breeding program for new seedlots");
+            alert(<% __('Please choose a breeding program for new seedlots') |js %>);
             return;
         }
         if (location === '') {
-            alert("Please give a location for new seedlots");
+            alert(<% __('Please give a location for new seedlots') |js %>);
             return;
         }
     }

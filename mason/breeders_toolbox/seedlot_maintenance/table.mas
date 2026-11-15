@@ -456,16 +456,16 @@ function getEvents() {
                 TOTAL = data.total;
             }
             else {
-                alert("ERROR: Could not load maintenance events!");
+                alert(<% __('ERROR: Could not load maintenance events!') |js %>);
             }
         },
         error: function() {
-            alert("ERROR: Could not load maintenance events!");
+            alert(<% __('ERROR: Could not load maintenance events!') |js %>);
         },
         complete: function() {
             displayEvents();
 
-            jQuery("#event_filter_submit").html("Filter");
+            jQuery("#event_filter_submit").html(<% __('Filter') |js %>);
             jQuery("#event_filter_submit").attr("disabled", false);
         }
     });
@@ -542,11 +542,11 @@ function getOntology(callback) {
                 if ( callback ) return callback();
             }
             else {
-                alert("ERROR: Could not fetch ontology terms");
+                alert(<% __('ERROR: Could not fetch ontology terms') |js %>);
             }
         },
         error: function() {
-            alert("ERROR: Could not fetch ontology terms");
+            alert(<% __('ERROR: Could not fetch ontology terms') |js %>);
         }
     });
 }
@@ -661,7 +661,7 @@ function addDateFilter() {
     // Check date format
     let regex = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
     if ( !d.match(regex) ) {
-        alert("Incorrect date format - the date must be in the format of YYYY-MM-DD");
+        alert(<% __('Incorrect date format - the date must be in the format of YYYY-MM-DD') |js %>);
         return false;
     }
 
@@ -778,17 +778,17 @@ function removeEvent(stock_id, stockprop_id) {
             success: function(data) {
                 if ( !data || !data.success || data.success === 0 ) {
                     console.log(data.error);
-                    alert("ERROR: Could not remove seedlot event!");
+                    alert(<% __('ERROR: Could not remove seedlot event!') |js %>);
                 }
             },
             error: function() {
-                alert("ERROR: Could not remove seedlot event!");
+                alert(<% __('ERROR: Could not remove seedlot event!') |js %>);
             },
             complete: function() {
                 jQuery('#seedlot_maintenance_remove_modal').modal('hide')
                 jQuery("#seedlot_maintenance_remove_modal_cancel").attr("disabled", false);
                 jQuery("#seedlot_maintenance_remove_modal_ok").attr("disabled", false);
-                jQuery("#seedlot_maintenance_remove_modal_ok").html("Remove Event");
+                jQuery("#seedlot_maintenance_remove_modal_ok").html(<% __('Remove Event') |js %>);
                 getEvents();
             }
         });

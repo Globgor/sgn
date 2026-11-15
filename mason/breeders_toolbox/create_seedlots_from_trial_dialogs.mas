@@ -522,7 +522,7 @@ $default_seedlot_material_type => undef
         // Make sure trial name was entered
         let trial_name = jQuery("#create_seedlots_trial_name").val();
         if ( !trial_name || trial_name === '' ) {
-            alert("Enter a trial name to continue");
+            alert(<% __('Enter a trial name to continue') |js %>);
             return;
         }
 
@@ -624,7 +624,7 @@ $default_seedlot_material_type => undef
             }
         }
         else {
-            alert("ERROR: unknown seedlot stock type!");
+            alert(<% __('ERROR: unknown seedlot stock type!') |js %>);
         }
 
         Workflow.complete('#create_seedlots_trial_complete_select_stock_type');
@@ -709,7 +709,7 @@ $default_seedlot_material_type => undef
         let stock_type = jQuery("#create_seedlots_trial_stock_type").val();
         let name_template = jQuery("#create_seedlots_trial_name_template").val();
         if ( name_template === '{plot_name}' ) {
-            return alert("The seedlot name cannot be the same as the plot name, please add a prefix or suffix to make the name unique");
+            return alert(<% __('The seedlot name cannot be the same as the plot name, please add a prefix or suffix to make the name unique') |js %>);
         }
 
         let html = "<thead></tr>";
@@ -879,19 +879,19 @@ $default_seedlot_material_type => undef
 
         // Check for required fields
         if ( !p_id || p_id === '' ) {
-            if (!quiet) alert("Breeding Program is required");
+            if (!quiet) alert(<% __('Breeding Program is required') |js %>);
             return;
         }
         if ( !l || l === '' ) {
-            if (!quiet) alert("Location is required");
+            if (!quiet) alert(<% __('Location is required') |js %>);
             return;
         }
         if ( !b || b === '' ) {
-            if (!quiet) alert("Box Name is required");
+            if (!quiet) alert(<% __('Box Name is required') |js %>);
             return;
         }
         if ( !mt || mt === '' ) {
-            if (!quiet) alert("Material type is required");
+            if (!quiet) alert(<% __('Material type is required') |js %>);
             return;
         }
 

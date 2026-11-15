@@ -235,19 +235,19 @@ jQuery(document).ready(function(){
         var breeding_program_id = jQuery('#seedlot_breeding_program_id').val();
         var seedlot_quality = jQuery('#seedlot_quality').val();
 
-        if (name == '') { alert("Please provide a name"); return; }
-        else if (material_type == '') { alert("Please provide a material type"); return; }
-        else if (location == '') { alert("Please provide a location"); return; }
-        else if (box_name == '') { alert("Please provide a box name"); return; }
-        else if (amount.trim().length == 0 && weight.trim().length == 0) { alert("Please provide a seed count amount or a weight in grams!"); return; }
-        else if (isNaN(amount)) { alert("If inputting a seed count amount, it must be a numeric value."); return; }
-        else if (isNaN(weight)) { alert("If inputting a weight, it must be a numeric value."); return; }
-        else if (breeding_program_id == '') { alert("Please select a breeding program"); return; }
+        if (name == '') { alert(<% __('Please provide a name') |js %>); return; }
+        else if (material_type == '') { alert(<% __('Please provide a material type') |js %>); return; }
+        else if (location == '') { alert(<% __('Please provide a location') |js %>); return; }
+        else if (box_name == '') { alert(<% __('Please provide a box name') |js %>); return; }
+        else if (amount.trim().length == 0 && weight.trim().length == 0) { alert(<% __('Please provide a seed count amount or a weight in grams!') |js %>); return; }
+        else if (isNaN(amount)) { alert(<% __('If inputting a seed count amount, it must be a numeric value.') |js %>); return; }
+        else if (isNaN(weight)) { alert(<% __('If inputting a weight, it must be a numeric value.') |js %>); return; }
+        else if (breeding_program_id == '') { alert(<% __('Please select a breeding program') |js %>); return; }
         else if (accession_uniquename == '' && cross_uniquename == '') {
-            alert("Please provide an accession name or a cross unique id as the content of the seedlot."); return;
+            alert(<% __('Please provide an accession name or a cross unique id as the content of the seedlot.') |js %>); return;
         }
         else if (accession_uniquename != '' && cross_uniquename != '') {
-            alert("Please provide an accession name OR a cross unique id as the content of the seedlot. Not both."); return;
+            alert(<% __('Please provide an accession name OR a cross unique id as the content of the seedlot. Not both.') |js %>); return;
         }
         else {
 
@@ -277,7 +277,7 @@ jQuery(document).ready(function(){
                 success: function(response) {
                     jQuery('#working_modal').modal('hide');
                     if (response.success == 1) {
-                        alert("The seedlot has been created.");
+                        alert(<% __('The seedlot has been created.') |js %>);
                         jQuery('#add_seedlot_dialog').modal('hide');
                         //seedlots_table.ajax.reload();
                         //document.location.reload();
@@ -288,7 +288,7 @@ jQuery(document).ready(function(){
                 },
                 error: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert('An error occurred creating seed lot');
+                    alert(<% __('An error occurred creating seed lot') |js %>);
                 }
             });
         }
