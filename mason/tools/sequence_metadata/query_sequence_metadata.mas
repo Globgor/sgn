@@ -18,7 +18,7 @@
         <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Query Range'), 'h' ), collapsible=>1, collapsed=>0 &>
             <div class="well">
             
-                <!-- Refence Genome -->
+                <!-- Reference Genome -->
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><% __('Reference Genome:') |h %> </label>
                     <div class="col-sm-10">
@@ -756,7 +756,7 @@ function set_protocols() {
             let p_name = p[i].nd_protocol_name;
             let p_type = p[i].nd_protocol_properties.sequence_metadata_type;
             
-            // Reselect previosuly selected items
+            // Reselect previously selected items
             let selected = false;
             if ( sel_protocols ) {
                 for ( let j = 0; j < sel_protocols.length; j++ ) {
@@ -1022,7 +1022,7 @@ function handle_query_results(response) {
 
 
 /**
- * Build a URL to view the seleceted data in jBrowse
+ * Build a URL to view the selected data in jBrowse
  * @params {Object} config JBrowse configuration properties
  * @returns {string} url to jbrowse with remote tracks added
  */
