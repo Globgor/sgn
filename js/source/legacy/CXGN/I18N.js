@@ -15,3 +15,13 @@ function npgettext(msgctxt, msgid, msgid_plural, n) {
 function gettext(msgid) { return npgettext(undefined, msgid); }
 function ngettext(msgid, msgid_plural, n) { return npgettext(undefined, msgid, msgid_plural, n); }
 function pgettext(msgctxt, msgid) { return npgettext(msgctxt, msgid); }
+
+// A translation inside an HTML string: the text is HTML-escaped, so a catalog adds no markup;
+// then each {name} becomes parts[name], markup that the script gives.
+function i18n_html(text, parts) {
+    var html = String(text).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
+    if (!parts) return html;
+    return html.replace(/\{(\w+)\}/g, function (all, name) {
+        return Object.prototype.hasOwnProperty.call(parts, name) ? parts[name] : all;
+    });
+}
