@@ -81,13 +81,13 @@ jQuery(document).ready(function() {
 
 function delete_user_role(sp_person_role_id) {
     
-    var yes = confirm("Really delete this role association?");
+    var yes = confirm(<% __('Really delete this role association?') |js %>);
     if (yes) { 
       $.ajax( {
         url: '/ajax/roles/delete/association/'+sp_person_role_id
       });
       jQuery('#manage_user_roles_table').DataTable().ajax.reload();					  
-      alert('Association deleted.');
+      alert(<% __('Association deleted.') |js %>);
     }
   }
 
@@ -134,7 +134,7 @@ function add_user_role(sp_person_id, person_name) {
                 alert('Error: '+response.error);
             } else {
             jQuery('#manage_user_roles_table').DataTable().ajax.reload();
-                alert('Role Added for User!');
+                alert(<% __('Role Added for User!') |js %>);
             }
         },
         error: function(response) {

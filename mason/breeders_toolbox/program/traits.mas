@@ -136,7 +136,7 @@ function trait_summary_hist_display_change(program_id) {
                     },
                     error: function(response) {
                         jQuery("#working_modal").modal("hide");
-                        alert('An error occured retrieving trait histogram data.');
+                        alert(<% __('An error occured retrieving trait histogram data.') |js %>);
                     }
                 });
             } else {
@@ -146,7 +146,7 @@ function trait_summary_hist_display_change(program_id) {
 
         },
         error: function(response){
-            alert('Error retrieving traits assayed in this breeding program');
+            alert(<% __('Error retrieving traits assayed in this breeding program') |js %>);
         }
 
     });
@@ -175,7 +175,7 @@ function trait_summary_hist_change(program_id, value) {
         },
         error: function(response) {
             jQuery("#working_modal").modal("hide");
-            alert('An error occured retrieving trait histogram data.');
+            alert(<% __('An error occured retrieving trait histogram data.') |js %>);
         }
     });
 }

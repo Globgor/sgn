@@ -199,15 +199,15 @@ jQuery(document).ready(function(){
         jQuery('#upload_profile_form').attr("action", '/ajax/breeders/program/upload_profile');
 
         if (program_id === '') {
-            alert("Please choose a breeding program");
+            alert(<% __('Please choose a breeding program') |js %>);
             return;
         }
         if (new_profile_name === '') {
-            alert("Please enter a profile name");
+            alert(<% __('Please enter a profile name') |js %>);
             return;
         }
         if (new_profile_scope == '') {
-            alert("Please enter a scope");
+            alert(<% __('Please enter a scope') |js %>);
             return;
         }
         jQuery('#upload_profile_form').submit();
@@ -221,7 +221,7 @@ jQuery(document).ready(function(){
             jQuery('#working_modal').modal("show");
             if (profile_uploaded_file == '') {
                 jQuery('#working_modal').modal("hide");
-                alert("No file selected");
+                alert(<% __('No file selected') |js %>);
             }
         },
         complete: function(response) {
