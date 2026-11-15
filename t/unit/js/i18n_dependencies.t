@@ -31,6 +31,7 @@ my @legacy = qw(
     solGS/gebvPhenoRegression solGS/gebvsSave solGS/geneticGain solGS/heatMap solGS/kinship
     solGS/listTypeSelectionPopulation solGS/listTypeTrainingPopulation solGS/loadAcronyms solGS/pca
     solGS/pcaSave solGS/searchTrials solGS/selectionIndex solGS/selectionPopulations solGS/solGS
+    tools/LabelDesigner
 );
 
 my @entries = qw(

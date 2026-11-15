@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 var page_formats = {};
 page_formats["Select a page format"] = {};
 page_formats["US Letter PDF"] = {
