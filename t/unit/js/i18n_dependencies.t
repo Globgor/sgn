@@ -25,12 +25,12 @@ my @legacy = qw(
     CXGN/BreedersToolbox/UploadGrafts CXGN/BreedersToolbox/UploadPedigrees
     CXGN/BreedersToolbox/UploadPhenotype CXGN/BreedersToolbox/UploadRenameAccessions
     CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
-    CXGN/Onto/Browser CXGN/SelectionIndex CXGN/Stock CXGN/TrialTreeFolders heritability/heritability
-    qualityControl/qualityControl solGS/analysisSelect solGS/analysisStatus solGS/anova solGS/clearCache
-    solGS/cluster solGS/combineTrials solGS/correlation solGS/gebvPhenoRegression solGS/gebvsSave
-    solGS/geneticGain solGS/heatMap solGS/kinship solGS/listTypeSelectionPopulation
-    solGS/listTypeTrainingPopulation solGS/loadAcronyms solGS/pca solGS/pcaSave solGS/searchTrials
-    solGS/selectionIndex solGS/selectionPopulations solGS/solGS
+    CXGN/Locations CXGN/Onto/Browser CXGN/SelectionIndex CXGN/Stock CXGN/TrialTreeFolders
+    heritability/heritability qualityControl/qualityControl solGS/analysisSelect solGS/analysisStatus
+    solGS/anova solGS/clearCache solGS/cluster solGS/combineTrials solGS/correlation
+    solGS/gebvPhenoRegression solGS/gebvsSave solGS/geneticGain solGS/heatMap solGS/kinship
+    solGS/listTypeSelectionPopulation solGS/listTypeTrainingPopulation solGS/loadAcronyms solGS/pca
+    solGS/pcaSave solGS/searchTrials solGS/selectionIndex solGS/selectionPopulations solGS/solGS
 );
 
 my @entries = qw(
