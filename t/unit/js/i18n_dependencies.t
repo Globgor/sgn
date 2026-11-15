@@ -24,7 +24,7 @@ my @legacy = qw(
     CXGN/BreedersToolbox/GenotypingTrial CXGN/BreedersToolbox/HTMLSelect CXGN/BreedersToolbox/MarkerSet
     CXGN/BreedersToolbox/UploadGrafts CXGN/BreedersToolbox/UploadPedigrees
     CXGN/BreedersToolbox/UploadPhenotype CXGN/BreedersToolbox/UploadRenameAccessions
-    CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
+    CXGN/BreedersToolbox/UploadTrial CXGN/Dataset CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist CXGN/Image
     CXGN/Locations CXGN/Onto/Browser CXGN/SelectionIndex CXGN/Stock CXGN/TrialTreeFolders
     heritability/heritability qualityControl/qualityControl solGS/analysisSelect solGS/analysisStatus
     solGS/anova solGS/clearCache solGS/cluster solGS/combineTrials solGS/correlation

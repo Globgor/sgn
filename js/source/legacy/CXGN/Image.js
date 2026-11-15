@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 
 // an image object that possibly should be expanded to retrieving other stuff
