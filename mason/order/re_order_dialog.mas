@@ -100,7 +100,7 @@ jQuery(document).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving your request');
+                alert(<% __('An error occurred saving your request') |js %>);
             }
         });
     });

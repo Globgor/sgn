@@ -223,13 +223,13 @@ $(window).ready( function() {
         'autoWidth': false,
         'ajax': '/ajax/order/vendor_current_orders',
         columns: [
-            { title: "Order Number", "data": null, "render": function ( data, type, row ) { return "<a href='/order/details/view/"+row.order_id+"'>"+row.order_id+"</a>"; } },
-            { title: "Ordered by", "data": "order_from_name" },
-            { title: "Submitted Date", "data": "create_date" },
-            { title: "Order Details", "data": "order_details" },
-            { title: "Status", "data": "order_status" },
-            { title: "Comments", "data": "contact_person_comments" },
-            { title: "Update", "data": "null", "render": function ( data, type, row ) { return "<a onclick='updateOrder(\""+row.order_id+"\", \""+row.order_from_name+"\")' >Update</a>"; } },
+            { title: <% __('Order Number') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/order/details/view/"+row.order_id+"'>"+row.order_id+"</a>"; } },
+            { title: <% __('Ordered by') |js %>, "data": "order_from_name" },
+            { title: <% __('Submitted Date') |js %>, "data": "create_date" },
+            { title: <% __('Order Details') |js %>, "data": "order_details" },
+            { title: <% __('Status') |js %>, "data": "order_status" },
+            { title: <% __('Comments') |js %>, "data": "contact_person_comments" },
+            { title: <% __('Update') |js %>, "data": "null", "render": function ( data, type, row ) { return "<a onclick='updateOrder(\""+row.order_id+"\", \""+row.order_from_name+"\")' >Update</a>"; } },
         ]
     });
 
@@ -237,14 +237,14 @@ $(window).ready( function() {
         'autoWidth': false,
         'ajax': '/ajax/order/vendor_completed_orders',
         columns: [
-            { title: "Order Number", "data": null, "render": function ( data, type, row ) { return "<a href='/order/details/view/"+row.order_id+"'>"+row.order_id+"</a>"; } },
-            { title: "Ordered by", "data": "order_from_name" },
-            { title: "Submitted Date", "data": "create_date" },
-            { title: "Order Details", "data": "order_details" },
-            { title: "Status", "data": "order_status" },
-            { title: "Completion Date", "data": "completion_date" },
-            { title: "Comments", "data": "contact_person_comments" },
-            { title: "Update", "data": "null", "render": function ( data, type, row ) { return "<a onclick='reOpenOrder(\""+row.order_id+"\", \""+row.order_from_name+"\")' >Re-Open</a>"; } },
+            { title: <% __('Order Number') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/order/details/view/"+row.order_id+"'>"+row.order_id+"</a>"; } },
+            { title: <% __('Ordered by') |js %>, "data": "order_from_name" },
+            { title: <% __('Submitted Date') |js %>, "data": "create_date" },
+            { title: <% __('Order Details') |js %>, "data": "order_details" },
+            { title: <% __('Status') |js %>, "data": "order_status" },
+            { title: <% __('Completion Date') |js %>, "data": "completion_date" },
+            { title: <% __('Comments') |js %>, "data": "contact_person_comments" },
+            { title: <% __('Update') |js %>, "data": "null", "render": function ( data, type, row ) { return "<a onclick='reOpenOrder(\""+row.order_id+"\", \""+row.order_from_name+"\")' >Re-Open</a>"; } },
         ]
     });
 
@@ -281,7 +281,7 @@ $(window).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred updating the order');
+                alert(<% __('An error occurred updating the order') |js %>);
             }
         });
     });
@@ -295,7 +295,7 @@ $(window).ready( function() {
         var re_open_status = jQuery('#re_open_status').val();
         var re_open_comments = jQuery('#re_open_comments').val();
         if (!re_open_comments) {
-            alert ("Please add comments for re-opening the order");
+            alert (<% __('Please add comments for re-opening the order') |js %>);
             return;
         }
 
@@ -323,7 +323,7 @@ $(window).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred updating the order');
+                alert(<% __('An error occurred updating the order') |js %>);
             }
         });
     });

@@ -288,7 +288,7 @@ jQuery(document).ready( function() {
 
         const vendor_id = jQuery('#selected_vendor_id').val();
         if (!vendor_id) {
-            alert ('Please select a vendor');
+            alert (<% __('Please select a vendor') |js %>);
             return;
         }
 
@@ -318,7 +318,7 @@ jQuery(document).ready( function() {
             },
             error: function(response){
                 jQuery('#working_modal').modal('hide');
-                alert('An error occurred saving your request');
+                alert(<% __('An error occurred saving your request') |js %>);
             }
         });
     });
