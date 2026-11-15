@@ -20,6 +20,12 @@ use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
 page_texts_ok(
+    '/bulk_download.mas',
+    'Your query was successful.',
+    'Feature Download Summary',
+);
+
+page_texts_ok(
     '/captcha.mas',
     'Javascript is required for bot detection...',
     'Verifying your request...',

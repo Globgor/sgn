@@ -31,6 +31,23 @@ my @scripts = (
         'gettext("No label format select. Please select a label format")',
         'gettext("No elements in the design. Please add design elements before saving")',
     ],
+    [ 'js/source/legacy/tools/vigs.js',
+        'gettext("Gene Functional annotation")',
+        'gettext("Parameters used")',
+        'gettext("Modify parameters help")',
+        'gettext("Distribution of n-mers help")',
+        'gettext("Best region help")',
+        'gettext("Sequence overview help")',
+        'gettext("Description of genes mapped help")',
+        'gettext("An error occurred. The service may not be available right now. Bowtie2 could not be executed")',
+        'gettext("Note: The score value is very low!. Increasing the number of targets or the n-mer length, or decreasing the mismatches the score value will increase")',
+        'gettext("Expand Graph")',
+        'gettext("Zoom In")',
+        'gettext("An error occurred. The service may not be available right now.")',
+        'gettext("Collapse Graph")',
+        'gettext("Zoom Out")',
+        'gettext("there are no parameters to change")',
+    ],
 );
 
 my $node = grep { -x "$_/node" && !-d "$_/node" } split /:/, $ENV{PATH} // q{};

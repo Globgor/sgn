@@ -18,6 +18,13 @@ use warnings;
 use Test::More;
 
 my @scripts = (
+    [ 'js/source/legacy/CXGN/Blast.js',
+        'gettext("Please enter a sequence :-)")',
+        'gettext("The BLAST program does not match the selected database and query.")',
+        'gettext("An error occurred. The service may not be available right now.")',
+        'gettext("An  error occurred. ")',
+        'gettext("Multiple sequences were detected. The output will be shown in the tabular and basic format")',
+    ],
     [ 'js/source/legacy/CXGN/BreederSearch.js',
         'gettext("No filters selected for download.")',
         'gettext(\'Please enter a name for the selection.\')',

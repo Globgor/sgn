@@ -31,6 +31,16 @@ page_texts_ok(
 
 component_compiles_ok('/tools/boxplotter.mas');
 
+page_texts_ok(
+    '/tools/document_browser.mas',
+    'Select TSV Document:',
+    'Upload New Document',
+    'Upload TSV Document',
+    'Save new document',
+    'Document Browser',
+    'Type Search...',
+);
+
 component_compiles_ok('/tools/environment_stratification.mas');
 
 component_compiles_ok('/tools/fieldmap.mas');
@@ -53,6 +63,25 @@ page_texts_ok(
     'Choose the dataset for your analysis',
     'sommer with spatial correction spl2D',
     'Run analysis and go to next step',
+);
+
+page_texts_ok(
+    '/tools/report.mas',
+    'Your report was submitted. You’ll receive an email when it’s ready. Feel free to navigate to other pages.',
+    'Enter email addresses separated by new lines (one per line)',
+    'Welcome to the Personalized Report Generator',
+    'Generate Report & Send Report',
+    'Personalized Report Generator',
+    'Available Report Scripts:',
+);
+
+component_compiles_ok('/tools/sixframe_translate_standalone.mas');
+
+page_texts_ok(
+    '/tools/tc_convert_deprecated.mas',
+    'Converting between SGN unigenes and TGI TC sequences',
+    'Mapping SGN-U to TGI TC',
+    'Mapping TGI TC to SGN-U',
 );
 
 page_texts_ok(

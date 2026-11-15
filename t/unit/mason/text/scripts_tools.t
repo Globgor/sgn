@@ -26,6 +26,11 @@ page_script_texts_ok(
 
 component_compiles_ok('/tools/boxplotter.mas');
 
+page_script_texts_ok(
+    '/tools/document_browser.mas',
+    'Please select a file',
+);
+
 component_compiles_ok('/tools/environment_stratification.mas');
 
 component_compiles_ok('/tools/fieldmap.mas');

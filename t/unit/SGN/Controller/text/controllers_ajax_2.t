@@ -38,6 +38,7 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/AJAX/DeriveTrait.pm', 'SGN::Controller::AJAX::DeriveTrait', [ '__("You need to be logged in to compute trait.")', '__("You have insufficient privileges to compute trait.")', '__("No trait assayed for this trial.")', '__("Select trait to compute.")', '__(\'Must be a curator to overwrite values! Please contact us!\')' ] ],
+    [ 'lib/SGN/Controller/AJAX/DocumentBrowser.pm', 'SGN::Controller::AJAX::DocumentBrowser', [ '__(\'Must be logged in!\')', '__(\'Problem archiving the file!\')', '__(\'Problem retrieving file md5!\')', '__(\'Successfully saved file!\')' ] ],
     [ 'lib/SGN/Controller/AJAX/EnvironmentStratification.pm', 'SGN::Controller::AJAX::EnvironmentStratification', [ '__(\'Dataset id is required.\')', '__("Phenotype file is required.")', '__("Can\'t find data.")', '__(\'Dataset and trait are required.\')', '__(\'Alpha must be a number between 0 and 1.\')' ] ],
     [ 'lib/SGN/Controller/AJAX/FamilyName.pm', 'SGN::Controller::AJAX::FamilyName', [ '__("You do not have the correct role to modify family members. Please contact us.")', '__("You do not have the correct role to delete family. Please contact us.")', '__(\'Only a submitter or a curator can add family members\')' ] ],
     [ 'lib/SGN/Controller/AJAX/FileShareDump.pm', 'SGN::Controller::AJAX::FileShareDump', [ '__("Could not store uploaded file!")', '__(\'You must be logged in to do this!\')', '__(\'You must be logged in to do this!\')' ] ],

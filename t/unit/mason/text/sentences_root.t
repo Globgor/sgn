@@ -18,6 +18,11 @@ use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
+    '/bulk_download.mas',
+    'Download as {link}Fasta{end_link}',
+);
+
+page_sentences_ok(
     '/index.mas',
     'There are a number of instances running for diverse crops, including Cassava ({cassava}), sweet potato ({sweet_potato}), banana ({banana}), rice ({rice}), tomato and other Solanaceae ({solanaceae}) and many others.',
     'You can watch the Breedbase workshops on {link}Youtube{end_link}, covering topics such as ontologies, trial design, data collection using fieldbook, data analysis, and genomic selection.',

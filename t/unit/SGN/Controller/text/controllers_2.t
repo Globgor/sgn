@@ -38,6 +38,7 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/Folder.pm', 'SGN::Controller::Folder', [ '__("The requested folder does not exist or has been deleted.")' ] ],
+    [ 'lib/SGN/Controller/Genefamily.pm', 'SGN::Controller::Genefamily', [ '__(\'Need a family to display!\')' ] ],
     [ 'lib/SGN/Controller/Image.pm', 'SGN::Controller::Image', [ '__(\'No image file uploaded.\')' ] ],
 );
 
