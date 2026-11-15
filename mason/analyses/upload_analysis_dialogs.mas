@@ -7,8 +7,8 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadNewAnalysisDialog">Upload Analysis</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadNewAnalysisDialog"><% __('Upload Analysis') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -16,27 +16,27 @@
                     <form class="form-horizontal" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_new_analysis_dialog_form" name="upload_new_analysis_dialog_form">
                     
                         <&| /util/workflow.mas, id=> "upload_new_analysis_workflow" &>
-                            <&| /util/workflow.mas:step, title=> "Intro" &>
-                                <& /page/page_title.mas, title=>"This workflow will guide you through uploading an analysis to the database" &>
-                                <p>You should have a spreadsheet (.csv) where the first column names the accession names or plots, and the subsequent columns have result values.</p>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through uploading an analysis to the database"), 'h' ) &>
+                                <p><% __('You should have a spreadsheet (.csv) where the first column names the accession names or plots, and the subsequent columns have result values.') |h %></p>
                                 <p>The header row should have 'stock_name' in the first column and subsequent column headers should be for a trait variable e.g. 'plant height|CO_323:0000123'</p>
 
                                 <br/><br/>
                                 <center>
-                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Analysis" &>
-                                <& /page/page_title.mas, title=>"Define the analysis" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Analysis"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Define the analysis"), 'h' ) &>
 
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Analysis Name (must be unique): </label>
+                                    <label class="col-sm-3 control-label"><% __('Analysis Name (must be unique):') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="upload_new_analysis_name" name="upload_new_analysis_name" type="text" />
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Analysis Description: </label>
+                                    <label class="col-sm-3 control-label"><% __('Analysis Description:') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="upload_new_analysis_description" name="upload_new_analysis_description" type="text" />
                                     </div>
@@ -48,40 +48,40 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Analysis Of: </label>
+                                    <label class="col-sm-3 control-label"><% __('Analysis Of:') |h %> </label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="upload_new_analysis_result_values_type" name="upload_new_analysis_result_values_type" >
-                                            <option value='analysis_result_values_match_accession_names'>Accession Names (for genetic blups, genetic results)</option>
-                                            <option value='analysis_result_values_match_precomputed_design'>Plot Names (for plot predictions, spatial, temporal results)</option>
+                                            <option value='analysis_result_values_match_accession_names'><% __('Accession Names (for genetic blups, genetic results)') |h %></option>
+                                            <option value='analysis_result_values_match_precomputed_design'><% __('Plot Names (for plot predictions, spatial, temporal results)') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Breeding Program: </label>
+                                    <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="upload_new_analysis_breeding_program_div"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Year: </label>
+                                    <label class="col-sm-3 control-label"><% __('Year:') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="upload_new_analysis_year_div"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Statistical Ontology Term (from SGNSTAT): </label>
+                                    <label class="col-sm-3 control-label"><% __('Statistical Ontology Term (from SGNSTAT):') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="upload_new_analysis_stat_term_div"></div>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Results File (.csv): </label>
+                                    <label class="col-sm-3 control-label"><% __('Results File (.csv):') |h %> </label>
                                     <div class="col-sm-9" >
                                         <input type="file" name="upload_new_analysis_file" id="upload_new_analysis_file" encoding="multipart/form-data" />
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Dataset ID (optional): </label>
+                                    <label class="col-sm-3 control-label"><% __('Dataset ID (optional):') |h %> </label>
                                     <div class="col-sm-9">
                                         <input class="form-control" id="upload_new_analysis_dataset_id" name="upload_new_analysis_dataset_id" type="text" />
                                     </div>
@@ -101,49 +101,49 @@
 
                                 <br/><br/>
                                 <center>
-                                <button class="btn btn-primary" id="upload_new_analysis_analysis_continue">Go to Next Step</button>
+                                <button class="btn btn-primary" id="upload_new_analysis_analysis_continue"><% __('Go to Next Step') |h %></button>
                                 </center>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Model" &>
-                                <& /page/page_title.mas, title=>"Define the model used to generate the analysis results" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Model"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Define the model used to generate the analysis results"), 'h' ) &>
 
                                 <div class="form-group form-group-sm">
-                                    <label class="col-sm-3 control-label">Select a Model: </label>
+                                    <label class="col-sm-3 control-label"><% __('Select a Model:') |h %> </label>
                                     <div class="col-sm-9">
                                         <div id="upload_new_analysis_model_select_div"></div>
                                     </div>
                                 </div>
 
                                 <center>
-                                    <button type="button" class="btn btn-default" id="upload_new_analysis_model_button" >Create a New Model if Needed</button>
+                                    <button type="button" class="btn btn-default" id="upload_new_analysis_model_button" ><% __('Create a New Model if Needed') |h %></button>
                                 </center>
                                 <hr>
 
                                 <div id="upload_new_analysis_model_div" style="display:none">
                                 
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Model Name (must be unique): </label>
+                                        <label class="col-sm-3 control-label"><% __('Model Name (must be unique):') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="upload_new_analysis_model_name" name="upload_new_analysis_model_name" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Model Description: </label>
+                                        <label class="col-sm-3 control-label"><% __('Model Description:') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="upload_new_analysis_model_description" name="upload_new_analysis_model_description" type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Model Is Public: </label>
+                                        <label class="col-sm-3 control-label"><% __('Model Is Public:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="upload_new_analysis_model_is_public" name="upload_new_analysis_model_is_public" >
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
+                                                <option value="yes"><% __('Yes') |h %></option>
+                                                <option value="no"><% __('No') |h %></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Model Language (e.g. R, Python, F90): </label>
+                                        <label class="col-sm-3 control-label"><% __('Model Language (e.g. R, Python, F90):') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="upload_new_analysis_model_language" name="upload_new_analysis_model_language" type="text"/>
                                         </div>
@@ -155,13 +155,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Application Name (e.g. MyAmazingPipeline): </label>
+                                        <label class="col-sm-3 control-label"><% __('Application Name (e.g. MyAmazingPipeline):') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="upload_new_analysis_model_application_name" name="upload_new_analysis_model_application_name" type="text"/>
                                         </div>
                                     </div>
                                     <div class="form-group form-group-sm">
-                                        <label class="col-sm-3 control-label">Application Version (e.g. v1.01): </label>
+                                        <label class="col-sm-3 control-label"><% __('Application Version (e.g. v1.01):') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="upload_new_analysis_model_application_version" name="upload_new_analysis_model_application_version" type="text"/>
                                         </div>
@@ -170,13 +170,13 @@
                                 </div>
 
                                 <div class="well well-sm">
-                                    <h4>Data files from this analysis model</h4>
+                                    <h4><% __('Data files from this analysis model') |h %></h4>
                                     
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>File Upload</th>
-                                                <th>File Type</th>
+                                                <th><% __('File Upload') |h %></th>
+                                                <th><% __('File Type') |h %></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -201,7 +201,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">Model File To Archive (optional) (this should be a model weights file): </label>
+                                                        <label class="col-sm-3 control-label"><% __('Model File To Archive (optional) (this should be a model weights file):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input id="upload_new_analysis_model_file" name="upload_new_analysis_model_file" type="file" encoding="multipart/form-data"/>
                                                         </div>
@@ -219,7 +219,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(1) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(1) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input id="upload_new_analysis_model_auxiliary_file_1" name="upload_new_analysis_model_auxiliary_file_1" type="file" encoding="multipart/form-data"/>
                                                         </div>
@@ -227,7 +227,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(1) Auxiliary File Type (optional): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(1) Auxiliary File Type (optional):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input class="form-control" id="upload_new_analysis_model_auxiliary_file_type_1" name="upload_new_analysis_model_auxiliary_file_type_1" type="text"/>
                                                         </div>
@@ -237,7 +237,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(2) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(2) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input id="upload_new_analysis_model_auxiliary_file_2" name="upload_new_analysis_model_auxiliary_file_2" type="file" encoding="multipart/form-data"/>
                                                         </div>
@@ -245,7 +245,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(2) Auxiliary File Type (optional): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(2) Auxiliary File Type (optional):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input class="form-control" id="upload_new_analysis_model_auxiliary_file_type_2" name="upload_new_analysis_model_auxiliary_file_type_2" type="text"/>
                                                         </div>
@@ -255,7 +255,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(3) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(3) Auxiliary File To Archive (optional) (e.g. log file, param file, grm input file):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input id="upload_new_analysis_model_auxiliary_file_3" name="upload_new_analysis_model_auxiliary_file_3" type="file" encoding="multipart/form-data"/>
                                                         </div>
@@ -263,7 +263,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group form-group-sm">
-                                                        <label class="col-sm-3 control-label">(3) Auxiliary File Type (optional): </label>
+                                                        <label class="col-sm-3 control-label"><% __('(3) Auxiliary File Type (optional):') |h %> </label>
                                                         <div class="col-sm-9">
                                                             <input class="form-control" id="upload_new_analysis_model_auxiliary_file_type_3" name="upload_new_analysis_model_auxiliary_file_type_3" type="text"/>
                                                         </div>
@@ -275,7 +275,7 @@
                                 </div>
 
                                 <center>
-                                    <button type="button" class="btn btn-primary" id="upload_new_analysis_submit" >Submit</button>
+                                    <button type="button" class="btn btn-primary" id="upload_new_analysis_submit" ><% __('Submit') |h %></button>
                                 </center>
                             </&>
                         </&>
@@ -284,7 +284,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

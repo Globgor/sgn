@@ -20,17 +20,17 @@ $sp_person_id
 
 <div id ="job_log_div" style="display:none;">
     <div style='display:flex;justify-content:center;'>
-        <button id="clear_dead_jobs_button" class='btn btn-sm btn-primary'>Dismiss failed and timed out jobs</button>
+        <button id="clear_dead_jobs_button" class='btn btn-sm btn-primary'><% __('Dismiss failed and timed out jobs') |h %></button>
         <span style="display: inline-block; width: 100px;"></span>
-        <button id="clear_finished_jobs_button" class='btn btn-sm btn-primary'>Dismiss finished and canceled jobs</button> 
+        <button id="clear_finished_jobs_button" class='btn btn-sm btn-primary'><% __('Dismiss finished and canceled jobs') |h %></button> 
         <span style="display: inline-block; width: 100px;"></span>
-        <button id="clear_old_jobs_button" class='btn btn-sm btn-primary'>Dismiss all jobs older than</button> 
+        <button id="clear_old_jobs_button" class='btn btn-sm btn-primary'><% __('Dismiss all jobs older than') |h %></button> 
         &nbsp;
         <select id="keep_recent_jobs_select">
-            <option value='one_week'>One week</option>
-            <option value='one_month'>One month</option>
-            <option value='six_months'>Six months</option>
-            <option value='one_year'>One year</option>
+            <option value='one_week'><% __('One week') |h %></option>
+            <option value='one_month'><% __('One month') |h %></option>
+            <option value='six_months'><% __('Six months') |h %></option>
+            <option value='one_year'><% __('One year') |h %></option>
         </select>
     </div>
     <br>

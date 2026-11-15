@@ -23,15 +23,15 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 
 
-<& /page/page_title.mas, title=>"Stability" &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Stability"), 'h' ) &>
 
 
-<&| /page/info_section.mas, id=>"input_dataset_section", title=>"Select Input Data", collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/stability" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
+<&| /page/info_section.mas, id=>"input_dataset_section", title=>$m->interp->apply_escapes( __("Select Input Data"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a class="btn btn-link pull-right" href="/help/stability" target="_blank">Help <span class="glyphicon glyphicon-question-sign"></span></a>' &>
   <input type="hidden" name="outformat" value="0" />
   <div class="form-group form-inline">
-    <label for="dataset_select">Available Datasets: </label><div id="dataset_select"></div>
+    <label for="dataset_select"><% __('Available Datasets:') |h %> </label><div id="dataset_select"></div>
     <br>
-    <button class="btn btn-primary" id="selectDataset" type="submit" name="selectDataset" value="selectDataset">Select Dataset</button>
+    <button class="btn btn-primary" id="selectDataset" type="submit" name="selectDataset" value="selectDataset"><% __('Select Dataset') |h %></button>
     <br>
     </div>
         <div class="form-group form-inline">
@@ -52,9 +52,9 @@
         </div>
       <div class = "form-group form-inline">
        <input type="checkbox" id="dataset_trait_outliers" />
-       <label>Exclude dataset outliers &nbsp; </label>
+       <label><% __('Exclude dataset outliers') |h %> &nbsp; </label>
        <br>      
-       <label for = select_method>Available Methods: </label>
+       <label for = select_method><% __('Available Methods:') |h %> </label>
        <select class="form-control input-sm" id="select_method">
         <option selected value="method_empty"></option>
         <option value="ammi">AMMI</option>
@@ -64,24 +64,24 @@
       </div>
     </div>
       <div class = "form-group form-inline">
-       <label for = select_imput>Phenotype Impute: </label>
+       <label for = select_imput><% __('Phenotype Impute:') |h %> </label>
        <select class="form-control input-sm" id="select_imput">
         <option selected value="imput_empty"></option>
-        <option value="imput_yes">yes</option>
-        <option value="imput_no">no</option>
+        <option value="imput_yes"><% __('yes') |h %></option>
+        <option value="imput_no"><% __('no') |h %></option>
        </select>
        <div id = "select_method">
       </div>
       <br>
 
             <div style="text-align: center">
-              <button class="btn btn-primary" id="runAMMI" type="submit" name="runAMMI" value="runAMMI">Run Stability</button>
+              <button class="btn btn-primary" id="runAMMI" type="submit" name="runAMMI" value="runAMMI"><% __('Run Stability') |h %></button>
             </div>
             <br />
     <div id="tempfile" style="display:none" >
     </div>
 </&>
-<&| /page/info_section.mas, title=>"Instructions", collapsible=>1, collapsed=>1, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Instructions"), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
 <center>
     <div id="sgn_blast_graph" style="display:none">
         <div id="myCanvas">
@@ -90,21 +90,21 @@
     </div>
   </center>
   <br>
-  <h5><b>Preparing Dataset:</b></h5> 
-  <h5> 1. Dataset must have at least trials and trait(s).</h5>
-  <h5> 2. Trials must be placed in more than 1 location. </h5>
-  <h5> 3. Accessions must be placed in all locations with replications. Check the trial design to make sure it has replications. </h5>
-  <h5> 4. The same trait must be available in all selected locations. Missing data is acceptable for some replications, however the model wont work if it is missing data in all replications. </h5>
-  <h5><b>Impuation:</b></h5>
-  <h5> Imputation is based on genotypes average using the R package mice. The imputation accuracy is processed by subsetting the data and calculating the correlation between imputed and original data. </h5>
-  <h5><b>Output:</b></h5>
-  <h5>The AMMI graphic shows stable varieties with horizintal lines. The slope is proportional to their stability index.</h5>
+  <h5><b><% __('Preparing Dataset:') |h %></b></h5> 
+  <h5> <% __('1. Dataset must have at least trials and trait(s).') |h %></h5>
+  <h5> <% __('2. Trials must be placed in more than 1 location.') |h %> </h5>
+  <h5> <% __('3. Accessions must be placed in all locations with replications. Check the trial design to make sure it has replications.') |h %> </h5>
+  <h5> <% __('4. The same trait must be available in all selected locations. Missing data is acceptable for some replications, however the model wont work if it is missing data in all replications.') |h %> </h5>
+  <h5><b><% __('Impuation:') |h %></b></h5>
+  <h5> <% __('Imputation is based on genotypes average using the R package mice. The imputation accuracy is processed by subsetting the data and calculating the correlation between imputed and original data.') |h %> </h5>
+  <h5><b><% __('Output:') |h %></b></h5>
+  <h5><% __('The AMMI graphic shows stable varieties with horizintal lines. The slope is proportional to their stability index.') |h %></h5>
   
   <center>
     <div id="stability_summary"></div>
   </center>
 </&>
-<&| /page/info_section.mas, title=>"Output", collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Output"), 'h' ), collapsible=>1, collapsed=>0, subtitle=>'<a id="download_table" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
   <br>
 <div id="stability_message_container">
     <div id="stability_message"></div>
@@ -114,13 +114,13 @@
     <div id="stability_output"></div>
       <br>
     <br>
-    <button class="btn btn-primary" id="download-button">Download CSV</button>
+    <button class="btn btn-primary" id="download-button"><% __('Download CSV') |h %></button>
   </center>
 </&>
-  <&| /page/info_section.mas, title=>"Graphics", collapsible=>1, collapsed=>1, subtitle=>'<a id="download_graphics" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
+  <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Graphics"), 'h' ), collapsible=>1, collapsed=>1, subtitle=>'<a id="download_graphics" class="download_tag" target="_blank" href="javascript:download_table();" title="Download results in tabular format">Table&#8675;</a>&nbsp;&nbsp;<a id="download_basic" class="download_tag" target="_blank" href="javascript:download();" title="Download results in basic format">Basic&#8675;</a>' &>
   <div style="display: flex;">
     <div>
-      <p>Press control (or cmd) to select multiple accessions.</p>
+      <p><% __('Press control (or cmd) to select multiple accessions.') |h %></p>
       <select id="accession_select" multiple size="15" style="height: 200px;">
         <!-- Options for accessions will be added dynamically -->
       </select>

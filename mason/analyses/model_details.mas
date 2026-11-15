@@ -10,7 +10,7 @@ $analysis_metadata
         <table class="table table-hover table-bordered" >
 
         <tr>
-            <td><b>Model Name</b></td>
+            <td><b><% __('Model Name') |h %></b></td>
             <td>
                 <div id="model_name">
                 </div>
@@ -18,7 +18,7 @@ $analysis_metadata
         </tr>
 
         <tr>
-            <td><b>Model Description</b></td>
+            <td><b><% __('Model Description') |h %></b></td>
             <td>
                 <div id="model_description">
                 </div>
@@ -26,7 +26,7 @@ $analysis_metadata
         </tr>
 
         <tr>
-            <td><b>Model Type</b></td>
+            <td><b><% __('Model Type') |h %></b></td>
             <td>
                 <div id="model_type">
                 </div>
@@ -34,7 +34,7 @@ $analysis_metadata
         </tr>
 
         <tr>
-            <td><b>Model Properties</b></td>
+            <td><b><% __('Model Properties') |h %></b></td>
             <td>
                 <div id="model_properties">
                 </div>
@@ -42,7 +42,7 @@ $analysis_metadata
         </tr>
 
         <tr>
-            <td><b>Model Files</b></td>
+            <td><b><% __('Model Files') |h %></b></td>
             <td>
                 <div id="model_files">
                 </div>
