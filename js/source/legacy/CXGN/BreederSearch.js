@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 window.onload = function initialize() {
 
     jQuery('#select1').change( // reset start from list if select1 changes

@@ -18,11 +18,11 @@ use JSAN::ServerSide;
 use Test::More;
 
 my @legacy = qw(
-    CXGN/BreedersToolbox/HTMLSelect CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
+    CXGN/BreederSearch CXGN/BreedersToolbox/HTMLSelect CXGN/Effects CXGN/Effects/Hotlist CXGN/Hotlist
 );
 
 my @entries = qw(
-
+    wizard
 );
 
 for my $script (@legacy) {
