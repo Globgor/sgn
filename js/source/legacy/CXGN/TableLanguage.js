@@ -12,6 +12,10 @@ if (typeof jQuery !== 'undefined' && jQuery.fn && jQuery.fn.dataTable) {
         loadingRecords: gettext('Loading...'),
         processing: gettext('Processing...'),
         paginate: { first: gettext('First'), last: gettext('Last'),
-            next: gettext('Next'), previous: gettext('Previous') }
+            next: gettext('Next'), previous: gettext('Previous') },
+        buttons: { copy: i18n_html(gettext('Copy')), print: i18n_html(gettext('Print')),
+            colvis: i18n_html(gettext('Column visibility')), copyTitle: i18n_html(gettext('Copy to clipboard')),
+            copySuccess: { 1: i18n_html(gettext('Copied one row to clipboard')),
+                _: i18n_html(gettext('Copied %d rows to clipboard')) } }
     } });
 }

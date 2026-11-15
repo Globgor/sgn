@@ -61,4 +61,34 @@ dom.window.eval(source);
 dom.window.eval(fs.readFileSync(base + 'jquery.js', 'utf8'));
 dom.window.eval(source);
 dom.window.close();
-console.log('DataTables 1.10.12 English defaults, translated defaults, two tables and absent plugin passed');
+// The Buttons extension (copy, print, column visibility) takes its texts from the same defaults.
+const buttons = { 'Copy': 'copy', 'Print': 'print', 'Column visibility': 'colvis' };
+for (const translation of [null, text => '«' + text + '»', () => '<img src=x onerror="window.hit=1">']) {
+    const dom = new JSDOM('<table id="c"><thead><tr><th>Name</th></tr></thead><tbody><tr><td>Sample</td></tr></tbody></table>',
+        { runScripts: 'outside-only' });
+    const w = dom.window;
+    w.JSAN = { use() {} };
+    if (translation) {
+        w.sgn_locale_data = { '': { plural_forms: 'nplurals=2; plural=(n != 1);' } };
+        for (const text of [...Object.keys(buttons), 'Copy to clipboard', 'Copied one row to clipboard', 'Copied %d rows to clipboard']) {
+            w.sgn_locale_data[text] = [translation(text)];
+        }
+    }
+    for (const file of ['jquery.js', 'jquery/dataTables.js', 'jquery/dataTables-buttons-min.js', 'buttons/html5-min.js',
+        'buttons/print-min.js', 'buttons/colvis-min.js', 'tannin_min.js', 'CXGN/I18N.js', 'CXGN/TableLanguage.js']) {
+        w.eval(fs.readFileSync(base + file, 'utf8'));
+    }
+    const table = w.jQuery('#c').DataTable({ dom: 'Bfrtip', buttons: ['copy', 'print', 'colvis'] });
+    const shown = [...w.document.querySelectorAll('.dt-button')].map(b => b.textContent.trim());
+    const expected = Object.keys(buttons).map(text => translation ? translation(text) : text);
+    assert.deepEqual(shown, expected);
+    // The message of the copy button is HTML: the translation is escaped.
+    const html = text => text.replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
+    const message = text => html(translation ? translation(text) : text);
+    assert.equal(table.i18n('buttons.copySuccess', '', 1), message('Copied one row to clipboard'));
+    assert.equal(table.i18n('buttons.copySuccess', '', 5), message('Copied %d rows to clipboard').replace('%d', 5));
+    assert.equal(w.document.querySelectorAll('.dt-buttons img').length, 0);
+    assert.equal(w.hit, undefined);
+    dom.window.close();
+}
+console.log('DataTables 1.10.12 English defaults, translated defaults, two tables, absent plugin and Buttons texts passed');

@@ -35,4 +35,10 @@ assert.deepEqual([0, 1, 2, 3, 11, 100].map(function (n) { return p.ngettext('tri
 p = page('empty');
 assert.equal(p.gettext('Search'), 'Search');
 assert.equal(p.ngettext('plot', 'plots', 21), 'plots');
-console.log('English, Ukrainian, Arabic, context, missing text and CSP checks passed');
+p = page();
+assert.equal(p.i18n_html('List Name'), 'List Name');
+assert.equal(p.i18n_html('<img src=x onerror="a()"> & \'b\''), '&#60;img src=x onerror=&#34;a()&#34;&#62; &#38; &#39;b&#39;');
+assert.equal(p.i18n_html('Select {bold}Group{end_bold} now', { bold: '<strong>', end_bold: '</strong>' }),
+    'Select <strong>Group</strong> now');
+assert.equal(p.i18n_html('{bold}<b>{x}{toString}', { bold: '<em>' }), '<em>&#60;b&#62;{x}{toString}');
+console.log('English, Ukrainian, Arabic, context, missing text, CSP and HTML escape checks passed');
