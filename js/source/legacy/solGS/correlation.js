@@ -4,6 +4,7 @@
  *
  */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("solGS.heatMap");
 
 var solGS = solGS || function solGS() {};

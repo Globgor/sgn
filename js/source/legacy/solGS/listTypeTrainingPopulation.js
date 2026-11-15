@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
 
 For training populations options from list of plots and trials and datasets.

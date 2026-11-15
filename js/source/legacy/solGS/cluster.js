@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * K-means and hierarchical cluster analysis and vizualization
  * Isaak Y Tecle <iyt2@cornell.edu>

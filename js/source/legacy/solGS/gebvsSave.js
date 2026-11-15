@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 jQuery(document).ready(function () {
   var analysisArgs = solGS.analysisSave.saveGebvsArgs();
   jQuery('#analysis_result_save_type').val('gebvs');

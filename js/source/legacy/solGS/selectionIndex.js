@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * selection index form, calculation and presentation
  * @author Isaak Y Tecle <iyt2@cornell.edu>

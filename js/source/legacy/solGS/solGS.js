@@ -5,6 +5,7 @@
  *
  */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("jquery.blockUI");
 JSAN.use("jquery.form");
 

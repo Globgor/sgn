@@ -4,6 +4,7 @@
 *
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use("Prototype");
 JSAN.use('jquery.blockUI');
 

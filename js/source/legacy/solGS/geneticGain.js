@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /** 
 * visualize and compare gebvs of a training population
 * and a selection population (genetic gain).

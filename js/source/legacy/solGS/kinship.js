@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * kinship analysis and result plotting using d3
  * Isaak Y Tecle <iyt2@cornell.edu>

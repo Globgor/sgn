@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * search and display selection populations
  * relevant to a training population.

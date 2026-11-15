@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 /**
  * Principal component analysis and scores plotting
  * using d3js
