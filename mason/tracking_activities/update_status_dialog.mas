@@ -26,8 +26,8 @@ if ($stock_type_page eq 'tracking_id') {
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updateStatusDialog">Mark this experiment as completed or terminated </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateStatusDialog"><% __('Mark this experiment as completed or terminated') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -39,27 +39,27 @@ if ($stock_type_page eq 'tracking_id') {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Status Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Status Type:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="status_type">
-                                    <option value="">Select a status type</option>
-                                    <option value="completed">completed</option>
-                                    <option value="terminated">terminated</option>
+                                    <option value=""><% __('Select a status type') |h %></option>
+                                    <option value="completed"><% __('completed') |h %></option>
+                                    <option value="terminated"><% __('terminated') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Comments: </label>
+                            <label class="col-sm-4 control-label"><% __('Comments:') |h %> </label>
                             <div class="col-sm-8" >
-                                <textarea class="form-control" id="comments_for_updating" name="comments_for_updating" placeholder="Optional"></textarea>
+                                <textarea class="form-control" id="comments_for_updating" name="comments_for_updating" placeholder="<% __('Optional') |h %>"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="update_status_submit" id="update_status_submit">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="update_status_submit" id="update_status_submit"><% __('Submit') |h %></button>
             </div>
         </div>
     </div>
@@ -69,19 +69,19 @@ if ($stock_type_page eq 'tracking_id') {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updatedSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updatedSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The status of this experiment has been updated.
+                        <% __('The status of this experiment has been updated.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_updated_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_updated_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -91,19 +91,19 @@ if ($stock_type_page eq 'tracking_id') {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="reverseStatusDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="reverseStatusDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        This experiment has been restored.
+                        <% __('This experiment has been restored.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_reverse_status_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_reverse_status_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>

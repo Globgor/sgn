@@ -11,95 +11,95 @@ $date
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="addPropagationGroupIdDialog">Add New Propagation Group ID</h4>
+                <h4 class="modal-title" id="addPropagationGroupIdDialog"><% __('Add New Propagation Group ID') |h %></h4>
             </div>
             <div class="modal-body" id = "propagation_group_id_dialog">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" id="add_new_propagation_group_id_form" name="add_new_propagation_group_id_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Propagation Project: </label>
+                            <label class="col-sm-4 control-label"><% __('Propagation Project:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" name="propagation_project" id="propagation_project" disabled value="<% $trial_name %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Propagation Group Identifier: </label>
+                            <label class="col-sm-4 control-label"><% __('Propagation Group Identifier:') |h %> </label>
                             <div class="col-sm-8" >
-                                <input class="form-control" type="text" id="new_propagation_group_identifier" name="new_propagation_group_identifier" placeholder="Must be unique in the database">
+                                <input class="form-control" type="text" id="new_propagation_group_identifier" name="new_propagation_group_identifier" placeholder="<% __('Must be unique in the database') |h %>">
                             </div>
                         </div>
                         <div class="form-group" id = "get_propagation_accession_name">
-                            <label class="col-sm-4 control-label">Accession Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Accession Name:') |h %> </label>
                             <div class="col-sm-8" >
-                                <input class="form-control" type="text" id="propagation_accession_name" name="propagation_accession_name" placeholder="Must be in the database">
+                                <input class="form-control" type="text" id="propagation_accession_name" name="propagation_accession_name" placeholder="<% __('Must be in the database') |h %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Material Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Material Type:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="propagation_material_type">
-                                    <option value="">Please select a type</option>
-                                    <option value="budwood">budwood</option>
-                                    <option value="stem">stem</option>
-                                    <option value="shoot">shoot</option>
-                                    <option value="root">root</option>
-                                    <option value="corm">corm</option>
-                                    <option value="plant">plant</option>
-                                    <option value="seed">seed</option>
+                                    <option value=""><% __('Please select a type') |h %></option>
+                                    <option value="budwood"><% __('budwood') |h %></option>
+                                    <option value="stem"><% __('stem') |h %></option>
+                                    <option value="shoot"><% __('shoot') |h %></option>
+                                    <option value="root"><% __('root') |h %></option>
+                                    <option value="corm"><% __('corm') |h %></option>
+                                    <option value="plant"><% __('plant') |h %></option>
+                                    <option value="seed"><% __('seed') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Source Type: </label>
+                            <label class="col-sm-4 control-label"><% __('Source Type:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="propagation_material_source_type">
-                                    <option value="">Please select a type (optional)</option>
-                                    <option value="plot">plot</option>
-                                    <option value="subplot">subplot</option>
-                                    <option value="plant">plant</option>
-                                    <option value="seedlot">seedlot</option>
-                                    <option value="new">new</option>
+                                    <option value=""><% __('Please select a type (optional)') |h %></option>
+                                    <option value="plot"><% __('plot') |h %></option>
+                                    <option value="subplot"><% __('subplot') |h %></option>
+                                    <option value="plant"><% __('plant') |h %></option>
+                                    <option value="seedlot"><% __('seedlot') |h %></option>
+                                    <option value="new"><% __('new') |h %></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group" id = "get_propagation_source_name">
-                            <label class="col-sm-4 control-label">Source Name: </label>
+                            <label class="col-sm-4 control-label"><% __('Source Name:') |h %> </label>
                             <div class="col-sm-8" >
-                                <input class="form-control" type="text" id="propagation_source_name" name="propagation_source_name" placeholder="optional (source name must be in the database)">
+                                <input class="form-control" type="text" id="propagation_source_name" name="propagation_source_name" placeholder="<% __('optional (source name must be in the database)') |h %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Sub-Location: </label>
+                            <label class="col-sm-4 control-label"><% __('Sub-Location:') |h %> </label>
                             <div class="col-sm-8" >
-                                <input class="form-control" type="text" id="propagation_sub_location" name="propagation_sub_location" placeholder="optional">
+                                <input class="form-control" type="text" id="propagation_sub_location" name="propagation_sub_location" placeholder="<% __('optional') |h %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Date (YYYY-MM-DD): </label>
+                            <label class="col-sm-4 control-label"><% __('Date (YYYY-MM-DD):') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" name="propagation_date" id="propagation_date" value="<%$date%>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Purpose: </label>
+                            <label class="col-sm-4 control-label"><% __('Purpose:') |h %> </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="propagation_purpose">
-                                    <option value="">Please select (optional)</option>
-                                    <option value="replicate">replicate</option>
-                                    <option value="backup">backup</option>
-                                    <option value="replacement">replacement</option>
+                                    <option value=""><% __('Please select (optional)') |h %></option>
+                                    <option value="replicate"><% __('replicate') |h %></option>
+                                    <option value="backup"><% __('backup') |h %></option>
+                                    <option value="replacement"><% __('replacement') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Description:</label>
+                            <label class="col-sm-4 control-label"><% __('Description:') |h %></label>
                             <div class="col-sm-8">
                                 <textarea class="form-control" id="propagation_description" name="propagation_description" ></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Operator: </label>
+                            <label class="col-sm-4 control-label"><% __('Operator:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" type="text" id="propagation_operator" name="propagation_operator" value="<%$logged_in_name%>" >
                             </div>
@@ -107,8 +107,8 @@ $date
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" id="close_add_propagation_group_id_dialog" name="close_add_propagation_group_id_dialog" class="btn btn-default" >Close</button>
-                    <button id="submit_new_propagation_group_id" type="button" class="btn btn-primary" >Add</button>
+                    <button type="reset" id="close_add_propagation_group_id_dialog" name="close_add_propagation_group_id_dialog" class="btn btn-default" ><% __('Close') |h %></button>
+                    <button id="submit_new_propagation_group_id" type="button" class="btn btn-primary" ><% __('Add') |h %></button>
                 </div>
             </form>
         </div>
@@ -119,19 +119,19 @@ $date
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addPropagationGroupIdSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addPropagationGroupIdSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The propagation group identifier was saved successfully.
+                        <% __('The propagation group identifier was saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_propagation_group_id_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_propagation_group_id_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>

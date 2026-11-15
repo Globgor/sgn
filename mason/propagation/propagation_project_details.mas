@@ -20,7 +20,7 @@ $date
     <div class="col-sm-12">
         <table class="table table-hover table-bordered" >
             <tr>
-                <td><b>Propagation Project Name</b></td>
+                <td><b><% __('Propagation Project Name') |h %></b></td>
                 <td>
                     <div id="trial_name">
 % if ($trial_name) {
@@ -33,7 +33,7 @@ $date
             </tr>
 
             <tr>
-                <td><b>Propagation Type</b></td>
+                <td><b><% __('Propagation Type') |h %></b></td>
                 <td>
                     <div id="propagation_type">
 % if ($propagation_type) {
@@ -46,7 +46,7 @@ $date
             </tr>
 
             <tr>
-                <td><b>Breeding Program </b></td>
+                <td><b><% __('Breeding Program') |h %> </b></td>
                 <td>
                     <span id="breeding_program">
 % if ($breeding_program_name) {
@@ -60,7 +60,7 @@ $date
             </tr>
 
             <tr>
-                <td><b>Location</b></td>
+                <td><b><% __('Location') |h %></b></td>
                 <td>
                     <div id="trial_location">
 % if ($location_name) {
@@ -73,7 +73,7 @@ $date
             </tr>
 
             <tr>
-                <td><b>Year</b></td>
+                <td><b><% __('Year') |h %></b></td>
                 <td>
                     <div id="trial_year">
 % if ($year) {
@@ -85,7 +85,7 @@ $date
                 </td>
             </tr>
 
-            <tr><td><b>Description</b></td>
+            <tr><td><b><% __('Description') |h %></b></td>
                 <td>
 % if ($trial_description) {
 %     print "<div id='trial_description' style='white-space: pre-wrap;'>$trial_description</div>";
@@ -96,16 +96,16 @@ $date
             </tr>
 
             <tr>
-                <td><b>Folder</b></td>
+                <td><b><% __('Folder') |h %></b></td>
                 <td>
                     <span id="trial_folder_div"><a href="/folder/<% $folder_id %>"><% $folder_name %></a></span>
                     <br/><br/>
-                    <button class="btn btn-sm btn-default" style="margin:3px" id="new_folder_dialog_link">New Folder</button> <button class="btn btn-sm btn-default" style="margin:3px" id="open_folder_dialog_link">Change Folder</button>
+                    <button class="btn btn-sm btn-default" style="margin:3px" id="new_folder_dialog_link"><% __('New Folder') |h %></button> <button class="btn btn-sm btn-default" style="margin:3px" id="open_folder_dialog_link"><% __('Change Folder') |h %></button>
                 </td>
             </tr>
 
             <tr>
-                <td><b>Created by</b></td>
+                <td><b><% __('Created by') |h %></b></td>
                 <td>
                     <div id="trial_owner">
 % if ($trial_owner) {
@@ -121,9 +121,9 @@ $date
     </div>
 </div>
 </br>
-<button class="btn btn-sm btn-default" style="margin:3px" id="add_new_propagation_group_id_link">Add New Propagation Group ID</button><button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_group_ids_link">Upload New Propagation Group IDs</button>
+<button class="btn btn-sm btn-default" style="margin:3px" id="add_new_propagation_group_id_link"><% __('Add New Propagation Group ID') |h %></button><button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_group_ids_link"><% __('Upload New Propagation Group IDs') |h %></button>
 <br>
-<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_ids_link">Upload New Propagation IDs</button><button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_id_status_link">Upload Propagation ID Status</button>
+<button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_ids_link"><% __('Upload New Propagation IDs') |h %></button><button class="btn btn-sm btn-primary" style="margin:3px" id="upload_propagation_id_status_link"><% __('Upload Propagation ID Status') |h %></button>
 
 <& /propagation/add_propagation_group_id_dialog.mas, trial_id => $trial_id, trial_name => $trial_name, breeding_program_name => $breeding_program_name, date => $date, logged_in_name => $logged_in_name&>
 <& /propagation/upload_propagation_group_ids_dialog.mas, trial_id => $trial_id, trial_name => $trial_name&>

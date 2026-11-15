@@ -10,43 +10,43 @@ $locations
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ui-front">
             <div class="modal-header">
-                <button type="reset" class="close" id="add_propagation_project_dismiss_button_1" name="add_propagation_project_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h4 class="modal-title" id="addPropagationProjectDialog">Add New Propagation Project</h4></center>
+                <button type="reset" class="close" id="add_propagation_project_dismiss_button_1" name="add_propagation_project_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="addPropagationProjectDialog"><% __('Add New Propagation Project') |h %></h4></center>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
 
                     <&| /util/workflow.mas, id=> "add_propagation_project_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"What are Propagation Projects?" &>
-                            <p>Propagation Project page acts as a centralized page for different propagation processes .</p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("What are Propagation Projects?"), 'h' ) &>
+                            <p><% __('Propagation Project page acts as a centralized page for different propagation processes .') |h %></p>
                             <ul>
-                                <li>Each project page may be used to group propagation processes having the same propagation type, objective or done in the same year.</li>
+                                <li><% __('Each project page may be used to group propagation processes having the same propagation type, objective or done in the same year.') |h %></li>
                                 <li>Metadata for each propagation process (e.g., accession name, material type, date, operator) is linked to a globally unique <b>Propagation Group Identifier</b>.</li>
                                 <li>Within each Propagation Group, the progress of each plant produced is tracked by a globally unique <b>Propagation Identifier</b>.</li>
                             </ul>
                             <hr>
                             <center>
-                                <button id="next_step_add_new_propagation_project" class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button id="next_step_add_new_propagation_project" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </center>
                         </&>
 
                         <form class="form-horizontal" role="form" name="add_propagation_project_form" id="add_propagation_project_form">
-                            <&| /util/workflow.mas:step, title=> "Add a propagation project" &>
-                                <& /page/page_title.mas, title=>"Enter basic information about the propagation project" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Add a propagation project"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Enter basic information about the propagation project"), 'h' ) &>
                                     <br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-lable">Project Name: </label>
+                                        <label class="col-sm-3 control-lable"><% __('Project Name:') |h %> </label>
                                         <div class="col-sm-9">
                                             <input class="form-control" type="text" id="propagation_project_name" name="propagation_project_name"  />
                                         </div>
                                     </div><br/>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Propagation Type: </label>
+                                        <label class="col-sm-3 control-label"><% __('Propagation Type:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="propagation_type" name="propagation_type">
-                                                <option value="Macropropagation">Macropropagation</option>
+                                                <option value="Macropropagation"><% __('Macropropagation') |h %></option>
                                                 <!--
                                                 <option value="">Select a Type</option>
                                                 <option value="Micropropagation">Micropropagation</option>
@@ -55,7 +55,7 @@ $locations
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Breeding Program: </label>
+                                        <label class="col-sm-3 control-label"><% __('Breeding Program:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="propagation_project_program" name="propagation_project_program">
                                                 <option value="">Select Breeding Program</option>
@@ -72,10 +72,10 @@ foreach my $program (@$programs) {
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Location: </label>
+                                        <label class="col-sm-3 control-label"><% __('Location:') |h %> </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" id="propagation_project_location" name="propagation_project_location">
-                                                <option value="">Select Location</option>
+                                                <option value=""><% __('Select Location') |h %></option>
 <%perl>
     foreach my $location_hashref (@$locations) {
         my $properties = $location_hashref->{'properties'};
@@ -88,13 +88,13 @@ foreach my $program (@$programs) {
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Year:</label>
+                                        <label class="col-sm-3 control-label"><% __('Year:') |h %></label>
                                         <div class="col-sm-9">
                                             <div id="propagation_project_year" name="propagation_project_year" ></div>
                                         </div>
                                     </div><br/>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Description:</label>
+                                        <label class="col-sm-3 control-label"><% __('Description:') |h %></label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control" id="propagation_project_description" name="propagation_project_description" ></textarea>
                                         </div>
@@ -103,15 +103,15 @@ foreach my $program (@$programs) {
                                 <br/>
                                 <br/>
                                 <center>
-                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="add_propagation_project_submit" id="add_propagation_project_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" onclick="Workflow.complete(this, false);" name="add_propagation_project_submit" id="add_propagation_project_submit"><% __('Submit') |h %></button>
                                 </center>
                             </&>
                         </form>
 
-                        <&| /util/workflow.mas:complete, title=> "Complete" &>
-                            <& /page/page_title.mas, title=>"Finished! Your propagation project is now in the database" &>
+                        <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finished! Your propagation project is now in the database"), 'h' ) &>
                             <ul>
-                                <li>Please click on 'Refresh' button to view your newly created project on the manage page.</li>
+                                <li><% __('Please click on \'Refresh\' button to view your newly created project on the manage page.') |h %></li>
                             </ul>
                             <br/>
                         </&>
@@ -119,7 +119,7 @@ foreach my $program (@$programs) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="add_propagation_project_dismiss_button_2" name="add_propagation_project_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="add_propagation_project_dismiss_button_2" name="add_propagation_project_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
