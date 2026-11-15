@@ -1,7 +1,7 @@
 
 <td>
-    <a href="/search/progenies_using_female"><p>Search Progenies of Female Parents</p></a>
+    <a href="/search/progenies_using_female"><p><% __('Search Progenies of Female Parents') |h %></p></a>
 </td>
 <td>
-    <a href="/search/progenies_using_male"><p>Search Progenies of Male Parents / Populations</p></a>
+    <a href="/search/progenies_using_male"><p><% __('Search Progenies of Male Parents / Populations') |h %></p></a>
 </td>

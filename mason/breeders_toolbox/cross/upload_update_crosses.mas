@@ -7,24 +7,24 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updateCrossinfoDialog">Upload Cross Info of Existing Crosses </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateCrossinfoDialog"><% __('Upload Cross Info of Existing Crosses') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <label class="col-sm-12 control-label">If you are uploading an Intercross file, please use manage Intercross section</label>
+                    <label class="col-sm-12 control-label"><% __('If you are uploading an Intercross file, please use manage Intercross section') |h %></label>
                     <br>
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="update_crossinfo_spreadsheet_format">Spreadsheet Format</a>
+                            <a id="update_crossinfo_spreadsheet_format"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_crossinfo_form" name="upload_crossinfo_form">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Upload File: </label>
+                            <label class="col-sm-2 control-label"><% __('Upload File:') |h %> </label>
                                 <div class="col-sm-10">
                                     <input type="file" name="crossinfo_upload_file" id="crossinfo_upload_file" encoding="multipart/form-data" />
                                 </div>
@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="update_crossinfo_submit" id="update_crossinfo_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="update_crossinfo_submit" id="update_crossinfo_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -44,8 +44,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCrossinfoErrorDialog">Upload Cross Info File Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCrossinfoErrorDialog"><% __('Upload Cross Info File Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -65,32 +65,32 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadCrossinfoInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadCrossinfoInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Cross info of existing crosses may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Cross info of existing crosses may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
 
                     <table class="table table-bordered table-hover">
                         <tbody>
                             <tr>
                                 <td>cross_unique_id</td>
-                                <td>At least one column of cross info listed below (please use exact column header as shown)</td>
+                                <td><% __('At least one column of cross info listed below (please use exact column header as shown)') |h %></td>
                             </tr>
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>cross_unique_id:</b> Must exist in the database, must not have duplicate cross unique id in the same upload file.
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -116,19 +116,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="crossInfoSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="crossInfoSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The cross information was saved successfully.
+                        <% __('The cross information was saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_cross_info_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_cross_info_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -139,22 +139,22 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadAdditionalInfoDialog">Upload Additional Parent Info of Existing Crosses </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadAdditionalInfoDialog"><% __('Upload Additional Parent Info of Existing Crosses') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Template Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                         <p>
-                            <b>File Format Information</b>
+                            <b><% __('File Format Information') |h %></b>
                             <br>
-                            <a id="upload_additional_info_format">Spreadsheet Format</a>
+                            <a id="upload_additional_info_format"><% __('Spreadsheet Format') |h %></a>
                             <br>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_additional_info_form" name="upload_additional_info_form">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Upload File: </label>
+                            <label class="col-sm-2 control-label"><% __('Upload File:') |h %> </label>
                                 <div class="col-sm-10">
                                     <input type="file" name="additional_info_upload_file" id="additional_info_upload_file" encoding="multipart/form-data" />
                                 </div>
@@ -163,8 +163,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_additional_info_submit" id="upload_additional_info_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_additional_info_submit" id="upload_additional_info_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -174,31 +174,31 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadAdditionalInfoFormatDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadAdditionalInfoFormatDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>
-                        Additional Parent Info of existing crosses may be uploaded in an Excel file (.xls or .xlsx)
+                        <% __('Additional Parent Info of existing crosses may be uploaded in an Excel file (.xls or .xlsx)') |h %>
                     </b>
                     <br>
                     <b>
-                        Header:
+                        <% __('Header:') |h %>
                     </b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <table class="table table-bordered table-hover">
                         <tbody>
                             <tr>
                                 <td>cross_unique_id</td>
-                                <td>At least one column of parent info listed below (please use exact column header as shown)</td>
+                                <td><% __('At least one column of parent info listed below (please use exact column header as shown)') |h %></td>
                             </tr>
                         </tbody>
                     </table>
                     <b>
-                        Required columns:
+                        <% __('Required columns:') |h %>
                     </b>
                     <ul>
                         <li><b>cross_unique_id:</b> Must exist in the database, must not have duplicate cross unique id in the same upload file.
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

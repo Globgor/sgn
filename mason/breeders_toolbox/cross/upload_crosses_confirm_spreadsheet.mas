@@ -10,7 +10,7 @@ $upload_data_ref => undef
 
 <article>
   <header>
-    <h1>Upload cross file verification</h1>
+    <h1><% __('Upload cross file verification') |h %></h1>
   </header>
 </article>
 <a id="return_to_home"  href="/breeders/home" >Return to breeders tools</button>
@@ -22,7 +22,7 @@ $upload_data_ref => undef
 print "<br><b>Number of crosses added:</b> $number_of_crosses_added<br>";
 print "<b>Number of unique parents in added crosses</b>: $number_of_unique_parents<br><br>";
 </%perl>
-<button id="view_uploaded_data_link" >View uploaded data</button>
+<button id="view_uploaded_data_link" ><% __('View uploaded data') |h %></button>
 </div>
 
 <div id="display_uploaded_data_dialog"  class="ui-widget" >

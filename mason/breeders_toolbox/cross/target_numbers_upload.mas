@@ -8,26 +8,26 @@ $trial_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadTargetNumbersDialog">Upload Target Numbers of Seeds/Progenies for This Crossing Experiment </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadTargetNumbersDialog"><% __('Upload Target Numbers of Seeds/Progenies for This Crossing Experiment') |h %> </h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <&| /page/explanation.mas, title=>'Target Numbers Upload Information' &>
+                    <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Target Numbers Upload Information'), 'h' ) &>
                         <p>
-                            <a id="upload_target_numbers_spreadsheet_format_info">Target Numbers Upload Information</a>
+                            <a id="upload_target_numbers_spreadsheet_format_info"><% __('Target Numbers Upload Information') |h %></a>
                         </p>
                     </&>
                     <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_target_numbers_form" name="upload_target_numbers_form">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Crossing Experiment: </label>
+                            <label class="col-sm-4 control-label"><% __('Crossing Experiment:') |h %> </label>
                             <div class="col-sm-8" >
                                 <input class="form-control" name="target_numbers_experiment_name" id="target_numbers_experiment_name" disabled value="<% $trial_name %>">
                                 <input name="target_numbers_experiment_id" id="target_numbers_experiment_id" type="hidden" value="<% $trial_id %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Upload File (.xls or .xlsx): </label>
+                            <label class="col-sm-4 control-label"><% __('Upload File (.xls or .xlsx):') |h %> </label>
                             <div class="col-sm-8">
                                 <input type="file" name="target_numbers_file" id="target_numbers_file" encoding="multipart/form-data" />
                             </div>
@@ -36,8 +36,8 @@ $trial_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" name="upload_target_numbers_submit" id="upload_target_numbers_submit">Upload File</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+                <button type="button" class="btn btn-primary" name="upload_target_numbers_submit" id="upload_target_numbers_submit"><% __('Upload File') |h %></button>
             </div>
         </div>
     </div>
@@ -47,8 +47,8 @@ $trial_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadTargetNumbersErrorDialog">Upload Target Numbers Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadTargetNumbersErrorDialog"><% __('Upload Target Numbers Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -58,7 +58,7 @@ $trial_name
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -68,19 +68,19 @@ $trial_name
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="targetNumbersSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="targetNumbersSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The target numbers of seeds/progenies were saved successfully.
+                        <% __('The target numbers of seeds/progenies were saved successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_target_numbers_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close & Reload</button>
+                <button id="dismiss_target_numbers_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close & Reload') |h %></button>
             </div>
         </div>
     </div>
@@ -90,16 +90,16 @@ $trial_name
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="targetNumbersFileInfoDialog">Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="targetNumbersFileInfoDialog"><% __('Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <b>Target numbers of seeds/progenies may be uploaded in an Excel file (.xls or .xlsx)
                     <br><br>
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                        The first row (header) must contain the following:
+                        <% __('The first row (header) must contain the following:') |h %>
                     <br>
                     <br>
                     <table class="table table-bordered table-hover">
@@ -112,17 +112,17 @@ $trial_name
                             </tr>
                         </tbody>
                     </table>
-                    <b>Field Info:</b>
+                    <b><% __('Field Info:') |h %></b>
                     <ul>
                         <li>female_accession (must exist as uniquename in the database.)</li>
                         <li>male_accession (must exist as uniquename in the database.)</li>
-                        <li>Please indicate target number of seeds and/or target number of progenies for each cross combination</li>
+                        <li><% __('Please indicate target number of seeds and/or target number of progenies for each cross combination') |h %></li>
                     </ul>
                     <br>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

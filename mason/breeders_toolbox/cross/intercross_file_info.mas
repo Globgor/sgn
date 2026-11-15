@@ -7,7 +7,7 @@ $trial_id
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title=>"Downloaded Intercross Files (Parents and Wishlist Files)", is_subsection => 1, collapsible=>1, collapsed=>1 &>
+        <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Downloaded Intercross Files (Parents and Wishlist Files)"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>1 &>
             <table class="table table-hover table-bordered" id="downloaded_intercross_files_table">
             </table>
         </&>
@@ -15,7 +15,7 @@ $trial_id
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
-        <&| /page/info_section.mas, title=>"Uploaded Intercross Files", is_subsection => 1, collapsible=>1, collapsed=>1 &>
+        <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Uploaded Intercross Files"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>1 &>
             <table class="table table-hover table-bordered" id="uploaded_intercross_files_table">
             </table>
         </&>

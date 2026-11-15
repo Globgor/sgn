@@ -10,14 +10,14 @@
                 <div class="col-sm-11">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-4">Select a list of accessions:</label>
+                            <label class="control-label col-sm-4"><% __('Select a list of accessions:') |h %></label>
                             <div class="col-sm-8" >
                                 <div class="input-group">
                                     <select class="form-control" id="accession_list_select">
-                                        <option value="">Select a list of accessions</option>
+                                        <option value=""><% __('Select a list of accessions') |h %></option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-info" id="search_parents"><i class="glyphicon glyphicon-search"></i> Parents </button>
+                                        <button class="btn btn-info" id="search_parents"><i class="glyphicon glyphicon-search"></i> <% __('Parents') |h %> </button>
                                     </div>
                                 </div>
                             </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
-            <&| /page/info_section.mas, title=>"Search Results", is_subsection => 1, collapsible=>1, collapsed=>0 &>
+            <&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Search Results"), 'h' ), is_subsection => 1, collapsible=>1, collapsed=>0 &>
                 <table class="table table-hover table-bordered" id="parent_search_results">
                 </table>
             </&>

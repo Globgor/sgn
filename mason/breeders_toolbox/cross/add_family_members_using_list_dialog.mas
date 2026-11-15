@@ -9,26 +9,26 @@ $family_type_string
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <button type="reset" class="close" id="add_family_members_using_list_dismiss_button_1" name="add_family_members_using_list_dismiss_button" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h4 class="modal-title" id="addFamilyMembersUsingList">Add Family Members Using a List</h4></center>
+                <button type="reset" class="close" id="add_family_members_using_list_dismiss_button_1" name="add_family_members_using_list_dismiss_button" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <center><h4 class="modal-title" id="addFamilyMembersUsingList"><% __('Add Family Members Using a List') |h %></h4></center>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" name="add_family_members_form" id="add_family_members_form">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" >Family Name: </label>
+                            <label class="col-sm-3 control-label" ><% __('Family Name:') |h %> </label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="members_for_family_name" id="members_for_family_name" disabled value="<% $family_name %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" >Family Type: </label>
+                            <label class="col-sm-3 control-label" ><% __('Family Type:') |h %> </label>
                             <div class="col-sm-9">
                                 <input class="form-control" name="family_name_type" id="family_name_type" disabled value="<% $family_type_string %>">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3">Select a List of Crosses to Add:</label>
+                            <label class="control-label col-sm-3"><% __('Select a List of Crosses to Add:') |h %></label>
                             <div class="col-sm-9" >
                                 <div class="input-group">
                                     <select class="form-control" id="family_crosses_list_select"></select>
@@ -39,8 +39,8 @@ $family_type_string
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add_family_members_submit">Submit</button>
-                <button id="add_family_members_using_list_dismiss_button_2" name="add_family_members_using_list_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="add_family_members_submit"><% __('Submit') |h %></button>
+                <button id="add_family_members_using_list_dismiss_button_2" name="add_family_members_using_list_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -50,19 +50,19 @@ $family_type_string
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addFamilyMembersUsingListSavedDialog">Success</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addFamilyMembersUsingListSavedDialog"><% __('Success') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <p>
                         <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                        The new family members were stored successfully.
+                        <% __('The new family members were stored successfully.') |h %>
                     </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="dismiss_add_family_members_using_list_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="dismiss_add_family_members_using_list_saved_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -72,8 +72,8 @@ $family_type_string
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addFamilyMembersUsingListErrorDialog">Add Family Members Error</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addFamilyMembersUsingListErrorDialog"><% __('Add Family Members Error') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -83,7 +83,7 @@ $family_type_string
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>

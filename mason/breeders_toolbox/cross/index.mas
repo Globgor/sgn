@@ -25,7 +25,7 @@ $identifier_prefix => ''
 
 <& /page/page_title.mas, title => "Details for cross '$cross_name'" &>
 
-<&| /page/info_section.mas, title => "Cross information" &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Cross information"), 'h' ) &>
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -68,7 +68,7 @@ $identifier_prefix => ''
 <& /util/import_javascript.mas, classes => ['jquery','jquery.dataTables'] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<&| /page/info_section.mas, title => 'Member of', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Member of'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -76,9 +76,9 @@ $identifier_prefix => ''
                     <table id = "membership_table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Crossing Experiment</th>
-                                <th>Description</th>
-                                <th>Family Name</th>
+                                <th><% __('Crossing Experiment') |h %></th>
+                                <th><% __('Description') |h %></th>
+                                <th><% __('Family Name') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -88,7 +88,7 @@ $identifier_prefix => ''
     </div>
 </&>
 
-<&| /page/info_section.mas, title => 'Parents', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Parents'), 'h' ), collapsible=>1, collapsed=>0 &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -96,16 +96,16 @@ $identifier_prefix => ''
                     <table id = "parent_information" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Cross Combination</th>
-                                <th>Cross Type</th>
-                                <th>Female Accession</th>
-                                <th>Female Ploidy</th>
-                                <th>Male Accession</th>
-                                <th>Male Ploidy</th>
-                                <th>Female Plot</th>
-                                <th>Male Plot</th>
-                                <th>Female Plant</th>
-                                <th>Male Plant</th>
+                                <th><% __('Cross Combination') |h %></th>
+                                <th><% __('Cross Type') |h %></th>
+                                <th><% __('Female Accession') |h %></th>
+                                <th><% __('Female Ploidy') |h %></th>
+                                <th><% __('Male Accession') |h %></th>
+                                <th><% __('Male Ploidy') |h %></th>
+                                <th><% __('Female Plot') |h %></th>
+                                <th><% __('Male Plot') |h %></th>
+                                <th><% __('Female Plant') |h %></th>
+                                <th><% __('Male Plant') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -125,11 +125,11 @@ $identifier_prefix => ''
 %}
     </select>
     <input id="additional_info_value" />
-    <button id="edit_additional_info_submit" >Save</button>
+    <button id="edit_additional_info_submit" ><% __('Save') |h %></button>
 </div>
 
 
-<&| /page/info_section.mas, title => 'Additional Parent Info', collapsible => 1, collapsed => 0, subtitle => $edit_additional_info_link &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Additional Parent Info'), 'h' ), collapsible => 1, collapsed => 0, subtitle => $edit_additional_info_link &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -152,7 +152,7 @@ $identifier_prefix => ''
 % my $edit_link = "[Edit]";
 % if ($user_id) { $edit_link = '<a id="edit_properties_link">[Edit]</a>'; }
 
-<&| /page/info_section.mas, title => 'Field Crossing Data', collapsible => 1, collapsed => 0, subtitle => $edit_link &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Field Crossing Data'), 'h' ), collapsible => 1, collapsed => 0, subtitle => $edit_link &>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -182,13 +182,13 @@ $identifier_prefix => ''
 
     <input id="property_value" />
 
-    <button id="property_submit" >Save</button>
+    <button id="property_submit" ><% __('Save') |h %></button>
 
     <p><b>WARNING!</b>&nbsp;Changing the parameters can have unpredicatable results in downstream analyses if they are inconsistent with other data.</p>
 
 </div>
 
-<&| /page/info_section.mas, title => 'Cross Transactions', collapsible => 1, collapsed => 0, subtitle => 'View crossing activities of this cross'&>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Cross Transactions'), 'h' ), collapsible => 1, collapsed => 0, subtitle => $m->interp->apply_escapes( __('View crossing activities of this cross'), 'h' )&>
     <div class = "well well-sm">
         <div class = "panel panel-default">
             <div class = "panel-body">
@@ -196,12 +196,12 @@ $identifier_prefix => ''
                     <table id = "cross_transactions" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Transaction ID</th>
-                                <th>Operator</th>
-                                <th>Timestamp</th>
-                                <th>Number of Flowers</th>
-                                <th>Number of Fruits</th>
-                                <th>Number of Seeds</th>
+                                <th><% __('Transaction ID') |h %></th>
+                                <th><% __('Operator') |h %></th>
+                                <th><% __('Timestamp') |h %></th>
+                                <th><% __('Number of Flowers') |h %></th>
+                                <th><% __('Number of Fruits') |h %></th>
+                                <th><% __('Number of Seeds') |h %></th>
                             </tr>
                         </thead>
                     </table>
@@ -212,7 +212,7 @@ $identifier_prefix => ''
 </&>
 
 % if ($odk_crossing_data_service_name eq 'ONA') {
-    <&| /page/info_section.mas, id=>'tissue_culture_summary_section', title => 'Tissue culture IDs of this Cross', collapsible=>1, collapsed=>1, subtitle => 'View tissue culture IDs in each step (e.g., embryo IDs, subculture IDs, rooting IDs, weaning1 IDs)'&>
+    <&| /page/info_section.mas, id=>'tissue_culture_summary_section', title => $m->interp->apply_escapes( __('Tissue culture IDs of this Cross'), 'h' ), collapsible=>1, collapsed=>1, subtitle => $m->interp->apply_escapes( __('View tissue culture IDs in each step (e.g., embryo IDs, subculture IDs, rooting IDs, weaning1 IDs)'), 'h' )&>
         <div class="well well-sm">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -220,14 +220,14 @@ $identifier_prefix => ''
                         <table id="tissue_culture_summary_table" class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Embryo IDs</th>
-                                    <th>Subculture IDs</th>
-                                    <th>Rooting IDs</th>
-                                    <th>Weaning1 IDs</th>
-                                    <th>Weaning2 IDs</th>
-                                    <th>Screenhouse IDs</th>
-                                    <th>Hardening IDs</th>
-                                    <th>Openfield IDs</th>
+                                    <th><% __('Embryo IDs') |h %></th>
+                                    <th><% __('Subculture IDs') |h %></th>
+                                    <th><% __('Rooting IDs') |h %></th>
+                                    <th><% __('Weaning1 IDs') |h %></th>
+                                    <th><% __('Weaning2 IDs') |h %></th>
+                                    <th><% __('Screenhouse IDs') |h %></th>
+                                    <th><% __('Hardening IDs') |h %></th>
+                                    <th><% __('Openfield IDs') |h %></th>
                                 </tr>
                             </thead>
                         </table>
@@ -243,26 +243,26 @@ $identifier_prefix => ''
 % my $add_progeny_link = "[add progeny]";
 % if ($user_id) { $add_progeny_link= '<a id="add_more_progeny_link">[add progeny]</a>'; }
 
-<&|  /page/info_section.mas, title => "Progeny", collapsible => 1, collapsed => 0, subtitle => $add_progeny_link   &>
+<&|  /page/info_section.mas, title => $m->interp->apply_escapes( __("Progeny"), 'h' ), collapsible => 1, collapsed => 0, subtitle => $add_progeny_link   &>
 
     <div id="progeny_information_div">
-        [loading...]
+        <% __('[loading...]') |h %>
     </div>
 
     <div id="add_more_progeny_dialog">
         <table>
-            <tr><td>Basename</td><td><input type="input" id="basename" name="basename" value="<% $basename %>" /></td></tr>
-            <tr><td>Start number</td><td><input type="input" id="start_number" name="start_number" size="5" value="<% $progeny_count + 1 %>" /></td></tr>
-            <tr><td>How many?</td><td><input type="input" id="progeny_count" name="progeny_count" size="5" /></td></tr>
+            <tr><td><% __('Basename') |h %></td><td><input type="input" id="basename" name="basename" value="<% $basename %>" /></td></tr>
+            <tr><td><% __('Start number') |h %></td><td><input type="input" id="start_number" name="start_number" size="5" value="<% $progeny_count + 1 %>" /></td></tr>
+            <tr><td><% __('How many?') |h %></td><td><input type="input" id="progeny_count" name="progeny_count" size="5" /></td></tr>
         </table>
     </div>
 
 
 </&>
 
-<&|  /page/info_section.mas, title => "Delete cross", collapsible => 1, collapsed => 0, subtitle => '<font color="red">Deletion cannot be undone</font>'  &>
+<&|  /page/info_section.mas, title => $m->interp->apply_escapes( __("Delete cross"), 'h' ), collapsible => 1, collapsed => 0, subtitle => '<font color="red">Deletion cannot be undone</font>'  &>
 
-<button id="delete_cross_button" class="btn btn-default">Delete</button>
+<button id="delete_cross_button" class="btn btn-default"><% __('Delete') |h %></button>
 
 </&>
 
