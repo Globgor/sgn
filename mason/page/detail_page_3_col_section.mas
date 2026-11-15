@@ -7,9 +7,9 @@ $title => "A title."
 $label_design_btn_id => undef
 $legacy_barcode_btn_id => undef
 $go_btn_id => undef
-$label_design_btn_text => "Label Designer (Recommended)"
-$legacy_barcode_text => "Legacy Barcode Generator"
-$go_btn_text => "Go"
+$label_design_btn_text => $m->interp->apply_escapes( __("Label Designer (Recommended)"), 'h' )
+$legacy_barcode_text => $m->interp->apply_escapes( __("Legacy Barcode Generator"), 'h' )
+$go_btn_text => $m->interp->apply_escapes( __("Go"), 'h' )
 </%args>
 
 
