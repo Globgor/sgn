@@ -567,7 +567,7 @@ jQuery(document).ready(function(){
                     console.log(response);
                 },
                 error: function(response){
-                    alert('Error saving GPS images positions!');
+                    alert(<% __('Error saving GPS images positions!') |js %>);
                 }
             });
 
@@ -750,7 +750,7 @@ jQuery(document).ready(function(){
             jQuery('#drone_imagery_standard_process_interactive_rotate_flight_pass').html("<h1><b>Current Imaging Event Pass: "+manage_drone_imagery_standard_process_raw_images_interactive_current_pass+"/"+manage_drone_imagery_standard_process_raw_images_interactive_maximum_pass+"</b></h1>");
         }
         else {
-            alert('No previous imaging pass to go to!');
+            alert(<% __('No previous imaging pass to go to!') |js %>);
             return false;
         }
     });
@@ -764,7 +764,7 @@ jQuery(document).ready(function(){
             jQuery('#drone_imagery_standard_process_interactive_rotate_flight_pass').html("<h1><b>Current Imaging Event Pass: "+manage_drone_imagery_standard_process_raw_images_interactive_current_pass+"/"+manage_drone_imagery_standard_process_raw_images_interactive_maximum_pass+"</b></h1>");
         }
         else {
-            alert('No next imaging pass to go to!');
+            alert(<% __('No next imaging pass to go to!') |js %>);
             return false;
         }
     });
@@ -789,7 +789,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 //jQuery('#working_modal').hide();
-                alert('Error rotating GPS images!');
+                alert(<% __('Error rotating GPS images!') |js %>);
             }
         });
 
@@ -840,7 +840,7 @@ jQuery(document).ready(function(){
                             }
                         },
                         error: function(response){
-                            alert('Error checking GPS image rotation and matching!');
+                            alert(<% __('Error checking GPS image rotation and matching!') |js %>);
                         }
                     });
                 }, 10000);
@@ -921,7 +921,7 @@ jQuery(document).ready(function(){
                 location.reload();
             },
             error: function(response){
-                alert('Error deleting GPS images template from match step!')
+                alert(<% __('Error deleting GPS images template from match step!') |js %>)
             }
         });
     });
@@ -938,7 +938,7 @@ jQuery(document).ready(function(){
                 location.reload();
             },
             error: function(response){
-                alert('Error deleting GPS images template from rotate step!')
+                alert(<% __('Error deleting GPS images template from rotate step!') |js %>)
             }
         });
     });
@@ -1179,12 +1179,12 @@ jQuery(document).ready(function(){
                     manage_drone_imagery_interactive_match_two_images(image_id1, image_id2);
                 }
                 else {
-                    alert('No more images to match!');
+                    alert(<% __('No more images to match!') |js %>);
                     return false;
                 }
             },
             error: function(response){
-                alert('Error matching and aligning two images!')
+                alert(<% __('Error matching and aligning two images!') |js %>)
             }
         });
     }
@@ -1214,7 +1214,7 @@ jQuery(document).ready(function(){
             window.scrollTo(0,0);
         }
         else {
-            alert('No previous imaging pass to go to!');
+            alert(<% __('No previous imaging pass to go to!') |js %>);
             return false;
         }
     });
@@ -1244,7 +1244,7 @@ jQuery(document).ready(function(){
             window.scrollTo(0,0);
         }
         else {
-            alert('No next imaging pass to go to!');
+            alert(<% __('No next imaging pass to go to!') |js %>);
             return false;
         }
     });
@@ -1271,7 +1271,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
             //    jQuery('#working_modal').modal('hide');
-                alert('Error matching and aligning images sequential!')
+                alert(<% __('Error matching and aligning images sequential!') |js %>)
             }
         });
     }
@@ -1281,7 +1281,7 @@ jQuery(document).ready(function(){
     });
 
     jQuery('#drone_imagery_standard_process_raw_images_interactive_drop_pin').click(function(){
-        alert('Click on a place in the current imaging event pass to drop a pin');
+        alert(<% __('Click on a place in the current imaging event pass to drop a pin') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -1336,7 +1336,7 @@ jQuery(document).ready(function(){
                 }
             },
             error: function(response){
-                alert('Error init svg!')
+                alert(<% __('Error init svg!') |js %>)
             }
         });
     }
@@ -1382,7 +1382,7 @@ jQuery(document).ready(function(){
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert('Error retrieving images and gps info!')
+                alert(<% __('Error retrieving images and gps info!') |js %>)
             }
         });
     }
@@ -1408,7 +1408,7 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length > 1 || selected.length == 0) {
-            alert('Please select one band!');
+            alert(<% __('Please select one band!') |js %>);
             return false;
         }
         manage_drone_imagery_standard_process_interactive_drone_run_band_project_id = selected[0];
@@ -1431,7 +1431,7 @@ jQuery(document).ready(function(){
                 window.scrollTo(0,0);
             },
             error: function(response){
-                alert('Error separate micasense stacks!');
+                alert(<% __('Error separate micasense stacks!') |js %>);
             }
         });
     });
@@ -1456,7 +1456,7 @@ jQuery(document).ready(function(){
                         _redraw_ground_control_points_table_interactive();
                     },
                     error: function(response){
-                        alert('Error getting standard process interactive gcps!');
+                        alert(<% __('Error getting standard process interactive gcps!') |js %>);
                     }
                 });
 
@@ -1489,7 +1489,7 @@ jQuery(document).ready(function(){
                 window.scrollTo(0,0);
             },
             error: function(response){
-                alert('Error check rotation!');
+                alert(<% __('Error check rotation!') |js %>);
             }
         });
     });
@@ -1519,7 +1519,7 @@ jQuery(document).ready(function(){
         var drone_run_project_id = jQuery(this).data('drone_run_project_id');
         var name = jQuery(this).data('name');
 
-        if (confirm("Remove this GCP?")) {
+        if (confirm(<% __('Remove this GCP?') |js %>)) {
             jQuery.ajax({
                 type: 'POST',
                 url: '/api/drone_imagery/remove_one_gcp',
@@ -1537,7 +1537,7 @@ jQuery(document).ready(function(){
                     _redraw_ground_control_points_table_interactive();
                 },
                 error: function(response){
-                    alert('Error deleting GCP name!');
+                    alert(<% __('Error deleting GCP name!') |js %>);
                 }
             });
         }
@@ -1562,7 +1562,7 @@ jQuery(document).ready(function(){
                 initializeImagesInteractive(1, '#drone_imagery_standard_process_raw_images_image_id_interactive_select_div_area_'+manage_drone_imagery_standard_process_raw_images_interactive_current_pass);
             },
             error: function(response){
-                alert('Error deleting GPS images template from NS step!')
+                alert(<% __('Error deleting GPS images template from NS step!') |js %>)
             }
         });
     });
@@ -1581,7 +1581,7 @@ jQuery(document).ready(function(){
                 initializeImagesInteractive(1, '#drone_imagery_standard_process_raw_images_image_id_interactive_select_div_area_'+manage_drone_imagery_standard_process_raw_images_interactive_current_pass);
             },
             error: function(response){
-                alert('Error deleting GPS images template from EW step!')
+                alert(<% __('Error deleting GPS images template from EW step!') |js %>)
             }
         });
     });
@@ -1596,7 +1596,7 @@ jQuery(document).ready(function(){
     });
 
     jQuery('#drone_imagery_plot_polygons_top_left_click_raw_images_interactive').click(function(){
-        alert('Now click the top left corner of your field on the image below.');
+        alert(<% __('Now click the top left corner of your field on the image below.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -1613,7 +1613,7 @@ jQuery(document).ready(function(){
         });
     });
     jQuery('#drone_imagery_plot_polygons_top_right_click_raw_images_interactive').click(function(){
-        alert('Now click the top right corner of your field on the image below.');
+        alert(<% __('Now click the top right corner of your field on the image below.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -1629,7 +1629,7 @@ jQuery(document).ready(function(){
         });
     });
     jQuery('#drone_imagery_plot_polygons_bottom_left_click_raw_images_interactive').click(function(){
-        alert('Now click the bottom left corner of your field on the image below.');
+        alert(<% __('Now click the bottom left corner of your field on the image below.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -1646,7 +1646,7 @@ jQuery(document).ready(function(){
         });
     });
     jQuery('#drone_imagery_plot_polygons_bottom_right_click_raw_images_interactive').click(function(){
-        alert('Now click the bottom right corner of your field on the image below.');
+        alert(<% __('Now click the bottom right corner of your field on the image below.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -1691,7 +1691,7 @@ jQuery(document).ready(function(){
     var drone_imagery_plot_polygons_rectangles_apply_square_raw_images_interactive_section_right_column_bottom_offset_val = 0;
 
     jQuery('#drone_imagery_plot_polygons_rectangles_apply_square_average_raw_images_interactive').click(function() {
-        alert('Click the four corners of 10 single plots at random in the current imaging pass. For each single plot click the top left, then the top right, then the bottom right, then the bottom left.');
+        alert(<% __('Click the four corners of 10 single plots at random in the current imaging pass. For each single plot click the top left, then the top right, then the bottom right, then the bottom left.') |js %>);
 
     });
 
@@ -1709,35 +1709,35 @@ jQuery(document).ready(function(){
         var section_right_column_bottom_offset_val = jQuery('#drone_imagery_plot_polygons_right_col_bottom_offset_raw_images_interactive').val();
 
         if (num_rows_val == ''){
-            alert('Please give the number of rows!');
+            alert(<% __('Please give the number of rows!') |js %>);
             return;
         }
         if (num_cols_val == ''){
-            alert('Please give the number of columns!');
+            alert(<% __('Please give the number of columns!') |js %>);
             return;
         }
         if (section_top_row_left_offset_val == ''){
-            alert('Please give the top-most rows left margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the top-most rows left margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_bottom_row_left_offset_val == ''){
-            alert('Please give the bottom-most rows left margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the bottom-most rows left margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_left_column_top_offset_val == ''){
-            alert('Please give the left-most columns top margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the left-most columns top margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_left_column_bottom_offset_val == ''){
-            alert('Please give the left-most columns bottom margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the left-most columns bottom margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_top_row_right_offset_val == ''){
-            alert('Please give the top-most rows right margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the top-most rows right margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_right_column_bottom_offset_val == ''){
-            alert('Please give the right-most columns bottom margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the right-most columns bottom margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
 
@@ -1828,35 +1828,35 @@ jQuery(document).ready(function(){
 
     function plotPolygonsRectanglesApplyInteractive(num_rows_val, num_cols_val, section_top_row_left_offset_val, section_bottom_row_left_offset_val, section_left_column_top_offset_val, section_left_column_bottom_offset_val, section_top_row_right_offset_val, section_right_column_bottom_offset_val, section_width, section_height, plot_polygons_assignment_info) {
         if (num_rows_val == ''){
-            alert('Please give the number of rows!');
+            alert(<% __('Please give the number of rows!') |js %>);
             return;
         }
         if (num_cols_val == ''){
-            alert('Please give the number of columns!');
+            alert(<% __('Please give the number of columns!') |js %>);
             return;
         }
         if (section_top_row_left_offset_val == ''){
-            alert('Please give the top-most rows left margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the top-most rows left margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_bottom_row_left_offset_val == ''){
-            alert('Please give the bottom-most rows left margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the bottom-most rows left margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_left_column_top_offset_val == ''){
-            alert('Please give the left-most columns top margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the left-most columns top margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_left_column_bottom_offset_val == ''){
-            alert('Please give the left-most columns bottom margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the left-most columns bottom margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_top_row_right_offset_val == ''){
-            alert('Please give the top-most rows right margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the top-most rows right margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
         if (section_right_column_bottom_offset_val == ''){
-            alert('Please give the right-most columns bottom margin! This can be 0 if there is no offset.');
+            alert(<% __('Please give the right-most columns bottom margin! This can be 0 if there is no offset.') |js %>);
             return;
         }
 
@@ -1983,7 +1983,7 @@ jQuery(document).ready(function(){
         }
         console.log(plot_polygons_interactive_generated_polygons_intermediate);
 
-        alert('Click on where the top left corner of the template will be pasted in the current imaging event pass.');
+        alert(<% __('Click on where the top left corner of the template will be pasted in the current imaging event pass.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -2061,7 +2061,7 @@ jQuery(document).ready(function(){
                 droneImageryDrawLayoutTableInteractive(response, {}, 'drone_imagery_interactive_trial_layout_div', 'drone_imagery_interactive_trial_layout_table');
             },
             error: function(response){
-                alert('Error retrieving trial layout and design!')
+                alert(<% __('Error retrieving trial layout and design!') |js %>)
             }
         });
     }
@@ -2111,7 +2111,7 @@ jQuery(document).ready(function(){
 
     jQuery('#drone_imagery_interactive_plot_polygon_template_options_paste_click').click(function(){
         jQuery('#drone_imagery_interactive_plot_polygon_template_options_dialog').modal('hide');
-        alert('Click on where the top left corner of the template will be pasted.');
+        alert(<% __('Click on where the top left corner of the template will be pasted.') |js %>);
 
         d3.selectAll("g").on('mousedown.drag', null);
 
@@ -2254,7 +2254,7 @@ jQuery(document).ready(function(){
         if (plot_polygons_first_plot_start == 'top_left') {
             var generated_polygon_key_first_plot_number = 0;
             if (plot_polygons_second_plot_follows == 'left' || plot_polygons_second_plot_follows == 'up') {
-                alert('Second plot cannot follow left or up from first plot if the first plot starts at the top left, because that is physically impossible.');
+                alert(<% __('Second plot cannot follow left or up from first plot if the first plot starts at the top left, because that is physically impossible.') |js %>);
                 return;
             }
             if (plot_polygons_second_plot_follows == 'right') {
@@ -2336,14 +2336,14 @@ jQuery(document).ready(function(){
                 }
             }
             if (plot_polygons_second_plot_follows == 'down') {
-                alert('Down not implemented if first plot starts in top left. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clock-wise, then first plot starts in top right and you can go left for plot assignment).');
+                alert(<% __('Down not implemented if first plot starts in top left. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clock-wise, then first plot starts in top right and you can go left for plot assignment).') |js %>);
                 return;
             }
         }
         if (plot_polygons_first_plot_start == 'top_right') {
             var generated_polygon_key_first_plot_number = plot_polygons_template_current_num_cols - 1;
             if (plot_polygons_second_plot_follows == 'right' || plot_polygons_second_plot_follows == 'up') {
-                alert('Second plot cannot follow right or up from first plot if the first plot starts at the top right, because that is physically impossible.');
+                alert(<% __('Second plot cannot follow right or up from first plot if the first plot starts at the top right, because that is physically impossible.') |js %>);
                 return;
             }
             if (plot_polygons_second_plot_follows == 'left') {
@@ -2437,16 +2437,16 @@ jQuery(document).ready(function(){
                 }
             }
             if (plot_polygons_second_plot_follows == 'down') {
-                alert('Down not implemented if your first plot starts in top right. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clockwise, then first plot starts in bottom right corner and plot assignment can follow going left).');
+                alert(<% __('Down not implemented if your first plot starts in top right. Please contact us or try rotating your image differently before assigning plot polygons (e.g. rotate image 90 degrees clockwise, then first plot starts in bottom right corner and plot assignment can follow going left).') |js %>);
                 return;
             }
         }
         if (plot_polygons_first_plot_start == 'bottom_left') {
-            alert('Not implemented');
+            alert(<% __('Not implemented') |js %>);
             return;
         }
         if (plot_polygons_first_plot_start == 'bottom_right') {
-            alert('Not implemented');
+            alert(<% __('Not implemented') |js %>);
             return;
         }
 
@@ -2575,7 +2575,7 @@ jQuery(document).ready(function(){
             manage_drone_imagery_standard_process_interactive_apply_drone_run_band_project_ids.push(jQuery(this).val());
         });
         if (manage_drone_imagery_standard_process_interactive_apply_drone_run_band_project_ids.length < 1){
-            alert('Please select at least one other drone run band!');
+            alert(<% __('Please select at least one other drone run band!') |js %>);
             return false;
         } else {
             Workflow.complete("#manage_drone_imagery_standard_process_interactive_drone_run_band_apply_step");
@@ -2589,7 +2589,7 @@ jQuery(document).ready(function(){
             manage_drone_imagery_standard_process_interactive_apply_drone_run_band_vegetative_indices.push(jQuery(this).val());
         });
         if (manage_drone_imagery_standard_process_interactive_apply_drone_run_band_vegetative_indices.length < 1){
-            alert('Please select at least one vegetative index!');
+            alert(<% __('Please select at least one vegetative index!') |js %>);
             return false;
         } else {
             jQuery.ajax({
@@ -2612,7 +2612,7 @@ jQuery(document).ready(function(){
                     manage_drone_imagery_standard_process_interactive_phenotype_time = response.time_ontology_day_cvterm_id;
                 },
                 error: function(response){
-                    alert('Error getting time terms!');
+                    alert(<% __('Error getting time terms!') |js %>);
                     jQuery('#working_modal').modal('hide');
                 }
             });
@@ -2626,7 +2626,7 @@ jQuery(document).ready(function(){
         var selected = [];
 
         if (manage_drone_imagery_standard_process_interactive_phenotype_time == '') {
-            alert('Time of phenotype not set! This should not happen! Please contact us.');
+            alert(<% __('Time of phenotype not set! This should not happen! Please contact us.') |js %>);
             return false;
         }
 
@@ -2634,7 +2634,7 @@ jQuery(document).ready(function(){
             selected.push(jQuery(this).val());
         });
         if (selected.length < 1){
-            alert('Please select at least one phenotype!');
+            alert(<% __('Please select at least one phenotype!') |js %>);
             return false;
         } else {
             jQuery.ajax({
@@ -2673,7 +2673,7 @@ jQuery(document).ready(function(){
     jQuery('#plot_polygons_use_previously_saved_template_raw_images_interactive').click(function(){
         var plot_polygons_use_previously_saved_template = jQuery('#manage_drone_imagery_standard_process_interactive_previous_templates').val();
         if (plot_polygons_use_previously_saved_template == '') {
-            alert('Please select a previously saved template before trying to apply it. If there is not a template listed, then you can create one using the templating tool above.');
+            alert(<% __('Please select a previously saved template before trying to apply it. If there is not a template listed, then you can create one using the templating tool above.') |js %>);
             return;
         }
 
@@ -2691,7 +2691,7 @@ jQuery(document).ready(function(){
                 draw_canvas_image_interactive(0);
             },
             error: function(response){
-                alert('Error retrieving plot polygons template!');
+                alert(<% __('Error retrieving plot polygons template!') |js %>);
             }
         });
         return;

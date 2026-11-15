@@ -466,14 +466,14 @@ jQuery(document).ready(function() {
         manage_drone_imagery_analytics_field_trial_id_array = jQuery('#drone_imagery_analytics_field_trial_id').val();
 
         if (!manage_drone_imagery_analytics_field_trial_id_array || manage_drone_imagery_analytics_field_trial_id_array.length > 1) {
-            alert('Please only select a single field trial for now!');
+            alert(<% __('Please only select a single field trial for now!') |js %>);
             return false;
         }
 
         manage_drone_imagery_analytics_field_trial_id_string = manage_drone_imagery_analytics_field_trial_id_array.join(",");
         manage_drone_imagery_analytics_observation_variable_type = jQuery('#drone_imagery_analytics_select_observation_variable_type').val();
         if (manage_drone_imagery_analytics_field_trial_id_string == '') {
-            alert('Please select a field trial first!');
+            alert(<% __('Please select a field trial first!') |js %>);
         } else {
             if (manage_drone_imagery_analytics_observation_variable_type == 'time_ontology') {
                 get_select_box('traits', 'drone_imagery_analytics_trait_select_div', { 'name' : 'drone_imagery_analytics_trait_id_select', 'id' : 'drone_imagery_analytics_trait_id_select', 'empty':1, 'multiple':1, 'size': 20, 'trial_ids':manage_drone_imagery_analytics_field_trial_id_string, 'stock_type':'plot', 'contains_composable_cv_type':manage_drone_imagery_analytics_observation_variable_type, 'select_format':'component_table_select' });
@@ -682,7 +682,7 @@ jQuery(document).ready(function() {
         });
 
         if (manage_drone_imagery_analytics_protocol_ids.length > 1) {
-            alert('Please select only one protocol!');
+            alert(<% __('Please select only one protocol!') |js %>);
             return false;
         }
         if (manage_drone_imagery_analytics_protocol_ids.length == 1) {
@@ -694,15 +694,15 @@ jQuery(document).ready(function() {
         manage_drone_imagery_analytics_type = jQuery('#drone_imagery_analytics_select_analytics_type').val();
 
         if (!manage_drone_imagery_analytics_protocol_id && manage_drone_imagery_analytics_name == '') {
-            alert('Please give an analytics name or select a previously saved analytics report.');
+            alert(<% __('Please give an analytics name or select a previously saved analytics report.') |js %>);
             return false;
         }
         if (!manage_drone_imagery_analytics_protocol_id && manage_drone_imagery_analytics_desc == '') {
-            alert('Please give an analytics description.');
+            alert(<% __('Please give an analytics description.') |js %>);
             return false;
         }
         if (manage_drone_imagery_analytics_protocol_id && manage_drone_imagery_analytics_name != '') {
-            alert('Please give an analytics name OR select a previously saved analytics report, not both!');
+            alert(<% __('Please give an analytics name OR select a previously saved analytics report, not both!') |js %>);
             return false;
         }
 
@@ -718,22 +718,22 @@ jQuery(document).ready(function() {
         else {
             manage_drone_imagery_analytics_trait_ids = jQuery('#drone_imagery_analytics_trait_id_select').val();
             if (manage_drone_imagery_analytics_trait_ids == null || manage_drone_imagery_analytics_trait_ids == undefined) {
-                alert('Please select at least one observation variable!');
+                alert(<% __('Please select at least one observation variable!') |js %>);
                 return false;
             }
         }
 
         if (!manage_drone_imagery_analytics_protocol_id && manage_drone_imagery_analytics_trait_ids.length < 1){
-            alert('Please select at least one observation variable!');
+            alert(<% __('Please select at least one observation variable!') |js %>);
             return false;
         }
 
         if (jQuery('#drone_image_analytics_genotyping_protocol_include_pedigree_select').val() == 'yes' && jQuery('#drone_image_analytics_genotyping_protocol_compute_from_parents_select').val() != 'yes') {
-            alert('You can only use pedigree info in the relationship matrix if you will compute the genotypes from the parents!');
+            alert(<% __('You can only use pedigree info in the relationship matrix if you will compute the genotypes from the parents!') |js %>);
             return false;
         }
         if (jQuery('#drone_image_analytics_genotyping_protocol_use_parental_grms_select').val() == 'yes' && jQuery('#drone_image_analytics_genotyping_protocol_compute_from_parents_select').val() != 'yes') {
-            alert('You can only use parental relationship matrices if you will compute the genotypes from the parents!');
+            alert(<% __('You can only use parental relationship matrices if you will compute the genotypes from the parents!') |js %>);
             return false;
         }
 
@@ -741,7 +741,7 @@ jQuery(document).ready(function() {
         if (jQuery('#drone_image_analytics_permanent_env_structure_select').val() == 'phenotype_correlation') {
             manage_drone_imagery_analytics_rr_structure_phenotype_correlation = jQuery('#drone_imagery_analytics_permanent_env_structure_phenotype_correlation_select').val();
             if (!manage_drone_imagery_analytics_rr_structure_phenotype_correlation || manage_drone_imagery_analytics_rr_structure_phenotype_correlation.length < 3) {
-                alert('Please select at least three phenotypes to use in random regression permanent environment phenotype correlation structure!');
+                alert(<% __('Please select at least three phenotypes to use in random regression permanent environment phenotype correlation structure!') |js %>);
                 return false;
             }
         }
@@ -922,7 +922,7 @@ jQuery(document).ready(function() {
             },
             error: function(response){
                 jQuery("#working_modal").modal("hide");
-                alert('Error calculating statistics analytics!')
+                alert(<% __('Error calculating statistics analytics!') |js %>)
             }
         });
     });

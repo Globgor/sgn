@@ -387,7 +387,7 @@ jQuery(document).ready(function(){
 
     jQuery('#image_search_submit').click(function(){
         if (jQuery('#html_image_analysis_trial_select').val() == '') {
-            alert("Please select a Field Trial first!");
+            alert(<% __('Please select a Field Trial first!') |js %>);
             return false;
         }
         _load_image_search_results();
@@ -505,7 +505,7 @@ jQuery(document).ready(function(){
         });
 
         if (selected_image_ids.length < 1) {
-            alert('Please select at least one image first!');
+            alert(<% __('Please select at least one image first!') |js %>);
             return false;
         }
 
@@ -516,7 +516,7 @@ jQuery(document).ready(function(){
         var images_finished = 0;
         var current_progress = 0;
         progress_modal.modal('show');
-        jQuery('#progress_msg').text('Submitting images for analysis');
+        jQuery('#progress_msg').text(<% __('Submitting images for analysis') |js %>);
 
         var deferred_calls = selected_image_ids.map(function(image_id, index) {
             jQuery('#progress_msg').text('Submitting image '+index+' out of '+image_total+' images');
@@ -610,7 +610,7 @@ jQuery(document).ready(function(){
                         progress_bar.css("width", current_progress + "%")
                         .attr("aria-valuenow", current_progress)
                         .text(Math.round(current_progress) + "%");
-                        jQuery('#progress_msg').text('Building results table.');
+                        jQuery('#progress_msg').text(<% __('Building results table.') |js %>);
 
                         is_multi_trait = response.results.multi_trait_analysis;
                         analysis_metadata = response.results.analysis_metadata;
@@ -684,14 +684,14 @@ jQuery(document).ready(function(){
                         progress_modal.modal('hide');
                         console.log('Error: '+response);
                         // jQuery('#'+image_id).text('Error analyzing image number '+index+'. '+response);
-                        alert("An error occurred while displaying image analysis results.");
+                        alert(<% __('An error occurred while displaying image analysis results.') |js %>);
                     }
                 });
             }
             else {
                 progress_modal.find('.modal-footer').html('');
                 progress_modal.modal('hide');
-                alert("No usable results returned from the service, aborting analysis.");                 // alert("No usable results returned from the service, aborting analysis.");
+                alert(<% __('No usable results returned from the service, aborting analysis.') |js %>);                 // alert("No usable results returned from the service, aborting analysis.");
             }
         });
     });

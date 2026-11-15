@@ -123,12 +123,12 @@ jQuery(document).ready(function () {
           },
           success: function(response){
             if (response.success) {
-                alert('Details saved!');
+                alert(<% __('Details saved!') |js %>);
             }
             location.reload();
           },
           error: function(response){
-              alert('Error saving details');
+              alert(<% __('Error saving details') |js %>);
           }
 
       });
