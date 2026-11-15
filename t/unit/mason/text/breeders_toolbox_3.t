@@ -60,6 +60,16 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/download.mas',
+    'Choose a list for each parameter and click "Download".',
+    'Download Crosses and Families of Progenies',
+    'Include Accession Entry Numbers:',
+    'Download Phenotypes Using Lists',
+    'Download Accession Properties',
+    'Include Intercrop Accessions:',
+);
+
+page_texts_ok(
     '/breeders_toolbox/drone_run_project.mas',
     'View and edit the public data agreement on this experiment.',
     'View basic information about the imaging event project.',
@@ -69,6 +79,8 @@ page_texts_ok(
     'Save Changes',
 );
 
+component_compiles_ok('/breeders_toolbox/file_list.mas');
+
 page_texts_ok(
     '/breeders_toolbox/genotype_data_project.mas',
     'View information about genotyping plates in this project or move genotyping plates to this project.',
@@ -77,6 +89,16 @@ page_texts_ok(
     'Download archived VCF files associated with this genotyping project.',
     'View and edit the public data agreement on this experiment.',
     'View basic information about the genotyping project.',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/home.mas',
+    'Create files for the Android Fieldbook app, upload files from Fieldbook to the database.',
+    'Download phenotypic and genotypic data by trial, triat and location.',
+    'Upload phenotype information for accessions in the database.',
+    'Manage accessions. Add new accessions using fuzzy matching.',
+    'Manage trials. Add new trials and create field layouts.',
+    'Download barcodes for accessions and plots.',
 );
 
 page_texts_ok(
@@ -96,6 +118,16 @@ page_texts_ok(
     'Analyzed Images',
     'Images Analyzed',
     'Loading images…',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/index.mas',
+    'SNP Tool (coming soon)',
+    'SGN Breeders Toolbox',
+    'Tools in development',
+    'Access QTL data',
+    'Potato genome',
+    'Tomato genome',
 );
 
 done_testing;

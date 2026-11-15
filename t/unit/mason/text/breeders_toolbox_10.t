@@ -29,4 +29,6 @@ page_texts_ok(
     'Removing seeds from existing seedlot to unspecified seedlot name or plot name',
 );
 
+component_compiles_ok('/breeders_toolbox/view_file.mas');
+
 done_testing;

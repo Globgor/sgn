@@ -30,6 +30,13 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/add_data_agreement_dialogs.mas',
+    'Modify Data Agreement',
+    'Submit',
+    'Close',
+);
+
+page_texts_ok(
     '/breeders_toolbox/add_derived_accessions_using_list_dialog.mas',
     'Description provided will be stored as description for the specify derived accession',
     'Add New Accessions Derived from Accessions/Plants/Tissue Samples Using a List',

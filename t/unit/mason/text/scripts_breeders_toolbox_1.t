@@ -20,6 +20,13 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/add_data_agreement_dialogs.mas',
+    'An error occurred fetching the data agreement data.',
+    'Successfully added a data agreement to this trial.',
+    'An error occurred storing the data agreement.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/add_derived_accessions_using_list_dialog.mas',
     'The list did not pass validation. Names in the list must be uniquenames in the database',
     'An error occurred storing new accessions.',
@@ -89,5 +96,12 @@ page_script_texts_ok(
     '/breeders_toolbox/crossing_experiment_tree.mas',
     'An error occurred while loading the trial data.',
 );
+
+page_script_texts_ok(
+    '/breeders_toolbox/data_agreement.mas',
+    'An error occurred fetching the data agreement data.',
+);
+
+component_compiles_ok('/breeders_toolbox/db_stats.mas');
 
 done_testing;

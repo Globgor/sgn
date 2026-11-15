@@ -18,6 +18,16 @@ use Test::More;
 use SGN::Test::MasonText qw( page_sentences_ok component_compiles_ok );
 
 page_sentences_ok(
+    '/breeders_toolbox/index.mas',
+    'The purpose of this page is to give breeders direct links to breeder-relevant tools and data on SGN. It is a work in progress and your feedback or suggestions are welcome to build this into a comprehensive, easy to use and breeder-friendly resource.',
+    '{link}QTL data submssion{end_link} and on-the-fly QTL analysis {link2}for Solanaceae traits{end_link2}',
+    'Browse available controlled vocabularies using the SGN {link}Ontology browser{end_link}',
+    '{link}Tomato Analyzer{end_link} - software for scoring fruit shape and other shapes.',
+    '{link}TomatoMap.Net{end_link} - a site for Tomato Genetics at Ohio State University.',
+    '{link}SolCAP{end_link} - the official SolCAP website at Michigan State University.',
+);
+
+page_sentences_ok(
     '/breeders_toolbox/location_edit.mas',
     '{i}Optional:{end_i} Nearest NOAA Weather Station ID ({link}Search Here{end_link})',
 );

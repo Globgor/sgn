@@ -42,6 +42,16 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/download.mas',
+    'The accession list could not be validated. Please correct the list(s) and try again',
+    'The accession list did not pass validation. Please correct the list and try again',
+    'The seedlot list did not pass validation. Please correct the list and try again',
+    'You need to select a list of accessions and a protocol !',
+    'You need to select an accession or a trial, or both!',
+    'You need to select an accession list!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/drone_run_project.mas',
     'Error saving details',
     'Details saved!',

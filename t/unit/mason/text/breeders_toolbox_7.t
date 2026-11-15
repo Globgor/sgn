@@ -69,6 +69,15 @@ page_texts_ok(
 );
 
 page_texts_ok(
+    '/breeders_toolbox/progress.mas',
+    'Breeding Progress',
+    'Select Trait',
+    '[loading...]',
+    'Show Graph',
+    'Show Stats',
+);
+
+page_texts_ok(
     '/breeders_toolbox/radargraph.mas',
     'Render Graph',
     '[loading...]',

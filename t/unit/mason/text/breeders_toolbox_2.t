@@ -84,6 +84,15 @@ page_texts_ok(
     'Edit Folder(s)',
 );
 
+component_compiles_ok('/breeders_toolbox/db_stats.mas');
+
+page_texts_ok(
+    '/breeders_toolbox/decision_meeting.mas',
+    'Accessions, stages, and decisions',
+    'Create meeting setup',
+    'Decision Meeting',
+);
+
 page_texts_ok(
     '/breeders_toolbox/delete_seedlots.mas',
     'Only seedlots that are not associated with crosses or trials can be deleted.',

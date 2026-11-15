@@ -49,6 +49,13 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/progress.mas',
+    'observations [count]',
+    'cannot show graph',
+    'std dev',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/radargraph.mas',
     'Please select at least one dataset!',
 );
