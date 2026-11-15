@@ -7,6 +7,7 @@
 *
 */
 
+JSAN.use("CXGN.I18N");
 JSAN.use('jquery');
 JSAN.use('jqueryui');
 JSAN.use('popup');

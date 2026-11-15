@@ -17,6 +17,7 @@
 //JSAN.use('MochiKit.Visual');
 //JSAN.use('MochiKit.Logging');
 //JSAN.use('MochiKit.Async');
+JSAN.use("CXGN.I18N");
 JSAN.use('CXGN.Effects');
 JSAN.use('CXGN.Onto.Browser');
 JSAN.use('jquery');
