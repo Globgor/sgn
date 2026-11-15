@@ -12,7 +12,7 @@ $drone_run_date => undef
         <table class="table table-hover table-bordered" >
 
             <tr>
-                <td><b>Imaging Event Name</b></td>
+                <td><b><% __('Imaging Event Name') |h %></b></td>
                 <td>
                     <div id="trial_name">
 % if ($trial_name) {
@@ -25,7 +25,7 @@ $drone_run_date => undef
             </tr>
 
             <tr>
-                <td><b>Imaging Event Date</b></td>
+                <td><b><% __('Imaging Event Date') |h %></b></td>
                 <td>
                     <div id="drone_run_date">
 % if ($drone_run_date) {
@@ -37,7 +37,7 @@ $drone_run_date => undef
                 </td>
             </tr>
 
-            <tr><td><b>Description</b></td>
+            <tr><td><b><% __('Description') |h %></b></td>
                 <td>
                     <div id="trial_description">
 % if ($trial_description) {

@@ -10,9 +10,9 @@ $type_id
 $refering_page => undef
 </%args>
 
-  <& /page/page_title.mas, title=>"Upload Image" &>
+  <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Upload Image"), 'h' ) &>
 
-  <p class="boxbgcolor2">Note: By pressing the "Upload" button, you are considered to be the copyright owner of the image being uploaded and that you grant a non-exclusive license to display and use the image on webpages and materials related to this website.<br /></p>
+  <p class="boxbgcolor2"><% __('Note: By pressing the "Upload" button, you are considered to be the copyright owner of the image being uploaded and that you grant a non-exclusive license to display and use the image on webpages and materials related to this website.') |h %><br /></p>
 
         <p> Supported file formats include .jpg. .jpeg, .gif, .png, .pdf, .ps,
 	.eps <br></p>
@@ -23,7 +23,7 @@ $refering_page => undef
 	    <input type="hidden" name="type" value="<% $type %>" />
 	    <input type="hidden" name="type_id" value="<% $type_id %>" />
 	    <input type="hidden" name="refering_page" value="<% $refering_page %>" />
-	    <input id="upload_image_submit" class="btn btn-primary" type="submit" value="Upload" />
+	    <input id="upload_image_submit" class="btn btn-primary" type="submit" value="<% __('Upload') |h %>" />
 	 </form>
 	 <br/>
 

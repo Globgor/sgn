@@ -9,31 +9,31 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exportDroneImageryDialog">Export Aerial Imaging Event(s)</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exportDroneImageryDialog"><% __('Export Aerial Imaging Event(s)') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_export_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"This workflow will guide you through exporting aerial imaging event(s) from the database" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through exporting aerial imaging event(s) from the database"), 'h' ) &>
                     <ul>
-                        <li>Exporting imaging events is important for transferring data across ImageBreed instances.</li>
-                        <li>Exporting imaging events will return a spreadsheet file defining the imaging events, a zipfile containing the orthophoto imges, and a zipfile containing the GeoJSON plot-polygon definitions.</li>
-                        <li>Phenotypic values will not be exported in this workflow, please use the Wizard of the "Download Image-Phenotype File" to retrieve phenotypic values.</li>
+                        <li><% __('Exporting imaging events is important for transferring data across ImageBreed instances.') |h %></li>
+                        <li><% __('Exporting imaging events will return a spreadsheet file defining the imaging events, a zipfile containing the orthophoto imges, and a zipfile containing the GeoJSON plot-polygon definitions.') |h %></li>
+                        <li><% __('Phenotypic values will not be exported in this workflow, please use the Wizard of the "Download Image-Phenotype File" to retrieve phenotypic values.') |h %></li>
                     </ul>
                     <br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to export imaging event(s)</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to export imaging event(s)') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial" &>
-                    <& /page/page_title.mas, title=>"Select your field trial" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select your field trial"), 'h' ) &>
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="export_drone_image_trial_select_div"></div>
                             </div>
@@ -42,40 +42,40 @@
 
                     <br/>
                     <center>
-                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                    <button class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Drone Run" &>
-                    <& /page/page_title.mas, title=>"Create a new drone run" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Drone Run"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Create a new drone run"), 'h' ) &>
 
                     <table class="table table-bordered table-hover" id="drone_image_export_drone_runs_table">
                         <thead>
                             <tr>
-                                <th>Select</th>
-                                <th>Imaging Event Name</th>
-                                <th>Imaging Event Type</th>
-                                <th>Imaging Event Description</th>
-                                <th>Imaging Event Date</th>
-                                <th>Drone Run GDD</th>
-                                <th>Sensor</th>
-                                <th>Field Trial Name</th>
-                                <th>Field Trial Description</th>
+                                <th><% __('Select') |h %></th>
+                                <th><% __('Imaging Event Name') |h %></th>
+                                <th><% __('Imaging Event Type') |h %></th>
+                                <th><% __('Imaging Event Description') |h %></th>
+                                <th><% __('Imaging Event Date') |h %></th>
+                                <th><% __('Drone Run GDD') |h %></th>
+                                <th><% __('Sensor') |h %></th>
+                                <th><% __('Field Trial Name') |h %></th>
+                                <th><% __('Field Trial Description') |h %></th>
                             </tr>
                         </thead>
                     </table>
 
                     <center>
-                    <button class="btn btn-primary" id="drone_image_export_drone_run_continue">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_image_export_drone_run_continue"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Submit" &>
-                    <& /page/page_title.mas, title=>"Export Imaging Event(s)" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Submit"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Export Imaging Event(s)"), 'h' ) &>
 
                     <div id="export_drone_imagery_submit_div">
                     </div>
 
                     <center>
-                    <button type="button" class="btn btn-info" name="export_drone_imagery_submit" id="export_drone_imagery_submit">Submit</button>
+                    <button type="button" class="btn btn-info" name="export_drone_imagery_submit" id="export_drone_imagery_submit"><% __('Submit') |h %></button>
                     </center>
                 </&>
 
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

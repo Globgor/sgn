@@ -7,77 +7,77 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalculateStatisticsDialog">Calculate statistics on aerial image phenotypes</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalculateStatisticsDialog"><% __('Calculate statistics on aerial image phenotypes') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_calculate_statistics_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Intro" &>
-                    <& /page/page_title.mas, title=>"Select the type of analysis to perform" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the type of analysis to perform"), 'h' ) &>
                     <center>
-                    <button class="btn btn-default" id="drone_imagery_calculate_statistics_intro_single_trial_select_step">Single Trial Field Analysis</button>
+                    <button class="btn btn-default" id="drone_imagery_calculate_statistics_intro_single_trial_select_step"><% __('Single Trial Field Analysis') |h %></button>
                     </center>
                     <br/>
                     <!--center>
                     <button class="btn btn-default" id="drone_imagery_calculate_statistics_intro_single_trial_multiseason_select_step">Single Trial Multi-Season Field Analysis</button>
                     </center-->
                 </&>
-                <&| /util/workflow.mas:step, title=> "Field Trial" &>
-                    <& /page/page_title.mas, title=>"Select the field trial you are interested in. Select only one." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial you are interested in. Select only one."), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial(s): </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial(s):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_calculate_statistics_trial_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Trait Selection" &>
-                    <& /page/page_title.mas, title=>"Select the observation variable(s) you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trait Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the observation variable(s) you are interested in"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Observation Variable Type: </label>
+                            <label class="col-sm-3 control-label"><% __('Observation Variable Type:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="drone_imagery_calculate_statistics_select_observation_variable_type">
-                                    <option value="time_ontology">Time Series</option>
-                                    <option value="">Single Trait</option>
+                                    <option value="time_ontology"><% __('Time Series') |h %></option>
+                                    <option value=""><% __('Single Trait') |h %></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Observation Variables Phenotyped in the Selected Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Observation Variables Phenotyped in the Selected Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_calculate_statistics_trait_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_trait_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_trait_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Statistics" &>
-                    <& /page/page_title.mas, title=>"Select statistics to calculate" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Statistics"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select statistics to calculate"), 'h' ) &>
 
                     <select class="form-control" id="drone_imagery_calculate_statistics_select_input">
-                        <option value="">Select A Model</option>
+                        <option value=""><% __('Select A Model') |h %></option>
                         <!--option value="lmer_germplasmname_replicate">LMER BLUPs y~replicate+1|Germplasm. Univariate genetic effects</option-->
 
-                        <option value="sommer_grm_genetic_blups">Sommer GBLUPs Y~replicate+GRM. Multivariate genetic effects using GRM</option>
-                        <option value="sommer_grm_spatial_genetic_blups">Sommer Spatial GBLUPs Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects</option>
+                        <option value="sommer_grm_genetic_blups"><% __('Sommer GBLUPs Y~replicate+GRM. Multivariate genetic effects using GRM') |h %></option>
+                        <option value="sommer_grm_spatial_genetic_blups"><% __('Sommer Spatial GBLUPs Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects') |h %></option>
 
                         <!--option value="blupf90_grm_random_regression_dap_blups">BLUPf90 GBLUPs Y~replicate+GRM+temporal random regression using days after planting. Multivariate genetic + permanent environment effects</option>
                         <option value="blupf90_grm_random_regression_gdd_blups">BLUPf90 GBLUPs Y~replicate+GRM+temporal random regression using growing degree days. Multivariate genetic + permanent environment effects</option-->
 
-                        <option value="airemlf90_grm_random_regression_dap_blups">AIREMLf90 GBLUPs Y~replicate+GRM+temporal random regression using days after planting. Multivariate genetic + permanent environment effects</option>
-                        <option value="airemlf90_grm_random_regression_gdd_blups">AIREMLf90 GBLUPs Y~replicate+GRM+temporal random regression using growing degree days. Multivariate genetic + permanent environment effects</option>
+                        <option value="airemlf90_grm_random_regression_dap_blups"><% __('AIREMLf90 GBLUPs Y~replicate+GRM+temporal random regression using days after planting. Multivariate genetic + permanent environment effects') |h %></option>
+                        <option value="airemlf90_grm_random_regression_gdd_blups"><% __('AIREMLf90 GBLUPs Y~replicate+GRM+temporal random regression using growing degree days. Multivariate genetic + permanent environment effects') |h %></option>
 
                         <!--option value="sommer_grm_temporal_random_regression_dap_genetic_blups">Sommer Temporal Random Regression GBLUPs Y~replicate+GRM+LegendrePoly. Multivariate genetic + permanent environment effects using days after planting</option>
                         <option value="sommer_grm_temporal_random_regression_gdd_genetic_blups">Sommer Temporal Random Regression GBLUPs Y~replicate+GRM+LegendrePoly. Multivariate genetic + permanent environment effects using growing degree days</option>
@@ -91,12 +91,12 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Relationship Matrix Type: </label>
+                                <label class="col-sm-3 control-label"><% __('Relationship Matrix Type:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_imagery_calculate_statistics_relationship_matrix_type_select_div">
-                                        <option value="">Identity</option>
-                                        <option value="htp_phenotypes">High-throughput Phenotyping Data</option>
-                                        <option value="genotypes">Genotyping Data</option>
+                                        <option value=""><% __('Identity') |h %></option>
+                                        <option value="htp_phenotypes"><% __('High-throughput Phenotyping Data') |h %></option>
+                                        <option value="genotypes"><% __('Genotyping Data') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -106,35 +106,35 @@
                     <div id="drone_imagery_calculate_statistics_genotyping_protocol_div" class="well well-sm" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Genotyping Protocol To Calculate Genomic Relationship Matrix (optional. If none selected, an identity matrix is used): </label>
+                                <label class="col-sm-3 control-label"><% __('Genotyping Protocol To Calculate Genomic Relationship Matrix (optional. If none selected, an identity matrix is used):') |h %> </label>
                                 <div class="col-sm-9" >
                                     <div id="drone_imagery_calculate_statistics_genotyping_protocol_select_div"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Compute Genotypes From Parents: </label>
+                                <label class="col-sm-3 control-label"><% __('Compute Genotypes From Parents:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_genotyping_protocol_compute_from_parents_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_genotyping_protocol_use_parental_grms_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">Use Parental Relationship Matrices: </label>
+                                <label class="col-sm-3 control-label"><% __('Use Parental Relationship Matrices:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_genotyping_protocol_use_parental_grms_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_genotyping_protocol_include_pedigree_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">Include Pedigree Info Into Relationship Matrix: </label>
+                                <label class="col-sm-3 control-label"><% __('Include Pedigree Info Into Relationship Matrix:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_genotyping_protocol_include_pedigree_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -144,28 +144,28 @@
                     <div id="drone_imagery_calculate_statistics_htp_phenotypes_rel_matrix_div" class="well well-sm" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">How to calculate the relationship matrix with high-throughput phenotypes: </label>
+                                <label class="col-sm-3 control-label"><% __('How to calculate the relationship matrix with high-throughput phenotypes:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_select">
-                                        <option value="correlations">Correlations</option>
+                                        <option value="correlations"><% __('Correlations') |h %></option>
                                         <option value="blues">BLUEs</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Time Points to Use: </label>
+                                <label class="col-sm-3 control-label"><% __('Time Points to Use:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_times_select">
-                                        <option value="all">All Available</option>
-                                        <option value="latest_trait">Up to the latest date selected in traits</option>
-                                        <option value="vegetative" disabled>Vegetative Growth Stage</option>
-                                        <option value="reproductive" disabled>Reproductive Growth Stage</option>
-                                        <option value="mature" disabled>Mature Growth Stage</option>
+                                        <option value="all"><% __('All Available') |h %></option>
+                                        <option value="latest_trait"><% __('Up to the latest date selected in traits') |h %></option>
+                                        <option value="vegetative" disabled><% __('Vegetative Growth Stage') |h %></option>
+                                        <option value="reproductive" disabled><% __('Reproductive Growth Stage') |h %></option>
+                                        <option value="mature" disabled><% __('Mature Growth Stage') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_inversion_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">HTP BLUEs Inversion Tolerance: </label>
+                                <label class="col-sm-3 control-label"><% __('HTP BLUEs Inversion Tolerance:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_htp_phenotypes_rel_matrix_inversion_select">
                                         <option value="0.00001">0.00001</option>
@@ -184,11 +184,11 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Use Cumulative Area-Under-Curve Phenotype in Analysis: </label>
+                                <label class="col-sm-3 control-label"><% __('Use Cumulative Area-Under-Curve Phenotype in Analysis:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_use_area_under_curve_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -199,7 +199,7 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Inversion Tolerance: </label>
+                                <label class="col-sm-3 control-label"><% __('Inversion Tolerance:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_tolparinv_select">
                                         <option value="0.000001">0.000001</option>
@@ -222,7 +222,7 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Legendre Polynomial Order: </label>
+                                <label class="col-sm-3 control-label"><% __('Legendre Polynomial Order:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_legendre_order_number_select">
                                         <option value="1">1</option>
@@ -240,8 +240,8 @@
                         $$x_t = Bx_{t-1} + u + w_t\\ w_t \sim MVN(0,Q)\\ y_t = Zx_t + a + v_t\\ v_t \sim MVN(0,R)\\ x_0 \sim MVN(\pi, \Lambda)$$
                         <hr>
                         <select class="form-control" id="drone_imagery_calculate_statistics_select_marss" name="drone_imagery_calculate_statistics_select_marss">
-                            <option value="marss_predict_last_time_point">Predict Last Time Point</option>
-                            <option value="marss_predict_last_two_time_points">Predict Last Two Time Point</option>
+                            <option value="marss_predict_last_time_point"><% __('Predict Last Time Point') |h %></option>
+                            <option value="marss_predict_last_two_time_points"><% __('Predict Last Two Time Point') |h %></option>
                         </select>
                     </div>
 
@@ -249,12 +249,12 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Permanent Environment Structure: </label>
+                                <label class="col-sm-3 control-label"><% __('Permanent Environment Structure:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_permanent_env_structure_select">
-                                        <option value="identity">Identity Matrix</option>
-                                        <option value="phenotype_correlation">Phenotype Correlation Matrix</option>
-                                        <option value="euclidean_rows_and_columns">Euclidean Distance From Rows and Columns Matrix</option>
+                                        <option value="identity"><% __('Identity Matrix') |h %></option>
+                                        <option value="phenotype_correlation"><% __('Phenotype Correlation Matrix') |h %></option>
+                                        <option value="euclidean_rows_and_columns"><% __('Euclidean Distance From Rows and Columns Matrix') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@
                         <div id="drone_imagery_calculate_statistics_permanent_env_structure_phenotype_correlation_div" style="display:none">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Phenotypes For Correlation Matrix: </label>
+                                    <label class="col-sm-3 control-label"><% __('Phenotypes For Correlation Matrix:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="drone_imagery_calculate_statistics_permanent_env_structure_phenotype_correlation_select_div"></div>
                                     </div>
@@ -275,19 +275,19 @@
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_select_step">Submit</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_select_step"><% __('Submit') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Results" &>
-                    <& /page/page_title.mas, title=>"Statistics results" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Results"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Statistics results"), 'h' ) &>
 
                     <hr>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_genetic_pe_residual" style="display:none">Go To Save Analysis Results For Genetic and Environment BLUPS and Residuals</button>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_genetic" style="display:none">Go To Save Analysis Results For Genetic BLUPS</button>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_spatial" style="display:none">Go To Save Analysis Results For Spatial BLUPS</button>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_pe" style="display:none">Go To Save Analysis Results For Permanent Environmental BLUPS</button>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_residuals" style="display:none">Go To Save Analysis Results For Residuals</button>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_fitted" style="display:none">Go To Save Analysis Results For Fitted Values</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_genetic_pe_residual" style="display:none"><% __('Go To Save Analysis Results For Genetic and Environment BLUPS and Residuals') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_genetic" style="display:none"><% __('Go To Save Analysis Results For Genetic BLUPS') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_spatial" style="display:none"><% __('Go To Save Analysis Results For Spatial BLUPS') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_blups_pe" style="display:none"><% __('Go To Save Analysis Results For Permanent Environmental BLUPS') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_residuals" style="display:none"><% __('Go To Save Analysis Results For Residuals') |h %></button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_analysis_save_fitted" style="display:none"><% __('Go To Save Analysis Results For Fitted Values') |h %></button>
                     <hr>
 
                     <div id ="drone_imagery_calculate_statistics_result_div">
@@ -299,7 +299,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
@@ -309,62 +309,62 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="droneImageryCalculateStatisticsSingleTrialMultiSeasonDialog">Calculate statistics on aerial image phenotypes</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="droneImageryCalculateStatisticsSingleTrialMultiSeasonDialog"><% __('Calculate statistics on aerial image phenotypes') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
             <&| /util/workflow.mas, id=> "drone_imagery_calculate_statistics_single_trial_multiseason_workflow" &>
-                <&| /util/workflow.mas:step, title=> "Field Trial" &>
-                    <& /page/page_title.mas, title=>"Select the field trial you are interested in. Select only one." &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Field Trial"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the field trial you are interested in. Select only one."), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Field Trial(s): </label>
+                            <label class="col-sm-3 control-label"><% __('Field Trial(s):') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_calculate_statistics_multiseason_trial_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_field_trial_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_field_trial_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Trait Selection" &>
-                    <& /page/page_title.mas, title=>"Select the observation variable(s) you are interested in" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trait Selection"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select the observation variable(s) you are interested in"), 'h' ) &>
                     <br/><br/>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Observation Variables Phenotyped in the Selected Field Trial: </label>
+                            <label class="col-sm-3 control-label"><% __('Observation Variables Phenotyped in the Selected Field Trial:') |h %> </label>
                             <div class="col-sm-9" >
                                 <div id="drone_imagery_calculate_statistics_multiseason_trait_select_div"></div>
                             </div>
                         </div>
                     </form>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_trait_select_step">Go to Next Step</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_trait_select_step"><% __('Go to Next Step') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Statistics" &>
-                    <& /page/page_title.mas, title=>"Select statistics to calculate" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Statistics"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select statistics to calculate"), 'h' ) &>
 
                     <select class="form-control" id="drone_imagery_calculate_statistics_multiseason_select_input">
-                        <option value="">Select A Model</option>
+                        <option value=""><% __('Select A Model') |h %></option>
 
-                        <option value="sommer_grm_genetic_blups">Sommer GBLUPs Y~replicate+GRM. Multivariate genetic effects using GRM</option>
-                        <option value="sommer_grm_spatial_genetic_blups">Sommer Spatial GBLUPs Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects</option>
+                        <option value="sommer_grm_genetic_blups"><% __('Sommer GBLUPs Y~replicate+GRM. Multivariate genetic effects using GRM') |h %></option>
+                        <option value="sommer_grm_spatial_genetic_blups"><% __('Sommer Spatial GBLUPs Y~replicate+GRM+spatial. Multivariate genetic + 2Dspl spatial effects') |h %></option>
                     </select>
 
                     <hr>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Relationship Matrix Type: </label>
+                            <label class="col-sm-3 control-label"><% __('Relationship Matrix Type:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="drone_imagery_calculate_statistics_multiseason_relationship_matrix_type_select_div">
-                                    <option value="">Identity</option>
-                                    <option value="htp_phenotypes">High-throughput Phenotyping Data</option>
-                                    <option value="genotypes">Genotyping Data</option>
+                                    <option value=""><% __('Identity') |h %></option>
+                                    <option value="htp_phenotypes"><% __('High-throughput Phenotyping Data') |h %></option>
+                                    <option value="genotypes"><% __('Genotyping Data') |h %></option>
                                 </select>
                             </div>
                         </div>
@@ -373,35 +373,35 @@
                     <div id="drone_imagery_calculate_statistics_multiseason_genotyping_protocol_div" class="well well-sm" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Genotyping Protocol To Calculate Genomic Relationship Matrix (optional. If none selected, an identity matrix is used): </label>
+                                <label class="col-sm-3 control-label"><% __('Genotyping Protocol To Calculate Genomic Relationship Matrix (optional. If none selected, an identity matrix is used):') |h %> </label>
                                 <div class="col-sm-9" >
                                     <div id="drone_imagery_calculate_statistics_multiseason_genotyping_protocol_select_div"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Compute Genotypes From Parents: </label>
+                                <label class="col-sm-3 control-label"><% __('Compute Genotypes From Parents:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_genotyping_protocol_compute_from_parents_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_multiseason_genotyping_protocol_use_parental_grms_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">Use Parental Relationship Matrices: </label>
+                                <label class="col-sm-3 control-label"><% __('Use Parental Relationship Matrices:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_genotyping_protocol_use_parental_grms_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_multiseason_genotyping_protocol_include_pedigree_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">Include Pedigree Info Into Relationship Matrix: </label>
+                                <label class="col-sm-3 control-label"><% __('Include Pedigree Info Into Relationship Matrix:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_genotyping_protocol_include_pedigree_select">
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="no"><% __('No') |h %></option>
+                                        <option value="yes"><% __('Yes') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -411,28 +411,28 @@
                     <div id="drone_imagery_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_div" class="well well-sm" style="display:none">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">How to calculate the relationship matrix with high-throughput phenotypes: </label>
+                                <label class="col-sm-3 control-label"><% __('How to calculate the relationship matrix with high-throughput phenotypes:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_select">
-                                        <option value="correlations">Correlations</option>
+                                        <option value="correlations"><% __('Correlations') |h %></option>
                                         <option value="blues">BLUEs</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Time Points to Use: </label>
+                                <label class="col-sm-3 control-label"><% __('Time Points to Use:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_times_select">
-                                        <option value="all">All Available</option>
-                                        <option value="latest_trait">Up to the latest date selected in traits</option>
-                                        <option value="vegetative" disabled>Vegetative Growth Stage</option>
-                                        <option value="reproductive" disabled>Reproductive Growth Stage</option>
-                                        <option value="mature" disabled>Mature Growth Stage</option>
+                                        <option value="all"><% __('All Available') |h %></option>
+                                        <option value="latest_trait"><% __('Up to the latest date selected in traits') |h %></option>
+                                        <option value="vegetative" disabled><% __('Vegetative Growth Stage') |h %></option>
+                                        <option value="reproductive" disabled><% __('Reproductive Growth Stage') |h %></option>
+                                        <option value="mature" disabled><% __('Mature Growth Stage') |h %></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group" id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_inversion_select_div" style="display:none">
-                                <label class="col-sm-3 control-label">HTP BLUEs Inversion Tolerance: </label>
+                                <label class="col-sm-3 control-label"><% __('HTP BLUEs Inversion Tolerance:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_htp_phenotypes_rel_matrix_inversion_select">
                                         <option value="0.00001">0.00001</option>
@@ -450,7 +450,7 @@
                     <hr>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Inversion Tolerance: </label>
+                            <label class="col-sm-3 control-label"><% __('Inversion Tolerance:') |h %> </label>
                             <div class="col-sm-9" >
                                 <select class="form-control" id="drone_image_calculate_statistics_multiseason_tolparinv_select">
                                     <option value="0.000001">0.000001</option>
@@ -472,7 +472,7 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Legendre Polynomial Order: </label>
+                                <label class="col-sm-3 control-label"><% __('Legendre Polynomial Order:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_legendre_order_number_select">
                                         <option value="1">1</option>
@@ -490,12 +490,12 @@
                         <hr>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Permanent Environment Structure: </label>
+                                <label class="col-sm-3 control-label"><% __('Permanent Environment Structure:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="drone_image_calculate_statistics_multiseason_permanent_env_structure_select">
-                                        <option value="identity">Identity Matrix</option>
-                                        <option value="phenotype_correlation">Phenotype Correlation Matrix</option>
-                                        <option value="euclidean_rows_and_columns">Euclidean Distance From Rows and Columns Matrix</option>
+                                        <option value="identity"><% __('Identity Matrix') |h %></option>
+                                        <option value="phenotype_correlation"><% __('Phenotype Correlation Matrix') |h %></option>
+                                        <option value="euclidean_rows_and_columns"><% __('Euclidean Distance From Rows and Columns Matrix') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -504,7 +504,7 @@
                         <div id="drone_imagery_calculate_statistics_multiseason_permanent_env_structure_phenotype_correlation_div" style="display:none">
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Phenotypes For Correlation Matrix: </label>
+                                    <label class="col-sm-3 control-label"><% __('Phenotypes For Correlation Matrix:') |h %> </label>
                                     <div class="col-sm-9" >
                                         <div id="drone_imagery_calculate_statistics_multiseason_permanent_env_structure_phenotype_correlation_select_div"></div>
                                     </div>
@@ -516,11 +516,11 @@
 
                     <br/><br/>
                     <center>
-                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_select_step">Submit</button>
+                    <button class="btn btn-primary" id="drone_imagery_calculate_statistics_multiseason_select_step"><% __('Submit') |h %></button>
                     </center>
                 </&>
-                <&| /util/workflow.mas:step, title=> "Results" &>
-                    <& /page/page_title.mas, title=>"Statistics results" &>
+                <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Results"), 'h' ) &>
+                    <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Statistics results"), 'h' ) &>
 
                     <div id ="drone_imagery_calculate_statistics_multiseason_result_div">
                     </div>
@@ -531,7 +531,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

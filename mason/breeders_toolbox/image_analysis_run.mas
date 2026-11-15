@@ -49,10 +49,10 @@ tr.shown td.details-control { text-align:center; color:red; }
 
 <&| /page/info_section.mas,
     id          => "run_details",
-    title       => "Run Details",
+    title       => $m->interp->apply_escapes( __("Run Details"), 'h' ),
     collapsible => 1,
     collapsed   => 0,
-    subtitle    => "View basic information about this image analysis run."
+    subtitle    => $m->interp->apply_escapes( __("View basic information about this image analysis run."), 'h' )
 &>
     <& /breeders_toolbox/image_analysis_run_details.mas,
         run_project_id     => $run_project_id,
@@ -68,18 +68,18 @@ tr.shown td.details-control { text-align:center; color:red; }
     &>
 </&>
 
-<&| /page/info_section.mas, title=>"Image Analysis Results by Image", collapsible => 1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Image Analysis Results by Image"), 'h' ), collapsible => 1, collapsed=>0 &>
   <div class="well well-sm">
 
     <div id="per_image_results_loading" style="text-align:center;padding:20px;">
       <span class="glyphicon glyphicon-refresh" style="font-size:24px;"></span>
-      <p>Loading images…</p>
+      <p><% __('Loading images…') |h %></p>
     </div>
 
     <div class="panel-group" id="per_image_accordion" role="tablist" aria-multiselectable="true"></div>
 
     <div id="per_image_empty" class="text-muted" style="display:none;padding:15px;">
-      No per-image results are stored for this run.
+      <% __('No per-image results are stored for this run.') |h %>
     </div>
 
   </div>

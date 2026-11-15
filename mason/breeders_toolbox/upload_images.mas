@@ -8,40 +8,40 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadImagesDialog">Upload Images</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadImagesDialog"><% __('Upload Images') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <&| /page/explanation.mas, title=>'Template Information' &>
+            <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template Information'), 'h' ) &>
                 <p>
-                <b>File format information</b>
+                <b><% __('File format information') |h %></b>
                 <br>
-                <a id="upload_images_format_info">Image File Format</a>
+                <a id="upload_images_format_info"><% __('Image File Format') |h %></a>
                 </p>
             </&>
 
             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_images_file_form" name="upload_images_file_form">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">File Format: </label>
+                    <label class="col-sm-3 control-label"><% __('File Format:') |h %> </label>
                     <div class="col-sm-9" >
                         <select class="form-control" id="upload_images_file_format" name="upload_images_file_format">
-                            <option value="images">Images</option>
-                            <option value="images_with_barcodes">Images with Barcodes</option>
-                            <option value="images_with_associated_phenotypes">Images with Associated Phenotypes</option>
+                            <option value="images"><% __('Images') |h %></option>
+                            <option value="images_with_barcodes"><% __('Images with Barcodes') |h %></option>
+                            <option value="images_with_associated_phenotypes"><% __('Images with Associated Phenotypes') |h %></option>
                         </select>
                     </div>
                 </div>
                 <div id="upload_images_with_associated_phenotypes_div" style="display:none">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Phenotype Spreadsheet: </label>
+                        <label class="col-sm-3 control-label"><% __('Phenotype Spreadsheet:') |h %> </label>
                         <div class="col-sm-9" >
                             <input type="file" id="upload_associated_phenotypes_file_input" name="upload_images_file_input" encoding="multipart/form-data" accept=".xls, .xlsx"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Images (.zip): </label>
+                        <label class="col-sm-3 control-label"><% __('Images (.zip):') |h %> </label>
                         <div class="col-sm-9" >
                             <input type="file" id="upload_images_zip_file_input" name="upload_images_zip_file_input" encoding="multipart/form-data" accept=".zip"/>
                         </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div id="upload_images_div">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Image Files: </label>
+                        <label class="col-sm-3 control-label"><% __('Image Files:') |h %> </label>
                         <div class="col-sm-9" >
                             <input type="file" id="upload_images_file_input" name="upload_images_file_input" multiple="multiple" accept="image/*">
                         </div>
@@ -59,30 +59,30 @@
                 </div>
                 <div id="upload_images_collection_div">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Add to Collection: </label>
+                        <label class="col-sm-3 control-label"><% __('Add to Collection:') |h %> </label>
                         <div class="col-sm-9" >
                             <select class="form-control" id="upload_images_collection_mode">
-                                <option value="none">Do not add to a collection</option>
-                                <option value="existing">Add to an existing collection</option>
-                                <option value="new">Create a new collection</option>
+                                <option value="none"><% __('Do not add to a collection') |h %></option>
+                                <option value="existing"><% __('Add to an existing collection') |h %></option>
+                                <option value="new"><% __('Create a new collection') |h %></option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group" id="upload_images_collection_existing_div" style="display:none">
-                        <label class="col-sm-3 control-label">Collection: </label>
+                        <label class="col-sm-3 control-label"><% __('Collection:') |h %> </label>
                         <div class="col-sm-9" >
                             <select class="form-control" id="upload_images_collection_id"></select>
                         </div>
                     </div>
                     <div id="upload_images_collection_new_div" style="display:none">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Collection Name: </label>
+                            <label class="col-sm-3 control-label"><% __('Collection Name:') |h %> </label>
                             <div class="col-sm-9" >
-                                <input class="form-control" style="width:100%;" type="text" id="upload_images_collection_name" placeholder="e.g. Field Photos 2026" />
+                                <input class="form-control" style="width:100%;" type="text" id="upload_images_collection_name" placeholder="<% __('e.g. Field Photos 2026') |h %>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Description: </label>
+                            <label class="col-sm-3 control-label"><% __('Description:') |h %> </label>
                             <div class="col-sm-9" >
                                 <input class="form-control" style="width:100%;" type="text" id="upload_images_collection_description" />
                             </div>
@@ -97,9 +97,9 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-info" name="upload_images_submit_verify" id="upload_images_submit_verify">Verify</button>
-            <button disabled type="button" class="btn btn-primary" name="upload_images_submit_store" id="upload_images_submit_store" title="First Verify Your File">Store</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
+            <button type="button" class="btn btn-info" name="upload_images_submit_verify" id="upload_images_submit_verify"><% __('Verify') |h %></button>
+            <button disabled type="button" class="btn btn-primary" name="upload_images_submit_store" id="upload_images_submit_store" title="<% __('First Verify Your File') |h %>"><% __('Store') |h %></button>
         </div>
 
     </div>
@@ -110,29 +110,29 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="uploadImagesInfoDialog">Template Information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadImagesInfoDialog"><% __('Template Information') |h %></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
 
-            <h4>Images Alone:</h4>
+            <h4><% __('Images Alone:') |h %></h4>
             <ul>
-                <li>Select multiple images directly for upload.</li>
+                <li><% __('Select multiple images directly for upload.') |h %></li>
                 <li>If the images being uploaded were taken using Fieldbook, they have EXIF data that contains the observationUnitName, traitname, and timestamp. They can be uploaded without needing to change the file name.</li>
                 <li>If images were NOT taken using Fieldbook, image file names should consist of the observationUnitName, traitname, number, and timestamp, all joined by underscores (the default naming system used by Fieldbook App).</li>
             </ul>
             <br/>
-            <h4>Images with Barcodes:</h4>
+            <h4><% __('Images with Barcodes:') |h %></h4>
             <ul>
-                <li>Upload multiple selected images that contain a barcode with a stock ID.</li>
-                <li>There should only be one barcode in each image, and the associated stock must already exist in the database.</li>
+                <li><% __('Upload multiple selected images that contain a barcode with a stock ID.') |h %></li>
+                <li><% __('There should only be one barcode in each image, and the associated stock must already exist in the database.') |h %></li>
             </ul>
             <br/>
-            <h4>Images with Associated Phenotypes:</h4>
+            <h4><% __('Images with Associated Phenotypes:') |h %></h4>
             <ul>
-                <li>The "Associated Images" format is useful for uploading a zipfile of images in association with phenotype values.</li>
-                <li>The phenotype values should be included in a .xls or .xlsx spreadsheet with the following columns:</li>
+                <li><% __('The "Associated Images" format is useful for uploading a zipfile of images in association with phenotype values.') |h %></li>
+                <li><% __('The phenotype values should be included in a .xls or .xlsx spreadsheet with the following columns:') |h %></li>
                 <br/><table class="table table-hover table-bordered table-condensed table-responsive" >
                     <thead></thead>
                     <tbody>
@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>
