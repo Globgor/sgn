@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 function run_blast(database_types, input_option_types) { 
   clear_status();
