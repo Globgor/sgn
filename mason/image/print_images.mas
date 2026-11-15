@@ -225,7 +225,7 @@ if (@more_is) {    #html_optional_show if there are more than 3 figures
         },
         error: function() {
           jQuery('#working_modal').modal('hide');
-          alert(<% __('An error occured while setting the display image') |js %>);
+          alert(<% __('An error occurred while setting the display image') |js %>);
         }
       });
 
