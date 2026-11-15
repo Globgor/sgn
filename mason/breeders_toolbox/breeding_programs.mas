@@ -21,8 +21,8 @@ if ($user && $user->check_roles("curator")) {
     <tr>
 
     <%perl>
-      if ($curator_flag) { print "<th>Name</th><th>Info</th><th>Edit</th><th>Delete</th>"; }
-        else { print "<th>Name</th><th>Info</th>"; }
+      if ($curator_flag) { print "<th>" . $m->interp->apply_escapes( __('Name'), 'h' ) . "</th><th>" . $m->interp->apply_escapes( __('Info'), 'h' ) . "</th><th>" . $m->interp->apply_escapes( __('Edit'), 'h' ) . "</th><th>" . $m->interp->apply_escapes( __('Delete'), 'h' ) . "</th>"; }
+        else { print "<th>" . $m->interp->apply_escapes( __('Name'), 'h' ) . "</th><th>" . $m->interp->apply_escapes( __('Info'), 'h' ) . "</th>"; }
     </%perl>
 
     </tr>
