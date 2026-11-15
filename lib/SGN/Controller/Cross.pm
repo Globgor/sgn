@@ -33,6 +33,7 @@ use SGN::Model::Cvterm;
 use File::Temp;
 use File::Basename qw | basename dirname|;
 use File::Spec;
+use Locale::TextDomain ( 'sgn', undef );
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -593,7 +594,7 @@ sub cross_detail : Path('/cross') Args(1) {
 
     if (!$cross) {
     	$c->stash->{template} = '/generic_message.mas';
-    	$c->stash->{message} = 'The requested cross does not exist.';
+    	$c->stash->{message} = __('The requested cross does not exist.');
     	return;
     } else {
         $cross_id = $cross->stock_id();
@@ -645,7 +646,7 @@ sub family_name_detail : Path('/family') Args(1) {
     my $family_type_string;
 	if (!$family) {
     	$c->stash->{template} = '/generic_message.mas';
-    	$c->stash->{message} = 'The requested family name does not exist.';
+    	$c->stash->{message} = __('The requested family name does not exist.');
     	return;
     } else {
         $family_id = $family->stock_id();
