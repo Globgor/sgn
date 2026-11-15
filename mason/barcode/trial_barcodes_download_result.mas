@@ -6,13 +6,13 @@ $file => ''
 $filetype => ''
 </%args>
 
-<& /page/page_title.mas, title=>'Download Trial Barcodes' &>
+<& /page/page_title.mas, title=>$m->interp->apply_escapes( __('Download Trial Barcodes'), 'h' ) &>
 
 % if (!$error) {
-  Success! Please click the link below to download the barcode label file.<br />
+  <% __('Success! Please click the link below to download the barcode label file.') |h %><br />
   <br /><br />
   <a target="_blank" href="<% $file %>" >Download <% $filetype %> file</a>
 % }
 % elsif ($error){
-    <b>Download Barcode Error:</b> <%$error%>
+    <b><% __('Download Barcode Error:') |h %></b> <%$error%>
 % }

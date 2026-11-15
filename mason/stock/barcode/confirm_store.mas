@@ -25,8 +25,8 @@ $message => undef
 
 </%perl>
 
-<& /page/page_title.mas, title => "Store uploaded barcode data" &>
-<&| /page/info_section.mas, title => "Upload status" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("Store uploaded barcode data"), 'h' ) &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Upload status"), 'h' ) &>
     <h4><div> <% $error %> </div></h4>
     <div> <% $message %></div>
   </form>

@@ -19,7 +19,7 @@ my $hash = $urlencode{'#'};
 </%perl>
 
 <center>
-<h1>CASSAVABASE BARCODE TOOL</h1>
+<h1><% __('CASSAVABASE BARCODE TOOL') |h %></h1>
 
 Tool version: <% $tool_version %>
 <br />

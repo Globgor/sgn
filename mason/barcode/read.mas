@@ -19,15 +19,15 @@
 
 <& /util/import_javascript.mas, classes => [ 'bootstrap_min.js', 'jquery', 'jsqr' ] &>
 
-<& /page/page_title.mas, title => 'Barcode Reader' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Barcode Reader'), 'h' ) &>
 
 <div class="panel panel-default">
     <div class="panel-heading">Scan a Barcode<span id="panel-heading-return"></span></div>
     <div class="panel-body" style="text-align: center">
-        <div id="loadingMessage">Starting...</div>
+        <div id="loadingMessage"><% __('Starting...') |h %></div>
         <canvas id="canvas" hidden></canvas>
     </div>
-    <div class="panel-footer">Scanning for Barcode...</div>
+    <div class="panel-footer"><% __('Scanning for Barcode...') |h %></div>
 </div>
 
 <script type="text/javascript">
