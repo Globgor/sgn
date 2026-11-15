@@ -587,9 +587,9 @@ function jqueryStuff() {
 
             qrCodeDisplay.toggle();
             if (qrCodeDisplay.is(':visible')) {
-                jQuery(this).text('Hide QR Code');
+                jQuery(this).text(<% __('Hide QR Code') |js %>);
             } else {
-                jQuery(this).text('Show QR Code');
+                jQuery(this).text(<% __('Show QR Code') |js %>);
             }
         });
 
