@@ -74,7 +74,7 @@ jQuery(document).ready(function() {
                     jQuery('#working_modal').modal("hide");
                     alert("An error occured calculating tool compatibility: \n" + response.error);
                     jQuery('#predicted-tool-compatibility').css('height', '100px');
-                    jQuery('#predicted-tool-compatibility').text("Error calculating tool compatibility.");
+                    jQuery('#predicted-tool-compatibility').text(<% __('Error calculating tool compatibility.') |js %>);
                 } else {
                     //jQuery('#predicted-tool-compatibility').css('height', '400px');
                     //jQuery('#predicted-tool-compatibility').html(populate_tool_compatibility(JSON.parse(response.tool_compatibility)));
@@ -85,8 +85,8 @@ jQuery(document).ready(function() {
             error: function(response) {
                 jQuery('#working_modal').modal("hide");
                 jQuery('#predicted-tool-compatibility').css('height', '100px');
-                alert("An error occurred calculating tool compatibility");
-                jQuery('#predicted-tool-compatibility').text("Error calculating tool compatibility.");
+                alert(<% __('An error occurred calculating tool compatibility') |js %>);
+                jQuery('#predicted-tool-compatibility').text(<% __('Error calculating tool compatibility.') |js %>);
             }
         });
     });
@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
         success: function(response) {
             if (response.error) {
                 alert("An error occurred. \n" + response.error);
-                jQuery('#predicted-tool-compatibility').text("Error retrieving tool compatibility.");
+                jQuery('#predicted-tool-compatibility').text(<% __('Error retrieving tool compatibility.') |js %>);
             } else {
                 if (response.tool_compatibility == "(not calculated)") {
                         jQuery('#predicted-tool-compatibility').text(response.tool_compatibility);
@@ -108,9 +108,9 @@ jQuery(document).ready(function() {
             }
         },
         error: function(response) {
-            alert("An error occurred retrieving tool compatibility");
+            alert(<% __('An error occurred retrieving tool compatibility') |js %>);
             jQuery('#predicted-tool-compatibility').css('height', '100px');
-            jQuery('#predicted-tool-compatibility').text("Error retrieving tool compatibility.");
+            jQuery('#predicted-tool-compatibility').text(<% __('Error retrieving tool compatibility.') |js %>);
         }
     });
 });

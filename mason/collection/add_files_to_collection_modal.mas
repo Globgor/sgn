@@ -120,7 +120,7 @@ jQuery(document).ready(function () {
             files_pick_render(jQuery('#files_pick_collection_search').val());
         }).fail(function () {
             jQuery('#files_pick_loading').hide();
-            jQuery('#files_pick_empty').text('Could not load collections.').show();
+            jQuery('#files_pick_empty').text(<% __('Could not load collections.') |js %>).show();
         });
     }
 

@@ -123,7 +123,7 @@ jQuery(document).ready(function() {
             }
         },
         error: function(response) {
-            alert("Error retrieving analyses using this dataset.");
+            alert(<% __('Error retrieving analyses using this dataset.') |js %>);
         }
     });
 });
