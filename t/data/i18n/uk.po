@@ -160,3 +160,23 @@ msgstr "Протоколи генотипування"
 # A translation with markup characters: the test checks that it is escaped.
 msgid "People"
 msgstr "Люди & <групи>"
+
+#, perl-brace-format
+msgid "Trial detail for {trial}"
+msgstr "Дослід {trial}: відомості"
+
+msgid "Trial Details"
+msgstr "Відомості про дослід"
+
+msgid "Edit Trial Details"
+msgstr "Редагувати дані досліду"
+
+msgid "Generate barcode labels for plots or plants or accessions in this trial."
+msgstr "Створити етикетки зі штрихкодом для ділянок, рослин або зразків цього досліду."
+
+msgid "Label Designer (Recommended)"
+msgstr "Дизайнер етикеток (рекомендовано)"
+
+# A translation with markup characters: the test checks that it is escaped.
+msgid "Trial Status"
+msgstr "Стан досліду <етап>"
