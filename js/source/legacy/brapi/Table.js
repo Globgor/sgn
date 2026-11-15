@@ -1,3 +1,4 @@
+JSAN.use("CXGN.I18N");
 
 //  This is for displaying brapi non-paginated responses in a table format.
 //
