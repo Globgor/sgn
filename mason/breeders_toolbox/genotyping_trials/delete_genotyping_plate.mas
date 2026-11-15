@@ -6,30 +6,30 @@ $number_of_samples_with_data => undef
 <& /util/import_javascript.mas, classes => [ 'jquery', 'jquery.dataTables', 'CXGN.BreedersToolbox.GenotypingTrial' ] &>
 <& /util/import_css.mas, paths => ['/documents/inc/datatables/jquery.dataTables.css'] &>
 
-<&| /page/info_section.mas, id=>'delete_genotyping_data_section', title => 'Delete Genotyping Data', subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_genotyping_data_section', title => $m->interp->apply_escapes( __('Delete Genotyping Data'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
-        <div style="text-align: center">Delete all genotyping data derived from this genotyping plate.</div>
+        <div style="text-align: center"><% __('Delete all genotyping data derived from this genotyping plate.') |h %></div>
     </div>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button class="btn btn-primary" id="delete_plate_genotyping_data" role="button">Delete genotyping data</button><br/><br/>
+                <button class="btn btn-primary" id="delete_plate_genotyping_data" role="button"><% __('Delete genotyping data') |h %></button><br/><br/>
             </div>
         </div>
     </div>
 </&>
 
-<&| /page/info_section.mas, id=>'delete_genotyping_plate_layout_section', title => 'Delete Genotyping Plate Layout', subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>'delete_genotyping_plate_layout_section', title => $m->interp->apply_escapes( __('Delete Genotyping Plate Layout'), 'h' ), subtitle => '<font color="red">Deletion cannot be undone.</font>', collapsible=>1, collapsed=>1 &>
     <div class="well well-sm">
-        <div style="text-align: center">Do not delete a genotype layout for an experiment that has already been submitted to the sequencing facility.</div>
+        <div style="text-align: center"><% __('Do not delete a genotype layout for an experiment that has already been submitted to the sequencing facility.') |h %></div>
     </div>
     <div class="well well-sm">
         <div class="panel panel-default">
             <div class="panel-body">
 %if ($number_of_samples_with_data > 0) {
-                <div class="boxbgcolor5" >Cannot delete genotyping plate layout. This layout has associated genotyping data.</div>
+                <div class="boxbgcolor5" ><% __('Cannot delete genotyping plate layout. This layout has associated genotyping data.') |h %></div>
 %} else {
-                <button class="btn btn-primary" id="delete_layout_data_by_trial_id" role="button">Delete genotyping plate layout</button><br/><br/>
+                <button class="btn btn-primary" id="delete_layout_data_by_trial_id" role="button"><% __('Delete genotyping plate layout') |h %></button><br/><br/>
 %}
             </div>
         </div>
@@ -40,17 +40,17 @@ $number_of_samples_with_data => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="genotypingDataDeleteMessageDialog"></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div style="text-align: center">The genotyping data was deleted successfully.</div>
+                    <div style="text-align: center"><% __('The genotyping data was deleted successfully.') |h %></div>
                     <div id="genotyping_data_delete_complete"></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="genotyping_data_delete_dismiss_button_1" name="genotyping_data_delete_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="genotyping_data_delete_dismiss_button_1" name="genotyping_data_delete_dismiss_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
 
         </div>
@@ -61,18 +61,18 @@ $number_of_samples_with_data => undef
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <div style="text-align: center">
-                    <h4 class="modal-title" id="createGenotypingProjectdialog">The genotyping data was deleted successfully.</h4>
+                    <h4 class="modal-title" id="createGenotypingProjectdialog"><% __('The genotyping data was deleted successfully.') |h %></h4>
                 </div>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div style="text-align: center">
                         <div id="empty_protocol_message"></div>
-                        <p>Do you want to delete this protocol?</p>
-                        <button id="delete_empty_protocol_submit" name="delete_empty_protocol_submit" type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                        <button id="empty_dismiss_button_1" name="empty_protocol_dismiss_button" type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        <p><% __('Do you want to delete this protocol?') |h %></p>
+                        <button id="delete_empty_protocol_submit" name="delete_empty_protocol_submit" type="button" class="btn btn-primary" data-dismiss="modal"><% __('Yes') |h %></button>
+                        <button id="empty_dismiss_button_1" name="empty_protocol_dismiss_button" type="button" class="btn btn-primary" data-dismiss="modal"><% __('No') |h %></button>
                         <br/>
                     </div>
                 </div>

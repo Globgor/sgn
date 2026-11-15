@@ -52,13 +52,13 @@ $identifier_prefix => 'SGN'
                 <div class="panel-body">
                     <table class="table table-bordered table-hover">
                     <tbody>
-                    <tr><td><b>Breeding Program</b></td><td><% $breeding_program_name %></td></tr>
+                    <tr><td><b><% __('Breeding Program') |h %></b></td><td><% $breeding_program_name %></td></tr>
                     </tbody>
                     </table>
                 </div>
             </div>
 
-            <a class='btn btn-default' href='/breeders/trial/<% $trial_id %>/download/layout?format=csv&dataLevel=samplingtrial'>Download Layout</a>
+            <a class='btn btn-default' href='/breeders/trial/<% $trial_id %>/download/layout?format=csv&dataLevel=samplingtrial'><% __('Download Layout') |h %></a>
 
         </div>
 

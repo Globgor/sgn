@@ -57,16 +57,16 @@ $assay_type => undef
                 <div class="panel-body">
                     <table class="table table-bordered table-hover">
                     <tbody>
-                    <tr><td><b>Genotyping Project</b></td><td><% $genotyping_project_link %></td></tr>
-                    <tr><td><b>Breeding Program</b></td><td><a href="/breeders/program/<% $breeding_program_id %>"><% $breeding_program_name %></a></td></tr>
-                    <tr><td><b>Trial Type</b></td><td>Genotyping Plate</td></tr>
-                    <tr><td><b>Plate Format</b></td><td><% $genotyping_plate_format %></td></tr>
-                    <tr><td><b>Plate Sample Type</b></td><td><% $genotyping_plate_sample_type %></td></tr>
-                    <tr><td><b>Number of Samples</b></td><td><% $number_of_samples %></td></tr>
-                    <tr><td><b>Number of Samples with Data</b></td><td><% $number_of_samples_with_data %></td></tr>
-                    <tr><td><b>Genotyping Facility</b></td><td><% $genotyping_facility %></td></tr>
-                    <tr><td><b>Description</b></td><td><% $trial_description %></td></tr>
-                    <tr><td><b>Created By</b></td><td><% $trial_owner %></td></tr>
+                    <tr><td><b><% __('Genotyping Project') |h %></b></td><td><% $genotyping_project_link %></td></tr>
+                    <tr><td><b><% __('Breeding Program') |h %></b></td><td><a href="/breeders/program/<% $breeding_program_id %>"><% $breeding_program_name %></a></td></tr>
+                    <tr><td><b><% __('Trial Type') |h %></b></td><td>Genotyping Plate</td></tr>
+                    <tr><td><b><% __('Plate Format') |h %></b></td><td><% $genotyping_plate_format %></td></tr>
+                    <tr><td><b><% __('Plate Sample Type') |h %></b></td><td><% $genotyping_plate_sample_type %></td></tr>
+                    <tr><td><b><% __('Number of Samples') |h %></b></td><td><% $number_of_samples %></td></tr>
+                    <tr><td><b><% __('Number of Samples with Data') |h %></b></td><td><% $number_of_samples_with_data %></td></tr>
+                    <tr><td><b><% __('Genotyping Facility') |h %></b></td><td><% $genotyping_facility %></td></tr>
+                    <tr><td><b><% __('Description') |h %></b></td><td><% $trial_description %></td></tr>
+                    <tr><td><b><% __('Created By') |h %></b></td><td><% $trial_owner %></td></tr>
                     <!-- <tr><td><b>Submitted to Genotyping Facility</b></td><td><% $genotyping_facility_submitted %></td></tr>
                     <tr><td><b>Genotyping Facility Status</b></td><td><% $genotyping_facility_status %></td></tr>
                     <tr><td><b>Raw Data Link</b></td><td><a href='<% $raw_data_link %>'><% $raw_data_link %></td></tr> -->
@@ -77,7 +77,7 @@ $assay_type => undef
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <button class="btn btn-primary btn-sm" id="edit_genotyping_trial_details" style="margin:3px">Edit Plate Details</button>
+                    <button class="btn btn-primary btn-sm" id="edit_genotyping_trial_details" style="margin:3px"><% __('Edit Plate Details') |h %></button>
                 </div>
             </div>
 
@@ -92,9 +92,9 @@ $assay_type => undef
                 </div>
             </div> -->
 
-            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=csv&dataLevel=plate" class="btn btn-default">Download Breedbase Formatted File</a>
-            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=intertekxls&dataLevel=plate" class="btn btn-default">Download Intertek Formatted File</a>
-            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=dartseqcsv&dataLevel=plate" class="btn btn-default">Download DartSeq Formatted File</a>
+            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=csv&dataLevel=plate" class="btn btn-default"><% __('Download Breedbase Formatted File') |h %></a>
+            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=intertekxls&dataLevel=plate" class="btn btn-default"><% __('Download Intertek Formatted File') |h %></a>
+            <a href="/breeders/trial/<% $trial_id %>/download/layout?format=dartseqcsv&dataLevel=plate" class="btn btn-default"><% __('Download DartSeq Formatted File') |h %></a>
 
         </div>
         <div class="col-sm-3">
@@ -114,22 +114,22 @@ $assay_type => undef
                     <span style="font-size:3.5em;" class="glyphicon glyphicon-export"></span>
                 </div>
                 <div class="col-sm-11">
-                <&| /page/info_section.mas, title => "<h4 style='display:inline'>Genotyping plate submission status</h4>", subtitle=> "Submit genotyping plates to facilities.", id => 'genotyping_facilities_section', collapsible => 1, collapsed => 1 &>
+                <&| /page/info_section.mas, title => "<h4 style='display:inline'>Genotyping plate submission status</h4>", subtitle=> $m->interp->apply_escapes( __("Submit genotyping plates to facilities."), 'h' ), id => 'genotyping_facilities_section', collapsible => 1, collapsed => 1 &>
                     <div class="col-sm-9"></div>
                     <div class="col-sm-3">
-                        <button class="btn btn-primary btn-sm" id="submit_plate_link" style="margin:3px">Submit plates</button>
+                        <button class="btn btn-primary btn-sm" id="submit_plate_link" style="margin:3px"><% __('Submit plates') |h %></button>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <table class="table table-bordered table-hover">
                             <tbody>
-                                <tr><td><b>Genotyping Facility</b></td><td><div id="genotyping_facility_tab"><% $genotyping_facility %></div></td></tr>
-                                <tr><td><b>Submitted to Genotyping Facility</b></td><td><div id="genotyping_facility_submitted_tab"></div></td></tr>
-                                <tr><td><b>Genotyping Facility Order ID </b></td><td><div id="genotyping_vendor_order_id_tab"><% $order_id %></div></td></tr>
-                                <tr><td><b>Genotyping Facility Submission ID </b></td><td><div id="genotyping_vendor_submission_id_tab"><% $submission_id %></div></td></tr>
-                                <tr><td><b>Live Status From Genotyping Facility</b></td><td><div id="genotyping_trial_status_info"></div></td></tr>
-                                <tr><td><b>Download PDF</b></td><td><div id="download_trial_pdf"></div></td></tr>
-                                <tr><td><b>Raw Data Link</b></td><td><div id="raw_data_tab"></div></td></tr>
+                                <tr><td><b><% __('Genotyping Facility') |h %></b></td><td><div id="genotyping_facility_tab"><% $genotyping_facility %></div></td></tr>
+                                <tr><td><b><% __('Submitted to Genotyping Facility') |h %></b></td><td><div id="genotyping_facility_submitted_tab"></div></td></tr>
+                                <tr><td><b><% __('Genotyping Facility Order ID') |h %> </b></td><td><div id="genotyping_vendor_order_id_tab"><% $order_id %></div></td></tr>
+                                <tr><td><b><% __('Genotyping Facility Submission ID') |h %> </b></td><td><div id="genotyping_vendor_submission_id_tab"><% $submission_id %></div></td></tr>
+                                <tr><td><b><% __('Live Status From Genotyping Facility') |h %></b></td><td><div id="genotyping_trial_status_info"></div></td></tr>
+                                <tr><td><b><% __('Download PDF') |h %></b></td><td><div id="download_trial_pdf"></div></td></tr>
+                                <tr><td><b><% __('Raw Data Link') |h %></b></td><td><div id="raw_data_tab"></div></td></tr>
                             </tbody>
                             </table>
                         </div>
@@ -156,12 +156,12 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
                     <span style="font-size:3.5em;" class="glyphicon glyphicon-qrcode"></span>
                 </div>
                 <div class="col-sm-7">
-                    <h4>Generate barcode labels for samples, accessions or plate ID.</h4>
+                    <h4><% __('Generate barcode labels for samples, accessions or plate ID.') |h %></h4>
                 </div>
                 <div class="col-sm-2">
                     <& /breeders_toolbox/trial/generate_genotrial_barcode.mas, trial_name => $trial_name, trial_id => $trial_id, identifier => $identifier_prefix, plate_id=> $plate_id &>
 
-                    <button id="generate_genotyping_trial_barcode_link" class="btn btn-primary btn-sm">Go</button>
+                    <button id="generate_genotyping_trial_barcode_link" class="btn btn-primary btn-sm"><% __('Go') |h %></button>
                 </div>
             </div>
         </div>
@@ -230,9 +230,9 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
 </div>
 
 % if ($assay_type eq 'KASP') {
-    <& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Genotyping Data</h4>", info_section_subtitle => 'View and download genotyping data derived from this genotyping plate.', icon_class => "glyphicon glyphicon-map-marker", buttons_html => '<button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_vcf">Download All Genotype Data VCF</button><button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_dosagematrix">Download All Genotype Data Dosage Matrix</button><button class="btn btn-default" style="margin:3px" id="plate_kasp_genotype_data_download_csv">Download All Genotype Data (CSV)</button>', info_section_id => "plate_genotyping_data" &>
+    <& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Genotyping Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and download genotyping data derived from this genotyping plate.'), 'h' ), icon_class => "glyphicon glyphicon-map-marker", buttons_html => '<button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_vcf">Download All Genotype Data VCF</button><button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_dosagematrix">Download All Genotype Data Dosage Matrix</button><button class="btn btn-default" style="margin:3px" id="plate_kasp_genotype_data_download_csv">Download All Genotype Data (CSV)</button>', info_section_id => "plate_genotyping_data" &>
 % } else {
-    <& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Genotyping Data</h4>", info_section_subtitle => 'View and download genotyping data derived from this genotyping plate.', icon_class => "glyphicon glyphicon-map-marker", buttons_html => '<button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_vcf">Download All Genotype Data VCF</button><button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_dosagematrix">Download All Genotype Data Dosage Matrix</button>', info_section_id => "plate_genotyping_data" &>
+    <& /page/detail_page_2_col_section.mas, trial_id => $trial_id, info_section_title => "<h4 style='display:inline'>Genotyping Data</h4>", info_section_subtitle => $m->interp->apply_escapes( __('View and download genotyping data derived from this genotyping plate.'), 'h' ), icon_class => "glyphicon glyphicon-map-marker", buttons_html => '<button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_vcf">Download All Genotype Data VCF</button><button class="btn btn-primary" style="margin:3px" id="plate_genotyping_data_download_all_dosagematrix">Download All Genotype Data Dosage Matrix</button>', info_section_id => "plate_genotyping_data" &>
 
 % }
 <div class="row">
@@ -244,7 +244,7 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
                 </div>
                 <div class="col-sm-11">
 
-                    <&| /page/info_section.mas, title => "<h4 style='display:inline'>Additional Files</h4>", subtitle=> "Upload and view any additional files for   this plate", id => 'genotyping_trial_additional_files_section', collapsible => 1, collapsed => 1 &>
+                    <&| /page/info_section.mas, title => "<h4 style='display:inline'>Additional Files</h4>", subtitle=> $m->interp->apply_escapes( __("Upload and view any additional files for   this plate"), 'h' ), id => 'genotyping_trial_additional_files_section', collapsible => 1, collapsed => 1 &>
 
                         <div class="panel panel-default">
                             <div class="panel-body">
@@ -267,7 +267,7 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
                 </div>
                 <div class="col-sm-11">
 
-                    <&| /page/info_section.mas, title => "<h4 style='display:inline'>Plate Linkage</h4>", subtitle => 'View any field trial to genotyping plate linkage', id => 'genotyping_trial_from_field_trial_section', collapsible => 1, collapsed => 1 &>
+                    <&| /page/info_section.mas, title => "<h4 style='display:inline'>Plate Linkage</h4>", subtitle => $m->interp->apply_escapes( __('View any field trial to genotyping plate linkage'), 'h' ), id => 'genotyping_trial_from_field_trial_section', collapsible => 1, collapsed => 1 &>
                         <& /breeders_toolbox/trial/genotyping_trial_from_field_trial_linkage.mas, trial_id => $trial_id, trial_type => 'genotyping_trial' &>
                     </&>
                 </div>
@@ -276,7 +276,7 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
     </div>
 </div>
 
-<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, number_of_samples_with_data => $number_of_samples_with_data, info_section_title => "<h4 style='display:inline'>Deletion</h4>", info_section_subtitle => 'Deleting genotyping data derived from this genotyping plate or genotyping plate layout.', icon_class => "glyphicon glyphicon-trash", info_section_id => "delete_genotyping_plate_section" &>
+<& /page/detail_page_2_col_section.mas, trial_id => $trial_id, number_of_samples_with_data => $number_of_samples_with_data, info_section_title => "<h4 style='display:inline'>Deletion</h4>", info_section_subtitle => $m->interp->apply_escapes( __('Deleting genotyping data derived from this genotyping plate or genotyping plate layout.'), 'h' ), icon_class => "glyphicon glyphicon-trash", info_section_id => "delete_genotyping_plate_section" &>
 
 <!--
 <div class="row">
@@ -300,9 +300,9 @@ DEPRECATED. THIS SHOULD BE DONE VIA BRAPI
 </div>
 -->
 
-<&| /page/info_section.mas, id=>"genotyping_trial_check_layout_section", title=>"Check Plate Design", collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, id=>"genotyping_trial_check_layout_section", title=>$m->interp->apply_escapes( __("Check Plate Design"), 'h' ), collapsible=>1, collapsed=>1 &>
     <div id="genotyping_trial_check_layout_section_div">
-        <div class="well well-sm">LOADING...</div>
+        <div class="well well-sm"><% __('LOADING...') |h %></div>
     </div>
 </&>
 

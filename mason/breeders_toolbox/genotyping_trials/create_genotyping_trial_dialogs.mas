@@ -9,71 +9,71 @@ $facilities => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addGenoTrialDialog">Add Genotyping Plate</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addGenoTrialDialog"><% __('Add Genotyping Plate') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <&| /util/workflow.mas, id=> "genotyping_trial_create_workflow" &>
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"This workflow will guide you through adding a genotyping plate in the database" &>
-                            <p>Genotyping plates represent 96 or 384 well plates.</p>
-                            <p>Each plate has a globally unique Plate ID.</p>
-                            <p>Each well in the plate has a globally unique tissue sample ID.</p>
-                            <p>The "contents" of each well can be either a tissue sample, plant name, subplot name, plot name, or accession name. This "source" name must be in the database already. This is useful if you provide a field trial entity (such as a plot or subplot or plant or tissue sample name), so that phenotypes and genotypes can be directly compared.</p>
-                            <p>If you choose to submit your genotyping plate to a genotyping facility (Cornell IGD, Intertek, BGI, etc) we can generate the files they require for you. Please be aware of their requirements, such as blank well positions and concentrations.</p>
-                            <p>In addition to sample ID, you have an option to include facility identifier for each well. </p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("This workflow will guide you through adding a genotyping plate in the database"), 'h' ) &>
+                            <p><% __('Genotyping plates represent 96 or 384 well plates.') |h %></p>
+                            <p><% __('Each plate has a globally unique Plate ID.') |h %></p>
+                            <p><% __('Each well in the plate has a globally unique tissue sample ID.') |h %></p>
+                            <p><% __('The "contents" of each well can be either a tissue sample, plant name, subplot name, plot name, or accession name. This "source" name must be in the database already. This is useful if you provide a field trial entity (such as a plot or subplot or plant or tissue sample name), so that phenotypes and genotypes can be directly compared.') |h %></p>
+                            <p><% __('If you choose to submit your genotyping plate to a genotyping facility (Cornell IGD, Intertek, BGI, etc) we can generate the files they require for you. Please be aware of their requirements, such as blank well positions and concentrations.') |h %></p>
+                            <p><% __('In addition to sample ID, you have an option to include facility identifier for each well.') |h %> </p>
                             <br/><br/>
                             <div style="text-align: center">
-                                <button id="next_step_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                <button id="next_step_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Genotyping Project" &>
-                            <& /page/page_title.mas, title=>"Select a genotyping project" &>
-                            <p>Genotyping projects are for grouping genotyping plates and/or genotyping data together. Genotyping Project should match Vendor Project if you have one. </p>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Genotyping Project"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a genotyping project"), 'h' ) &>
+                            <p><% __('Genotyping projects are for grouping genotyping plates and/or genotyping data together. Genotyping Project should match Vendor Project if you have one.') |h %> </p>
                             <div style="text-align: center">
-                                <button class="btn btn-info" name="create_genotyping_project_link">If you need to create a genotyping project, click here</button><br/><br/>
-                                <button id="next_step_creating_genotyping_plates" class="btn btn-primary" onclick="Workflow.complete(this);">Once you have a genotyping project, go to Next Step</button>
+                                <button class="btn btn-info" name="create_genotyping_project_link"><% __('If you need to create a genotyping project, click here') |h %></button><br/><br/>
+                                <button id="next_step_creating_genotyping_plates" class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Once you have a genotyping project, go to Next Step') |h %></button>
                             </div>
                         </&>
 
-                        <&| /util/workflow.mas:step, title=> "Basic Plate Info" &>
-                            <& /page/page_title.mas, title=>"Provide info about your plate" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Basic Plate Info"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide info about your plate"), 'h' ) &>
                             <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" encoding="multipart/form-data" id="upload_genotyping_trials_form" name="upload_genotyping_trials_form">
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Genotyping Project Name: </label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Project Name:') |h %> </label>
                                     <div class="col-sm-7">
                                         <span id="plate_genotyping_project_select_div"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Genotyping Plate ID: <br/><small>-In Coordinate App this is called "Plate Name"<br/>-This is the globally unique name of the plate</small></label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Plate ID:') |h %> <br/><small>-In Coordinate App this is called "Plate Name"<br/>-This is the globally unique name of the plate</small></label>
                                     <div class="col-sm-7">
                                         <input class="form-control" id="genotyping_trial_name" name="genotyping_trial_name" type="text" placeholder=" e.g. 18DNA00001"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Plate Format: </label>
+                                    <label class="col-sm-5 control-label"><% __('Plate Format:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="genotyping_trial_plate_format">
-                                            <option value="96">96 Well</option>
-                                            <option value="384">384 Well</option>
+                                            <option value="96"><% __('96 Well') |h %></option>
+                                            <option value="384"><% __('384 Well') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Sample Type: </label>
+                                    <label class="col-sm-5 control-label"><% __('Sample Type:') |h %> </label>
                                     <div class="col-sm-7">
                                         <select class="form-control" id="genotyping_trial_plate_sample_type">
                                             <option value="DNA">DNA</option>
                                             <option value="RNA">RNA</option>
-                                            <option value="Tissue">Tissue</option>
+                                            <option value="Tissue"><% __('Tissue') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Genotyping Plate's Description (optional): </label>
+                                    <label class="col-sm-5 control-label"><% __('Genotyping Plate\'s Description (optional):') |h %> </label>
                                     <div class="col-sm-7">
                                         <textarea class="form-control" id="genotyping_trial_description" name="genotyping_trial_description"></textarea>
                                     </div>
@@ -86,36 +86,36 @@ $facilities => ();
                                 </div>
                                 <br/>
                                 <div style="text-align: center">
-                                    <button id="plate_info_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                    <button id="plate_info_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Well Info" &>
-                                <& /page/page_title.mas, title=>"Provide information about the wells in your plate" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Well Info"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Provide information about the wells in your plate"), 'h' ) &>
                                 <br/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label text-align: right">Select One: </label>
+                                    <label class="col-sm-3 control-label text-align: right"><% __('Select One:') |h %> </label>
                                     <div class="col-sm-9">
                                         <select class="form-control" id="genotyping_trial_well_input_option">
-                                            <option value="">Select a file format that you want to upload</option>
-                                            <option value="xlsx">I am uploading a plate design I made in Excel</option>
-                                            <option value="coordinate">I am uploading a Default Coordinate Android Application plate design</option>
-                                            <option value="coordinate_template">I am uploading a Custom Coordinate Android Application plate design</option>
-                                            <option value="design">I need to design a completely new plate</option>
+                                            <option value=""><% __('Select a file format that you want to upload') |h %></option>
+                                            <option value="xlsx"><% __('I am uploading a plate design I made in Excel') |h %></option>
+                                            <option value="coordinate"><% __('I am uploading a Default Coordinate Android Application plate design') |h %></option>
+                                            <option value="coordinate_template"><% __('I am uploading a Custom Coordinate Android Application plate design') |h %></option>
+                                            <option value="design"><% __('I need to design a completely new plate') |h %></option>
                                         </select>
                                     </div>
                                 </div>
                                 <br/><br/>
 
                                 <div id="genotyping_trial_well_upload_section" style="display:none">
-                                    <h3>You want to upload an existing plate layout</h3>
+                                    <h3><% __('You want to upload an existing plate layout') |h %></h3>
                                     <div class="well well-sm">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <&| /page/explanation.mas, title=>'Template information' &>
+                                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                     <p>
-                                                        <b>File format information</b>
+                                                        <b><% __('File format information') |h %></b>
                                                         <br>
-                                                        <a id="genotyping_trial_layout_upload_spreadsheet_info_format">Spreadsheet format</a>
+                                                        <a id="genotyping_trial_layout_upload_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                                                     </p>
                                                 </&>
                                             </div>
@@ -124,7 +124,7 @@ $facilities => ();
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            <label class="col-sm-6 control-label">Select Plate Layout XLSX File: </label>
+                                                            <label class="col-sm-6 control-label"><% __('Select Plate Layout XLSX File:') |h %> </label>
                                                             <div class="col-sm-6">
                                                                 <input type="file" name="genotyping_trial_layout_upload" id="genotyping_trial_layout_upload" encoding="multipart/form-data" />
                                                             </div>
@@ -137,15 +137,15 @@ $facilities => ();
                                 </div>
 
                                 <div id="genotyping_trial_well_coordinate_upload_section" style="display:none">
-                                    <h3>You want to upload a Coordinate Android Application file.</h3>
+                                    <h3><% __('You want to upload a Coordinate Android Application file.') |h %></h3>
                                     <div class="well well-sm">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <&| /page/explanation.mas, title=>'Template information' &>
+                                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                     <p>
-                                                        <b>File format information</b>
+                                                        <b><% __('File format information') |h %></b>
                                                         <br>
-                                                        <a id="genotyping_trial_layout_upload_coordinate_spreadsheet_info_format">Spreadsheet format</a>
+                                                        <a id="genotyping_trial_layout_upload_coordinate_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                                                     </p>
                                                 </&>
                                             </div>
@@ -154,7 +154,7 @@ $facilities => ();
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            <label class="col-sm-6 control-label">Select Coordinate CSV File: </label>
+                                                            <label class="col-sm-6 control-label"><% __('Select Coordinate CSV File:') |h %> </label>
                                                             <div class="col-sm-6">
                                                                 <input type="file" name="genotyping_trial_layout_upload_coordinate" id="genotyping_trial_layout_upload_coordinate" encoding="multipart/form-data" />
                                                             </div>
@@ -167,15 +167,15 @@ $facilities => ();
                                 </div>
 
                                 <div id="genotyping_trial_well_coordinate_template_upload_section" style="display:none">
-                                    <h3>You want to upload a Custom Android Application file.</h3>
+                                    <h3><% __('You want to upload a Custom Android Application file.') |h %></h3>
                                     <div class="well well-sm">
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <&| /page/explanation.mas, title=>'Template information' &>
+                                                <&| /page/explanation.mas, title=>$m->interp->apply_escapes( __('Template information'), 'h' ) &>
                                                     <p>
-                                                        <b>File format information</b>
+                                                        <b><% __('File format information') |h %></b>
                                                         <br>
-                                                        <a id="genotyping_trial_layout_upload_coordinate_custom_spreadsheet_info_format">Spreadsheet format</a>
+                                                        <a id="genotyping_trial_layout_upload_coordinate_custom_spreadsheet_info_format"><% __('Spreadsheet format') |h %></a>
                                                     </p>
                                                 </&>
                                             </div>
@@ -184,7 +184,7 @@ $facilities => ();
                                                 <div class="panel panel-default">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            <label class="col-sm-6 control-label">Select Coordinate CSV File: </label>
+                                                            <label class="col-sm-6 control-label"><% __('Select Coordinate CSV File:') |h %> </label>
                                                             <div class="col-sm-6">
                                                                 <input type="file" name="genotyping_trial_layout_upload_coordinate_template" id="genotyping_trial_layout_upload_coordinate_template" encoding="multipart/form-data" />
                                                             </div>
@@ -197,17 +197,17 @@ $facilities => ();
                                 </div>
 
                                 <div id="genotyping_trial_well_design_section" style="display:none">
-                                    <h3>You want to design a completely new plate.</h3>
+                                    <h3><% __('You want to design a completely new plate.') |h %></h3>
                                     <div class="well well-sm">
                                         <ul>
-                                            <li>Select a list for the source material going into each well. Your list should be a one to one pairing to each well e.g. if you want to fill 95 wells you should supply a list of 95 elements.</li>
-                                            <li>Note: From the most desirable to least desirable source observation unit you can choose: tissue samples, plants, subplots, plots, or accessions</li>
+                                            <li><% __('Select a list for the source material going into each well. Your list should be a one to one pairing to each well e.g. if you want to fill 95 wells you should supply a list of 95 elements.') |h %></li>
+                                            <li><% __('Note: From the most desirable to least desirable source observation unit you can choose: tissue samples, plants, subplots, plots, or accessions') |h %></li>
                                         </ul>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-7 control-label">Source Observation Unit List: </label>
+                                        <label class="col-sm-7 control-label"><% __('Source Observation Unit List:') |h %> </label>
                                         <div class="col-sm-5">
-                                            <span id="accession_select_box_span">[loading...]</span>
+                                            <span id="accession_select_box_span"><% __('[loading...]') |h %></span>
                                         </div>
                                     </div>
                                     <br/>
@@ -237,12 +237,12 @@ $facilities => ();
                                         <label class="col-sm-7 control-label"><i>Optional</i> Tissue: <small>(If used the same tissue for all wells)</small> </label>
                                         <div class="col-sm-5">
                                             <select class="form-control" id="genotyping_well_tissue">
-                                                <option value="leaf">Leaf</option>
-                                                <option value="root">Root</option>
-                                                <option value="stem">Stem</option>
-                                                <option value="seed">Seed</option>
-                                                <option value="fruit">Fruit</option>
-                                                <option value="tuber">Tuber</option>
+                                                <option value="leaf"><% __('Leaf') |h %></option>
+                                                <option value="root"><% __('Root') |h %></option>
+                                                <option value="stem"><% __('Stem') |h %></option>
+                                                <option value="seed"><% __('Seed') |h %></option>
+                                                <option value="fruit"><% __('Fruit') |h %></option>
+                                                <option value="tuber"><% __('Tuber') |h %></option>
                                             </select>
                                         </div>
                                     </div>
@@ -286,22 +286,22 @@ $facilities => ();
                                 <br/>
                                 <div id="next_upload_button" style="display:none">
                                     <div style="text-align: center">
-                                        <button id="well_info_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;">Go to Next Step</button>
+                                        <button id="well_info_intro_button" class="btn btn-primary" onclick="Workflow.complete(this); return false;"><% __('Go to Next Step') |h %></button>
                                     </div>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Trial Linkage" &>
-                                <& /page/page_title.mas, title=>"Is your genotyping plate linked with field trials in the database? This information can also be added from the genotyping plate detail page once the trial is saved in the database." &>
-                                <p>If you provided us with information about where the tissue sample in each well originated (e.g. it came from a plot name or a subplot name or plant name or tissue sample name in a field trial), we will automatically create linkage between the field trial(s) and this genotyping plate.</p>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Trial Linkage"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Is your genotyping plate linked with field trials in the database? This information can also be added from the genotyping plate detail page once the trial is saved in the database."), 'h' ) &>
+                                <p><% __('If you provided us with information about where the tissue sample in each well originated (e.g. it came from a plot name or a subplot name or plant name or tissue sample name in a field trial), we will automatically create linkage between the field trial(s) and this genotyping plate.') |h %></p>
                                 <br/>
                                 <div style="text-align: center">
-                                    <button id="trial_linkage_intro_button"  class="btn btn-lg btn-primary" onclick="Workflow.complete(this); return false;" >Continue to Next Step</button>
+                                    <button id="trial_linkage_intro_button"  class="btn btn-lg btn-primary" onclick="Workflow.complete(this); return false;" ><% __('Continue to Next Step') |h %></button>
                                 </div>
                             </&>
-                            <&| /util/workflow.mas:step, title=> "Confirm" &>
-                                <& /page/page_title.mas, title=>"Finalize and submit your genotyping plate" &>
+                            <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Finalize and submit your genotyping plate"), 'h' ) &>
 
-                                <p>Automatic submission to the Genotyping Facility currently not working. You can submit it from the Genotyping Plate's detail page or download the information from the Genotyping Plate's detail page and submit it yourself after clicking Submit</p>
+                                <p><% __('Automatic submission to the Genotyping Facility currently not working. You can submit it from the Genotyping Plate\'s detail page or download the information from the Genotyping Plate\'s detail page and submit it yourself after clicking Submit') |h %></p>
 <!--
                                 <div class="form-group">
                                     <label class="col-sm-5 control-label">Along with saving this information to this database, I want to automatically submit to the Genotyping Facility: <small>Automatic submission currently not working. You can submit it from the Genotyping Plate's detail page or download the information from the Genotyping Plate's detail page and submit it yourself after clicking Submit</small></label>
@@ -318,19 +318,19 @@ $facilities => ();
                                 </form>
                                 <hr/>
                                 <div style="text-align: center">
-                                    <button type="button" class="btn btn-primary" name="add_geno_trial_submit" id="add_geno_trial_submit">Submit</button>
+                                    <button type="button" class="btn btn-primary" name="add_geno_trial_submit" id="add_geno_trial_submit"><% __('Submit') |h %></button>
                                 </div>
                             </&>
 
-                            <&| /util/workflow.mas:complete, title=> "Complete" &>
-                                <& /page/page_title.mas, title=>"Complete! Your genotyping plate was saved in the database." &>
+                            <&| /util/workflow.mas:complete, title=> $m->interp->apply_escapes( __("Complete"), 'h' ) &>
+                                <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Complete! Your genotyping plate was saved in the database."), 'h' ) &>
                                 <p>
                                     <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
-                                    The genotyping plate was saved successfully
+                                    <% __('The genotyping plate was saved successfully') |h %>
                                 </p>
                                 <ul>
-                                    <li>You may want to proceed to the genotyping plate detail page for the trial you just created.</li>
-                                    <li>You can print barcodes for the plate and tissue samples.</li>
+                                    <li><% __('You may want to proceed to the genotyping plate detail page for the trial you just created.') |h %></li>
+                                    <li><% __('You can print barcodes for the plate and tissue samples.') |h %></li>
                                 </ul>
                                 <br/>
                             </&>
@@ -338,7 +338,7 @@ $facilities => ();
                     </div>
             </div>
             <div class="modal-footer">
-                <button id="close_trial_button" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_trial_button" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -348,18 +348,18 @@ $facilities => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypingTrialInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypingTrialInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading a pre-existing genotyping plate layout.</b>
+                    <b><% __('This is for uploading a pre-existing genotyping plate layout.') |h %></b>
                     <br/>
-                    <b>File must be Excel file (.xls or .xlsx)</b>
+                    <b><% __('File must be Excel file (.xls or .xlsx)') |h %></b>
                     <br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following:
+                    <% __('The first row (header) must contain the following:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -384,7 +384,7 @@ $facilities => ();
                     </table>
                     Optional column: In addition to sample ids, you can add facility identifiers in the last column with the header: "facility_identifier".
                     <br/><br/>
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>date (should be YYYY-MM-DD)</li>
                     <li>sample_id (the unique identifier for the sample in the well)</li>
@@ -395,7 +395,7 @@ $facilities => ();
                     <li>tissue_type (must be either leaf, root, stem, seed, fruit or tuber)</li>
                     </ul>
 
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                     <li>ncbi_taxonomy_id (NCBI taxonomy identifier)</li>
                     <li>dna_person (the name of the person who prepared the well)</li>
@@ -410,7 +410,7 @@ $facilities => ();
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_spreadsheet_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -420,20 +420,20 @@ $facilities => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypingTrialCoordinateInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypingTrialCoordinateInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading a Default Coordinate Android Application exported plate layout.</b>
+                    <b><% __('This is for uploading a Default Coordinate Android Application exported plate layout.') |h %></b>
                     <br/>
-                    <b>File must be a CSV file (.csv)</b>
+                    <b><% __('File must be a CSV file (.csv)') |h %></b>
                     <br />
-                    (Excel format not supported)
+                    <% __('(Excel format not supported)') |h %>
                     <br /><br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br>
-                    The first row (header) must contain the following:
+                    <% __('The first row (header) must contain the following:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -455,7 +455,7 @@ $facilities => ();
                     </table>
                     Optional column: In addition to sample ids, you can add facility identifiers in the last column with the header: "facility_identifier".
                     <br/><br/>
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                     <li>date (should be YYYY-MM-DD)</li>
                     <li>plate_id (an identifier for a grouping of plates. called "Genotyping Project Name" in genotyping plate submission form. e.g. NextGenCassava)</li>
@@ -468,7 +468,7 @@ $facilities => ();
                     <li>tissue_type (must be either leaf, root, or stem)</li>
                     </ul>
 
-                    <b>Optional fields:</b>
+                    <b><% __('Optional fields:') |h %></b>
                     <ul>
                     <li>notes (any additional notes on the well)</li>
                     <li>extraction (free-text for the extraction method e.g. CTAB)</li>
@@ -478,7 +478,7 @@ $facilities => ();
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_coordinate_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_coordinate_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -488,23 +488,23 @@ $facilities => ();
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadGenotypingTrialCoordinateCustomInfoDialog">Upload Template Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="uploadGenotypingTrialCoordinateCustomInfoDialog"><% __('Upload Template Information') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>This is for uploading a Custom Coordinate Android Application exported plate layout.</b>
+                    <b><% __('This is for uploading a Custom Coordinate Android Application exported plate layout.') |h %></b>
                     <br/>
-                    <b>File must be a CSV file (.csv)</b>
+                    <b><% __('File must be a CSV file (.csv)') |h %></b>
                     <br />
-                    (Excel format not supported)
+                    <% __('(Excel format not supported)') |h %>
                     <br /><br />
-                    <b>Header:</b>
+                    <b><% __('Header:') |h %></b>
                     <br
 
                     <p>Note that tissue type will be set to 'leaf' if you use this upload type, since tissue type is not provided in the upload and tissue type is required for DaRT.</p>
 
-                    The first row (header) must contain the following:
+                    <% __('The first row (header) must contain the following:') |h %>
 
                     <table class="table table-hover table-bordered table-condensed" >
                         <thead></thead>
@@ -521,7 +521,7 @@ $facilities => ();
                     </table>
                     Optional column: In addition to sample ids, you can add facility identifiers in the last column with the header: "Facility Identifier".
                     <br/><br/>
-                    <b>Required fields:</b>
+                    <b><% __('Required fields:') |h %></b>
                     <ul>
                         <li>Value (the identifier of the origin material. e.g. 2018MyPlant0001. in order of most desirable identifier to least desirable identifier that can be used here: tissue sample name, plant name, subplot name, plot name, accession name. This can also say 'exclude' to indicate a BLANK)</li>
                         <li>Column (the column position of the sample e.g. 10)</li>
@@ -530,7 +530,7 @@ $facilities => ();
                         <li>Person (the name of the person who plated the individual sample. can be any name.)</li>
                         <li>Date (should be YYYY-MM-DD)</li>
                     </ul>
-                    <b>Optional field:</b>
+                    <b><% __('Optional field:') |h %></b>
                     <ul>
                         <li>Facility Identifier (if you would like to include facility identifiers in your genotyping plate layout, you can add facility identifiers in the last column with the header <b>"Facility Identifier"</b>)</li>
                     </ul>
@@ -538,7 +538,7 @@ $facilities => ();
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="close_upload_genotyping_coordinate_custom_info_dialog" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="close_upload_genotyping_coordinate_custom_info_dialog" type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
