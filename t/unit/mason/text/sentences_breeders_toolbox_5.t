@@ -30,4 +30,14 @@ page_sentences_ok(
     'Analyses ({icon})',
 );
 
+page_sentences_ok(
+    '/breeders_toolbox/upload_accession_rename_dialog.mas',
+    '({xls} or {xlsx} formats are {bold}NOT{end_bold} supported)',
+);
+
+page_sentences_ok(
+    '/breeders_toolbox/upload_graft_dialogs.mas',
+    '({xls} or {xlsx} formats are {bold}NOT{end_bold} supported)',
+);
+
 done_testing;

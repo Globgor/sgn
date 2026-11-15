@@ -19,6 +19,16 @@ use lib 't/lib';
 use Test::More;
 use SGN::Test::MasonText qw( page_texts_ok component_compiles_ok );
 
+page_texts_ok(
+    '/breeders_toolbox/manage_populations_dialogs.mas',
+    'Choose a List of Accessions to Add:',
+    'Choose a List of Members to Add:',
+    'Choose a List of Plants to Add:',
+    'Choose a List of Plots to Add:',
+    'Select a member type',
+    'Create A Population',
+);
+
 component_compiles_ok('/breeders_toolbox/manage_projects.mas');
 
 done_testing;

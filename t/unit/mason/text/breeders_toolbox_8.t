@@ -41,4 +41,44 @@ page_texts_ok(
     'Download Trial Phenotypes',
 );
 
+page_texts_ok(
+    '/breeders_toolbox/upload_accession_rename_dialog.mas',
+    'Accession renaming information may be uploaded in tab-delimited text file format',
+    'The first row (header) should contain the following:',
+    'The accession renaming list upload was successful.',
+    'Store old names as synonyms of the accessions',
+    'Upload Rename Accessions Information',
+    'Upload Rename Accessions File:',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/upload_derived_accessions_dialog.mas',
+    'The first row (header) should contain the following:',
+    'Upload Template Information For Derived Accessions',
+    'The derived accessions were saved successfully.',
+    'Upload Derived Accessions Error',
+    'Upload Derived Accessions',
+    'File format information',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/upload_graft_dialogs.mas',
+    'Graft may be uploaded in tab-delimited text file format',
+    'The first row (header) should contain the following:',
+    'The graft upload was successful.',
+    'Upload Grafting Information',
+    'File format information',
+    'Results From Validation',
+);
+
+page_texts_ok(
+    '/breeders_toolbox/upload_pedigrees_dialogs.mas',
+    'To Overwrite Parents In the Case That An Accession Already Has Male or Female Parents',
+    'The first row (header) should contain the following:',
+    'The Pedigree Upload Finished With No Errors.',
+    'cross type descriptions:',
+    'File format information',
+    'Results From Validation',
+);
+
 done_testing;

@@ -38,6 +38,7 @@ sub run_perl {
 
 my @modules = (
     [ 'lib/SGN/Controller/AJAX/BreedersToolbox/Folder.pm', 'SGN::Controller::AJAX::BreedersToolbox::Folder', [ '__("A folder or trial with that name already exists in the database. Please select another name.")', '__(\'Folder Not Deleted! To delete a folder first move all trials and sub-folders out of it.\')', '__(\'Folder could not be renamed!\')', '__("You need to be logged in.")', '__("You have insufficient privileges.")' ] ],
+    [ 'lib/SGN/Controller/AJAX/BreedersToolbox/Population.pm', 'SGN::Controller::AJAX::BreedersToolbox::Population', [ '__(\'You must be logged in to create a population!\')', '__(\'You must be logged in to create a population!\')', '__(\'Only a submitter or a curator can create a population\')', '__(\'You must be logged in to add population members!\')', '__(\'You must be logged in to add population members!\')', '__(\'Only a submitter or a curator can add population members\')', '__(\'You must be logged in to delete a population!\')', '__(\'You must be logged in to delete a population!\')', '__(\'Only a curator can delete a population\')', '__("No such population exists. Cannot delete.")', '__(\'You must be logged in to remove an accession from population!\')', '__(\'You must be logged in to remove an accession from population!\')', '__(\'Only a curator can remove an accession from population\')' ] ],
 );
 
 for my $module (@modules) {

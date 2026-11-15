@@ -37,6 +37,7 @@ sub run_perl {
 }
 
 my @modules = (
+    [ 'lib/SGN/Controller/AJAX/Accessions.pm', 'SGN::Controller::AJAX::Accessions', [ '__(\'You must be logged in to upload this info!\')', '__(\'You must be logged in to upload this info!\')', '__("You need to be logged in to add accessions.")', '__("You have insufficient privileges to add accessions.")', '__(\'You must be logged in to upload this seedlot info!\')', '__(\'You must be logged in to upload this seedlot info!\')', '__(\'Only a curator, submitter or sequencer can upload a file\')', '__("Could not get parsing errors")', '__("You need to be logged in to submit accessions.")', '__("You have insufficient privileges to submit accessions.")' ] ],
     [ 'lib/SGN/Controller/AJAX/BreederSearch.pm', 'SGN::Controller::AJAX::BreederSearch', [ '__(\'Over 10,000 matches. Speeds may be affected, consider narrowing your search\')' ] ],
 );
 

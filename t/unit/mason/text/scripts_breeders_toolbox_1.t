@@ -20,6 +20,12 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/add_derived_accessions_using_list_dialog.mas',
+    'The list did not pass validation. Names in the list must be uniquenames in the database',
+    'An error occurred storing new accessions.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/breeder_search_page_dataset_overlay.mas',
     'Are you sure you want to close the dataset creation help?',
     'Return',

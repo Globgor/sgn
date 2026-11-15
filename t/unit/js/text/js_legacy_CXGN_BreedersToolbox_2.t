@@ -21,6 +21,19 @@ my @scripts = (
     [ 'js/source/legacy/CXGN/BreedersToolbox/HTMLSelect.js',
         'gettext("An error occurred")',
     ],
+    [ 'js/source/legacy/CXGN/BreedersToolbox/UploadGrafts.js',
+        'gettext("No file selected")',
+        'gettext("Please select a file")',
+    ],
+    [ 'js/source/legacy/CXGN/BreedersToolbox/UploadPedigrees.js',
+        'gettext("No file selected")',
+        'gettext("Please select a file")',
+        'gettext(\'An error occurred storing the pedigrees. None were uploaded.\')',
+    ],
+    [ 'js/source/legacy/CXGN/BreedersToolbox/UploadRenameAccessions.js',
+        'gettext("No file selected")',
+        'gettext("Please select a file")',
+    ],
 );
 
 my $node = grep { -x "$_/node" && !-d "$_/node" } split /:/, $ENV{PATH} // q{};

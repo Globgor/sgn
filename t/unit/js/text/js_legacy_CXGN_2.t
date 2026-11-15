@@ -18,6 +18,15 @@ use warnings;
 use Test::More;
 
 my @scripts = (
+    [ 'js/source/legacy/CXGN/Stock.js',
+        'gettext(\'Remove a parent\')',
+        'gettext("an error occurred.")',
+        'gettext("Are you sure you want to remove this parent?")',
+        'gettext("The parent has been removed.")',
+        'gettext("Error retrieving stock id")',
+        'gettext("Error retrieving stock name")',
+        'gettext("Error obsoleting stock.")',
+    ],
     [ 'js/source/legacy/CXGN/TrialTreeFolders.js',
         'gettext(\'An error occurred refreshing trial jstree html\')',
         'gettext(\'An error occurred refreshing crosses jstree html\')',
