@@ -191,8 +191,8 @@
 
       <div style="text-align: center;">
           <p><% __('This is an option to set selected plots as outliers for other traits as well.') |h %></p>
-          <p>Clicking on <b>'Select Other Traits'</b> you will see available traits in your dataset.</p>
-          <p>If you want to ignore this step, please click on <b>'Next step'</b> button.</p>
+          <p><& /util/sentence.mas, text => __x('Clicking on {bold}\'Select Other Traits\'{end_bold} you will see available traits in your dataset.'), bold => '<b>', end_bold => '</b>' &></p>
+          <p><& /util/sentence.mas, text => __x('If you want to ignore this step, please click on {bold}\'Next step\'{end_bold} button.'), bold => '<b>', end_bold => '</b>' &></p>
           <button id="select_traits_button"><% __('Select Other Traits') |h %></button>
           <div id="other_traits" style="margin-top: 20px; margin-bottom: 50px;">
               <!-- Dynamically populated checkboxes will appear here -->
@@ -210,8 +210,8 @@
       <div>
         <div style="text-align: center;">
           <p><% __('This is the validation process. Trials cleaned of outliers can be used in downstream analysis.') |h %></p>
-          <p>To validate a dataset you will need privilieges as <b>CURATOR</b> or <b>BREEDER</b>.</p>
-          <p>Only <b>CURATORS</b> are allowed to restore the dataset to original values.</p>
+          <p><& /util/sentence.mas, text => __x('To validate a dataset you will need privilieges as {bold}CURATOR{end_bold} or {bold}BREEDER{end_bold}.'), bold => '<b>', end_bold => '</b>' &></p>
+          <p><& /util/sentence.mas, text => __x('Only {bold}CURATORS{end_bold} are allowed to restore the dataset to original values.'), bold => '<b>', end_bold => '</b>' &></p>
           <button class="btn btn-main" id="restore_outliers_button"   onclick="Workflow.complete(this);"><% __('Restore') |h %></button>
           <button class="btn btn-main" id="store_outliers_button"   onclick="Workflow.complete(this);"><% __('Validate') |h %></button>
         </div>

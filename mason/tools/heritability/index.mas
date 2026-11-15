@@ -94,7 +94,7 @@
   <h5><% __('1. The dataset must contain trails and numerical traits. Inclusion of accession, plots, locations, and years is optional.') |h %></h5>
   <h5><% __('2. The model will adapt to your dataset. For instance, if the dataset has more than one location, then the model will take the interaction among locations and accessions.') |h %></h5>
   <h5><% __('3. Traits with more than 60% of missing data are removed from the analysis.') |h %></h5>
-  <h5>4. Outliers can be removed by accessing the <a href="/search/datasets" target="_blank"> Datasets tab </a>. </h5>
+  <h5><& /util/sentence.mas, text => __x('4. Outliers can be removed by accessing the {link} Datasets tab {end_link}.'), link => '<a href="/search/datasets" target="_blank">', end_link => '</a>' &> </h5>
   <h5><% __('5. Selecting the \'Exclude dataset outliers\', heritability is calculated using filtered data.') |h %></h5>
 
 

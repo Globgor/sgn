@@ -124,7 +124,7 @@ $trial_name => undef
         <h4>
           <% __('Results:') |h %>
         </h4>
-          <p>The <b>Calculate Rankings</b> button will produce a SIN score and ranking for each accession, based on the selected parameters and phenotype means. The rankings and phenotype means are displayed in the <b>Rankings</b> and <b>Unweighted Means</b> tabs of the results section, where they can be manipulated, copied and downloaded. Below the results table, users have the option to <b>save top ranked accessions to a list</b>.</p>
+          <p><& /util/sentence.mas, text => __x('The {bold}Calculate Rankings{end_bold} button will produce a SIN score and ranking for each accession, based on the selected parameters and phenotype means. The rankings and phenotype means are displayed in the {bold}Rankings{end_bold} and {bold}Unweighted Means{end_bold} tabs of the results section, where they can be manipulated, copied and downloaded. Below the results table, users have the option to {bold}save top ranked accessions to a list{end_bold}.'), bold => '<b>', end_bold => '</b>' &></p>
         </div>
       </div>
       <div class="modal-footer">
