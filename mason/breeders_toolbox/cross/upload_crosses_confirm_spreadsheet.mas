@@ -13,7 +13,7 @@ $upload_data_ref => undef
     <h1><% __('Upload cross file verification') |h %></h1>
   </header>
 </article>
-<a id="return_to_home"  href="/breeders/home" >Return to breeders tools</button>
+<a id="return_to_home"  href="/breeders/home" ><& /util/sentence.mas, text => __x('Return to breeders tools') &></button>
 
 
 

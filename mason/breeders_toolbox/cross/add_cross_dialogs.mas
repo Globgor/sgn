@@ -232,7 +232,7 @@ $locations
                                             <div class="input-group">
                                                 <input type ="text" class ="form-control" id="parents_field_trial" name="parents_field_trial" placeholder="<% __('Enter trial name') |h %>">
                                                 <div class ="input-group-btn">
-                                                    <button class = "btn btn-info" id="search_parents_plots_plants" name="search_plots_plants"></i>Search Plots/Plants</button>
+                                                    <button class = "btn btn-info" id="search_parents_plots_plants" name="search_plots_plants"></i><& /util/sentence.mas, text => __x('Search Plots/Plants') &></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -263,7 +263,7 @@ $locations
                                             <div class="input-group">
                                                 <input type ="text" class ="form-control" id="female_field_trial" name ="female_field_trial" placeholder="<% __('Enter trial name') |h %>">
                                                 <div class ="input-group-btn">
-                                                    <button class = "btn btn-info" id="search_female_plots_plants" name="search_plots_plants"></i>Search Plots/Plants</button>
+                                                    <button class = "btn btn-info" id="search_female_plots_plants" name="search_plots_plants"></i><& /util/sentence.mas, text => __x('Search Plots/Plants') &></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -441,25 +441,25 @@ $locations
                         <% __('Individual Crosses:') |h %>
                     </h2>
 
-                    <p><b>biparental:</b> An individual plant pollinated by another individual plant.</p>
-                    <p><b>self:</b> A self pollinated individual plant.</p>
-                    <p><b>open pollinated:</b> An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).</p>
-                    <p><b>backcross:</b> An individual plant pollinated by one of its parents.</p>
-                    <p><b>sib:</b> Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.</p>
-                    <p><b>bulk:</b> A group of plants (usually a related family) pollinated by an individual plant.</p>
-                    <p><b>bulk selfed:</b> A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).</p>
-                    <p><b>bulk and open pollinated:</b> A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (pollen may be from a group with known or unknown members).</p>
-                    <p><b>doubled haploid:</b> Plants derived from doubling the chromosome number of haploid tissue.</p>
-                    <p><b>dihaploid induction:</b> Plants derived from a chromosome reduction from tetraploid to diploid</p>
+                    <p><& /util/sentence.mas, text => __x('{bold}biparental:{end_bold} An individual plant pollinated by another individual plant.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}self:{end_bold} A self pollinated individual plant.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}open pollinated:{end_bold} An individual plant pollinated by a group of plants or open pollinated (pollen may be from a group with known or unknown members).'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}backcross:{end_bold} An individual plant pollinated by one of its parents.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}sib:{end_bold} Mating between individuals that have at least one parent in common. Generally between two individuals within the same plot.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}bulk:{end_bold} A group of plants (usually a related family) pollinated by an individual plant.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}bulk selfed:{end_bold} A group of plants (usually a related family) that are self pollinated (each individual selfed, not combined pollen).'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}bulk and open pollinated:{end_bold} A group of plants (usually a related family) that are pollinated by another group of plants or open pollinated (pollen may be from a group with known or unknown members).'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}doubled haploid:{end_bold} Plants derived from doubling the chromosome number of haploid tissue.'), bold => '<b>', end_bold => '</b>' &></p>
+                    <p><& /util/sentence.mas, text => __x('{bold}dihaploid induction:{end_bold} Plants derived from a chromosome reduction from tetraploid to diploid'), bold => '<b>', end_bold => '</b>' &></p>
                     <br>
 
                     <h2>
                       <% __('Group of Crosses:') |h %>
                     </h2>
 
-                    <p><b>polycross:</b> Creates a group of open pollinated crosses. Each accession in the selected list becomes the female parent in an open cross, and all the members of the list grouped together form the male parent.<p>
-                    <p><b>reciprocal:</b> Creates a group of biparental crosses. Starting with a list of accessions, all possible biparental cross combinations are made between them.<p>
-                    <p><b>multicross:</b> Creates a group of biparental crosses. Starting with a list of maternal accessions and a list of paternal accessions, direct crosses are made in order.<p>
+                    <p><& /util/sentence.mas, text => __x('{bold}polycross:{end_bold} Creates a group of open pollinated crosses. Each accession in the selected list becomes the female parent in an open cross, and all the members of the list grouped together form the male parent.'), bold => '<b>', end_bold => '</b>' &><p>
+                    <p><& /util/sentence.mas, text => __x('{bold}reciprocal:{end_bold} Creates a group of biparental crosses. Starting with a list of accessions, all possible biparental cross combinations are made between them.'), bold => '<b>', end_bold => '</b>' &><p>
+                    <p><& /util/sentence.mas, text => __x('{bold}multicross:{end_bold} Creates a group of biparental crosses. Starting with a list of maternal accessions and a list of paternal accessions, direct crosses are made in order.'), bold => '<b>', end_bold => '</b>' &><p>
                 </div>
             </div>
             <div class="modal-footer">

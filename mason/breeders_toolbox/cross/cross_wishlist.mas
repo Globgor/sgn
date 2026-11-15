@@ -211,7 +211,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="createCrossWishlistSelectDialog"><% __('Select Plots for Cross Wishlist') |h %></h4>
-                <h4>Female Plots are in <span class="bg-primary">Blue</span><!-- and Male Plots are in <span class="bg-success">Green</span>.--></h4>
+                <h4><& /util/sentence.mas, text => __x('Female Plots are in {span}Blue{end_span}'), span => '<span class="bg-primary">', end_span => '</span>' &><!-- and Male Plots are in <span class="bg-success">Green</span>.--></h4>
             </div>
 
             <div class="modal-body">

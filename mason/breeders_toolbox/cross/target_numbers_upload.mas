@@ -95,7 +95,7 @@ $trial_name
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Target numbers of seeds/progenies may be uploaded in an Excel file (.xls or .xlsx)
+                    <b><& /util/sentence.mas, text => __x('Target numbers of seeds/progenies may be uploaded in an Excel file (.xls or .xlsx)') &>
                     <br><br>
                     <b><% __('Header:') |h %></b>
                     <br>

@@ -105,9 +105,9 @@ $trial_name
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <b>Cross Unique ID:</b> You can let database automatically generate cross unique IDs for you or you can set up your own cross unique IDs in the database before uploading Intercross file. For the auto-generated cross unique ID, cross unique ID is a combination of crossing experiment name and incremental suffix number.
+                    <& /util/sentence.mas, text => __x('{bold}Cross Unique ID:{end_bold} You can let database automatically generate cross unique IDs for you or you can set up your own cross unique IDs in the database before uploading Intercross file. For the auto-generated cross unique ID, cross unique ID is a combination of crossing experiment name and incremental suffix number.'), bold => '<b>', end_bold => '</b>' &>
                     <br><br>
-                    <b>Intercross file is an CSV file (.csv).</b> Crosses in an intercross file must be in the same crossing experiment.
+                    <& /util/sentence.mas, text => __x('{bold}Intercross file is an CSV file (.csv).{end_bold} Crosses in an intercross file must be in the same crossing experiment.'), bold => '<b>', end_bold => '</b>' &>
                     <br><br>
                     <b><% __('Header:') |h %></b>
                     <br>

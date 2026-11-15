@@ -19,8 +19,8 @@
                     <h4>
                         <% __('How to Record Target Numbers:') |h %>
                     </h4>
-                    <li><b>Uploading Target Numbers</b>: Target numbers of seeds/progenies can be uploaded to the database using a spreadsheet. Please use "Upload Target Numbers" link in this section </li>
-                    <li><b>Using Lists of Accessions</b>: You can indicate target numbers of seeds and/or progenies by using a list of female accessions and a list of male accessions. Please use "Using Lists to Record Target Numbers" link in this section </li>
+                    <li><& /util/sentence.mas, text => __x('{bold}Uploading Target Numbers{end_bold}: Target numbers of seeds/progenies can be uploaded to the database using a spreadsheet. Please use "Upload Target Numbers" link in this section'), bold => '<b>', end_bold => '</b>' &> </li>
+                    <li><& /util/sentence.mas, text => __x('{bold}Using Lists of Accessions{end_bold}: You can indicate target numbers of seeds and/or progenies by using a list of female accessions and a list of male accessions. Please use "Using Lists to Record Target Numbers" link in this section'), bold => '<b>', end_bold => '</b>' &> </li>
                     <br>
                     <h4>
                         <% __('Tracking Progress of Each Parental Combination:') |h %>
