@@ -112,7 +112,7 @@ function add_user_role(sp_person_id, person_name) {
             },
             error: function(response) {
                 jQuery("#working_modal").modal("hide");
-                alert('An error occured: '+response);
+                alert('An error occurred: '+response);
             }
         });
 }
@@ -139,7 +139,7 @@ function add_user_role(sp_person_id, person_name) {
         },
         error: function(response) {
             jQuery("#working_modal").modal("hide");
-            alert('An error occured: '+response);
+            alert('An error occurred: '+response);
         }
     });
 });
