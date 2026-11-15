@@ -2,13 +2,13 @@
 
   
 <div class="col-sm-11 col-md-11 col-lg-11">
-The Breedbase system has evolved from the <a href="https://solgenomics.net">Sol Genomics Network (SGN)</a> and <a href="https://cassavabase.org/">Cassavabase</a> and related sites (see <a href="https://rtbbase.org">RTBbase.org</a>).
+<& /util/sentence.mas, text => __x('The Breedbase system has evolved from the {link}Sol Genomics Network (SGN){end_link} and {link2}Cassavabase{end_link2} and related sites (see {link3}RTBbase.org{end_link3}).'), link => '<a href="https://solgenomics.net">', end_link => '</a>', link2 => '<a href="https://cassavabase.org/">', end_link2 => '</a>', link3 => '<a href="https://rtbbase.org">', end_link3 => '</a>' &>
 </div>
 <div class="col-sm-11 col-md-11 col-lg-11">
   <% __('Breedbase is striving to be a complete breeding management system, including field management, data collection, crossing utilities, and advanced trial analysis.') |h %>
 </div>
 <div class="col-sm-11 col-md-11 col-lg-11">
-  Please refer to the Breedbase <a href="https://solgenomics.github.io/sgn/">manual</a> for detailed information about available features.
+  <& /util/sentence.mas, text => __x('Please refer to the Breedbase {link}manual{end_link} for detailed information about available features.'), link => '<a href="https://solgenomics.github.io/sgn/">', end_link => '</a>' &>
   </div>
 <div class="col-sm-11 col-md-11 col-lg-11">
   <br />

@@ -1,14 +1,14 @@
 <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Breedbase Help"), 'h' ) &>
 
-<div>Breedbase is a comprehensive breeding management and analysis software. It can be used to design field layouts, collect <a href="https://phenoapps.org">phenotypic and other information using Phenoapps software</a>, support the collection of genotyping samples in a field, store large amounts of high density genotypic information, and provide Genomic Selection related analyses and predictions. Breedbase supports the <a href="https://brapi.org">BrAPI standard</a>.
+<div><& /util/sentence.mas, text => __x('Breedbase is a comprehensive breeding management and analysis software. It can be used to design field layouts, collect {link}phenotypic and other information using Phenoapps software{end_link}, support the collection of genotyping samples in a field, store large amounts of high density genotypic information, and provide Genomic Selection related analyses and predictions. Breedbase supports the {link2}BrAPI standard{end_link2}.'), link => '<a href="https://phenoapps.org">', end_link => '</a>', link2 => '<a href="https://brapi.org">', end_link2 => '</a>' &>
 </div>
 <br />
 <div class="panel panel-default">
 <div class="panel-body">
 <ul>
-<li>The complete Breedbase help is available from the <a href="https://solgenomics.github.io/sgn/" target="_new">Breedbase and SGN manual</a>.</li>
-<li>Video Tutorials are available on <a href="https://www.youtube.com/channel/UC3jrvvzGKKEHzOriDBgnj0A" target="_new">YouTube</a>.</li> 
-<li>A guide for <a href="https://github.com/solgenomics/sgn/wiki/" target="_new">developers is also available</a>.</li>
+<li><& /util/sentence.mas, text => __x('The complete Breedbase help is available from the {link}Breedbase and SGN manual{end_link}.'), link => '<a href="https://solgenomics.github.io/sgn/" target="_new">', end_link => '</a>' &></li>
+<li><& /util/sentence.mas, text => __x('Video Tutorials are available on {link}YouTube{end_link}.'), link => '<a href="https://www.youtube.com/channel/UC3jrvvzGKKEHzOriDBgnj0A" target="_new">', end_link => '</a>' &></li> 
+<li><& /util/sentence.mas, text => __x('A guide for {link}developers is also available{end_link}.'), link => '<a href="https://github.com/solgenomics/sgn/wiki/" target="_new">', end_link => '</a>' &></li>
 </ul>
 </div>
 </div>

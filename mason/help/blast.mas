@@ -1,7 +1,7 @@
 
 <& /page/page_title.mas, title => $m->interp->apply_escapes( __("BLAST Help"), 'h' ) &>
 
-<p>BLAST on this site is based on NCBI BLAST and is accessible on <a href="/tools/blast">/tools/blast</a>. </p>
+<p><& /util/sentence.mas, text => __x('BLAST on this site is based on NCBI BLAST and is accessible on {link}{address}{end_link}.'), link => '<a href="/tools/blast">', address => '/tools/blast', end_link => '</a>' &> </p>
 
 <p><% __('To make finding the right BLAST database faster, the databases are organized into different categories, which can be selected using the "Categories" pull-down menu. Each category contains a number of BLAST databases which can be selected in the "Database" pull down menu.') |h %></p>
 

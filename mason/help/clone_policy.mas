@@ -10,40 +10,9 @@
         <td>
 
 
-          <p>Development of the tomato EST database is
-          currently in progress and continues to be updated on a
-          regular basis as new sequences are added. Our objective
-          is to ultimately make available to the research community
-          a complete set of non-redundant tomato ESTs. The "in
-          progress" collection is continually updated as new EST
-          sequences are added to the database. In some cases new
-          EST sequences provide information that modifies the
-          previous "in-progress" non-redundant EST collection. For
-          example, when clones are found through additional
-          sequencing to be chimeric, or when a new EST sequence
-          "links" two clones previously thought to be unique. In
-          short, the "in-progress" non-redundant set is expected to
-          contain a considerable number of duplications and errors
-          of various types. Once the sequencing phase of this
-          project is completed (fall 2001) a final build will be
-          created and a final non-redundant gene set defined. This
-          collection is currently estimated to range from 25,000 -
-          40,000 cDNA clones which will be condensed, quality
-          confirmed, and re-arrayed into a collection that can be
-          distributed in whole - or can much more efficiently be
-          searched for individual clones than is currently the case
-          with over 25 libraries each containing 4000 - 15,000
-          ordered clones.</p>
+          <p><& /util/sentence.mas, text => __x('Development of the tomato EST database is currently in progress and continues to be updated on a regular basis as new sequences are added.') &> <& /util/sentence.mas, text => __x('Our objective is to ultimately make available to the research community a complete set of non-redundant tomato ESTs.') &> <& /util/sentence.mas, text => __x('The "in progress" collection is continually updated as new EST sequences are added to the database.') &> <& /util/sentence.mas, text => __x('In some cases new EST sequences provide information that modifies the previous "in-progress" non-redundant EST collection.') &> <& /util/sentence.mas, text => __x('For example, when clones are found through additional sequencing to be chimeric, or when a new EST sequence "links" two clones previously thought to be unique.') &> <& /util/sentence.mas, text => __x('In short, the "in-progress" non-redundant set is expected to contain a considerable number of duplications and errors of various types.') &> <& /util/sentence.mas, text => __x('Once the sequencing phase of this project is completed (fall 2001) a final build will be created and a final non-redundant gene set defined.') &> <& /util/sentence.mas, text => __x('This collection is currently estimated to range from 25,000 - 40,000 cDNA clones which will be condensed, quality confirmed, and re-arrayed into a collection that can be distributed in whole - or can much more efficiently be searched for individual clones than is currently the case with over 25 libraries each containing 4000 - 15,000 ordered clones.') &></p>
 
-          <p><strong>We realize the need for access by the research
-          community to EST clones prior to completion of this
-          project and thus have instituted a policy whereby up to
-          150 clones per laboratory per year can be requested on a
-          subsidized re-charge basis through the Clemson University
-          Genomics Institute (CUGI) which handles maintenance and
-          distribution of the tomato ESTs and receives funding
-          through this project to offset some of the associated
-          costs.</strong></p>
+          <p><strong><& /util/sentence.mas, text => __x('We realize the need for access by the research community to EST clones prior to completion of this project and thus have instituted a policy whereby up to 150 clones per laboratory per year can be requested on a subsidized re-charge basis through the Clemson University Genomics Institute (CUGI) which handles maintenance and distribution of the tomato ESTs and receives funding through this project to offset some of the associated costs.') &></strong></p>
 
           <strong><% __('Cost Basis') |h %></strong>
           <p>CUGI received a total of \$100,000 (apx. \$80K in direct
@@ -79,14 +48,12 @@
             </tr>
 
             <tr>
-              <td>Clones 151 - unlimited in any twelve month
-              period:</td>
+              <td><& /util/sentence.mas, text => __x('Clones 151 - unlimited in any twelve month period:') &></td>
               <td>\$20/clone</td>
             </tr>
 
             <tr>
-              <td>Entire 384 well plates of sequential ESTs from a
-              given library</td>
+              <td><& /util/sentence.mas, text => __x('Entire 384 well plates of sequential ESTs from a given library') &></td>
               <td>\$10/plate(academic)<br />
               \$50/plate(industry)</td>
             </tr>

@@ -19,10 +19,7 @@ sgn_data.mas - SGN page for organism data overview in a tree format
 <script language="javascript" type="text/javascript" src="/js/popup.js"></script>
 
 <div class="page_introduction">
-  This page presents a summary of all currently available data on SGN
-  sorted by species.  Click a species name for details about available
-  its available maps, loci, libraries, ESTs, metabolic annotation and
-  phenotyped accessions.
+  <& /util/sentence.mas, text => __x('This page presents a summary of all currently available data on SGN sorted by species. Click a species name for details about available its available maps, loci, libraries, ESTs, metabolic annotation and phenotyped accessions.') &>
 </div>
 
 % for my $category (reverse sort keys %$organism_trees) {

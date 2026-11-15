@@ -2,16 +2,14 @@
 <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Gene Search Help"), 'h' ) &>
 
 <p>
-The <a href="/search/direct_search.pl?search=loci">gene search</a> is a tool for searching genes in SGN's database. 
-These genes originate from various sources, including GenBank, PubMed literature mining, historic collections of gene names, and SGN user-contributed data.
+<& /util/sentence.mas, text => __x('The {link}gene search{end_link} is a tool for searching genes in SGN\'s database. These genes originate from various sources, including GenBank, PubMed literature mining, historic collections of gene names, and SGN user-contributed data.'), link => '<a href="/search/direct_search.pl?search=loci">', end_link => '</a>' &>
 </p>
 
 <img src="/documents/help/screenshots/gene_search_help.png" alt="<% __('screenshot of gene search form') |h %>" style="margin: auto; border: 1px solid black;" />
 
 <h4><% __('1. Simple search option: search by locus or allele name or symbol') |h %></h4>
 <p>
-Use this option for searching the database for genes with a locus or allele name/symbol/synonym/description containing what you typed in. You can search these fields for an exact match, begin with or end with your input, by selecting the desired option from the drop-down menu. 
-The search is case-insensitive.
+<& /util/sentence.mas, text => __x('Use this option for searching the database for genes with a locus or allele name/symbol/synonym/description containing what you typed in. You can search these fields for an exact match, begin with or end with your input, by selecting the desired option from the drop-down menu. The search is case-insensitive.') &>
 
 
 </p>
@@ -65,7 +63,7 @@ For searching phenotypes of accessions not necessarily associated with a gene, y
 
 <h4><% __('7. Ontology term') |h %></h4>
 <p>
-Use this box for searching for genes that are annotated to specific <a href="http://geneontology.org">Gene Ontology</a> or <a href="http://plantontology.org">Plant Ontology</a> terms. You may search for ontology annotations by typing any part of the ontology term ID, term name, term synonym, or term definition.
+<& /util/sentence.mas, text => __x('Use this box for searching for genes that are annotated to specific {link}Gene Ontology{end_link} or {link2}Plant Ontology{end_link2} terms. You may search for ontology annotations by typing any part of the ontology term ID, term name, term synonym, or term definition.'), link => '<a href="http://geneontology.org">', end_link => '</a>', link2 => '<a href="http://plantontology.org">', end_link2 => '</a>' &>
 
 
 </p>

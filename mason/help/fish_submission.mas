@@ -1,16 +1,14 @@
 
 <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("FISH Data Submission Help"), 'h' ) &>
 
-<p>This document describes what we at SGN are prepared to accept for FISH
-experiment data. Please <a href="/contact/form">contact us</a> if you have any questions about these guidelines.</p>
+<p><& /util/sentence.mas, text => __x('This document describes what we at SGN are prepared to accept for FISH experiment data. Please {link}contact us{end_link} if you have any questions about these guidelines.'), link => '<a href="/contact/form">', end_link => '</a>' &></p>
 
 
 <p><% __('When submitting spreads, the preferred folder layout looks like this:') |h %></p>
 
 <pre>&lt;chromosome arm&gt;/&lt;BACS on arm&gt;/&lt;spreads for BAC&gt;/&lt;files for spread&gt;</pre>
 
-<p>For example, a single spread for a BAC on chromosome 11's long arm would
-be:</p>
+<p><& /util/sentence.mas, text => __x('For example, a single spread for a BAC on chromosome 11\'s long arm would be:') &></p>
 
 <pre>
   Tomato_11Q/
@@ -41,8 +39,7 @@ folder (e.g., have two folders "Spread_15" and "Spread_16", rather
 than putting the images in a single folder called
 &quot;Spreads_15_and_16&quot; or something).</p>
 
-<p>For each upload of several spreads, a single spreadsheet with at
-least the following columns (columns of other data will be ignored):</p>
+<p><& /util/sentence.mas, text => __x('For each upload of several spreads, a single spreadsheet with at least the following columns (columns of other data will be ignored):') &></p>
 
 <pre>
   BAC ID      Spread   BAC % from kc

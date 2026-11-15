@@ -18,10 +18,10 @@ border:1px solid red;color:red;
 
 <div class="boxbgcolor1">
 <p>
-SolCyc is a collection of Pathway Genome Databases (PGDBs) for Solanaceae species generated using <a href="http://bioinformatics.ai.sri.com/ptools/">Pathway Tools</a> software from <a href="http://www.sri.com">SRI International</a>, the same software that is used in <a href="http://www.arabidopsis.org/tools/aracyc/">AraCyc</a> for <i>Arabidopsis thaliana</i> and <a href="http://www.ecocyc.org">EcoCyc</a> for <i>E. coli</i>. 
+<& /util/sentence.mas, text => __x('SolCyc is a collection of Pathway Genome Databases (PGDBs) for {family} species generated using {link}Pathway Tools{end_link} software from {link2}SRI International{end_link2}, the same software that is used in {link3}AraCyc{end_link3} for {i}{arabidopsis}{end_i} and {link4}EcoCyc{end_link4} for {i}{ecoli}{end_i}.'), family => 'Solanaceae', link => '<a href="http://bioinformatics.ai.sri.com/ptools/">', end_link => '</a>', link2 => '<a href="http://www.sri.com">', end_link2 => '</a>', link3 => '<a href="http://www.arabidopsis.org/tools/aracyc/">', end_link3 => '</a>', i => '<i>', arabidopsis => 'Arabidopsis thaliana', end_i => '</i>', link4 => '<a href="http://www.ecocyc.org">', end_link4 => '</a>', ecoli => 'E. coli' &> 
 </p>
 <p>
-Currently, databases for tomato, potato, and pepper are available, generated from the respective genome annotations. Databases that have received significant curation are marked with a <span class="tier">TIER 1</span>. The eggplant database is not longer supported or available.
+<& /util/sentence.mas, text => __x('Currently, databases for tomato, potato, and pepper are available, generated from the respective genome annotations.') &> <& /util/sentence.mas, text => __x('Databases that have received significant curation are marked with a {span}{tier}{end_span}.'), span => '<span class="tier">', tier => 'TIER 1', end_span => '</span>' &> <& /util/sentence.mas, text => __x('The eggplant database is not longer supported or available.') &>
 </p>
 
 
@@ -56,13 +56,12 @@ Currently, databases for tomato, potato, and pepper are available, generated fro
 <% __('More databases will be generated in the future, and the annotation will be improved by adding more Solanaceae specific pathways.') |h %>
 </p>
 <p>
-Note the availability of the <a href="http://solcyc.solgenomics.net/expression.html">Omics viewer</a>, which allows microarray, gene chip, proteomics, and metabolomic information to be overlaid over the pathway overview diagrams.
+<& /util/sentence.mas, text => __x('Note the availability of the {link}Omics viewer{end_link}, which allows microarray, gene chip, proteomics, and metabolomic information to be overlaid over the pathway overview diagrams.'), link => '<a href="http://solcyc.solgenomics.net/expression.html">', end_link => '</a>' &>
 </p>
 </div>
 
 
 <b><% __('Programmatic interfaces for Pathway Tools') |h %></b>:<br />
-We currently maintain a Perl interface and a Java interface for Pathway Tools:
-<a href="ftp://ftp.solgenomics.net/programs/javacyc/javacyc.tar.gz">JavaCyc</a> and <a href="ftp://ftp.solgenomics.net/programs/perlcyc/perlcyc.tar.gz">PerlCyc</a>. More information is available on the <a href="/downloads/">software downloads</a> page.
+<& /util/sentence.mas, text => __x('We currently maintain a Perl interface and a Java interface for Pathway Tools: {link}JavaCyc{end_link} and {link2}PerlCyc{end_link2}.'), link => '<a href="ftp://ftp.solgenomics.net/programs/javacyc/javacyc.tar.gz">', end_link => '</a>', link2 => '<a href="ftp://ftp.solgenomics.net/programs/perlcyc/perlcyc.tar.gz">', end_link2 => '</a>' &> <& /util/sentence.mas, text => __x('More information is available on the {link}software downloads{end_link} page.'), link => '<a href="/downloads/">', end_link => '</a>' &>
 
 };

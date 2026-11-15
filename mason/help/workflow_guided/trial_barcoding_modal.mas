@@ -13,7 +13,7 @@
             <div class="modal-body">
                 <div class="container-fluid">
                 <% __('Nothing Here Yet') |h %><br/>
-                Please refer to the <a href="https://solgenomics.github.io/sgn">Documentation</a>
+                <& /util/sentence.mas, text => __x('Please refer to the {link}Documentation{end_link}'), link => '<a href="https://solgenomics.github.io/sgn">', end_link => '</a>' &>
                 </div>
             </div>
             <div class="modal-footer">
