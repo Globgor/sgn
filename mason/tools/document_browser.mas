@@ -187,7 +187,7 @@ function hideWorkingModal() {
 function initializeUpload() {
     var uploadFile = jQuery("#upload_document_browser_file_input").val();
     if (uploadFile === '') {
-        alert("Please select a file");
+        alert(<% __('Please select a file') |js %>);
     } else {
         showWorkingModal("Storing File");
         jQuery("#upload_document_browser_file_form").attr("action", '/ajax/tools/documents/upload');

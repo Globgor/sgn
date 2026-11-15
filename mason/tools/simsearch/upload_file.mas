@@ -39,7 +39,7 @@ $format => ""
 
 jQuery(document).ready( function() { 
     jQuery('#simsearch_run_button').click( function() {
-        alert("HELLO!");
+        alert(<% __('HELLO!') |js %>);
         var filename = jQuery('#simsearch_filename').val();
         var reference_file = jQuery('#reference_file').val();
 
