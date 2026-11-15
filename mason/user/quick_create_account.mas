@@ -6,7 +6,7 @@
   <form id="quick_create_account_input_form" method="post" action="/user/quick_create_account">
     
     <table cellpadding="2" cellspacing="2" width="100%" align="center">
-      <tr><td colspan="2"><b>Curators may use this form to create accounts for new users.<br />&nbsp;</b></td></tr>
+      <tr><td colspan="2"><b><& /util/sentence.mas, text => __x('Curators may use this form to create accounts for new users.') &><br />&nbsp;</b></td></tr>
       <tr><td><% __('First Name') |h %></td><td><input type="text" name="first_name" size="20" value=""></td></tr>
       <tr><td><% __('Last Name') |h %></td><td><input type="text" name="last_name" size="20" value=""></td></tr>
       <tr><td><% __('Username (at least 7 characters)') |h %></td><td><input type="text" name="username" size="12" value=""></td></tr>
