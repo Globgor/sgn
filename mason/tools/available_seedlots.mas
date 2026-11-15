@@ -3,16 +3,16 @@
   <table class="table table-hover table-bordered">
     <thead>
       <tr>
-        <th rowspan="2" style="text-align: center;">Accessions</th><th colspan="7" style="text-align: center;">Seedlots</th>
+        <th rowspan="2" style="text-align: center;"><% __('Accessions') |h %></th><th colspan="7" style="text-align: center;"><% __('Seedlots') |h %></th>
       </tr>
       <tr>
-        <th style="text-align: center;"><button id="selectallaccessions" type="button" disabled>Select/Deselect All</button></th>
-        <th style="text-align: center;">Breeding Program</th>
-        <th style="text-align: center;">Seedlot Name</th>
-        <th style="text-align: center;">Contents</th>
-        <th style="text-align: center;">Seedlot Location</th>
-        <th style="text-align: center;">Count</th>
-        <th style="text-align: center;">Weight(g)</th>
+        <th style="text-align: center;"><button id="selectallaccessions" type="button" disabled><% __('Select/Deselect All') |h %></button></th>
+        <th style="text-align: center;"><% __('Breeding Program') |h %></th>
+        <th style="text-align: center;"><% __('Seedlot Name') |h %></th>
+        <th style="text-align: center;"><% __('Contents') |h %></th>
+        <th style="text-align: center;"><% __('Seedlot Location') |h %></th>
+        <th style="text-align: center;"><% __('Count') |h %></th>
+        <th style="text-align: center;"><% __('Weight(g)') |h %></th>
       </tr>
     </thead>
   </table>

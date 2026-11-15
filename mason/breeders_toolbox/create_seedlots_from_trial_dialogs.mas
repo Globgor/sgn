@@ -7,8 +7,8 @@ $default_seedlot_material_type => undef
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="create_seedlots_trial_dialog_title">Create Seedlots from a Trial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="create_seedlots_trial_dialog_title"><% __('Create Seedlots from a Trial') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -18,8 +18,8 @@ $default_seedlot_material_type => undef
 
 
                         <!-- STEP 1: Intro -->
-                        <&| /util/workflow.mas:step, title=> "Intro" &>
-                            <& /page/page_title.mas, title=>"Introduction" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Introduction"), 'h' ) &>
                             <p>
                                 This workflow will guide you through the process of creating seedlots from the accessions
                                 in a field trial.  You can create one new seedlot for each plot or unique accession
@@ -28,21 +28,21 @@ $default_seedlot_material_type => undef
                             </p>
                             <br/><br/>
                             <div style="text-align: center">
-                                <button class="btn btn-primary" onclick="Workflow.complete(this);">Go to Next Step</button>
+                                <button class="btn btn-primary" onclick="Workflow.complete(this);"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
                         <!-- STEP 2: Select Trial -->
-                        <&| /util/workflow.mas:step, title=> "Select Trial" &>
-                            <& /page/page_title.mas, title=>"Select a Field Trial" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select Trial"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select a Field Trial"), 'h' ) &>
                             <p>
-                                Enter the name of the field trial from which to create the seedlots:
+                                <% __('Enter the name of the field trial from which to create the seedlots:') |h %>
                             </p>
                             <br /><br />
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Trial: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Trial:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control" id="create_seedlots_trial_name" placeholder="Trial Name..." value="">
+                                    <input class="form-control" id="create_seedlots_trial_name" placeholder="<% __('Trial Name...') |h %>" value="">
                                 </div>
                             </div>
                             <br /><br /><br /><br />
@@ -51,13 +51,13 @@ $default_seedlot_material_type => undef
                             </div>
                             <br/><br/>
                             <div style="text-align: center">
-                                <button id="create_seedlots_trial_complete_select_trial" class="btn btn-primary">Go to Next Step</button>
+                                <button id="create_seedlots_trial_complete_select_trial" class="btn btn-primary"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
                         <!-- STEP 3: Select Seedlots -->
-                        <&| /util/workflow.mas:step, title=> "Select Seedlots" &>
-                            <& /page/page_title.mas, title=>"Select Seedlots" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select Seedlots"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select Seedlots"), 'h' ) &>
 
                             <p>
                                 Seedlots can be generated from either each <strong>accession</strong> or <strong>plot</strong>
@@ -78,10 +78,10 @@ $default_seedlot_material_type => undef
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6" >
                                     <select id="create_seedlots_trial_stock_type" class="form-control">
-                                        <option value="accessions">Accessions</option>
-                                        <option value="plots">Plots</option>
-                                        <option class="create_seedlots_trial_subplots_available" value="subplots">Subplots</option>
-                                        <option class="create_seedlots_trial_plants_available" value="plants">Plants</option>
+                                        <option value="accessions"><% __('Accessions') |h %></option>
+                                        <option value="plots"><% __('Plots') |h %></option>
+                                        <option class="create_seedlots_trial_subplots_available" value="subplots"><% __('Subplots') |h %></option>
+                                        <option class="create_seedlots_trial_plants_available" value="plants"><% __('Plants') |h %></option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3"></div>
@@ -89,16 +89,16 @@ $default_seedlot_material_type => undef
 
                             <br/><br/><br /><br />
                             <div style="text-align: center">
-                                <button id="create_seedlots_trial_complete_select_stock_type" class="btn btn-primary">Go to Next Step</button>
+                                <button id="create_seedlots_trial_complete_select_stock_type" class="btn btn-primary"><% __('Go to Next Step') |h %></button>
                             </div>
                         </&>
 
                         <!-- STEP 4: Name Seedlots -->
-                        <&| /util/workflow.mas:step, title=> "Name Seedlots" &>
-                            <& /page/page_title.mas, title=>"Name Seedlots" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Name Seedlots"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Name Seedlots"), 'h' ) &>
 
                             <p>
-                                Enter a template for naming each new seedlot.  The following variables (surrounded by curly braces) can be used in the template and the value of that variable will be replaced.
+                                <% __('Enter a template for naming each new seedlot.  The following variables (surrounded by curly braces) can be used in the template and the value of that variable will be replaced.') |h %>
                             </p>
                             <ul>
                                 <li><code>trial_name</code></li>
@@ -117,30 +117,30 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Name Template: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Name Template:') |h %> </label>
                                 <div class="col-sm-7" >
                                     <input class="form-control" id="create_seedlots_trial_name_template" value="">
                                 </div>
                                 <div class="col-sm-2">
-                                    <button id="create_seedlots_trial_name_update" type="button" class="btn btn-primary btn-block" disabled>Update</button>
+                                    <button id="create_seedlots_trial_name_update" type="button" class="btn btn-primary btn-block" disabled><% __('Update') |h %></button>
                                 </div>
                             </div>
 
                             <br /><br /><br />
 
                             <div style="text-align: center">
-                                <button id="create_seedlots_trial_complete_name_seedlots" class="btn btn-primary">Go to Next Step</button>
+                                <button id="create_seedlots_trial_complete_name_seedlots" class="btn btn-primary"><% __('Go to Next Step') |h %></button>
                             </div>
 
                             <br /><br />
 
-                            <h4>Seedlot Names</h4>
+                            <h4><% __('Seedlot Names') |h %></h4>
                             <table id="create_seedlots_trial_name_table" class="table table-striped table-hover"></table>
                         </&>
 
                         <!-- STEP 5: Seedlot Contents -->
-                        <&| /util/workflow.mas:step, title=> "Set Contents" &>
-                            <& /page/page_title.mas, title=>"Set Seedlot Contents" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Set Contents"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Set Seedlot Contents"), 'h' ) &>
 
                             <p>
                                 Each seedlot needs to have its initial contents (either a count or a weight) set.  You
@@ -155,11 +155,11 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Contents Type: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Contents Type:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="create_seedlots_trial_contents_type">
-                                        <option value="amount">Amount / Count</option>
-                                        <option value="weight">Weight</option>
+                                        <option value="amount"><% __('Amount / Count') |h %></option>
+                                        <option value="weight"><% __('Weight') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -167,12 +167,12 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Contents Value: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Contents Value:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="create_seedlots_trial_contents_value">
-                                        <option value="constant">Constant Value</option>
-                                        <option value="trait">Trait Value</option>
-                                        <option value="computed">Computed Value from Traits</option>
+                                        <option value="constant"><% __('Constant Value') |h %></option>
+                                        <option value="trait"><% __('Trait Value') |h %></option>
+                                        <option value="computed"><% __('Computed Value from Traits') |h %></option>
                                     </select>
                                 </div>
                             </div>
@@ -180,21 +180,21 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group" id="create_seedlots_trial_contents_constant_form">
-                                <label class="col-sm-3 control-label" style="text-align: right">Constant: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Constant:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control" id="create_seedlots_trial_contents_constant" value="1">
                                 </div>
                             </div>
 
                             <div class="form-group" id="create_seedlots_trial_contents_trait_form" style="display: none">
-                                <label class="col-sm-3 control-label" style="text-align: right">Trait: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Trait:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <select class="form-control" id="create_seedlots_trial_contents_trait"></select>
                                 </div>
                             </div>
 
                             <div class="form-group" id="create_seedlots_trial_contents_computed_form" style="display: none">
-                                <label class="col-sm-3 control-label" style="text-align: right">Trait Variables: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Trait Variables:') |h %> </label>
                                 <div class="col-sm-9">
                                     <p>
                                         Use the following variables as substitutions for the trait values to compute a new value
@@ -206,15 +206,15 @@ $default_seedlot_material_type => undef
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Variable</th>
-                                                <th>Trait</th>
+                                                <th><% __('Variable') |h %></th>
+                                                <th><% __('Trait') |h %></th>
                                             </tr>
                                         </thead>
                                         <tbody id="create_seedlots_trial_contents_computed_table"></tbody>
                                     </table>
                                 </div>
 
-                                <label class="col-sm-3 control-label" style="text-align: right">Contents Formula: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Contents Formula:') |h %> </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="create_seedlots_trial_contents_computed_formula" value="" placeholder="{trait_1}/10">
                                     <p>
@@ -224,25 +224,25 @@ $default_seedlot_material_type => undef
                                 </div>
 
                                 <div class="col-sm-12" style="text-align: center; margin: 25px 0">
-                                    <button id="create_seedlots_trial_complete_computed_compute" class="btn btn-primary" disabled>Compute</button>
+                                    <button id="create_seedlots_trial_complete_computed_compute" class="btn btn-primary" disabled><% __('Compute') |h %></button>
                                 </div>
                             </div>
 
                             <br /><br />
 
                             <div style="text-align: center">
-                                <button id="create_seedlots_trial_complete_set_contents" class="btn btn-primary">Go to Next Step</button>
+                                <button id="create_seedlots_trial_complete_set_contents" class="btn btn-primary"><% __('Go to Next Step') |h %></button>
                             </div>
 
                             <br /><br />
 
-                            <h4>Seedlot Contents</h4>
+                            <h4><% __('Seedlot Contents') |h %></h4>
                             <table id="create_seedlots_trial_contents_table" class="table table-striped table-hover"></table>
                         </&>
 
                         <!-- STEP 6: Seedlot Metadata -->
-                        <&| /util/workflow.mas:step, title=> "Set Metadata" &>
-                            <& /page/page_title.mas, title=>"Set Seedlot Metadata" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Set Metadata"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Set Seedlot Metadata"), 'h' ) &>
 
                             <p>
                                 The following metadata is required for each seedlot.  Fill out the form at the top
@@ -253,7 +253,7 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Breeding Program: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Breeding Program:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <div id="create_seedlots_trial_breeding_program_div"></div>
                                 </div>
@@ -262,32 +262,32 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Location: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Location:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_location" value="" placeholder="Required">
+                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_location" value="" placeholder="<% __('Required') |h %>">
                                 </div>
                             </div>
 
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Box Name: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Box Name:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_box_name" value="" placeholder="Required">
+                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_box_name" value="" placeholder="<% __('Required') |h %>">
                                 </div>
                             </div>
 
                             <br /><br />
 %if ($default_seedlot_material_type) {
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Material Type: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Material Type:') |h %> </label>
                                 <div class="col-sm-9">
                                     <input class="form-control" name="create_seedlots_trial_default_material_type" id="create_seedlots_trial_default_material_type" disabled value="<% $default_seedlot_material_type %>">
                                 </div>
                             </div>
 % } else {
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Material Type: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Material Type:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <div id="create_seedlots_trial_material_type_div"></div>
                                 </div>
@@ -296,7 +296,7 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Quality Issues: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Quality Issues:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_quality_issues" value="" placeholder="Optional, list quality issues here, or 'ok' for good quality seed">
                                 </div>
@@ -305,16 +305,16 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Organization: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Organization:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_organization" value="" placeholder="Optional">
+                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_organization" value="" placeholder="<% __('Optional') |h %>">
                                 </div>
                             </div>
 
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Timestamp: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Timestamp:') |h %> </label>
                                 <div class="col-sm-9" >
                                     <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_timestamp" value="<% $timestamp %>" placeholder="<% $timestamp %>">
                                 </div>
@@ -323,29 +323,29 @@ $default_seedlot_material_type => undef
                             <br /><br />
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" style="text-align: right">Description: </label>
+                                <label class="col-sm-3 control-label" style="text-align: right"><% __('Description:') |h %> </label>
                                 <div class="col-sm-9" >
-                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_description" value="" placeholder="Optional">
+                                    <input class="form-control create_seedlots_trial_metadata_input" id="create_seedlots_trial_description" value="" placeholder="<% __('Optional') |h %>">
                                 </div>
                             </div>
 
                             <br /><br /><br />
 
                             <div style="text-align: center">
-                                <button id="create_seedlots_trial_update_metadata" class="btn btn-primary">Update</button>
+                                <button id="create_seedlots_trial_update_metadata" class="btn btn-primary"><% __('Update') |h %></button>
                                 <br />
-                                <button id="create_seedlots_trial_complete_set_metadata" class="btn btn-primary" disabled>Go to Next Step</button>
+                                <button id="create_seedlots_trial_complete_set_metadata" class="btn btn-primary" disabled><% __('Go to Next Step') |h %></button>
                             </div>
 
                             <br /><br />
 
-                            <h4>Seedlot Metadata</h4>
+                            <h4><% __('Seedlot Metadata') |h %></h4>
                             <table id="create_seedlots_trial_metadata_table" class="table table-striped table-hover"></table>
                         </&>
 
                         <!-- STEP 7: Confirm -->
-                        <&| /util/workflow.mas:step, title=> "Confirm" &>
-                            <& /page/page_title.mas, title=>"Confirm Seedlots" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Confirm"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Confirm Seedlots"), 'h' ) &>
 
                             <p>
                                 Confirm the attributes for the new seedlots in the table below.  If something
@@ -357,28 +357,28 @@ $default_seedlot_material_type => undef
 
                             <div style="text-align: center">
                                 <button id="create_seedlots_trial_complete_confirm_seedlots" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok"></span>&nbsp;Create Seedlots
+                                    <span class="glyphicon glyphicon-ok"></span>&nbsp;<% __('Create Seedlots') |h %>
                                 </button>
                             </div>
 
                             <br /><br />
 
-                            <h4>Seedlots to Create</h4>
+                            <h4><% __('Seedlots to Create') |h %></h4>
                             <table id="create_seedlots_trial_confirm_table" class="table table-striped table-hover"></table>
                         </&>
 
                         <!-- STEP 8: Create -->
-                        <&| /util/workflow.mas:step, title=> "Create" &>
-                            <& /page/page_title.mas, title=>"Create Seedlots" &>
+                        <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Create"), 'h' ) &>
+                            <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Create Seedlots"), 'h' ) &>
 
                             <br /><br />
 
                             <div id="create_seedlots_trial_uploading">
-                                <p id="create_seedlots_trial_status"><strong>Creating Seedlots...</strong></p>
+                                <p id="create_seedlots_trial_status"><strong><% __('Creating Seedlots...') |h %></strong></p>
                                 <div class="progress">
                                     <div id="create_seedlots_trial_progress" class="progress-bar" role="progressbar" aria-valuenow="70"
                                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                                        <span class="sr-only">70% Complete</span>
+                                        <span class="sr-only"><% __('70% Complete') |h %></span>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +387,7 @@ $default_seedlot_material_type => undef
 
                             <br /><br />
 
-                            <h4>Seedlot Progress</h4>
+                            <h4><% __('Seedlot Progress') |h %></h4>
                             <table id="create_seedlots_trial_results_table" class="table table-striped table-hover"></table>
                         </&>
 
