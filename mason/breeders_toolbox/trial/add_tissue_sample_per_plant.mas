@@ -10,7 +10,7 @@ $trial_has_plants => undef
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addTissueSamplesDialog">Add tissue samples to <% $trial_name %></h4>
+                <h4 class="modal-title" id="addTissueSamplesDialog"><& /util/sentence.mas, text => __x('Add tissue samples to {trial}'), trial => $trial_name &></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">

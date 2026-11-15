@@ -6,7 +6,7 @@
    <h2 style="margin-bottom: 1em"><% __('Design new experimental treatments') |h %></h2>
    <h4><% __('Experimental treatments are applied to the stocks of a trial. Subplots, plants, and tissue samples inherit treatments from their parent stocks.') |h %></h4>
 
-   <h4> Check the <a href='/search/treatments'>treatment search page</a> to see if your treatment has already been made before designing new treatments.</h4>
+   <h4> <& /util/sentence.mas, text => __x('Check the {link}treatment search page{end_link} to see if your treatment has already been made before designing new treatments.'), link => '<a href=\'/search/treatments\'>', end_link => '</a>' &></h4>
 
     <br>
 

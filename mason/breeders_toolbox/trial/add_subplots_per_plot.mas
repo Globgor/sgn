@@ -9,7 +9,7 @@ $trial_name => undef
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addSubplotsDialog">Add subplots to <% $trial_name %></h4>
+        <h4 class="modal-title" id="addSubplotsDialog"><& /util/sentence.mas, text => __x('Add subplots to {trial}'), trial => $trial_name &></h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -44,7 +44,7 @@ $trial_name => undef
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSubplotsDialog">Upload subplots to <% $trial_name %></h4>
+                <h4 class="modal-title" id="uploadSubplotsDialog"><& /util/sentence.mas, text => __x('Upload subplots to {trial}'), trial => $trial_name &></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -134,7 +134,7 @@ $trial_name => undef
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSubplotsWithIndexNumberDialog">Upload subplots to <% $trial_name %> with subplot index number</h4>
+                <h4 class="modal-title" id="uploadSubplotsWithIndexNumberDialog"><& /util/sentence.mas, text => __x('Upload subplots to {trial} with subplot index number'), trial => $trial_name &></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -224,7 +224,7 @@ $trial_name => undef
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="uploadSubplotsWithNumSubplotsPerPlotDialog">Upload subplots to <% $trial_name %> with number of subplots per plot</h4>
+                <h4 class="modal-title" id="uploadSubplotsWithNumSubplotsPerPlotDialog"><& /util/sentence.mas, text => __x('Upload subplots to {trial} with number of subplots per plot'), trial => $trial_name &></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">

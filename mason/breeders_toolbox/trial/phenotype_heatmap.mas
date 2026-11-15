@@ -664,7 +664,7 @@ $trial_stock_type => undef
                     <p> <% __('Field Plot layout submitted successfully!') |h %></p>
                 </div>
                 <div>
-                    <p><strong>NOTE:</strong> It may take a few minutes for the database to update and the changes to be reflected on the website.</p>
+                    <p><& /util/sentence.mas, text => __x('{strong}NOTE:{end_strong} It may take a few minutes for the database to update and the changes to be reflected on the website.'), strong => '<strong>', end_strong => '</strong>' &></p>
                 </div>
             </div>
             <div class="modal-footer">

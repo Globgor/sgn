@@ -25,7 +25,7 @@ $breeding_programs
       <button class="btn btn-primary" id="download_button" disabled="disabled" title="First Select a Trial to Download">Excel</button>
       <button class="btn btn-primary" id="download_button_csv" disabled="disabled" title="First Select a Trial to Download">CSV</button><br />
       <hr>
-      <h5><i>Double click<br />trial to view</i></h5>
+      <h5><i><& /util/sentence.mas, text => __x('Double click{break}trial to view'), break => '<br />' &></i></h5>
       <!-- hr>
       <button id="delete" disabled="disabled" >Delete</button -->
       <br />

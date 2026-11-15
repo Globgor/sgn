@@ -20,7 +20,7 @@ $trial_name => undef
             <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Intro"), 'h' ) &>
               <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Generate Entry Numbers Template"), 'h' ) &>
               <div class="well">
-                  <p>This workflow will generate an Excel spreadsheet which can be used to upload entry numbers (numbers assigned to acccessions in a set of trials).  In the first step, select one or more trials you want to assign accession entry numbers.  Then, download the Excel template containing the selected trials' accessions.  Once you have the entry numbers filled in, use the <strong>Upload Template</strong> function to upload the accession numbers to the database.</p>
+                  <p><& /util/sentence.mas, text => __x('This workflow will generate an Excel spreadsheet which can be used to upload entry numbers (numbers assigned to acccessions in a set of trials). In the first step, select one or more trials you want to assign accession entry numbers. Then, download the Excel template containing the selected trials\' accessions. Once you have the entry numbers filled in, use the {strong}Upload Template{end_strong} function to upload the accession numbers to the database.'), strong => '<strong>', end_strong => '</strong>' &></p>
               </div>
 
               <div class="center">
@@ -33,8 +33,7 @@ $trial_name => undef
             <&| /util/workflow.mas:step, title=> $m->interp->apply_escapes( __("Select Trials"), 'h' ) &>
               <& /page/page_title.mas, title=>$m->interp->apply_escapes( __("Select Trial(s) to assign Entry Numbers"), 'h' ) &>
               <p>
-                <strong>Select Trial(s):</strong> 
-                Select one or more individual Trials or a List of Trials to assign entry numbers.
+                <& /util/sentence.mas, text => __x('{strong}Select Trial(s):{end_strong} Select one or more individual Trials or a List of Trials to assign entry numbers.'), strong => '<strong>', end_strong => '</strong>' &>
               </p>
 
 % if ( $trial_id && $trial_name ) {
@@ -71,10 +70,7 @@ $trial_name => undef
 
               <div id="set_entry_numbers_template">
                 <div class="well">
-                  <p style="margin: 0">Download the generated template and fill in the <strong>entry_number</strong> column for each Accession 
-                  you want to assign an entry number to.  An entry number is not required for each Accession, but each entry number 
-                  should be unique for this set of Trial(s).  Once you have filled out the template, you can upload it to the database 
-                  using the <strong>Upload Template</strong> function.</p>
+                  <p style="margin: 0"><& /util/sentence.mas, text => __x('Download the generated template and fill in the {column} column for each Accession you want to assign an entry number to. An entry number is not required for each Accession, but each entry number should be unique for this set of Trial(s). Once you have filled out the template, you can upload it to the database using the {strong}Upload Template{end_strong} function.'), column => '<strong>entry_number</strong>', strong => '<strong>', end_strong => '</strong>' &></p>
                 </div>
                 <div style="max-width: 250px; margin: 50px auto; text-align: center">
                   <button class="btn btn-primary" id="set_entry_numbers_template_download"><% __('Download Template') |h %></button>

@@ -61,8 +61,7 @@ $for_analysis_page => undef
                     <span class="glyphicon glyphicon-refresh"></span> <% __('Loading collections') |h %>&hellip;
                 </div>
                 <div id="trial_file_collections_empty" class="text-muted" style="display:none; padding:5px;">
-                    No collections contain files from this trial yet. Files can be added to a
-                    collection from the <a href="/collections/files">file collections page</a>.
+                    <& /util/sentence.mas, text => __x('No collections contain files from this trial yet. Files can be added to a collection from the {link}file collections page{end_link}.'), link => '<a href="/collections/files">', end_link => '</a>' &>
                 </div>
                 <table class="table table-hover table-condensed" id="trial_file_collections_table" style="width:100%; display:none;">
                     <thead>
