@@ -320,6 +320,6 @@ qq|<img src="$image_url" usemap="#map$count" border="0" alt="" />|;
 
 </%perl>
 
-<&| /page/info_section.mas, title=>'Mapped locations', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Mapped locations'), 'h' ), collapsible=>1, collapsed=>0 &>
   <% $locations_html %>
 </&>

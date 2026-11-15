@@ -177,30 +177,30 @@ my $edit_privs = $curator ;
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editCvtermDialog">Edit cvterm name and description</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editCvtermDialog"><% __('Edit cvterm name and description') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <form class="form-horizontal" role="form" method="post" id="edit_cvterm_form" name="edit_cvterm_form">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">New name:</label>
+                            <label class="col-sm-3 control-label"><% __('New name:') |h %></label>
                             <div class="col-sm-8">
-                                <input style="width:100%;" class="form-control" id="cvterm_new_name" name="cvterm_new_name" type="text" placeholder="Leave blank for name to be left unchanged"/>
+                                <input style="width:100%;" class="form-control" id="cvterm_new_name" name="cvterm_new_name" type="text" placeholder="<% __('Leave blank for name to be left unchanged') |h %>"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">New definition:</label>
+                            <label class="col-sm-3 control-label"><% __('New definition:') |h %></label>
                             <div class="col-sm-8">
-                                <input style="width:100%;" class="form-control" id="cvterm_new_definition" name="cvterm_new_definition" type="text" placeholder="Leave blank for definition to be left unchanged"/>
+                                <input style="width:100%;" class="form-control" id="cvterm_new_definition" name="cvterm_new_definition" type="text" placeholder="<% __('Leave blank for definition to be left unchanged') |h %>"/>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="cvterm_edit_submit_btn" >Submit</button>
-                <button type="button" id="cvterm_edit_close_btn" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" id="cvterm_edit_submit_btn" ><% __('Submit') |h %></button>
+                <button type="button" id="cvterm_edit_close_btn" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -210,8 +210,8 @@ my $edit_privs = $curator ;
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editSynonymDialog">Edit Synonyms</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editSynonymDialog"><% __('Edit Synonyms') |h %></h4>
             </div>
             <div class="modal-body">
                 <div id="synonym_list">
@@ -225,13 +225,13 @@ my $edit_privs = $curator ;
                 </div>
                 <hr/>
                 <div class="form-inline">
-                    <input type="text" id="new_synonym_input" class="form-control" placeholder="New synonym"/>
+                    <input type="text" id="new_synonym_input" class="form-control" placeholder="<% __('New synonym') |h %>"/>
                     &nbsp;
-                    <button type="button" id="add_synonym_btn" class="btn btn-primary">Add Synonym</button>
+                    <button type="button" id="add_synonym_btn" class="btn btn-primary"><% __('Add Synonym') |h %></button>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -241,27 +241,27 @@ my $edit_privs = $curator ;
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header" style="text-align: center">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="editParentsDialog">Add Parent Terms</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editParentsDialog"><% __('Add Parent Terms') |h %></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="form-group">
-                        <label>Parent term:</label>
+                        <label><% __('Parent term:') |h %></label>
                         <div class="input-group">
-                            <input class="form-control" id="new_parent_term_input" type="text" placeholder="Start typing a term name..."/>
+                            <input class="form-control" id="new_parent_term_input" type="text" placeholder="<% __('Start typing a term name...') |h %>"/>
                             <span class="input-group-btn">
                                 <button id="add_parent_term_btn" class="btn btn-success">+</button>
                             </span>
                         </div>
                         <ul id="new_parent_terms_list" style="text-align:left; padding-left:1em; list-style-type:disc; margin-top:0.5em;"></ul>
-                        <button id="remove_parent_term_btn" class="btn btn-sm btn-danger" style="display:none;"><span class="glyphicon glyphicon-trash"></span> Remove last</button>
+                        <button id="remove_parent_term_btn" class="btn btn-sm btn-danger" style="display:none;"><span class="glyphicon glyphicon-trash"></span> <% __('Remove last') |h %></button>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add_parent_terms_submit_btn">Submit</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="add_parent_terms_submit_btn"><% __('Submit') |h %></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><% __('Close') |h %></button>
             </div>
         </div>
     </div>
@@ -410,15 +410,15 @@ my $edit_privs = $curator ;
   });
 </script>
 
-<&| /page/info_section.mas, title=>"Cvterm details" &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Cvterm details"), 'h' ) &>
 <table style="border-spacing:10px">
 % if ( $allow_edits && $edit_privs ) {
-<tr><td colspan="2"><a href="javascript:displayCvtermEditDialog()" id="edit_cvterm_link">[Edit]</a> <a href="javascript:deleteCvterm()" id="delete_cvterm_link" style="color:red;">[Delete]</a></td><td></td><td></td></tr>
+<tr><td colspan="2"><a href="javascript:displayCvtermEditDialog()" id="edit_cvterm_link"><% __('[Edit]') |h %></a> <a href="javascript:deleteCvterm()" id="delete_cvterm_link" style="color:red;"><% __('[Delete]') |h %></a></td><td></td><td></td></tr>
 % }
-<tr><td>Term id</td><td width="10px">&nbsp;</td><td><b><% $accession %></b></td></tr>
-<tr><td>Term name</td><td>&nbsp;</td><td><b><% $cvterm_name %></b></td></tr>
-<tr><td>Term definition</td><td>&nbsp;</td><td><b><% $definition %></b></td></tr>
-<tr><td>Comment</td><td>&nbsp;</td><td><b><% $comment %></b></td></tr>
+<tr><td><% __('Term id') |h %></td><td width="10px">&nbsp;</td><td><b><% $accession %></b></td></tr>
+<tr><td><% __('Term name') |h %></td><td>&nbsp;</td><td><b><% $cvterm_name %></b></td></tr>
+<tr><td><% __('Term definition') |h %></td><td>&nbsp;</td><td><b><% $definition %></b></td></tr>
+<tr><td><% __('Comment') |h %></td><td>&nbsp;</td><td><b><% $comment %></b></td></tr>
 </table>
 
 % if ($is_obsolete) {
@@ -427,28 +427,28 @@ my $edit_privs = $curator ;
 
 <br />
 % if ( $allow_edits && $edit_privs ) {
-<a href="javascript:displaySynonymEditDialog()" id="edit_synonym_link">[Edit]</a>
+<a href="javascript:displaySynonymEditDialog()" id="edit_synonym_link"><% __('[Edit]') |h %></a>
 <br>
 % }
-<b>Synonyms</b><br />
+<b><% __('Synonyms') |h %></b><br />
 % foreach my $synonym (@synonyms) {
 <% $synonym %> <br />
 % }
 
 <br />
 % if ( $allow_edits && $edit_privs ) {
-<a href="javascript:displayAddParentTermsDialog()" id="add_parent_terms_link">[Add parent terms]</a>
+<a href="javascript:displayAddParentTermsDialog()" id="add_parent_terms_link"><% __('[Add parent terms]') |h %></a>
 <br>
 % }
-<b> Relationships</b><br />
+<b> <% __('Relationships') |h %></b><br />
 <div id="relationships_div"></div>
 
-<br /><b> Definition dbxrefs</b><br />
+<br /><b> <% __('Definition dbxrefs') |h %></b><br />
 % foreach my $da (@def_accessions) {
 <% $da %><br />
 % }
 
-<br /><b> Related dbxrefs</b><br />
+<br /><b> <% __('Related dbxrefs') |h %></b><br />
 % foreach my $sa (@secondary_accessions) {
 <% $sa %><br />
 %  }
@@ -460,7 +460,7 @@ my $edit_privs = $curator ;
 % my $props_subtitle = $allow_edits ? "[<a id=\"cvterm_add_props\" href=\"javascript:cvtermprops_addPropDialog()\">Add...</a>]" : "";
 
 % if ($is_variable) {
-<&| /page/info_section.mas, title => "Variable Properties" , collapsible=> 1, is_subsection => 1, subtitle=>$props_subtitle &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __("Variable Properties"), 'h' ) , collapsible=> 1, is_subsection => 1, subtitle=>$props_subtitle &>
       <& /chado/cvtermprops.mas,
        cv_name    => 'trait_property',
        cvterm_id  =>$cvterm_id,
@@ -480,9 +480,9 @@ my $edit_privs = $curator ;
 
 <div id="cvterm_id" style="display:none" ><% $cvterm_name %>|<% $accession %></div>
 
-<&| /page/info_section.mas, title=>"Add this term to a list", collapsible=>1, collapsed=>1 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Add this term to a list"), 'h' ), collapsible=>1, collapsed=>1 &>
 <div id="paste_to_list">
-LOAD...
+<% __('LOAD...') |h %>
 </div>
 
 </&>
@@ -505,7 +505,7 @@ LOAD...
 
 
 <&| /page/info_section.mas,
-    title=> "Annotated loci",
+    title=> $m->interp->apply_escapes( __("Annotated loci"), 'h' ),
     subtitle => '',
     collapsible => 1,
     collapsed   => 1,
@@ -514,9 +514,9 @@ LOAD...
 <table id="loci_data" class="display">
 <thead>
   <tr>
-    <th>Organism</th>
-    <th>Locus symbol</th>
-    <th>Locus name</th>
+    <th><% __('Organism') |h %></th>
+    <th><% __('Locus symbol') |h %></th>
+    <th><% __('Locus name') |h %></th>
   </tr>
 </thead>
 
@@ -568,7 +568,7 @@ LOAD...
 
 
 <&| /page/info_section.mas,
-       title=> "Annotated stocks",
+       title=> $m->interp->apply_escapes( __("Annotated stocks"), 'h' ),
        collapsible => 1,
        collapsed=>1,
        subtitle => '',
@@ -578,9 +578,9 @@ LOAD...
 <table id="annotated_stocks_data" class="display">
 <thead>
   <tr>
-     <th>Type</th>
-    <th>Stock name</th>
-    <th>Description</th>
+     <th><% __('Type') |h %></th>
+    <th><% __('Stock name') |h %></th>
+    <th><% __('Description') |h %></th>
   </tr>
 </thead>
 
@@ -605,7 +605,7 @@ LOAD...
 % if ( @qtl_pops )
 % {
     <&| /page/info_section.mas,
-        title       => "QTL analysis",
+        title       => $m->interp->apply_escapes( __("QTL analysis"), 'h' ),
         collapsible => 1,
    &>
      <& /page/columnar_table.mas,
@@ -620,7 +620,7 @@ LOAD...
 
 
 <&| /page/info_section.mas,
-      title       => "Phenotyped accessions",
+      title       => $m->interp->apply_escapes( __("Phenotyped accessions"), 'h' ),
       collapsible => 1,
       collapsed=>1,
       subtitle    => '' ,
@@ -630,9 +630,9 @@ LOAD...
 <table id="phen_stocks_data" class="display">
 <thead>
   <tr>
-     <th>Type</th>
-    <th>Stock name</th>
-    <th>Description</th>
+     <th><% __('Type') |h %></th>
+    <th><% __('Stock name') |h %></th>
+    <th><% __('Description') |h %></th>
   </tr>
 </thead>
 
@@ -655,7 +655,7 @@ LOAD...
 
 
 <&| /page/info_section.mas,
-      title       => "Phenotyping trials",
+      title       => $m->interp->apply_escapes( __("Phenotyping trials"), 'h' ),
       collapsible => 1,
       collapsed=>1,
       subtitle    => '<span id="trial_count"></span>',
@@ -675,8 +675,8 @@ LOAD...
 <table id="trial_data" class="display">
 <thead>
   <tr>
-     <th>Trial name</th>
-     <th>Description</th>
+     <th><% __('Trial name') |h %></th>
+     <th><% __('Description') |h %></th>
   </tr>
 </thead>
 
@@ -697,7 +697,7 @@ LOAD...
 </&>
 
 <&| /page/info_section.mas,
-    title => "Images and figures",
+    title => $m->interp->apply_escapes( __("Images and figures"), 'h' ),
     subtitle      => $image_subtitle,
     collapsible   => 1,
     collapsed     => 0,

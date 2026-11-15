@@ -11,14 +11,14 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Marker</th>
-            <th>Protocol</th>
-            <th>Species</th>
-            <th>Reference</th>
-            <th>Chromosome</th>
-            <th>Position</th>
-            <th>Ref</th>
-            <th>Alt</th>
+            <th><% __('Marker') |h %></th>
+            <th><% __('Protocol') |h %></th>
+            <th><% __('Species') |h %></th>
+            <th><% __('Reference') |h %></th>
+            <th><% __('Chromosome') |h %></th>
+            <th><% __('Position') |h %></th>
+            <th><% __('Ref') |h %></th>
+            <th><% __('Alt') |h %></th>
         </tr>
     </thead>
     <tbody>

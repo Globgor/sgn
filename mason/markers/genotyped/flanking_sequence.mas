@@ -19,6 +19,6 @@
 
 <p>
     <a href="/tools/blast/match/show?blast_db_id=<% $blast_db %>;id=<% $chrom %>;hilite_coords=<% $pos %>-<% $pos %>" target="_blank">
-        View the marker flanking sequence
+        <% __('View the marker flanking sequence') |h %>
     </a>
 </p>

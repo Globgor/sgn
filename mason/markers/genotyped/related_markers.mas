@@ -11,12 +11,12 @@
 <p><strong>Related Genotyped Markers:</strong> These genotyped markers share either the same <em>name</em> as one or more markers at this variant or 
 are located at the same <em>position</em> but have different allele values</p>
 <div id="related-variants">
-    <em>Loading...</em><br /><br />
+    <em><% __('Loading...') |h %></em><br /><br />
 </div>
 
 <p><strong>Related Mapped Markers:</strong> These mapped markers have the same name as a marker at this variant</p>
 <div id="related-mapped-markers">
-    <em>Loading...</em><br />
+    <em><% __('Loading...') |h %></em><br />
 </div>
 
 

@@ -1,4 +1,4 @@
-    <& /page/page_title.mas, title => 'Secretom Project Publications' &>
+    <& /page/page_title.mas, title => $m->interp->apply_escapes( __('Secretom Project Publications'), 'h' ) &>
 
 
   <&| /secretom/section_templates/publications.mas &>

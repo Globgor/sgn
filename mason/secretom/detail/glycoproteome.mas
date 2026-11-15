@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'The Tomato Fruit Glycoproteome' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('The Tomato Fruit Glycoproteome'), 'h' ) &>
 
 <div class="indented_content">
     <div style="width: 400px; float: right; margin: 0 0 10px 20px" class="captioned_image">

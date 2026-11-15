@@ -88,7 +88,7 @@ EOT
 </%perl>
 
 
-<&| /page/info_section.mas, title=>'COS information' &> <% $basic.$orth.$genbank %> </&>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('COS information'), 'h' ) &> <% $basic.$orth.$genbank %> </&>
 
 
 

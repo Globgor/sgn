@@ -18,7 +18,7 @@
 <& /feature/page_title.mas, feature => $feature &>
 
 <&| /page/info_section.mas,
-    title       => 'Gene',
+    title       => $m->interp->apply_escapes( __('Gene'), 'h' ),
     subtitle    => $feature->is_obsolete ? 'WARNING: This feature is obsolete, new data is available.' : '',
     collapsible => 1,
 &>
@@ -35,7 +35,7 @@
 </&>
 
 <&| /page/info_section.mas,
-   title       => 'Genome Viewer',
+   title       => $m->interp->apply_escapes( __('Genome Viewer'), 'h' ),
    collapsible => 1,
 &>
 
@@ -45,7 +45,7 @@
 
 
 <&| /page/info_section.mas,
-   title       => 'Related features',
+   title       => $m->interp->apply_escapes( __('Related features'), 'h' ),
    collapsible => 1,
 &>
   <& /feature/related_features.mas,
@@ -58,8 +58,8 @@
 
 
 <&| /page/info_section.mas,
-        title       => 'Genomic sequence',
-        subtitle    => 'unprocessed genomic sequence region underlying this gene',
+        title       => $m->interp->apply_escapes( __('Genomic sequence'), 'h' ),
+        subtitle    => $m->interp->apply_escapes( __('unprocessed genomic sequence region underlying this gene'), 'h' ),
         empty_message => 'Not available',
         collapsible => 1,
         collapsed   => 1,
@@ -80,8 +80,8 @@
   &>
 
     <&| /page/info_section.mas,
-       title => 'Ontology terms',
-       subtitle => 'terms associated with this mRNA',
+       title => $m->interp->apply_escapes( __('Ontology terms'), 'h' ),
+       subtitle => $m->interp->apply_escapes( __('terms associated with this mRNA'), 'h' ),
        collapsible => 1,
        is_subsection => 1,
     &>
@@ -95,9 +95,9 @@
 %   my ( $mrna_sequence, $cds_sequence, $protein_sequence ) = @{(mrna_cds_protein_sequence( $mrna ))[0] || [] };
 
     <&| /page/info_section.mas,
-            title         => 'cDNA sequence',
+            title         => $m->interp->apply_escapes( __('cDNA sequence'), 'h' ),
             is_subsection => 1,
-            subtitle      => 'spliced cDNA sequence, including UTRs',
+            subtitle      => $m->interp->apply_escapes( __('spliced cDNA sequence, including UTRs'), 'h' ),
             empty_message => 'Not available',
             collapsible   => 1,
             collapsed     => 1,
@@ -123,9 +123,9 @@
     </&>
 
     <&| /page/info_section.mas,
-            title         => 'Protein sequence',
+            title         => $m->interp->apply_escapes( __('Protein sequence'), 'h' ),
             is_subsection => 1,
-            subtitle      => 'translated polypeptide sequence',
+            subtitle      => $m->interp->apply_escapes( __('translated polypeptide sequence'), 'h' ),
             empty_message => 'Not available',
             collapsible   => 1,
             collapsed     => 1,
@@ -153,7 +153,7 @@
     </&>
 
     <&| /page/info_section.mas,
-        title         => 'Related features',
+        title         => $m->interp->apply_escapes( __('Related features'), 'h' ),
         is_subsection => 1,
         collapsible   => 1,
      &>
@@ -169,7 +169,7 @@
 % }
 
 <&| /page/info_section.mas,
-     title       => 'Related views',
+     title       => $m->interp->apply_escapes( __('Related views'), 'h' ),
      collapsible => 1,
  &>
      <& /sitefeatures/mixed/xref_set/link.mas,

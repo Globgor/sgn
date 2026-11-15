@@ -34,10 +34,10 @@ David Waring <djw64@cornell.edu>
     }
 </%init>
 
-<&| /page/info_section.mas, title=>'Related Markers', collapsible=>1, collapsed=>0 &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __('Related Markers'), 'h' ), collapsible=>1, collapsed=>0 &>
     <p><strong>Related Genotyped Markers:</strong> These markers have been genotyped and share a name with this marker</p>
     <div id="related-genotyped-markers">
-        <em>Loading...</em>
+        <em><% __('Loading...') |h %></em>
     </div>
 </&>
 

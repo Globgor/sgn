@@ -4,7 +4,7 @@
 % my $items = Load( $m->content );
 % delete $ARGS{$_} for qw( default_ref_base c );
 
-<&| /page/info_section.mas, title => 'Data Sets', %ARGS &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Data Sets'), 'h' ), %ARGS &>
 <ul>
 
 % foreach my $item (@$items) {

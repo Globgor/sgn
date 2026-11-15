@@ -4,16 +4,16 @@
 
 
 
-<& /page/page_title.mas, title => "CytoScape Interactome Viewer" &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __("CytoScape Interactome Viewer"), 'h' ) &>
 
 
-This is a CytoScape Java Web Start app designed to preload with the coffee interactome data.  In order to use this app, please click the Launch Cytoscape button below, which will download the configuration file and load the java app from your browser.  The application itself will not be installed on your computer, but you should get full Cytoscape functionality, and be able to view, process, edit, and save the network shown.
+<% __('This is a CytoScape Java Web Start app designed to preload with the coffee interactome data.  In order to use this app, please click the Launch Cytoscape button below, which will download the configuration file and load the java app from your browser.  The application itself will not be installed on your computer, but you should get full Cytoscape functionality, and be able to view, process, edit, and save the network shown.') |h %>
 
 
 
 <center><form method="get" action="/tools/interactomics/coffee.jnlp" >
 <input type="hidden" name="Network" value = "http://andrew.sgn.cornell.edu:3000/CytoScape/coffee.cys" />
-<input type="submit" value="Launch CytoScape" align = "center" /> 
+<input type="submit" value="<% __('Launch CytoScape') |h %>" align = "center" /> 
 </form></center>
 
 

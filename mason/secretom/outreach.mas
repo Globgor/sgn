@@ -1,5 +1,5 @@
 <span style="white-space:nowrap; display:block; padding:3px; background-color: #fff; text-align:center; color: #444; font-size:1.3em">
-Education, Training, and Outreach Activities
+<% __('Education, Training, and Outreach Activities') |h %>
 </span>
 <br />
 <center>

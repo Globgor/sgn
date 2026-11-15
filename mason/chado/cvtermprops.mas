@@ -66,8 +66,8 @@ sub prop_select {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add trait attributes</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title"><% __('Add trait attributes') |h %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="<% __('Close') |h %>">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -75,7 +75,7 @@ sub prop_select {
         <div id="<% $div_name %>_add_dialog">
           <form class="form-horizontal" role="form" id="add_cvtermprop_form">
             <div class="form-group">
-              <label class="control-label col-sm-3">Add</label> 
+              <label class="control-label col-sm-3"><% __('Add') |h %></label> 
               <div class="col-sm-4">
                 <% $prop_select %>
               </div>
@@ -89,8 +89,8 @@ sub prop_select {
         </div>
       </div>
       <div class="modal-footer">
-	      <button id="<% $div_name %>_addProp_submit" type="button" class="btn btn-primary">Store attribute</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      <button id="<% $div_name %>_addProp_submit" type="button" class="btn btn-primary"><% __('Store attribute') |h %></button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><% __('Close') |h %></button>
       </div>
     </div>
   </div>

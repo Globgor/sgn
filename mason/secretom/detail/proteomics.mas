@@ -1,4 +1,4 @@
-<& /page/page_title.mas, title => 'Tomato Comparative and Quantitative Proteomics' &>
+<& /page/page_title.mas, title => $m->interp->apply_escapes( __('Tomato Comparative and Quantitative Proteomics'), 'h' ) &>
 
 <div class="indented_content">
   <p>
@@ -101,7 +101,7 @@
 
 </div>
 
-<h1>Comparative proteomic analysis of tomato fruit ripening</h1>
+<h1><% __('Comparative proteomic analysis of tomato fruit ripening') |h %></h1>
 
 <div class="indented_content">
 

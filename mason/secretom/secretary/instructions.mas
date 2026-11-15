@@ -27,7 +27,7 @@
 
 </div>
 
-<&| /page/info_section.mas, title => '1. Input Sequences' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('1. Input Sequences'), 'h' ) &>
 
   <p>
   The amino acid sequences can be input by pasting one or more
@@ -39,7 +39,7 @@
   are replaced by <b>X</b> before analysis.
   </p>
 
-  <h3>An example:</h3>
+  <h3><% __('An example:') |h %></h3>
   <& /sequence/with_markup.mas,
          seq => Bio::PrimarySeq->new(
                      -id => 'P05117_Tomato',
@@ -51,7 +51,7 @@
 
 </&>
 
-<&| /page/info_section.mas, title => '2. Submission' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('2. Submission'), 'h' ) &>
 
   Paste the sequence(s) into the window, or click browse to select a 
   fasta file on your disk for analysis. Then, click on the "Submit" 
@@ -65,7 +65,7 @@
 .blue { background: #aaf }
 
 </style>
-<&| /page/info_section.mas, title => '3. Output' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('3. Output'), 'h' ) &>
 
   <p>
   For each sequence <span class="secretary">SecreTary</span> gives a score; sequences with scores
@@ -82,7 +82,7 @@
   with no predicted signal peptide.
   </p>
 
-  <h3>An example:</h3>
+  <h3><% __('An example:') |h %></h3>
   <pre>
 
 <pre class="secretary_results">
@@ -104,7 +104,7 @@ AT1G44090.1      NO     0         -       MCIYASRQTVCPYLTPFKVKRPKSREMNSSDVNFSLLQ
    </pre>
 </&>
 
-<&| /page/info_section.mas, title => '4. Getting help' &>
+<&| /page/info_section.mas, title => $m->interp->apply_escapes( __('4. Getting help'), 'h' ) &>
   Please contact: <a href="mailto:sgn-feedback@sgn.cornell.edu">sgn-feedback@sgn.cornell.edu</a>.
 </&>
 

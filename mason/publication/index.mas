@@ -103,7 +103,7 @@ my $pub_title = $pub->get_title;
 <& /page/page_title.mas, title=> $pub_title  || 'New publication' &>
 
 
-<&| /page/info_section.mas, title=>"Publication details"  &>
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("Publication details"), 'h' )  &>
 
 
 <& /page/form.mas,
@@ -123,7 +123,7 @@ my $pub_title = $pub->get_title;
 
 % if ($pub_id) {
 
-<&| /page/info_section.mas, title=>"External resources", 
+<&| /page/info_section.mas, title=>$m->interp->apply_escapes( __("External resources"), 'h' ), 
   collapsible=>1, collapsed=>0 
   &>
   <% $dbxrefs_html %>

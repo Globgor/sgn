@@ -103,11 +103,11 @@
   </style>
 
   <div style="width: 80%; margin: 0 auto">
-    <& /page/page_title.mas, title => 'A project to catalog and study the dynamic properties of the cell wall proteome (the secretome), using tomato as a model system.' &>
+    <& /page/page_title.mas, title => $m->interp->apply_escapes( __('A project to catalog and study the dynamic properties of the cell wall proteome (the secretome), using tomato as a model system.'), 'h' ) &>
   </div>
 
   <div id="secretom_summary" style="float: left; width: 50%">
-    <&| /page/info_section.mas, title => 'Summary' &>
+    <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Summary'), 'h' ) &>
 
       <p>
       The <a class="info_link" href="/secretom/detail/cell_wall">plant cell wall/apoplast</a> plays a fundamental role
@@ -157,21 +157,21 @@
   <div style="float: right; width: 50%">
 
      <div class="projects">
-      <&| /page/info_section.mas, title => 'Projects', subtitle => 'download datasets: <a href="ftp://ftp.solgenomics.net/secretom/">[SGN FTP site]</a>' &>
+      <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Projects'), 'h' ), subtitle => 'download datasets: <a href="ftp://ftp.solgenomics.net/secretom/">[SGN FTP site]</a>' &>
 
-        <a class="project" href="/secretom/detail/prediction">Computational Prediction of the Plant Secretome</a>
-        <a class="project" href="/secretom/detail/functional_screens">Functional Screens for Secreted Proteins</a>
-        <a class="project" href="/secretom/detail/glycoproteome">The Tomato Fruit Glycoproteome</a>
-        <a class="project" href="/secretom/detail/proteomics">Tomato Comparative and Quantitative Proteomics</a>
-        <a class="project" href="/secretom/detail/profiling">Integrated Proteome/Transcriptome Profiling of Tomato Fruit</a>
-        <a class="project" href="/secretom/detail/cuticle">The Tomato Fruit Cuticular Cell Wall Proteome</a>
-        <a class="project" href="/secretom/detail/phytophthora_interaction">The Secretome of Phytophthora/Tomato Interactions</a>
-        <a class="project" href="/secretom/detail/spinoffs">Spin-off Projects and Collaborations</a>
+        <a class="project" href="/secretom/detail/prediction"><% __('Computational Prediction of the Plant Secretome') |h %></a>
+        <a class="project" href="/secretom/detail/functional_screens"><% __('Functional Screens for Secreted Proteins') |h %></a>
+        <a class="project" href="/secretom/detail/glycoproteome"><% __('The Tomato Fruit Glycoproteome') |h %></a>
+        <a class="project" href="/secretom/detail/proteomics"><% __('Tomato Comparative and Quantitative Proteomics') |h %></a>
+        <a class="project" href="/secretom/detail/profiling"><% __('Integrated Proteome/Transcriptome Profiling of Tomato Fruit') |h %></a>
+        <a class="project" href="/secretom/detail/cuticle"><% __('The Tomato Fruit Cuticular Cell Wall Proteome') |h %></a>
+        <a class="project" href="/secretom/detail/phytophthora_interaction"><% __('The Secretome of Phytophthora/Tomato Interactions') |h %></a>
+        <a class="project" href="/secretom/detail/spinoffs"><% __('Spin-off Projects and Collaborations') |h %></a>
 
       </&>
     </div>
      <div class="resources">
-      <&| /page/info_section.mas, title => 'Resources' &>
+      <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Resources'), 'h' ) &>
 
         <a href="ftp://ftp.solgenomics.net/secretom/">
           <span class="secretom">secretom</span> datasets (<span style="text-decoration: underline">SGN FTP</span>)
@@ -188,10 +188,10 @@
      </div>
   </div>
 
-  <&| /page/info_section.mas, title => 'News' &>
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('News'), 'h' ) &>
 
     <div style="float: left; width: 50%">
-      <&| /page/info_section.mas, title => 'Job Openings', is_subsection => 1 &>
+      <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Job Openings'), 'h' ), is_subsection => 1 &>
         <p>
         The Rose lab is currently seeking a postdoctoral research associate with 
         an interest in plant proteomics, or fruit development and ripening. 
@@ -206,7 +206,7 @@
 
     <div style="width: 50%; float: right" id="education">
 
-      <&| /page/info_section.mas, title => 'Education, Training, and Outreach', is_subsection => 1 &>
+      <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Education, Training, and Outreach'), 'h' ), is_subsection => 1 &>
           <img style="border: 1px solid black; display: block; margin: 15px auto 0 auto" src="/img/secretom/tomato_bath.png" />
           <p>
              <a href="/secretom/training">Education and training
@@ -220,7 +220,7 @@
 
 
   </&>
-  <&| /page/info_section.mas, title => 'People' &>
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('People'), 'h' ) &>
     <ul class="people">
       <li>Joss Rose <a href="http://labs.plantbio.cornell.edu/rose/">[Lab]</a></li>
       <li>Ted Thannhauser <a href="http://www.ars.usda.gov/PandP/docs.htm?docid=9634">[USDA Personal]</a></li>
@@ -230,7 +230,7 @@
     </ul>
 
   </&>
-  <&| /page/info_section.mas, title => 'Funding' &>
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Funding'), 'h' ) &>
 
        <table><tr>
        <td><a style="background: none" href="http://www.nsf.gov"><img border="0" src="/documents/img/secretom/NSF_Logo.jpg" width="100" height="100"/></a></td>
@@ -248,15 +248,15 @@
 
   </&>
 
-  <&| /page/info_section.mas, title => 'Related Sites' &>
+  <&| /page/info_section.mas, title => $m->interp->apply_escapes( __('Related Sites'), 'h' ) &>
 
       <ul>
-        <li><a href="http://www.ccrc.uga.edu/~mao/cellwall/main.htm">Plant Cell Wall Overview</a></li>
-        <li><a href="http://cell.ccrc.uga.edu/~mao/wallmab/Home/Home.php">Cell Wall Antibodies</a></li>
-        <li><a href="http://cellwall.genomics.purdue.edu/">Cell Wall Genomics</a></li>
-        <li><a href="http://csbl1.bmb.uga.edu/pDAWG">Plant cell wall genes (pDAWG)</a></li>
+        <li><a href="http://www.ccrc.uga.edu/~mao/cellwall/main.htm"><% __('Plant Cell Wall Overview') |h %></a></li>
+        <li><a href="http://cell.ccrc.uga.edu/~mao/wallmab/Home/Home.php"><% __('Cell Wall Antibodies') |h %></a></li>
+        <li><a href="http://cellwall.genomics.purdue.edu/"><% __('Cell Wall Genomics') |h %></a></li>
+        <li><a href="http://csbl1.bmb.uga.edu/pDAWG"><% __('Plant cell wall genes (pDAWG)') |h %></a></li>
         <li><a href="http://bioweb.ucr.edu/Cellwall">Cell Wall Navigator</a></li>
-        <li><a href="http://www.cazy.org">Carbohydrate Active Enzymes</a></li>
+        <li><a href="http://www.cazy.org"><% __('Carbohydrate Active Enzymes') |h %></a></li>
       </ul>
 
   </&>
