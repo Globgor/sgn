@@ -25,7 +25,7 @@ Lukas Mueller <lam87@cornell.edu>
 
 <% __('The purpose of outreach is to establish a link between the science community and students at all levels of education in order to foster interest in the sciences and expose students to scientific career paths. A specific mandate from funding agencies such as the National Science Foundation is to increase the participation of underrepresented groups in science.') |h %>
 <br /><br />
-<% __('The US SOL outreach program focuses on Solanaceae biology and bioinformatics. The target audience is K-12 and college undergraduates, with a particular effort to engage underrepresented groups. Activies include presentations at elementary schools and associated after school programs, high schools, undergraduate classes, high school teacher curriculum workshops, and we provide hands-on laboratory activities. Bioinformatics training is taking place in the form of internships at SGN for undergraduate students.') |h %>
+<% __('The US SOL outreach program focuses on Solanaceae biology and bioinformatics. The target audience is K-12 and college undergraduates, with a particular effort to engage underrepresented groups. Activities include presentations at elementary schools and associated after school programs, high schools, undergraduate classes, high school teacher curriculum workshops, and we provide hands-on laboratory activities. Bioinformatics training is taking place in the form of internships at SGN for undergraduate students.') |h %>
 <br /><br />
 This page gives more information about the materials developed. Please contact us if you want to contribute materials. For more information, please contact the SOL outreach coordinator, <a href="mailto:jv27@cornell.edu">Joyce Van Eck</a>.
 </&>

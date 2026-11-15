@@ -27,7 +27,7 @@ would be in folders beside Tomato_11Q.</p>
 <p>The "Spread" IDs above are arbitrary, but it's best if the submitter
 uses different IDs for each spread, across their entire FISHing project
 (we assume that the lab already uses unique identifiers for their
-experiements, so we can just use those identifiers, for simplicity).</p>
+experiments, so we can just use those identifiers, for simplicity).</p>
 
 <p>Each spread's folder must have at least the 3 image files.  We'll also
 store any additional per-spread datafiles beside the JPGs in the
