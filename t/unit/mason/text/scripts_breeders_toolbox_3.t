@@ -20,6 +20,13 @@ use Test::More;
 use SGN::Test::MasonText qw( page_script_texts_ok component_compiles_ok );
 
 page_script_texts_ok(
+    '/breeders_toolbox/manage_roles.mas',
+    'Really delete this role association?',
+    'Association deleted.',
+    'Role Added for User!',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/manage_samples.mas',
     'Automatic export to genotyping vendors is currently not available; however, you can download the layout and submit to vendor manually.',
 );

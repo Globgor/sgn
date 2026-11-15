@@ -80,6 +80,16 @@ page_texts_ok(
 component_compiles_ok('/breeders_toolbox/manage_projects.mas');
 
 page_texts_ok(
+    '/breeders_toolbox/manage_roles.mas',
+    'Manage User Roles',
+    '[LOADING...]',
+    'Submit',
+    'Close',
+    'Role:',
+    'Roles',
+);
+
+page_texts_ok(
     '/breeders_toolbox/manage_samples.mas',
     'View and create tissue samples for genotyping plates. Genotyping plates represent tissue samples in a 96 or 384 well plate layout.',
     'View and create tissue samples for field trials. Tissue samples come from a plant in a plot.',

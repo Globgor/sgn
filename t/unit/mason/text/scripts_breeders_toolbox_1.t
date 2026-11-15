@@ -60,6 +60,12 @@ page_script_texts_ok(
 );
 
 page_script_texts_ok(
+    '/breeders_toolbox/breeding_programs.mas',
+    'Please enter a name and a description.',
+    'An error occurred.',
+);
+
+page_script_texts_ok(
     '/breeders_toolbox/create_seedlots_from_trial_dialogs.mas',
     'The seedlot name cannot be the same as the plot name, please add a prefix or suffix to make the name unique',
     'ERROR: unknown seedlot stock type!',
