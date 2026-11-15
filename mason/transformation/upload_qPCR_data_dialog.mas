@@ -297,27 +297,27 @@ jQuery(document).ready(function(){
         const normalization_method = jQuery("#qPCR_normalization_method").val();
 
         if (tissue_type === ''){
-            alert("Please select a tissue type");
+            alert(<% __('Please select a tissue type') |js %>);
             return;
         }
 
         if (endogenous_control === ''){
-            alert("Please select an endogenous control");
+            alert(<% __('Please select an endogenous control') |js %>);
             return;
         }
 
         if (assay_date === ''){
-            alert("Please provide assay date");
+            alert(<% __('Please provide assay date') |js %>);
             return;
         }
 
         if (normalization_method === '') {
-            alert("Please select a normalization method");
+            alert(<% __('Please select a normalization method') |js %>);
             return;
         }
 
         if (Cq_upload_file === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 

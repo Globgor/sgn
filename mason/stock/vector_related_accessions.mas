@@ -35,16 +35,16 @@ jQuery(document).ready(function(){
         'autoWidth': false,
         'ordering': false,
         'columns': [
-            { title: "Accession", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.transformant_id+"/view'>"+row.transformant_name+"</a>"; } },
-            { title: "Plant Material", "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.plant_id+"/view'>"+row.plant_name+"</a>"; } },
-            { title: "Transformation ID", "data": null, "render": function ( data, type, row ) {
+            { title: <% __('Accession') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.transformant_id+"/view'>"+row.transformant_name+"</a>"; } },
+            { title: <% __('Plant Material') |js %>, "data": null, "render": function ( data, type, row ) { return "<a href='/stock/"+row.plant_id+"/view'>"+row.plant_name+"</a>"; } },
+            { title: <% __('Transformation ID') |js %>, "data": null, "render": function ( data, type, row ) {
                 if (row.transformation_id === null){
                     return 'NA'
                 } else {
                     return "<a href='/transformation/"+row.transformation_id+"'>"+row.transformation_name+"</a>";
                 }
             }},
-            { title: "Obsolete Accession", "data": "null", "render": function ( data, type, row ) { return "<a onclick='obsoleteStock("+row.transformant_id+",\""+row.transformant_name+"\")'>X</a>"; } },
+            { title: <% __('Obsolete Accession') |js %>, "data": "null", "render": function ( data, type, row ) { return "<a onclick='obsoleteStock("+row.transformant_id+",\""+row.transformant_name+"\")'>X</a>"; } },
         ],
 
         "fnInitComplete": function(oSettings, json) {

@@ -140,31 +140,31 @@ jQuery(document).ready(function(){
     jQuery('#create_transformation_project_submit').click(function() {
         var transformation_project_name = jQuery("#transformation_project_name").val();
         if (!transformation_project_name) {
-            alert("Project name is required");
+            alert(<% __('Project name is required') |js %>);
             return;
         }
 
         var selectedProgram = jQuery("#transformation_project_program").val();
         if (!selectedProgram) {
-            alert("Breeding program is required");
+            alert(<% __('Breeding program is required') |js %>);
             return;
         }
 
         var transformation_project_location = jQuery("#transformation_project_location").val();
         if (!transformation_project_location) {
-            alert ("Location is required");
+            alert (<% __('Location is required') |js %>);
             return;
         }
 
         var year = jQuery("#transformation_project_year_select").val();
         if (!year) {
-            alert ("Year is required");
+            alert (<% __('Year is required') |js %>);
             return;
         }
 
         var project_description = jQuery('textarea#transformation_project_description').val();
         if (!project_description) {
-            alert ("Description is required");
+            alert (<% __('Description is required') |js %>);
             return;
         }
 

@@ -283,17 +283,17 @@ $(document).ready(function () {
       altEditor: true,     // Enable altEditor
       buttons: [
           {
-          text: 'Add',
+          text: <% __('Add') |js %>,
           name: 'add'        // do not change name
           },
           {
           extend: 'selected', // Bind to Selected row
-          text: 'Edit',
+          text: <% __('Edit') |js %>,
           name: 'edit'        // do not change name
           },
           {
           extend: 'selected', // Bind to Selected row
-          text: 'Delete',
+          text: <% __('Delete') |js %>,
           name: 'delete'      // do not change name
           }
       ]
@@ -324,17 +324,17 @@ $(document).ready(function () {
       altEditor: true,     // Enable altEditor
       buttons: [
           {
-          text: 'Add',
+          text: <% __('Add') |js %>,
           name: 'add'        // do not change name
           },
           {
           extend: 'selected', // Bind to Selected row
-          text: 'Edit',
+          text: <% __('Edit') |js %>,
           name: 'edit'        // do not change name
           },
           {
           extend: 'selected', // Bind to Selected row
-          text: 'Delete',
+          text: <% __('Delete') |js %>,
           name: 'delete'      // do not change name
           }
       ]

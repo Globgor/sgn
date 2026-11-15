@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
         });
 
         if (selected_stocks.length == 0){
-            alert('Please select accessions that you would like to obsolete');
+            alert(<% __('Please select accessions that you would like to obsolete') |js %>);
         } else {
             stock_name_string = JSON.stringify(selected_stocks);
             formatted_stock_names = selected_stocks.join('\n');
@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
                 },
                 error: function(response){
                     jQuery('#working_modal').modal('hide');
-                    alert("Error obsoleting accessions.");
+                    alert(<% __('Error obsoleting accessions.') |js %>);
                 }
             });
         }

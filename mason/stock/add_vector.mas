@@ -143,11 +143,11 @@ function handleSubmit() {
             alert(response.error);
           } else {
             jQuery('#uniqueName').val('');
-            alert('Saved!');
+            alert(<% __('Saved!') |js %>);
           }
         },
         error: function(response) {
-          alert( 'An Error occured while storing vectors.');
+          alert( <% __('An Error occured while storing vectors.') |js %>);
         }
     });
 }

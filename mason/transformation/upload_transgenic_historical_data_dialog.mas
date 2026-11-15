@@ -146,7 +146,7 @@ jQuery(document).ready(function(){
     jQuery('#upload_transgenic_historical_data_link').click(function() {
         const defaultPlantMaterial = "<% $default_plant_material_name %>";
         if (defaultPlantMaterial === ''){
-            alert("Please set a default plant material for this project before uploading your data.");
+            alert(<% __('Please set a default plant material for this project before uploading your data.') |js %>);
             return;
         }
 
@@ -160,7 +160,7 @@ jQuery(document).ready(function(){
     jQuery("#upload_transgenic_historical_data_submit").click(function(){
         var uploadFile = jQuery("#transgenic_historical_data_file").val();
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 

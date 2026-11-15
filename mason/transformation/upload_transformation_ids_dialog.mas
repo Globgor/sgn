@@ -149,7 +149,7 @@ jQuery(document).ready(function(){
         jQuery('#upload_transformation_ids_form').attr("action", "/ajax/transformation/upload_transformation_identifiers");
 
         if (uploadFile === ''){
-            alert("Please select a file");
+            alert(<% __('Please select a file') |js %>);
             return;
         }
 
