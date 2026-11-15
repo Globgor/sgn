@@ -180,3 +180,28 @@ msgstr "Дизайнер етикеток (рекомендовано)"
 # A translation with markup characters: the test checks that it is escaped.
 msgid "Trial Status"
 msgstr "Стан досліду <етап>"
+
+msgid "Experiment Usage"
+msgstr "Використання в експериментах"
+
+msgid "Editor"
+msgstr "Редактор"
+
+msgid "Timestamp"
+msgstr "Час"
+
+msgid "Modification Note"
+msgstr "Примітка до зміни"
+
+msgid "Add Synonym"
+msgstr "Додати синонім"
+
+msgid "Show QR Code"
+msgstr "Показати QR-код"
+
+msgid "Hide QR Code"
+msgstr "Приховати QR-код"
+
+# A translation with markup characters: the test checks that it is escaped.
+msgid "Traits Assayed"
+msgstr "Виміряні ознаки <усі>"
