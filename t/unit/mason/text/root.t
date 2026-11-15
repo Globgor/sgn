@@ -41,6 +41,11 @@ page_texts_ok(
 component_compiles_ok('/system_message.mas');
 
 page_texts_ok(
+    '/test.mas',
+    'This is a test',
+);
+
+page_texts_ok(
     '/usage_policy.mas',
     'Informing data users about the data being generated, data standards and quality, planned analyses, timelines, and relevant contact information, ideally through publication of a citable marker paper near the start of the project or by provision of a citable URL at the project or funding-agency website',
     'Providing relevant metadata (e.g., questionnaires, phenotypes, environmental conditions, and laboratory methods) that will assist other researchers in reproducing and/or independently analysing the data, while protecting interests of individuals enrolled in studies focusing on humans',
