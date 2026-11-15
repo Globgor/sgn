@@ -22,8 +22,8 @@ $locations
                             <p><% __('Propagation Project page acts as a centralized page for different propagation processes .') |h %></p>
                             <ul>
                                 <li><% __('Each project page may be used to group propagation processes having the same propagation type, objective or done in the same year.') |h %></li>
-                                <li>Metadata for each propagation process (e.g., accession name, material type, date, operator) is linked to a globally unique <b>Propagation Group Identifier</b>.</li>
-                                <li>Within each Propagation Group, the progress of each plant produced is tracked by a globally unique <b>Propagation Identifier</b>.</li>
+                                <li><& /util/sentence.mas, text => __x('Metadata for each propagation process (e.g., accession name, material type, date, operator) is linked to a globally unique {bold}Propagation Group Identifier{end_bold}.'), bold => '<b>', end_bold => '</b>' &></li>
+                                <li><& /util/sentence.mas, text => __x('Within each Propagation Group, the progress of each plant produced is tracked by a globally unique {bold}Propagation Identifier{end_bold}.'), bold => '<b>', end_bold => '</b>' &></li>
                             </ul>
                             <hr>
                             <center>
